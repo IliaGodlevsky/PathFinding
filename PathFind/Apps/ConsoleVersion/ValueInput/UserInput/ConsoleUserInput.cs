@@ -3,20 +3,22 @@ using System;
 
 namespace ConsoleVersion.ValueInput.UserInput
 {
-    internal abstract class ConsoleUserInput<T> : IInput<T>
+    internal abstract class ConsoleUserInput<TOutput, TInner> : IInput<TOutput>
     {
-        public T Input()
+        public TOutput Input()
         {
-            T result;
+            TInner result;
             string userInput = Console.ReadLine();
             while (!IsValidInput(userInput, out result))
             {
                 Console.Write(MessagesTexts.BadInputMsg);
                 userInput = Console.ReadLine();
             }
-            return result;
+            return Convert(result);
         }
 
-        protected abstract bool IsValidInput(string input, out T parsed);
+        protected abstract TOutput Convert(TInner inner);
+
+        protected abstract bool IsValidInput(string input, out TInner parsed);
     }
 }

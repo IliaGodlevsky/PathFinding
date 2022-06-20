@@ -2,6 +2,7 @@
 using Algorithm.Interfaces;
 using Autofac;
 using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Windows.Input;
 using ValueRange.Enums;
 using ValueRange.Extensions;
@@ -30,7 +31,7 @@ namespace WPFVersion.ViewModel
         private int visitedVerticesCount;
         private string status;
         private string time;
-        private int delayTime;
+        private TimeSpan delayTime;
 
         public ICommand InterruptCommand { get; }
 
@@ -58,17 +59,17 @@ namespace WPFVersion.ViewModel
 
         public string Time { get => time; set => Set(ref time, value); }
 
-        public int DelayTime
+        public TimeSpan DelayTime
         {
             get => delayTime;
             set
             {
-                Set(ref delayTime, (int)Constants.AlgorithmDelayTimeValueRange.ReturnInRange(value, ReturnOptions.Cycle));
+                Set(ref delayTime, Constants.AlgorithmDelayTimeValueRange.ReturnInRange(value, ReturnOptions.Cycle));
                 messenger.SendParallel(new DelayTimeChangedMessage(delayTime, Index));
             }
         }
 
-        public AlgorithmViewModel(PathfindingAlgorithm algorithm, int delayTime, int index)
+        public AlgorithmViewModel(PathfindingAlgorithm algorithm, TimeSpan delayTime, int index)
         {
             this.algorithm = algorithm;
             this.delayTime = delayTime;

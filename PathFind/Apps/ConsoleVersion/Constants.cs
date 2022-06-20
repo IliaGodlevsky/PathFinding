@@ -1,4 +1,5 @@
 ﻿using ConsoleVersion.Enums;
+using System;
 using ValueRange;
 
 namespace ConsoleVersion
@@ -11,10 +12,15 @@ namespace ConsoleVersion
         public static int WidthOfOrdinateView => (GraphLengthValueRange.UpperValueOfRange - 1).ToString().Length + 1;
 
         public static InclusiveValueRange<Answer> AnswerValueRange { get; }
+
         public static InclusiveValueRange<int> GraphWidthValueRange { get; }
+
         public static InclusiveValueRange<int> GraphLengthValueRange { get; }
+
         public static InclusiveValueRange<int> ObstaclesPercentValueRange { get; }
-        public static InclusiveValueRange<int> AlgorithmDelayTimeValueRange { get; }
+
+        public static InclusiveValueRange<TimeSpan> AlgorithmDelayTimeValueRange { get; }
+
         public static InclusiveValueRange<int> VerticesCostRange { get; }
 
         static Constants()
@@ -24,7 +30,7 @@ namespace ConsoleVersion
             GraphWidthValueRange = new InclusiveValueRange<int>(75, 1);
             GraphLengthValueRange = new InclusiveValueRange<int>(45, 1);
             ObstaclesPercentValueRange = new InclusiveValueRange<int>(99);
-            AlgorithmDelayTimeValueRange = new InclusiveValueRange<int>(35);
+            AlgorithmDelayTimeValueRange = new InclusiveValueRange<TimeSpan>(TimeSpan.FromMilliseconds(35), TimeSpan.FromMilliseconds(0));
         }
     }
 }

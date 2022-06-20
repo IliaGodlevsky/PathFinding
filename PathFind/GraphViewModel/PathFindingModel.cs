@@ -31,7 +31,7 @@ namespace GraphViewModel
 
         public bool IsVisualizationRequired { get; set; } = true;
 
-        public virtual int DelayTime { get; set; }
+        public virtual TimeSpan Delay { get; set; }
 
         public IAlgorithmFactory<PathfindingAlgorithm> Algorithm { get; set; }
 

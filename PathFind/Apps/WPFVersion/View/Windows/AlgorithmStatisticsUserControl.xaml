@@ -13,6 +13,7 @@
         <viewmodel:AlgorithmsViewModel/>
     </UserControl.DataContext>
     <UserControl.Resources>
+        <converters:TimeSpanMillisecondsConverter x:Key="TimeSpanConverter"/>
         <converters:AlgorithmStatusToStringConverter x:Key="StatusToStringConverter"/>
     </UserControl.Resources>
     <Grid>
@@ -65,7 +66,7 @@
                             </GridViewColumn.Header>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <xctk:IntegerUpDown Value="{Binding DelayTime}"/>
+                                    <xctk:IntegerUpDown Value="{Binding DelayTime, Converter={StaticResource TimeSpanConverter}, UpdateSourceTrigger=PropertyChanged}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

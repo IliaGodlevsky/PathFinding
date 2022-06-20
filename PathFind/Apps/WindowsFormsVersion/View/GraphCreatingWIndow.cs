@@ -20,12 +20,13 @@ namespace WindowsFormsVersion.View
             graphAssemblesListBox.DataSource = source;
 
             var graphAssembleBinding = new Binding(
-                nameof(graphAssemblesListBox.SelectedValue),
+                nameof(graphAssemblesListBox.SelectedItem),
                 model,
                 nameof(model.SelectedGraphAssemble),
                 true,
-                DataSourceUpdateMode.OnPropertyChanged);
+                DataSourceUpdateMode.OnPropertyChanged);            
             graphAssemblesListBox.DataBindings.Add(graphAssembleBinding);
+            graphAssemblesListBox.SelectedIndex = 0;
 
             var bindWidth = new Binding(
                 nameof(widthTextBox.Text),

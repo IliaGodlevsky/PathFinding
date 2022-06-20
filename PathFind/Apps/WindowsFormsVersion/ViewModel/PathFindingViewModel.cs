@@ -25,7 +25,7 @@ namespace WindowsFormsVersion.ViewModel
             IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ILog log)
             : base(endPoints, algorithmFactories, log)
         {
-            DelayTime = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
+            Delay = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
             messenger = DI.Container.Resolve<IMessenger>();
         }
 
@@ -48,7 +48,7 @@ namespace WindowsFormsVersion.ViewModel
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            TimeSpan.FromMilliseconds(DelayTime).Wait();
+            Delay.Wait();
             base.OnVertexVisited(sender, e);
             var message = new UpdateStatisticsMessage(Statistics);
             messenger.Send(message, MessageTokens.MainModel);

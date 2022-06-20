@@ -6,7 +6,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:WPFVersion3D.Converters"
-        xmlns:range="clr-namespace:WPFVersion3D" 
         xmlns:rules="clr-namespace:WPFVersion3D.ValidationRules" 
         xmlns:model="clr-namespace:WPFVersion3D.Model" 
         xmlns:viewmodel="clr-namespace:WPFVersion3D.ViewModel" 
@@ -17,6 +16,7 @@
     <Window.Resources>
         <converters:IntToStringConverter x:Key="intToStringConverter"/>
         <converters:BoolToVisibilityConverter x:Key="boolToVisibiltyConverter"/>
+        <converters:TimeSpanMillisecondsConverter x:Key="TimeConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -35,9 +35,7 @@
             <Button Command="{Binding CancelFindPathCommand}" Margin ="5" Content="Cancel"></Button>
         </StackPanel>
 
-        <ListBox ItemsSource="{Binding  Algorithms }"
-                 x:Name="algoListBox" BorderThickness="0" Margin="5"
-                 SelectedValue="{Binding Path = Algorithm}">
+        <ListBox ItemsSource="{Binding  Algorithms }" x:Name="algoListBox" BorderThickness="0" Margin="5" SelectedValue="{Binding Path = Algorithm}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Margin="3" Text="{Binding}"/>
@@ -55,30 +53,17 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             
-            <TextBlock Grid.ColumnSpan="2" 
-                       Margin="5" 
-                       Grid.Row="0" 
-                       Text="Algorithm speed" 
-                       HorizontalAlignment="Center" 
-                       Grid.Column="0"/>
+            <TextBlock Grid.ColumnSpan="2" Margin="5" Grid.Row="0" Text="Algorithm speed" HorizontalAlignment="Center"  Grid.Column="0"/>
             
             <model:RangedSlider Grid.Row="1" 
-                    Value ="{Binding Path=DelayTime}"
+                    Value ="{Binding Path=Delay, Converter={StaticResource TimeConverter}, UpdateSourceTrigger=PropertyChanged}"
                     x:Name="delayTimeSlider" 
                     MinWidth="100" 
-                    ValueRange="{x:Static range:Constants.AlgorithmDelayValueRange}"
                     Margin="5"></model:RangedSlider>
             
-            <TextBox MaxWidth="25" 
-                     Grid.Row="1"                      
-                     Grid.Column="1" 
-                     Margin="5">
+            <TextBox MaxWidth="25" Grid.Row="1" Grid.Column="1" Margin="5">
                 <TextBox.Text>
-                <Binding Mode="TwoWay" 
-                             Path="Value" 
-                             ElementName="delayTimeSlider" 
-                             UpdateSourceTrigger = "PropertyChanged"        
-                             Converter="{StaticResource intToStringConverter}">
+                <Binding Mode="TwoWay" Path="Value" ElementName="delayTimeSlider" UpdateSourceTrigger = "PropertyChanged" Converter="{StaticResource intToStringConverter}">
                     <Binding.ValidationRules>
                         <rules:NonInt32InputValidationRule/>
                     </Binding.ValidationRules>

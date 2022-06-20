@@ -24,11 +24,11 @@ namespace WPFVersion3D.Model
         {
             private readonly string name;
 
-            public double Milliseconds { get; }
+            public TimeSpan Time { get; }
 
-            public AnimationSpeed(double milliseconds, string name)
+            public AnimationSpeed(TimeSpan time, string name)
             {
-                Milliseconds = milliseconds;
+                Time = time;
                 this.name = name;
             }
 
@@ -38,13 +38,13 @@ namespace WPFVersion3D.Model
         private sealed class RandomAnimationSpeed : IAnimationSpeed
         {
             private readonly IRandom random;
-            private readonly InclusiveValueRange<double> range;
+            private readonly InclusiveValueRange<TimeSpan> range;
 
-            public double Milliseconds => random.NextDouble(range);
+            public TimeSpan Time => random.NextTimeSpan(range);
 
-            public RandomAnimationSpeed(double from, double to)
+            public RandomAnimationSpeed(TimeSpan from, TimeSpan to)
             {
-                range = new InclusiveValueRange<double>(from, to);
+                range = new InclusiveValueRange<TimeSpan>(from, to);
                 random = DI.Container.Resolve<IRandom>();
             }
 
@@ -53,7 +53,7 @@ namespace WPFVersion3D.Model
 
         public sealed class CustomAnimationSpeed : IAnimationSpeed
         {
-            public double Milliseconds { get; set; }
+            public TimeSpan Time { get; set; }
 
             public override string ToString() => "Custom";
         }
@@ -62,13 +62,13 @@ namespace WPFVersion3D.Model
         {
             return new IAnimationSpeed[]
             {
-                new AnimationSpeed(5000, "Slowest"),
-                new AnimationSpeed(2000, "Slow"),
-                new AnimationSpeed(1000, "Medium"),
-                new AnimationSpeed(700, "High"),
-                new AnimationSpeed(400, "Highest"),
-                new RandomAnimationSpeed(4800, 300),
-                new CustomAnimationSpeed { Milliseconds = 2400 }
+                new AnimationSpeed(TimeSpan.FromSeconds(5), "Slowest"),
+                new AnimationSpeed(TimeSpan.FromSeconds(2), "Slow"),
+                new AnimationSpeed(TimeSpan.FromSeconds(1), "Medium"),
+                new AnimationSpeed(TimeSpan.FromMilliseconds(700), "High"),
+                new AnimationSpeed(TimeSpan.FromMilliseconds(400), "Highest"),
+                new RandomAnimationSpeed(TimeSpan.FromSeconds(4.8), TimeSpan.FromMilliseconds(300)),
+                new CustomAnimationSpeed { Time = TimeSpan.FromSeconds(2.4) }
             };
         }
     }

@@ -28,7 +28,7 @@ using ValueRange.Extensions;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class PathFindingViewModel : PathFindingModel, IViewModel, IRequireIntInput, IRequireAnswerInput, IRequireConsoleKeyInput, IDisposable
+    internal sealed class PathFindingViewModel : PathFindingModel, IViewModel, IRequireTimeSpanInput, IRequireIntInput, IRequireAnswerInput, IRequireConsoleKeyInput, IDisposable
     {
         public event Action WindowClosed;
 
@@ -37,9 +37,7 @@ namespace ConsoleVersion.ViewModel
         private readonly ManualResetEventSlim resetEvent;
         private readonly ConsoleKeystrokesHook keystrokesHook;
 
-        private string currentAlgorithmName;
-
-        private InclusiveValueRange<int> DelayRange => Constants.AlgorithmDelayTimeValueRange;
+        private InclusiveValueRange<TimeSpan> DelayRange => Constants.AlgorithmDelayTimeValueRange;
 
         public IInput<int> IntInput { get; set; }
 
@@ -47,9 +45,11 @@ namespace ConsoleVersion.ViewModel
 
         public IInput<ConsoleKey> KeyInput { get; set; }
 
+        public IInput<TimeSpan> TimeSpanInput { get; set; }
+
         public string AlgorithmKeyInputMessage { private get; set; }
 
-        private string Statistics => path.ToStatistics(timer, visitedVerticesCount, currentAlgorithmName);
+        private string Statistics => path.ToStatistics(timer, visitedVerticesCount, Algorithm.ToString());
 
         private int AlgorithmIndex => IntInput.Input(AlgorithmKeyInputMessage, algorithmKeysValueRange) - 1;
 
@@ -59,7 +59,7 @@ namespace ConsoleVersion.ViewModel
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Count, 1);
             keystrokesHook = DI.Container.Resolve<ConsoleKeystrokesHook>();
             keystrokesHook.KeyPressed += OnConsoleKeyPressed;
-            DelayTime = DelayRange.LowerValueOfRange;
+            Delay = DelayRange.LowerValueOfRange;
             resetEvent = new ManualResetEventSlim();
             messenger = DI.Container.Resolve<IMessenger>();
         }
@@ -82,7 +82,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.InputDelayTime, 3)]
         public void InputDelayTime()
         {
-            DelayTime = IntInput.Input(MessagesTexts.DelayTimeInputMsg, DelayRange);
+            Delay = TimeSpanInput.Input(MessagesTexts.DelayTimeInputMsg, DelayRange);
         }
 
         [MenuItem(MenuItemsNames.ChooseAlgorithm, 1)]
@@ -142,7 +142,7 @@ namespace ConsoleVersion.ViewModel
 
         protected override void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            TimeSpan.FromMilliseconds(DelayTime).Wait();
+            Delay.Wait();
             base.OnVertexVisited(sender, e);
             messenger.Send(new UpdateStatisticsMessage(Statistics));
         }
@@ -152,7 +152,6 @@ namespace ConsoleVersion.ViewModel
             base.SubscribeOnAlgorithmEvents(algorithm);
             algorithm.Started += keystrokesHook.StartAsync;
             algorithm.Finished += keystrokesHook.Interrupt;
-            currentAlgorithmName = Algorithm.ToString();
         }
 
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
@@ -169,10 +168,10 @@ namespace ConsoleVersion.ViewModel
                     algorithm.Resume();
                     break;
                 case ConsoleKey.DownArrow:
-                    DelayTime = DelayRange.ReturnInRange(DelayTime - 1);
+                    Delay = DelayRange.ReturnInRange(Delay - TimeSpan.FromMilliseconds(1));
                     break;
                 case ConsoleKey.UpArrow:
-                    DelayTime = DelayRange.ReturnInRange(DelayTime + 1);
+                    Delay = DelayRange.ReturnInRange(Delay + TimeSpan.FromMilliseconds(1));
                     break;
             }
         }

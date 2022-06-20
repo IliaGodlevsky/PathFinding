@@ -3,4 +3,4 @@ using Algorithm.Algos.Benchmark.Pathfinding;
 using BenchmarkDotNet.Running;
 
 BenchmarkRunner.Run<WaveAlgorithmBenchmarks>();
-//BenchmarkRunner.Run<HeuristicsBenchmarks>();
+BenchmarkRunner.Run<HeuristicsBenchmarks>();

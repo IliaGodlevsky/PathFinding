@@ -13,6 +13,7 @@
         <converters:AnimationSpeedToVisibiltyConverter x:Key="SpeedToVisibility"/>
         <converters:AnimationSpeedToDataContextConverter x:Key="SpeedToDataContext"/>
         <converters:AnimatedAxisRotatorConverter x:Key="AnimatedAxisRotatorConverter"/>
+        <converters:TimeSpanMillisecondsConverter x:Key="TimeConverter"/>
     </UserControl.Resources>
 
     <StackPanel Orientation="Vertical">
@@ -32,7 +33,7 @@
         </StackPanel>
         <StackPanel Visibility="{Binding SelectedRotationSpeed, Converter={StaticResource SpeedToVisibility}}" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="Speed (milliseconds)"/>
-            <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Milliseconds}" Margin="5" Width="auto" MinWidth="45" DataContext="{Binding SelectedRotationSpeed, Converter={StaticResource SpeedToDataContext}, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Time, Converter={StaticResource TimeConverter}}" Margin="5" Width="auto" MinWidth="45" DataContext="{Binding SelectedRotationSpeed, Converter={StaticResource SpeedToDataContext}, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
         <local:GraphFieldRotatingUserControl DataContext="{Binding Path=XAxisRotationViewModel}"/>

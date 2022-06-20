@@ -1,4 +1,5 @@
 ﻿using Random.Interface;
+using System;
 using ValueRange;
 using ValueRange.Extensions;
 
@@ -19,6 +20,13 @@ namespace Random.Extensions
         public static double NextDouble(this IRandom random, InclusiveValueRange<double> range)
         {
             return range.Amplitude() * ((double)random.Next() / int.MaxValue) + range.LowerValueOfRange;
+        }
+
+        public static TimeSpan NextTimeSpan(this IRandom random, InclusiveValueRange<TimeSpan> range)
+        {
+            var valueRange = new InclusiveValueRange<double>(range.LowerValueOfRange.TotalMilliseconds, 
+                range.UpperValueOfRange.TotalMilliseconds);
+            return TimeSpan.FromMilliseconds(random.NextDouble(valueRange));
         }
     }
 }

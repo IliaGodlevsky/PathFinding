@@ -1,7 +1,9 @@
-﻿namespace WPFVersion3D.Interface
+﻿using System;
+
+namespace WPFVersion3D.Interface
 {
     internal interface IAnimationSpeed
     {
-        double Milliseconds { get; }
+        TimeSpan Time { get; }
     }
 }

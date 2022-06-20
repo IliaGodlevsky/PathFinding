@@ -25,7 +25,7 @@ namespace WPFVersion3D.Infrastructure.Animators
 
         protected override Duration CalculateAnimationDuration(AxisAngleRotation3D angleRotation)
         {
-            var duration = speed.Milliseconds * angleRotation.Angle / AngleValueRange.Amplitude();
+            var duration = speed.Time.TotalMilliseconds * angleRotation.Angle / AngleValueRange.Amplitude();
             return new Duration(TimeSpan.FromMilliseconds(duration));
         }
     }

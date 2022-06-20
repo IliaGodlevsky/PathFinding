@@ -39,7 +39,7 @@ namespace WPFVersion3D.ViewModel
             FindPathCommand = new RelayCommand(ExecutePathFindCommand, CanExecutePathFindCommand);
             CancelFindPathCommand = new RelayCommand(ExecuteCloseWindowCommand);
             messenger.Register<AlgorithmIndexMessage>(this, SetAlgorithmIndex);
-            DelayTime = Convert.ToInt32(Constants.AlgorithmDelayValueRange.LowerValueOfRange);
+            Delay = Constants.AlgorithmDelayValueRange.LowerValueOfRange;
         }
 
         private void SetAlgorithmIndex(AlgorithmIndexMessage message)
@@ -65,7 +65,7 @@ namespace WPFVersion3D.ViewModel
 
         protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            TimeSpan.FromMilliseconds(DelayTime).Wait();
+            Delay.Wait();
             string time = timer.Elapsed.ToString(@"mm\:ss\.fff");
             var message = new UpdateAlgorithmStatisticsMessage(Index, time, visitedVerticesCount);
             await messenger.SendAsync(message).ConfigureAwait(false);

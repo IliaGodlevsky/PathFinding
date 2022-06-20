@@ -5,7 +5,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:WPFVersion.Converters"
-        xmlns:range="clr-namespace:WPFVersion" 
         xmlns:model="clr-namespace:WPFVersion.Model" 
         xmlns:rules="clr-namespace:WPFVersion.ValidationRules"
         mc:Ignorable="d"       
@@ -13,6 +12,7 @@
         SizeToContent="WidthAndHeight">
     <Window.Resources>
         <converters:IntToStringConverter x:Key="SliderValueConverter"/>
+        <converters:TimeSpanMillisecondsConverter x:Key="TimeSpanConverter"/>
         <converters:BoolToVisibilityConverter x:Key="boolToVisibiltyConverter"/>
     </Window.Resources>
     <Grid>
@@ -53,7 +53,7 @@
             
                 <TextBlock Grid.ColumnSpan="2" Margin="5" Grid.Row="0" Text="Algorithm speed" HorizontalAlignment="Center" Grid.Column="0"/>
 
-            <model:RangedSlider Grid.Row="1" Value ="{Binding Path=DelayTime}" x:Name="delayTimeSlider" MinWidth="100" ValueRange="{x:Static range:Constants.AlgorithmDelayTimeValueRange}" Margin="5"/>
+            <model:RangedSlider Grid.Row="1" Value ="{Binding Path=Delay, Converter={StaticResource TimeSpanConverter}}" x:Name="delayTimeSlider" MinWidth="100" Margin="5"/>
 
             <TextBox MaxWidth="35" Grid.Row="1" Grid.Column="1" Margin="5">
                 <TextBox.Text>

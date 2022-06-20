@@ -1,11 +1,13 @@
-﻿namespace WPFVersion.Messages.DataMessages
+﻿using System;
+
+namespace WPFVersion.Messages.DataMessages
 {
     internal sealed class DelayTimeChangedMessage
     {
-        public int DelayTime { get; }
+        public TimeSpan DelayTime { get; }
         public int Index { get; }
 
-        public DelayTimeChangedMessage(int delayTime, int index)
+        public DelayTimeChangedMessage(TimeSpan delayTime, int index)
         {
             DelayTime = delayTime;
             Index = index;

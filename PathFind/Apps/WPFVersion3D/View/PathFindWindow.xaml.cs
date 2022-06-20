@@ -7,8 +7,8 @@ namespace WPFVersion3D.View
         public PathFindWindow(PathFindingViewModel viewModel) : base(viewModel)
         {
             InitializeComponent();
-            delayTimeSlider.Minimum = Constants.AlgorithmDelayValueRange.LowerValueOfRange;
-            delayTimeSlider.Maximum = Constants.AlgorithmDelayValueRange.UpperValueOfRange;
+            delayTimeSlider.Minimum = Constants.AlgorithmDelayValueRange.LowerValueOfRange.TotalMilliseconds;
+            delayTimeSlider.Maximum = Constants.AlgorithmDelayValueRange.UpperValueOfRange.TotalMilliseconds;
         }
     }
 }
