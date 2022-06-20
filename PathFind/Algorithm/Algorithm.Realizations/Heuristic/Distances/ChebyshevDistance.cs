@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace Algorithm.Realizations.Heuristic.Distances
 {
-    public sealed class ChebyshevDistance : Distance, IHeuristic
+    public sealed class ChebyshevDistance : DistanceFunction, IHeuristic
     {
-        protected override double Aggregate(IEnumerable<double> collection)
+        protected override double Operation(double a, double b)
         {
-            return collection.Any() ? collection.Max() : default;
+            return Math.Max(a, b);
         }
 
         protected override double ZipMethod(int first, int second)

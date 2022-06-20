@@ -1,5 +1,6 @@
 ﻿using Algorithm.Сompanions.Interface;
 using GraphLib.Interfaces;
+using GraphLib.Utility;
 using NullObject.Extensions;
 using System.Collections.Generic;
 
@@ -11,7 +12,7 @@ namespace Algorithm.Сompanions
 
         public ParentVertices()
         {
-            parentVertices = new Dictionary<ICoordinate, IVertex>();
+            parentVertices = new Dictionary<ICoordinate, IVertex>(new CoordinateEqualityComparer());
         }
 
         public void Add(IVertex child, IVertex parent)

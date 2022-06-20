@@ -32,7 +32,7 @@ namespace Algorithm.Algos.Algos
 
         protected override IVertex GetNextVertex()
         {
-            var query = queue
+            queue
                 .OrderByDescending(heuristics.GetCost)
                 .Take(ToDeleteCount)
                 .Select(vertex => new { Vertex = vertex, Priority = queue.GetPriorityOrInfinity(vertex) })

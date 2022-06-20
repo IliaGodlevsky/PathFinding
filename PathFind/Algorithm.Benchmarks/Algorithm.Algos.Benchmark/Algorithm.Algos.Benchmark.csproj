@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -43,15 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Benchmarks\CostGreedyAlgorithmBenchmark.cs" />
-    <Compile Include="Benchmarks\DepthFirstAlgorithmBenchmark.cs" />
-    <Compile Include="Benchmarks\DistanceFirstAlgorithmBenchmarks.cs" />
-    <Compile Include="Benchmarks\AlgorithmBenchmarks.cs" />
-    <Compile Include="Benchmarks\AStarAlgorithmBenchmarks.cs" />
-    <Compile Include="Benchmarks\IDAStarALgorithmBenchmarks.cs" />
-    <Compile Include="Benchmarks\BestFirstLeeAlgorithm.cs" />
-    <Compile Include="Benchmarks\DijkstraAlgorithmBenchmarks.cs" />
-    <Compile Include="Benchmarks\LeeAlgorithmBenchmarks.cs" />
+    <Compile Include="Heuristics\HeuristicsBenchmarks.cs" />
+    <Compile Include="Pathfinding\AlgorithmsBenchmarks.cs" />
+    <Compile Include="Pathfinding\WaveAlgorithmBenchmarks.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -69,13 +65,25 @@
       <Project>{04393071-3BA6-42C5-89D8-A89E3AC34511}</Project>
       <Name>Algorithm.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Algorithm\Algorithm.Factory\Algorithm.Factory.csproj">
+      <Project>{8270F3AF-2B53-45E4-9795-89091CEE60D4}</Project>
+      <Name>Algorithm.Factory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Algorithm\Algorithm.Interfaces\Algorithm.Interfaces.csproj">
       <Project>{FC4F499E-9AB1-4623-9AD8-CFDE0A07B7D0}</Project>
       <Name>Algorithm.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Algorithm\Algorithm.Realizations\Algorithm.Realizations.csproj">
+      <Project>{600D74AF-A0AE-46AA-BCF5-695650BBE66F}</Project>
+      <Name>Algorithm.Realizations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{A5A743F5-D346-4B2B-B6AC-07152F64E4D9}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Base\GraphLib.Base.csproj">
+      <Project>{6AA3B516-ABFE-4EDA-98DD-1CE799DA747F}</Project>
+      <Name>GraphLib.Base</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Interfaces\GraphLib.Interfaces.csproj">
       <Project>{D3C5CCFE-698B-41C7-9A72-5FD0262765E1}</Project>
@@ -94,5 +102,6 @@
       <Name>Interruptable</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

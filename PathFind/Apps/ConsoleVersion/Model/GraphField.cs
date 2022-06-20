@@ -1,5 +1,4 @@
 ﻿using Common.Extensions.EnumerableExtensions;
-using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Model.FramedAxes;
 using GraphLib.Interfaces;

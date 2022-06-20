@@ -5,13 +5,13 @@ using System;
 
 namespace Algorithm.Realizations.Heuristic.Angles
 {
-    public sealed class Angle : IHeuristic
+    public sealed class AngleFunction : IHeuristic
     {
         private const double Radians = 57.2956;
 
         private readonly ICoordinate startingPoint;
 
-        public Angle(IVertex startingPoint)
+        public AngleFunction(IVertex startingPoint)
         {
             this.startingPoint = startingPoint.Position;
         }

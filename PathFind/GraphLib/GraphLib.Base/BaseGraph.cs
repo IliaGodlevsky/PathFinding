@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using Common.Extensions.EnumerableExtensions;
+﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
@@ -10,7 +9,7 @@ using static System.Reflection.BindingFlags;
 namespace GraphLib.Base
 {
     public abstract class BaseGraph : IGraph
-    {       
+    {
         private static readonly string ParamsFormat = "Obstacle percent: {0} ({1}/{2})";
         private static readonly string LargeSpace = "   ";
         protected static readonly string[] DimensionNames = new[] { "Width", "Length", "Height" };
@@ -60,7 +59,7 @@ namespace GraphLib.Base
         {
             var verticesHashCode = Vertices.Select(x => x.GetHashCode()).ToHashCode();
             var dimensionsHashCode = DimensionsSizes.ToHashCode();
-            return verticesHashCode ^ dimensionsHashCode;
+            return HashCode.Combine(verticesHashCode, dimensionsHashCode);
         }
 
         public override string ToString()

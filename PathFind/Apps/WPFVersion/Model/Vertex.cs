@@ -119,7 +119,10 @@ namespace WPFVersion.Model
             ColoredAsPathEvent = RegisterRoutedEvent(nameof(ColoredAsPath));
         }
 
-        public bool Equals(IVertex other) => other.IsEqual(this);
+        public bool Equals(IVertex other)
+        {
+            return other.IsEqual(this);
+        }
 
         public void VisualizeAsTarget()
         {

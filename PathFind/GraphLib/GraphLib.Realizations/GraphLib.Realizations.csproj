@@ -110,6 +110,10 @@
       <Project>{51c3baf5-6ae2-47c4-932b-25687013c2ce}</Project>
       <Name>GraphLib.Proxy</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GraphLib.Utility\GraphLib.Utility.csproj">
+      <Project>{9fd961da-777e-4c9c-9bf2-9ea4fd989c21}</Project>
+      <Name>GraphLib.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Collections.Immutable">

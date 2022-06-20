@@ -20,14 +20,14 @@ namespace GraphLib.Proxy
             hashCode = CoordinatesValues.ToHashCode();
         }
 
+        public bool Equals(ICoordinate other)
+        {
+            return other.GetHashCode().Equals(GetHashCode());
+        }
+
         public override bool Equals(object pos)
         {
-            if (pos is ICoordinate coordinate)
-            {
-                return this.CoordinatesValues.Juxtapose(coordinate.CoordinatesValues);
-            }
-
-            return false;
+            return pos.GetHashCode().Equals(GetHashCode());
         }
 
         public override int GetHashCode()

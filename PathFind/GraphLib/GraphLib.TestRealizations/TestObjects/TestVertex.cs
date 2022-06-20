@@ -38,7 +38,7 @@ namespace GraphLib.TestRealizations.TestObjects
 
         public bool Equals(IVertex other)
         {
-            return Equals((object)other);
+            return other.IsEqual(this);
         }
 
         public override bool Equals(object obj)
@@ -48,7 +48,7 @@ namespace GraphLib.TestRealizations.TestObjects
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return HashCode.Combine(Cost.CurrentCost, Position.GetHashCode());
         }
     }
 }

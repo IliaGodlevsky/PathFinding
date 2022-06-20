@@ -1,5 +1,6 @@
 ﻿using Algorithm.Сompanions.Interface;
 using GraphLib.Interfaces;
+using GraphLib.Utility;
 using System.Collections.Generic;
 
 namespace Algorithm.Сompanions
@@ -10,7 +11,7 @@ namespace Algorithm.Сompanions
 
         public Costs()
         {
-            costs = new Dictionary<ICoordinate, double>();
+            costs = new Dictionary<ICoordinate, double>(new CoordinateEqualityComparer());
         }
 
         public void Reevaluate(IVertex vertex, double accumulatedCost)
@@ -35,7 +36,7 @@ namespace Algorithm.Сompanions
 
         public bool Contains(IVertex vertex)
         {
-            return costs.TryGetValue(vertex.Position, out _);
+            return costs.ContainsKey(vertex.Position);
         }
     }
 }

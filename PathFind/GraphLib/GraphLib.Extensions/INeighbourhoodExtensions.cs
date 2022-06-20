@@ -13,8 +13,8 @@ namespace GraphLib.Extensions
     {
         public static IReadOnlyCollection<IVertex> GetNeighboursWithinGraph(this INeighborhood self, IVertex vertex)
         {
-            return vertex.Graph.IsNull() 
-                ? throw new LonelyVertexException(vertex) 
+            return vertex.Graph.IsNull()
+                ? throw new LonelyVertexException(vertex)
                 : self.GetNeighborsWithinGraphInternal(vertex);
         }
 

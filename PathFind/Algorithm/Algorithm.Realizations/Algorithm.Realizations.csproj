@@ -42,10 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GraphPaths\CombinedGraphPath.cs" />
-    <Compile Include="Heuristic\Angles\Angle.cs" />
+    <Compile Include="Heuristic\Angles\AngleFunction.cs" />
     <Compile Include="Heuristic\Distances\ChebyshevDistance.cs" />
     <Compile Include="GraphPaths\GraphPath.cs" />
-    <Compile Include="Heuristic\Distances\Distance.cs" />
+    <Compile Include="Heuristic\Distances\DistanceFunction.cs" />
     <Compile Include="Heuristic\Distances\EuclidianDistance.cs" />
     <Compile Include="Heuristic\Distances\ManhattanDistance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

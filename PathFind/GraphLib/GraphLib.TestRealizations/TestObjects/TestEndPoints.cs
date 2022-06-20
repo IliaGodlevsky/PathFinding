@@ -1,5 +1,6 @@
 ﻿using GraphLib.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GraphLib.TestRealizations.TestObjects
 {
@@ -16,6 +17,12 @@ namespace GraphLib.TestRealizations.TestObjects
             Source = source;
             Target = target;
             EndPoints = new[] { Source, Target };
+        }
+
+        public TestEndPoints(IGraph graph)
+            : this(graph.Vertices.First(), graph.Vertices.Last())
+        {
+
         }
     }
 }

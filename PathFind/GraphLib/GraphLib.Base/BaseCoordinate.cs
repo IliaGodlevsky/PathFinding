@@ -1,5 +1,4 @@
 ﻿using Common.Extensions.EnumerableExtensions;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System.Linq;
 
@@ -19,14 +18,14 @@ namespace GraphLib.Base
             hashCode = CoordinatesValues.ToHashCode();
         }
 
+        public bool Equals(ICoordinate other)
+        {
+            return other.GetHashCode().Equals(GetHashCode());
+        }
+
         public override bool Equals(object pos)
         {
-            if (pos is ICoordinate coordinate)
-            {
-                return coordinate.IsEqual(this);
-            }
-
-            return false;
+            return pos.GetHashCode().Equals(GetHashCode());
         }
 
         public override int GetHashCode()

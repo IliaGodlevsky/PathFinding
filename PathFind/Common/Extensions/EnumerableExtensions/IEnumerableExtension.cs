@@ -99,7 +99,7 @@ namespace Common.Extensions.EnumerableExtensions
 
         public static int ToHashCode(this IEnumerable<int> array)
         {
-            return array.AggregateOrDefault((x, y) => x ^ y);
+            return array.AggregateOrDefault(HashCode.Combine);
         }
     }
 }

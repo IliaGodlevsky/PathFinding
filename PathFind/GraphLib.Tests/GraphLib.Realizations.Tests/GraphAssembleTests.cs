@@ -1,12 +1,13 @@
 ﻿using Autofac;
 using Autofac.Extras.Moq;
-using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
+using GraphLib.Interfaces.Factories;
 using GraphLib.NullRealizations;
 using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Neighbourhoods;
 using GraphLib.Realizations.Tests.Extenions;
 using GraphLib.TestRealizations;
+using GraphLib.TestRealizations.TestFactories;
 using GraphLib.TestRealizations.TestObjects;
 using NUnit.Framework;
 using Random.Interface;
@@ -21,12 +22,13 @@ namespace GraphLib.Realizations.Tests
     {
         private void RegisterNullRandomNumberGenerator(ContainerBuilder builder)
         {
-            builder.Register(container => NullRandom.Instance).As<IRandom>();
+            builder.Register(container => NullRandom.Instance).As<IRandom>().SingleInstance();
         }
 
         private void RegisterPseudoRandomNumberGenerator(ContainerBuilder builder)
         {
-            builder.RegisterType<PseudoRandom>().As<IRandom>();
+            builder.RegisterType<PseudoRandom>().As<IRandom>().SingleInstance();
+            builder.RegisterType<TestCostFactory>().As<IVertexCostFactory>().SingleInstance();
         }
 
         [TestCase(15, new int[] { 100 })]
@@ -40,7 +42,6 @@ namespace GraphLib.Realizations.Tests
                 mock.MockNeighbourhoodFactory(x => new MooreNeighborhood(x));
                 mock.MockVertexFactory((n, c) => new TestVertex(n, c));
                 mock.MockGraphFactory((v, d) => new TestGraph(v, d));
-                mock.MockVertexCostFactory(cost => new TestVertexCost(cost));
 
                 var assemble = mock.Create<GraphAssemble>();
                 var graph = assemble.AssembleGraph(obstaclePercent, dimensionSizes);

@@ -10,6 +10,7 @@ namespace Algorithm.Algos.Algos
 {
     public class AStarAlgorithm : DijkstraAlgorithm
     {
+        private readonly ICosts accumulatedCosts;
         protected readonly ICosts heuristics;
         protected readonly IHeuristic heuristic;
 
@@ -24,27 +25,41 @@ namespace Algorithm.Algos.Algos
         {
             heuristic = function;
             heuristics = new Costs();
+            accumulatedCosts = new Costs();
         }
 
         protected override void Reset()
         {
             base.Reset();
             heuristics.Clear();
+            accumulatedCosts.Clear();
+        }
+
+        protected override void PrepareForLocalPathfinding()
+        {
+            base.PrepareForLocalPathfinding();
+            accumulatedCosts.Reevaluate(CurrentEndPoints.Source, default);
         }
 
         protected override void Enqueue(IVertex vertex, double value)
         {
+            double heusristicCost = default;
             if (!heuristics.Contains(vertex))
             {
-                heuristics.Reevaluate(vertex, CalculateHeuristic(vertex));
+                heusristicCost = CalculateHeuristic(vertex);
+                heuristics.Reevaluate(vertex, heusristicCost);
             }
-            base.Enqueue(vertex, value + heuristics.GetCost(vertex));
+            else
+            {
+                heusristicCost = heuristics.GetCost(vertex);
+            }
+            base.Enqueue(vertex, value + heusristicCost);
+            accumulatedCosts.Reevaluate(vertex, value);
         }
 
         protected override double GetVertexCurrentCost(IVertex vertex)
         {
-            return base.GetVertexCurrentCost(vertex)
-                - heuristics.GetCostOrDefault(vertex, default);
+            return accumulatedCosts.GetCostOrDefault(vertex);
         }
 
         protected virtual double CalculateHeuristic(IVertex vertex)

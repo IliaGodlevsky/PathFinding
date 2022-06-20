@@ -67,8 +67,8 @@ namespace Algorithm.Realizations.GraphPaths
 
         private IVertex GetOrNullVertex(IVertex vertex)
         {
-            return parentVertices.HasParent(vertex) 
-                ? parentVertices.GetParent(vertex) 
+            return parentVertices.HasParent(vertex)
+                ? parentVertices.GetParent(vertex)
                 : NullVertex.Instance;
         }
     }

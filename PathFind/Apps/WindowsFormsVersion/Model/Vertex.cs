@@ -75,9 +75,20 @@ namespace WindowsFormsVersion.Model
         public bool IsVisualizedAsPath => visualization.IsVisualizedAsPath(this);
         public bool IsVisualizedAsEndPoint => visualization.IsVisualizedAsEndPoint(this);
 
-        public bool Equals(IVertex other) => Equals((object)other);
-        public override bool Equals(object obj) => obj is IVertex vertex && vertex.IsEqual(this);
-        public override int GetHashCode() => base.GetHashCode();
+        public bool Equals(IVertex other)
+        {
+            return other.IsEqual(this);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is IVertex vertex && vertex.IsEqual(this);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Cost.CurrentCost, Position.GetHashCode());
+        }
 
         private readonly IVisualization<Vertex> visualization;
         private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;

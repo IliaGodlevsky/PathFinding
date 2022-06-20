@@ -26,5 +26,10 @@ namespace GraphLib.NullRealizations
         {
             return base.GetHashCode();
         }
+
+        public bool Equals(ICoordinate other)
+        {
+            return other is NullCoordinate;
+        }
     }
 }

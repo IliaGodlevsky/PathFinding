@@ -7,6 +7,7 @@ using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations;
+using GraphLib.Utility;
 using Priority_Queue;
 using System.Collections.Generic;
 
@@ -27,7 +28,7 @@ namespace Algorithm.Algos.Algos
             : base(endPoints)
         {
             this.stepRule = stepRule;
-            queue = new SimplePriorityQueue<IVertex, double>();
+            queue = new SimplePriorityQueue<IVertex, double>(new VertexEqualityComparer());
         }
 
         protected override IGraphPath CreateGraphPath()
@@ -43,8 +44,8 @@ namespace Algorithm.Algos.Algos
 
         protected override IVertex GetNextVertex()
         {
-            return queue.TryFirst(out var vertex) 
-                ? vertex 
+            return queue.TryFirst(out var vertex)
+                ? vertex
                 : NullVertex.Instance;
         }
 

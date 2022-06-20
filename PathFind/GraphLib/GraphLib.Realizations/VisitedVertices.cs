@@ -1,4 +1,5 @@
 ﻿using GraphLib.Interfaces;
+using GraphLib.Utility;
 using NullObject.Extensions;
 using System.Collections.Generic;
 
@@ -10,7 +11,7 @@ namespace GraphLib.Realizations
 
         public VisitedVertices()
         {
-            visitedVertices = new HashSet<IVertex>();
+            visitedVertices = new HashSet<IVertex>(new VertexEqualityComparer());
         }
 
         public void Visit(IVertex vertex)

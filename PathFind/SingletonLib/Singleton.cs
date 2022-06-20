@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using SingletonLib.Exceptions;
+﻿using SingletonLib.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
