@@ -3,10 +3,11 @@ using System.Linq;
 
 namespace ConsoleVersion.Model
 {
-    internal sealed class Answer : IComparable, IComparable<Answer>, IEquatable<Answer>
+    internal readonly struct Answer : IComparable, IComparable<Answer>, IEquatable<Answer>
     {
         private const StringComparison IgnoreCase = StringComparison.OrdinalIgnoreCase;
 
+        private static readonly Answer Default = new Answer(-1, string.Empty);
         public static readonly Answer Yes = new Answer(1, nameof(Yes));
         public static readonly Answer No = new Answer(0, nameof(No));
 
@@ -37,7 +38,7 @@ namespace ConsoleVersion.Model
 
         public bool Equals(Answer other)
         {
-            return other.value == value && display.Equals(other.display, IgnoreCase);
+            return other.value == value && display.Equals(other.display, IgnoreCase) == true;
         }
 
         public override bool Equals(object obj)
@@ -62,14 +63,14 @@ namespace ConsoleVersion.Model
 
         public static bool TryParse(string input, out Answer result)
         {
-            result = null;
+            result = default;
             if (int.TryParse(input, out int value))
             {
-                result = Answers.FirstOrDefault(answer => answer.value.Equals(value));
-                return result != null;
+                result = FirstOrDefaultAnswer(Answers, answer => answer.value.Equals(value));
+                return !result.Equals(Default);
             }
-            result = Answers.FirstOrDefault(answer => answer.display.Equals(input, IgnoreCase));
-            return result != null;
+            result = FirstOrDefaultAnswer(Answers, answer => answer.display.Equals(input, IgnoreCase));
+            return !result.Equals(Default);
         }
 
         public static implicit operator bool(Answer answer)
@@ -80,6 +81,11 @@ namespace ConsoleVersion.Model
         public static implicit operator int(Answer answer)
         {
             return answer.value;
+        }
+
+        private static Answer FirstOrDefaultAnswer(Answer[] answers, Func<Answer, bool> predicate)
+        {
+            return answers.Any(predicate) ? answers.FirstOrDefault(predicate) : Answer.Default;
         }
     }
 }
