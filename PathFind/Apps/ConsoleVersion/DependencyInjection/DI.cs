@@ -3,7 +3,9 @@ using Algorithm.Factory.Interface;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.StepRules;
 using Autofac;
+using Autofac.Builder;
 using Autofac.Core;
+using Autofac.Features.Scanning;
 using Common.Extensions;
 using Common.Interface;
 using ConsoleVersion.Interface;
@@ -30,6 +32,8 @@ using Logging.Loggers;
 using Random.Interface;
 using Random.Realizations.Generators;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 using static Common.Extensions.MemberInfoExtensions;
@@ -42,7 +46,9 @@ namespace ConsoleVersion.DependencyInjection
 
         public static IContainer Container => container.Value;
 
-        private static Assembly[] Assemblies => AppDomain.CurrentDomain.GetAssemblies();
+        private static Assembly LocalAssembly => typeof(DI).Assembly;
+
+        private static Assembly AlgorithmsAssembly => typeof(IAlgorithmFactory<>).Assembly;
 
         private static IContainer Configure()
         {
@@ -57,10 +63,10 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterType<ConsoleKeystrokesHook>().AsSelf().InstancePerDependency().PropertiesAutowired();
 
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
-            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IViewModel>()).Except<MainViewModel>().AsSelf()
-                .PropertiesAutowired().InstancePerLifetimeScope();
-            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IView>()).AsSelf().PropertiesAutowired()
-                .OnActivated(OnViewActivated).InstancePerLifetimeScope();
+            LocalAssembly.GetTypes(type => type.Implements<IViewModel>()).Register(builder)
+                .Except<MainViewModel>().AsSelf().PropertiesAutowired().InstancePerLifetimeScope();
+            LocalAssembly.GetTypes(type => type.Implements<IView>()).Register(builder)
+                .AsSelf().PropertiesAutowired().OnActivated(OnViewActivated).InstancePerLifetimeScope();
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
             builder.RegisterType<EndPoints>().As<BaseEndPoints>().AsImplementedInterfaces().SingleInstance();
@@ -88,12 +94,11 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<BinaryGraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
-            //builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterDecorator<ThreadSafeGraphSerializer, IGraphSerializer>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
-            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IAlgorithmFactory<PathfindingAlgorithm>>())
-                .As<IAlgorithmFactory<PathfindingAlgorithm>>().SingleInstance();
+            AlgorithmsAssembly.GetTypes(type => type.Implements<IAlgorithmFactory<PathfindingAlgorithm>>())
+                .Register(builder).As<IAlgorithmFactory<PathfindingAlgorithm>>().SingleInstance();
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
 
             return builder.Build();
@@ -104,6 +109,16 @@ namespace ConsoleVersion.DependencyInjection
             var view = (IView)e.Instance;
             var mainModel = e.Context.Resolve<MainViewModel>();
             view.NewMenuIteration += mainModel.DisplayGraph;
+        }
+
+        private static IRegistrationBuilder<object, ScanningActivatorData, DynamicRegistrationStyle> Register(this IEnumerable<Type> types, ContainerBuilder builder)
+        {
+            return builder.RegisterTypes(types.ToArray());
+        }
+
+        private static IEnumerable<Type> GetTypes(this Assembly assembly, Func<Type, bool> predicate)
+        {
+            return assembly.GetTypes().Where(predicate);
         }
     }
 }
