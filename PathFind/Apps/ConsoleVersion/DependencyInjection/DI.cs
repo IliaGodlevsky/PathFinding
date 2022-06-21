@@ -63,9 +63,9 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterType<ConsoleKeystrokesHook>().AsSelf().InstancePerDependency().PropertiesAutowired();
 
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
-            LocalAssembly.GetTypes(type => type.Implements<IViewModel>()).Register(builder)
+            LocalAssembly.GetTypes().Where(type => type.Implements<IViewModel>()).Register(builder)
                 .Except<MainViewModel>().AsSelf().PropertiesAutowired().InstancePerLifetimeScope();
-            LocalAssembly.GetTypes(type => type.Implements<IView>()).Register(builder)
+            LocalAssembly.GetTypes().Where(type => type.Implements<IView>()).Register(builder)
                 .AsSelf().PropertiesAutowired().OnActivated(OnViewActivated).InstancePerLifetimeScope();
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
@@ -97,7 +97,7 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterDecorator<ThreadSafeGraphSerializer, IGraphSerializer>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
-            AlgorithmsAssembly.GetTypes(type => type.Implements<IAlgorithmFactory<PathfindingAlgorithm>>())
+            AlgorithmsAssembly.GetTypes().Where(type => type.Implements<IAlgorithmFactory<PathfindingAlgorithm>>())
                 .Register(builder).As<IAlgorithmFactory<PathfindingAlgorithm>>().SingleInstance();
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
 
@@ -111,14 +111,10 @@ namespace ConsoleVersion.DependencyInjection
             view.NewMenuIteration += mainModel.DisplayGraph;
         }
 
-        private static IRegistrationBuilder<object, ScanningActivatorData, DynamicRegistrationStyle> Register(this IEnumerable<Type> types, ContainerBuilder builder)
+        private static IRegistrationBuilder<object, ScanningActivatorData, DynamicRegistrationStyle> Register(this IEnumerable<Type> types, 
+            ContainerBuilder builder)
         {
             return builder.RegisterTypes(types.ToArray());
-        }
-
-        private static IEnumerable<Type> GetTypes(this Assembly assembly, Func<Type, bool> predicate)
-        {
-            return assembly.GetTypes().Where(predicate);
         }
     }
 }

@@ -6,11 +6,10 @@ namespace ConsoleVersion.Model
     internal readonly struct Answer : IComparable, IComparable<Answer>, IEquatable<Answer>
     {
         private const StringComparison IgnoreCase = StringComparison.OrdinalIgnoreCase;
-
-        private static readonly Answer Default = new Answer(-1, string.Empty);
+        
         public static readonly Answer Yes = new Answer(1, nameof(Yes));
         public static readonly Answer No = new Answer(0, nameof(No));
-
+        private static readonly Answer Default = new Answer(-1, string.Empty);
         private static readonly Answer[] Answers = new[] { Yes, No };
 
         private readonly int value;
@@ -29,26 +28,17 @@ namespace ConsoleVersion.Model
 
         public int CompareTo(object obj)
         {
-            if (obj is Answer answer)
-            {
-                return this.CompareTo(answer);
-            }
-            throw new ArgumentException("Wrong argument", nameof(obj));
+            return obj is Answer answer ? this.CompareTo(answer) : throw new ArgumentException("Wrong argument", nameof(obj));
         }
 
         public bool Equals(Answer other)
         {
-            return other.value == value && display.Equals(other.display, IgnoreCase) == true;
+            return other.value == value && display.Equals(other.display, IgnoreCase);
         }
 
         public override bool Equals(object obj)
         {
-            if (obj is Answer answer)
-            {
-                return this.Equals(answer);
-            }
-
-            return false;
+            return obj is Answer answer ? this.Equals(answer) : false;
         }
 
         public override string ToString()
@@ -63,13 +53,12 @@ namespace ConsoleVersion.Model
 
         public static bool TryParse(string input, out Answer result)
         {
-            result = default;
             if (int.TryParse(input, out int value))
             {
-                result = FirstOrDefaultAnswer(Answers, answer => answer.value.Equals(value));
+                result = FirstOrDefault(Answers, answer => answer.value.Equals(value));
                 return !result.Equals(Default);
             }
-            result = FirstOrDefaultAnswer(Answers, answer => answer.display.Equals(input, IgnoreCase));
+            result = FirstOrDefault(Answers, answer => answer.display.Equals(input, IgnoreCase));
             return !result.Equals(Default);
         }
 
@@ -83,7 +72,7 @@ namespace ConsoleVersion.Model
             return answer.value;
         }
 
-        private static Answer FirstOrDefaultAnswer(Answer[] answers, Func<Answer, bool> predicate)
+        private static Answer FirstOrDefault(Answer[] answers, Func<Answer, bool> predicate)
         {
             return answers.Any(predicate) ? answers.FirstOrDefault(predicate) : Answer.Default;
         }
