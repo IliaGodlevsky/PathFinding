@@ -1,7 +1,5 @@
 ﻿using Algorithm.Interfaces;
-using Common.Extensions.EnumerableExtensions;
 using System;
-using System.Collections.Generic;
 
 namespace Algorithm.Realizations.Heuristic.Distances
 {

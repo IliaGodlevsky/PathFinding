@@ -24,7 +24,7 @@ namespace WindowsFormsVersion.View
                 model,
                 nameof(model.SelectedGraphAssemble),
                 true,
-                DataSourceUpdateMode.OnPropertyChanged);            
+                DataSourceUpdateMode.OnPropertyChanged);
             graphAssemblesListBox.DataBindings.Add(graphAssembleBinding);
             graphAssemblesListBox.SelectedIndex = 0;
 

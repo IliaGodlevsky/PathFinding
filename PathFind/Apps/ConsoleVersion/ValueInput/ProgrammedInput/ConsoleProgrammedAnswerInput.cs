@@ -1,9 +1,9 @@
-﻿using ConsoleVersion.Enums;
+﻿using ConsoleVersion.Model;
 
 namespace ConsoleVersion.ValueInput.ProgrammedInput
 {
     internal sealed class ConsoleProgrammedAnswerInput : ConsoleProgrammedInput<Answer>
     {
-        private const Answer ExitApplication = Answer.Yes;
+        private static readonly Answer ExitApplication = Answer.Yes;
     }
 }

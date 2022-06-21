@@ -17,14 +17,14 @@ namespace ValueRange.Extensions
         }
 
         public static bool Contains<T>(this InclusiveValueRange<T> self, T value)
-            where T : IComparable
+            where T : IComparable, IComparable<T>
         {
             return value.IsBetween(self.UpperValueOfRange, self.LowerValueOfRange);
         }
 
         public static T ReturnInRange<T>(this InclusiveValueRange<T> self, T value,
             ReturnOptions returnOptions = ReturnOptions.Limit)
-            where T : IComparable
+            where T : IComparable, IComparable<T>
         {
             if (value.IsGreater(self.UpperValueOfRange))
             {
@@ -38,7 +38,7 @@ namespace ValueRange.Extensions
         }
 
         private static T ReturnInRangeIfGreaterThanRange<T>(this InclusiveValueRange<T> self, T value, ReturnOptions returnOptions)
-            where T : IComparable
+            where T : IComparable, IComparable<T>
         {
             switch (returnOptions)
             {
@@ -52,7 +52,7 @@ namespace ValueRange.Extensions
         }
 
         private static T ReturnInRangeIfLessThanRange<T>(this InclusiveValueRange<T> self, T value, ReturnOptions returnOptions)
-            where T : IComparable
+            where T : IComparable, IComparable<T>
         {
             switch (returnOptions)
             {

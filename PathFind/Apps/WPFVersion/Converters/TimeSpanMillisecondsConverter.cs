@@ -26,7 +26,7 @@ namespace WPFVersion.Converters
             catch (Exception)
             {
                 return Binding.DoNothing;
-            }            
+            }
         }
     }
 }

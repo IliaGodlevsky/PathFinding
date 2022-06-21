@@ -6,7 +6,6 @@ using Common.Extensions;
 using Common.Interface;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.DependencyInjection;
-using ConsoleVersion.Enums;
 using ConsoleVersion.EventArguments;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
@@ -121,7 +120,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.ApplyVisualization, 6)]
         public void ApplyVisualization()
         {
-            IsVisualizationRequired = AnswerInput.InputAnswer(MessagesTexts.ApplyVisualizationMsg, Constants.AnswerValueRange);
+            IsVisualizationRequired = AnswerInput.Input(MessagesTexts.ApplyVisualizationMsg, Constants.AnswerValueRange);
         }
 
         public void Dispose()

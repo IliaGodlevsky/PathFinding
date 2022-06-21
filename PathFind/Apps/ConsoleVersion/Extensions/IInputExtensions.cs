@@ -1,5 +1,4 @@
-﻿using ConsoleVersion.Enums;
-using ConsoleVersion.Interface;
+﻿using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -21,9 +20,14 @@ namespace ConsoleVersion.Extensions
         }
 
         public static T Input<T>(this IInput<T> self, string msg, T upper, T lower = default)
-            where T : IComparable
+            where T : IComparable, IComparable<T>
         {
-            var range = new InclusiveValueRange<T>(upper, lower);
+            return self.Input(msg, new InclusiveValueRange<T>(upper, lower));
+        }
+
+        public static T Input<T>(this IInput<T> self, string msg, InclusiveValueRange<T> range)
+            where T : IComparable, IComparable<T>
+        {
             var input = self.Input(msg);
             while (!range.Contains(input))
             {
@@ -33,19 +37,8 @@ namespace ConsoleVersion.Extensions
             return input;
         }
 
-        public static T Input<T>(this IInput<T> self, string msg, InclusiveValueRange<T> range)
-            where T : IComparable
-        {
-            return self.Input(msg, range.UpperValueOfRange, range.LowerValueOfRange);
-        }
-
-        public static bool InputAnswer(this IInput<Answer> self, string msg, InclusiveValueRange<Answer> range)
-        {
-            return self.Input(msg, range) == Answer.Yes;
-        }
-
         public static InclusiveValueRange<T> InputRange<T>(this IInput<T> self, InclusiveValueRange<T> range)
-            where T : IComparable
+            where T : IComparable, IComparable<T>
         {
             T upperValueOfRange = self.Input(MessagesTexts.RangeUpperValueInputMsg, range);
             T lowerValueOfRange = self.Input(MessagesTexts.RangeLowerValueInputMsg, range);

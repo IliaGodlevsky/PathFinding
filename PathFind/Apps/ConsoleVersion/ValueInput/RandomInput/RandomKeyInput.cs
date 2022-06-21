@@ -7,8 +7,6 @@ namespace ConsoleVersion.ValueInput.RandomInput
 {
     internal sealed class RandomKeyInput : RandomInput<ConsoleKey>
     {
-        protected override int WaitMilliseconds => 500;
-
         private ConsoleKey[] AvailableKeys { get; }
 
         protected override InclusiveValueRange<int> Range { get; }
@@ -23,7 +21,7 @@ namespace ConsoleVersion.ValueInput.RandomInput
         {
             int value = GetRandomInt();
             ConsoleKey key = ConvertFrom(value);
-            TimeSpan.FromMilliseconds(WaitMilliseconds).Wait();
+            Delay.Wait();
             return key;
         }
 

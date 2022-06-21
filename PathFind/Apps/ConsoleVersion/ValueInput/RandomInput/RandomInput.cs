@@ -9,7 +9,7 @@ namespace ConsoleVersion.ValueInput.RandomInput
 {
     internal abstract class RandomInput<T> : IInput<T>
     {
-        protected virtual int WaitMilliseconds => 500;
+        protected virtual TimeSpan Delay { get; }
 
         protected IRandom Random { get; }
 
@@ -17,6 +17,7 @@ namespace ConsoleVersion.ValueInput.RandomInput
 
         protected RandomInput(IRandom random)
         {
+            Delay = TimeSpan.FromMilliseconds(500);
             Random = random;
         }
 
@@ -25,7 +26,7 @@ namespace ConsoleVersion.ValueInput.RandomInput
             int value = GetRandomInt();
             T converted = ConvertFrom(value);
             Console.WriteLine(converted);
-            TimeSpan.FromMilliseconds(WaitMilliseconds).Wait();
+            Delay.Wait();
             return converted;
         }
 

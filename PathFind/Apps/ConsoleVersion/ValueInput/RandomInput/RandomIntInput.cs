@@ -17,10 +17,5 @@ namespace ConsoleVersion.ValueInput.RandomInput
         {
             return value;
         }
-
-        protected override int GetRandomInt()
-        {
-            return Random.Next(Range);
-        }
     }
 }

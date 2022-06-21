@@ -55,6 +55,11 @@ namespace WPFVersion3D.Model
         {
             public TimeSpan Time { get; set; }
 
+            public CustomAnimationSpeed(TimeSpan time)
+            {
+                Time = time;
+            }
+
             public override string ToString() => "Custom";
         }
 
@@ -68,7 +73,7 @@ namespace WPFVersion3D.Model
                 new AnimationSpeed(TimeSpan.FromMilliseconds(700), "High"),
                 new AnimationSpeed(TimeSpan.FromMilliseconds(400), "Highest"),
                 new RandomAnimationSpeed(TimeSpan.FromSeconds(4.8), TimeSpan.FromMilliseconds(300)),
-                new CustomAnimationSpeed { Time = TimeSpan.FromSeconds(2.4) }
+                new CustomAnimationSpeed(TimeSpan.FromSeconds(2.4))
             };
         }
     }

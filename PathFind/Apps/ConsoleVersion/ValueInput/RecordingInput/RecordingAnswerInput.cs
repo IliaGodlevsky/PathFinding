@@ -1,5 +1,5 @@
-﻿using ConsoleVersion.Enums;
-using ConsoleVersion.Interface;
+﻿using ConsoleVersion.Interface;
+using ConsoleVersion.Model;
 
 namespace ConsoleVersion.ValueInput.RecordingInput
 {

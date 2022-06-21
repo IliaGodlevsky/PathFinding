@@ -24,8 +24,9 @@ namespace Random.Extensions
 
         public static TimeSpan NextTimeSpan(this IRandom random, InclusiveValueRange<TimeSpan> range)
         {
-            var valueRange = new InclusiveValueRange<double>(range.LowerValueOfRange.TotalMilliseconds, 
-                range.UpperValueOfRange.TotalMilliseconds);
+            double lowerMilliseconds = range.LowerValueOfRange.TotalMilliseconds;
+            double upperMilliseconds = range.UpperValueOfRange.TotalMilliseconds;
+            var valueRange = new InclusiveValueRange<double>(lowerMilliseconds, upperMilliseconds);
             return TimeSpan.FromMilliseconds(random.NextDouble(valueRange));
         }
     }

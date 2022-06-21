@@ -2,10 +2,10 @@
 using Common.Interface;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.DependencyInjection;
-using ConsoleVersion.Enums;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
+using ConsoleVersion.Model;
 using ConsoleVersion.Views;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
@@ -169,7 +169,7 @@ namespace ConsoleVersion.ViewModel
 
         private bool CanExecuteInterrupt()
         {
-            return AnswerInput.Input(MessagesTexts.ExitAppMsg, Constants.AnswerValueRange) == Answer.Yes;
+            return AnswerInput.Input(MessagesTexts.ExitAppMsg, Constants.AnswerValueRange);
         }
 
         private void ExecuteSafe(Action action)

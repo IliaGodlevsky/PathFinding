@@ -68,7 +68,6 @@
     <Compile Include="Cursor.cs" />
     <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Enums\Answer.cs" />
     <Compile Include="EventArguments\ConsoleKeyPressedEventArgs.cs" />
     <Compile Include="EventHandlers\ConsoleKeyPressedEventHandler.cs" />
     <Compile Include="Extensions\ConsoleKeystrokesHookExtensions.cs" />
@@ -93,6 +92,7 @@
     <Compile Include="Messages\GraphCreatedMessage.cs" />
     <Compile Include="Messages\UpdateStatisticsMessage.cs" />
     <Compile Include="MessegesTexts.cs" />
+    <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
     <Compile Include="Model\ConsoleSmoothLevels.cs" />
     <Compile Include="Model\DelegateExtractors\DelegateExtractor.cs" />
@@ -119,7 +119,7 @@
     <Compile Include="ValueInput\UserInput\ConsoleUserKeyInput.cs" />
     <Compile Include="ValueInput\UserInput\ConsoleUserStringInput.cs" />
     <Compile Include="ValueInput\UserInput\ConsoleUserInput.cs" />
-    <Compile Include="ValueInput\UserInput\ConsoleUserEnumInput.cs" />
+    <Compile Include="ValueInput\UserInput\ConsoleUserAnswerInput.cs" />
     <Compile Include="ValueInput\UserInput\ConsoleUserIntInput.cs" />
     <Compile Include="Interface\IInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ProgrammedInput.cs" />

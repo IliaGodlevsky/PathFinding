@@ -12,7 +12,7 @@ namespace Algorithm.Algos.Benchmark.Pathfinding
         public IEnumerable<IEndPoints> Arguments()
         {
             var graphAssemble = new TestGraphAssemble();
-            for (int i = 1; i <= Limit; i+=2)
+            for (int i = 1; i <= Limit; i += 2)
             {
                 int dimension = i * 10;
                 var graph = graphAssemble.AssembleGraph(0, dimension, dimension);

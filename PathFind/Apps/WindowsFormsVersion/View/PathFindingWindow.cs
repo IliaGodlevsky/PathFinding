@@ -37,7 +37,7 @@ namespace WindowsFormsVersion.View
                 nameof(delaySlider.Value),
                 delayTextBox,
                 nameof(delayTextBox.Text),
-                true, DataSourceUpdateMode.OnPropertyChanged);           
+                true, DataSourceUpdateMode.OnPropertyChanged);
             delaySlider.DataBindings.Add(bindingDelaySliderToDelayTextBox);
 
             delaySlider.Minimum = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange.Milliseconds;
