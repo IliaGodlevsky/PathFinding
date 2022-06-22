@@ -6,9 +6,9 @@ namespace ConsoleVersion.Commands
 {
     internal sealed class MenuCommand : IMenuCommand
     {
+        private readonly string header;
         private readonly Action action;
         private readonly Func<bool> validation;
-        private readonly string header;
 
         public MenuCommand(string header, Action action, Func<bool> validation)
         {

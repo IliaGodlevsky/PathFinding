@@ -1,9 +1,10 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using ConsoleVersion.Attributes;
+using ConsoleVersion.Model.Methods;
 using System;
 using System.Reflection;
 
-namespace ConsoleVersion.Model.DelegateExtractors
+namespace ConsoleVersion.Model.Methods
 {
     internal sealed class ValidationMethods : CompanionMethods<Func<bool>, ValidateAttribute>
     {

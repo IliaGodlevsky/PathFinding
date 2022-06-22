@@ -95,9 +95,9 @@
     <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
     <Compile Include="Model\ConsoleSmoothLevels.cs" />
-    <Compile Include="Model\DelegateExtractors\CompanionMethods.cs" />
-    <Compile Include="Model\DelegateExtractors\SafeMethods.cs" />
-    <Compile Include="Model\DelegateExtractors\ValidationMethods.cs" />
+    <Compile Include="Model\Methods\CompanionMethods.cs" />
+    <Compile Include="Model\Methods\SafeMethods.cs" />
+    <Compile Include="Model\Methods\ValidationMethods.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedKeyInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedStringInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\FromFile\FromFileProgrammedAnswerInput.cs" />

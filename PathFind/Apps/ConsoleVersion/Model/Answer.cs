@@ -10,7 +10,6 @@ namespace ConsoleVersion.Model
         public static readonly Answer Yes = new Answer(1, nameof(Yes));
         public static readonly Answer No = new Answer(0, nameof(No));
         private static readonly Answer Default = new Answer(-1, string.Empty);
-        private static readonly Answer[] Answers = new[] { Yes, No };
 
         private readonly int value;
         private readonly string display;
@@ -55,10 +54,10 @@ namespace ConsoleVersion.Model
         {
             if (int.TryParse(input, out int value))
             {
-                result = FirstOrDefault(Answers, answer => answer.value.Equals(value));
+                result = value == Answer.Yes ? Answer.Yes : (value == Answer.No ? Answer.No : Answer.Default);
                 return !result.Equals(Default);
             }
-            result = FirstOrDefault(Answers, answer => answer.display.Equals(input, IgnoreCase));
+            result = input == Answer.Yes ? Answer.Yes : (input == Answer.No ? Answer.No :Answer.Default);
             return !result.Equals(Default);
         }
 
@@ -72,9 +71,9 @@ namespace ConsoleVersion.Model
             return answer.value;
         }
 
-        private static Answer FirstOrDefault(Answer[] answers, Func<Answer, bool> predicate)
+        public static implicit operator string(Answer answer)
         {
-            return answers.Any(predicate) ? answers.FirstOrDefault(predicate) : Answer.Default;
+            return answer.display;
         }
     }
 }

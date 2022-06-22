@@ -3,7 +3,7 @@ using Common.Extensions;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Commands;
 using ConsoleVersion.Interface;
-using ConsoleVersion.Model.DelegateExtractors;
+using ConsoleVersion.Model.Methods;
 using System;
 using System.Collections.Generic;
 using System.Linq;

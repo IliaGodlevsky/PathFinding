@@ -7,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using static System.Reflection.BindingFlags;
 
-namespace ConsoleVersion.Model.DelegateExtractors
+namespace ConsoleVersion.Model.Methods
 {
     internal abstract class CompanionMethods<TResult, TAttribute> : ICompanionMethods<TResult>
         where TResult : Delegate
