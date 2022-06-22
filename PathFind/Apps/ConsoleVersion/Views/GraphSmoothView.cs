@@ -1,7 +1,6 @@
 ﻿using ConsoleVersion.Extensions;
 using ConsoleVersion.Model;
 using ConsoleVersion.ViewModel;
-using System.Linq;
 
 namespace ConsoleVersion.Views
 {
@@ -9,7 +8,7 @@ namespace ConsoleVersion.Views
     {
         public GraphSmoothView(GraphSmoothViewModel model) : base(model)
         {
-            var menuList = ConsoleSmoothLevels.Levels.Select(level => level.ToString()).ToMenuList();
+            var menuList = ConsoleSmoothLevels.Levels.CreateMenuList();
             model.ChooseSmoothLevelMsg = menuList + "\nChoose smooth level: ";
         }
     }

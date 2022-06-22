@@ -4,6 +4,6 @@ namespace ConsoleVersion.Interface
 {
     internal interface IMenu
     {
-        IReadOnlyDictionary<string, IMenuCommand> MenuCommands { get; }
+        IReadOnlyList<IMenuCommand> Commands { get; }
     }
 }

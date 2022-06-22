@@ -1,5 +1,4 @@
 ﻿using ConsoleVersion.Model;
-using System;
 
 namespace ConsoleVersion.ValueInput.ProgrammedInput.FromFile
 {

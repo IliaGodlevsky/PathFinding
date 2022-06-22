@@ -1,7 +1,5 @@
 ﻿using Common.Attrbiutes;
 using Common.Extensions;
-using Common.Extensions.EnumerableExtensions;
-using Common.Interface;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Commands;
 using ConsoleVersion.Interface;
@@ -21,12 +19,12 @@ namespace ConsoleVersion.Model
 
         private readonly object target;
         private readonly Type targetType;
-        private readonly ICompanionMethods<Func<bool>[]> validationMethods;
+        private readonly ICompanionMethods<Func<bool>> validationMethods;
         private readonly ICompanionMethods<Action<Action>> safeMethods;
 
-        private readonly Lazy<IReadOnlyDictionary<string, IMenuCommand>> menuActions;
+        private readonly Lazy<IReadOnlyList<IMenuCommand>> menuActions;
 
-        public IReadOnlyDictionary<string, IMenuCommand> MenuCommands => menuActions.Value;
+        public IReadOnlyList<IMenuCommand> Commands => menuActions.Value;
 
         public Menu(object target)
         {
@@ -34,30 +32,39 @@ namespace ConsoleVersion.Model
             validationMethods = new ValidationMethods(target);
             this.target = target;
             targetType = target.GetType();
-            menuActions = new Lazy<IReadOnlyDictionary<string, IMenuCommand>>(GetMenuCommands);
+            menuActions = new Lazy<IReadOnlyList<IMenuCommand>>(GetMenuCommands);
         }
 
-        private IReadOnlyDictionary<string, IMenuCommand> GetMenuCommands()
+        private IReadOnlyList<IMenuCommand> GetMenuCommands()
         {
             return targetType
                 .GetMethods(MethodAccessModificators)
-                .Where(method => Attribute.IsDefined(method, typeof(MenuItemAttribute)))
-                .OrderBy(item => item.GetAttributeOrNull<OrderAttribute>()?.Order ?? OrderAttribute.Default.Order)
+                .Where(IsMenuItem)
+                .OrderBy(GetOrder)
                 .SelectMany(CreateNameCommandPair)
-                .ToReadOnlyDictionary();
+                .ToArray();
         }
 
-        private IEnumerable<KeyValuePair<string, IMenuCommand>> CreateNameCommandPair(MethodInfo methodInfo)
+        private IEnumerable<IMenuCommand> CreateNameCommandPair(MethodInfo commandMethod)
         {
-            if (methodInfo.TryCreateDelegate(target, out Action action))
+            if (commandMethod.TryCreateDelegate(target, out Action action))
             {
-                var safeAction = safeMethods.GetMethods(methodInfo);
-                var validationMethods = this.validationMethods.GetMethods(methodInfo);
-                var command = new Action(() => safeAction.Invoke(action));
-                string header = methodInfo.GetAttributeOrNull<MenuItemAttribute>().Header;
-                var menuCommand = new MenuCommand(command, validationMethods);
-                yield return new KeyValuePair<string, IMenuCommand>(header, menuCommand);
+                var safeAction = safeMethods.GetMethods(commandMethod);
+                var validation = validationMethods.GetMethods(commandMethod);
+                Action command = () => safeAction.Invoke(action);
+                string header = commandMethod.GetAttributeOrNull<MenuItemAttribute>().Header;
+                yield return new MenuCommand(header, command, validation);
             }
+        }
+
+        private bool IsMenuItem(MethodInfo methodInfo)
+        {
+            return Attribute.IsDefined(methodInfo, typeof(MenuItemAttribute));
+        }
+
+        private static int GetOrder(MethodInfo methodInfo)
+        {
+            return methodInfo.GetAttributeOrNull<OrderAttribute>()?.Order ?? OrderAttribute.Default.Order;
         }
     }
 }

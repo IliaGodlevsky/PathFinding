@@ -1,6 +1,8 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using ConsoleVersion.Model;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ConsoleVersion.Extensions
 {
@@ -16,9 +18,14 @@ namespace ConsoleVersion.Extensions
             vertices.ForEach(vertex => vertex.OnMarkedToReplaceIntermediate());
         }
 
-        public static MenuList ToMenuList(this IEnumerable<string> strings, int columnsNumber = 2)
+        public static MenuList CreateMenuList<T>(this IEnumerable<T> items, Func<T, string> itemName, int columnsNumber = 2)
         {
-            return new MenuList(strings, columnsNumber);
+            return new MenuList(items.Select(itemName), columnsNumber);
+        }
+
+        public static MenuList CreateMenuList<T>(this IEnumerable<T> items, int columnsNumber = 2)
+        {
+            return items.CreateMenuList(item => item.ToString(), columnsNumber);
         }
     }
 }

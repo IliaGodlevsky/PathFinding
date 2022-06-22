@@ -1,6 +1,5 @@
 ﻿using ConsoleVersion.Extensions;
 using ConsoleVersion.ViewModel;
-using System.Linq;
 
 namespace ConsoleVersion.Views
 {
@@ -8,7 +7,7 @@ namespace ConsoleVersion.Views
     {
         public GraphCreateView(GraphCreatingViewModel model) : base(model)
         {
-            var graphAssembleMenu = model.GraphAssembles.Select(assemble => assemble.ToString()).ToMenuList(columnsNumber: 1);
+            var graphAssembleMenu = model.GraphAssembles.CreateMenuList(columnsNumber: 1);
             model.GraphAssembleInpuMessage = graphAssembleMenu + MessagesTexts.GraphAssembleChoiceMsg;
         }
     }

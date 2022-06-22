@@ -7,12 +7,14 @@ namespace ConsoleVersion.Commands
     internal sealed class MenuCommand : IMenuCommand
     {
         private readonly Action action;
-        private readonly Func<bool>[] predicates;
+        private readonly Func<bool> validation;
+        private readonly string header;
 
-        public MenuCommand(Action action, params Func<bool>[] predicates)
+        public MenuCommand(string header, Action action, Func<bool> validation)
         {
+            this.header = header;
             this.action = action;
-            this.predicates = predicates;
+            this.validation = validation;
         }
 
         public void Execute()
@@ -25,7 +27,15 @@ namespace ConsoleVersion.Commands
 
         private bool CanExecute()
         {
-            return predicates.All(p => p is null || p.Invoke());
+            return validation == null || validation
+                .GetInvocationList()
+                .Cast<Func<bool>>()
+                .All(p => p.Invoke());
+        }
+
+        public override string ToString()
+        {
+            return header;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace ConsoleVersion.Model
     internal readonly struct Answer : IComparable, IComparable<Answer>, IEquatable<Answer>
     {
         private const StringComparison IgnoreCase = StringComparison.OrdinalIgnoreCase;
-        
+
         public static readonly Answer Yes = new Answer(1, nameof(Yes));
         public static readonly Answer No = new Answer(0, nameof(No));
         private static readonly Answer Default = new Answer(-1, string.Empty);

@@ -9,8 +9,8 @@ using static System.Reflection.BindingFlags;
 
 namespace ConsoleVersion.Model.DelegateExtractors
 {
-    internal abstract class CompanionMethods<TResult, TDelegate, TAttribute> : ICompanionMethods<TResult>
-        where TDelegate : Delegate
+    internal abstract class CompanionMethods<TResult, TAttribute> : ICompanionMethods<TResult>
+        where TResult : Delegate
         where TAttribute : MethodAttribute
     {
         private const BindingFlags MethodAccessModificators = NonPublic | Instance | Public;
@@ -26,7 +26,7 @@ namespace ConsoleVersion.Model.DelegateExtractors
 
         public abstract TResult GetMethods(MethodInfo targetMethod);
 
-        protected IEnumerable<TDelegate> ExtractInternal(MethodInfo info)
+        protected IEnumerable<TResult> GetMethodsInternal(MethodInfo info)
         {
             return info
                 .GetCustomAttributes<TAttribute>()
@@ -36,9 +36,9 @@ namespace ConsoleVersion.Model.DelegateExtractors
                 .Where(method => method != null);
         }
 
-        private TDelegate CreateDelegateOrNull(object target, MethodInfo info)
+        private TResult CreateDelegateOrNull(object target, MethodInfo info)
         {
-            info.TryCreateDelegate(target, out TDelegate action);
+            info.TryCreateDelegate(target, out TResult action);
             return action;
         }
 

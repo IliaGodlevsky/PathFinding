@@ -1,5 +1,4 @@
-﻿using Random.Extensions;
-using Random.Interface;
+﻿using Random.Interface;
 using ValueRange;
 
 namespace ConsoleVersion.ValueInput.RandomInput

@@ -3,7 +3,6 @@ using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
 using System;
-using System.Linq;
 using ValueRange;
 
 namespace ConsoleVersion.Views
@@ -18,25 +17,20 @@ namespace ConsoleVersion.Views
 
         public IInput<int> IntInput { get; set; }
 
-        private string[] MenuActionsNames { get; }
-
-        private int MenuSize => MenuActionsNames.Length;
+        private int MenuSize => menu.Commands.Count;
 
         private string OptionsMsg => MessagesTexts.MenuOptionChoiceMsg;
 
         private int MenuItemIndex => IntInput.Input(OptionsMsg, menuRange) - 1;
 
-        private string MenuItem => MenuActionsNames[MenuItemIndex];
-
-        private IMenuCommand MenuCommand => menu.MenuCommands[MenuItem];
+        private IMenuCommand MenuCommand => menu.Commands[MenuItemIndex];
 
         private bool IsClosureRequested { get; set; }
 
         protected View(IViewModel model)
         {
             menu = new Menu(model);
-            MenuActionsNames = menu.MenuCommands.Keys.ToArray();
-            menuList = menu.MenuCommands.Keys.ToMenuList();
+            menuList = menu.Commands.CreateMenuList();
             menuRange = new InclusiveValueRange<int>(MenuSize, 1);
             model.WindowClosed += OnClosed;
         }

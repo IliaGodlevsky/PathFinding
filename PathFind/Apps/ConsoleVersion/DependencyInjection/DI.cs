@@ -111,7 +111,7 @@ namespace ConsoleVersion.DependencyInjection
             view.NewMenuIteration += mainModel.DisplayGraph;
         }
 
-        private static IRegistrationBuilder<object, ScanningActivatorData, DynamicRegistrationStyle> Register(this IEnumerable<Type> types, 
+        private static IRegistrationBuilder<object, ScanningActivatorData, DynamicRegistrationStyle> Register(this IEnumerable<Type> types,
             ContainerBuilder builder)
         {
             return builder.RegisterTypes(types.ToArray());

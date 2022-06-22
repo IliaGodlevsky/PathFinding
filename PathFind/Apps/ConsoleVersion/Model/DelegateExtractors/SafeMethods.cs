@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace ConsoleVersion.Model.DelegateExtractors
 {
-    internal sealed class SafeMethods : CompanionMethods<Action<Action>, Action<Action>, ExecuteSafeAttribute>
+    internal sealed class SafeMethods : CompanionMethods<Action<Action>, ExecuteSafeAttribute>
     {
         public SafeMethods(object target) : base(target)
         {
@@ -13,7 +13,7 @@ namespace ConsoleVersion.Model.DelegateExtractors
 
         public override Action<Action> GetMethods(MethodInfo info)
         {
-            return ExtractInternal(info).FirstOrDefault() ?? EmptySafeAction;
+            return GetMethodsInternal(info).FirstOrDefault() ?? EmptySafeAction;
         }
 
         private static void EmptySafeAction(Action action)
