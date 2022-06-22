@@ -60,9 +60,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\BaseMethodAttribute.cs" />
+    <Compile Include="Attributes\MethodAttribute.cs" />
     <Compile Include="Attributes\ExecuteSafeAttribute.cs" />
-    <Compile Include="Attributes\PreValidationMethodAttribute.cs" />
+    <Compile Include="Attributes\ValidateAttribute.cs" />
     <Compile Include="Attributes\MenuItemAttribute.cs" />
     <Compile Include="Commands\MenuCommand.cs" />
     <Compile Include="Cursor.cs" />
@@ -75,7 +75,7 @@
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IGraphPathExtensions.cs" />
     <Compile Include="Extensions\IInputExtensions.cs" />
-    <Compile Include="Interface\IDelegateExtractor.cs" />
+    <Compile Include="Interface\ICompanionMethods.cs" />
     <Compile Include="Interface\IMenu.cs" />
     <Compile Include="Interface\IMenuCommand.cs" />
     <Compile Include="Interface\IRequireAnswerInput.cs" />
@@ -95,9 +95,9 @@
     <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
     <Compile Include="Model\ConsoleSmoothLevels.cs" />
-    <Compile Include="Model\DelegateExtractors\DelegateExtractor.cs" />
-    <Compile Include="Model\DelegateExtractors\SafeMethodExtractor.cs" />
-    <Compile Include="Model\DelegateExtractors\ValidationMethodExtractor.cs" />
+    <Compile Include="Model\DelegateExtractors\CompanionMethods.cs" />
+    <Compile Include="Model\DelegateExtractors\SafeMethods.cs" />
+    <Compile Include="Model\DelegateExtractors\ValidationMethods.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedKeyInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedStringInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\FromFile\FromFileProgrammedAnswerInput.cs" />

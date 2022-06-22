@@ -9,20 +9,29 @@ using static System.Reflection.BindingFlags;
 
 namespace ConsoleVersion.Model.DelegateExtractors
 {
-    internal abstract class DelegateExtractor<TResult, TDelegate, TAttribute> : IDelegateExtractor<TDelegate, TResult>
+    internal abstract class CompanionMethods<TResult, TDelegate, TAttribute> : ICompanionMethods<TResult>
         where TDelegate : Delegate
         where TAttribute : MethodAttribute
     {
         private const BindingFlags MethodAccessModificators = NonPublic | Instance | Public;
 
-        public abstract TResult Extract(MethodInfo info, object target);
+        private readonly object target;
+        private readonly Type type;
 
-        protected virtual IEnumerable<TDelegate> ExtractInternal(MethodInfo info, object target)
+        protected CompanionMethods(object target)
         {
-            var type = target.GetType();
+            this.target = target;
+            type = target.GetType();
+        }
+
+        public abstract TResult GetMethods(MethodInfo targetMethod);
+
+        protected IEnumerable<TDelegate> ExtractInternal(MethodInfo info)
+        {
             return info
                 .GetCustomAttributes<TAttribute>()
                 .Select(attribute => GetMethod(type, attribute))
+                .Where(method => method != null)
                 .Select(method => CreateDelegateOrNull(target, method))
                 .Where(method => method != null);
         }

@@ -19,19 +19,19 @@ namespace ConsoleVersion.Model
     {
         private const BindingFlags MethodAccessModificators = NonPublic | Instance | Public;
 
-        private readonly IViewModel target;
+        private readonly object target;
         private readonly Type targetType;
-        private readonly IDelegateExtractor<Func<bool>, Func<bool>[]> validationExtractor;
-        private readonly IDelegateExtractor<Action<Action>, Action<Action>> safeActionExtractor;
+        private readonly ICompanionMethods<Func<bool>[]> validationMethods;
+        private readonly ICompanionMethods<Action<Action>> safeMethods;
 
         private readonly Lazy<IReadOnlyDictionary<string, IMenuCommand>> menuActions;
 
         public IReadOnlyDictionary<string, IMenuCommand> MenuCommands => menuActions.Value;
 
-        public Menu(IViewModel target)
+        public Menu(object target)
         {
-            safeActionExtractor = new SafeMethodExtractor();
-            validationExtractor = new ValidationMethodExtractor();
+            safeMethods = new SafeMethods(target);
+            validationMethods = new ValidationMethods(target);
             this.target = target;
             targetType = target.GetType();
             menuActions = new Lazy<IReadOnlyDictionary<string, IMenuCommand>>(GetMenuCommands);
@@ -51,8 +51,8 @@ namespace ConsoleVersion.Model
         {
             if (methodInfo.TryCreateDelegate(target, out Action action))
             {
-                var safeAction = safeActionExtractor.Extract(methodInfo, target);
-                var validationMethods = validationExtractor.Extract(methodInfo, target);
+                var safeAction = safeMethods.GetMethods(methodInfo);
+                var validationMethods = this.validationMethods.GetMethods(methodInfo);
                 var command = new Action(() => safeAction.Invoke(action));
                 string header = methodInfo.GetAttributeOrNull<MenuItemAttribute>().Header;
                 var menuCommand = new MenuCommand(command, validationMethods);

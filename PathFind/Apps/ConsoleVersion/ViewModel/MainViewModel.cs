@@ -54,12 +54,14 @@ namespace ConsoleVersion.ViewModel
             this.log = log;
         }
 
+        [ExecuteSafe(nameof(ExecuteSafe))]
         [MenuItem(MenuItemsNames.CreateNewGraph, 0)]
         private void CreateNewGraph()
         {
             DI.Container.Display<GraphCreateView>();
         }
 
+        [ExecuteSafe(nameof(ExecuteSafe))]
         [Validate(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.FindPath, 1)]
         private void FindPath()
@@ -67,21 +69,23 @@ namespace ConsoleVersion.ViewModel
             DI.Container.Display<PathFindView>();
         }
 
+        [ExecuteSafe(nameof(ExecuteSafe))]
         [Validate(nameof(IsGraphValid))]
-        [MenuItem(MenuItemsNames.ChangedVertexState, 4)]
+        [MenuItem(MenuItemsNames.ChangedVertexState, 3)]
         private void ChangeVertexState()
         {
             DI.Container.Display<VertexStateView>();
         }
 
         [ExecuteSafe(nameof(ExecuteSafe))]
-        [MenuItem(MenuItemsNames.ChangeCostRange, 7)]
+        [MenuItem(MenuItemsNames.ChangeCostRange, 6)]
         private void ChangeVertexCostValueRange()
         {
             CostRange = IntInput.InputRange(Constants.VerticesCostRange);
             messenger.Send(new CostRangeChangedMessage(CostRange));
         }
 
+        [ExecuteSafe(nameof(ExecuteSafe))]
         [Validate(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.SmoothGraph, 2)]
         private void SmoothGraph()
@@ -89,21 +93,23 @@ namespace ConsoleVersion.ViewModel
             DI.Container.Display<GraphSmoothView>();
         }
 
+        [ExecuteSafe(nameof(ExecuteSafe))]
         [Validate(nameof(IsGraphValid))]
-        [MenuItem(MenuItemsNames.SaveGraph, 5)]
+        [MenuItem(MenuItemsNames.SaveGraph, 4)]
         private void SaveGraph()
         {
             DI.Container.Display<GraphSaveView>();
         }
 
-        [MenuItem(MenuItemsNames.LoadGraph, 6)]
+        [ExecuteSafe(nameof(ExecuteSafe))]
+        [MenuItem(MenuItemsNames.LoadGraph, 5)]
         private void LoadGraph()
         {
             DI.Container.Display<GraphLoadView>();
         }
 
         [Validate(nameof(CanExecuteInterrupt))]
-        [MenuItem(MenuItemsNames.Exit, 8)]
+        [MenuItem(MenuItemsNames.Exit, 7)]
         private void Interrupt()
         {
             WindowClosed?.Invoke();

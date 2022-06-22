@@ -96,6 +96,7 @@ namespace ConsoleVersion.ViewModel
             WindowClosed?.Invoke();
         }
 
+        [ExecuteSafe(nameof(ExecuteSafe))]
         [MenuItem(MenuItemsNames.ChooseEndPoints, 2)]
         public void ChooseExtremeVertex()
         {

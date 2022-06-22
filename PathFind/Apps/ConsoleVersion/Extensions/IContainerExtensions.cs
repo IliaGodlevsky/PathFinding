@@ -1,7 +1,5 @@
 ﻿using Autofac;
 using ConsoleVersion.Interface;
-using Logging.Interface;
-using System;
 
 namespace ConsoleVersion.Extensions
 {
@@ -10,19 +8,10 @@ namespace ConsoleVersion.Extensions
         public static void Display<TView>(this IContainer container)
             where TView : IView
         {
-            ILog log = null;
-            try
+            using (var scope = container.BeginLifetimeScope())
             {
-                log = container.Resolve<ILog>();
-                using (var scope = container.BeginLifetimeScope())
-                {
-                    var view = scope.Resolve<TView>();
-                    view.Display();
-                }
-            }
-            catch (Exception ex)
-            {
-                log?.Error(ex);
+                var view = scope.Resolve<TView>();
+                view.Display();
             }
         }
     }
