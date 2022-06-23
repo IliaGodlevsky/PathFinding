@@ -21,6 +21,7 @@ namespace ConsoleVersion.Model
         private readonly Type targetType;
         private readonly ICompanionMethods<Func<bool>> validationMethods;
         private readonly ICompanionMethods<Action<Action>> safeMethods;
+        private readonly ICompanionMethods<Action> routeMethods;
 
         private readonly Lazy<IReadOnlyList<IMenuCommand>> menuActions;
 
@@ -30,6 +31,7 @@ namespace ConsoleVersion.Model
         {
             safeMethods = new SafeMethods(target);
             validationMethods = new ValidationMethods(target);
+            routeMethods = new ValidationFailRouteMethods(target);
             this.target = target;
             targetType = target.GetType();
             menuActions = new Lazy<IReadOnlyList<IMenuCommand>>(GetMenuCommands);
@@ -51,9 +53,10 @@ namespace ConsoleVersion.Model
             {
                 var safeAction = safeMethods.GetMethods(commandMethod);
                 var validation = validationMethods.GetMethods(commandMethod);
+                var routes = routeMethods.GetMethods(commandMethod);
                 Action command = () => safeAction.Invoke(action);
                 string header = commandMethod.GetAttributeOrNull<MenuItemAttribute>().Header;
-                yield return new MenuCommand(header, command, validation);
+                yield return new MenuCommand(header, command, validation, routes);
             }
         }
 

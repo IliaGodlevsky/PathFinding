@@ -60,17 +60,19 @@ namespace ConsoleVersion.ViewModel
         {
             DI.Container.Display<GraphCreateView>();
         }
-
+       
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Validate(nameof(IsGraphValid))]
+        [ValidationFailRoute(nameof(CreateNewGraph))]
         [MenuItem(MenuItemsNames.FindPath, 1)]
         private void FindPath()
         {
             DI.Container.Display<PathFindView>();
         }
-
+       
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Validate(nameof(IsGraphValid))]
+        [ValidationFailRoute(nameof(CreateNewGraph))]
         [MenuItem(MenuItemsNames.ChangedVertexState, 3)]
         private void ChangeVertexState()
         {
@@ -87,6 +89,7 @@ namespace ConsoleVersion.ViewModel
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Validate(nameof(IsGraphValid))]
+        [ValidationFailRoute(nameof(CreateNewGraph))]
         [MenuItem(MenuItemsNames.SmoothGraph, 2)]
         private void SmoothGraph()
         {
@@ -95,6 +98,7 @@ namespace ConsoleVersion.ViewModel
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Validate(nameof(IsGraphValid))]
+        [ValidationFailRoute(nameof(CreateNewGraph))]
         [MenuItem(MenuItemsNames.SaveGraph, 4)]
         private void SaveGraph()
         {

@@ -9,12 +9,14 @@ namespace ConsoleVersion.Commands
         private readonly string header;
         private readonly Action action;
         private readonly Func<bool> validation;
+        private readonly Action route;
 
-        public MenuCommand(string header, Action action, Func<bool> validation)
+        public MenuCommand(string header, Action action, Func<bool> validation, Action route = null)
         {
             this.header = header;
             this.action = action;
             this.validation = validation;
+            this.route = route;
         }
 
         public void Execute()
@@ -22,6 +24,10 @@ namespace ConsoleVersion.Commands
             if (CanExecute())
             {
                 action.Invoke();
+            }
+            else if(route != null)
+            {
+                route.Invoke();
             }
         }
 

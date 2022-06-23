@@ -37,6 +37,8 @@ namespace ConsoleVersion.ViewModel
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Validate(nameof(CanCreateGraph))]
+        [ValidationFailRoute(nameof(ChooseGraphAssemble))]
+        [ValidationFailRoute(nameof(InputGraphParametres))]
         [MenuItem(MenuItemsNames.CreateNewGraph, 0)]
         public override void CreateGraph()
         {

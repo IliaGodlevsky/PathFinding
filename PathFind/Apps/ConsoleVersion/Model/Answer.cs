@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace ConsoleVersion.Model
 {
@@ -13,11 +12,13 @@ namespace ConsoleVersion.Model
 
         private readonly int value;
         private readonly string display;
+        private readonly int hash;
 
         private Answer(int value, string display)
         {
             this.display = display;
             this.value = value;
+            hash = HashCode.Combine(value, display);
         }
 
         public int CompareTo(Answer other)
@@ -32,7 +33,7 @@ namespace ConsoleVersion.Model
 
         public bool Equals(Answer other)
         {
-            return other.value == value && display.Equals(other.display, IgnoreCase);
+            return GetHashCode() == other.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -47,23 +48,23 @@ namespace ConsoleVersion.Model
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(value, display);
+            return hash;
         }
 
         public static bool TryParse(string input, out Answer result)
         {
             if (int.TryParse(input, out int value))
             {
-                result = value == Answer.Yes ? Answer.Yes : (value == Answer.No ? Answer.No : Answer.Default);
+                result = value == Yes ? Yes : (value == No ? No : Default);
                 return !result.Equals(Default);
             }
-            result = input == Answer.Yes ? Answer.Yes : (input == Answer.No ? Answer.No :Answer.Default);
+            result = input == Yes ? Yes : (input == No ? No : Default);
             return !result.Equals(Default);
         }
 
         public static implicit operator bool(Answer answer)
         {
-            return answer.value == 1;
+            return answer.Equals(Yes);
         }
 
         public static implicit operator int(Answer answer)

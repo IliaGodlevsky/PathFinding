@@ -65,6 +65,8 @@ namespace ConsoleVersion.ViewModel
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Validate(nameof(CanExecutePathfinding))]
+        [ValidationFailRoute(nameof(ChooseAlgorithm))]
+        [ValidationFailRoute(nameof(ChooseExtremeVertex))]
         [MenuItem(MenuItemsNames.FindPath, 0)]
         public override void FindPath()
         {

@@ -64,7 +64,10 @@
     <Compile Include="Attributes\ExecuteSafeAttribute.cs" />
     <Compile Include="Attributes\ValidateAttribute.cs" />
     <Compile Include="Attributes\MenuItemAttribute.cs" />
+    <Compile Include="Attributes\ValidationFailRouteAttribute.cs" />
     <Compile Include="Commands\MenuCommand.cs" />
+    <Compile Include="Commands\ValidatableMenuCommand.cs" />
+    <Compile Include="Commands\ValidationRoutedMenuCommand.cs" />
     <Compile Include="Cursor.cs" />
     <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="Constants.cs" />
@@ -97,6 +100,7 @@
     <Compile Include="Model\ConsoleSmoothLevels.cs" />
     <Compile Include="Model\Methods\CompanionMethods.cs" />
     <Compile Include="Model\Methods\SafeMethods.cs" />
+    <Compile Include="Model\Methods\ValidationFailRouteMethods.cs" />
     <Compile Include="Model\Methods\ValidationMethods.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedKeyInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedStringInput.cs" />
