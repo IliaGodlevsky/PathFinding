@@ -1,7 +1,9 @@
 ﻿using Common.Attrbiutes;
 using Common.Extensions;
+using Common.Extensions.EnumerableExtensions;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Commands;
+using ConsoleVersion.Delegates;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Model.Methods;
 using System;
@@ -19,9 +21,8 @@ namespace ConsoleVersion.Model
 
         private readonly object target;
         private readonly Type targetType;
-        private readonly ICompanionMethods<Func<bool>> validationMethods;
-        private readonly ICompanionMethods<Action<Action>> safeMethods;
-        private readonly ICompanionMethods<Action> routeMethods;
+        private readonly ICompanionMethods<Condition> conditionMethods;
+        private readonly ICompanionMethods<SafeAction> safeMethods;
 
         private readonly Lazy<IReadOnlyList<IMenuCommand>> menuActions;
 
@@ -30,8 +31,7 @@ namespace ConsoleVersion.Model
         public Menu(object target)
         {
             safeMethods = new SafeMethods(target);
-            validationMethods = new ValidationMethods(target);
-            routeMethods = new ValidationFailRouteMethods(target);
+            conditionMethods = new ConditionMethods(target);
             this.target = target;
             targetType = target.GetType();
             menuActions = new Lazy<IReadOnlyList<IMenuCommand>>(GetMenuCommands);
@@ -42,32 +42,32 @@ namespace ConsoleVersion.Model
             return targetType
                 .GetMethods(MethodAccessModificators)
                 .Where(IsMenuItem)
-                .OrderBy(GetOrder)
-                .SelectMany(CreateNameCommandPair)
+                .OrderByOrderAttribute()
+                .Select(CreateCommandDelegate)
+                .Where(del => del is not null)
+                .Select(CreateCommand)
                 .ToArray();
         }
 
-        private IEnumerable<IMenuCommand> CreateNameCommandPair(MethodInfo commandMethod)
+        private Command CreateCommandDelegate(MethodInfo commandMethod)
         {
-            if (commandMethod.TryCreateDelegate(target, out Action action))
-            {
-                var safeAction = safeMethods.GetMethods(commandMethod);
-                var validation = validationMethods.GetMethods(commandMethod);
-                var routes = routeMethods.GetMethods(commandMethod);
-                Action command = () => safeAction.Invoke(action);
-                string header = commandMethod.GetAttributeOrNull<MenuItemAttribute>().Header;
-                yield return new MenuCommand(header, command, validation, routes);
-            }
+            return commandMethod.TryCreateDelegate(target, out Command action) ? action : null;
+        }
+
+        private IMenuCommand CreateCommand(Command command)
+        {
+            var methodInfo = command.Method;
+            var safeAction = safeMethods.GetMethods(methodInfo);
+            var condition = conditionMethods.GetMethods(methodInfo);
+            Command method = () => safeAction.Invoke(command);
+            string header = methodInfo.GetAttributeOrNull<MenuItemAttribute>().Header;
+            var menuCommand = new MenuCommand(header, method);
+            return condition == null ? menuCommand : new ConditionedMenuCommand(menuCommand, condition);
         }
 
         private bool IsMenuItem(MethodInfo methodInfo)
         {
             return Attribute.IsDefined(methodInfo, typeof(MenuItemAttribute));
-        }
-
-        private static int GetOrder(MethodInfo methodInfo)
-        {
-            return methodInfo.GetAttributeOrNull<OrderAttribute>()?.Order ?? OrderAttribute.Default.Order;
         }
     }
 }

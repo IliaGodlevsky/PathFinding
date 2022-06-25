@@ -36,9 +36,7 @@ namespace ConsoleVersion.ViewModel
         }
 
         [ExecuteSafe(nameof(ExecuteSafe))]
-        [Validate(nameof(CanCreateGraph))]
-        [ValidationFailRoute(nameof(ChooseGraphAssemble))]
-        [ValidationFailRoute(nameof(InputGraphParametres))]
+        [Condition(nameof(CanCreateGraph))]
         [MenuItem(MenuItemsNames.CreateNewGraph, 0)]
         public override void CreateGraph()
         {
@@ -70,6 +68,11 @@ namespace ConsoleVersion.ViewModel
         public void Interrupt()
         {
             WindowClosed?.Invoke();
+        }
+
+        private void Route()
+        {
+
         }
 
         public void Dispose()

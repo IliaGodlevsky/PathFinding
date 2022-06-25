@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 
 namespace Common.Extensions.EnumerableExtensions
 {
@@ -73,6 +74,11 @@ namespace Common.Extensions.EnumerableExtensions
             return collection.OrderBy(item => item.GetAttributeOrNull<OrderAttribute>()?.Order ?? OrderAttribute.Default.Order);
         }
 
+        public static IOrderedEnumerable<MethodInfo> OrderByOrderAttribute(this IEnumerable<MethodInfo> collection)
+        {
+            return collection.OrderBy(method => method.GetAttributeOrNull<OrderAttribute>()?.Order ?? OrderAttribute.Default.Order);
+        }
+
         public static IEnumerable<T> TakeOrDefault<T>(this IEnumerable<T> collection, int number, T defaultValue = default)
         {
             int count = 0;
@@ -96,6 +102,13 @@ namespace Common.Extensions.EnumerableExtensions
         {
             return new Queue<T>(collection);
         }
+
+        public static T Combine<T>(this IEnumerable<T> delegates) 
+            where T : Delegate
+        {
+            return (T)Delegate.Combine(delegates.ToArray());
+        }
+
 
         public static int ToHashCode(this IEnumerable<int> array)
         {

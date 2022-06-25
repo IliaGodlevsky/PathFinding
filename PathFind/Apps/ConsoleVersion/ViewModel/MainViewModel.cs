@@ -56,28 +56,31 @@ namespace ConsoleVersion.ViewModel
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [MenuItem(MenuItemsNames.CreateNewGraph, 0)]
-        private void CreateNewGraph()
-        {
-            DI.Container.Display<GraphCreateView>();
-        }
-       
+        private void CreateNewGraph() => DI.Container.Display<GraphCreateView>();
+
         [ExecuteSafe(nameof(ExecuteSafe))]
-        [Validate(nameof(IsGraphValid))]
-        [ValidationFailRoute(nameof(CreateNewGraph))]
+        [Condition(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.FindPath, 1)]
-        private void FindPath()
-        {
-            DI.Container.Display<PathFindView>();
-        }
-       
+        private void FindPath() => DI.Container.Display<PathFindView>();
+
         [ExecuteSafe(nameof(ExecuteSafe))]
-        [Validate(nameof(IsGraphValid))]
-        [ValidationFailRoute(nameof(CreateNewGraph))]
+        [Condition(nameof(IsGraphValid))]
+        [MenuItem(MenuItemsNames.SmoothGraph, 2)]
+        private void SmoothGraph() => DI.Container.Display<GraphSmoothView>();
+
+        [ExecuteSafe(nameof(ExecuteSafe))]
+        [Condition(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.ChangedVertexState, 3)]
-        private void ChangeVertexState()
-        {
-            DI.Container.Display<VertexStateView>();
-        }
+        private void ChangeVertexState() => DI.Container.Display<VertexStateView>();
+
+        [ExecuteSafe(nameof(ExecuteSafe))]
+        [Condition(nameof(IsGraphValid))]
+        [MenuItem(MenuItemsNames.SaveGraph, 4)]
+        private void SaveGraph() => DI.Container.Display<GraphSaveView>();
+
+        [ExecuteSafe(nameof(ExecuteSafe))]
+        [MenuItem(MenuItemsNames.LoadGraph, 5)]
+        private void LoadGraph() => DI.Container.Display<GraphLoadView>();
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [MenuItem(MenuItemsNames.ChangeCostRange, 6)]
@@ -87,32 +90,7 @@ namespace ConsoleVersion.ViewModel
             messenger.Send(new CostRangeChangedMessage(CostRange));
         }
 
-        [ExecuteSafe(nameof(ExecuteSafe))]
-        [Validate(nameof(IsGraphValid))]
-        [ValidationFailRoute(nameof(CreateNewGraph))]
-        [MenuItem(MenuItemsNames.SmoothGraph, 2)]
-        private void SmoothGraph()
-        {
-            DI.Container.Display<GraphSmoothView>();
-        }
-
-        [ExecuteSafe(nameof(ExecuteSafe))]
-        [Validate(nameof(IsGraphValid))]
-        [ValidationFailRoute(nameof(CreateNewGraph))]
-        [MenuItem(MenuItemsNames.SaveGraph, 4)]
-        private void SaveGraph()
-        {
-            DI.Container.Display<GraphSaveView>();
-        }
-
-        [ExecuteSafe(nameof(ExecuteSafe))]
-        [MenuItem(MenuItemsNames.LoadGraph, 5)]
-        private void LoadGraph()
-        {
-            DI.Container.Display<GraphLoadView>();
-        }
-
-        [Validate(nameof(CanExecuteInterrupt))]
+        [Condition(nameof(CanExecuteInterrupt))]
         [MenuItem(MenuItemsNames.Exit, 7)]
         private void Interrupt()
         {

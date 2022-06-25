@@ -30,6 +30,6 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
             UndoCommands.ForEach(command => command.Undo());
         }
 
-        protected abstract IReadOnlyCollection<IVertexCommand> GetCommands(BaseEndPoints endPoints);
+        protected abstract IEnumerable<IVertexCommand> GetCommands(BaseEndPoints endPoints);
     }
 }

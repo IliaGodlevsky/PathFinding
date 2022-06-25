@@ -14,7 +14,7 @@ namespace Common.Attrbiutes
             Order = order;
         }
 
-        public OrderAttribute() : this(-1)
+        public OrderAttribute() : this(int.MaxValue)
         {
 
         }

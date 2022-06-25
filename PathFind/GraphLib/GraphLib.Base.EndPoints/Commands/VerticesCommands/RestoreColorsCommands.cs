@@ -16,15 +16,12 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
 
         }
 
-        protected override IReadOnlyCollection<IVertexCommand> GetCommands(BaseEndPoints endPoints)
+        protected override IEnumerable<IVertexCommand> GetCommands(BaseEndPoints endPoints)
         {
-            return new IVertexCommand[]
-            {
-                new RestoreIntermediateColorCommand(endPoints),
-                new RestoreMarkedToReplaceColorCommand(endPoints),
-                new RestoreSourceColorCommand(endPoints),
-                new RestoreTargetColorCommand(endPoints)
-            };
+            yield return new  RestoreIntermediateColorCommand(endPoints);
+            yield return new  RestoreMarkedToReplaceColorCommand(endPoints);
+            yield return new  RestoreSourceColorCommand(endPoints);
+            yield return new RestoreTargetColorCommand(endPoints);
         }
     }
 }

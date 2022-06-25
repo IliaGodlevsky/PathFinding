@@ -64,9 +64,7 @@ namespace ConsoleVersion.ViewModel
         }
 
         [ExecuteSafe(nameof(ExecuteSafe))]
-        [Validate(nameof(CanExecutePathfinding))]
-        [ValidationFailRoute(nameof(ChooseAlgorithm))]
-        [ValidationFailRoute(nameof(ChooseExtremeVertex))]
+        [Condition(nameof(CanExecutePathfinding))]
         [MenuItem(MenuItemsNames.FindPath, 0)]
         public override void FindPath()
         {
@@ -79,7 +77,7 @@ namespace ConsoleVersion.ViewModel
             }
         }
 
-        [Validate(nameof(IsVisualizationNeeded))]
+        [Condition(nameof(IsVisualizationNeeded))]
         [MenuItem(MenuItemsNames.InputDelayTime, 3)]
         public void InputDelayTime()
         {

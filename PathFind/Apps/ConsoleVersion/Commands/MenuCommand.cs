@@ -1,4 +1,5 @@
-﻿using ConsoleVersion.Interface;
+﻿using ConsoleVersion.Delegates;
+using ConsoleVersion.Interface;
 using System;
 using System.Linq;
 
@@ -7,36 +8,17 @@ namespace ConsoleVersion.Commands
     internal sealed class MenuCommand : IMenuCommand
     {
         private readonly string header;
-        private readonly Action action;
-        private readonly Func<bool> validation;
-        private readonly Action route;
+        private readonly Command command;
 
-        public MenuCommand(string header, Action action, Func<bool> validation, Action route = null)
+        public MenuCommand(string header, Command command)
         {
             this.header = header;
-            this.action = action;
-            this.validation = validation;
-            this.route = route;
+            this.command = command;
         }
 
         public void Execute()
         {
-            if (CanExecute())
-            {
-                action.Invoke();
-            }
-            else if(route != null)
-            {
-                route.Invoke();
-            }
-        }
-
-        private bool CanExecute()
-        {
-            return validation == null || validation
-                .GetInvocationList()
-                .Cast<Func<bool>>()
-                .All(p => p.Invoke());
+            command.Invoke();
         }
 
         public override string ToString()

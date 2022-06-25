@@ -15,13 +15,10 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
             UndoCommands = new IUndoCommand[] { new UndoMarkToReplaceCommand(endPoints) };
         }
 
-        protected override IReadOnlyCollection<IVertexCommand> GetCommands(BaseEndPoints endPoints)
+        protected override IEnumerable<IVertexCommand> GetCommands(BaseEndPoints endPoints)
         {
-            return new IVertexCommand[]
-            {
-                new CancelMarkToReplaceCommand(endPoints),
-                new MarkToReplaceCommand(endPoints)
-            };
+            yield return new CancelMarkToReplaceCommand(endPoints);
+            yield return new MarkToReplaceCommand(endPoints);
         }
     }
 }

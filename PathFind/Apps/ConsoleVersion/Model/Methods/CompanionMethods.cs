@@ -28,21 +28,23 @@ namespace ConsoleVersion.Model.Methods
 
         protected IEnumerable<TResult> GetMethodsInternal(MethodInfo info)
         {
-            return info
-                .GetCustomAttributes<TAttribute>()
-                .Select(attribute => GetMethod(type, attribute))
-                .Where(method => method != null)
-                .Select(method => CreateDelegateOrNull(target, method))
-                .Where(method => method != null);
+            return GetCustomAttributes(info)
+                .Select(GetMethod)
+                .Select(CreateDelegateOrNull);
         }
 
-        private TResult CreateDelegateOrNull(object target, MethodInfo info)
+        protected virtual IEnumerable<TAttribute> GetCustomAttributes(MethodInfo info)
+        {
+            return info.GetCustomAttributes<TAttribute>();
+        }
+
+        private TResult CreateDelegateOrNull(MethodInfo info)
         {
             info.TryCreateDelegate(target, out TResult action);
             return action;
         }
 
-        private MethodInfo GetMethod(Type type, TAttribute attribute)
+        private MethodInfo GetMethod(TAttribute attribute)
         {
             return type.GetMethod(attribute.MethodName, MethodAccessModificators);
         }

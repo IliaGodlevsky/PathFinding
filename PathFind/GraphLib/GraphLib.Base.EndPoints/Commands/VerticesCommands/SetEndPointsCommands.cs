@@ -20,21 +20,18 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
             };
         }
 
-        protected override IReadOnlyCollection<IVertexCommand> GetCommands(BaseEndPoints endPoints)
+        protected override IEnumerable<IVertexCommand> GetCommands(BaseEndPoints endPoints)
         {
-            return new IVertexCommand[]
-            {
-                new UnsetIntermediateCommand(endPoints),
-                new UnsetTargetCommand(endPoints),
-                new UnsetSourceCommand(endPoints),
-                new SetSourceCommand(endPoints),
-                new SetTargetCommand(endPoints),
-                new SetIntermediateCommand(endPoints),
-                new ReplaceIntermediateCommand(endPoints),
-                new ReplaceIntermediateIsolatedCommand(endPoints),
-                new ReplaceIsolatedSourceCommand(endPoints),
-                new ReplaceIsolatedTargetCommand(endPoints),
-            };
+            yield return new UnsetIntermediateCommand(endPoints);
+            yield return new UnsetTargetCommand(endPoints);
+            yield return new UnsetSourceCommand(endPoints);
+            yield return new SetSourceCommand(endPoints);
+            yield return new SetTargetCommand(endPoints);
+            yield return new SetIntermediateCommand(endPoints);
+            yield return new ReplaceIntermediateCommand(endPoints);
+            yield return new ReplaceIntermediateIsolatedCommand(endPoints);
+            yield return new ReplaceIsolatedSourceCommand(endPoints);
+            yield return new ReplaceIsolatedTargetCommand(endPoints);
         }
     }
 }

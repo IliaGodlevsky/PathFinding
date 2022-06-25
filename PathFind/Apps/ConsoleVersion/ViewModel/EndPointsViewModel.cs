@@ -39,7 +39,7 @@ namespace ConsoleVersion.ViewModel
             messenger.Send(new ClaimGraphMessage());
         }
 
-        [Validate(nameof(CanChooseEndPoints))]
+        [Condition(nameof(CanChooseEndPoints))]
         [MenuItem(MenuItemsNames.ChooseEndPoints, 0)]
         public void ChooseEndPoints()
         {
@@ -47,8 +47,7 @@ namespace ConsoleVersion.ViewModel
             IntInput.InputRequiredEndPoints(graph, endPoints).OnEndPointChosen();
         }
 
-        [Validate(nameof(HasSourceAndTargetSet))]
-        [ValidationFailRoute(nameof(ChooseEndPoints))]
+        [Condition(nameof(HasSourceAndTargetSet))]
         [MenuItem(MenuItemsNames.ReplaceSource, 2)]
         public void ReplaceSourceVertex()
         {
@@ -56,8 +55,7 @@ namespace ConsoleVersion.ViewModel
             IntInput.InputEndPoint(MessagesTexts.SourceVertexChoiceMsg, graph, endPoints).OnEndPointChosen();
         }
 
-        [Validate(nameof(HasSourceAndTargetSet))]
-        [ValidationFailRoute(nameof(ChooseEndPoints))]
+        [Condition(nameof(HasSourceAndTargetSet))]
         [MenuItem(MenuItemsNames.ReplaceTarget, 3)]
         public void ReplaceTargetVertex()
         {
@@ -71,9 +69,7 @@ namespace ConsoleVersion.ViewModel
             endPoints.Reset();
         }
 
-        [Validate(nameof(CanReplaceIntermediates))]
-        [ValidationFailRoute(nameof(ChooseEndPoints))]
-        [ValidationFailRoute(nameof(ChooseIntermediates))]
+        [Condition(nameof(CanReplaceIntermediates))]
         [MenuItem(MenuItemsNames.ReplaceIntermediate, 4)]
         public void ReplaceIntermediates()
         {
@@ -85,8 +81,7 @@ namespace ConsoleVersion.ViewModel
             IntInput.InputEndPoints(graph, endPoints, toReplaceNumber).OnEndPointChosen();
         }
 
-        [Validate(nameof(HasSourceAndTargetSet))]
-        [ValidationFailRoute(nameof(ChooseEndPoints))]
+        [Condition(nameof(HasSourceAndTargetSet))]
         [MenuItem(MenuItemsNames.ChooseIntermediates, 1)]
         public void ChooseIntermediates()
         {

@@ -60,15 +60,16 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\MethodAttribute.cs" />
     <Compile Include="Attributes\ExecuteSafeAttribute.cs" />
-    <Compile Include="Attributes\ValidateAttribute.cs" />
+    <Compile Include="Attributes\ConditionAttribute.cs" />
     <Compile Include="Attributes\MenuItemAttribute.cs" />
-    <Compile Include="Attributes\ValidationFailRouteAttribute.cs" />
+    <Compile Include="Attributes\MethodAttribute.cs" />
     <Compile Include="Commands\MenuCommand.cs" />
-    <Compile Include="Commands\ValidatableMenuCommand.cs" />
-    <Compile Include="Commands\ValidationRoutedMenuCommand.cs" />
+    <Compile Include="Commands\ConditionedMenuCommand.cs" />
     <Compile Include="Cursor.cs" />
+    <Compile Include="Delegates\Command.cs" />
+    <Compile Include="Delegates\Condition.cs" />
+    <Compile Include="Delegates\SafeAction.cs" />
     <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="EventArguments\ConsoleKeyPressedEventArgs.cs" />
@@ -100,8 +101,7 @@
     <Compile Include="Model\ConsoleSmoothLevels.cs" />
     <Compile Include="Model\Methods\CompanionMethods.cs" />
     <Compile Include="Model\Methods\SafeMethods.cs" />
-    <Compile Include="Model\Methods\ValidationFailRouteMethods.cs" />
-    <Compile Include="Model\Methods\ValidationMethods.cs" />
+    <Compile Include="Model\Methods\ConditionMethods.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedKeyInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedStringInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\FromFile\FromFileProgrammedAnswerInput.cs" />

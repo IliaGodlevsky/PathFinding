@@ -1,23 +1,23 @@
 ﻿using ConsoleVersion.Attributes;
-using ConsoleVersion.Model.Methods;
+using ConsoleVersion.Delegates;
 using System;
 using System.Linq;
 using System.Reflection;
 
 namespace ConsoleVersion.Model.Methods
 {
-    internal sealed class SafeMethods : CompanionMethods<Action<Action>, ExecuteSafeAttribute>
+    internal sealed class SafeMethods : CompanionMethods<SafeAction, ExecuteSafeAttribute>
     {
         public SafeMethods(object target) : base(target)
         {
         }
 
-        public override Action<Action> GetMethods(MethodInfo info)
+        public override SafeAction GetMethods(MethodInfo info)
         {
             return GetMethodsInternal(info).FirstOrDefault() ?? EmptySafeAction;
         }
 
-        private static void EmptySafeAction(Action action)
+        private static void EmptySafeAction(Command action)
         {
             action.Invoke();
         }
