@@ -7,28 +7,28 @@ using System.Reflection;
 
 namespace Common.Extensions.EnumerableExtensions
 {
-    sealed class MatchComparer<T> : IEqualityComparer<T>
-    {
-        public MatchComparer(Func<T, T, bool> predicate)
-        {
-            this.predicate = predicate;
-        }
-
-        public bool Equals(T x, T y)
-        {
-            return predicate(x, y);
-        }
-
-        public int GetHashCode(T obj)
-        {
-            return obj.GetHashCode();
-        }
-
-        private readonly Func<T, T, bool> predicate;
-    }
-
     public static class IEnumerableExtension
     {
+        private sealed class MatchComparer<T> : IEqualityComparer<T>
+        {
+            private readonly Func<T, T, bool> predicate;
+
+            public MatchComparer(Func<T, T, bool> predicate)
+            {
+                this.predicate = predicate;
+            }
+
+            public bool Equals(T x, T y)
+            {
+                return predicate(x, y);
+            }
+
+            public int GetHashCode(T obj)
+            {
+                return obj.GetHashCode();
+            }            
+        }
+
         public static T AggregateOrDefault<T>(this IEnumerable<T> collection, Func<T, T, T> func)
         {
             return collection.Any() ? collection.Aggregate(func) : default;

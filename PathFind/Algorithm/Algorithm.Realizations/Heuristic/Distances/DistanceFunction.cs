@@ -1,9 +1,10 @@
-﻿using GraphLib.Extensions;
+﻿using Algorithm.Interfaces;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 
 namespace Algorithm.Realizations.Heuristic.Distances
 {
-    public abstract class DistanceFunction
+    public abstract class DistanceFunction : IHeuristic
     {
         public double Calculate(IVertex first, IVertex second)
         {

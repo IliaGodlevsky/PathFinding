@@ -1,5 +1,4 @@
-﻿using Common.Extensions.EnumerableExtensions;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using GraphLib.Proxy.Extensions;
 using System;
 using System.Linq;
@@ -17,14 +16,22 @@ namespace Algorithm.Extensions
 
         public static double GetScalarProduct(this ICoordinate self, ICoordinate coordinate)
         {
-            return self.CoordinatesValues
-                .Zip(coordinate.CoordinatesValues, (a, b) => a * b)
-                .SumOrDefault();
+            double result = default;
+            for (int i = 0; i < self.CoordinatesValues.Length; i++)
+            {
+                result += (self.CoordinatesValues[i] * coordinate.CoordinatesValues[i]);
+            }
+            return result;
         }
 
         public static double GetVectorLength(this ICoordinate self)
         {
-            return Math.Sqrt(self.CoordinatesValues.Select(x => x * x).SumOrDefault());
+            double result = 0;
+            for (int i = 0; i < self.CoordinatesValues.Length; i++)
+            {
+                result += (self.CoordinatesValues[i] * self.CoordinatesValues[i]);
+            }
+            return Math.Sqrt(result);
         }
     }
 }
