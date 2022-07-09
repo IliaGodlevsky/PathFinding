@@ -7,7 +7,7 @@ namespace ConsoleVersion.ValueInput.ProgrammedInput
 {
     internal abstract class ProgrammedInput<T> : IInput<T>
     {
-        private const int WaitMilliseconds = 500;
+        protected static readonly TimeSpan Wait = TimeSpan.FromMilliseconds(500);
 
         private readonly Lazy<Queue<T>> steps;
 
@@ -22,7 +22,7 @@ namespace ConsoleVersion.ValueInput.ProgrammedInput
         {
             var input = Steps.Dequeue();
             Console.WriteLine(input);
-            TimeSpan.FromMilliseconds(WaitMilliseconds).Wait();
+            Wait.Wait();
             return input;
         }
 

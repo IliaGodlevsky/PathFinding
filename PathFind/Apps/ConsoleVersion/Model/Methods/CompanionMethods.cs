@@ -28,14 +28,10 @@ namespace ConsoleVersion.Model.Methods
 
         protected IEnumerable<TResult> GetMethodsInternal(MethodInfo info)
         {
-            return GetCustomAttributes(info)
+            return info
+                .GetCustomAttributes<TAttribute>()
                 .Select(GetMethod)
                 .Select(CreateDelegateOrNull);
-        }
-
-        protected virtual IEnumerable<TAttribute> GetCustomAttributes(MethodInfo info)
-        {
-            return info.GetCustomAttributes<TAttribute>();
         }
 
         private TResult CreateDelegateOrNull(MethodInfo info)

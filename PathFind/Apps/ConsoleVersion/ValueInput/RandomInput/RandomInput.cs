@@ -1,19 +1,19 @@
 ﻿using Common.Extensions;
 using ConsoleVersion.Interface;
-using Random.Extensions;
 using Random.Interface;
 using System;
 using ValueRange;
 
 namespace ConsoleVersion.ValueInput.RandomInput
 {
-    internal abstract class RandomInput<T> : IInput<T>
+    internal abstract class RandomInput<T, TRange> : IInput<T>
+        where TRange : IComparable, IComparable<TRange>
     {
         protected virtual TimeSpan Delay { get; }
 
         protected IRandom Random { get; }
 
-        protected abstract InclusiveValueRange<int> Range { get; }
+        protected abstract InclusiveValueRange<TRange> Range { get; }
 
         protected RandomInput(IRandom random)
         {
@@ -23,18 +23,12 @@ namespace ConsoleVersion.ValueInput.RandomInput
 
         public virtual T Input()
         {
-            int value = GetRandomInt();
-            T converted = ConvertFrom(value);
-            Console.WriteLine(converted);
+            T value = GetRandomValue();
+            Console.WriteLine(value);
             Delay.Wait();
-            return converted;
+            return value;
         }
 
-        protected virtual int GetRandomInt()
-        {
-            return Random.Next(Range);
-        }
-
-        protected abstract T ConvertFrom(int value);
+        protected abstract T GetRandomValue();
     }
 }

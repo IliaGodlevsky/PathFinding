@@ -33,13 +33,12 @@
         private const int FivethIntermediateY = 5;
         private const int ExitChoosingEndPoints = 7;
         private const int DelayInputMenu = 4;
-        private const int Delay = 3;
         private const int FindPath = 1;
         private const int ClearGraphMenu = 6;
         private const int ChooseAlgorithm2 = 2;
         private const int AStar = 2;
         private const int FindPath2 = 1;
         private const int ExitPathfindng = 8;
-        private const int ExitProgramm = 9;
+        private const int ExitProgramm = 8;
     }
 }

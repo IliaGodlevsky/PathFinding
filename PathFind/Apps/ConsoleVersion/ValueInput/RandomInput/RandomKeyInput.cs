@@ -1,33 +1,36 @@
 ﻿using Common.Extensions;
+using Random.Extensions;
 using Random.Interface;
 using System;
+using System.Collections.Generic;
 using ValueRange;
+
+using static System.ConsoleKey;
 
 namespace ConsoleVersion.ValueInput.RandomInput
 {
-    internal sealed class RandomKeyInput : RandomInput<ConsoleKey>
+    internal sealed class RandomKeyInput : RandomInput<ConsoleKey, int>
     {
-        private ConsoleKey[] AvailableKeys { get; }
+        private IReadOnlyList<ConsoleKey> Keys { get; }
 
         protected override InclusiveValueRange<int> Range { get; }
 
         public RandomKeyInput(IRandom random) : base(random)
         {
-            AvailableKeys = new[] { ConsoleKey.Enter, ConsoleKey.UpArrow, ConsoleKey.DownArrow };
-            Range = new InclusiveValueRange<int>(AvailableKeys.Length - 1);
+            Keys = new[] { Enter, UpArrow, DownArrow };
+            Range = new InclusiveValueRange<int>(Keys.Count - 1);
         }
 
         public override ConsoleKey Input()
         {
-            int value = GetRandomInt();
-            ConsoleKey key = ConvertFrom(value);
             Delay.Wait();
-            return key;
+            return GetRandomValue();
         }
 
-        protected override ConsoleKey ConvertFrom(int value)
+        protected override ConsoleKey GetRandomValue()
         {
-            return AvailableKeys[value];
+            int random = Random.Next(Range);
+            return Keys[random];
         }
     }
 }

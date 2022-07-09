@@ -58,11 +58,11 @@ namespace ConsoleVersion.Model
         {
             var methodInfo = command.Method;
             var safeAction = safeMethods.GetMethods(methodInfo);
-            var condition = conditionMethods.GetMethods(methodInfo);
             Command method = () => safeAction.Invoke(command);
             string header = methodInfo.GetAttributeOrNull<MenuItemAttribute>().Header;
             var menuCommand = new MenuCommand(header, method);
-            return condition == null ? menuCommand : new ConditionedMenuCommand(menuCommand, condition);
+            var condition = conditionMethods.GetMethods(methodInfo);
+            return condition is null ? menuCommand : new ConditionedMenuCommand(menuCommand, condition);
         }
 
         private bool IsMenuItem(MethodInfo methodInfo)

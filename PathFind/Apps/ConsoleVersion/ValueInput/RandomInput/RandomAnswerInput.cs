@@ -1,10 +1,11 @@
 ﻿using ConsoleVersion.Model;
+using Random.Extensions;
 using Random.Interface;
 using ValueRange;
 
 namespace ConsoleVersion.ValueInput.RandomInput
 {
-    internal sealed class RandomAnswerInput : RandomInput<Answer>
+    internal sealed class RandomAnswerInput : RandomInput<Answer, int>
     {
         protected override InclusiveValueRange<int> Range { get; }
 
@@ -13,9 +14,10 @@ namespace ConsoleVersion.ValueInput.RandomInput
             Range = new InclusiveValueRange<int>(Answer.Yes, Answer.No);
         }
 
-        protected override Answer ConvertFrom(int value)
+        protected override Answer GetRandomValue()
         {
-            return value == Answer.Yes ? Answer.Yes : Answer.No;
+            int random = Random.Next(Range);
+            return random == Answer.Yes ? Answer.Yes : Answer.No;
         }
     }
 }

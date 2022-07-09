@@ -58,7 +58,7 @@ namespace ConsoleVersion.Model
                 result = value == Yes ? Yes : (value == No ? No : Default);
                 return !result.Equals(Default);
             }
-            result = input == Yes ? Yes : (input == No ? No : Default);
+            result = input.Equals(Yes, IgnoreCase) ? Yes : (input == No ? No : Default);
             return !result.Equals(Default);
         }
 

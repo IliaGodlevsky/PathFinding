@@ -21,7 +21,7 @@ namespace ConsoleVersion.ValueInput.ProgrammedInput
             {
                 Keys.ForEach(Steps.Enqueue);
             }
-            TimeSpan.FromMilliseconds(750).Wait();
+            Wait.Wait();
             return Steps.Dequeue();
         }
 

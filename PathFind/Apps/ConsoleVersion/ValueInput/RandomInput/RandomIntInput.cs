@@ -1,9 +1,10 @@
-﻿using Random.Interface;
+﻿using Random.Extensions;
+using Random.Interface;
 using ValueRange;
 
 namespace ConsoleVersion.ValueInput.RandomInput
 {
-    internal sealed class RandomIntInput : RandomInput<int>
+    internal sealed class RandomIntInput : RandomInput<int, int>
     {
         protected override InclusiveValueRange<int> Range { get; }
 
@@ -12,9 +13,9 @@ namespace ConsoleVersion.ValueInput.RandomInput
             Range = new InclusiveValueRange<int>(0, 10);
         }
 
-        protected override int ConvertFrom(int value)
+        protected override int GetRandomValue()
         {
-            return value;
+            return Random.Next(Range);
         }
     }
 }

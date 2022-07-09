@@ -10,6 +10,8 @@ using Common.Extensions;
 using Common.Interface;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
+using ConsoleVersion.ValueInput.ProgrammedInput;
+using ConsoleVersion.ValueInput.RandomInput;
 using ConsoleVersion.ValueInput.UserInput;
 using ConsoleVersion.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
@@ -46,7 +48,7 @@ namespace ConsoleVersion.DependencyInjection
 
         public static IContainer Container => container.Value;
 
-        private static Assembly LocalAssembly => typeof(DI).Assembly;
+        private static readonly Type[] LocalAssemblyTypes = typeof(DI).Assembly.GetTypes();
 
         private static Assembly AlgorithmsAssembly => typeof(IAlgorithmFactory<>).Assembly;
 
@@ -54,18 +56,24 @@ namespace ConsoleVersion.DependencyInjection
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<ConsoleUserAnswerInput>().As<IInput<Answer>>().SingleInstance();
-            builder.RegisterType<ConsoleUserIntInput>().As<IInput<int>>().SingleInstance();
-            builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance();
-            builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
-            builder.RegisterType<ConsoleUserTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
+            //builder.RegisterType<ConsoleUserAnswerInput>().As<IInput<Answer>>().SingleInstance();
+            //builder.RegisterType<ConsoleUserIntInput>().As<IInput<int>>().SingleInstance();
+            //builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance();
+            //builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
+            //builder.RegisterType<ConsoleUserTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
+
+            builder.RegisterType<ConsoleProgrammedAnswerInput>().As<IInput<Answer>>().SingleInstance();
+            builder.RegisterType<ConsoleProgrammedIntInput>().As<IInput<int>>().SingleInstance();
+            builder.RegisterType<ConsoleProgrammedStringInput>().As<IInput<string>>().SingleInstance();
+            builder.RegisterType<RandomKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
+            builder.RegisterType<RandomTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
 
             builder.RegisterType<ConsoleKeystrokesHook>().AsSelf().InstancePerDependency().PropertiesAutowired();
 
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
-            LocalAssembly.GetTypes().Where(type => type.Implements<IViewModel>()).Register(builder)
+            LocalAssemblyTypes.Where(type => type.Implements<IViewModel>()).Register(builder)
                 .Except<MainViewModel>().AsSelf().PropertiesAutowired().InstancePerLifetimeScope();
-            LocalAssembly.GetTypes().Where(type => type.Implements<IView>()).Register(builder)
+            LocalAssemblyTypes.Where(type => type.Implements<IView>()).Register(builder)
                 .AsSelf().PropertiesAutowired().OnActivated(OnViewActivated).InstancePerLifetimeScope();
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();

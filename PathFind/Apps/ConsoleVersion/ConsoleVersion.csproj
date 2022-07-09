@@ -115,6 +115,7 @@
     <Compile Include="ValueInput\RandomInput\RandomKeyInput.cs" />
     <Compile Include="ValueInput\RandomInput\RandomIntInput.cs" />
     <Compile Include="ValueInput\RandomInput\RandomInput.cs" />
+    <Compile Include="ValueInput\RandomInput\RandomTimeSpanInput.cs" />
     <Compile Include="ValueInput\RecordingInput\RecordingAnswerInput.cs" />
     <Compile Include="ValueInput\RecordingInput\RecordingConsoleKeyInput.cs" />
     <Compile Include="ValueInput\RecordingInput\RecordingInput.cs" />
