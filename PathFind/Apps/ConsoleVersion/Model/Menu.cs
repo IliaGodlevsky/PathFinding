@@ -45,7 +45,7 @@ namespace ConsoleVersion.Model
                 .OrderByOrderAttribute()
                 .Select(CreateCommandDelegate)
                 .Where(del => del is not null)
-                .Select(CreateCommand)
+                .Select(CreateMenuCommand)
                 .ToArray();
         }
 
@@ -54,7 +54,7 @@ namespace ConsoleVersion.Model
             return commandMethod.TryCreateDelegate(target, out Command action) ? action : null;
         }
 
-        private IMenuCommand CreateCommand(Command command)
+        private IMenuCommand CreateMenuCommand(Command command)
         {
             var methodInfo = command.Method;
             var safeAction = safeMethods.GetMethods(methodInfo);

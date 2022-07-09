@@ -1,9 +1,8 @@
-﻿using Algorithm.Interfaces;
-using System;
+﻿using System;
 
 namespace Algorithm.Realizations.Heuristic.Distances
 {
-    public sealed class ManhattanDistance : DistanceFunction, IHeuristic
+    public sealed class ManhattanDistance : DistanceFunction
     {
         protected override double ZipMethod(int first, int second)
         {

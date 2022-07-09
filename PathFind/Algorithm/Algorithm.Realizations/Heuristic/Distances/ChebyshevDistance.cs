@@ -1,9 +1,8 @@
-﻿using Algorithm.Interfaces;
-using System;
+﻿using System;
 
 namespace Algorithm.Realizations.Heuristic.Distances
 {
-    public sealed class ChebyshevDistance : DistanceFunction, IHeuristic
+    public sealed class ChebyshevDistance : DistanceFunction
     {
         protected override double Operation(double a, double b)
         {

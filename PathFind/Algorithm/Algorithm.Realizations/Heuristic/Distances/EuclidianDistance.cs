@@ -1,9 +1,8 @@
-﻿using Algorithm.Interfaces;
-using System;
+﻿using System;
 
 namespace Algorithm.Realizations.Heuristic.Distances
 {
-    public sealed class EuclidianDistance : DistanceFunction, IHeuristic
+    public sealed class EuclidianDistance : DistanceFunction
     {
         private const int Precision = 1;
         private const double Power = 2;
