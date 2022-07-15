@@ -1,7 +1,5 @@
 ﻿using ConsoleVersion.Delegates;
 using ConsoleVersion.Interface;
-using System;
-using System.Linq;
 
 namespace ConsoleVersion.Commands
 {

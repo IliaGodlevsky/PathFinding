@@ -23,24 +23,27 @@ namespace Algorithm.Base
         {
             var path = NullGraphPath.Instance;
             PrepareForPathfinding();
-            foreach (var endPoint in endPoints.ToSubEndPoints())
+            var subEndPoints = endPoints.ToSubEndPoints();
+            using (var iterator = subEndPoints.GetEnumerator())
             {
-                CurrentEndPoints = endPoint;
-                PrepareForLocalPathfinding();
-                VisitVertex(CurrentVertex);
-                while (!IsDestination(CurrentEndPoints))
+                while (iterator.MoveNext() && !IsInterruptRequested)
                 {
-                    WaitUntilResumed();
-                    InspectVertex(CurrentVertex);
-                    CurrentVertex = GetNextVertex();
+                    CurrentEndPoints = iterator.Current;
+                    PrepareForLocalPathfinding();
                     VisitVertex(CurrentVertex);
+                    while (!IsDestination(CurrentEndPoints))
+                    {
+                        WaitUntilResumed();
+                        InspectVertex(CurrentVertex);
+                        CurrentVertex = GetNextVertex();
+                        VisitVertex(CurrentVertex);
+                    }
+                    path = new CombinedGraphPath(path, CreateGraphPath());
+                    Reset();
                 }
-                if (IsTerminatedPrematurely) break;
-                path = new CombinedGraphPath(path, CreateGraphPath());
-                Reset();
             }
             CompletePathfinding();
-            return IsTerminatedPrematurely ? NullGraphPath.Instance : path;
+            return IsInterruptRequested ? NullGraphPath.Instance : path;
         }
 
         protected virtual void PrepareForLocalPathfinding()
@@ -55,6 +58,7 @@ namespace Algorithm.Base
 
         protected virtual void VisitVertex(IVertex vertex)
         {
+            CheckForNull(vertex);
             visitedVertices.Visit(vertex);
             RaiseVertexVisited(new AlgorithmEventArgs(vertex));
         }

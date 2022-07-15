@@ -26,7 +26,7 @@ namespace Common.Extensions.EnumerableExtensions
             public int GetHashCode(T obj)
             {
                 return obj.GetHashCode();
-            }            
+            }
         }
 
         public static T AggregateOrDefault<T>(this IEnumerable<T> collection, Func<T, T, T> func)
@@ -103,7 +103,7 @@ namespace Common.Extensions.EnumerableExtensions
             return new Queue<T>(collection);
         }
 
-        public static T Combine<T>(this IEnumerable<T> delegates) 
+        public static T Combine<T>(this IEnumerable<T> delegates)
             where T : Delegate
         {
             return (T)Delegate.Combine(delegates.ToArray());

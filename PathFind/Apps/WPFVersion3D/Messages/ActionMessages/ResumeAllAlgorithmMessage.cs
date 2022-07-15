@@ -1,10 +1,11 @@
-﻿using WPFVersion3D.ViewModel;
+﻿using Commands.Interfaces;
+using WPFVersion3D.ViewModel;
 
 namespace WPFVersion3D.Messages.ActionMessages
 {
-    internal sealed class ResumeAllAlgorithmMessage : BaseAlgorithmsExecutionMessage
+    internal sealed class ResumeAllAlgorithmMessage : IExecutable<AlgorithmViewModel>
     {
-        protected override void Execute(AlgorithmViewModel model)
+        public void Execute(AlgorithmViewModel model)
         {
             model.Resume();
         }

@@ -60,6 +60,10 @@
       <Project>{04393071-3ba6-42c5-89d8-a89e3ac34511}</Project>
       <Name>Algorithm.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Algorithm\Algorithm.Exceptions\Algorithm.Exceptions.csproj">
+      <Project>{09207CB3-EED3-4DBF-A594-6381154E677C}</Project>
+      <Name>Algorithm.Exceptions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Algorithm\Algorithm.Extensions\Algorithm.Extensions.csproj">
       <Project>{11c8b301-fe40-44a1-a5a2-bc684b6a56a0}</Project>
       <Name>Algorithm.Extensions</Name>

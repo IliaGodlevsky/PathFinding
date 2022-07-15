@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using Commands.Extensions;
+using Commands.Interfaces;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
@@ -12,7 +14,6 @@ using WPFVersion.Infrastructure;
 using WPFVersion.Messages;
 using WPFVersion.Messages.ActionMessages;
 using WPFVersion.Messages.DataMessages;
-using WPFVersion.Messages.Interfaces;
 using WPFVersion.Model;
 
 namespace WPFVersion.ViewModel
@@ -39,7 +40,7 @@ namespace WPFVersion.ViewModel
             VisualizeCommand = new RelayCommand(ExecuteVisualizeCommand, CanExecuteVisualizeCommand);
             messenger.Register<AlgorithmStartedMessage>(this, OnAlgorithmStarted);
             messenger.Register<UpdateStatisticsMessage>(this, UpdateAlgorithmStatistics);
-            messenger.Register<IAlgorithmsExecutionMessage>(this, true, OnAllAlgorithmAction);
+            messenger.Register<IExecutable<AlgorithmViewModel>>(this, true, OnAllAlgorithmAction);
             messenger.Register<ClearStatisticsMessage>(this, OnClearStatistics);
             messenger.Register<AlgorithmStatusMessage>(this, SetAlgorithmStatistics);
             messenger.Register<GraphCreatedMessage>(this, NewGraphCreated);
@@ -69,7 +70,7 @@ namespace WPFVersion.ViewModel
             Dispatcher.Invoke(() => Algorithms[message.Index].RecieveMessage(message));
         }
 
-        private void OnAllAlgorithmAction(IAlgorithmsExecutionMessage message)
+        private void OnAllAlgorithmAction(IExecutable<AlgorithmViewModel> message)
         {
             message.Execute(Algorithms);
         }

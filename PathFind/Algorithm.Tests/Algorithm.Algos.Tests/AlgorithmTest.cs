@@ -1,5 +1,5 @@
+using Algorithm.Exceptions;
 using Algorithm.Interfaces;
-using Algorithm.NullRealizations;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations;
 using GraphLib.TestRealizations.TestFactories;
@@ -36,14 +36,12 @@ namespace Algorithm.Algos.Tests
             Assert.AreEqual(GetExpectedCost(), graphPath.Cost);
         }
 
-        [TestCase(TestName = "Finding path using NullEndPoints returns NullGraphPath")]
+        [TestCase(TestName = "Finding path using NullEndPoints throws DeadEndException")]
         public virtual void FindPath_NullEndPoints_ReturnsNullGraphPath()
         {
             var algorithm = CreateAlgorithm(NullEndPoints.Instance);
 
-            var graphPath = algorithm.FindPath();
-
-            Assert.AreSame(NullGraphPath.Instance, graphPath);
+            Assert.Throws<DeadendVertexException>(() => algorithm.FindPath());
         }
 
         [TestCase(new int[] { 500 }, TestName = "Finding path in one dimensional graph with 500 vertices")]

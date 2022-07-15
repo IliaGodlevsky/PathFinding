@@ -1,4 +1,5 @@
 ﻿using Algorithm.Base;
+using Algorithm.Exceptions;
 using Algorithm.Extensions;
 using Algorithm.Factory.Interface;
 using Algorithm.Infrastructure.EventArguments;
@@ -61,6 +62,10 @@ namespace GraphViewModel
                     await path.HighlightAsync();
                     SummarizePathfindingResults();
                 }
+            }
+            catch (DeadendVertexException)
+            {
+                SummarizePathfindingResults();
             }
             catch (Exception ex)
             {

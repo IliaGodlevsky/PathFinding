@@ -92,8 +92,6 @@
     <Compile Include="Messages\ActionMessages\RemoveAlgorithmMessage.cs" />
     <Compile Include="Messages\ActionMessages\StartEditorModeMessage.cs" />
     <Compile Include="Messages\ActionMessages\StopEditorModeMessage.cs" />
-    <Compile Include="Messages\BaseMessages\BaseAlgorithmsExecutionMessage.cs" />
-    <Compile Include="Messages\Interfaces\IAlgorithmExecutionMessage.cs" />
     <Compile Include="Messages\ActionMessages\PauseAllAlgorithmMessage.cs" />
     <Compile Include="Messages\ActionMessages\ResumeAllAlgorithmsMessage.cs" />
     <Compile Include="Messages\ActionMessages\SubscribeOnAlgorithmEventsMessage.cs" />

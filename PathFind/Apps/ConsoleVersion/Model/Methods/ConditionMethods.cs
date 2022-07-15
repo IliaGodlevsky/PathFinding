@@ -1,8 +1,6 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Delegates;
-using ConsoleVersion.Model.Methods;
-using System;
 using System.Reflection;
 
 namespace ConsoleVersion.Model.Methods

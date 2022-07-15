@@ -1,4 +1,5 @@
-﻿using Algorithm.Infrastructure.EventArguments;
+﻿using Algorithm.Exceptions;
+using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Algorithm.Сompanions;
@@ -38,9 +39,7 @@ namespace Algorithm.Base
 
         protected IVertex CurrentVertex { get; set; }
 
-        protected bool IsTerminatedPrematurely => CurrentVertex.IsNull() || IsInterruptRequested;
-
-        private bool IsInterruptRequested { get; set; }
+        protected bool IsInterruptRequested { get; set; }
 
         private bool IsAlgorithmDisposed { get; set; } = false;
 
@@ -117,7 +116,7 @@ namespace Algorithm.Base
 
         protected virtual bool IsDestination(IEndPoints endPoints)
         {
-            return endPoints.Target.IsEqual(CurrentVertex) || IsTerminatedPrematurely;
+            return endPoints.Target.IsEqual(CurrentVertex) || IsInterruptRequested;
         }
 
         protected void RaiseVertexVisited(AlgorithmEventArgs e)
@@ -154,6 +153,15 @@ namespace Algorithm.Base
                 .Where(visitedVertices.IsNotVisited)
                 .Where(v => !v.IsObstacle)
                 .ToArray();
+        }
+
+        protected virtual void CheckForNull(IVertex vertex)
+        {
+            if (vertex.IsNull())
+            {
+                CompletePathfinding();
+                throw new DeadendVertexException();
+            }
         }
 
         protected abstract IVertex GetNextVertex();

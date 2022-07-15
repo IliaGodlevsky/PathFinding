@@ -1,5 +1,4 @@
-﻿using Common.Attrbiutes;
-using Common.Extensions;
+﻿using Common.Extensions;
 using Common.Extensions.EnumerableExtensions;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Commands;
@@ -24,9 +23,9 @@ namespace ConsoleVersion.Model
         private readonly ICompanionMethods<Condition> conditionMethods;
         private readonly ICompanionMethods<SafeAction> safeMethods;
 
-        private readonly Lazy<IReadOnlyList<IMenuCommand>> menuActions;
+        private readonly Lazy<IReadOnlyList<IMenuCommand>> commands;
 
-        public IReadOnlyList<IMenuCommand> Commands => menuActions.Value;
+        public IReadOnlyList<IMenuCommand> Commands => commands.Value;
 
         public Menu(object target)
         {
@@ -34,7 +33,7 @@ namespace ConsoleVersion.Model
             conditionMethods = new ConditionMethods(target);
             this.target = target;
             targetType = target.GetType();
-            menuActions = new Lazy<IReadOnlyList<IMenuCommand>>(GetMenuCommands);
+            commands = new Lazy<IReadOnlyList<IMenuCommand>>(GetMenuCommands);
         }
 
         private IReadOnlyList<IMenuCommand> GetMenuCommands()

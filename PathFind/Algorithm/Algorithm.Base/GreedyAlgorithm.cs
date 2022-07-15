@@ -33,6 +33,7 @@ namespace Algorithm.Base
                 PreviousVertex = CurrentVertex;
                 CurrentVertex = GetNextVertex();
                 ProcessCurrentVertex();
+                CheckForNull(CurrentVertex);
             }
             CompletePathfinding();
 
@@ -41,7 +42,7 @@ namespace Algorithm.Base
 
         protected virtual IGraphPath CreateGraphPath()
         {
-            return IsTerminatedPrematurely
+            return IsInterruptRequested
                 ? NullGraphPath.Instance
                 : new GraphPath(parentVertices, endPoints);
         }
@@ -67,17 +68,21 @@ namespace Algorithm.Base
         {
             base.PrepareForPathfinding();
             CurrentVertex = endPoints.Source;
-            visitedVertices.Visit(CurrentVertex);
-            RaiseVertexVisited(new AlgorithmEventArgs(CurrentVertex));
-            visitedVerticesStack.Push(CurrentVertex);
+            CheckForNull(CurrentVertex);
+            VisitVertex(CurrentVertex);
         }
 
         private void VisitCurrentVertex()
         {
-            visitedVertices.Visit(CurrentVertex);
-            RaiseVertexVisited(new AlgorithmEventArgs(CurrentVertex));
-            visitedVerticesStack.Push(CurrentVertex);
+            VisitVertex(CurrentVertex);
             parentVertices.Add(CurrentVertex, PreviousVertex);
+        }
+
+        private void VisitVertex(IVertex vertex)
+        {           
+            visitedVertices.Visit(vertex);
+            RaiseVertexVisited(new AlgorithmEventArgs(vertex));
+            visitedVerticesStack.Push(vertex);
         }
 
         private void Enqueue(IVertex vertex)
@@ -87,11 +92,9 @@ namespace Algorithm.Base
 
         private void ProcessCurrentVertex()
         {
-            if (CurrentVertex.IsNull())
+            if (CurrentVertex.IsNull() && visitedVerticesStack.Count > 0)
             {
-                CurrentVertex = visitedVerticesStack.Count == 0
-                    ? NullVertex.Instance
-                    : visitedVerticesStack.Pop();
+                CurrentVertex = visitedVerticesStack.Pop();
             }
             else
             {

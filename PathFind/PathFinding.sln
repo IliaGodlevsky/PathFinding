@@ -107,6 +107,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLib.Exceptions", "Grap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLib.Utility", "GraphLib\GraphLib.Utility\GraphLib.Utility.csproj", "{9FD961DA-777E-4C9C-9BF2-9EA4FD989C21}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithm.Exceptions", "Algorithm\Algorithm.Exceptions\Algorithm.Exceptions.csproj", "{09207CB3-EED3-4DBF-A594-6381154E677C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -297,6 +299,10 @@ Global
 		{9FD961DA-777E-4C9C-9BF2-9EA4FD989C21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FD961DA-777E-4C9C-9BF2-9EA4FD989C21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FD961DA-777E-4C9C-9BF2-9EA4FD989C21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09207CB3-EED3-4DBF-A594-6381154E677C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09207CB3-EED3-4DBF-A594-6381154E677C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09207CB3-EED3-4DBF-A594-6381154E677C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09207CB3-EED3-4DBF-A594-6381154E677C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -334,6 +340,7 @@ Global
 		{51C3BAF5-6AE2-47C4-932B-25687013C2CE} = {FC422D56-6D0C-48D8-9F47-A6B3B43623B3}
 		{3D8B3398-A50A-4559-B123-5C2D8213FA06} = {FC422D56-6D0C-48D8-9F47-A6B3B43623B3}
 		{9FD961DA-777E-4C9C-9BF2-9EA4FD989C21} = {FC422D56-6D0C-48D8-9F47-A6B3B43623B3}
+		{09207CB3-EED3-4DBF-A594-6381154E677C} = {C2095ABE-A68C-4A85-82E8-D12C8D5FB2AD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {97B689F4-F324-4048-A586-6D7150C9C419}

@@ -1,6 +1,5 @@
 ﻿using ConsoleVersion.Attributes;
 using ConsoleVersion.Delegates;
-using System;
 using System.Linq;
 using System.Reflection;
 

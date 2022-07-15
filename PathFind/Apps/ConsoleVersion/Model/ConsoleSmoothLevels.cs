@@ -28,7 +28,7 @@ namespace ConsoleVersion.Model
 
             public IInput<int> IntInput { get; set; } = DI.Container.Resolve<IInput<int>>();
 
-            public int Level => IntInput.Input(LevelMsg, MaxSmoothLevel);
+            public int Level => IntInput.Input(LevelMsg, MaxSmoothLevel, 1);
 
             public override string ToString() => "Custom";
         }

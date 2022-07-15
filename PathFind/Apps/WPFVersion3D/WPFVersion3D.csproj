@@ -96,13 +96,11 @@
     <Compile Include="Interface\IChangeColorOpacity.cs" />
     <Compile Include="Interface\IPassValueMessage.cs" />
     <Compile Include="Interface\IRotationState.cs" />
-    <Compile Include="Messages\ActionMessages\BaseAlgorithmsExecutionMessage.cs" />
     <Compile Include="Messages\PassValueMessages\AddRotationViewModelMessage.cs" />
     <Compile Include="Messages\PassValueMessages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\PassValueMessages\AlgorithmIndexMessage.cs" />
     <Compile Include="Messages\ActionMessages\GraphChangedMessage.cs" />
     <Compile Include="Messages\PassValueMessages\EndPointsChosenMessage.cs" />
-    <Compile Include="Interface\IAlgorithmsExecutionMessage.cs" />
     <Compile Include="Messages\PassValueMessages\GraphFieldCreatedMessage.cs" />
     <Compile Include="Messages\PassValueMessages\IsAllAlgorithmsFinishedMessage.cs" />
     <Compile Include="Messages\PassValueMessages\AlgorithmStatusMessage.cs" />

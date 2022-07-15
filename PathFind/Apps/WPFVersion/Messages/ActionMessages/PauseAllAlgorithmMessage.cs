@@ -1,11 +1,11 @@
-﻿using WPFVersion.Messages.BaseMessages;
+﻿using Commands.Interfaces;
 using WPFVersion.ViewModel;
 
 namespace WPFVersion.Messages
 {
-    internal sealed class PauseAllAlgorithmMessage : BaseAlgorithmsExecutionMessage
+    internal sealed class PauseAllAlgorithmMessage : IExecutable<AlgorithmViewModel>
     {
-        protected override void Execute(AlgorithmViewModel model)
+        public void Execute(AlgorithmViewModel model)
         {
             model.Pause();
         }

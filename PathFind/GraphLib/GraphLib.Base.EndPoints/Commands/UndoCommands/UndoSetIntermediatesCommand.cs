@@ -18,7 +18,7 @@ namespace GraphLib.Base.EndPoints.Commands.UndoCommands
 
         public override void Undo()
         {
-            unsetIntermediatesCommand.ExecuteForEach(Intermediates.ToArray());
+            unsetIntermediatesCommand.Execute(Intermediates.ToArray());
         }
     }
 }
