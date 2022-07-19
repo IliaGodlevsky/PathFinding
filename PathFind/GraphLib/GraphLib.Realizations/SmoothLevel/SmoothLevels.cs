@@ -32,13 +32,13 @@ namespace GraphLib.Realizations.SmoothLevel
 
         private static IReadOnlyList<ISmoothLevel> GetSmoothLevels()
         {
-            return new ISmoothLevel[]
+            return new List<ISmoothLevel>
             {
                 new SmoothLevel(1, "Low"),
                 new SmoothLevel(2, "Medium"),
                 new SmoothLevel(3, "High"),
                 new SmoothLevel(25, "Flat")
-            };
+            }.AsReadOnly();
         }
     }
 }

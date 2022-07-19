@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Common.Extensions.EnumerableExtensions;
 using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
@@ -35,7 +36,7 @@ namespace ConsoleVersion.Model
 
         private static IReadOnlyList<ISmoothLevel> GetSmoothLevels()
         {
-            return SmoothLevels.Levels.Append(new CustomSmoothLevel()).ToArray();
+            return SmoothLevels.Levels.Append(new CustomSmoothLevel()).ToReadOnly();
         }
     }
 }

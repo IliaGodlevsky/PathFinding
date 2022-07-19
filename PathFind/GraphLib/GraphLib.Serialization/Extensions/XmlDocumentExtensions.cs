@@ -1,4 +1,5 @@
-﻿using GraphLib.Interfaces;
+﻿using Common.Extensions.EnumerableExtensions;
+using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,18 +89,12 @@ namespace GraphLib.Serialization.Extensions
 
         private static void AppendAttributes(this XmlNode element, params XmlAttribute[] attriutes)
         {
-            foreach (var attribute in attriutes)
-            {
-                element.Attributes.Append(attribute);
-            }
+            attriutes.ForEach(elem => element.Attributes.Append(elem));
         }
 
         private static void AppendChildren(this XmlNode element, params XmlNode[] nodes)
         {
-            foreach (var node in nodes)
-            {
-                element.AppendChild(node);
-            }
+            nodes.ForEach(node => element.AppendChild(node));
         }
     }
 }

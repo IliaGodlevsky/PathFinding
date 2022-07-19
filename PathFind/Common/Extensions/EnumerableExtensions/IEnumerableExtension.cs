@@ -69,6 +69,11 @@ namespace Common.Extensions.EnumerableExtensions
             return new ReadOnlyDictionary<TKey, TValue>(collection.ToDictionary(item => item.Key, item => item.Value));
         }
 
+        public static ReadOnlyCollection<T> ToReadOnly<T>(this IEnumerable<T> collection)
+        {
+            return new ReadOnlyCollection<T>(collection.ToArray());
+        }
+
         public static IOrderedEnumerable<T> OrderByOrderAttribute<T>(this IEnumerable<T> collection)
         {
             return collection.OrderBy(item => item.GetAttributeOrNull<OrderAttribute>()?.Order ?? OrderAttribute.Default.Order);

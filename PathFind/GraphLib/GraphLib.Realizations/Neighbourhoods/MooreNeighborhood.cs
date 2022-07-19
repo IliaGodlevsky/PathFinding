@@ -1,4 +1,5 @@
-﻿using GraphLib.Interfaces;
+﻿using Common.Extensions;
+using GraphLib.Interfaces;
 using GraphLib.Proxy.Extensions;
 using System;
 using System.Collections.Generic;
@@ -45,8 +46,8 @@ namespace GraphLib.Realizations.Neighbourhoods
         private IReadOnlyCollection<ICoordinate> GetCoordinates(int depth)
         {
             return depth < limitDepth - 1
-                ? (IReadOnlyCollection<ICoordinate>)DetectNeighborhood(depth + 1)
-                : new[] { resultCoordinatesValues.ToCoordinate() };
+                ? DetectNeighborhood(depth + 1)
+                : resultCoordinatesValues.ToCoordinate().ToCollection();
         }
 
         private List<ICoordinate> GetNeighborhood()

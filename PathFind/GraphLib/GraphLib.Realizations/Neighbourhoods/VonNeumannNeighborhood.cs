@@ -1,4 +1,5 @@
-﻿using GraphLib.Extensions;
+﻿using Common.Extensions.EnumerableExtensions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace GraphLib.Realizations.Neighbourhoods
         {
             return neighboursCoordinates.Neighbours
                 .Where(neighbour => neighbour.IsCardinal(selfCoordinate))
-                .ToArray();
+                .ToReadOnly();
         }
     }
 }

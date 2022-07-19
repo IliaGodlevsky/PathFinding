@@ -19,7 +19,7 @@ namespace WPFVersion3D.Model.Axes
 
         protected Axis(Graph3D graph)
         {
-            dimensionSize = graph.DimensionsSizes[Order];
+            dimensionSize = graph.DimensionsSizes.ElementAtOrDefault(Order);
             vertices = graph.Vertices;
             vertices.ForEach(vertex => LocateVertex((Vertex3D)vertex));
         }

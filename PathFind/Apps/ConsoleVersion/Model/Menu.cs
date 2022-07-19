@@ -45,7 +45,7 @@ namespace ConsoleVersion.Model
                 .Select(CreateCommandDelegate)
                 .Where(del => del is not null)
                 .Select(CreateMenuCommand)
-                .ToArray();
+                .ToReadOnly();
         }
 
         private Command CreateCommandDelegate(MethodInfo commandMethod)
@@ -61,7 +61,9 @@ namespace ConsoleVersion.Model
             string header = methodInfo.GetAttributeOrNull<MenuItemAttribute>().Header;
             var menuCommand = new MenuCommand(header, method);
             var condition = conditionMethods.GetMethods(methodInfo);
-            return condition is null ? menuCommand : new ConditionedMenuCommand(menuCommand, condition);
+            return condition is null 
+                ? menuCommand 
+                : new ConditionedMenuCommand(menuCommand, condition);
         }
 
         private bool IsMenuItem(MethodInfo methodInfo)
