@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Common.Extensions.EnumerableExtensions;
 using Random.Extensions;
 using Random.Interface;
 using System;
@@ -66,16 +65,17 @@ namespace WPFVersion3D.Model
 
         private static IReadOnlyCollection<IAnimationSpeed> GetSpeeds()
         {
-            return new List<IAnimationSpeed>
+            var speeds = new IAnimationSpeed[]
             {
                 new AnimationSpeed(TimeSpan.FromSeconds(5), "Slowest"),
                 new AnimationSpeed(TimeSpan.FromSeconds(2), "Slow"),
                 new AnimationSpeed(TimeSpan.FromSeconds(1), "Medium"),
                 new AnimationSpeed(TimeSpan.FromMilliseconds(700), "High"),
                 new AnimationSpeed(TimeSpan.FromMilliseconds(400), "Highest"),
-                new RandomAnimationSpeed(TimeSpan.FromSeconds(4.8), TimeSpan.FromMilliseconds(300)),
-                new CustomAnimationSpeed(TimeSpan.FromSeconds(2.4))
-            }.AsReadOnly();
+                new RandomAnimationSpeed(TimeSpan.FromSeconds(5), TimeSpan.FromMilliseconds(400)),
+                new CustomAnimationSpeed(TimeSpan.FromSeconds(2))
+            };
+            return Array.AsReadOnly(speeds);
         }
     }
 }

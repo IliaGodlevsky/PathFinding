@@ -4,7 +4,6 @@ using GraphLib.Base.EndPoints.Commands.VerticesCommands;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;

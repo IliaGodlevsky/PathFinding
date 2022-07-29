@@ -1,4 +1,5 @@
-﻿using Common.Extensions;
+﻿using Common.Attrbiutes;
+using Common.Extensions;
 using Common.Extensions.EnumerableExtensions;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Commands;
@@ -41,7 +42,7 @@ namespace ConsoleVersion.Model
             return targetType
                 .GetMethods(MethodAccessModificators)
                 .Where(IsMenuItem)
-                .OrderByOrderAttribute()
+                .OrderBy(GetOrder)
                 .Select(CreateCommandDelegate)
                 .Where(del => del is not null)
                 .Select(CreateMenuCommand)
@@ -61,9 +62,15 @@ namespace ConsoleVersion.Model
             string header = methodInfo.GetAttributeOrNull<MenuItemAttribute>().Header;
             var menuCommand = new MenuCommand(header, method);
             var condition = conditionMethods.GetMethods(methodInfo);
-            return condition is null 
-                ? menuCommand 
+            return condition is null
+                ? menuCommand
                 : new ConditionedMenuCommand(menuCommand, condition);
+        }
+
+        private int GetOrder(MethodInfo method)
+        {
+            return method.GetAttributeOrNull<OrderAttribute>()?.Order 
+                ?? OrderAttribute.Default.Order;
         }
 
         private bool IsMenuItem(MethodInfo methodInfo)

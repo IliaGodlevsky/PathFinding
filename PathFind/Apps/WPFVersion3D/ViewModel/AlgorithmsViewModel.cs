@@ -11,7 +11,6 @@ using System.Windows.Threading;
 using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Extensions;
 using WPFVersion3D.Infrastructure.Commands;
-using WPFVersion3D.Interface;
 using WPFVersion3D.Messages.ActionMessages;
 using WPFVersion3D.Messages.PassValueMessages;
 using WPFVersion3D.Model;

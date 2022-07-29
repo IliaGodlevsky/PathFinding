@@ -5,7 +5,6 @@ using Algorithm.Realizations.GraphPaths;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations;
 using NullObject.Extensions;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +32,7 @@ namespace Algorithm.Base
                 PreviousVertex = CurrentVertex;
                 CurrentVertex = GetNextVertex();
                 ProcessCurrentVertex();
-                CheckForNull(CurrentVertex);
+                ThrowIfDeadEnd(CurrentVertex);
             }
             CompletePathfinding();
 
@@ -68,7 +67,7 @@ namespace Algorithm.Base
         {
             base.PrepareForPathfinding();
             CurrentVertex = endPoints.Source;
-            CheckForNull(CurrentVertex);
+            ThrowIfDeadEnd(CurrentVertex);
             VisitVertex(CurrentVertex);
         }
 
@@ -79,7 +78,7 @@ namespace Algorithm.Base
         }
 
         private void VisitVertex(IVertex vertex)
-        {           
+        {
             visitedVertices.Visit(vertex);
             RaiseVertexVisited(new AlgorithmEventArgs(vertex));
             visitedVerticesStack.Push(vertex);

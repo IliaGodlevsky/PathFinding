@@ -3,6 +3,7 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using static System.Reflection.BindingFlags;
 
@@ -31,11 +32,11 @@ namespace GraphLib.Base
                 .TakeOrDefault(requiredNumberOfDimensions, 1)
                 .ToArray();
             Size = DimensionsSizes.AggregateOrDefault((x, y) => x * y);
-            this.vertices = vertices
+            var verticesMap = vertices
                 .Take(Size)
                 .ForEach(SetGraph)
-                .ToDictionary(vertex => vertex.Position)
-                .ToReadOnlyDictionary();
+                .ToDictionary(vertex => vertex.Position);
+            this.vertices = new ReadOnlyDictionary<ICoordinate, IVertex>(verticesMap);
         }
 
         public IVertex Get(ICoordinate coordinate)

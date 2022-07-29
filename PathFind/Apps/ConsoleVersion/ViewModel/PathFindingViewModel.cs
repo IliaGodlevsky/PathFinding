@@ -5,6 +5,7 @@ using Autofac;
 using Common.Extensions;
 using Common.Interface;
 using ConsoleVersion.Attributes;
+using ConsoleVersion.Delegates;
 using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.EventArguments;
 using ConsoleVersion.Extensions;
@@ -186,7 +187,7 @@ namespace ConsoleVersion.ViewModel
             return !endPoints.HasIsolators() && !Algorithm.IsNull();
         }
 
-        private void ExecuteSafe(Action action)
+        private void ExecuteSafe(Command action)
         {
             try
             {

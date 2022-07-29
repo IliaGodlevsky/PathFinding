@@ -54,14 +54,12 @@ namespace GraphViewModel
         {
             try
             {
-                using (algorithm = Algorithm.Create(endPoints))
-                {
-                    SubscribeOnAlgorithmEvents(algorithm);
-                    endPoints.RestoreCurrentColors();
-                    path = await algorithm.FindPathAsync();
-                    await path.HighlightAsync();
-                    SummarizePathfindingResults();
-                }
+                algorithm = Algorithm.Create(endPoints);
+                SubscribeOnAlgorithmEvents(algorithm);
+                endPoints.RestoreCurrentColors();
+                path = await algorithm.FindPathAsync();
+                await path.HighlightAsync();
+                SummarizePathfindingResults();
             }
             catch (DeadendVertexException)
             {
@@ -71,6 +69,10 @@ namespace GraphViewModel
             {
                 algorithm.Interrupt();
                 log.Error(ex);
+            }
+            finally
+            {
+                algorithm.Dispose();
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Common.Interface;
 using ConsoleVersion.Attributes;
+using ConsoleVersion.Delegates;
 using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
@@ -87,7 +88,7 @@ namespace ConsoleVersion.ViewModel
                 && Constants.GraphLengthValueRange.Contains(Length);
         }
 
-        private void ExecuteSafe(Action action)
+        private void ExecuteSafe(Command action)
         {
             try
             {
