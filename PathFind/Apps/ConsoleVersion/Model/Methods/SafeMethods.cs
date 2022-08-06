@@ -9,16 +9,13 @@ namespace ConsoleVersion.Model.Methods
     {
         public SafeMethods(object target) : base(target)
         {
+
         }
 
         public override SafeAction GetMethods(MethodInfo info)
         {
-            return GetMethodsInternal(info).FirstOrDefault() ?? EmptySafeAction;
-        }
-
-        private static void EmptySafeAction(Command action)
-        {
-            action.Invoke();
+            return GetMethodsInternal(info).SingleOrDefault()
+                ?? new SafeAction(command => command.Invoke());
         }
     }
 }

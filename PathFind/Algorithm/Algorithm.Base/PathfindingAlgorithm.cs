@@ -4,7 +4,6 @@ using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations;
 using Interruptable.EventArguments;
@@ -116,7 +115,7 @@ namespace Algorithm.Base
 
         protected virtual bool IsDestination(IEndPoints endPoints)
         {
-            return endPoints.Target.IsEqual(CurrentVertex) || IsInterruptRequested;
+            return endPoints.Target.Equals(CurrentVertex) || IsInterruptRequested;
         }
 
         protected void RaiseVertexVisited(AlgorithmEventArgs e)
@@ -155,7 +154,7 @@ namespace Algorithm.Base
                 .ToArray();
         }
 
-        protected virtual void CheckForNull(IVertex vertex)
+        protected virtual void ThrowIfDeadEnd(IVertex vertex)
         {
             if (vertex.IsNull())
             {

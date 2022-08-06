@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection;
 
 namespace Common.Extensions.EnumerableExtensions
 {
@@ -43,16 +42,6 @@ namespace Common.Extensions.EnumerableExtensions
             return collection;
         }
 
-        public static double SumOrDefault(this IEnumerable<double> collection)
-        {
-            return collection.Any() ? collection.Sum() : default;
-        }
-
-        public static int SumOrDefault(this IEnumerable<int> collection)
-        {
-            return collection.Any() ? collection.Sum() : default;
-        }
-
         public static bool Juxtapose<T>(this IEnumerable<T> self, IEnumerable<T> second, Func<T, T, bool> predicate)
         {
             return self.SequenceEqual(second, new MatchComparer<T>(predicate));
@@ -61,12 +50,6 @@ namespace Common.Extensions.EnumerableExtensions
         public static bool Juxtapose<T>(this IEnumerable<T> self, IEnumerable<T> second)
         {
             return self.Juxtapose(second, (a, b) => a.Equals(b));
-        }
-
-        public static ReadOnlyDictionary<TKey, TValue> ToReadOnlyDictionary<TKey, TValue>
-            (this IEnumerable<KeyValuePair<TKey, TValue>> collection)
-        {
-            return new ReadOnlyDictionary<TKey, TValue>(collection.ToDictionary(item => item.Key, item => item.Value));
         }
 
         public static ReadOnlyCollection<T> ToReadOnly<T>(this IEnumerable<T> collection)
@@ -85,11 +68,6 @@ namespace Common.Extensions.EnumerableExtensions
         public static IOrderedEnumerable<T> OrderByOrderAttribute<T>(this IEnumerable<T> collection)
         {
             return collection.OrderBy(item => item.GetAttributeOrNull<OrderAttribute>()?.Order ?? OrderAttribute.Default.Order);
-        }
-
-        public static IOrderedEnumerable<MethodInfo> OrderByOrderAttribute(this IEnumerable<MethodInfo> collection)
-        {
-            return collection.OrderBy(method => method.GetAttributeOrNull<OrderAttribute>()?.Order ?? OrderAttribute.Default.Order);
         }
 
         public static IEnumerable<T> TakeOrDefault<T>(this IEnumerable<T> collection, int number, T defaultValue = default)

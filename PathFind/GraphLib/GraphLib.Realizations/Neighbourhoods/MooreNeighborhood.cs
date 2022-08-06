@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using GraphLib.Proxy.Extensions;
 using System;
 using System.Collections.Generic;
@@ -32,27 +31,23 @@ namespace GraphLib.Realizations.Neighbourhoods
             neighbourhood = new Lazy<IReadOnlyCollection<ICoordinate>>(GetNeighborhood);
         }
 
-        private List<ICoordinate> DetectNeighborhood(int depth = 0)
+        private List<ICoordinate> CollectNeighbors(int depth = 0)
         {
             var neighborhood = new List<ICoordinate>();
             foreach (int offset in lateralOffsetMatrix)
             {
                 resultCoordinatesValues[depth] = selfCoordinatesValues[depth] + offset;
-                neighborhood.AddRange(GetCoordinates(depth));
+                var neighbours = depth < limitDepth - 1
+                    ? CollectNeighbors(depth + 1).AsEnumerable()
+                    : new[] { resultCoordinatesValues.ToCoordinate() };
+                neighborhood.AddRange(neighbours);
             }
             return neighborhood;
         }
 
-        private IReadOnlyCollection<ICoordinate> GetCoordinates(int depth)
-        {
-            return depth < limitDepth - 1
-                ? DetectNeighborhood(depth + 1)
-                : resultCoordinatesValues.ToCoordinate().ToCollection();
-        }
-
         private List<ICoordinate> GetNeighborhood()
         {
-            var coordinates = DetectNeighborhood();
+            var coordinates = CollectNeighbors();
             coordinates.Remove(selfCoordinate);
             return coordinates;
         }

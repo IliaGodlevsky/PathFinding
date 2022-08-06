@@ -30,19 +30,14 @@ namespace ConsoleVersion.Model.Methods
         {
             return info
                 .GetCustomAttributes<TAttribute>()
-                .Select(GetMethod)
+                .Select(attr => type.GetMethod(attr.MethodName, MethodAccessModificators))
                 .Select(CreateDelegateOrNull);
         }
 
-        private TResult CreateDelegateOrNull(MethodInfo info)
+        private TResult CreateDelegateOrNull(MethodInfo method)
         {
-            info.TryCreateDelegate(target, out TResult action);
+            method.TryCreateDelegate(target, out TResult action);
             return action;
-        }
-
-        private MethodInfo GetMethod(TAttribute attribute)
-        {
-            return type.GetMethod(attribute.MethodName, MethodAccessModificators);
         }
     }
 }

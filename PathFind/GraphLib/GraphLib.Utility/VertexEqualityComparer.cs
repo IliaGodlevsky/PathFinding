@@ -13,7 +13,7 @@ namespace GraphLib.Utility
 
         public int GetHashCode(IVertex obj)
         {
-            return HashCode.Combine(obj.Cost.CurrentCost, obj.Position.GetHashCode());
+            return HashCode.Combine(obj.Cost.CurrentCost, obj.IsObstacle, obj.Position.GetHashCode());
         }
     }
 }

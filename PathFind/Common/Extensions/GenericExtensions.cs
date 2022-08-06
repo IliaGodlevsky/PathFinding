@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 
@@ -55,11 +53,6 @@ namespace Common.Extensions
         public static T As<T>(this object self, T @default = null) where T : class
         {
             return self as T ?? @default;
-        }
-
-        public static IReadOnlyCollection<T> ToCollection<T>(this T item)
-        {
-            return new ReadOnlyCollection<T>(new[] { item });
         }
     }
 }

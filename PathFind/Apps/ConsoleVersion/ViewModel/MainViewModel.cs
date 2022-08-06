@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Common.Interface;
 using ConsoleVersion.Attributes;
+using ConsoleVersion.Delegates;
 using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
@@ -92,10 +93,7 @@ namespace ConsoleVersion.ViewModel
 
         [Condition(nameof(CanExecuteInterrupt))]
         [MenuItem(MenuItemsNames.Exit, 7)]
-        private void Interrupt()
-        {
-            WindowClosed?.Invoke();
-        }
+        private void Interrupt() => WindowClosed?.Invoke();
 
         public void ClearGraph()
         {
@@ -160,7 +158,7 @@ namespace ConsoleVersion.ViewModel
             return AnswerInput.Input(MessagesTexts.ExitAppMsg, Constants.AnswerValueRange);
         }
 
-        private void ExecuteSafe(Action action)
+        private void ExecuteSafe(Command action)
         {
             try
             {

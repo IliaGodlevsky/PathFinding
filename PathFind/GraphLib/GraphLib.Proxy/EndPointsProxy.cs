@@ -1,5 +1,4 @@
 ﻿using GraphLib.Interfaces;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace GraphLib.Proxy

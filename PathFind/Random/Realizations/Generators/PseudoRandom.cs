@@ -13,7 +13,6 @@ namespace Random.Realizations.Generators
         private readonly object locker = new object();
 
         private ulong seed;
-        private ulong Seed => seed = seed * Factor + Term;
 
         public PseudoRandom(int seed)
         {
@@ -32,7 +31,8 @@ namespace Random.Realizations.Generators
             {
                 var range = new InclusiveValueRange<int>(maxValue, minValue);
                 ulong module = (ulong)range.Amplitude() + 1;
-                return (int)(Seed % module) + range.LowerValueOfRange;
+                seed = seed * Factor + Term;
+                return (int)(seed % module) + range.LowerValueOfRange;
             }
         }
     }

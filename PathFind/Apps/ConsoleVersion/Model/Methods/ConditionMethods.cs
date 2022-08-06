@@ -1,6 +1,7 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Delegates;
+using System;
 using System.Reflection;
 
 namespace ConsoleVersion.Model.Methods
@@ -13,7 +14,8 @@ namespace ConsoleVersion.Model.Methods
 
         public override Condition GetMethods(MethodInfo targetMethod)
         {
-            return GetMethodsInternal(targetMethod).Combine();
+            return (Condition)GetMethodsInternal(targetMethod)
+                .AggregateOrDefault<Delegate>(Delegate.Combine);
         }
     }
 }
