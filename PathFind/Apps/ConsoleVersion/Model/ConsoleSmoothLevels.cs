@@ -22,12 +22,12 @@ namespace ConsoleVersion.Model
             levels = new Lazy<IReadOnlyList<ISmoothLevel>>(GetSmoothLevels);
         }
 
-        private sealed class CustomSmoothLevel : ISmoothLevel, IRequireIntInput
+        private sealed class CustomSmoothLevel : ISmoothLevel
         {
             private const int MaxSmoothLevel = 100;
             private const string LevelMsg = "Input level of smoothing: ";
 
-            public IInput<int> IntInput { get; set; } = DI.Container.Resolve<IInput<int>>();
+            private IInput<int> IntInput { get; } = DI.Container.Resolve<IInput<int>>();
 
             public int Level => IntInput.Input(LevelMsg, MaxSmoothLevel, 1);
 
