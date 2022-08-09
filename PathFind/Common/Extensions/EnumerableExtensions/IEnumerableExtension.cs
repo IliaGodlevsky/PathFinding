@@ -54,7 +54,15 @@ namespace Common.Extensions.EnumerableExtensions
 
         public static ReadOnlyCollection<T> ToReadOnly<T>(this IEnumerable<T> collection)
         {
-            return new ReadOnlyCollection<T>(collection.ToArray());
+            switch (collection)
+            {
+                case ReadOnlyCollection<T> readOnly:
+                    return readOnly;
+                case IList<T> list:
+                    return new ReadOnlyCollection<T>(list);
+                default:
+                    return Array.AsReadOnly(collection.ToArray());
+            }
         }
 
         public static IOrderedEnumerable<T> OrderByOrderAttribute<T>(this IEnumerable<T> collection)
@@ -84,6 +92,12 @@ namespace Common.Extensions.EnumerableExtensions
         public static Queue<T> ToQueue<T>(this IEnumerable<T> collection)
         {
             return new Queue<T>(collection);
+        }
+
+        public static T Combine<T>(this IEnumerable<T> delegates)
+            where T : Delegate
+        {
+            return (T)delegates.AggregateOrDefault<Delegate>(Delegate.Combine);
         }
 
         public static int ToHashCode(this IEnumerable<int> array)

@@ -64,7 +64,7 @@ namespace WPFVersion3D.Model
         }
 
         private static IReadOnlyCollection<IAnimationSpeed> GetSpeeds()
-        {
+        {           
             var speeds = new IAnimationSpeed[]
             {
                 new AnimationSpeed(TimeSpan.FromSeconds(5), "Slowest"),
