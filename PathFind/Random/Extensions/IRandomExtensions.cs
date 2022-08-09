@@ -17,17 +17,18 @@ namespace Random.Extensions
             return random.Next(default, int.MaxValue);
         }
 
-        public static double NextDouble(this IRandom random, InclusiveValueRange<double> range)
+        public static double Next(this IRandom random, InclusiveValueRange<double> range)
         {
             return range.Amplitude() * ((double)random.Next() / int.MaxValue) + range.LowerValueOfRange;
         }
 
-        public static TimeSpan NextTimeSpan(this IRandom random, InclusiveValueRange<TimeSpan> range)
+        public static TimeSpan Next(this IRandom random, InclusiveValueRange<TimeSpan> range)
         {
-            double lowerMilliseconds = range.LowerValueOfRange.TotalMilliseconds;
-            double upperMilliseconds = range.UpperValueOfRange.TotalMilliseconds;
-            var valueRange = new InclusiveValueRange<double>(lowerMilliseconds, upperMilliseconds);
-            return TimeSpan.FromMilliseconds(random.NextDouble(valueRange));
+            double lower = range.LowerValueOfRange.TotalMilliseconds;
+            double upper = range.UpperValueOfRange.TotalMilliseconds;
+            var valueRange = new InclusiveValueRange<double>(lower, upper);
+            double randomValue = random.Next(valueRange);
+            return TimeSpan.FromMilliseconds(randomValue);
         }
     }
 }

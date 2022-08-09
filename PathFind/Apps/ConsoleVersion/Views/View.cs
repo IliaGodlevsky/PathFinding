@@ -54,5 +54,7 @@ namespace ConsoleVersion.Views
         {
             IsClosureRequested = true;
         }
+
+
     }
 }

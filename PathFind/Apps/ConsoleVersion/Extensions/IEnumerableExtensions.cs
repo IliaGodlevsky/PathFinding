@@ -18,14 +18,9 @@ namespace ConsoleVersion.Extensions
             vertices.ForEach(vertex => vertex.OnMarkedToReplaceIntermediate());
         }
 
-        public static MenuList CreateMenuList<T>(this IEnumerable<T> items, Func<T, string> itemName, int columnsNumber = 2)
-        {
-            return new MenuList(items.Select(itemName), columnsNumber);
-        }
-
         public static MenuList CreateMenuList<T>(this IEnumerable<T> items, int columnsNumber = 2)
         {
-            return items.CreateMenuList(item => item.ToString(), columnsNumber);
+            return new MenuList(items.Select(item => item.ToString()), columnsNumber);
         }
     }
 }

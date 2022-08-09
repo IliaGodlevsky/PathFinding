@@ -86,7 +86,7 @@ namespace ConsoleVersion.DependencyInjection
 
             builder.RegisterComposite<CompositeGraphEvents, IGraphEvents>().SingleInstance();
 
-            builder.RegisterType<KnuthRandom>().As<IRandom>().SingleInstance();
+            builder.RegisterType<PseudoRandom>().As<IRandom>().SingleInstance();
             builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
