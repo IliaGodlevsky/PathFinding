@@ -1,5 +1,4 @@
 ﻿using Algorithm.Interfaces;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 
 namespace Algorithm.Realizations.Heuristic.Distances
@@ -9,8 +8,8 @@ namespace Algorithm.Realizations.Heuristic.Distances
         public double Calculate(IVertex first, IVertex second)
         {
             double result = default;
-            var firstCoordinates = first.GetCoordinates();
-            var secondCoordinates = second.GetCoordinates();
+            var firstCoordinates = first.Position.CoordinatesValues;
+            var secondCoordinates = second.Position.CoordinatesValues;
             for (int i = 0; i < firstCoordinates.Length; i++)
             {
                 double zipped = ZipMethod(firstCoordinates[i], secondCoordinates[i]);

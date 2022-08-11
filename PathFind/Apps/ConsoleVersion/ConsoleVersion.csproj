@@ -63,7 +63,7 @@
     <Compile Include="Attributes\ExecuteSafeAttribute.cs" />
     <Compile Include="Attributes\ConditionAttribute.cs" />
     <Compile Include="Attributes\MenuItemAttribute.cs" />
-    <Compile Include="Attributes\MethodAttribute.cs" />
+    <Compile Include="Attributes\CompanionMethodAttribute.cs" />
     <Compile Include="Commands\MenuCommand.cs" />
     <Compile Include="Commands\ConditionedMenuCommand.cs" />
     <Compile Include="Cursor.cs" />

@@ -38,7 +38,7 @@ namespace WPFVersion3D.Model.Axes
 
         private void LocateVertex(Vertex3D vertex, double distanceBetweenVertices)
         {
-            int coordinate = vertex.GetCoordinates().ElementAtOrDefault(Order);
+            int coordinate = vertex.Position.CoordinatesValues.ElementAtOrDefault(Order);
             double dimensionSizeCorrection = distanceBetweenVertices == 0 ? 0 : 1;
             double centeredPosition = coordinate + (dimensionSizeCorrection - dimensionSize) / 2.0;
             Offset(vertex, centeredPosition * (InitialVertexSize + distanceBetweenVertices));
