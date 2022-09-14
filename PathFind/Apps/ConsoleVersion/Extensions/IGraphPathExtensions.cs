@@ -7,7 +7,7 @@ namespace ConsoleVersion.Extensions
     {
         public static string ToStatistics(this IGraphPath path, Stopwatch timer, int visited, string algorithm)
         {
-            string pathfindingInfo = string.Format(MessagesTexts.PathfindingStatisticsFormat, path.Length, path.Cost, visited);
+            string pathfindingInfo = string.Format(MessagesTexts.PathfindingStatisticsFormat, path.Count, path.Cost, visited);
             return string.Join("\t", algorithm, timer.Elapsed.ToString(@"mm\:ss\.fff"), pathfindingInfo);
         }
     }

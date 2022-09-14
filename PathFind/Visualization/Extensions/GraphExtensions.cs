@@ -9,14 +9,14 @@ namespace Visualization.Extensions
     {
         public static void RemoveAllColors(this IGraph graph)
         {
-            graph.Vertices
+            graph
                 .OfType<IVisualizable>()
                 .ForEach(vertex => vertex.VisualizeAsRegular());
         }
 
         public static IEnumerable<IVertex> GetObstacles(this IGraph graph)
         {
-            return graph.Vertices.Where(vertex => vertex.IsObstacle);
+            return graph.Where(vertex => vertex.IsObstacle);
         }
     }
 }

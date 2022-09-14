@@ -1,5 +1,4 @@
 ﻿using Common.Extensions;
-using Common.Extensions.EnumerableExtensions;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.Interface;
 using System;

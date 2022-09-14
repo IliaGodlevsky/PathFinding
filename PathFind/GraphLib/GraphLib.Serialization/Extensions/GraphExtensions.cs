@@ -12,7 +12,7 @@ namespace GraphLib.Serialization.Extensions
 
         internal static VertexSerializationInfo[] GetVerticesSerializationInfo(this IGraph graph)
         {
-            return graph.Vertices.Select(vertex => vertex.ToSerializationInfo()).ToArray();
+            return graph.Select(vertex => vertex.ToSerializationInfo()).ToArray();
         }
     }
 }

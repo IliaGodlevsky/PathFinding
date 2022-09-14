@@ -58,7 +58,7 @@ namespace WPFVersion3D.ViewModel
         {
             var status = !path.IsNull() ? AlgorithmViewModel.Finished : AlgorithmViewModel.Failed;
             string time = timer.Elapsed.ToString(@"mm\:ss\.fff");
-            messenger.Send(new UpdateAlgorithmStatisticsMessage(Index, time, visitedVerticesCount, path.Length, path.Cost));
+            messenger.Send(new UpdateAlgorithmStatisticsMessage(Index, time, visitedVerticesCount, path.Count, path.Cost));
             messenger.Send(new AlgorithmStatusMessage(status, Index));
             messenger.Send(new PathFoundMessage(path, algorithm));
         }

@@ -18,7 +18,7 @@ namespace ConsoleVersion.Model
 
         public GraphField(Graph2D graph)
         {
-            Vertices = graph.Vertices.Cast<Vertex>().ToReadOnly();
+            Vertices = graph.Cast<Vertex>().ToReadOnly();
             var displayables = new List<IDisplayable>()
             {
                 new FramedOverAbscissa(graph),

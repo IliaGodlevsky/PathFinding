@@ -1,4 +1,5 @@
 ﻿using GraphLib.Interfaces;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +11,7 @@ namespace GraphLib.TestRealizations.TestObjects
 
         public IVertex Source { get; }
 
-        public IEnumerable<IVertex> EndPoints { get; }
+        private IEnumerable<IVertex> EndPoints { get; }
 
         public TestEndPoints(IVertex source, IVertex target)
         {
@@ -20,9 +21,19 @@ namespace GraphLib.TestRealizations.TestObjects
         }
 
         public TestEndPoints(IGraph graph)
-            : this(graph.Vertices.First(), graph.Vertices.Last())
+            : this(graph.First(), graph.Last())
         {
 
+        }
+
+        public IEnumerator<IVertex> GetEnumerator()
+        {
+            return EndPoints.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Algorithm.Algos.Tests
     [TestFixture]
     public class DistanceFirstALgorithmTests : AlgorithmTest
     {
-        protected override IAlgorithm CreateAlgorithm(IEndPoints endPoints)
+        protected override IAlgorithm<IGraphPath> CreateAlgorithm(IEndPoints endPoints)
         {
             return new DistanceFirstAlgorithm(endPoints);
         }

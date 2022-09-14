@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using Common.Disposables;
 using GraphLib.Realizations.Coordinates;
 using System;
 using Console = Colorful.Console;
@@ -13,14 +13,14 @@ namespace ConsoleVersion
         public static IDisposable HideCursor()
         {
             Console.CursorVisible = false;
-            return new Disposing(ShowCursor);
+            return Disposable.Use(ShowCursor);
         }
 
         public static IDisposable UseCurrentPosition()
         {
             CursorLeft = Console.CursorLeft;
             CursorRight = Console.CursorTop;
-            return new Disposing(RestoreCursorPosition);
+            return Disposable.Use(RestoreCursorPosition);
         }
 
         public static void SetPosition(Coordinate2D point)

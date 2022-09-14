@@ -38,7 +38,7 @@ namespace Algorithm.Base
                         CurrentVertex = GetNextVertex();
                         VisitVertex(CurrentVertex);
                     }
-                    path = new CombinedGraphPath(path, CreateGraphPath());
+                    path = new CompositeGraphPath(path, CreateGraphPath());
                     Reset();
                 }
             }

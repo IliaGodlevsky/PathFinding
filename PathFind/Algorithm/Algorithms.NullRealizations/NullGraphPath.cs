@@ -1,10 +1,11 @@
 ﻿using Algorithm.Interfaces;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations;
 using NullObject.Attributes;
 using SingletonLib;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Algorithm.NullRealizations
 {
@@ -12,15 +13,22 @@ namespace Algorithm.NullRealizations
     [DebuggerDisplay("Null")]
     public sealed class NullGraphPath : Singleton<NullGraphPath, IGraphPath>, IGraphPath
     {
-        public IReadOnlyList<IVertex> Path => NullVertex.GetMany(0);
-
         public double Cost => default;
 
-        public int Length => default;
+        public int Count => default;
 
         private NullGraphPath()
         {
 
         }
+
+        public IEnumerator<IVertex> GetEnumerator()
+        {
+            return Enumerable
+                .Empty<IVertex>()
+                .GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

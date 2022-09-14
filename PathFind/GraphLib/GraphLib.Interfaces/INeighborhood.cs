@@ -2,8 +2,8 @@
 
 namespace GraphLib.Interfaces
 {
-    public interface INeighborhood
+    public interface INeighborhood : IReadOnlyCollection<ICoordinate>
     {
-        IReadOnlyCollection<ICoordinate> Neighbours { get; }
+
     }
 }

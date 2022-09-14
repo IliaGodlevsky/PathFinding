@@ -35,13 +35,13 @@ namespace GraphLib.Serialization.Extensions
         {
             yield return document.CreateElement(Obstacle).WithAttributes(vertex.IsObstacle);
             yield return document.CreateElement(Neighbours).WithChildren(() => document.CreateNodes(vertex.Neighbourhood));
-            yield return document.CreateElement(Coordinate).WithAttributes(vertex.Position.CoordinatesValues);
+            yield return document.CreateElement(Coordinate).WithAttributes(vertex.Position);
             yield return document.CreateElement(Cost).WithAttributes(vertex.Cost.CurrentCost);
         }
 
-        private static IEnumerable<XmlNode> CreateNodes(this XmlDocument document, INeighborhood neighborhood)
+        private static IEnumerable<XmlNode> CreateNodes(this XmlDocument document, IEnumerable<ICoordinate> neighborhood)
         {
-            return neighborhood.Neighbours.Select(neighbour => document.CreateElement(Coordinate).WithAttributes(neighbour.CoordinatesValues));
+            return neighborhood.Select(neighbour => document.CreateElement(Coordinate).WithAttributes(neighbour));
         }
 
         private static XmlText CreateValue<T>(this XmlDocument document, T value)
@@ -54,7 +54,7 @@ namespace GraphLib.Serialization.Extensions
             return document.CreateAttribute(name).WithValue(() => document.CreateValue(value));
         }
 
-        private static IEnumerable<XmlAttribute> GenerateAttributes<T>(this XmlDocument document, T[] array)
+        private static IEnumerable<XmlAttribute> GenerateAttributes<T>(this XmlDocument document, IReadOnlyList<T> array)
         {
             return array.Select((value, i) => document.CreateAttributeWithValue(string.Format(Value, i), value));
         }
@@ -63,6 +63,13 @@ namespace GraphLib.Serialization.Extensions
             where Xml : XmlNode
         {
             node.AppendAttributes(node.OwnerDocument.GenerateAttributes(array).ToArray());
+            return node;
+        }
+
+        private static Xml WithAttributes<Xml>(this Xml node, ICoordinate coordinate)
+            where Xml : XmlNode
+        {
+            node.AppendAttributes(node.OwnerDocument.GenerateAttributes(coordinate).ToArray());
             return node;
         }
 

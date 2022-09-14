@@ -1,5 +1,4 @@
 ﻿using Common.Extensions.EnumerableExtensions;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
@@ -19,8 +18,8 @@ namespace WindowsFormsVersion.View
         public WinFormsGraphField(Graph2D graph)
         {
             distanceBetweenVertices = Constants.DistanceBetweenVertices + Constants.VertexSize;
-            Vertices = graph.Vertices;
-            graph.ForEach<Vertex>(Locate);
+            Vertices = graph;
+            graph.ForEach(vertex => Locate((Vertex)vertex));
         }
 
         public WinFormsGraphField()

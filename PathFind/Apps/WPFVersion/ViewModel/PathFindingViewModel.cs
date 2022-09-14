@@ -26,6 +26,7 @@ namespace WPFVersion.ViewModel
         public event Action WindowClosed;
 
         public ICommand ConfirmPathFindAlgorithmChoice { get; }
+
         public ICommand CancelPathFindAlgorithmChoice { get; }
 
         public PathFindingViewModel(BaseEndPoints endPoints,
@@ -63,7 +64,7 @@ namespace WPFVersion.ViewModel
         protected override void SummarizePathfindingResults()
         {
             string time = timer.Elapsed.ToString(@"mm\:ss\.fff");
-            var updateMessage = new UpdateStatisticsMessage(Index, time, visitedVerticesCount, path.Length, path.Cost);
+            var updateMessage = new UpdateStatisticsMessage(Index, time, visitedVerticesCount, path.Count, path.Cost);
             messenger.Send(updateMessage);
             messenger.Send(new AlgorithmStatusMessage(path.ToStatus(), Index));
             messenger.Send(new PathFoundMessage(algorithm, path));

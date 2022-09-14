@@ -150,7 +150,7 @@ namespace ConsoleVersion.ViewModel
 
         private bool IsGraphValid()
         {
-            return !graph.IsNull() && graph.Vertices.Count > 0;
+            return !graph.IsNull() && graph.Count > 0;
         }
 
         private bool CanExecuteInterrupt()

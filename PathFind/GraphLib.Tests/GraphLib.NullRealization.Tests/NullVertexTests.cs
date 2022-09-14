@@ -47,7 +47,7 @@ namespace GraphLib.Common.Tests
             var graph = NullGraph.Instance;
 
             var candidate = NullVertex.Instance;
-            var vertex = graph.Vertices.FirstOrDefault() ?? NullVertex.Instance;
+            var vertex = graph.FirstOrDefault() ?? NullVertex.Instance;
 
             Assert.DoesNotThrow(() => vertex.IsNeighbour(candidate));
         }

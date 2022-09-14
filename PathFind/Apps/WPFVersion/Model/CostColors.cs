@@ -27,7 +27,7 @@ namespace WPFVersion.Model
 
         public void ColorizeAccordingToCost()
         {
-            foreach (Vertex vertex in graph.Vertices)
+            foreach (Vertex vertex in graph)
             {
                 previousColors.Add(vertex.Background);
                 if (CanBeColored(vertex))
@@ -39,7 +39,7 @@ namespace WPFVersion.Model
 
         public void ReturnPreviousColors()
         {
-            using (var iterator = graph.Vertices.GetEnumerator())
+            using (var iterator = graph.GetEnumerator())
             {
                 for (int i = 0; i < previousColors.Count; i++)
                 {

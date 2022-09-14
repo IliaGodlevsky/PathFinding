@@ -1,7 +1,5 @@
-﻿using Autofac;
-using Autofac.Extras.Moq;
-using GraphLib.Interfaces;
-using GraphLib.Realizations.Tests.Extenions;
+﻿using GraphLib.Interfaces;
+using GraphLib.TestRealizations.TestObjects;
 using NUnit.Framework;
 using System;
 using System.Collections;
@@ -30,46 +28,33 @@ namespace GraphLib.Realizations.Tests.NeighborhoodTests
         public void Coordinates_CoordinatesWithVariousDimensionsNumber_ReturnValidNumberOfNeighbours(int[] coordinateValues)
         {
             ulong expectedResult = GetExpectedNeighborhoodCount(coordinateValues.Length);
-            using (var mock = AutoMock.GetLoose())
-            {
-                mock.MockCoordinate(coordinateValues);
-                var neighboursCoordinate = mock.Create<TNeighborhood>();
 
-                var environment = neighboursCoordinate.Neighbours;
+            var coordinate = new TestCoordinate(coordinateValues);
+            var neighborhood = (TNeighborhood)Activator.CreateInstance(typeof(TNeighborhood), coordinate);
 
-                Assert.AreEqual(expectedResult, environment.LongCount());
-            }
+            Assert.AreEqual(expectedResult, neighborhood.LongCount());
         }
 
         [TestCaseSource(nameof(CoordinateValues))]
         public void Coordinates_CoordinatesWithVariousDimensionsNumber_ReturnNeighboursWithoutSelf(int[] coordinateValues)
         {
-            using (var mock = AutoMock.GetLoose())
-            {
-                mock.MockCoordinate(coordinateValues);
-                var neighboursCoordinate = mock.Create<TNeighborhood>();
+            var coordinate = new TestCoordinate(coordinateValues);
+            var neighborhood = (TNeighborhood)Activator.CreateInstance(typeof(TNeighborhood), coordinate);
 
-                var environment = neighboursCoordinate.Neighbours;
-                var coordinate = mock.Container.Resolve<ICoordinate>();
-                bool hasSelf = environment.Any(values => values.Equals(coordinate));
+            bool hasSelf = neighborhood.Any(values => values.Equals(coordinate));
 
-                Assert.IsFalse(hasSelf);
-            }
+            Assert.IsFalse(hasSelf);
         }
 
         [TestCaseSource(nameof(CoordinateValues))]
         public void Coordinates_CoordinatesWithVariousDimensionsCount_ReturnUniqueCoordinates(int[] coordinateValues)
         {
-            using (var mock = AutoMock.GetLoose())
-            {
-                mock.MockCoordinate(coordinateValues);
-                var neighboursCoordinate = mock.Create<TNeighborhood>();
+            var coordinate = new TestCoordinate(coordinateValues);
+            var neighborhood = (TNeighborhood)Activator.CreateInstance(typeof(TNeighborhood), coordinate);
 
-                var environment = neighboursCoordinate.Neighbours;
-                var environmentCount = environment.Distinct().Count();
+            var environmentCount = neighborhood.Distinct().Count();
 
-                Assert.IsTrue(environmentCount == environment.Count);
-            }
+            Assert.IsTrue(environmentCount == neighborhood.Count);
         }
     }
 }

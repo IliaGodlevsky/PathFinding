@@ -66,7 +66,7 @@ namespace ConsoleVersion.Model
 
         private string Text { get; set; }
 
-        public Vertex(INeighborhood neighbourhood, ICoordinate coordinate, IVisualization<Vertex> visualization)
+        public Vertex(IReadOnlyCollection<ICoordinate> neighbourhood, ICoordinate coordinate, IVisualization<Vertex> visualization)
         {
             this.visualization = visualization;
             Position = coordinate;

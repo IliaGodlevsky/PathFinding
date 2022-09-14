@@ -14,7 +14,7 @@ namespace WindowsFormsVersion.Model
     [DebuggerDisplay("{Position.ToString()}")]
     internal class Vertex : Label, IVertex, IVisualizable
     {
-        public Vertex(INeighborhood neighborhood, ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
+        public Vertex(IReadOnlyCollection<ICoordinate> neighborhood, ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
         {
             this.visualization = visualization;
             float fontSize = VertexSize * TextToSizeRatio;

@@ -15,7 +15,7 @@ namespace Visualization.Realizations
             slides = new List<IVisualizationSlides<IVertex>>();
         }
 
-        public void Add(IAlgorithm algorithm, IVertex vertex)
+        public void Add(IAlgorithm<IGraphPath> algorithm, IVertex vertex)
         {
             slides.ForEach(slide => slide.Add(algorithm, vertex));
         }
@@ -35,7 +35,7 @@ namespace Visualization.Realizations
             return (IEnumerator<IVisualizationSlides<IVertex>>)slides.GetEnumerator();
         }
 
-        public void Remove(IAlgorithm algorithm)
+        public void Remove(IAlgorithm<IGraphPath> algorithm)
         {
             slides.ForEach(slide => slide.Remove(algorithm));
         }

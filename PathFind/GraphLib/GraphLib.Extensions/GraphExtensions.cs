@@ -14,35 +14,19 @@ namespace GraphLib.Extensions
 
         public static int GetObstaclePercent(this IGraph self)
         {
-            return (int)Math.Round(self.Size == 0 ? 0 : self.GetObstaclesCount() * 100.0 / self.Size);
+            return (int)Math.Round(self.Count == 0 ? 0 : self.GetObstaclesCount() * 100.0 / self.Count);
         }
 
         public static int GetObstaclesCount(this IGraph self)
         {
-            return self.Vertices.Where(vertex => vertex.IsObstacle).Count();
-        }
-
-        public static IGraph ForEach(this IGraph self, Action<IVertex> action)
-        {
-            self.Vertices.ForEach(action);
-            return self;
-        }
-
-        public static IGraph ForEach<TVertex>(this IGraph self, Action<TVertex> action)
-            where TVertex : IVertex
-        {
-            foreach (TVertex vertex in self.Vertices)
-            {
-                action(vertex);
-            }
-            return self;
+            return self.Where(vertex => vertex.IsObstacle).Count();
         }
 
         public static int GetAvailableIntermediatesNumber(this IGraph graph)
         {
             const int NumberOfRequiredEndPoints = 2;
-            int isolatedCount = graph.Vertices.Where(vertex => vertex.IsIsolated()).Count();
-            int number = graph.Size - isolatedCount - NumberOfRequiredEndPoints;
+            int isolatedCount = graph.Where(vertex => vertex.IsIsolated()).Count();
+            int number = graph.Count - (isolatedCount + NumberOfRequiredEndPoints);
             return number > 0 ? number : 0;
         }
     }

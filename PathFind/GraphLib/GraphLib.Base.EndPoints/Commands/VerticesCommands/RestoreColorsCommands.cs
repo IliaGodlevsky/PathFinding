@@ -1,16 +1,13 @@
 ﻿using Commands.Interfaces;
 using GraphLib.Base.EndPoints.Commands.EndPointsCommands;
 using GraphLib.Interfaces;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
 {
     internal sealed class RestoreColorsCommands : BaseVerticesCommands
     {
-
-        protected override IReadOnlyCollection<IUndoCommand> UndoCommands => Array.Empty<IUndoCommand>();
-
         public RestoreColorsCommands(BaseEndPoints endPoints) : base(endPoints)
         {
 
@@ -22,6 +19,11 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
             yield return new RestoreMarkedToReplaceColorCommand(endPoints);
             yield return new RestoreSourceColorCommand(endPoints);
             yield return new RestoreTargetColorCommand(endPoints);
+        }
+
+        protected override IEnumerable<IUndoCommand> GetUndoCommand(BaseEndPoints endPoints)
+        {
+            return Enumerable.Empty<IUndoCommand>();
         }
     }
 }

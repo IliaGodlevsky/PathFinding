@@ -1,5 +1,4 @@
 ﻿using Common.Extensions.EnumerableExtensions;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
 using GraphLib.Realizations.Graphs;
@@ -16,8 +15,8 @@ namespace WPFVersion.Model
 
         public GraphField(Graph2D graph)
         {
-            Vertices = graph.Vertices;
-            graph.ForEach<Vertex>(Locate);
+            Vertices = graph;
+            Vertices.ForEach(vertex => Locate((Vertex)vertex));
         }
 
         public GraphField()

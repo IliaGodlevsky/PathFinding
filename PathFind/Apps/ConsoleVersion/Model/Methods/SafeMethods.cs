@@ -7,6 +7,13 @@ namespace ConsoleVersion.Model.Methods
 {
     internal sealed class SafeMethods : CompanionMethods<SafeAction, ExecuteSafeAttribute>
     {
+        private static readonly SafeAction SafeAction;
+
+        static SafeMethods()
+        {
+            SafeAction = new SafeAction(command => command.Invoke());
+        }
+
         public SafeMethods(object target) : base(target)
         {
 
@@ -14,8 +21,7 @@ namespace ConsoleVersion.Model.Methods
 
         public override SafeAction GetMethods(MethodInfo info)
         {
-            return GetMethodsInternal(info).SingleOrDefault()
-                ?? new SafeAction(command => command.Invoke());
+            return GetMethodsInternal(info).SingleOrDefault() ?? SafeAction;
         }
     }
 }

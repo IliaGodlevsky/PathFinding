@@ -1,6 +1,7 @@
 ﻿using GraphLib.Interfaces;
 using NullObject.Attributes;
 using SingletonLib;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -14,8 +15,18 @@ namespace GraphLib.NullRealizations
 
         public IVertex Source => NullVertex.Instance;
 
-        public IEnumerable<IVertex> EndPoints { get; }
+        private IEnumerable<IVertex> EndPoints { get; }
 
         private NullEndPoints() => EndPoints = NullVertex.GetMany(2);
+
+        public IEnumerator<IVertex> GetEnumerator()
+        {
+            return EndPoints.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 }

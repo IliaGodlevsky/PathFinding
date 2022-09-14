@@ -5,9 +5,9 @@ namespace WPFVersion3D.Messages.PassValueMessages
 {
     internal sealed class EndPointsChosenMessage : PassValueMessage<IEndPoints>
     {
-        public IAlgorithm Algorithm { get; }
+        public IAlgorithm<IGraphPath> Algorithm { get; }
 
-        public EndPointsChosenMessage(IEndPoints value, IAlgorithm algorithm) : base(value)
+        public EndPointsChosenMessage(IEndPoints value, IAlgorithm<IGraphPath> algorithm) : base(value)
         {
             Algorithm = algorithm;
         }

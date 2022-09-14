@@ -1,7 +1,11 @@
-﻿namespace Algorithm.Interfaces
+﻿using GraphLib.Interfaces;
+using System.Collections.Generic;
+
+namespace Algorithm.Interfaces
 {
-    public interface IAlgorithm
+    public interface IAlgorithm<out TPath>
+        where TPath : IEnumerable<IVertex>
     {
-        IGraphPath FindPath();
+        TPath FindPath();
     }
 }

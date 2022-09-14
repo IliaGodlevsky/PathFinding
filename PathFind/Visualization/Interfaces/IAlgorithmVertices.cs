@@ -6,6 +6,6 @@ namespace Visualization.Interfaces
 {
     internal interface IAlgorithmVertices
     {
-        IReadOnlyCollection<IVertex> GetVertices(IAlgorithm algorithm);
+        IReadOnlyCollection<IVertex> GetVertices(IAlgorithm<IGraphPath> algorithm);
     }
 }

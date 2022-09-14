@@ -1,5 +1,6 @@
 ﻿using GraphLib.Interfaces;
-using GraphLib.Proxy;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GraphLib.Serialization
 {
@@ -11,16 +12,17 @@ namespace GraphLib.Serialization
 
         public ICoordinate Position { get; }
 
-        public INeighborhood Neighbourhood { get; }
+        public IReadOnlyCollection<ICoordinate> Neighbourhood { get; }
 
         public VertexSerializationInfo(IVertex vertex)
-            : this(vertex.IsObstacle, vertex.Cost, vertex.Position, new NeighbourhoodProxy(vertex))
+            : this(vertex.IsObstacle, vertex.Cost, vertex.Position,
+                  vertex.Neighbours.Select(v => v.Position).ToArray())
         {
 
         }
 
         internal VertexSerializationInfo(bool isObstacle, IVertexCost cost,
-            ICoordinate position, INeighborhood neighborhood)
+            ICoordinate position, IReadOnlyCollection<ICoordinate> neighborhood)
         {
             IsObstacle = isObstacle;
             Cost = cost;

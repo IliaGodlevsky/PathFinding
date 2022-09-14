@@ -8,9 +8,9 @@ namespace Algorithm.Realizations.Heuristic.Distances
         public double Calculate(IVertex first, IVertex second)
         {
             double result = default;
-            var firstCoordinates = first.Position.CoordinatesValues;
-            var secondCoordinates = second.Position.CoordinatesValues;
-            for (int i = 0; i < firstCoordinates.Length; i++)
+            var firstCoordinates = first.Position;
+            var secondCoordinates = second.Position;
+            for (int i = 0; i < firstCoordinates.Count; i++)
             {
                 double zipped = ZipMethod(firstCoordinates[i], secondCoordinates[i]);
                 result = Operation(result, zipped);

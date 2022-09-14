@@ -58,7 +58,7 @@ namespace GraphViewModel
                 SubscribeOnAlgorithmEvents(algorithm);
                 endPoints.RestoreCurrentColors();
                 path = await algorithm.FindPathAsync();
-                await path.HighlightAsync();
+                await path.VisualizeAsPathAsync();
                 SummarizePathfindingResults();
             }
             catch (DeadendVertexException)

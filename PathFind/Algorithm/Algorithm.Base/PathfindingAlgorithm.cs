@@ -17,7 +17,7 @@ using System.Threading;
 
 namespace Algorithm.Base
 {
-    public abstract class PathfindingAlgorithm : IAlgorithm, IProcess, IPausable, IInterruptable, IDisposable
+    public abstract class PathfindingAlgorithm : IAlgorithm<IGraphPath>, IProcess, IPausable, IInterruptable, IDisposable
     {
         public event AlgorithmEventHandler VertexVisited;
         public event AlgorithmEventHandler VertexEnqueued;
@@ -27,7 +27,7 @@ namespace Algorithm.Base
         public event ProcessEventHandler Paused;
         public event ProcessEventHandler Resumed;
 
-        private readonly AutoResetEvent pauseEvent;
+        private readonly EventWaitHandle pauseEvent;
         protected readonly IVisitedVertices visitedVertices;
         protected readonly IParentVertices parentVertices;
         protected readonly IEndPoints endPoints;

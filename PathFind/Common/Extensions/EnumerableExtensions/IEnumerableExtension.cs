@@ -94,12 +94,6 @@ namespace Common.Extensions.EnumerableExtensions
             return new Queue<T>(collection);
         }
 
-        public static T Combine<T>(this IEnumerable<T> delegates)
-            where T : Delegate
-        {
-            return (T)delegates.AggregateOrDefault<Delegate>(Delegate.Combine);
-        }
-
         public static int ToHashCode(this IEnumerable<int> array)
         {
             return array.AggregateOrDefault(HashCode.Combine);

@@ -1,4 +1,5 @@
 ﻿using GraphLib.Interfaces;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace GraphLib.Proxy
@@ -9,13 +10,18 @@ namespace GraphLib.Proxy
 
         public IVertex Source { get; }
 
-        public IEnumerable<IVertex> EndPoints { get; }
-
         public EndPointsProxy(IVertex source, IVertex target)
         {
             Source = source;
             Target = target;
-            EndPoints = new[] { Source, Target };
         }
+
+        public IEnumerator<IVertex> GetEnumerator()
+        {
+            yield return Source;
+            yield return Target;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

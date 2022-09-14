@@ -35,15 +35,20 @@ namespace WPFVersion3D.ViewModel
 
         private void ExecuteEnableRotationCommand(object param)
         {
-            RotationState = (IRotationState)param;
-            RotationState.Activate(this);
+            if (param is IRotationState state)
+            {
+                RotationState = state;
+                RotationState.Activate(this);
+            }
         }
 
         private void ExecuteRotateFieldCommand(object parameter)
         {
-            var factory = (IAnimatedAxisRotatorFactory)parameter;
-            var rotator = factory.Create(RotationSpeed);
-            rotator.RotateAxis(AngleRotation);
+            if (parameter is IAnimatedAxisRotatorFactory factory)
+            {
+                var rotator = factory.Create(RotationSpeed);
+                rotator.RotateAxis(AngleRotation);
+            }
         }
 
         private bool CanExecuteRotateFieldCommand(object parameter)

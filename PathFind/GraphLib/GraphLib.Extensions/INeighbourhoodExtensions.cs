@@ -11,31 +11,31 @@ namespace GraphLib.Extensions
 {
     public static class INeighbourhoodExtensions
     {
-        public static IReadOnlyCollection<IVertex> GetNeighboursWithinGraph(this INeighborhood self, IVertex vertex)
+        public static IReadOnlyCollection<IVertex> GetNeighboursWithinGraph(this IEnumerable<ICoordinate> self, IVertex vertex)
         {
             return vertex.Graph.IsNull()
                 ? throw new LonelyVertexException(vertex)
                 : self.GetNeighborsWithinGraphInternal(vertex);
         }
 
-        private static IEnumerable<ICoordinate> WithoutOutOfGraph(this INeighborhood self, IVertex vertex)
+        private static IEnumerable<ICoordinate> WithoutOutOfGraph(this IEnumerable<ICoordinate> self, IVertex vertex)
         {
-            return self.Neighbours.Where(neighbour =>
+            return self.Where(neighbour =>
             {
                 bool IsWithin(int coordinate, int graphDimension)
                 {
                     var range = new InclusiveValueRange<int>(graphDimension - 1);
                     return range.Contains(coordinate);
                 }
-                return neighbour.CoordinatesValues.Juxtapose(vertex.Graph.DimensionsSizes, IsWithin);
+                return neighbour.Juxtapose(vertex.Graph.DimensionsSizes, IsWithin);
             });
         }
 
-        private static IReadOnlyCollection<IVertex> GetNeighborsWithinGraphInternal(this INeighborhood self, IVertex vertex)
+        private static IReadOnlyCollection<IVertex> GetNeighborsWithinGraphInternal(this IEnumerable<ICoordinate> self, IVertex vertex)
         {
             return self.WithoutOutOfGraph(vertex)
                 .Select(coordinate => vertex.Graph.Get(coordinate))
-                .ToArray();
+                .ToReadOnly();
         }
     }
 }

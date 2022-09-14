@@ -23,7 +23,7 @@ namespace Algorithm.Algos.Benchmark.Pathfinding
 
         private void InitializeNeighbours(IGraph graph)
         {
-            foreach (var vertex in graph.Vertices)
+            foreach (var vertex in graph)
             {
                 var neighbours = vertex.Neighbours;
             }

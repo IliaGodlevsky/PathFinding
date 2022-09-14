@@ -16,9 +16,9 @@ namespace GraphLib.Realizations.Coordinates
         public Coordinate3D(params int[] coordinates)
             : base(numberOfDimensions: 3, coordinates)
         {
-            X = CoordinatesValues.First();
-            Y = CoordinatesValues.ElementAt(1);
-            Z = CoordinatesValues.Last();
+            X = this.First();
+            Y = this.ElementAt(1);
+            Z = this.Last();
         }
 
         public Coordinate3D(int x, int y, int z)

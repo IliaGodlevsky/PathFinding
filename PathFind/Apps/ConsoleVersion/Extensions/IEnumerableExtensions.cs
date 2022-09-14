@@ -1,6 +1,5 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using ConsoleVersion.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 

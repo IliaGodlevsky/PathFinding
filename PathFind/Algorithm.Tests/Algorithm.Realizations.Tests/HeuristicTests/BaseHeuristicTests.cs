@@ -1,5 +1,6 @@
 ﻿using Algorithm.Interfaces;
 using GraphLib.Interfaces;
+using GraphLib.TestRealizations.TestObjects;
 using Moq;
 
 namespace Algorithm.Realizations.Tests.HeuristicTests
@@ -10,8 +11,6 @@ namespace Algorithm.Realizations.Tests.HeuristicTests
 
         private readonly Mock<IVertex> vertexFromMock;
         private readonly Mock<IVertex> vertexToMock;
-        private readonly Mock<ICoordinate> coordinateFromMock;
-        private readonly Mock<ICoordinate> coordinateToMock;
 
         private IVertex FirstVertex => vertexFromMock.Object;
         private IVertex SecondVertex => vertexToMock.Object;
@@ -20,17 +19,15 @@ namespace Algorithm.Realizations.Tests.HeuristicTests
         {
             vertexFromMock = new Mock<IVertex>();
             vertexToMock = new Mock<IVertex>();
-            coordinateFromMock = new Mock<ICoordinate>();
-            coordinateToMock = new Mock<ICoordinate>();
         }
 
         public virtual double Calculate_EqualNumberOfCoordinateValues_ReturnsValidValue(
             int[] fromVertexCoordinateValues, int[] toVertexCoordinateValues)
         {
-            coordinateFromMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(fromVertexCoordinateValues);
-            vertexFromMock.Setup(vertex => vertex.Position).Returns(coordinateFromMock.Object);
-            coordinateToMock.Setup(coordinate => coordinate.CoordinatesValues).Returns(toVertexCoordinateValues);
-            vertexToMock.Setup(vertex => vertex.Position).Returns(coordinateToMock.Object);
+            var fromCoordinate = new TestCoordinate(fromVertexCoordinateValues);
+            var toCoordinate = new TestCoordinate(toVertexCoordinateValues);
+            vertexFromMock.Setup(vertex => vertex.Position).Returns(fromCoordinate);
+            vertexToMock.Setup(vertex => vertex.Position).Returns(toCoordinate);
 
             return Heuristic.Calculate(FirstVertex, SecondVertex);
         }

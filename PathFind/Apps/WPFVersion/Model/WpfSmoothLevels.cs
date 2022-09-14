@@ -1,4 +1,5 @@
-﻿using GraphLib.Interfaces;
+﻿using Common.Extensions.EnumerableExtensions;
+using GraphLib.Interfaces;
 using GraphLib.Realizations.SmoothLevel;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace WPFVersion.Model
     {
         private static readonly Lazy<IReadOnlyCollection<ISmoothLevel>> levels;
 
-        public static IReadOnlyCollection<ISmoothLevel> Levels => levels.Value;
+        public static IEnumerable<ISmoothLevel> Levels => levels.Value;
 
         static WpfSmoothLevels()
         {
@@ -21,12 +22,17 @@ namespace WPFVersion.Model
         {
             public int Level { get; set; }
 
+            public CustomSmoothLevel(int level)
+            {
+                Level = level;
+            }
+
             public override string ToString() => "Custom";
         }
 
         private static IReadOnlyCollection<ISmoothLevel> GetLevels()
         {
-            return SmoothLevels.Levels.Append(new CustomSmoothLevel { Level = 1 }).ToArray();
+            return SmoothLevels.Levels.Append(new CustomSmoothLevel(1)).ToReadOnly();
         }
     }
 }

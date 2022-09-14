@@ -1,4 +1,5 @@
-﻿using GraphLib.Base.EventHolder.Commands;
+﻿using Common.Extensions.EnumerableExtensions;
+using GraphLib.Base.EventHolder.Commands;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;

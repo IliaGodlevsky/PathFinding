@@ -43,7 +43,7 @@ namespace GraphLib.Serialization.Extensions
                 .Select(Attributes<int>).Select(factory.CreateCoordinate).ToArray();
 
             return new VertexSerializationInfo(isObstacle, costFactory.CreateCost(cost),
-                factory.CreateCoordinate(coordinate), new NeighbourhoodProxy(neighbours));
+                factory.CreateCoordinate(coordinate), neighbours);
         }
 
         private static T Attribute<T>(this XElement element, string name)

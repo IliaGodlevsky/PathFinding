@@ -35,7 +35,7 @@ namespace WPFVersion3D.ViewModel
 
         public ICommand ResumeCommand { get; }
 
-        public IAlgorithm Algorithm => algorithm;
+        public IAlgorithm<IGraphPath> Algorithm => algorithm;
 
         public bool IsStarted => algorithm.IsInProcess;
 
