@@ -36,6 +36,12 @@ namespace Common.Extensions
             return value.IsLessOrEqual(upper) && value.IsGreaterOrEqual(lower);
         }
 
+        public static bool IsEqual<T>(this T first, T second)
+            where T : IComparable<T>
+        {
+            return first.CompareTo(second) == 0;
+        }
+
         public static TAttribute GetAttributeOrNull<TAttribute>(this object self)
             where TAttribute : Attribute
         {

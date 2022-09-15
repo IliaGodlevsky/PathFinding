@@ -14,7 +14,7 @@ namespace GraphLib.Serialization.Extensions
 
         internal static IReadOnlyCollection<VertexSerializationInfo> GetVerticesSerializationInfo(this IGraph graph)
         {
-            return graph.Select(vertex => vertex.ToSerializationInfo()).ToReadOnly();
+            return graph.Select(vertex => new VertexSerializationInfo(vertex)).ToReadOnly();
         }
     }
 }

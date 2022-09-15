@@ -83,7 +83,7 @@ namespace GraphLib.Serialization.Extensions
         private static Xml WithChildren<Xml>(this Xml node, Func<IEnumerable<XmlNode>> children)
             where Xml : XmlNode
         {
-            node.AppendChildren(children.Invoke().ToArray());
+            children.Invoke().ForEach(child => node.AppendChild(child));
             return node;
         }
 
@@ -97,11 +97,6 @@ namespace GraphLib.Serialization.Extensions
         private static void AppendAttributes(this XmlNode element, params XmlAttribute[] attriutes)
         {
             attriutes.ForEach(elem => element.Attributes.Append(elem));
-        }
-
-        private static void AppendChildren(this XmlNode element, params XmlNode[] nodes)
-        {
-            nodes.ForEach(node => element.AppendChild(node));
         }
     }
 }

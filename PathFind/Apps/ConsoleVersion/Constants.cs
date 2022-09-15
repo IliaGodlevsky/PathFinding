@@ -11,8 +11,6 @@ namespace ConsoleVersion
         public static int YCoordinatePadding => WidthOfOrdinateView - 1;
         public static int WidthOfOrdinateView => (GraphLengthValueRange.UpperValueOfRange - 1).ToString().Length + 1;
 
-        public static InclusiveValueRange<Answer> AnswerValueRange { get; }
-
         public static InclusiveValueRange<int> GraphWidthValueRange { get; }
 
         public static InclusiveValueRange<int> GraphLengthValueRange { get; }
@@ -25,7 +23,6 @@ namespace ConsoleVersion
 
         static Constants()
         {
-            AnswerValueRange = new InclusiveValueRange<Answer>(Answer.Yes, Answer.No);
             VerticesCostRange = new InclusiveValueRange<int>(99, 1);
             GraphWidthValueRange = new InclusiveValueRange<int>(75, 1);
             GraphLengthValueRange = new InclusiveValueRange<int>(45, 1);

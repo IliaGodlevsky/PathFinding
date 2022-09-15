@@ -1,5 +1,4 @@
-﻿using GraphLib.Serialization.Extensions;
-using GraphLib.Serialization.Interfaces;
+﻿using GraphLib.Serialization.Interfaces;
 using System;
 using System.Linq;
 using System.Text;

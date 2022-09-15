@@ -1,4 +1,5 @@
 ﻿using System;
+using ValueRange;
 
 namespace ConsoleVersion.Model
 {
@@ -9,6 +10,8 @@ namespace ConsoleVersion.Model
         public static readonly Answer Yes = new Answer(1, nameof(Yes));
         public static readonly Answer No = new Answer(0, nameof(No));
         private static readonly Answer Default = new Answer(-1, string.Empty);
+
+        public static readonly InclusiveValueRange<Answer> Range = new InclusiveValueRange<Answer>(Yes, No);
 
         private readonly int value;
         private readonly string display;

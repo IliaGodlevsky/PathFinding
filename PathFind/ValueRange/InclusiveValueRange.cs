@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace ValueRange
 {
     [DebuggerDisplay("[{LowerValueOfRange}...{UpperValueOfRange}]")]
-    public readonly struct InclusiveValueRange<T>
+    public readonly struct InclusiveValueRange<T> : IEquatable<InclusiveValueRange<T>>
         where T : IComparable, IComparable<T>
     {
         public T UpperValueOfRange { get; }
@@ -24,6 +24,29 @@ namespace ValueRange
                 UpperValueOfRange = upperValueOfRange;
                 LowerValueOfRange = lowerValueOfRange;
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is InclusiveValueRange<T> range 
+                ? range.Equals(this) 
+                : false;
+        }
+
+        public bool Equals(InclusiveValueRange<T> other)
+        {
+            return other.UpperValueOfRange.IsEqual(UpperValueOfRange)
+                && other.LowerValueOfRange.IsEqual(LowerValueOfRange);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(UpperValueOfRange, LowerValueOfRange);
+        }
+
+        public override string ToString()
+        {
+            return $"[{LowerValueOfRange}...{UpperValueOfRange}]";
         }
     }
 }

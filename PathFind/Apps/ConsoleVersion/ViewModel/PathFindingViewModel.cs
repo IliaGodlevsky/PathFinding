@@ -124,7 +124,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.ApplyVisualization, 6)]
         public void ApplyVisualization()
         {
-            IsVisualizationRequired = AnswerInput.Input(MessagesTexts.ApplyVisualizationMsg, Constants.AnswerValueRange);
+            IsVisualizationRequired = AnswerInput.Input(MessagesTexts.ApplyVisualizationMsg, Answer.Range);
         }
 
         public void Dispose()

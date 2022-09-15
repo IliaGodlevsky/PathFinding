@@ -31,12 +31,7 @@ namespace GraphLib.Serialization.Extensions
         private static void WriterNeighborhood(this BinaryWriter writer, IReadOnlyCollection<ICoordinate> neighbourhood)
         {
             writer.Write(neighbourhood.Count);
-            neighbourhood.ForEach(writer.WriteCoordinate);
-        }
-
-        private static void WriteCoordinate(this BinaryWriter writer, ICoordinate coordinate)
-        {
-            writer.WriteIntArray(coordinate);
+            neighbourhood.ForEach(writer.WriteIntArray);
         }
 
         private static void WriteVertices(this BinaryWriter writer, IReadOnlyCollection<VertexSerializationInfo> vertices)

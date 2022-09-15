@@ -1,5 +1,5 @@
-﻿using GraphLib.Interfaces.Factories;
-using GraphLib.Proxy;
+﻿using Common.Extensions.EnumerableExtensions;
+using GraphLib.Interfaces.Factories;
 using System;
 using System.Linq;
 using System.Xml.Linq;
@@ -25,9 +25,10 @@ namespace GraphLib.Serialization.Extensions
             var vertices = root.Element(Vertices)
                 .Elements()
                 .Select(element => element.GetVertex(costFactory, coordinateFactory))
-                .ToArray();
+                .ToReadOnly();
 
             var rangeValues = root.Element(Range).Attributes<int>();
+
             var range = new InclusiveValueRange<int>(rangeValues[0], rangeValues[1]);
 
             return new GraphSerializationInfo(dimensions, vertices, range);
@@ -37,13 +38,22 @@ namespace GraphLib.Serialization.Extensions
             IVertexCostFactory costFactory, ICoordinateFactory factory)
         {
             bool isObstacle = element.Element(Obstacle).Attribute<bool>(string.Format(Value, 0));
-            int cost = element.Element(Cost).Attribute<int>(string.Format(Value, 0));
-            var coordinate = element.Element(Coordinate).Attributes<int>();
-            var neighbours = element.Element(Neighbours).Elements()
-                .Select(Attributes<int>).Select(factory.CreateCoordinate).ToArray();
 
-            return new VertexSerializationInfo(isObstacle, costFactory.CreateCost(cost),
-                factory.CreateCoordinate(coordinate), neighbours);
+            int costValue = element.Element(Cost).Attribute<int>(string.Format(Value, 0));
+
+            var cost = costFactory.CreateCost(costValue);
+
+            var coordinateValues = element.Element(Coordinate).Attributes<int>();
+
+            var coordinate = factory.CreateCoordinate(coordinateValues);
+
+            var neighbours = element.Element(Neighbours)
+                .Elements()
+                .Select(Attributes<int>)
+                .Select(factory.CreateCoordinate)
+                .ToReadOnly();
+
+            return new VertexSerializationInfo(isObstacle, cost, coordinate, neighbours);
         }
 
         private static T Attribute<T>(this XElement element, string name)

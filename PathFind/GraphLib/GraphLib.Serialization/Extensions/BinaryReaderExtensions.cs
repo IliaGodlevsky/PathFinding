@@ -1,6 +1,5 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
-using GraphLib.Proxy;
 using System.Collections.Generic;
 using System.IO;
 using ValueRange;

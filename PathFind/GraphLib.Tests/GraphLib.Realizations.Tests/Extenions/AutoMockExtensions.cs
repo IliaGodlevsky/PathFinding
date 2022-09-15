@@ -1,5 +1,4 @@
 ﻿using Autofac.Extras.Moq;
-using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using Moq;

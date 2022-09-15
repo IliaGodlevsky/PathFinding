@@ -155,7 +155,7 @@ namespace ConsoleVersion.ViewModel
 
         private bool CanExecuteInterrupt()
         {
-            return AnswerInput.Input(MessagesTexts.ExitAppMsg, Constants.AnswerValueRange);
+            return AnswerInput.Input(MessagesTexts.ExitAppMsg, Answer.Range);
         }
 
         private void ExecuteSafe(Command action)
