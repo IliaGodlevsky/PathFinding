@@ -15,13 +15,12 @@ namespace GraphLib.NullRealizations
 
         public IVertex Source => NullVertex.Instance;
 
-        private IEnumerable<IVertex> EndPoints { get; }
-
-        private NullEndPoints() => EndPoints = NullVertex.GetMany(2);
+        private NullEndPoints() { }
 
         public IEnumerator<IVertex> GetEnumerator()
         {
-            return EndPoints.GetEnumerator();
+            yield return NullVertex.Instance;
+            yield return NullVertex.Instance;
         }
 
         IEnumerator IEnumerable.GetEnumerator()

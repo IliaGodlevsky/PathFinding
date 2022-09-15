@@ -11,13 +11,10 @@ namespace GraphLib.TestRealizations.TestObjects
 
         public IVertex Source { get; }
 
-        private IEnumerable<IVertex> EndPoints { get; }
-
         public TestEndPoints(IVertex source, IVertex target)
         {
             Source = source;
             Target = target;
-            EndPoints = new[] { Source, Target };
         }
 
         public TestEndPoints(IGraph graph)
@@ -28,7 +25,8 @@ namespace GraphLib.TestRealizations.TestObjects
 
         public IEnumerator<IVertex> GetEnumerator()
         {
-            return EndPoints.GetEnumerator();
+            yield return Source;
+            yield return Target;
         }
 
         IEnumerator IEnumerable.GetEnumerator()

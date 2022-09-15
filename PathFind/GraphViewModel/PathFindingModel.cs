@@ -45,7 +45,7 @@ namespace GraphViewModel
             Algorithms = factories
                 .GroupBy(item => item.GetAttributeOrNull<GroupAttribute>())
                 .SelectMany(item => item.OrderByOrderAttribute())
-                .ToArray();
+                .ToReadOnly();
             timer = new Stopwatch();
             path = NullGraphPath.Instance;
         }

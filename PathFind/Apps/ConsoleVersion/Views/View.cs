@@ -17,8 +17,6 @@ namespace ConsoleVersion.Views
 
         public IInput<int> IntInput { get; set; }
 
-        private int MenuSize => menu.Commands.Count;
-
         private string OptionsMsg => MessagesTexts.MenuOptionChoiceMsg;
 
         private int MenuItemIndex => IntInput.Input(OptionsMsg, menuRange) - 1;
@@ -31,7 +29,7 @@ namespace ConsoleVersion.Views
         {
             menu = new Menu(model);
             menuList = menu.Commands.CreateMenuList();
-            menuRange = new InclusiveValueRange<int>(MenuSize, 1);
+            menuRange = new InclusiveValueRange<int>(menu.Commands.Count, 1);
             model.WindowClosed += OnClosed;
         }
 

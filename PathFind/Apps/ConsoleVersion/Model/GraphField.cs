@@ -14,7 +14,7 @@ namespace ConsoleVersion.Model
 
         IReadOnlyCollection<IVertex> IGraphField.Vertices => Vertices;
 
-        private IReadOnlyCollection<IDisplayable> Displayables { get; }
+        private IEnumerable<IDisplayable> Displayables { get; }
 
         public GraphField(Graph2D graph)
         {

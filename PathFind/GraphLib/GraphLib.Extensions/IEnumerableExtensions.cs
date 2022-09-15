@@ -12,7 +12,7 @@ namespace GraphLib.Extensions
 {
     public static class IEnumerableExtensions
     {
-        public static bool IsCardinal(this IReadOnlyList<int> centralCoordinates, IReadOnlyList<int> cardinalCoordinates)
+        public static bool IsCardinal(this IReadOnlyCollection<int> centralCoordinates, IReadOnlyCollection<int> cardinalCoordinates)
         {
             // Cardinal coordinate differs from central coordinate only for one coordinate value
             return centralCoordinates.Count == cardinalCoordinates.Count
