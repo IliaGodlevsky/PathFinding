@@ -21,7 +21,7 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
             yield return new RestoreTargetColorCommand(endPoints);
         }
 
-        protected override IEnumerable<IUndoCommand> GetUndoCommand(BaseEndPoints endPoints)
+        protected override IEnumerable<IUndoCommand> GetUndoCommands(BaseEndPoints endPoints)
         {
             return Enumerable.Empty<IUndoCommand>();
         }

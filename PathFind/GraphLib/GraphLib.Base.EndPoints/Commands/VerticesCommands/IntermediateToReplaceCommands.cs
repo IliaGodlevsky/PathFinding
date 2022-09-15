@@ -18,7 +18,7 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
             yield return new MarkToReplaceCommand(endPoints);
         }
 
-        protected override IEnumerable<IUndoCommand> GetUndoCommand(BaseEndPoints endPoints)
+        protected override IEnumerable<IUndoCommand> GetUndoCommands(BaseEndPoints endPoints)
         {
             yield return new UndoMarkToReplaceCommand(endPoints);
         }

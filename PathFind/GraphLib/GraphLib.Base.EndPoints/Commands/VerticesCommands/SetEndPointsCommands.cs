@@ -26,7 +26,7 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
             yield return new ReplaceIsolatedTargetCommand(endPoints);
         }
 
-        protected override IEnumerable<IUndoCommand> GetUndoCommand(BaseEndPoints endPoints)
+        protected override IEnumerable<IUndoCommand> GetUndoCommands(BaseEndPoints endPoints)
         {
             yield return new UndoSetIntermediatesCommand(endPoints);
             yield return new UndoSetTargetCommand(endPoints);

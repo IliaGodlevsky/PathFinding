@@ -16,7 +16,7 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
         protected BaseVerticesCommands(BaseEndPoints endPoints)
         {
             ExecuteCommands = GetCommands(endPoints).OrderByOrderAttribute().ToReadOnly();
-            UndoCommands = GetUndoCommand(endPoints).ToReadOnly();
+            UndoCommands = GetUndoCommands(endPoints).ToReadOnly();
         }
 
         public void Execute(IVertex vertex)
@@ -31,6 +31,6 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
 
         protected abstract IEnumerable<IVertexCommand> GetCommands(BaseEndPoints endPoints);
 
-        protected abstract IEnumerable<IUndoCommand> GetUndoCommand(BaseEndPoints endPoints);
+        protected abstract IEnumerable<IUndoCommand> GetUndoCommands(BaseEndPoints endPoints);
     }
 }
