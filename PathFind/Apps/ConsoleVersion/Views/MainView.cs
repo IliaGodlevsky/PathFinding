@@ -21,7 +21,7 @@ namespace ConsoleVersion.Views
 
         private readonly IMessenger messenger;
 
-        private IGraph graph = NullGraph.Instance;
+        private IGraph graph = NullGraph.Interface;
 
         public static int LateralDistanceBetweenVertices { get; private set; }
 

@@ -10,8 +10,12 @@ using Common.Extensions;
 using Common.Interface;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Model;
+#if DEBUG
 using ConsoleVersion.ValueInput.ProgrammedInput;
 using ConsoleVersion.ValueInput.RandomInput;
+#elif !DEBUG
+using ConsoleVersion.ValueInput.UserInput;
+#endif
 using ConsoleVersion.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
@@ -53,20 +57,20 @@ namespace ConsoleVersion.DependencyInjection
 
         private static IContainer Configure()
         {
-            var builder = new ContainerBuilder();
-
-            //builder.RegisterType<ConsoleUserAnswerInput>().As<IInput<Answer>>().SingleInstance();
-            //builder.RegisterType<ConsoleUserIntInput>().As<IInput<int>>().SingleInstance();
-            //builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance();
-            //builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
-            //builder.RegisterType<ConsoleUserTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
-
+            var builder = new ContainerBuilder();           
+#if DEBUG
             builder.RegisterType<ConsoleProgrammedAnswerInput>().As<IInput<Answer>>().SingleInstance();
             builder.RegisterType<ConsoleProgrammedIntInput>().As<IInput<int>>().SingleInstance();
             builder.RegisterType<ConsoleProgrammedStringInput>().As<IInput<string>>().SingleInstance();
             builder.RegisterType<RandomKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
             builder.RegisterType<RandomTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
-
+#elif !DEBUG
+            builder.RegisterType<ConsoleUserAnswerInput>().As<IInput<Answer>>().SingleInstance();
+            builder.RegisterType<ConsoleUserIntInput>().As<IInput<int>>().SingleInstance();
+            builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance();
+            builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
+            builder.RegisterType<ConsoleUserTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
+#endif
             builder.RegisterType<ConsoleKeystrokesHook>().AsSelf().InstancePerDependency().PropertiesAutowired();
 
             builder.RegisterType<MainViewModel>().AsSelf().SingleInstance().PropertiesAutowired();
@@ -115,7 +119,7 @@ namespace ConsoleVersion.DependencyInjection
         {
             var view = (IView)e.Instance;
             var mainModel = e.Context.Resolve<MainViewModel>();
-            view.NewMenuIteration += mainModel.DisplayGraph;
+            view.IterationStarted += mainModel.DisplayGraph;
         }
 
         private static IRegistrationBuilder<object, ScanningActivatorData, DynamicRegistrationStyle> Register(this IEnumerable<Type> types,

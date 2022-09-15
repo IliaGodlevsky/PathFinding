@@ -24,7 +24,7 @@ namespace GraphLib.NullRealizations
 
         public IVertex Get(ICoordinate coordinate)
         {
-            return NullVertex.Instance;
+            return NullVertex.Interface;
         }
 
         public override bool Equals(object obj)

@@ -39,9 +39,9 @@ namespace GraphLib.Serialization.Extensions
             writer.WriteIntArray(coordinate.CoordinatesValues);
         }
 
-        private static void WriteVertices(this BinaryWriter writer, VertexSerializationInfo[] vertices)
+        private static void WriteVertices(this BinaryWriter writer, IReadOnlyCollection<VertexSerializationInfo> vertices)
         {
-            writer.Write(vertices.Length);
+            writer.Write(vertices.Count);
             foreach (var vertex in vertices)
             {
                 writer.Write(vertex.IsObstacle);

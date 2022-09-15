@@ -36,7 +36,7 @@ namespace GraphViewModel
             this.fieldFactory = fieldFactory;
             this.endPoints = endPoints;
             this.log = log;
-            Graph = NullGraph.Instance;
+            Graph = NullGraph.Interface;
         }
 
         public virtual async void SaveGraph()

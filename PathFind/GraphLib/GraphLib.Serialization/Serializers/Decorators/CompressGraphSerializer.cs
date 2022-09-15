@@ -19,7 +19,7 @@ namespace GraphLib.Serialization.Serializers.Decorators
 
         public IGraph LoadGraph(Stream stream)
         {
-            var graph = NullGraph.Instance;
+            var graph = NullGraph.Interface;
             try
             {
                 using (var compressionStream = new GZipStream(stream, CompressionMode.Decompress, leaveOpen: true))

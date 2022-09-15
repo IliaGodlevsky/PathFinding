@@ -48,18 +48,18 @@ namespace GraphLib.Extensions
 
         public static IVisualizable AsVisualizable(this IVertex vertex)
         {
-            return vertex.As<IVisualizable>(NullVisualizable.Instance);
+            return vertex.As<IVisualizable>(NullVisualizable.Interface);
         }
 
         public static IVertex AsVertex(this object self)
         {
-            return self.As<IVertex>(NullVertex.Instance);
+            return self.As<IVertex>(NullVertex.Interface);
         }
 
         public static void Initialize(this IVertex self)
         {
             self.IsObstacle = false;
-            self.Cost = NullCost.Instance;
+            self.Cost = NullCost.Interface;
             self.SetToDefault();
         }
 

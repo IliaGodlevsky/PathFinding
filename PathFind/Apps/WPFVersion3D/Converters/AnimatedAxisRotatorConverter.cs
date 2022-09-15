@@ -25,7 +25,7 @@ namespace WPFVersion3D.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return Rotators.GetOrDefault(value, () => NullAnimatedAxisRotatorFactory.Instance);
+            return Rotators.GetOrDefault(value, () => NullAnimatedAxisRotatorFactory.Interface);
         }
 
         public object ConvertBack(object value, Type targetTypes, object parameter, CultureInfo culture)

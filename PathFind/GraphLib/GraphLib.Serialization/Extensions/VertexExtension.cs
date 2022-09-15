@@ -4,11 +4,6 @@ namespace GraphLib.Serialization.Extensions
 {
     public static class VertexExtension
     {
-        internal static VertexSerializationInfo ToSerializationInfo(this IVertex self)
-        {
-            return new VertexSerializationInfo(self);
-        }
-
         public static void Initialize(this IVertex vertex, VertexSerializationInfo info)
         {
             vertex.Cost = info.Cost;

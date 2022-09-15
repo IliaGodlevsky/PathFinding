@@ -25,7 +25,7 @@ namespace WPFVersion3D.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return States.GetOrDefault(value, () => NullRotationState.Instance);
+            return States.GetOrDefault(value, () => NullRotationState.Interface);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -9,7 +9,7 @@ namespace GraphLib.Extensions
     {
         public static IVertex GetOrNullVertex<TKey>(this IReadOnlyDictionary<TKey, IVertex> self, TKey key)
         {
-            return self.GetOrDefault(key, () => NullVertex.Instance);
+            return self.GetOrDefault(key, () => NullVertex.Interface);
         }
     }
 }

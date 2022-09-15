@@ -47,7 +47,7 @@ namespace GraphViewModel
                 .SelectMany(item => item.OrderByOrderAttribute())
                 .ToArray();
             timer = new Stopwatch();
-            path = NullGraphPath.Instance;
+            path = NullGraphPath.Interface;
         }
 
         public virtual async void FindPath()

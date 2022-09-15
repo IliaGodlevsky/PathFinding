@@ -18,7 +18,7 @@ namespace WPFVersion.ViewModel.ButtonViewModels
 
         public ICommand CreateGraphCommand { get; }
 
-        private IGraph Graph { get; set; } = NullGraph.Instance;
+        private IGraph Graph { get; set; } = NullGraph.Interface;
 
         private bool IsAllAlgorithmsFinishedPathfinding { get; set; } = true;
 

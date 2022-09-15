@@ -19,21 +19,21 @@ namespace GraphLib.NullRealizations
 
         public IVertexCost Cost
         {
-            get => NullCost.Instance;
+            get => NullCost.Interface;
             set { }
         }
 
         public IReadOnlyCollection<IVertex> Neighbours => GetMany(0);
 
-        public IGraph Graph => NullGraph.Instance;
+        public IGraph Graph => NullGraph.Interface;
 
         public ICoordinate Position
         {
-            get => NullCoordinate.Instance;
+            get => NullCoordinate.Interface;
             set { }
         }
 
-        public INeighborhood Neighborhood => NullNeighborhood.Instance;
+        public INeighborhood Neighborhood => NullNeighborhood.Interface;
 
         private NullVertex()
         {

@@ -23,7 +23,7 @@ namespace GraphLib.Common.Tests
         [Test]
         public void Refresh_DoesnotThrows()
         {
-            var graph = NullGraph.Instance;
+            var graph = NullGraph.Interface;
 
             Assert.DoesNotThrow(() => graph.Refresh());
         }
@@ -31,7 +31,7 @@ namespace GraphLib.Common.Tests
         [Test]
         public void ForEach_DoesntThrow()
         {
-            var graph = NullGraph.Instance;
+            var graph = NullGraph.Interface;
 
             Assert.DoesNotThrow(() => graph.ForEach(vertex => vertex.GetHashCode()));
         }

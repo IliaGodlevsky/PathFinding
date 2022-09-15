@@ -10,7 +10,7 @@ namespace SingletonLib.Exceptions
             return string.Format("{0} has neither private nor protected parametreless constructor", genericType.Name);
         }
 
-        public SingletonException(Type type) : base(GetMessage(type))
+        internal SingletonException(Type type) : base(GetMessage(type))
         {
 
         }

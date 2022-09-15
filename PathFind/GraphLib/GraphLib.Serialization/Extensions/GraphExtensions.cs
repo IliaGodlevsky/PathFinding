@@ -1,4 +1,6 @@
-﻿using GraphLib.Interfaces;
+﻿using Common.Extensions.EnumerableExtensions;
+using GraphLib.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Serialization.Extensions
@@ -10,9 +12,9 @@ namespace GraphLib.Serialization.Extensions
             return new GraphSerializationInfo(graph);
         }
 
-        internal static VertexSerializationInfo[] GetVerticesSerializationInfo(this IGraph graph)
+        internal static IReadOnlyCollection<VertexSerializationInfo> GetVerticesSerializationInfo(this IGraph graph)
         {
-            return graph.Vertices.Select(vertex => vertex.ToSerializationInfo()).ToArray();
+            return graph.Vertices.Select(vertex => new VertexSerializationInfo(vertex)).ToReadOnly();
         }
     }
 }

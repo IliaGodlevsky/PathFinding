@@ -11,7 +11,7 @@ namespace GraphLib.Common.Tests
         [Test]
         public void IsIsolated_ReturnTrue()
         {
-            var vertex = NullVertex.Instance;
+            var vertex = NullVertex.Interface;
 
             Assert.IsTrue(vertex.IsIsolated());
         }
@@ -19,7 +19,7 @@ namespace GraphLib.Common.Tests
         [Test]
         public void SetToDefault_DoesntThrow()
         {
-            var vertex = NullVertex.Instance;
+            var vertex = NullVertex.Interface;
 
             Assert.DoesNotThrow(() => vertex.SetToDefault());
         }
@@ -27,7 +27,7 @@ namespace GraphLib.Common.Tests
         [Test]
         public void Initialize_DoesntThrow()
         {
-            var vertex = NullVertex.Instance;
+            var vertex = NullVertex.Interface;
 
             Assert.DoesNotThrow(() => vertex.Initialize());
         }
@@ -35,8 +35,8 @@ namespace GraphLib.Common.Tests
         [Test]
         public void IsEqual_NullVertex_ReturnTrue()
         {
-            var vertex = NullVertex.Instance;
-            var secondVertex = NullVertex.Instance;
+            var vertex = NullVertex.Interface;
+            var secondVertex = NullVertex.Interface;
 
             Assert.IsTrue(vertex.IsEqual(secondVertex));
         }
@@ -44,10 +44,10 @@ namespace GraphLib.Common.Tests
         [Test]
         public void IsNeighbour_DoesnotThrow()
         {
-            var graph = NullGraph.Instance;
+            var graph = NullGraph.Interface;
 
-            var candidate = NullVertex.Instance;
-            var vertex = graph.Vertices.FirstOrDefault() ?? NullVertex.Instance;
+            var candidate = NullVertex.Interface;
+            var vertex = graph.Vertices.FirstOrDefault() ?? NullVertex.Interface;
 
             Assert.DoesNotThrow(() => vertex.IsNeighbour(candidate));
         }

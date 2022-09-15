@@ -9,7 +9,7 @@ namespace ConsoleVersion.Views
 {
     internal abstract class View : IView, IRequireIntInput, IDisposable
     {
-        public event Action NewMenuIteration;
+        public event Action IterationStarted;
 
         private readonly IMenu menu;
         private readonly IDisplayable menuList;
@@ -39,7 +39,7 @@ namespace ConsoleVersion.Views
         {
             while (!IsClosureRequested)
             {
-                NewMenuIteration?.Invoke();
+                IterationStarted?.Invoke();
                 menuList.Display();
                 MenuCommand.Execute();
             }
@@ -47,7 +47,7 @@ namespace ConsoleVersion.Views
 
         public void Dispose()
         {
-            NewMenuIteration = null;
+            IterationStarted = null;
         }
 
         private void OnClosed()

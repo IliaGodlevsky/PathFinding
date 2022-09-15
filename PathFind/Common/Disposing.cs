@@ -6,7 +6,7 @@ namespace Common
     {
         private readonly Action disposeAction;
 
-        public Disposing(Action disposeAction)
+        private Disposing(Action disposeAction)
         {
             this.disposeAction = disposeAction;
         }
@@ -16,7 +16,6 @@ namespace Common
             return new Disposing(action);
         }
 
-
-        public void Dispose() => disposeAction?.Invoke();
+        void IDisposable.Dispose() => disposeAction?.Invoke();
     }
 }

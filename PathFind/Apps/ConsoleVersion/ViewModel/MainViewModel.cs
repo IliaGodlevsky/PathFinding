@@ -43,7 +43,7 @@ namespace ConsoleVersion.ViewModel
 
         public MainViewModel(IGraphFieldFactory fieldFactory, IGraphEvents events, BaseEndPoints endPoints, ILog log)
         {
-            graph = NullGraph.Instance;
+            graph = NullGraph.Interface;
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<GraphCreatedMessage>(this, SetGraph);
             messenger.Register<ClearGraphMessage>(this, message => ClearGraph());

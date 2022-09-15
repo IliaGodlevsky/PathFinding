@@ -29,7 +29,7 @@ namespace GraphLib.Serialization.Serializers.Decorators
 
         public IGraph LoadGraph(Stream stream)
         {
-            var graph = NullGraph.Instance;
+            var graph = NullGraph.Interface;
             try
             {
                 algorithm.Padding = PaddingMode.None;

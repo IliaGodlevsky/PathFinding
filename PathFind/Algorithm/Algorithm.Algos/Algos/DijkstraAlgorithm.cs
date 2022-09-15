@@ -46,7 +46,7 @@ namespace Algorithm.Algos.Algos
         {
             return queue.TryFirst(out var vertex)
                 ? vertex
-                : NullVertex.Instance;
+                : NullVertex.Interface;
         }
 
         protected override void PrepareForLocalPathfinding()

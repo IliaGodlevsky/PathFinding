@@ -33,7 +33,8 @@ namespace GraphLib.Serialization.Serializers
             {
                 var graphInfo = LoadGraphInternal(stream, costFactory, coordinateFactory);
                 BaseVertexCost.CostRange = graphInfo.CostRange;
-                return (graphFactory, vertexFactory).Create(graphInfo);
+                var vertices = vertexFactory.CreateManyFrom(graphInfo.VerticesInfo);
+                return graphFactory.CreateGraph(vertices, graphInfo.DimensionsSizes);
             }
             catch (Exception ex)
             {

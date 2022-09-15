@@ -42,7 +42,7 @@ namespace Algorithm.Base
         protected virtual IGraphPath CreateGraphPath()
         {
             return IsInterruptRequested
-                ? NullGraphPath.Instance
+                ? NullGraphPath.Interface
                 : new GraphPath(parentVertices, endPoints);
         }
 

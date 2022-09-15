@@ -21,7 +21,7 @@ namespace GraphLib.Extensions
 
         public static IVertex FirstOrNullVertex(this IEnumerable<IVertex> collection, Func<IVertex, bool> predicate)
         {
-            return collection.FirstOrDefault(predicate) ?? NullVertex.Instance;
+            return collection.FirstOrDefault(predicate) ?? NullVertex.Interface;
         }
 
         public static int[] ToCoordinates(this int[] dimensionSizes, int index)

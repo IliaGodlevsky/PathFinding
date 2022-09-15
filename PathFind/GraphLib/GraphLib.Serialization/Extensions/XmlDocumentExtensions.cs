@@ -23,7 +23,7 @@ namespace GraphLib.Serialization.Extensions
             yield return document.CreateElement(Range).WithAttributes(info.CostRange.LowerValueOfRange, info.CostRange.UpperValueOfRange);
         }
 
-        private static XmlNode CreateNode(this XmlDocument document, VertexSerializationInfo[] infos)
+        private static XmlNode CreateNode(this XmlDocument document, IReadOnlyCollection<VertexSerializationInfo> infos)
         {
             return document.CreateElement(Vertices).WithChildren(() =>
             {

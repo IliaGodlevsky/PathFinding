@@ -13,14 +13,14 @@ namespace ConsoleVersion
         public static IDisposable HideCursor()
         {
             Console.CursorVisible = false;
-            return new Disposing(ShowCursor);
+            return Disposing.Use(ShowCursor);
         }
 
         public static IDisposable UseCurrentPosition()
         {
             CursorLeft = Console.CursorLeft;
             CursorRight = Console.CursorTop;
-            return new Disposing(RestoreCursorPosition);
+            return Disposing.Use(RestoreCursorPosition);
         }
 
         public static void SetPosition(Coordinate2D point)

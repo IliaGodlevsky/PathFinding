@@ -18,7 +18,7 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
         public override void Execute(IVertex vertex)
         {
             vertex.AsVisualizable().VisualizeAsRegular();
-            endPoints.Source = NullVertex.Instance;
+            endPoints.Source = NullVertex.Interface;
         }
 
         public override bool CanExecute(IVertex vertex)

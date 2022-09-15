@@ -21,7 +21,7 @@ namespace Algorithm.Base
 
         public sealed override IGraphPath FindPath()
         {
-            var path = NullGraphPath.Instance;
+            var path = NullGraphPath.Interface;
             PrepareForPathfinding();
             var subEndPoints = endPoints.ToSubEndPoints();
             using (var iterator = subEndPoints.GetEnumerator())
@@ -43,7 +43,7 @@ namespace Algorithm.Base
                 }
             }
             CompletePathfinding();
-            return IsInterruptRequested ? NullGraphPath.Instance : path;
+            return IsInterruptRequested ? NullGraphPath.Interface : path;
         }
 
         protected virtual void PrepareForLocalPathfinding()

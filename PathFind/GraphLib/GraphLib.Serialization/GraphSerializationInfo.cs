@@ -1,6 +1,7 @@
 ﻿using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Serialization.Extensions;
+using System.Collections.Generic;
 using ValueRange;
 
 namespace GraphLib.Serialization
@@ -9,7 +10,7 @@ namespace GraphLib.Serialization
     {
         public int[] DimensionsSizes { get; }
 
-        public VertexSerializationInfo[] VerticesInfo { get; }
+        public IReadOnlyCollection<VertexSerializationInfo> VerticesInfo { get; }
 
         public InclusiveValueRange<int> CostRange { get; }
 
@@ -21,7 +22,7 @@ namespace GraphLib.Serialization
         }
 
         internal GraphSerializationInfo(int[] dimensionsSizes,
-            VertexSerializationInfo[] info, InclusiveValueRange<int> range)
+            IReadOnlyCollection<VertexSerializationInfo> info, InclusiveValueRange<int> range)
         {
             DimensionsSizes = dimensionsSizes;
             VerticesInfo = info;

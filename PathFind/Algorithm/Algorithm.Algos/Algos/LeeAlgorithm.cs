@@ -33,7 +33,7 @@ namespace Algorithm.Algos.Algos
         protected override IVertex GetNextVertex()
         {
             return verticesQueue.Count == 0
-                ? NullVertex.Instance
+                ? NullVertex.Interface
                 : verticesQueue.Dequeue();
         }
 

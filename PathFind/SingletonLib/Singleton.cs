@@ -4,35 +4,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
+using static System.Reflection.BindingFlags;
+
 namespace SingletonLib
 {
     public abstract class Singleton<TInstance, TInterface>
-        where TInstance : class, TInterface
+        where TInstance : Singleton<TInstance, TInterface>, TInterface
     {
-        private static readonly Lazy<TInterface> instance;
+        private static readonly Type instanceType;
+        private static readonly Lazy<TInstance> instance;
 
-        public static TInterface Instance => instance.Value;
+        public static TInterface Interface => Instance;
+
+        public static TInstance Instance => instance.Value;
 
         static Singleton()
         {
-            instance = new Lazy<TInterface>(() => CreateInstance(typeof(TInstance)), true);
+            instanceType = typeof(TInstance);
+            instance = new Lazy<TInstance>(CreateInstance, true);
         }
 
-        public static IReadOnlyList<TInterface> GetMany(int count)
+        public static IReadOnlyList<TInstance> GetMany(int count)
         {
             return count > 0
                 ? Enumerable.Repeat(Instance, count).ToArray()
-                : Array.Empty<TInterface>();
+                : Array.Empty<TInstance>();
         }
 
-        private static TInstance CreateInstance(Type ofType)
+        private static TInstance CreateInstance()
         {
-            var ctor = ofType
-                .GetConstructors(BindingFlags.NonPublic | BindingFlags.Instance)
+            var ctor = instanceType
+                .GetConstructors(NonPublic | BindingFlags.Instance)
                 .FirstOrDefault(c => c.GetParameters().Length == 0);
             return ctor != null
                 ? (TInstance)ctor.Invoke(Array.Empty<object>())
-                : throw new SingletonException(ofType);
+                : throw new SingletonException(instanceType);
         }
     }
 }

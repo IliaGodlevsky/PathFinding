@@ -22,7 +22,7 @@ namespace GraphLib.Realizations.Tests
     {
         private void RegisterNullRandomNumberGenerator(ContainerBuilder builder)
         {
-            builder.Register(container => NullRandom.Instance).As<IRandom>().SingleInstance();
+            builder.Register(container => NullRandom.Interface).As<IRandom>().SingleInstance();
         }
 
         private void RegisterPseudoRandomNumberGenerator(ContainerBuilder builder)
@@ -60,16 +60,16 @@ namespace GraphLib.Realizations.Tests
         {
             using (var mock = AutoMock.GetLoose(RegisterNullRandomNumberGenerator))
             {
-                mock.MockCoordinateFactory(_ => NullCoordinate.Instance);
-                mock.MockNeighbourhoodFactory(_ => NullNeighborhood.Instance);
-                mock.MockVertexFactory((_, __) => NullVertex.Instance);
-                mock.MockGraphFactory((_, __) => NullGraph.Instance);
-                mock.MockVertexCostFactory(_ => NullCost.Instance);
+                mock.MockCoordinateFactory(_ => NullCoordinate.Interface);
+                mock.MockNeighbourhoodFactory(_ => NullNeighborhood.Interface);
+                mock.MockVertexFactory((_, __) => NullVertex.Interface);
+                mock.MockGraphFactory((_, __) => NullGraph.Interface);
+                mock.MockVertexCostFactory(_ => NullCost.Interface);
 
                 var assemble = mock.Create<GraphAssemble>();
                 var graph = assemble.AssembleGraph(0);
 
-                Assert.AreSame(NullGraph.Instance, graph);
+                Assert.AreSame(NullGraph.Interface, graph);
             }
         }
     }

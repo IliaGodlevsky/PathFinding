@@ -69,7 +69,7 @@ namespace Algorithm.Realizations.GraphPaths
         {
             return parentVertices.HasParent(vertex)
                 ? parentVertices.GetParent(vertex)
-                : NullVertex.Instance;
+                : NullVertex.Interface;
         }
     }
 }

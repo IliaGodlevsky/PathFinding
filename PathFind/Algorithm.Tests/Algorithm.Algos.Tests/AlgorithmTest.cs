@@ -39,7 +39,7 @@ namespace Algorithm.Algos.Tests
         [TestCase(TestName = "Finding path using NullEndPoints throws DeadEndException")]
         public virtual void FindPath_NullEndPoints_ReturnsNullGraphPath()
         {
-            var algorithm = CreateAlgorithm(NullEndPoints.Instance);
+            var algorithm = CreateAlgorithm(NullEndPoints.Interface);
 
             Assert.Throws<DeadendVertexException>(() => algorithm.FindPath());
         }
@@ -52,8 +52,8 @@ namespace Algorithm.Algos.Tests
         public void FindPath_GraphsWithoutObstacles_ReturnsNotEmptyPath(int[] dimensionSizes)
         {
             var graph = testGraphAssemble.AssembleGraph(0, dimensionSizes);
-            var source = graph.Vertices.FirstOrDefault() ?? NullVertex.Instance;
-            var target = graph.Vertices.LastOrDefault() ?? NullVertex.Instance;
+            var source = graph.Vertices.FirstOrDefault() ?? NullVertex.Interface;
+            var target = graph.Vertices.LastOrDefault() ?? NullVertex.Interface;
             var endPoints = new TestEndPoints(source, target);
             var algorithm = CreateAlgorithm(endPoints);
 

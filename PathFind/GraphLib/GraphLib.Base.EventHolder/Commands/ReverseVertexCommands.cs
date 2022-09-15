@@ -19,7 +19,7 @@ namespace GraphLib.Base.EventHolder.Commands
 
         public void Execute(IVertex vertex)
         {
-            commands.ExecuteFirst(vertex ?? NullVertex.Instance);
+            commands.ExecuteFirst(vertex ?? NullVertex.Interface);
         }
 
         public void Undo() { }
