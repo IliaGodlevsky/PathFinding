@@ -2,6 +2,7 @@
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,16 +13,14 @@ namespace GraphLib.Base
     public abstract class BaseGraph : IGraph
     {
         private static readonly string ParamsFormat = "Obstacle percent: {0} ({1}/{2})";
-        private static readonly string LargeSpace = "   ";
+        private const string LargeSpace = "   ";
         protected static readonly string[] DimensionNames = new[] { "Width", "Length", "Height" };
 
         private readonly Type graphType;
         private readonly object locker = new object();
         private readonly IReadOnlyDictionary<ICoordinate, IVertex> vertices;
 
-        public IReadOnlyCollection<IVertex> Vertices => (IReadOnlyCollection<IVertex>)vertices.Values;
-
-        public int Size { get; }
+        public int Count { get; }
 
         public int[] DimensionsSizes { get; }
 
@@ -31,9 +30,9 @@ namespace GraphLib.Base
             DimensionsSizes = dimensionSizes
                 .TakeOrDefault(requiredNumberOfDimensions, 1)
                 .ToArray();
-            Size = DimensionsSizes.AggregateOrDefault((x, y) => x * y);
+            Count = DimensionsSizes.AggregateOrDefault((x, y) => x * y);
             var verticesMap = vertices
-                .Take(Size)
+                .Take(Count)
                 .ForEach(SetGraph)
                 .ToDictionary(vertex => vertex.Position);
             this.vertices = new ReadOnlyDictionary<ICoordinate, IVertex>(verticesMap);
@@ -50,7 +49,7 @@ namespace GraphLib.Base
             {
                 bool hasEqualDimensionSizes = DimensionsSizes.SequenceEqual(graph.DimensionsSizes);
                 bool hasEqualNumberOfObstacles = graph.GetObstaclesCount() == this.GetObstaclesCount();
-                bool hasEqualVertices = Vertices.Juxtapose(graph.Vertices, (a, b) => a.Equals(b));
+                bool hasEqualVertices = graph.Juxtapose(this, (a, b) => a.Equals(b));
                 return hasEqualNumberOfObstacles && hasEqualVertices && hasEqualDimensionSizes;
             }
             return false;
@@ -58,7 +57,7 @@ namespace GraphLib.Base
 
         public override int GetHashCode()
         {
-            var verticesHashCode = Vertices.Select(x => x.GetHashCode()).ToHashCode();
+            var verticesHashCode = this.Select(x => x.GetHashCode()).ToHashCode();
             var dimensionsHashCode = DimensionsSizes.ToHashCode();
             return HashCode.Combine(verticesHashCode, dimensionsHashCode);
         }
@@ -71,7 +70,7 @@ namespace GraphLib.Base
             var zipped = DimensionNames.Zip(DimensionsSizes, Zip);
             string joined = string.Join(LargeSpace, zipped);
             string graphParams = string.Format(ParamsFormat,
-                obstaclesPercent, obstacles, Size);
+                obstaclesPercent, obstacles, Count);
             return string.Join(LargeSpace, joined, graphParams);
         }
 
@@ -86,5 +85,9 @@ namespace GraphLib.Base
                   .ForEach(info => info.SetValue(vertex, this));
             }
         }
+
+        public IEnumerator<IVertex> GetEnumerator() => vertices.Values.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

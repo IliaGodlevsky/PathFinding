@@ -2,12 +2,10 @@
 
 namespace GraphLib.Interfaces
 {
-    public interface IEndPoints
+    public interface IEndPoints : IEnumerable<IVertex>
     {
         IVertex Target { get; }
 
         IVertex Source { get; }
-
-        IEnumerable<IVertex> EndPoints { get; }
     }
 }

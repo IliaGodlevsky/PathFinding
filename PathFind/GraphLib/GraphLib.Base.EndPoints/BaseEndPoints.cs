@@ -4,6 +4,7 @@ using GraphLib.Base.EndPoints.Commands.VerticesCommands;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -19,8 +20,6 @@ namespace GraphLib.Base.EndPoints
         public IVertex Source { get; internal set; }
 
         public IVertex Target { get; internal set; }
-
-        public IEnumerable<IVertex> EndPoints => Intermediates.Prepend(Source).Append(Target);
 
         internal protected Collection<IVertex> Intermediates { get; }
 
@@ -54,7 +53,7 @@ namespace GraphLib.Base.EndPoints
 
         public void RestoreCurrentColors()
         {
-            returnColorsCommands.Execute(EndPoints);
+            returnColorsCommands.Execute(this);
         }
 
         protected virtual void SetEndPoints(object sender, EventArgs e)
@@ -70,5 +69,15 @@ namespace GraphLib.Base.EndPoints
         protected abstract void SubscribeVertex(IVertex vertex);
 
         protected abstract void UnsubscribeVertex(IVertex vertex);
+
+        public IEnumerator<IVertex> GetEnumerator()
+        {
+            return Intermediates.Prepend(Source).Append(Target).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 }

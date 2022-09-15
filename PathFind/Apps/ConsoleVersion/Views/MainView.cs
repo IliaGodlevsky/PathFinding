@@ -6,7 +6,6 @@ using ConsoleVersion.Model;
 using ConsoleVersion.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations;
 using GraphLib.Realizations.Coordinates;
@@ -60,7 +59,7 @@ namespace ConsoleVersion.Views
                 + Constants.HeightOfAbscissaView * 2 + Constants.HeightOfGraphParametresView;
             StatisticsPosition = new Coordinate2D(0, pathFindingStatisticsOffset);
             LateralDistanceBetweenVertices = CalculateLateralDistanceBetweenVertices();
-            graph.ForEach<Vertex>(RecalculateConsolePosition);
+            graph.ForEach(vertex => RecalculateConsolePosition((Vertex)vertex));
         }
 
         private void OnCostRangeChanged(CostRangeChangedMessage message)
@@ -71,7 +70,7 @@ namespace ConsoleVersion.Views
             PreviousMaxValueOfRange = Math.Max(CurrentMaxValueOfRange, PreviousMaxValueOfRange);
             CurrentMaxValueOfRange = max;
             LateralDistanceBetweenVertices = CalculateLateralDistanceBetweenVertices();
-            graph.ForEach<Vertex>(RecalculateConsolePosition);
+            graph.ForEach(vertex => RecalculateConsolePosition((Vertex)vertex));
         }
 
         private void OnStatisticsUpdated(UpdateStatisticsMessage message)

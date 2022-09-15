@@ -23,7 +23,7 @@ namespace ConsoleVersion.Commands
             }
         }
 
-        public bool CanExecute()
+        private bool CanExecute()
         {
             return condition
                 .GetInvocationList()

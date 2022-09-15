@@ -16,19 +16,31 @@ namespace WPFVersion3D.ViewModel
         private GraphFieldAxisRotatingViewModel yAxis;
         private GraphFieldAxisRotatingViewModel zAxis;
 
+        public IEnumerable<IAnimationSpeed> Speeds => AnimationSpeeds.Speeds;
+
         public IAnimationSpeed SelectedRotationSpeed
         {
             get => speed;
             set { speed = value; SpeedChanged?.Invoke(this, new RotationSpeedChangedEventArgs(speed)); }
         }
 
-        public GraphFieldAxisRotatingViewModel XAxisRotationViewModel { get => xAxis; set => Set(ref xAxis, value); }
+        public GraphFieldAxisRotatingViewModel XAxisRotationViewModel
+        {
+            get => xAxis;
+            set => Set(ref xAxis, value);
+        }
 
-        public GraphFieldAxisRotatingViewModel YAxisRotationViewModel { get => yAxis; set => Set(ref yAxis, value); }
+        public GraphFieldAxisRotatingViewModel YAxisRotationViewModel
+        {
+            get => yAxis;
+            set => Set(ref yAxis, value);
+        }
 
-        public GraphFieldAxisRotatingViewModel ZAxisRotationViewModel { get => zAxis; set => Set(ref zAxis, value); }
-
-        public IReadOnlyCollection<IAnimationSpeed> Speeds => AnimationSpeeds.Speeds;
+        public GraphFieldAxisRotatingViewModel ZAxisRotationViewModel
+        {
+            get => zAxis;
+            set => Set(ref zAxis, value);
+        }
 
         public void Dispose()
         {

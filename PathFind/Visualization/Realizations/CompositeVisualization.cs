@@ -6,7 +6,7 @@ using Visualization.Extensions;
 
 namespace Visualization.Realizations
 {
-    internal sealed class CompositeVisualization : List<IExecutable<IAlgorithm>>, IExecutable<IAlgorithm>
+    internal sealed class CompositeVisualization : List<IExecutable<IAlgorithm<IGraphPath>>>, IExecutable<IAlgorithm<IGraphPath>>
     {
         private readonly IGraph graph;
 
@@ -15,7 +15,7 @@ namespace Visualization.Realizations
             this.graph = graph;
         }
 
-        public void Execute(IAlgorithm algorithm)
+        public void Execute(IAlgorithm<IGraphPath> algorithm)
         {
             graph.RemoveAllColors();
             ForEach(command => command.Execute(algorithm));

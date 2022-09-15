@@ -90,7 +90,7 @@ namespace ConsoleVersion.DependencyInjection
 
             builder.RegisterComposite<CompositeGraphEvents, IGraphEvents>().SingleInstance();
 
-            builder.RegisterType<KnuthRandom>().As<IRandom>().SingleInstance();
+            builder.RegisterType<PseudoRandom>().As<IRandom>().SingleInstance();
             builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
@@ -105,6 +105,7 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance().PropertiesAutowired();
             builder.RegisterType<BinaryGraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
+            builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterDecorator<ThreadSafeGraphSerializer, IGraphSerializer>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 

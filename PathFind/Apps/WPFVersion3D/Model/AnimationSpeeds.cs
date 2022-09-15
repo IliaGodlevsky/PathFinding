@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Common.Extensions.EnumerableExtensions;
 using Random.Extensions;
 using Random.Interface;
 using System;
@@ -13,11 +14,11 @@ namespace WPFVersion3D.Model
     {
         private static readonly Lazy<IReadOnlyCollection<IAnimationSpeed>> speeds;
 
-        public static IReadOnlyCollection<IAnimationSpeed> Speeds => speeds.Value;
+        public static IEnumerable<IAnimationSpeed> Speeds => speeds.Value;
 
         static AnimationSpeeds()
         {
-            speeds = new Lazy<IReadOnlyCollection<IAnimationSpeed>>(GetSpeeds);
+            speeds = new Lazy<IReadOnlyCollection<IAnimationSpeed>>(GetSpeeds().ToReadOnly);
         }
 
         private sealed class AnimationSpeed : IAnimationSpeed
@@ -40,7 +41,7 @@ namespace WPFVersion3D.Model
             private readonly IRandom random;
             private readonly InclusiveValueRange<TimeSpan> range;
 
-            public TimeSpan Time => random.NextTimeSpan(range);
+            public TimeSpan Time => random.Next(range);
 
             public RandomAnimationSpeed(TimeSpan from, TimeSpan to)
             {
@@ -63,19 +64,15 @@ namespace WPFVersion3D.Model
             public override string ToString() => "Custom";
         }
 
-        private static IReadOnlyCollection<IAnimationSpeed> GetSpeeds()
-        {           
-            var speeds = new IAnimationSpeed[]
-            {
-                new AnimationSpeed(TimeSpan.FromSeconds(5), "Slowest"),
-                new AnimationSpeed(TimeSpan.FromSeconds(2), "Slow"),
-                new AnimationSpeed(TimeSpan.FromSeconds(1), "Medium"),
-                new AnimationSpeed(TimeSpan.FromMilliseconds(700), "High"),
-                new AnimationSpeed(TimeSpan.FromMilliseconds(400), "Highest"),
-                new RandomAnimationSpeed(TimeSpan.FromSeconds(5), TimeSpan.FromMilliseconds(400)),
-                new CustomAnimationSpeed(TimeSpan.FromSeconds(2))
-            };
-            return Array.AsReadOnly(speeds);
+        private static IEnumerable<IAnimationSpeed> GetSpeeds()
+        {
+            yield return new AnimationSpeed(TimeSpan.FromSeconds(5), "Slowest");
+            yield return new AnimationSpeed(TimeSpan.FromSeconds(2), "Slow");
+            yield return new AnimationSpeed(TimeSpan.FromSeconds(1), "Medium");
+            yield return new AnimationSpeed(TimeSpan.FromMilliseconds(700), "High");
+            yield return new AnimationSpeed(TimeSpan.FromMilliseconds(400), "Highest");
+            yield return new RandomAnimationSpeed(TimeSpan.FromSeconds(5), TimeSpan.FromMilliseconds(400));
+            yield return new CustomAnimationSpeed(TimeSpan.FromSeconds(2));
         }
     }
 }

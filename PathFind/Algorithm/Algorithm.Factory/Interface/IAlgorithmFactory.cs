@@ -4,7 +4,7 @@ using GraphLib.Interfaces;
 namespace Algorithm.Factory.Interface
 {
     public interface IAlgorithmFactory<out TAlgorithm>
-        where TAlgorithm : IAlgorithm
+        where TAlgorithm : IAlgorithm<IGraphPath>
     {
         TAlgorithm Create(IEndPoints endPoints);
     }

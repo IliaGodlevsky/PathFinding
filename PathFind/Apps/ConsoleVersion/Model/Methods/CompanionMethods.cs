@@ -11,7 +11,7 @@ namespace ConsoleVersion.Model.Methods
 {
     internal abstract class CompanionMethods<TResult, TAttribute> : ICompanionMethods<TResult>
         where TResult : Delegate
-        where TAttribute : MethodAttribute
+        where TAttribute : CompanionMethodAttribute
     {
         private const BindingFlags MethodAccessModificators = NonPublic | Instance | Public;
 

@@ -5,6 +5,7 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Algorithm.Realizations.GraphPaths
@@ -18,11 +19,11 @@ namespace Algorithm.Realizations.GraphPaths
         private readonly Lazy<double> pathCost;
         private readonly Lazy<IReadOnlyList<IVertex>> path;
 
-        public IReadOnlyList<IVertex> Path => path.Value;
+        private IReadOnlyList<IVertex> Path => path.Value;
 
         public double Cost => pathCost.Value;
 
-        public int Length => Path.Count == 0 ? 0 : Path.Count - 1;
+        public int Count => Path.Count == 0 ? 0 : Path.Count - 1;
 
         public GraphPath(IParentVertices parentVertices, IEndPoints endPoints)
             : this(parentVertices, endPoints, new DefaultStepRule())
@@ -70,6 +71,16 @@ namespace Algorithm.Realizations.GraphPaths
             return parentVertices.HasParent(vertex)
                 ? parentVertices.GetParent(vertex)
                 : NullVertex.Interface;
+        }
+
+        public IEnumerator<IVertex> GetEnumerator()
+        {
+            return Path.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

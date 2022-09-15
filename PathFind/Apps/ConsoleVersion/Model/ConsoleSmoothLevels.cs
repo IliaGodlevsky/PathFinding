@@ -19,7 +19,7 @@ namespace ConsoleVersion.Model
 
         static ConsoleSmoothLevels()
         {
-            levels = new Lazy<IReadOnlyList<ISmoothLevel>>(GetSmoothLevels);
+            levels = new Lazy<IReadOnlyList<ISmoothLevel>>(GetSmoothLevels().ToReadOnly);
         }
 
         private sealed class CustomSmoothLevel : ISmoothLevel
@@ -34,9 +34,9 @@ namespace ConsoleVersion.Model
             public override string ToString() => "Custom";
         }
 
-        private static IReadOnlyList<ISmoothLevel> GetSmoothLevels()
+        private static IEnumerable<ISmoothLevel> GetSmoothLevels()
         {
-            return SmoothLevels.Levels.Append(new CustomSmoothLevel()).ToReadOnly();
+            return SmoothLevels.Levels.Append(new CustomSmoothLevel());
         }
     }
 }

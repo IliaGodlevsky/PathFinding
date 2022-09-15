@@ -1,6 +1,8 @@
 ﻿using Autofac;
+using Common.Extensions.EnumerableExtensions;
 using GalaSoft.MvvmLight.Messaging;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Infrastructure.Commands;
@@ -12,14 +14,14 @@ namespace WPFVersion3D.ViewModel
     {
         private readonly IMessenger messenger;
 
-        private List<GraphFieldAxisRotatingViewModel> AxisRotationViewModels { get; }
+        private ICollection<GraphFieldAxisRotatingViewModel> AxisRotationViewModels { get; }
 
         public ICommand RotateCommand { get; }
 
         public GraphFieldAxesRotationViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            AxisRotationViewModels = new List<GraphFieldAxisRotatingViewModel>();
+            AxisRotationViewModels = new Collection<GraphFieldAxisRotatingViewModel>();
             RotateCommand = new RelayCommand(ExecuteRotateCommand, CanExecuteRotateCommand);
             messenger.Register<AddRotationViewModelMessage>(this, AddRotationViewModel);
             messenger.Register<RemoveRotationViewModelMessage>(this, RemoveRotationViewModel);
@@ -44,6 +46,5 @@ namespace WPFVersion3D.ViewModel
         {
             AxisRotationViewModels.Remove(message.Value);
         }
-
     }
 }

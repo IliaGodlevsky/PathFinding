@@ -50,7 +50,7 @@ namespace GraphLib.Realizations.Tests
                 {
                     Assert.IsTrue(graph.DimensionsSizes.SequenceEqual(dimensionSizes));
                     Assert.AreEqual(obstaclePercent, graph.GetObstaclePercent());
-                    Assert.IsTrue(graph.Vertices.Distinct().Count() == graph.Size);
+                    Assert.IsTrue(graph.Distinct().Count() == graph.Count);
                 });
             }
         }

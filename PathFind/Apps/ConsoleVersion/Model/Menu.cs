@@ -62,14 +62,12 @@ namespace ConsoleVersion.Model
             string header = methodInfo.GetAttributeOrNull<MenuItemAttribute>().Header;
             var menuCommand = new MenuCommand(header, method);
             var condition = conditionMethods.GetMethods(methodInfo);
-            return condition is null
-                ? menuCommand
-                : new ConditionedMenuCommand(menuCommand, condition);
+            return condition is null ? menuCommand : new ConditionedMenuCommand(menuCommand, condition);
         }
 
         private int GetOrder(MethodInfo method)
         {
-            return method.GetAttributeOrNull<OrderAttribute>()?.Order 
+            return method.GetAttributeOrNull<OrderAttribute>()?.Order
                 ?? OrderAttribute.Default.Order;
         }
 

@@ -10,15 +10,6 @@ namespace GraphLib.Realizations.Tests.Extenions
 {
     internal static class AutoMockExtensions
     {
-        public static void MockCoordinate(this AutoMock self, int[] coordinateValues)
-        {
-            var hash = coordinateValues.ToHashCode();
-            var mock = self.Mock<ICoordinate>();
-            mock.Setup(c => c.CoordinatesValues).Returns(coordinateValues);
-            mock.Setup(c => c.Equals(It.IsAny<object>())).Returns<bool>(obj => hash == obj.GetHashCode());
-            mock.Setup(c => c.GetHashCode()).Returns(hash);
-        }
-
         public static void MockVertexCostFactory(this AutoMock self, Func<int, IVertexCost> returnCallback)
         {
             self.Mock<IVertexCostFactory>().Setup(x => x.CreateCost(It.IsAny<int>())).Returns<int>(returnCallback);

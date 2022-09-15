@@ -8,17 +8,19 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
 {
     internal sealed class IntermediateToReplaceCommands : BaseVerticesCommands
     {
-        protected override IReadOnlyCollection<IUndoCommand> UndoCommands { get; }
-
         public IntermediateToReplaceCommands(BaseEndPoints endPoints) : base(endPoints)
         {
-            UndoCommands = new IUndoCommand[] { new UndoMarkToReplaceCommand(endPoints) };
         }
 
         protected override IEnumerable<IVertexCommand> GetCommands(BaseEndPoints endPoints)
         {
             yield return new CancelMarkToReplaceCommand(endPoints);
             yield return new MarkToReplaceCommand(endPoints);
+        }
+
+        protected override IEnumerable<IUndoCommand> GetUndoCommands(BaseEndPoints endPoints)
+        {
+            yield return new UndoMarkToReplaceCommand(endPoints);
         }
     }
 }

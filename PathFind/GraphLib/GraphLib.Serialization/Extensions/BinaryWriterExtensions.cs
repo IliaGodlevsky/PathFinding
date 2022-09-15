@@ -16,9 +16,9 @@ namespace GraphLib.Serialization.Extensions
             writer.WriteRange(info.CostRange);
         }
 
-        private static void WriteIntArray(this BinaryWriter writer, int[] array)
+        private static void WriteIntArray(this BinaryWriter writer, IReadOnlyCollection<int> array)
         {
-            writer.Write(array.Length);
+            writer.Write(array.Count);
             array.ForEach(writer.Write);
         }
 
@@ -36,7 +36,7 @@ namespace GraphLib.Serialization.Extensions
 
         private static void WriteCoordinate(this BinaryWriter writer, ICoordinate coordinate)
         {
-            writer.WriteIntArray(coordinate.CoordinatesValues);
+            writer.WriteIntArray(coordinate);
         }
 
         private static void WriteVertices(this BinaryWriter writer, IReadOnlyCollection<VertexSerializationInfo> vertices)
@@ -46,8 +46,8 @@ namespace GraphLib.Serialization.Extensions
             {
                 writer.Write(vertex.IsObstacle);
                 writer.Write(vertex.Cost.CurrentCost);
-                writer.WriterNeighborhood(vertex.Neighbourhood.Neighbours);
-                writer.WriteIntArray(vertex.Position.CoordinatesValues);
+                writer.WriterNeighborhood(vertex.Neighbourhood);
+                writer.WriteIntArray(vertex.Position);
             }
         }
     }

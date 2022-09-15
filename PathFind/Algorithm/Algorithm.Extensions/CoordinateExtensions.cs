@@ -9,17 +9,15 @@ namespace Algorithm.Extensions
     {
         public static ICoordinate Substract(this ICoordinate self, ICoordinate coordinate)
         {
-            return self.CoordinatesValues
-                .Zip(coordinate.CoordinatesValues, (x, y) => x - y)
-                .ToCoordinate();
+            return self.Zip(coordinate, (x, y) => x - y).ToCoordinate();
         }
 
         public static double GetScalarProduct(this ICoordinate self, ICoordinate coordinate)
         {
             double result = default;
-            for (int i = 0; i < self.CoordinatesValues.Length; i++)
+            for (int i = 0; i < self.Count; i++)
             {
-                result += (self.CoordinatesValues[i] * coordinate.CoordinatesValues[i]);
+                result += (self[i] * coordinate[i]);
             }
             return result;
         }
@@ -27,9 +25,9 @@ namespace Algorithm.Extensions
         public static double GetVectorLength(this ICoordinate self)
         {
             double result = 0;
-            for (int i = 0; i < self.CoordinatesValues.Length; i++)
+            for (int i = 0; i < self.Count; i++)
             {
-                result += (self.CoordinatesValues[i] * self.CoordinatesValues[i]);
+                result += (self[i] * self[i]);
             }
             return Math.Sqrt(result);
         }

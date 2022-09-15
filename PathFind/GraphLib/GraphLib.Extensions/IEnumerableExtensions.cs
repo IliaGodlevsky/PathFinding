@@ -4,6 +4,7 @@ using GraphLib.NullRealizations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using ValueRange;
 using ValueRange.Extensions;
 
@@ -11,10 +12,10 @@ namespace GraphLib.Extensions
 {
     public static class IEnumerableExtensions
     {
-        public static bool IsCardinal(this int[] centralCoordinates, int[] cardinalCoordinates)
+        public static bool IsCardinal(this IReadOnlyCollection<int> centralCoordinates, IReadOnlyCollection<int> cardinalCoordinates)
         {
             // Cardinal coordinate differs from central coordinate only for one coordinate value
-            return centralCoordinates.Length == cardinalCoordinates.Length
+            return centralCoordinates.Count == cardinalCoordinates.Count
                 ? centralCoordinates.Zip(cardinalCoordinates, (x, y) => x != y).Count(i => i) == 1
                 : false;
         }
@@ -22,6 +23,22 @@ namespace GraphLib.Extensions
         public static IVertex FirstOrNullVertex(this IEnumerable<IVertex> collection, Func<IVertex, bool> predicate)
         {
             return collection.FirstOrDefault(predicate) ?? NullVertex.Interface;
+        }
+
+        public static T VisualizeAsPath<T>(this T path)
+            where T : IEnumerable<IVertex>
+        {
+            path.OfType<IVisualizable>()
+                .Reverse()
+                .Where(vertex => !vertex.IsVisualizedAsEndPoint)
+                .ForEach(vertex => vertex.VisualizeAsPath());
+            return path;
+        }
+
+        public static async Task<T> VisualizeAsPathAsync<T>(this T path)
+            where T : IEnumerable<IVertex>
+        {
+            return await Task.Run(() => path.VisualizeAsPath()).ConfigureAwait(false);
         }
 
         public static int[] ToCoordinates(this int[] dimensionSizes, int index)

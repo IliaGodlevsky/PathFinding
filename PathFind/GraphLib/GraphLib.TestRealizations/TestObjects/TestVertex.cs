@@ -13,7 +13,7 @@ namespace GraphLib.TestRealizations.TestObjects
     {
         private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
 
-        public TestVertex(INeighborhood neighborhood, ICoordinate coordinate)
+        public TestVertex(IReadOnlyCollection<ICoordinate> neighborhood, ICoordinate coordinate)
         {
             this.Initialize();
             Position = coordinate;

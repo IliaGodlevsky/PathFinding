@@ -1,23 +1,29 @@
 ﻿using Algorithm.Interfaces;
 using GraphLib.Interfaces;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Algorithm.Realizations.GraphPaths
 {
-    public sealed class CombinedGraphPath : IGraphPath
+    public sealed class CompositeGraphPath : IGraphPath
     {
-        public IReadOnlyList<IVertex> Path { get; }
+        private IReadOnlyList<IVertex> Path { get; }
 
-        public int Length { get; }
+        public int Count { get; }
 
         public double Cost { get; }
 
-        public CombinedGraphPath(params IGraphPath[] paths)
+        public CompositeGraphPath(IGraphPath path, IGraphPath second, params IGraphPath[] paths)
         {
-            Path = paths.SelectMany(path => path.Path.Reverse()).Reverse().ToArray();
-            Length = paths.Sum(path => path.Length);
-            Cost = paths.Sum(path => path.Cost);
+            var composite = paths.Prepend(second).Prepend(path).ToArray();
+            Path = composite.SelectMany(p => p.Reverse()).Reverse().ToArray();
+            Count = composite.Sum(p => p.Count);
+            Cost = composite.Sum(p => p.Cost);
         }
+
+        public IEnumerator<IVertex> GetEnumerator() => Path.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

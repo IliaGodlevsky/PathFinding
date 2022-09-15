@@ -23,7 +23,7 @@ namespace WPFVersion3D.Model
 
         public GraphField3D(Graph3D graph)
         {
-            Vertices = graph.Vertices.OfType<Vertex3D>().ToArray();
+            Vertices = graph.OfType<Vertex3D>().ToReadOnly();
             Children.AddRange(Vertices);
             Abscissa = new Abscissa(graph);
             Ordinate = new Ordinate(graph);

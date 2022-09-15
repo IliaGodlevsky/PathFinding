@@ -64,7 +64,7 @@ namespace WPFVersion3D.Model
             set => SetValue(SizeProperty, value);
         }
 
-        public Vertex3D(INeighborhood neighborhood, ICoordinate coordinate, IModel3DFactory modelFactory,
+        public Vertex3D(IReadOnlyCollection<ICoordinate> neighborhood, ICoordinate coordinate, IModel3DFactory modelFactory,
             IVisualization<Vertex3D> visualization)
         {
             this.visualization = visualization;

@@ -1,6 +1,7 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Proxy;
+using System.Collections.Generic;
 using System.IO;
 using ValueRange;
 
@@ -44,7 +45,7 @@ namespace GraphLib.Serialization.Extensions
             return coordinates;
         }
 
-        private static INeighborhood ReadNeighborhood(this BinaryReader reader, ICoordinateFactory factory)
+        private static IReadOnlyCollection<ICoordinate> ReadNeighborhood(this BinaryReader reader, ICoordinateFactory factory)
         {
             int count = reader.ReadInt32();
             var neighborhood = new ICoordinate[count];
@@ -52,7 +53,7 @@ namespace GraphLib.Serialization.Extensions
             {
                 neighborhood[i] = reader.ReadCoordinate(factory);
             }
-            return new NeighbourhoodProxy(neighborhood);
+            return neighborhood;
         }
 
         private static InclusiveValueRange<int> ReadRange(this BinaryReader reader)

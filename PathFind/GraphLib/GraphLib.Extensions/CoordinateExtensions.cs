@@ -12,12 +12,7 @@ namespace GraphLib.Extensions
                 return false;
             }
 
-            return self.CoordinatesValues.Juxtapose(coordinate.CoordinatesValues);
-        }
-
-        public static bool IsCardinal(this ICoordinate coordinate, ICoordinate neighbour)
-        {
-            return coordinate.CoordinatesValues.IsCardinal(neighbour.CoordinatesValues);
+            return self.Juxtapose(coordinate);
         }
     }
 }

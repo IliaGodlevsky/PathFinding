@@ -95,7 +95,7 @@ namespace WPFVersion.Model
 
         public IGraph Graph { get; }
 
-        public Vertex(INeighborhood neighborhood, ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
+        public Vertex(IReadOnlyCollection<ICoordinate> neighborhood, ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
         {
             RenderTransformOrigin = new Point(0.5, 0.5);
             RenderTransform = new ScaleTransform();

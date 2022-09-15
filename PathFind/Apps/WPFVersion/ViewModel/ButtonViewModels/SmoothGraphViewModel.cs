@@ -22,7 +22,7 @@ namespace WPFVersion.ViewModel.ButtonViewModels
 
         public ISmoothLevel SelectSmoothLevel { get; set; }
 
-        public IReadOnlyCollection<ISmoothLevel> Levels => WpfSmoothLevels.Levels;
+        public IEnumerable<ISmoothLevel> Levels => WpfSmoothLevels.Levels;
 
         public ICommand SmoothCommand { get; }
 

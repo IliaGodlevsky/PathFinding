@@ -64,7 +64,7 @@
   <ItemGroup>
     <Compile Include="Attrbiutes\GroupAttribute.cs" />
     <Compile Include="Attrbiutes\OrderAttribute.cs" />
-    <Compile Include="Disposing.cs" />
+    <Compile Include="Disposables\Disposable.cs" />
     <Compile Include="Extensions\EnumerableExtensions\ICollectionExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions\ConcurrentDictionaryExtensions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
@@ -79,6 +79,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.HashCode">
       <Version>1.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Threading.Tasks.Extensions">
+      <Version>4.5.4</Version>
     </PackageReference>
     <PackageReference Include="System.ValueTuple">
       <Version>4.5.0</Version>

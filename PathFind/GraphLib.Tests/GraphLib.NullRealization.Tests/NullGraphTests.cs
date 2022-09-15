@@ -1,3 +1,4 @@
+using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.NullRealizations;
 using NUnit.Framework;

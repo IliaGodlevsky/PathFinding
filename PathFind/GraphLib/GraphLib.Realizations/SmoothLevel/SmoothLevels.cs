@@ -1,4 +1,5 @@
-﻿using GraphLib.Interfaces;
+﻿using Common.Extensions.EnumerableExtensions;
+using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
 
@@ -12,7 +13,7 @@ namespace GraphLib.Realizations.SmoothLevel
 
         static SmoothLevels()
         {
-            levels = new Lazy<IReadOnlyList<ISmoothLevel>>(GetSmoothLevels);
+            levels = new Lazy<IReadOnlyList<ISmoothLevel>>(GetSmoothLevels().ToReadOnly);
         }
 
         private sealed class SmoothLevel : ISmoothLevel
@@ -30,16 +31,12 @@ namespace GraphLib.Realizations.SmoothLevel
             public override string ToString() => name;
         }
 
-        private static IReadOnlyList<ISmoothLevel> GetSmoothLevels()
+        private static IEnumerable<ISmoothLevel> GetSmoothLevels()
         {
-            var levels = new ISmoothLevel[]
-            {
-                new SmoothLevel(1, "Low"),
-                new SmoothLevel(2, "Medium"),
-                new SmoothLevel(3, "High"),
-                new SmoothLevel(25, "Flat")
-            };
-            return Array.AsReadOnly(levels);
+            yield return new SmoothLevel(1, "Low");
+            yield return new SmoothLevel(2, "Medium");
+            yield return new SmoothLevel(3, "High");
+            yield return new SmoothLevel(25, "Flat");
         }
     }
 }

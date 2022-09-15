@@ -2,8 +2,10 @@
 using NullObject.Attributes;
 using SingletonLib;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace GraphLib.NullRealizations
 {
@@ -15,7 +17,7 @@ namespace GraphLib.NullRealizations
 
         public IReadOnlyCollection<IVertex> Vertices => NullVertex.GetMany(0);
 
-        public int Size => 0;
+        public int Count => 0;
 
         private NullGraph()
         {
@@ -40,6 +42,16 @@ namespace GraphLib.NullRealizations
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public IEnumerator<IVertex> GetEnumerator()
+        {
+            return Enumerable.Empty<IVertex>().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

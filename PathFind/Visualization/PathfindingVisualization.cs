@@ -13,7 +13,7 @@ using Visualization.Realizations;
 
 namespace Visualization
 {
-    public abstract class PathfindingVisualization : IExecutable<IAlgorithm>, IVisualizationSlides<IGraphPath>, IVisualizationSlides<IEndPoints>
+    public abstract class PathfindingVisualization : IExecutable<IAlgorithm<IGraphPath>>, IVisualizationSlides<IGraphPath>, IVisualizationSlides<IEndPoints>
     {
         private readonly VisitedVertices visited = new VisitedVertices();
         private readonly EnqueuedVertices enqueued = new EnqueuedVertices();
@@ -22,7 +22,7 @@ namespace Visualization
         private readonly SourceVertices source = new SourceVertices();
         private readonly TargetVertices target = new TargetVertices();
         private readonly ObstacleVertices obstacles = new ObstacleVertices();
-        private readonly IExecutable<IAlgorithm> visualizations;
+        private readonly IExecutable<IAlgorithm<IGraphPath>> visualizations;
         private readonly IVisualizationSlides<IVertex> visualizationSlides;
         private readonly IGraph graph;
 
@@ -38,12 +38,12 @@ namespace Visualization
             visualizationSlides.Clear();
         }
 
-        public void Remove(IAlgorithm algorithm)
+        public void Remove(IAlgorithm<IGraphPath> algorithm)
         {
             visualizationSlides.Remove(algorithm);
         }
 
-        public void Execute(IAlgorithm algorithm)
+        public void Execute(IAlgorithm<IGraphPath> algorithm)
         {
             visualizations.Execute(algorithm);
         }
@@ -56,7 +56,7 @@ namespace Visualization
             algorithm.Started += OnAlgorithmStarted;
         }
 
-        public void Add(IAlgorithm algorithm, IEndPoints endPoints)
+        public void Add(IAlgorithm<IGraphPath> algorithm, IEndPoints endPoints)
         {
             source.Add(algorithm, endPoints.Source);
             target.Add(algorithm, endPoints.Target);
@@ -64,17 +64,17 @@ namespace Visualization
             intermediate.AddRange(algorithm, intermediates);
         }
 
-        public void Add(IAlgorithm algorithm, IGraphPath graphPath)
+        public void Add(IAlgorithm<IGraphPath> algorithm, IGraphPath graphPath)
         {
             var endPoints = source.GetVertices(algorithm)
                 .Concat(target.GetVertices(algorithm))
                 .Concat(intermediate.GetVertices(algorithm));
-            path.AddRange(algorithm, graphPath.Path.Where(item => !endPoints.Contains(item)));
+            path.AddRange(algorithm, graphPath.Where(item => !endPoints.Contains(item)));
         }
 
         protected virtual void OnAlgorithmStarted(object sender, EventArgs e)
         {
-            if (sender is IAlgorithm algorithm)
+            if (sender is IAlgorithm<IGraphPath> algorithm)
             {
                 obstacles.AddRange(algorithm, graph.GetObstacles());
             }
@@ -82,7 +82,7 @@ namespace Visualization
 
         protected virtual void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            if (sender is IAlgorithm algo && e.Current.TryVisualizeAsVisited())
+            if (sender is IAlgorithm<IGraphPath> algo && e.Current.TryVisualizeAsVisited())
             {
                 visited.Add(algo, e.Current);
             }
@@ -90,7 +90,7 @@ namespace Visualization
 
         protected virtual void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
         {
-            if (sender is IAlgorithm algo && e.Current.TryVisualizeAsEnqueued())
+            if (sender is IAlgorithm<IGraphPath> algo && e.Current.TryVisualizeAsEnqueued())
             {
                 enqueued.Add(algo, e.Current);
             }
@@ -98,7 +98,7 @@ namespace Visualization
 
         protected virtual void OnAlgorithmFinished(object sender, EventArgs e)
         {
-            if (sender is IAlgorithm algorithm)
+            if (sender is IAlgorithm<IGraphPath> algorithm)
             {
                 enqueued.RemoveRange(algorithm, visited.GetVertices(algorithm));
             }

@@ -2,13 +2,9 @@
 
 namespace GraphLib.Interfaces
 {
-    public interface IGraph
+    public interface IGraph : IReadOnlyCollection<IVertex>
     {
-        int Size { get; }
-
         int[] DimensionsSizes { get; }
-
-        IReadOnlyCollection<IVertex> Vertices { get; }
 
         IVertex Get(ICoordinate coordinate);
 

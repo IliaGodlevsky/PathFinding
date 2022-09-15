@@ -43,7 +43,7 @@ namespace WPFVersion.ViewModel
 
         public bool IsStarted => algorithm.IsInProcess;
 
-        public IAlgorithm Algorithm => algorithm;
+        public IAlgorithm<IGraphPath> Algorithm => algorithm;
 
         public int Index { get; }
 

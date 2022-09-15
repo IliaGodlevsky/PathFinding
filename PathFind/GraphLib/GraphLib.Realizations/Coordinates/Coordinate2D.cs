@@ -20,8 +20,8 @@ namespace GraphLib.Realizations.Coordinates
         public Coordinate2D(params int[] coordinates)
             : base(numberOfDimensions: 2, coordinates)
         {
-            X = CoordinatesValues.First();
-            Y = CoordinatesValues.Last();
+            X = this.First();
+            Y = this.Last();
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Base
@@ -9,7 +11,11 @@ namespace GraphLib.Base
         private readonly string toString;
         private readonly int hashCode;
 
-        public int[] CoordinatesValues { get; }
+        private IReadOnlyList<int> CoordinatesValues { get; }
+
+        public int Count => CoordinatesValues.Count;
+
+        public int this[int index] => CoordinatesValues[index];
 
         protected BaseCoordinate(int numberOfDimensions, params int[] coordinates)
         {
@@ -28,14 +34,12 @@ namespace GraphLib.Base
             return pos.GetHashCode().Equals(GetHashCode());
         }
 
-        public override int GetHashCode()
-        {
-            return hashCode;
-        }
+        public override int GetHashCode() => hashCode;
 
-        public override string ToString()
-        {
-            return toString;
-        }
+        public override string ToString() => toString;
+
+        public IEnumerator<int> GetEnumerator() => CoordinatesValues.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => CoordinatesValues.GetEnumerator();
     }
 }

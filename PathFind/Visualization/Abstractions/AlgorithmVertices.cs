@@ -10,16 +10,16 @@ using Visualization.Interfaces;
 
 namespace Visualization.Abstractions
 {
-    internal abstract class AlgorithmVertices : IVisualizationSlides<IVertex>, IExecutable<IAlgorithm>, IAlgorithmVertices
+    internal abstract class AlgorithmVertices : IVisualizationSlides<IVertex>, IExecutable<IAlgorithm<IGraphPath>>, IAlgorithmVertices
     {
-        private readonly ConcurrentDictionary<IAlgorithm, ConcurrentDictionary<ICoordinate, IVertex>> vertices;
+        private readonly ConcurrentDictionary<IAlgorithm<IGraphPath>, ConcurrentDictionary<ICoordinate, IVertex>> vertices;
 
         public AlgorithmVertices()
         {
-            vertices = new ConcurrentDictionary<IAlgorithm, ConcurrentDictionary<ICoordinate, IVertex>>();
+            vertices = new ConcurrentDictionary<IAlgorithm<IGraphPath>, ConcurrentDictionary<ICoordinate, IVertex>>();
         }
 
-        public virtual void Add(IAlgorithm algorithm, IVertex vertex)
+        public virtual void Add(IAlgorithm<IGraphPath> algorithm, IVertex vertex)
         {
             vertices.TryGetOrAddNew(algorithm).TryAddOrUpdate(vertex.Position, vertex);
             Visualize(vertex.AsVisualizable());
@@ -30,22 +30,22 @@ namespace Visualization.Abstractions
             vertices.Clear();
         }
 
-        public void Remove(IAlgorithm algorithm)
+        public void Remove(IAlgorithm<IGraphPath> algorithm)
         {
             vertices.TryRemove(algorithm, out _);
         }
 
-        public void Remove(IAlgorithm algorithm, IVertex vertex)
+        public void Remove(IAlgorithm<IGraphPath> algorithm, IVertex vertex)
         {
             vertices.GetOrEmpty(algorithm).TryRemove(vertex.Position, out _);
         }
 
-        public void Execute(IAlgorithm algorithm)
+        public void Execute(IAlgorithm<IGraphPath> algorithm)
         {
             GetVertices(algorithm).OfType<IVisualizable>().ForEach(Visualize);
         }
 
-        public IReadOnlyCollection<IVertex> GetVertices(IAlgorithm algorithm)
+        public IReadOnlyCollection<IVertex> GetVertices(IAlgorithm<IGraphPath> algorithm)
         {
             return (IReadOnlyCollection<IVertex>)vertices.GetOrEmpty(algorithm).Values;
         }

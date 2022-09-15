@@ -4,7 +4,6 @@ using Algorithm.Interfaces;
 using Algorithm.Realizations.GraphPaths;
 using Algorithm.Realizations.StepRules;
 using Common.Extensions.EnumerableExtensions;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations;
 using GraphLib.Utility;

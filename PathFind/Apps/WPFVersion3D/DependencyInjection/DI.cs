@@ -72,7 +72,7 @@ namespace WPFVersion3D.DependencyInjection
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<XmlGraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
-            //builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
+            builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<Vertex3DFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
             builder.RegisterAssemblyTypes(Assemblies)

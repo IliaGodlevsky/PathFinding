@@ -9,7 +9,7 @@ namespace GraphLib.Extensions
     {
         public static IEnumerable<IEndPoints> ToSubEndPoints(this IEndPoints self)
         {
-            using (var iterator = self.EndPoints.GetEnumerator())
+            using (var iterator = self.GetEnumerator())
             {
                 iterator.MoveNext();
                 var previous = iterator.Current;
@@ -24,7 +24,7 @@ namespace GraphLib.Extensions
 
         public static bool IsEndPoint(this IEndPoints self, IVertex vertex)
         {
-            return self.EndPoints.Contains(vertex);
+            return self.Contains(vertex);
         }
 
         public static bool IsIntermediate(this IEndPoints endPoints, IVertex vertex)
@@ -44,13 +44,13 @@ namespace GraphLib.Extensions
 
         public static bool HasIsolators(this IEndPoints self)
         {
-            return self.EndPoints.Any(vertex => vertex.IsIsolated());
+            return self.Any(vertex => vertex.IsIsolated());
         }
 
         public static IEnumerable<IVertex> GetIntermediates(this IEndPoints self)
         {
             var vertices = new[] { self.Source, self.Target };
-            return self.EndPoints.Where(item => !vertices.Contains(item));
+            return self.Where(item => !vertices.Contains(item));
         }
     }
 }

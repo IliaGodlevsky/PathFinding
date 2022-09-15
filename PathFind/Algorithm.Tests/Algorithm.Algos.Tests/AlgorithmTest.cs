@@ -27,12 +27,12 @@ namespace Algorithm.Algos.Tests
         public virtual void FindPath_EndpointsBelongToGraph_ReturnsShortestPath()
         {
             var graph = testgraph2DAssemble.AssembleGraph();
-            var endPoints = new TestEndPoints(graph.Vertices.First(), graph.Vertices.Last());
+            var endPoints = new TestEndPoints(graph.First(), graph.Last());
             var algorithm = CreateAlgorithm(endPoints);
 
             var graphPath = algorithm.FindPath();
 
-            Assert.AreEqual(GetExpectedLength(), graphPath.Length);
+            Assert.AreEqual(GetExpectedLength(), graphPath.Count);
             Assert.AreEqual(GetExpectedCost(), graphPath.Cost);
         }
 
@@ -52,8 +52,8 @@ namespace Algorithm.Algos.Tests
         public void FindPath_GraphsWithoutObstacles_ReturnsNotEmptyPath(int[] dimensionSizes)
         {
             var graph = testGraphAssemble.AssembleGraph(0, dimensionSizes);
-            var source = graph.Vertices.FirstOrDefault() ?? NullVertex.Interface;
-            var target = graph.Vertices.LastOrDefault() ?? NullVertex.Interface;
+            var source = graph.FirstOrDefault() ?? NullVertex.Interface;
+            var target = graph.LastOrDefault() ?? NullVertex.Interface;
             var endPoints = new TestEndPoints(source, target);
             var algorithm = CreateAlgorithm(endPoints);
 
@@ -62,7 +62,7 @@ namespace Algorithm.Algos.Tests
             Assert.IsFalse(graph.IsNull());
         }
 
-        protected abstract IAlgorithm CreateAlgorithm(IEndPoints endPoints);
+        protected abstract IAlgorithm<IGraphPath> CreateAlgorithm(IEndPoints endPoints);
 
         protected abstract int GetExpectedCost();
         protected abstract int GetExpectedLength();

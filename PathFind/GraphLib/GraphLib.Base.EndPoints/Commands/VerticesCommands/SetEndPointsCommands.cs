@@ -8,16 +8,8 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
 {
     internal sealed class SetEndPointsCommands : BaseVerticesCommands
     {
-        protected override IReadOnlyCollection<IUndoCommand> UndoCommands { get; }
-
         public SetEndPointsCommands(BaseEndPoints endPoints) : base(endPoints)
         {
-            UndoCommands = new IUndoCommand[]
-            {
-                new UndoSetIntermediatesCommand(endPoints),
-                new UndoSetTargetCommand(endPoints),
-                new UndoSetSourceCommand(endPoints)
-            };
         }
 
         protected override IEnumerable<IVertexCommand> GetCommands(BaseEndPoints endPoints)
@@ -32,6 +24,13 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
             yield return new ReplaceIntermediateIsolatedCommand(endPoints);
             yield return new ReplaceIsolatedSourceCommand(endPoints);
             yield return new ReplaceIsolatedTargetCommand(endPoints);
+        }
+
+        protected override IEnumerable<IUndoCommand> GetUndoCommands(BaseEndPoints endPoints)
+        {
+            yield return new UndoSetIntermediatesCommand(endPoints);
+            yield return new UndoSetTargetCommand(endPoints);
+            yield return new UndoSetSourceCommand(endPoints);
         }
     }
 }

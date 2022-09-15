@@ -17,13 +17,11 @@ namespace WPFVersion3D.Model3DFactories
         private const double PI = 180;
         private const double PI2 = 360;
 
-        private Vector3D center;
-
         public Model3D CreateModel3D(double diametre, Material material)
         {
             double radius = diametre / 2;
-            center = new Vector3D(radius, radius, radius);
-            var points = GetPoints3D(0, radius);
+            var center = new Vector3D(radius, radius, radius);
+            var points = GetPoints3D(0, radius, center);
             var rectangles = GetTriangleModels(points, material);
             var cylinder = new Model3DGroup();
             cylinder.Children.AddRange(rectangles);
@@ -54,20 +52,22 @@ namespace WPFVersion3D.Model3DFactories
             }
         }
 
-        private Point3D[,] GetPoints3D(double bigRadius, double smallRadius)
+        private Point3D[,] GetPoints3D(double bigRadius,
+            double smallRadius, Vector3D center)
         {
             var points = new Point3D[Segments, Positions];
             for (int i = 0; i < Segments; i++)
             {
-                points[i, 0] = GetPosition(bigRadius, i * PI2 / (Segments - 1), HalfHeight);
-                points[i, 1] = GetPosition(bigRadius, i * PI2 / (Segments - 1), -HalfHeight);
-                points[i, 2] = GetPosition(smallRadius, i * PI2 / (Segments - 1), -HalfHeight);
-                points[i, 3] = GetPosition(smallRadius, i * PI2 / (Segments - 1), HalfHeight);
+                points[i, 0] = GetPosition(bigRadius, i * PI2 / (Segments - 1), HalfHeight, center);
+                points[i, 1] = GetPosition(bigRadius, i * PI2 / (Segments - 1), -HalfHeight, center);
+                points[i, 2] = GetPosition(smallRadius, i * PI2 / (Segments - 1), -HalfHeight, center);
+                points[i, 3] = GetPosition(smallRadius, i * PI2 / (Segments - 1), HalfHeight, center);
             }
             return points;
         }
 
-        private Point3D GetPosition(double radius, double theta, double y)
+        private Point3D GetPosition(double radius,
+            double theta, double y, Vector3D center)
         {
             double sn = Math.Sin(theta * Math.PI / PI);
             double cn = Math.Cos(theta * Math.PI / PI);

@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="AlgorithmExtensions.cs" />
     <Compile Include="CoordinateExtensions.cs" />
-    <Compile Include="GraphPathExtensions.cs" />
     <Compile Include="ICostsExtensions.cs" />
     <Compile Include="IPriorityQueueExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

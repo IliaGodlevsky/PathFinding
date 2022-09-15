@@ -16,7 +16,7 @@ namespace ConsoleVersion.ValueInput.RandomInput
 
         protected override TimeSpan GetRandomValue()
         {
-            return Random.NextTimeSpan(Range);
+            return Random.Next(Range);
         }
     }
 }

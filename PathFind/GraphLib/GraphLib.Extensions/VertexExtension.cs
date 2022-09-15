@@ -24,11 +24,6 @@ namespace GraphLib.Extensions
                 => ReferenceEquals(vertex, candidate) && ReferenceEquals(vertex.Graph, candidate.Graph));
         }
 
-        public static int[] GetCoordinates(this IVertex self)
-        {
-            return self.Position.CoordinatesValues;
-        }
-
         public static void SetToDefault(this IVertex self)
         {
             if (self.IsObstacle)

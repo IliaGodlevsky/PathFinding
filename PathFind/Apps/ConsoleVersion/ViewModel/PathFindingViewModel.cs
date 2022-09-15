@@ -32,6 +32,8 @@ namespace ConsoleVersion.ViewModel
     {
         public event Action WindowClosed;
 
+        private static readonly TimeSpan Millisecond = TimeSpan.FromMilliseconds(1);
+
         private readonly InclusiveValueRange<int> algorithmKeysValueRange;
         private readonly IMessenger messenger;
         private readonly ManualResetEventSlim resetEvent;
@@ -169,10 +171,10 @@ namespace ConsoleVersion.ViewModel
                     algorithm.Resume();
                     break;
                 case ConsoleKey.DownArrow:
-                    Delay = DelayRange.ReturnInRange(Delay - TimeSpan.FromMilliseconds(1));
+                    Delay = DelayRange.ReturnInRange(Delay - Millisecond);
                     break;
                 case ConsoleKey.UpArrow:
-                    Delay = DelayRange.ReturnInRange(Delay + TimeSpan.FromMilliseconds(1));
+                    Delay = DelayRange.ReturnInRange(Delay + Millisecond);
                     break;
             }
         }

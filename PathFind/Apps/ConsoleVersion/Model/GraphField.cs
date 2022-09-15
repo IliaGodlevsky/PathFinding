@@ -14,11 +14,11 @@ namespace ConsoleVersion.Model
 
         IReadOnlyCollection<IVertex> IGraphField.Vertices => Vertices;
 
-        private IReadOnlyCollection<IDisplayable> Displayables { get; }
+        private IEnumerable<IDisplayable> Displayables { get; }
 
         public GraphField(Graph2D graph)
         {
-            Vertices = graph.Vertices.Cast<Vertex>().ToReadOnly();
+            Vertices = graph.Cast<Vertex>().ToReadOnly();
             var displayables = new List<IDisplayable>()
             {
                 new FramedOverAbscissa(graph),

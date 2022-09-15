@@ -74,10 +74,11 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<XmlGraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
-            //builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
+            builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
-            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IAlgorithmFactory<PathfindingAlgorithm>>())
+            builder.RegisterAssemblyTypes(Assemblies)
+                .Where(type => type.Implements<IAlgorithmFactory<PathfindingAlgorithm>>())
                 .As<IAlgorithmFactory<PathfindingAlgorithm>>().SingleInstance();
 
             builder.RegisterType<DefaultStepRule>().As<IStepRule>().SingleInstance();
