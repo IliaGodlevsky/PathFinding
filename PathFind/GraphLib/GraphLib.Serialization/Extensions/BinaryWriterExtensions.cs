@@ -10,7 +10,7 @@ namespace GraphLib.Serialization.Extensions
     {
         public static void WriteGraph(this BinaryWriter writer, IGraph graph)
         {
-            var info = graph.ToGraphSerializationInfo();
+            var info = new GraphSerializationInfo(graph);
             writer.WriteIntArray(info.DimensionsSizes);
             writer.WriteVertices(info.VerticesInfo);
             writer.WriteRange(info.CostRange);

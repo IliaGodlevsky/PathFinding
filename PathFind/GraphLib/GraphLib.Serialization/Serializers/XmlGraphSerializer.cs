@@ -3,6 +3,7 @@ using GraphLib.Interfaces.Factories;
 using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
 using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace GraphLib.Serialization.Serializers
@@ -32,12 +33,12 @@ namespace GraphLib.Serialization.Serializers
         protected override GraphSerializationInfo LoadGraphInternal(Stream stream,
             IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory)
         {
-            return XDocument.Load(stream).ToGraph(costFactory, coordinateFactory);
+            return XDocument.Load(stream).Root.GetGraphInfo(costFactory, coordinateFactory);
         }
 
         protected override void SaveGraphInternal(IGraph graph, Stream stream)
         {
-            graph.ToGraphSerializationInfo().ToXml().Save(stream);
+            new XmlDocument().Append(new GraphSerializationInfo(graph)).Save(stream);
         }
     }
 }

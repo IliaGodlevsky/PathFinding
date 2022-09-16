@@ -1,7 +1,8 @@
-﻿using GraphLib.Base;
+﻿using Common.Extensions.EnumerableExtensions;
+using GraphLib.Base;
 using GraphLib.Interfaces;
-using GraphLib.Serialization.Extensions;
 using System.Collections.Generic;
+using System.Linq;
 using ValueRange;
 
 namespace GraphLib.Serialization
@@ -17,7 +18,9 @@ namespace GraphLib.Serialization
         public GraphSerializationInfo(IGraph graph)
         {
             DimensionsSizes = graph.DimensionsSizes;
-            VerticesInfo = graph.GetVerticesSerializationInfo();
+            VerticesInfo = graph
+                .Select(vertex => new VertexSerializationInfo(vertex))
+                .ToReadOnly();
             CostRange = BaseVertexCost.CostRange;
         }
 

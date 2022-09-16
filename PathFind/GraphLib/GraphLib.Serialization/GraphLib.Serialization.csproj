@@ -44,7 +44,6 @@
     <Compile Include="AesCrypto.cs" />
     <Compile Include="Extensions\BinaryReaderExtensions.cs" />
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
-    <Compile Include="Extensions\GraphSerializationInfoExtensions.cs" />
     <Compile Include="Extensions\GraphSerializerExtensions.cs" />
     <Compile Include="Extensions\GraphSerializationModuleExtensions.cs" />
     <Compile Include="Extensions\VertexFromInfoFactoryExtensions.cs" />
@@ -57,7 +56,6 @@
     <Compile Include="Serializers\Decorators\CompressGraphSerializer.cs" />
     <Compile Include="Serializers\Decorators\CryptoGraphSerializer.cs" />
     <Compile Include="Exceptions\CantSerializeGraphException.cs" />
-    <Compile Include="Extensions\GraphExtensions.cs" />
     <Compile Include="Extensions\VertexExtension.cs" />
     <Compile Include="GraphSerializationInfo.cs" />
     <Compile Include="Interfaces\IGraphSerializer.cs" />

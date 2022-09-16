@@ -11,13 +11,7 @@ namespace GraphLib.Serialization.Extensions
 {
     internal static class XDocumentExtensions
     {
-        public static GraphSerializationInfo ToGraph(this XDocument document,
-           IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory)
-        {
-            return document.Root.GetGraphInfo(costFactory, coordinateFactory);
-        }
-
-        private static GraphSerializationInfo GetGraphInfo(this XElement root,
+        public static GraphSerializationInfo GetGraphInfo(this XElement root,
             IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory)
         {
             var dimensions = root.Element(Dimensions).Attributes<int>();

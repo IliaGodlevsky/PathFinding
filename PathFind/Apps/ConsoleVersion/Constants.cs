@@ -1,5 +1,4 @@
-﻿using ConsoleVersion.Model;
-using System;
+﻿using System;
 using ValueRange;
 
 namespace ConsoleVersion
