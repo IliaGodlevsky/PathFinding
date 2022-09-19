@@ -8,7 +8,7 @@ using System.Security.Cryptography;
 
 namespace GraphLib.Serialization.Serializers.Decorators
 {
-    public sealed class CryptoGraphSerializer : IGraphSerializer
+    public sealed class CryptoGraphSerializer : IGraphSerializer, IDisposable
     {
         private readonly ICrypto crypto;
         private readonly IGraphSerializer serializer;
@@ -65,6 +65,11 @@ namespace GraphLib.Serialization.Serializers.Decorators
             {
                 throw new CantSerializeGraphException(ex.Message, ex);
             }
+        }
+
+        public void Dispose()
+        {
+            algorithm.Dispose();
         }
     }
 }

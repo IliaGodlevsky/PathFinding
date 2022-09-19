@@ -75,6 +75,7 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterType<XmlGraphSerializer>().As<IGraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
             builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
+            builder.RegisterDecorator<ThreadSafeGraphSerializer, IGraphSerializer>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
 
             builder.RegisterAssemblyTypes(Assemblies)

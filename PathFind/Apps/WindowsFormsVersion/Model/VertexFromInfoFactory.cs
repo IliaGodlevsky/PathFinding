@@ -6,6 +6,8 @@ namespace WindowsFormsVersion.Model
 {
     internal sealed class VertexFromInfoFactory : IVertexFromInfoFactory
     {
+        private readonly IVisualization<Vertex> visualization;
+
         public VertexFromInfoFactory(IVisualization<Vertex> visualization)
         {
             this.visualization = visualization;
@@ -14,8 +16,6 @@ namespace WindowsFormsVersion.Model
         public IVertex CreateFrom(VertexSerializationInfo info)
         {
             return new Vertex(info, visualization);
-        }
-
-        private readonly IVisualization<Vertex> visualization;
+        }      
     }
 }

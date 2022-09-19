@@ -1,4 +1,5 @@
-﻿using Common.Extensions.EnumerableExtensions;
+﻿using Commands.Interfaces;
+using Common.Extensions.EnumerableExtensions;
 using GraphLib.Base.EventHolder.Commands;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -9,7 +10,7 @@ namespace GraphLib.Base.EventHolder
 {
     public abstract class BaseGraphEvents : IGraphEvents
     {
-        private readonly IVerticesCommands commands;
+        private readonly IExecutable<IVertex> commands;
         protected readonly IVertexCostFactory costFactory;
 
         protected BaseGraphEvents(IVertexCostFactory costFactory)

@@ -1,11 +1,12 @@
-﻿using GraphLib.Base;
+﻿using Common.Extensions.EnumerableExtensions;
+using GraphLib.Base;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Serialization.Exceptions;
-using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace GraphLib.Serialization.Serializers
 {
@@ -33,7 +34,7 @@ namespace GraphLib.Serialization.Serializers
             {
                 var graphInfo = LoadGraphInternal(stream, costFactory, coordinateFactory);
                 BaseVertexCost.CostRange = graphInfo.CostRange;
-                var vertices = vertexFactory.CreateManyFrom(graphInfo.VerticesInfo);
+                var vertices = graphInfo.VerticesInfo.Select(vertexFactory.CreateFrom).ToReadOnly();
                 return graphFactory.CreateGraph(vertices, graphInfo.DimensionsSizes);
             }
             catch (Exception ex)

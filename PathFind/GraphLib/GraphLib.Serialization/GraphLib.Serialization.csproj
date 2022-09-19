@@ -46,7 +46,6 @@
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
     <Compile Include="Extensions\GraphSerializerExtensions.cs" />
     <Compile Include="Extensions\GraphSerializationModuleExtensions.cs" />
-    <Compile Include="Extensions\VertexFromInfoFactoryExtensions.cs" />
     <Compile Include="Extensions\XDocumentExtensions.cs" />
     <Compile Include="Extensions\XmlDocumentExtensions.cs" />
     <Compile Include="Interfaces\ICrypto.cs" />
