@@ -17,9 +17,9 @@ namespace GraphLib.Base
 
         public int this[int index] => CoordinatesValues[index];
 
-        protected BaseCoordinate(int numberOfDimensions, params int[] coordinates)
+        protected BaseCoordinate(int numberOfDimensions, IReadOnlyList<int> coordinates)
         {
-            CoordinatesValues = coordinates.TakeOrDefault(numberOfDimensions).ToArray();
+            CoordinatesValues = coordinates.TakeOrDefault(numberOfDimensions).ToReadOnly();
             toString = $"({string.Join(",", CoordinatesValues)})";
             hashCode = CoordinatesValues.ToHashCode();
         }

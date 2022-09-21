@@ -1,5 +1,6 @@
 using Algorithm.Exceptions;
 using Algorithm.Interfaces;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations;
 using GraphLib.TestRealizations.TestFactories;

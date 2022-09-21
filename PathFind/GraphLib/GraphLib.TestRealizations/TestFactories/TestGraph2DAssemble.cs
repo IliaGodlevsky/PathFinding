@@ -6,12 +6,13 @@ using GraphLib.Realizations.Graphs;
 using GraphLib.Realizations.Neighbourhoods;
 using GraphLib.TestRealizations.TestFactories.Matrix;
 using GraphLib.TestRealizations.TestObjects;
+using System.Collections.Generic;
 
 namespace GraphLib.TestRealizations.TestFactories
 {
     public sealed class TestGraph2DAssemble : IGraphAssemble
     {
-        public IGraph AssembleGraph(int obstaclePercent = 0, params int[] sizes)
+        public IGraph AssembleGraph(int obstaclePercent, IReadOnlyList<int> dimensionSizes)
         {
             int size = Constants.DimensionSizes2D.AggregateOrDefault((x, y) => x * y);
             var vertices = new TestVertex[size];

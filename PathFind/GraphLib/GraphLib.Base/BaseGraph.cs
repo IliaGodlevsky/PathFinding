@@ -24,7 +24,8 @@ namespace GraphLib.Base
 
         public int[] DimensionsSizes { get; }
 
-        protected BaseGraph(int requiredNumberOfDimensions, IReadOnlyCollection<IVertex> vertices, params int[] dimensionSizes)
+        protected BaseGraph(int requiredNumberOfDimensions, 
+            IReadOnlyCollection<IVertex> vertices, IReadOnlyList<int> dimensionSizes)
         {
             graphType = GetType();
             DimensionsSizes = dimensionSizes

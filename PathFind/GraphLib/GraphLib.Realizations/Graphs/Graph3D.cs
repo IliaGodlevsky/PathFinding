@@ -13,7 +13,7 @@ namespace GraphLib.Realizations.Graphs
 
         public int Height { get; }
 
-        public Graph3D(IReadOnlyCollection<IVertex> vertices, params int[] dimensions)
+        public Graph3D(IReadOnlyCollection<IVertex> vertices, IReadOnlyList<int> dimensions)
             : base(requiredNumberOfDimensions: 3, vertices, dimensions)
         {
             Width = DimensionsSizes.First();

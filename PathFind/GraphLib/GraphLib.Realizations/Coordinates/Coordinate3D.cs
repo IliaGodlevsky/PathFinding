@@ -1,4 +1,5 @@
 ﻿using GraphLib.Base;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -13,7 +14,7 @@ namespace GraphLib.Realizations.Coordinates
 
         public int Z { get; }
 
-        public Coordinate3D(params int[] coordinates)
+        public Coordinate3D(IReadOnlyList<int> coordinates)
             : base(numberOfDimensions: 3, coordinates)
         {
             X = this.First();

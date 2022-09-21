@@ -7,6 +7,7 @@ using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using ConsoleVersion.Messages;
 using GalaSoft.MvvmLight.Messaging;
+using GraphLib.Extensions;
 using GraphLib.Interfaces.Factories;
 using GraphLib.ViewModel;
 using Logging.Interface;

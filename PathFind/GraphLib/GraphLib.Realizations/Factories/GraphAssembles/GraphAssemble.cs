@@ -5,6 +5,7 @@ using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using Random.Extensions;
 using Random.Interface;
+using System.Collections.Generic;
 using System.Linq;
 using ValueRange;
 using ValueRange.Extensions;
@@ -38,7 +39,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             percentRange = new InclusiveValueRange<int>(99, 0);
         }
 
-        public virtual IGraph AssembleGraph(int obstaclePercent, params int[] graphDimensionsSizes)
+        public virtual IGraph AssembleGraph(int obstaclePercent, IReadOnlyList<int> graphDimensionsSizes)
         {
             int graphSize = graphDimensionsSizes.AggregateOrDefault((x, y) => x * y);
             int percentOfObstacles = percentRange.ReturnInRange(obstaclePercent);

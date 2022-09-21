@@ -1,7 +1,9 @@
-﻿namespace GraphLib.Interfaces.Factories
+﻿using System.Collections.Generic;
+
+namespace GraphLib.Interfaces.Factories
 {
     public interface IGraphAssemble
     {
-        IGraph AssembleGraph(int obstaclePercent, params int[] graphDimensionSizes);
+        IGraph AssembleGraph(int obstaclePercent, IReadOnlyList<int> graphDimensionSizes);
     }
 }

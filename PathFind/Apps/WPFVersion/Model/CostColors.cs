@@ -12,7 +12,7 @@ namespace WPFVersion.Model
     internal sealed class CostColors
     {
         private readonly Lazy<IReadOnlyDictionary<int, Brush>> costColors;
-        private readonly List<Brush> previousColors;
+        private readonly IList<Brush> previousColors;
         private readonly IGraph graph;
 
         public Color CostColor { get; set; }

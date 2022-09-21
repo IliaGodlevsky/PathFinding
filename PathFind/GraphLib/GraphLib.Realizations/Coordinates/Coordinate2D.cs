@@ -1,4 +1,5 @@
 ﻿using GraphLib.Base;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -17,7 +18,7 @@ namespace GraphLib.Realizations.Coordinates
 
         }
 
-        public Coordinate2D(params int[] coordinates)
+        public Coordinate2D(IReadOnlyList<int> coordinates)
             : base(numberOfDimensions: 2, coordinates)
         {
             X = this.First();

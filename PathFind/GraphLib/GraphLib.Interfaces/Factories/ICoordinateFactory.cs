@@ -1,7 +1,9 @@
-﻿namespace GraphLib.Interfaces.Factories
+﻿using System.Collections.Generic;
+
+namespace GraphLib.Interfaces.Factories
 {
     public interface ICoordinateFactory
     {
-        ICoordinate CreateCoordinate(int[] coordinates);
+        ICoordinate CreateCoordinate(IReadOnlyList<int> coordinates);
     }
 }

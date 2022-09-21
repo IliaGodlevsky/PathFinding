@@ -7,7 +7,7 @@ namespace GraphLib.Realizations.Factories.GraphFactories
 {
     public sealed class Graph3DFactory : IGraphFactory
     {
-        public IGraph CreateGraph(IReadOnlyCollection<IVertex> vertices, int[] dimensionSizes)
+        public IGraph CreateGraph(IReadOnlyCollection<IVertex> vertices, IReadOnlyList<int> dimensionSizes)
         {
             return new Graph3D(vertices, dimensionSizes);
         }

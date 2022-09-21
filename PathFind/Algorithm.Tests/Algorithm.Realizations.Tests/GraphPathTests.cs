@@ -1,6 +1,7 @@
 ﻿using Algorithm.Realizations.GraphPaths;
 using Algorithm.Сompanions;
 using Common.Extensions.EnumerableExtensions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.TestRealizations.TestFactories;
@@ -33,7 +34,7 @@ namespace Algorithm.Realizations.Tests
                 new TestCoordinate(3,6), //1
                 new TestCoordinate(4,7)  //5
             };
-            graph = graphAssemble.AssembleGraph(0);
+            graph = graphAssemble.AssembleGraph();
             var source = graph.Get(expectedPraphPathCoordinates.First());
             var target = graph.Get(expectedPraphPathCoordinates.Last());
             endPoints = new TestEndPoints(source, target);

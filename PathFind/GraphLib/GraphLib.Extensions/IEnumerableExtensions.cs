@@ -41,7 +41,7 @@ namespace GraphLib.Extensions
             return await Task.Run(() => path.VisualizeAsPath()).ConfigureAwait(false);
         }
 
-        public static int[] ToCoordinates(this int[] dimensionSizes, int index)
+        public static int[] ToCoordinates(this IReadOnlyList<int> dimensionSizes, int index)
         {
             int size = dimensionSizes.AggregateOrDefault((x, y) => x * y);
             var rangeOfIndices = new InclusiveValueRange<int>(size - 1, 0);
@@ -50,7 +50,7 @@ namespace GraphLib.Extensions
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            var coordinates = new int[dimensionSizes.Length];
+            var coordinates = new int[dimensionSizes.Count];
 
             for (int i = 0; i < coordinates.Length; i++)
             {

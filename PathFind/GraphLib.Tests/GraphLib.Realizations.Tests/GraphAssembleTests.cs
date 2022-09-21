@@ -67,7 +67,7 @@ namespace GraphLib.Realizations.Tests
                 mock.MockVertexCostFactory(_ => NullCost.Interface);
 
                 var assemble = mock.Create<GraphAssemble>();
-                var graph = assemble.AssembleGraph(0);
+                var graph = assemble.AssembleGraph();
 
                 Assert.AreSame(NullGraph.Interface, graph);
             }
