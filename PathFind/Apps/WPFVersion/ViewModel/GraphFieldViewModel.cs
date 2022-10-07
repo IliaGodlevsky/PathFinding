@@ -1,10 +1,10 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Interfaces;
-using GraphLib.Realizations.Graphs;
 using WPFVersion.DependencyInjection;
 using WPFVersion.Messages.ActionMessages;
 using WPFVersion.Messages.DataMessages;
+using WPFVersion.Model;
 using WPFVersion.ViewModel.BaseViewModels;
 
 namespace WPFVersion.ViewModel
@@ -13,13 +13,21 @@ namespace WPFVersion.ViewModel
     {
         private readonly IMessenger messenger;
 
-        private Graph2D graph;
+        private IGraph graph;
         private IGraphField field;
         private string graphParamtres;
 
-        public IGraphField GraphField { get => field; set => Set(ref field, value); }
+        public IGraphField GraphField 
+        { 
+            get => field; 
+            set => Set(ref field, value); 
+        }
 
-        public string GraphParamtres { get => graphParamtres; set => Set(ref graphParamtres, value); }
+        public string GraphParamtres 
+        { 
+            get => graphParamtres; 
+            set => Set(ref graphParamtres, value); 
+        }
 
         public GraphFieldViewModel()
         {
@@ -30,15 +38,17 @@ namespace WPFVersion.ViewModel
 
         private void OnGraphCreated(GraphCreatedMessage message)
         {
-            graph = (Graph2D)message.Graph;
+            graph = message.Graph;
             var graphFieldFactory = DI.Container.Resolve<IGraphFieldFactory>();
-            GraphField = graphFieldFactory.CreateGraphField(graph);
-            GraphParamtres = graph.ToString();
+            GraphField = graphFieldFactory.CreateGraphField(message.Graph);
+            var wrap = new GraphWrap(graph);
+            GraphParamtres = wrap.ToString();
         }
 
         private void OnGraphChanged(GraphChangedMessage message)
         {
-            GraphParamtres = graph.ToString();
+            var wrap = new GraphWrap(graph);
+            GraphParamtres = wrap.ToString();
         }
     }
 }

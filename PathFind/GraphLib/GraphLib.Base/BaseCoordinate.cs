@@ -2,7 +2,6 @@
 using GraphLib.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GraphLib.Base
 {
@@ -31,7 +30,7 @@ namespace GraphLib.Base
 
         public override bool Equals(object pos)
         {
-            return pos.GetHashCode().Equals(GetHashCode());
+            return pos is ICoordinate coord ? this.Equals(coord) : false;
         }
 
         public override int GetHashCode() => hashCode;

@@ -32,7 +32,8 @@ namespace WPFVersion.ViewModel.ButtonViewModels
 
         private void ExecuteCreateGraphCommand(object param)
         {
-            DI.Container.Resolve<GraphCreatesWindow>().Show();
+            var window = DI.Container.Resolve<GraphCreatesWindow>();
+            window.Show();
         }
 
         private bool CanExecuteCreateGraphCommand(object param)

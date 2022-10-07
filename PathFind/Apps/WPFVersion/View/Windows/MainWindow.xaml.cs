@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphLib.Extensions;
+using System;
 using System.Windows;
 using WPFVersion.Attributes;
 using WPFVersion.Infrastructure.EventArguments;

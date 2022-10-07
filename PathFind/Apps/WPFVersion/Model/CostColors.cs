@@ -1,4 +1,6 @@
-﻿using GraphLib.Interfaces;
+﻿using Common.Disposables;
+using Common.Extensions.EnumerableExtensions;
+using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,58 +14,46 @@ namespace WPFVersion.Model
     internal sealed class CostColors
     {
         private readonly Lazy<IReadOnlyDictionary<int, Brush>> costColors;
-        private readonly IList<Brush> previousColors;
-        private readonly IGraph graph;
+        private readonly ICollection<Brush> previousColors;
+        private readonly IReadOnlyCollection<Vertex> graph;
 
-        public Color CostColor { get; set; }
+        public Color CostColor { get; set; } = Colors.DodgerBlue;
 
         public CostColors(IGraph graph)
         {
-            this.graph = graph;
-            previousColors = new List<Brush>();
+            this.graph = graph.Cast<Vertex>().ToReadOnly();
+            previousColors = new Collection<Brush>();
             costColors = new Lazy<IReadOnlyDictionary<int, Brush>>(FormCostColors);
-            CostColor = Colors.DodgerBlue;
         }
 
         public void ColorizeAccordingToCost()
         {
-            foreach (Vertex vertex in graph)
-            {
-                previousColors.Add(vertex.Background);
-                if (CanBeColored(vertex))
-                {
-                    vertex.Background = costColors.Value[vertex.Cost.CurrentCost];
-                }
-            }
+            graph.ForEach(vertex => previousColors.Add(vertex.Background))
+                .Where(CanBeColored)
+                .ForEach(vertex => vertex.Background = costColors.Value[vertex.Cost.CurrentCost]);
         }
 
         public void ReturnPreviousColors()
         {
-            using (var iterator = graph.GetEnumerator())
+            using (Disposable.Use(previousColors.Clear))
             {
-                for (int i = 0; i < previousColors.Count; i++)
-                {
-                    iterator.MoveNext();
-                    var vertex = (Vertex)iterator.Current;
-                    vertex.Background = previousColors[i];
-                }
+                graph.Zip(previousColors, (vertex, color) => (Vertex: vertex, Color: color))
+                  .ForEach(item => item.Vertex.Background = item.Color);
             }
-            previousColors.Clear();
         }
 
         private IReadOnlyDictionary<int, Brush> FormCostColors()
         {
             var availableCostValues = Enumerable
                 .Range(CostRange.LowerValueOfRange, (int)CostRange.Amplitude() + 1)
-                .ToArray();
+                .ToReadOnly();
             var colors = new Dictionary<int, Brush>();
-            double step = byte.MaxValue / availableCostValues.Length;
-            for (int i = 0; i < availableCostValues.Length; i++)
+            double step = byte.MaxValue / availableCostValues.Count;
+            for (int i = 0; i < availableCostValues.Count; i++)
             {
                 var color = CostColor;
                 color.A = Convert.ToByte(i * step);
-                var brush = new SolidColorBrush(color);
-                colors.Add(availableCostValues[i], brush);
+                colors.Add(availableCostValues[i], new SolidColorBrush(color));
             }
             return new ReadOnlyDictionary<int, Brush>(colors);
         }

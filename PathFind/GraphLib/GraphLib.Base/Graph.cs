@@ -10,7 +10,7 @@ using static System.Reflection.BindingFlags;
 
 namespace GraphLib.Base
 {
-    public abstract class BaseGraph : IGraph
+    public abstract class Graph : IGraph
     {
         private static readonly string ParamsFormat = "Obstacle percent: {0} ({1}/{2})";
         private const string LargeSpace = "   ";
@@ -22,20 +22,15 @@ namespace GraphLib.Base
 
         public int Count { get; }
 
-        public int[] DimensionsSizes { get; }
+        public IReadOnlyList<int> DimensionsSizes { get; }
 
-        protected BaseGraph(int requiredNumberOfDimensions, 
-            IReadOnlyCollection<IVertex> vertices, IReadOnlyList<int> dimensionSizes)
+        protected Graph(int requiredNumberOfDimensions, IReadOnlyCollection<IVertex> vertices, 
+            IReadOnlyList<int> dimensionSizes)
         {
             graphType = GetType();
-            DimensionsSizes = dimensionSizes
-                .TakeOrDefault(requiredNumberOfDimensions, 1)
-                .ToArray();
+            DimensionsSizes = dimensionSizes.TakeOrDefault(requiredNumberOfDimensions, 1).ToReadOnly();
             Count = DimensionsSizes.AggregateOrDefault((x, y) => x * y);
-            var verticesMap = vertices
-                .Take(Count)
-                .ForEach(SetGraph)
-                .ToDictionary(vertex => vertex.Position);
+            var verticesMap = vertices.Take(Count).ForEach(SetGraph).ToDictionary(vertex => vertex.Position);
             this.vertices = new ReadOnlyDictionary<ICoordinate, IVertex>(verticesMap);
         }
 

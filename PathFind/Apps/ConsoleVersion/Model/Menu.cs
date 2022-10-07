@@ -60,18 +60,24 @@ namespace ConsoleVersion.Model
             var safeAction = safeMethods.GetMethods(methodInfo);
             Command method = () => safeAction.Invoke(command);
             string header = methodInfo.GetAttributeOrNull<MenuItemAttribute>().Header;
-            var menuCommand = new MenuCommand(header, method);
             var condition = conditionMethods.GetMethods(methodInfo);
-            return condition is null ? menuCommand : new ConditionedMenuCommand(menuCommand, condition);
+            return CreateMenuCommand(condition, method, header);
         }
 
-        private int GetOrder(MethodInfo method)
+        private static IMenuCommand CreateMenuCommand(Condition condition, Command method, string header)
+        {
+            return condition is null
+                ? new MenuCommand(header, method)
+                : new ConditionedMenuCommand(header, method, condition);
+        }
+
+        private static int GetOrder(MethodInfo method)
         {
             return method.GetAttributeOrNull<OrderAttribute>()?.Order
                 ?? OrderAttribute.Default.Order;
         }
 
-        private bool IsMenuItem(MethodInfo methodInfo)
+        private static bool IsMenuItem(MethodInfo methodInfo)
         {
             return Attribute.IsDefined(methodInfo, typeof(MenuItemAttribute));
         }

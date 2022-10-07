@@ -4,7 +4,7 @@ namespace GraphLib.Interfaces
 {
     public interface IGraph : IReadOnlyCollection<IVertex>
     {
-        int[] DimensionsSizes { get; }
+        IReadOnlyList<int> DimensionsSizes { get; }
 
         IVertex Get(ICoordinate coordinate);
 

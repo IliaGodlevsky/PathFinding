@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace GraphLib.TestRealizations
 {
-    public sealed class TestGraph : BaseGraph
+    public sealed class TestGraph : Graph
     {
         public TestGraph(IReadOnlyCollection<IVertex> vertices, IReadOnlyList<int> dimensionSizes)
             : base(dimensionSizes.Count, vertices, dimensionSizes)

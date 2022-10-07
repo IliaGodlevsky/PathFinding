@@ -13,7 +13,7 @@ namespace GraphLib.NullRealizations
     [DebuggerDisplay("Null")]
     public sealed class NullGraph : Singleton<NullGraph, IGraph>, IGraph
     {
-        public int[] DimensionsSizes => Array.Empty<int>();
+        public IReadOnlyList<int> DimensionsSizes => Array.Empty<int>();
 
         public IReadOnlyCollection<IVertex> Vertices => NullVertex.GetMany(0);
 

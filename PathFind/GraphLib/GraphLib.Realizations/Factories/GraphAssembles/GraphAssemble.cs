@@ -46,7 +46,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             int numberOfObstacles = graphSize.GetPercentage(obstaclePercent);
             var regulars = Enumerable.Repeat(false, graphSize - numberOfObstacles);
             var obstacles = Enumerable.Repeat(true, numberOfObstacles);
-            var obstaclesMatrix = regulars.Concat(obstacles).OrderBy(_ => random.Next()).ToArray();
+            var obstaclesMatrix = regulars.Concat(obstacles).OrderBy(_ => random.Next()).ToReadOnly();
             var vertices = new IVertex[graphSize];
             for (int vertexIndex = 0; vertexIndex < graphSize; vertexIndex++)
             {

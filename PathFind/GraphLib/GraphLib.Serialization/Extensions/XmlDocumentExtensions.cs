@@ -66,6 +66,13 @@ namespace GraphLib.Serialization.Extensions
             return node;
         }
 
+        private static Xml WithAttributes<Xml, T>(this Xml node, IReadOnlyList<T> array)
+            where Xml : XmlNode
+        {
+            node.AppendAttributes(node.OwnerDocument.GenerateAttributes(array).ToArray());
+            return node;
+        }
+
         private static Xml WithAttributes<Xml>(this Xml node, ICoordinate coordinate)
             where Xml : XmlNode
         {

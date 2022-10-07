@@ -20,6 +20,7 @@ namespace WPFVersion.ViewModel
         public event Action WindowClosed;
 
         public ICommand ConfirmCreateGraphCommand { get; }
+
         public ICommand CancelCreateGraphCommand { get; }
 
         public GraphCreatingViewModel(IEnumerable<IGraphAssemble> graphAssembles, ILog log)

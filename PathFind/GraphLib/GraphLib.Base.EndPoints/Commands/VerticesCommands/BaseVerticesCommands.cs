@@ -21,7 +21,7 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
 
         public void Execute(IVertex vertex)
         {
-            ExecuteCommands.ExecuteFirst(vertex ?? NullVertex.Instance);
+            ExecuteCommands.ExecuteFirst(vertex ?? NullVertex.Interface);
         }
 
         public void Undo()

@@ -1,25 +1,23 @@
 ﻿using ConsoleVersion.Delegates;
-using ConsoleVersion.Interface;
 using System.Linq;
 
 namespace ConsoleVersion.Commands
 {
-    internal sealed class ConditionedMenuCommand : IMenuCommand
+    internal class ConditionedMenuCommand : MenuCommand
     {
-        private readonly IMenuCommand command;
         private readonly Condition condition;
 
-        public ConditionedMenuCommand(IMenuCommand command, Condition condition)
+        public ConditionedMenuCommand(string header, Command command, 
+            Condition condition) : base(header, command)
         {
-            this.command = command;
             this.condition = condition;
         }
 
-        public void Execute()
+        public override void Execute()
         {
             if (CanExecute())
             {
-                command.Execute();
+                command.Invoke();
             }
         }
 
@@ -29,11 +27,6 @@ namespace ConsoleVersion.Commands
                 .GetInvocationList()
                 .Cast<Condition>()
                 .All(p => p.Invoke());
-        }
-
-        public override string ToString()
-        {
-            return command.ToString();
         }
     }
 }

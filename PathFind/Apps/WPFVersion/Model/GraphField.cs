@@ -1,7 +1,6 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Coordinates;
-using GraphLib.Realizations.Graphs;
 using System.Collections.Generic;
 using System.Windows.Controls;
 
@@ -13,7 +12,7 @@ namespace WPFVersion.Model
     {
         public IReadOnlyCollection<IVertex> Vertices { get; }
 
-        public GraphField(Graph2D graph)
+        public GraphField(IGraph graph)
         {
             Vertices = graph;
             Vertices.ForEach(vertex => Locate((Vertex)vertex));

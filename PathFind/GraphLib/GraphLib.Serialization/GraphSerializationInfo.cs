@@ -9,7 +9,7 @@ namespace GraphLib.Serialization
 {
     public sealed class GraphSerializationInfo
     {
-        public int[] DimensionsSizes { get; }
+        public IReadOnlyList<int> DimensionsSizes { get; }
 
         public IReadOnlyCollection<VertexSerializationInfo> VerticesInfo { get; }
 
