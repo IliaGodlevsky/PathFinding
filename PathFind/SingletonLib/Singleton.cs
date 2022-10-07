@@ -11,7 +11,6 @@ namespace SingletonLib
     public abstract class Singleton<TInstance, TInterface>
         where TInstance : Singleton<TInstance, TInterface>, TInterface
     {
-        private static readonly Type instanceType;
         private static readonly Lazy<TInstance> instance;
 
         public static TInterface Interface => Instance;
@@ -20,7 +19,6 @@ namespace SingletonLib
 
         static Singleton()
         {
-            instanceType = typeof(TInstance);
             instance = new Lazy<TInstance>(CreateInstance, true);
         }
 
@@ -33,6 +31,7 @@ namespace SingletonLib
 
         private static TInstance CreateInstance()
         {
+            var instanceType = typeof(TInstance);
             var ctor = instanceType
                 .GetConstructors(NonPublic | BindingFlags.Instance)
                 .FirstOrDefault(c => c.GetParameters().Length == 0);
