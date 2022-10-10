@@ -28,7 +28,7 @@ namespace ValueRange
 
         public override bool Equals(object obj)
         {
-            return obj is InclusiveValueRange<T> range ? range.Equals(this) : false;
+            return obj is InclusiveValueRange<T> range ? Equals(range) : false;
         }
 
         public bool Equals(InclusiveValueRange<T> other)

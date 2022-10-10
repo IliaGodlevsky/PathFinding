@@ -1,5 +1,6 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
+using NullObject.Extensions;
 using System;
 using System.Linq;
 
@@ -28,6 +29,25 @@ namespace GraphLib.Extensions
             int isolatedCount = graph.Where(vertex => vertex.IsIsolated()).Count();
             int number = graph.Count - (isolatedCount + NumberOfRequiredEndPoints);
             return number > 0 ? number : 0;
+        }
+
+        public static string GetStringRepresentation(this IGraph graph, 
+            string format = "Obstacle percent: {0} ({1}/{2})")
+        {           
+            if (!graph.IsNull())
+            {
+                const string LargeSpace = "   ";
+                var dimensionNames = new[] { "Width", "Length", "Height" };
+                int obstacles = graph.GetObstaclesCount();
+                int obstaclesPercent = graph.GetObstaclePercent();
+                string Zip(string name, int size) => $"{name}: {size}";
+                var zipped = dimensionNames.Zip(graph.DimensionsSizes, Zip);
+                string joined = string.Join(LargeSpace, zipped);
+                string graphParams = string.Format(format,
+                    obstaclesPercent, obstacles, graph.Count);
+                return string.Join(LargeSpace, joined, graphParams);
+            }
+            return string.Empty;
         }
     }
 }

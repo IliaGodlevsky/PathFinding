@@ -71,7 +71,7 @@ namespace GraphViewModel
         public virtual void ClearGraph()
         {
             Graph.Refresh();
-            GraphParametres = Graph.ToString();
+            GraphParametres = Graph.GetStringRepresentation();
             endPoints.Reset();
         }
 
@@ -82,7 +82,7 @@ namespace GraphViewModel
             Graph = graph;
             GraphField = fieldFactory.CreateGraphField(Graph);
             events.Subscribe(Graph);
-            GraphParametres = Graph.ToString();
+            GraphParametres = Graph.GetStringRepresentation();
         }
 
         public void ClearColors()

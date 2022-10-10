@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Graphs;
 using System.Windows.Media.Media3D;
@@ -58,14 +59,12 @@ namespace WPFVersion3D.ViewModel
             var graphFieldFactry = DI.Container.Resolve<IGraphFieldFactory>();
             GraphField = graphFieldFactry.CreateGraphField(graph);
             messenger.Send(new GraphFieldCreatedMessage(GraphField));
-            var wrap = new GraphWrap(graph);
-            GraphParametres = wrap.ToString();
+            GraphParametres = graph.GetStringRepresentation();
         }
 
         private void OnGraphUpdated(GraphChangedMessage message)
         {
-            var wrap = new GraphWrap(graph);
-            GraphParametres = wrap.ToString();
+            GraphParametres = graph.GetStringRepresentation();
         }
     }
 }

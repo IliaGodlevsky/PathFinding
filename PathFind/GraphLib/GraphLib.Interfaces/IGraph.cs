@@ -7,7 +7,5 @@ namespace GraphLib.Interfaces
         IReadOnlyList<int> DimensionsSizes { get; }
 
         IVertex Get(ICoordinate coordinate);
-
-        string ToString();
     }
 }

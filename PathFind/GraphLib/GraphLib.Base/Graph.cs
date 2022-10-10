@@ -12,10 +12,6 @@ namespace GraphLib.Base
 {
     public abstract class Graph : IGraph
     {
-        private static readonly string ParamsFormat = "Obstacle percent: {0} ({1}/{2})";
-        private const string LargeSpace = "   ";
-        protected static readonly string[] DimensionNames = new[] { "Width", "Length", "Height" };
-
         private readonly Type graphType;
         private readonly object locker = new object();
         private readonly IReadOnlyDictionary<ICoordinate, IVertex> vertices;
@@ -56,18 +52,6 @@ namespace GraphLib.Base
             var verticesHashCode = this.Select(x => x.GetHashCode()).ToHashCode();
             var dimensionsHashCode = DimensionsSizes.ToHashCode();
             return HashCode.Combine(verticesHashCode, dimensionsHashCode);
-        }
-
-        public override string ToString()
-        {
-            int obstacles = this.GetObstaclesCount();
-            int obstaclesPercent = this.GetObstaclePercent();
-            string Zip(string name, int size) => $"{name}: {size}";
-            var zipped = DimensionNames.Zip(DimensionsSizes, Zip);
-            string joined = string.Join(LargeSpace, zipped);
-            string graphParams = string.Format(ParamsFormat,
-                obstaclesPercent, obstacles, Count);
-            return string.Join(LargeSpace, joined, graphParams);
         }
 
         private void SetGraph(IVertex vertex)

@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="EndPointsExtensions.cs" />
     <Compile Include="GraphAssembleExtensions.cs" />
-    <Compile Include="CoordinateExtensions.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
     <Compile Include="GraphExtensions.cs" />
     <Compile Include="IDictionaryExtensions.cs" />

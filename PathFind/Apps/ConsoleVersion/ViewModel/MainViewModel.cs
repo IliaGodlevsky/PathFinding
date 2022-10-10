@@ -98,7 +98,7 @@ namespace ConsoleVersion.ViewModel
         public void ClearGraph()
         {
             graph.Refresh();
-            GraphParamters = graph.ToString();
+            GraphParamters = graph.GetStringRepresentation();
             endPoints.Reset();
             messenger.Send(UpdateStatisticsMessage.Empty);
         }
@@ -137,7 +137,7 @@ namespace ConsoleVersion.ViewModel
             graph = message.Graph;
             graphField = fieldFactory.CreateGraphField(graph);
             events.Subscribe(graph);
-            GraphParamters = graph.ToString();
+            GraphParamters = graph.GetStringRepresentation();
         }
 
         private void RecieveClaimGraphMessage(ClaimGraphMessage message)

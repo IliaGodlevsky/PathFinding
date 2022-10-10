@@ -1,6 +1,5 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -16,15 +15,7 @@ namespace GraphLib.Extensions
         public static async Task<IGraph> AssembleGraphAsync(this IGraphAssemble self,
             int percentOfObstacles, IReadOnlyList<int> dimensionSizes)
         {
-            var task = Task.Run(() => self.AssembleGraph(percentOfObstacles, dimensionSizes));
-            try
-            {
-                return await task.ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return await Task.Run(() => self.AssembleGraph(percentOfObstacles, dimensionSizes));
         }
 
         public static async Task<IGraph> AssembleGraphAsync(this IGraphAssemble self,

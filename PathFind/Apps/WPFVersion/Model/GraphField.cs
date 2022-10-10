@@ -1,5 +1,6 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
+using GraphLib.NullRealizations;
 using GraphLib.Realizations.Coordinates;
 using System.Collections.Generic;
 using System.Windows.Controls;
@@ -18,7 +19,7 @@ namespace WPFVersion.Model
             Vertices.ForEach(vertex => Locate((Vertex)vertex));
         }
 
-        public GraphField()
+        public GraphField() : this(NullGraph.Interface)
         {
 
         }

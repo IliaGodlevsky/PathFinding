@@ -15,8 +15,6 @@ namespace GraphLib.NullRealizations
     {
         public IReadOnlyList<int> DimensionsSizes => Array.Empty<int>();
 
-        public IReadOnlyCollection<IVertex> Vertices => NullVertex.GetMany(0);
-
         public int Count => 0;
 
         private NullGraph()
@@ -32,11 +30,6 @@ namespace GraphLib.NullRealizations
         public override bool Equals(object obj)
         {
             return obj is NullGraph;
-        }
-
-        public override string ToString()
-        {
-            return string.Empty;
         }
 
         public override int GetHashCode()

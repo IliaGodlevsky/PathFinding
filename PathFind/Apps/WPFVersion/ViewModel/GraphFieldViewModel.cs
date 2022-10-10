@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using WPFVersion.DependencyInjection;
 using WPFVersion.Messages.ActionMessages;
@@ -41,14 +42,12 @@ namespace WPFVersion.ViewModel
             graph = message.Graph;
             var graphFieldFactory = DI.Container.Resolve<IGraphFieldFactory>();
             GraphField = graphFieldFactory.CreateGraphField(message.Graph);
-            var wrap = new GraphWrap(graph);
-            GraphParamtres = wrap.ToString();
+            GraphParamtres = graph.GetStringRepresentation();
         }
 
         private void OnGraphChanged(GraphChangedMessage message)
         {
-            var wrap = new GraphWrap(graph);
-            GraphParamtres = wrap.ToString();
+            GraphParamtres = graph.GetStringRepresentation();
         }
     }
 }
