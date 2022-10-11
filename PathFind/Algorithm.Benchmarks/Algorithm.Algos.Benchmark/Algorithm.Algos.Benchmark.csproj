@@ -50,6 +50,7 @@
     <Compile Include="Pathfinding\WaveAlgorithmBenchmarks.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Random\RandomBenchmarks.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet">
@@ -104,6 +105,10 @@
     <ProjectReference Include="..\..\Interruptable\Interruptable.csproj">
       <Project>{97260353-B5E4-414B-A789-C4B5568089DC}</Project>
       <Name>Interruptable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Random\Random.csproj">
+      <Project>{03EB6575-5B74-418F-9231-1B67598C68E8}</Project>
+      <Name>Random</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

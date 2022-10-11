@@ -15,8 +15,6 @@ namespace Random.Realizations.Generators
         private const int InitializationConst = 21;
         private const int CalculationConst = 30;
 
-        private readonly object locker = new object();
-
         private readonly InclusiveValueRange<int> indexRange;
         private readonly Lazy<int[]> seeds;
 
@@ -55,12 +53,9 @@ namespace Random.Realizations.Generators
 
         public int Next(int minValue, int maxValue)
         {
-            lock (locker)
-            {
-                var range = new InclusiveValueRange<int>(maxValue, minValue);
-                long module = (long)range.Amplitude() + 1;
-                return (int)(Seed % module) + range.LowerValueOfRange;
-            }
+            var range = new InclusiveValueRange<int>(maxValue, minValue);
+            long module = (long)range.Amplitude() + 1;
+            return (int)(Seed % module) + range.LowerValueOfRange;
         }
 
         private int[] Initialize(int seed)

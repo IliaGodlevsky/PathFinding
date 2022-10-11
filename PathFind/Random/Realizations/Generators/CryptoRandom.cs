@@ -11,8 +11,6 @@ namespace Random.Realizations.Generators
         private const int IntSize = sizeof(int);
         private const int MaxBufferSize = IntSize << 4;
 
-        private readonly object locker = new object();
-
         private readonly byte[] buffer;
         private readonly RandomNumberGenerator generator;
 
@@ -45,19 +43,16 @@ namespace Random.Realizations.Generators
 
         public int Next(int minValue, int maxValue)
         {
-            lock (locker)
+            var range = new InclusiveValueRange<int>(maxValue, minValue);
+            long module = (long)range.Amplitude() + 1;
+            long max = 1 + (long)uint.MaxValue;
+            long remainder = max % module;
+            uint seed = Seed;
+            while (seed >= max - remainder)
             {
-                var range = new InclusiveValueRange<int>(maxValue, minValue);
-                long module = (long)range.Amplitude() + 1;
-                long max = 1 + (long)uint.MaxValue;
-                long remainder = max % module;
-                uint seed = Seed;
-                while (seed >= max - remainder)
-                {
-                    seed = Seed;
-                }
-                return (int)(seed % module) + range.LowerValueOfRange;
+                seed = Seed;
             }
+            return (int)(seed % module) + range.LowerValueOfRange;
         }
 
         public void Dispose()

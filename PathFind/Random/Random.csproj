@@ -51,6 +51,7 @@
     <Compile Include="Realizations\Generators\NullRandom.cs" />
     <Compile Include="Realizations\Generators\PseudoRandom.cs" />
     <Compile Include="Realizations\Generators\KnuthRandom.cs" />
+    <Compile Include="Realizations\Generators\ThreadSafeRandom.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

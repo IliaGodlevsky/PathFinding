@@ -60,6 +60,7 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterComposite<CompositeGraphEvents, IGraphEvents>().SingleInstance();
 
             builder.RegisterType<CryptoRandom>().As<IRandom>().SingleInstance();
+            builder.RegisterDecorator<ThreadSafeRandom, IRandom>();
             builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
             builder.RegisterType<VertexFactory>().As<IVertexFactory>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
