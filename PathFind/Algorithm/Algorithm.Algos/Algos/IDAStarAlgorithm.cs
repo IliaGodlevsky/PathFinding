@@ -35,11 +35,11 @@ namespace Algorithm.Algos.Algos
             queue
                 .OrderByDescending(heuristics.GetCost)
                 .Take(ToDeleteCount)
-                .Select(vertex => (vertex, queue.GetPriorityOrInfinity(vertex)))
+                .Select(vertex => (Vertex: vertex, Priority: queue.GetPriorityOrInfinity(vertex)))
                 .ForEach(item =>
                 {
-                    queue.TryRemove(item.vertex);
-                    deletedVertices[item.vertex] = item.Item2;
+                    queue.TryRemove(item.Vertex);
+                    deletedVertices[item.Vertex] = item.Priority;
                 });
             var next = base.GetNextVertex();
             if (next.IsNull())

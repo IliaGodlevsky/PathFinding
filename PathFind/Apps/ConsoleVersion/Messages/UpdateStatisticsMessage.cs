@@ -2,7 +2,8 @@
 {
     internal sealed class UpdateStatisticsMessage
     {
-        public static UpdateStatisticsMessage Empty => new UpdateStatisticsMessage(string.Empty);
+        public static readonly UpdateStatisticsMessage Empty 
+            = new UpdateStatisticsMessage(string.Empty);
 
         public string Statistics { get; }
 

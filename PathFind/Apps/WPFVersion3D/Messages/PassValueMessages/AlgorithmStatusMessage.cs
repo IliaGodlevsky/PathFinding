@@ -4,11 +4,20 @@ namespace WPFVersion3D.Messages.PassValueMessages
 {
     internal sealed class AlgorithmStatusMessage
     {
-        public static AlgorithmStatusMessage Paused(int index) => new AlgorithmStatusMessage(AlgorithmViewModel.Paused, index);
+        public static AlgorithmStatusMessage Paused(int index)
+        {
+            return new AlgorithmStatusMessage(AlgorithmViewModel.Paused, index);
+        }
 
-        public static AlgorithmStatusMessage Interrupted(int index) => new AlgorithmStatusMessage(AlgorithmViewModel.Interrupted, index);
+        public static AlgorithmStatusMessage Interrupted(int index)
+        {
+            return new AlgorithmStatusMessage(AlgorithmViewModel.Interrupted, index);
+        }
 
-        public static AlgorithmStatusMessage Started(int index) => new AlgorithmStatusMessage(AlgorithmViewModel.Started, index);
+        public static AlgorithmStatusMessage Started(int index) 
+        {
+            return new AlgorithmStatusMessage(AlgorithmViewModel.Started, index);
+        }
 
         public string Status { get; }
 
