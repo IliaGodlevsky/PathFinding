@@ -46,11 +46,11 @@ namespace GraphLib.Realizations.Neighbourhoods
             return neighborhood;
         }
 
-        private List<ICoordinate> GetNeighborhood()
+        private IReadOnlyCollection<ICoordinate> GetNeighborhood()
         {
             var coordinates = CollectNeighbors();
             coordinates.Remove(selfCoordinate);
-            return coordinates;
+            return coordinates.AsReadOnly();
         }
 
         public IEnumerator<ICoordinate> GetEnumerator()
