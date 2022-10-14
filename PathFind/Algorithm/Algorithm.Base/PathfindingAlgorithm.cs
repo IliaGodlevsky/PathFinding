@@ -4,6 +4,7 @@ using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
 using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
+using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
 using GraphLib.Realizations;
 using Interruptable.EventArguments;
@@ -151,7 +152,7 @@ namespace Algorithm.Base
                 .Neighbours
                 .Where(visitedVertices.IsNotVisited)
                 .Where(v => !v.IsObstacle)
-                .ToArray();
+                .ToReadOnly();
         }
 
         protected virtual void ThrowIfDeadEnd(IVertex vertex)

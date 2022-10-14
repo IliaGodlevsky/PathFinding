@@ -8,7 +8,7 @@ namespace Algorithm.Realizations.GraphPaths
 {
     public sealed class CompositeGraphPath : IGraphPath
     {
-        private IReadOnlyList<IVertex> Path { get; }
+        private IEnumerable<IVertex> Path { get; }
 
         public int Count { get; }
 

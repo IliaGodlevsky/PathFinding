@@ -2,6 +2,7 @@
 using Common.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using WPFVersion3D.Infrastructure.Commands;
 using WPFVersion3D.Interface;
@@ -16,11 +17,11 @@ namespace WPFVersion3D.ViewModel
 
         public ICommand CancelOpacityChange { get; }
 
-        internal IReadOnlyCollection<IChangeColorOpacity> OpacityChangers { get; set; }
+        internal IEnumerable<IChangeColorOpacity> OpacityChangers { get; set; }
 
         public OpacityChangeViewModel()
         {
-            OpacityChangers = Array.Empty<IChangeColorOpacity>();
+            OpacityChangers = Enumerable.Empty<IChangeColorOpacity>();
             ConfirmOpacityChange = new RelayCommand(ExecuteChangeVertexOpacity);
             CancelOpacityChange = new RelayCommand(ExecuteCloseChangeVertexOpacity);
         }

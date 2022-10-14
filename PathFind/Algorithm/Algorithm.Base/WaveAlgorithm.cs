@@ -23,24 +23,21 @@ namespace Algorithm.Base
         {
             var path = NullGraphPath.Interface;
             PrepareForPathfinding();
-            var subEndPoints = endPoints.ToSubEndPoints();
-            using (var iterator = subEndPoints.GetEnumerator())
+            var subEndPoints = endPoints.ToSubEndPoints().ToReadOnly();
+            for (int i = 0; i < subEndPoints.Count && !IsInterruptRequested; i++)
             {
-                while (iterator.MoveNext() && !IsInterruptRequested)
+                CurrentEndPoints = subEndPoints[i];
+                PrepareForLocalPathfinding();
+                VisitVertex(CurrentVertex);
+                while (!IsDestination(CurrentEndPoints))
                 {
-                    CurrentEndPoints = iterator.Current;
-                    PrepareForLocalPathfinding();
+                    WaitUntilResumed();
+                    InspectVertex(CurrentVertex);
+                    CurrentVertex = GetNextVertex();
                     VisitVertex(CurrentVertex);
-                    while (!IsDestination(CurrentEndPoints))
-                    {
-                        WaitUntilResumed();
-                        InspectVertex(CurrentVertex);
-                        CurrentVertex = GetNextVertex();
-                        VisitVertex(CurrentVertex);
-                    }
-                    path = new CompositeGraphPath(path, CreateGraphPath());
-                    Reset();
                 }
+                path = new CompositeGraphPath(path, CreateGraphPath());
+                Reset();
             }
             CompletePathfinding();
             return IsInterruptRequested ? NullGraphPath.Interface : path;

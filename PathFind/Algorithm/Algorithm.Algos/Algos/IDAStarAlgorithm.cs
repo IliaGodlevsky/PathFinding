@@ -4,6 +4,7 @@ using Algorithm.Realizations.Heuristic.Distances;
 using Algorithm.Realizations.StepRules;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
+using GraphLib.Utility;
 using NullObject.Extensions;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace Algorithm.Algos.Algos
         public IDAStarAlgorithm(IEndPoints endPoints, IStepRule stepRule, IHeuristic function)
             : base(endPoints, stepRule, function)
         {
-            deletedVertices = new Dictionary<IVertex, double>();
+            deletedVertices = new Dictionary<IVertex, double>(new VertexEqualityComparer());
         }
 
         protected override IVertex GetNextVertex()

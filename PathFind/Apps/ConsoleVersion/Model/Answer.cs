@@ -3,7 +3,7 @@ using ValueRange;
 
 namespace ConsoleVersion.Model
 {
-    internal readonly struct Answer : IComparable, IComparable<Answer>, IEquatable<Answer>
+    internal sealed class Answer : IComparable, IComparable<Answer>, IEquatable<Answer>
     {
         private const StringComparison IgnoreCase = StringComparison.OrdinalIgnoreCase;
 

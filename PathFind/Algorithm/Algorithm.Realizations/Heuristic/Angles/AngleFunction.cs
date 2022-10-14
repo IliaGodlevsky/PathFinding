@@ -24,7 +24,7 @@ namespace Algorithm.Realizations.Heuristic.Angles
             double firstVectorLength = firstSubstract.GetVectorLength();
             double secondVectorLength = secondSubstract.GetVectorLength();
             double vectorSum = firstVectorLength * secondVectorLength;
-            var cosValue = vectorSum > 0 ? scalarProduct / vectorSum : 0;
+            double cosValue = vectorSum > 0 ? scalarProduct / vectorSum : 0;
             return Math.Round(Radians * Math.Acos(cosValue), digits: 3);
         }
     }

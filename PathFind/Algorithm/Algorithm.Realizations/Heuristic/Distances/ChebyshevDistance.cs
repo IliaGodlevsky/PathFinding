@@ -4,7 +4,7 @@ namespace Algorithm.Realizations.Heuristic.Distances
 {
     public sealed class ChebyshevDistance : DistanceFunction
     {
-        protected override double Operation(double a, double b)
+        protected override double AggregateMethod(double a, double b)
         {
             return Math.Max(a, b);
         }
