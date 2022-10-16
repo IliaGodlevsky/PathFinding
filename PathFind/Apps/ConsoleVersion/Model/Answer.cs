@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using ValueRange;
 
 namespace ConsoleVersion.Model
@@ -13,9 +14,17 @@ namespace ConsoleVersion.Model
 
         public static readonly InclusiveValueRange<Answer> Range = new InclusiveValueRange<Answer>(Yes, No);
 
+        public static readonly ReadOnlyCollection<Answer> Answers;
+
         private readonly int value;
         private readonly string display;
         private readonly int hash;
+
+        static Answer()
+        {
+            var answers = new[] { Yes, No };
+            Answers = Array.AsReadOnly(answers);
+        }
 
         private Answer(int value, string display)
         {
@@ -31,7 +40,9 @@ namespace ConsoleVersion.Model
 
         public int CompareTo(object obj)
         {
-            return obj is Answer answer ? this.CompareTo(answer) : throw new ArgumentException("Wrong argument", nameof(obj));
+            return obj is Answer answer 
+                ? CompareTo(answer) 
+                : throw new ArgumentException("Wrong argument", nameof(obj));
         }
 
         public bool Equals(Answer other)
@@ -41,7 +52,7 @@ namespace ConsoleVersion.Model
 
         public override bool Equals(object obj)
         {
-            return obj is Answer answer ? this.Equals(answer) : false;
+            return obj is Answer answer ? Equals(answer) : false;
         }
 
         public override string ToString()

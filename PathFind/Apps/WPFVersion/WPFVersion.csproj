@@ -75,7 +75,6 @@
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\PrecisedDoubleToStringConverter.cs" />
     <Compile Include="Converters\IntToStringConverter.cs" />
-    <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\IGraphPathExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />

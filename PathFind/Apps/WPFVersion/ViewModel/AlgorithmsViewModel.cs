@@ -49,7 +49,7 @@ namespace WPFVersion.ViewModel
 
         private void SetAlgorithmStatistics(AlgorithmStatusMessage message)
         {
-            if (Algorithms[message.Index].Status != AlgorithmViewModel.Interrupted)
+            if (!Algorithms[message.Index].IsInterrupted)
             {
                 Algorithms[message.Index].Status = message.Status;
                 messenger.Send(new IsAllAlgorithmsFinishedMessage(IsAllFinished));
@@ -67,7 +67,14 @@ namespace WPFVersion.ViewModel
 
         private void UpdateAlgorithmStatistics(UpdateStatisticsMessage message)
         {
-            Dispatcher.Invoke(() => Algorithms[message.Index].RecieveMessage(message));
+            var model = Algorithms[message.Index];
+            Dispatcher.Invoke(() =>
+            {
+                model.Time = message.Time;
+                model.PathCost = message.PathCost;
+                model.PathLength = message.PathLength;
+                model.VisitedVerticesCount = message.VisitedVertices;
+            });
         }
 
         private void OnAllAlgorithmAction(IExecutable<AlgorithmViewModel> message)

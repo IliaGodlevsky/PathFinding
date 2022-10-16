@@ -49,6 +49,8 @@ namespace WPFVersion.ViewModel
 
         public string AlgorithmName { get; }
 
+        public bool IsInterrupted => Status == Interrupted;
+
         public int PathLength { get => pathLength; set => Set(ref pathLength, value); }
 
         public double PathCost { get => pathCost; set => Set(ref pathCost, value); }

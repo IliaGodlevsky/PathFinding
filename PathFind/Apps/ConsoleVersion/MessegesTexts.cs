@@ -1,7 +1,14 @@
-﻿namespace ConsoleVersion
+﻿using ConsoleVersion.Model;
+
+namespace ConsoleVersion
 {
     internal static class MessagesTexts
     {
+        private static readonly string AnswerOptions = $"<{string.Join("/", Answer.Answers)}>";
+
+        public static readonly string ApplyVisualizationMsg = $"Apply visualization {AnswerOptions}?: ";
+        public static readonly string ExitAppMsg = $"Do you want to exit {AnswerOptions}?: ";
+
         public const string SourceAndTargetInputMsg = "Input source and target vertices: ";
         public const string PathfindingStatisticsFormat = "Steps: {0}  Path cost: {1}  Visited: {2}";
         public const string SourceVertexChoiceMsg = "Choose source vertex: ";
@@ -11,8 +18,6 @@
         public const string PlaceToPutIntermediateMsg = "Choose place where to put intermediate: ";
         public const string AlgorithmChoiceMsg = "Choose algorithm: ";
         public const string GraphAssembleChoiceMsg = "Choose graph assemble: ";
-        public const string ApplyVisualizationMsg = "Apply visualization <yes/no>?: ";
-        public const string ExitAppMsg = "Do you want to exit <yes/no>?: ";
         public const string DelayTimeInputMsg = "Input delay time: ";
         public const string GraphHeightInputMsg = "Input height of graph: ";
         public const string GraphWidthInputMsg = "Input width of graph: ";

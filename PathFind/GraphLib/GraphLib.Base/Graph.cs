@@ -1,6 +1,7 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,7 +27,8 @@ namespace GraphLib.Base
             graphType = GetType();
             DimensionsSizes = dimensionSizes.TakeOrDefault(requiredNumberOfDimensions, 1).ToReadOnly();
             Count = DimensionsSizes.AggregateOrDefault((x, y) => x * y);
-            var verticesMap = vertices.Take(Count).ForEach(SetGraph).ToDictionary(vertex => vertex.Position);
+            var verticesMap = vertices.Take(Count).ForEach(SetGraph)
+                .ToDictionary(vertex => vertex.Position, new CoordinateEqualityComparer());
             this.vertices = new ReadOnlyDictionary<ICoordinate, IVertex>(verticesMap);
         }
 

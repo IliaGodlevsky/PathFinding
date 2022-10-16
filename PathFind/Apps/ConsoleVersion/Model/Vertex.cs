@@ -116,12 +116,12 @@ namespace ConsoleVersion.Model
 
         public override bool Equals(object obj)
         {
-            return obj is IVertex vertex && vertex.IsEqual(this);
+            return obj is IVertex vertex && Equals(vertex);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Cost.CurrentCost, Position.GetHashCode());
+            return HashCode.Combine(Cost.CurrentCost, Position);
         }
 
         public void VisualizeAsTarget()
