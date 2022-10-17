@@ -46,5 +46,15 @@ namespace ValueRange
         {
             return $"[{LowerValueOfRange}...{UpperValueOfRange}]";
         }
+
+        public static explicit operator (T UpperValueOfRange, T LowerValueOfRange)(InclusiveValueRange<T> range)
+        {
+            return ValueTuple.Create(range.LowerValueOfRange, range.UpperValueOfRange);
+        }
+
+        public static explicit operator InclusiveValueRange<T>((T UpperValueOfRange, T LowerValueOfRange) tuple)
+        {
+            return new InclusiveValueRange<T>(tuple.UpperValueOfRange, tuple.LowerValueOfRange);
+        }
     }
 }
