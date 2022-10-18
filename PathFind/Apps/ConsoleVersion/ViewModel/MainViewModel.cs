@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Common.Interface;
 using ConsoleVersion.Attributes;
+using ConsoleVersion.ConvertedProperties;
 using ConsoleVersion.Delegates;
 using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.Extensions;
@@ -35,13 +36,14 @@ namespace ConsoleVersion.ViewModel
         private IGraph graph;
         private IGraphField graphField;
 
-        public string GraphParamters { get; set; }
+        public IProperty<string> GraphParamters { get; private set; }
 
         public IInput<int> IntInput { get; set; }
 
         public IInput<Answer> AnswerInput { get; set; }
 
-        public MainViewModel(IGraphFieldFactory fieldFactory, IGraphEvents events, BaseEndPoints endPoints, ILog log)
+        public MainViewModel(IGraphFieldFactory fieldFactory, 
+            IGraphEvents events, BaseEndPoints endPoints, ILog log)
         {
             graph = NullGraph.Interface;
             messenger = DI.Container.Resolve<IMessenger>();
@@ -98,7 +100,7 @@ namespace ConsoleVersion.ViewModel
         public void ClearGraph()
         {
             graph.Refresh();
-            GraphParamters = graph.GetStringRepresentation();
+            GraphParamters = GraphParamsProperty.Empty;
             endPoints.Reset();
             messenger.Send(UpdateStatisticsMessage.Empty);
         }
@@ -137,7 +139,7 @@ namespace ConsoleVersion.ViewModel
             graph = message.Graph;
             graphField = fieldFactory.CreateGraphField(graph);
             events.Subscribe(graph);
-            GraphParamters = graph.GetStringRepresentation();
+            GraphParamters = GraphParamsProperty.Assign(graph);
         }
 
         private void RecieveClaimGraphMessage(ClaimGraphMessage message)

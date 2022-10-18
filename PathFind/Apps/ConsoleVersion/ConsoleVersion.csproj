@@ -66,6 +66,8 @@
     <Compile Include="Attributes\CompanionMethodAttribute.cs" />
     <Compile Include="Commands\MenuCommand.cs" />
     <Compile Include="Commands\ConditionedMenuCommand.cs" />
+    <Compile Include="ConvertedProperties\GraphParamsProperty.cs" />
+    <Compile Include="ConvertedProperties\ConvertedProperty.cs" />
     <Compile Include="Cursor.cs" />
     <Compile Include="Delegates\Command.cs" />
     <Compile Include="Delegates\Condition.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="Interface\ICompanionMethods.cs" />
     <Compile Include="Interface\IMenu.cs" />
     <Compile Include="Interface\IMenuCommand.cs" />
+    <Compile Include="Interface\IProperty.cs" />
     <Compile Include="Interface\IRequireAnswerInput.cs" />
     <Compile Include="Interface\IRequireConsoleKeyInput.cs" />
     <Compile Include="Interface\IRequireIntInput.cs" />

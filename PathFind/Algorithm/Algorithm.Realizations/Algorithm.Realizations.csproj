@@ -72,6 +72,10 @@
       <Project>{FA595CBF-C9AA-4D4F-AFF7-19E571C91D00}</Project>
       <Name>GraphLib.NullRealizations</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Proxy\GraphLib.Proxy.csproj">
+      <Project>{51C3BAF5-6AE2-47C4-932B-25687013C2CE}</Project>
+      <Name>GraphLib.Proxy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Realizations\GraphLib.Realizations.csproj">
       <Project>{B80C5250-3D81-4742-B8A5-84AE39122BA9}</Project>
       <Name>GraphLib.Realizations</Name>

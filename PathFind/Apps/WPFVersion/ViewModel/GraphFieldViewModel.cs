@@ -18,16 +18,16 @@ namespace WPFVersion.ViewModel
         private IGraphField field;
         private string graphParamtres;
 
-        public IGraphField GraphField 
-        { 
-            get => field; 
-            set => Set(ref field, value); 
+        public IGraphField GraphField
+        {
+            get => field;
+            private set => Set(ref field, value);
         }
 
-        public string GraphParamtres 
-        { 
-            get => graphParamtres; 
-            set => Set(ref graphParamtres, value); 
+        public string GraphParamtres
+        {
+            get => graphParamtres;
+            private set => Set(ref graphParamtres, value);
         }
 
         public GraphFieldViewModel()

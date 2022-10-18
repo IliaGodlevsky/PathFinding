@@ -3,7 +3,6 @@ using GraphLib.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 
 namespace GraphLib.Proxy
 {
@@ -21,7 +20,7 @@ namespace GraphLib.Proxy
 
         public CoordinateProxy(params int[] coordinates)
         {
-            CoordinatesValues = coordinates.ToArray();
+            CoordinatesValues = coordinates.ToReadOnly();
             toString = $"({string.Join(",", CoordinatesValues)})";
             hashCode = CoordinatesValues.ToHashCode();
         }
@@ -33,7 +32,7 @@ namespace GraphLib.Proxy
 
         public override bool Equals(object pos)
         {
-            return pos.GetHashCode().Equals(GetHashCode());
+            return pos is ICoordinate coord ? Equals(coord) : false;
         }
 
         public override int GetHashCode() => hashCode;
