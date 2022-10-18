@@ -71,6 +71,7 @@
     <Compile Include="Extensions\EnumerableExtensions\IDictionaryExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
+    <Compile Include="Extensions\TupleExtensions.cs" />
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="Extensions\EnumerableExtensions\IEnumerableExtension.cs" />
     <Compile Include="Extensions\MemberInfoExtensions.cs" />

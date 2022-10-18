@@ -1,6 +1,7 @@
 ﻿using Algorithm.Interfaces;
 using Algorithm.Realizations.StepRules;
 using Algorithm.Сompanions.Interface;
+using Common.Extensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations;
@@ -59,7 +60,7 @@ namespace Algorithm.Realizations.GraphPaths
         private double GetPathCost()
         {
             double totalCost = 0;
-            for (int i = 0; i < Path.Count - 1; i++)
+            foreach (int i in (0, Path.Count - 1))
             {
                 totalCost += stepRule.CalculateStepCost(Path[i], Path[i + 1]);
             }
