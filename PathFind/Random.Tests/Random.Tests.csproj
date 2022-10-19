@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Random\Random.csproj" />
+    <ProjectReference Include="..\ValueRange\ValueRange.csproj" />
   </ItemGroup>
 
 </Project>

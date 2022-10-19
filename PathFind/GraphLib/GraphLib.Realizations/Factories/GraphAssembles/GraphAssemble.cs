@@ -48,7 +48,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             var obstacles = Enumerable.Repeat(true, numberOfObstacles);
             var obstaclesMatrix = regulars.Concat(obstacles).OrderBy(_ => random.Next()).ToReadOnly();
             var vertices = new IVertex[graphSize];
-            for (int vertexIndex = 0; vertexIndex < graphSize; vertexIndex++)
+            foreach (var vertexIndex in (0, graphSize))
             {
                 var coordinateValues = graphDimensionsSizes.ToCoordinates(vertexIndex);
                 var coordinate = coordinateFactory.CreateCoordinate(coordinateValues);

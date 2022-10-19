@@ -13,13 +13,13 @@ namespace GraphLib.NullRealizations
     [DebuggerDisplay("Null")]
     public sealed class NullGraph : Singleton<NullGraph, IGraph>, IGraph
     {
-        public IReadOnlyList<int> DimensionsSizes => Array.Empty<int>();
+        public IReadOnlyList<int> DimensionsSizes { get; }
 
         public int Count => 0;
 
         private NullGraph()
         {
-
+            DimensionsSizes = Array.Empty<int>();
         }
 
         public IVertex Get(ICoordinate coordinate)

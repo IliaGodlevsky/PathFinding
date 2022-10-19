@@ -1,4 +1,5 @@
-﻿using Random.Interface;
+﻿using Common.Extensions;
+using Random.Interface;
 using System;
 using ValueRange;
 using ValueRange.Enums;
@@ -65,7 +66,7 @@ namespace Random.Realizations.Generators
             mj = Math.Abs(MSeed - (seed == int.MinValue ? int.MaxValue : Math.Abs(seed)));
             seeds[ArrayLength - 1] = mj;
             mk = 1;
-            for (int i = 1; i < ArrayLength - 1; i++)
+            foreach (int i in (1, ArrayLength - 1))
             {
                 seedIndex = InitializationConst * i % (ArrayLength - 1);
                 seeds[seedIndex] = mk;
@@ -79,7 +80,7 @@ namespace Random.Realizations.Generators
             int limit = 5;
             while (limit-- > 1)
             {
-                for (int i = 1; i < ArrayLength; i++)
+                foreach (int i in (1, ArrayLength))
                 {
                     seeds[i] -= seeds[1 + (i + CalculationConst) % (ArrayLength - 1)];
                     if (seeds[i] < MZero)

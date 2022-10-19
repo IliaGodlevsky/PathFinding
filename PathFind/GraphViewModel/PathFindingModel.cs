@@ -6,7 +6,6 @@ using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Algorithm.NullRealizations;
 using Common.Attrbiutes;
-using Common.Disposables;
 using Common.Extensions;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Base.EndPoints;
@@ -54,7 +53,7 @@ namespace GraphViewModel
         public virtual async void FindPath()
         {
             try
-            {
+            {                
                 algorithm = Algorithm.Create(endPoints);
                 SubscribeOnAlgorithmEvents(algorithm);
                 endPoints.RestoreCurrentColors();
