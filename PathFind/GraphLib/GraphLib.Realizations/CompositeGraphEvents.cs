@@ -1,11 +1,12 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
+using System.Collections.Generic;
 
 namespace GraphLib.Realizations
 {
     public sealed class CompositeGraphEvents : IGraphEvents
     {
-        private readonly IGraphEvents[] events;
+        private readonly IEnumerable<IGraphEvents> events;
 
         public CompositeGraphEvents(params IGraphEvents[] events)
         {

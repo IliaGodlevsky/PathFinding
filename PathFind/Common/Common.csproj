@@ -75,7 +75,6 @@
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="Extensions\EnumerableExtensions\IEnumerableExtension.cs" />
     <Compile Include="Extensions\MemberInfoExtensions.cs" />
-    <Compile Include="Enumerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
