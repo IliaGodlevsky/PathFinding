@@ -5,6 +5,7 @@ using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using Random.Extensions;
 using Random.Interface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ValueRange;
@@ -43,7 +44,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         {
             int graphSize = graphDimensionsSizes.AggregateOrDefault((x, y) => x * y);
             int percentOfObstacles = percentRange.ReturnInRange(obstaclePercent);
-            int numberOfObstacles = graphSize.GetPercentage(obstaclePercent);
+            int numberOfObstacles = (int)Math.Round(graphSize * percentOfObstacles / 100.0, 0);
             var regulars = Enumerable.Repeat(false, graphSize - numberOfObstacles);
             var obstacles = Enumerable.Repeat(true, numberOfObstacles);
             var obstaclesMatrix = regulars.Concat(obstacles).OrderBy(_ => random.Next()).ToReadOnly();

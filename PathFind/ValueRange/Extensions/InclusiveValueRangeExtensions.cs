@@ -1,4 +1,5 @@
-﻿using Common.Extensions;
+﻿using Common;
+using Common.Extensions;
 using System;
 using ValueRange.Enums;
 
@@ -6,6 +7,11 @@ namespace ValueRange.Extensions
 {
     public static class InclusiveValueRangeExtensions
     {
+        public static Enumerator GetEnumerator(this InclusiveValueRange<int> range)
+        {
+            return new Enumerator(range.LowerValueOfRange, range.UpperValueOfRange);
+        }
+
         public static uint Amplitude(this InclusiveValueRange<int> valueRange)
         {
             return (uint)((long)valueRange.UpperValueOfRange - valueRange.LowerValueOfRange);
