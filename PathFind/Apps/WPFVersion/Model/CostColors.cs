@@ -45,15 +45,15 @@ namespace WPFVersion.Model
 
         private IReadOnlyDictionary<int, Brush> FormCostColors()
         {
-            var availableCostValues = CostRange.ToReadOnly();
+            var costValues = CostRange.EnumerateValues().ToReadOnly();
             var colors = new Dictionary<int, Brush>();
-            double step = byte.MaxValue / availableCostValues.Count;
-            foreach (int i in (0, availableCostValues.Count))
+            double step = byte.MaxValue / costValues.Count;
+            foreach (int i in (0, costValues.Count))
             {
                 var color = CostColor;
                 color.A = Convert.ToByte(i * step);
                 var brush = new SolidColorBrush(color);
-                colors.Add(availableCostValues[i], brush);
+                colors.Add(costValues[i], brush);
             }
             return new ReadOnlyDictionary<int, Brush>(colors);
         }

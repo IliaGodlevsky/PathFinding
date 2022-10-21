@@ -58,7 +58,7 @@ namespace Common.Extensions.EnumerableExtensions
             {
                 case ReadOnlyCollection<T> readOnly: return readOnly;
                 case IList<T> list: return new ReadOnlyCollection<T>(list);
-                default: return Array.AsReadOnly(collection.ToArray());
+                default: return collection.ToList().AsReadOnly();
             }
         }
 

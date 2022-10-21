@@ -23,7 +23,11 @@ namespace Random.Realizations.Generators
             {
                 uint number = BitConverter.ToUInt32(buffer, currentBufferPosition);
                 currentBufferPosition += IntSize;
-                VerifyBuffer();
+                if (currentBufferPosition >= MaxBufferSize)
+                {
+                    currentBufferPosition = 0;
+                    generator.GetBytes(buffer);
+                }
                 return number;
             }
         }
@@ -34,11 +38,6 @@ namespace Random.Realizations.Generators
             buffer = new byte[MaxBufferSize];
             currentBufferPosition = 0;
             generator.GetBytes(buffer);
-        }
-
-        ~CryptoRandom()
-        {
-            Dispose(false);
         }
 
         public int Next(int minValue, int maxValue)
@@ -57,28 +56,7 @@ namespace Random.Realizations.Generators
 
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (disposing == false || isDisposing)
-            {
-                return;
-            }
-
-            isDisposing = true;
             generator.Dispose();
-        }
-
-        private void VerifyBuffer()
-        {
-            if (currentBufferPosition >= MaxBufferSize)
-            {
-                currentBufferPosition = 0;
-                generator.GetBytes(buffer);
-            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GraphLib.Base;
+using System;
 using ValueRange;
 
 namespace WPFVersion
@@ -25,6 +26,7 @@ namespace WPFVersion
 
         static Constants()
         {
+            BaseVertexCost.CostRange = new InclusiveValueRange<int>(99, 1);
             GraphFieldScaleValueRange = new InclusiveValueRange<double>(2.5, 0.1);
             GraphWidthValueRange = new InclusiveValueRange<int>(Leverage * WidthBase, 1);
             GraphLengthValueRange = new InclusiveValueRange<int>(Leverage * LengthBase, 1);
