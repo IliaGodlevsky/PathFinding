@@ -1,4 +1,5 @@
 ﻿using Common.Attrbiutes;
+using Common.ReadOnly;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -52,19 +53,24 @@ namespace Common.Extensions.EnumerableExtensions
             return self.Juxtapose(second, (a, b) => a.Equals(b));
         }
 
-        public static ReadOnlyCollection<T> ToReadOnly<T>(this IEnumerable<T> collection)
+        public static ReadOnlyList<T> ToReadOnly<T>(this IEnumerable<T> collection)
         {
             switch (collection)
             {
-                case ReadOnlyCollection<T> readOnly: return readOnly;
-                case IList<T> list: return new ReadOnlyCollection<T>(list);
-                default: return collection.ToList().AsReadOnly();
+                case ReadOnlyList<T> readOnly: return readOnly;
+                case IList<T> list: return new ReadOnlyList<T>(list);
+                default: return new ReadOnlyList<T>(collection.ToArray());
             }
         }
 
         public static IOrderedEnumerable<T> OrderByOrderAttribute<T>(this IEnumerable<T> collection)
         {
             return collection.OrderBy(item => item.GetAttributeOrNull<OrderAttribute>()?.Order ?? OrderAttribute.Default.Order);
+        }
+
+        public static IOrderedEnumerable<T> Shuffle<T>(this IEnumerable<T> collection, Func<int> selector)
+        {
+            return collection.OrderBy(_ => selector());
         }
 
         public static IEnumerable<T> TakeOrDefault<T>(this IEnumerable<T> collection, int number, T defaultValue = default)

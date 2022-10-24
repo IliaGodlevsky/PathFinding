@@ -27,7 +27,7 @@ namespace SingletonLib
         {
             return count > 0
                 ? Enumerable.Repeat(Instance, count).ToReadOnly()
-                : Array.Empty<TInstance>().ToReadOnly();
+                : (IReadOnlyList<TInstance>)Array.Empty<TInstance>();
         }
 
         private static TInstance CreateInstance()

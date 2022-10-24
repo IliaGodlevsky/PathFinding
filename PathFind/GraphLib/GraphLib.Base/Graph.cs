@@ -5,7 +5,6 @@ using GraphLib.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using static System.Reflection.BindingFlags;
 
@@ -27,9 +26,10 @@ namespace GraphLib.Base
             graphType = GetType();
             DimensionsSizes = dimensionSizes.TakeOrDefault(requiredNumberOfDimensions, 1).ToReadOnly();
             Count = DimensionsSizes.AggregateOrDefault((x, y) => x * y);
-            var verticesMap = vertices.Take(Count).ForEach(SetGraph)
-                .ToDictionary(vertex => vertex.Position, new CoordinateEqualityComparer());
-            this.vertices = new ReadOnlyDictionary<ICoordinate, IVertex>(verticesMap);
+            this.vertices = vertices.Take(Count)
+                .ForEach(SetGraph)
+                .ToDictionary(vertex => vertex.Position, new CoordinateEqualityComparer())
+                .ToReadOnly();
         }
 
         public IVertex Get(ICoordinate coordinate)

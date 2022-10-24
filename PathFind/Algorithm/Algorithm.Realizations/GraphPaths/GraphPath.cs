@@ -2,6 +2,7 @@
 using Algorithm.Realizations.StepRules;
 using Algorithm.Сompanions.Interface;
 using Common.Extensions;
+using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations;
@@ -54,7 +55,7 @@ namespace Algorithm.Realizations.GraphPaths
                 vertex = parent;
                 parent = GetOrNullVertex(vertex);
             }
-            return vertices.AsReadOnly();
+            return vertices.ToReadOnly();
         }
 
         private double GetPathCost()

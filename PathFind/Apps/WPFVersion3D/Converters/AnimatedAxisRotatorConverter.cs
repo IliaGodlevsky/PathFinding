@@ -1,7 +1,6 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows.Data;
 using WPFVersion3D.Interface;
@@ -15,12 +14,11 @@ namespace WPFVersion3D.Converters
 
         public AnimatedAxisRotatorConverter()
         {
-            var rotators = new Dictionary<object, IAnimatedAxisRotatorFactory>()
+            Rotators = new Dictionary<object, IAnimatedAxisRotatorFactory>()
             {
                 { true, new ForwardAnimatedAxisRotatorFactory() },
                 { false, new BackwardAnimatedAxisRotatorFactory() },
-            };
-            Rotators = new ReadOnlyDictionary<object, IAnimatedAxisRotatorFactory>(rotators);
+            }.ToReadOnly();
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
