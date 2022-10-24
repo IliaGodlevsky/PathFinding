@@ -14,7 +14,6 @@ namespace Random.Realizations.Generators
         private readonly byte[] buffer;
         private readonly RandomNumberGenerator generator;
 
-        private bool isDisposing;
         private int currentBufferPosition;
 
         private uint Seed

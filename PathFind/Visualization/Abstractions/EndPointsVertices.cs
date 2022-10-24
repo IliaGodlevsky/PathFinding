@@ -2,6 +2,7 @@
 using Commands.Interfaces;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Visualization.Interfaces;
@@ -29,7 +30,7 @@ namespace Visualization.Abstractions
 
         public IReadOnlyCollection<IVertex> GetVertices(IAlgorithm<IGraphPath> algorithm)
         {
-            return new IVertex[] { vertices.GetOrNullVertex(algorithm) };
+            return Array.AsReadOnly(new[] { vertices.GetOrNullVertex(algorithm) });
         }
 
         public void Remove(IAlgorithm<IGraphPath> algorithm)

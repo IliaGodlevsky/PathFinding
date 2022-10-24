@@ -17,8 +17,7 @@ namespace Random.Realizations.Generators
             this.seed = (ulong)seed;
         }
 
-        public PseudoRandom()
-            : this(Environment.TickCount)
+        public PseudoRandom() : this(Environment.TickCount)
         {
 
         }

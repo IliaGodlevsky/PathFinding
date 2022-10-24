@@ -40,8 +40,7 @@ namespace Random.Realizations.Generators
             }
         }
 
-        public KnuthRandom()
-          : this(Environment.TickCount)
+        public KnuthRandom() : this(Environment.TickCount)
         {
 
         }
@@ -82,7 +81,8 @@ namespace Random.Realizations.Generators
             {
                 foreach (int i in (1, ArrayLength))
                 {
-                    seeds[i] -= seeds[1 + (i + CalculationConst) % (ArrayLength - 1)];
+                    int index = 1 + (i + CalculationConst) % (ArrayLength - 1);
+                    seeds[i] -= seeds[index];
                     if (seeds[i] < MZero)
                     {
                         seeds[i] += MBig;
