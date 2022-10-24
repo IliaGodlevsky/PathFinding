@@ -1,4 +1,5 @@
-﻿using SingletonLib.Exceptions;
+﻿using Common.Extensions.EnumerableExtensions;
+using SingletonLib.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +26,8 @@ namespace SingletonLib
         public static IReadOnlyList<TInstance> GetMany(int count)
         {
             return count > 0
-                ? Enumerable.Repeat(Instance, count).ToArray()
-                : Array.Empty<TInstance>();
+                ? Enumerable.Repeat(Instance, count).ToReadOnly()
+                : Array.Empty<TInstance>().ToReadOnly();
         }
 
         private static TInstance CreateInstance()
