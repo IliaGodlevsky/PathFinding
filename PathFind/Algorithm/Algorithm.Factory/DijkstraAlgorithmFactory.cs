@@ -25,7 +25,7 @@ namespace Algorithm.Factory
 
         }
 
-        public DijkstraAlgorithm Create(IEndPoints endPoints)
+        public DijkstraAlgorithm Create(IPathfindingRange endPoints)
         {
             return new DijkstraAlgorithm(endPoints, stepRule);
         }

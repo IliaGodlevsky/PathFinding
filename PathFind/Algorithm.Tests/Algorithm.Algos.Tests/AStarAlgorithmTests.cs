@@ -12,11 +12,11 @@ namespace Algorithm.Algos.Tests
 
         [TestCase(TestName = "Finding path with valid endpoints within 1900 milliseconds")]
         [Timeout(AStarAlgorithmTimeoutToFinishPathfinding)]
-        public override void FindPath_EndpointsBelongToGraph_ReturnsShortestPath()
+        public override void FindPath_PathfindingRangeBelongToGraph_ReturnsShortestPath()
         {
-            base.FindPath_EndpointsBelongToGraph_ReturnsShortestPath();
+            base.FindPath_PathfindingRangeBelongToGraph_ReturnsShortestPath();
         }
-        protected override IAlgorithm<IGraphPath> CreateAlgorithm(IEndPoints endPoints)
+        protected override IAlgorithm<IGraphPath> CreateAlgorithm(IPathfindingRange endPoints)
         {
             return new AStarAlgorithm(endPoints);
         }

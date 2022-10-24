@@ -9,30 +9,12 @@ namespace ValueRange.Extensions
 {
     public static class InclusiveValueRangeExtensions
     {
-        private struct RangeEnumerator
+        public static IEnumerable<int> EnumerateValues(this InclusiveValueRange<int> range)
         {
-            private readonly int lowerValueOfRange;
-            private readonly int upperValueOfRange;
-
-            public int Current { get; private set; }
-
-            internal RangeEnumerator(int lowerValueOfRange, int upperValueOfRange)
+            for (int i = range.LowerValueOfRange; i <= range.UpperValueOfRange; i++)
             {
-                this.lowerValueOfRange = lowerValueOfRange - 1;
-                Current = this.lowerValueOfRange;
-                this.upperValueOfRange = upperValueOfRange;
+                yield return i;
             }
-
-            public void Dispose() => Reset();
-
-            public bool MoveNext() => ++Current <= upperValueOfRange;
-
-            public void Reset() => Current = lowerValueOfRange;
-        }
-
-        public static ReadOnlyCollection<int> ToReadOnly(this InclusiveValueRange<int> range)
-        {
-            return range.GetAllValues().ToReadOnly();
         }
 
         public static uint Amplitude(this InclusiveValueRange<int> valueRange)
@@ -92,19 +74,6 @@ namespace ValueRange.Extensions
                 default:
                     return value;
             }
-        }
-
-        private static IEnumerable<int> GetAllValues(this InclusiveValueRange<int> range)
-        {
-            foreach (int value in range)
-            {
-                yield return value;
-            }
-        }
-
-        private static RangeEnumerator GetEnumerator(this InclusiveValueRange<int> range)
-        {
-            return new RangeEnumerator(range.LowerValueOfRange, range.UpperValueOfRange);
         }
     }
 }

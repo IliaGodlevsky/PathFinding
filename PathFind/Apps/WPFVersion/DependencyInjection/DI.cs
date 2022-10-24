@@ -49,7 +49,7 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
-            builder.RegisterType<EndPoints>().As<BaseEndPoints>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<PathfindingRange>().As<BasePathfindingRange>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<GraphEvents>().As<IGraphEvents>().SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();

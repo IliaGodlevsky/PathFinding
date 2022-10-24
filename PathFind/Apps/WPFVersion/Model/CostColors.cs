@@ -20,6 +20,8 @@ namespace WPFVersion.Model
 
         public Color CostColor { get; set; } = Colors.DodgerBlue;
 
+        private IReadOnlyDictionary<int, Brush> Colours => costColors.Value;
+
         public CostColors(IGraph graph)
         {
             this.graph = graph.Cast<Vertex>().ToReadOnly();
@@ -31,7 +33,7 @@ namespace WPFVersion.Model
         {
             graph.ForEach(vertex => previousColors.Add(vertex.Background))
                 .Where(CanBeColored)
-                .ForEach(vertex => vertex.Background = costColors.Value[vertex.Cost.CurrentCost]);
+                .ForEach(vertex => vertex.Background = Colours[vertex.Cost.CurrentCost]);
         }
 
         public void ReturnPreviousColors()
@@ -45,15 +47,15 @@ namespace WPFVersion.Model
 
         private IReadOnlyDictionary<int, Brush> FormCostColors()
         {
-            var availableCostValues = CostRange.ToReadOnly();
+            var costValues = CostRange.EnumerateValues().ToReadOnly();
             var colors = new Dictionary<int, Brush>();
-            double step = byte.MaxValue / availableCostValues.Count;
-            foreach (int i in (0, availableCostValues.Count))
+            double step = byte.MaxValue / costValues.Count;
+            foreach (int i in (0, costValues.Count))
             {
                 var color = CostColor;
                 color.A = Convert.ToByte(i * step);
                 var brush = new SolidColorBrush(color);
-                colors.Add(availableCostValues[i], brush);
+                colors.Add(costValues[i], brush);
             }
             return new ReadOnlyDictionary<int, Brush>(colors);
         }

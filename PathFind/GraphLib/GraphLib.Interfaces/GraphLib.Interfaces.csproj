@@ -48,7 +48,7 @@
     <Compile Include="Factories\ICoordinateFactory.cs" />
     <Compile Include="Factories\INeighborhoodFactory.cs" />
     <Compile Include="Factories\ICostFactory.cs" />
-    <Compile Include="IEndPoints.cs" />
+    <Compile Include="IPathfindingRange.cs" />
     <Compile Include="INeighborhood.cs" />
     <Compile Include="IGraph.cs" />
     <Compile Include="Factories\IGraphAssemble.cs" />

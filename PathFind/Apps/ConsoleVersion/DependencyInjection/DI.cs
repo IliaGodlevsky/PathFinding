@@ -80,7 +80,7 @@ namespace ConsoleVersion.DependencyInjection
                 .AsSelf().PropertiesAutowired().OnActivated(OnViewActivated).InstancePerLifetimeScope();
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
-            builder.RegisterType<EndPoints>().As<BaseEndPoints>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<PathfindingRange>().As<BasePathfindingRange>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<GraphEvents>().As<IGraphEvents>().SingleInstance().PropertiesAutowired();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();

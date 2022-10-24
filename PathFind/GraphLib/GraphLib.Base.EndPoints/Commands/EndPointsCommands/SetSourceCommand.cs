@@ -7,23 +7,23 @@ using NullObject.Extensions;
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [Order(4)]
-    internal sealed class SetSourceCommand : BaseEndPointsCommand
+    internal sealed class SetSourceCommand : BasePathfindingRangeCommand
     {
-        public SetSourceCommand(BaseEndPoints endPoints)
+        public SetSourceCommand(BasePathfindingRange endPoints)
             : base(endPoints)
         {
         }
 
         public override void Execute(IVertex vertex)
         {
-            endPoints.Source = vertex;
+            range.Source = vertex;
             Source.VisualizeAsSource();
         }
 
         public override bool CanExecute(IVertex vertex)
         {
-            return endPoints.Source.IsNull()
-                && endPoints.CanBeEndPoint(vertex);
+            return range.Source.IsNull()
+                && range.CanBeInPathfindingRange(vertex);
         }
     }
 }

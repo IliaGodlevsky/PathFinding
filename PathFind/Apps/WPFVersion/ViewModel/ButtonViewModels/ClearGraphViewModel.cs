@@ -15,7 +15,7 @@ namespace WPFVersion.ViewModel.ButtonViewModels
     internal class ClearGraphViewModel
     {
         private readonly IMessenger messenger;
-        private readonly BaseEndPoints endPoints;
+        private readonly BasePathfindingRange pathfindingRange;
 
         private IGraph Graph { get; set; }
 
@@ -26,7 +26,7 @@ namespace WPFVersion.ViewModel.ButtonViewModels
         public ClearGraphViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            endPoints = DI.Container.Resolve<BaseEndPoints>();
+            pathfindingRange = DI.Container.Resolve<BasePathfindingRange>();
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAllAlgorithmFinishedPathfinding);
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteClearGraphCommand);
@@ -35,7 +35,7 @@ namespace WPFVersion.ViewModel.ButtonViewModels
         private void ExecuteClearGraphCommand(object param)
         {
             Graph.Refresh();
-            endPoints.Reset();
+            pathfindingRange.Reset();
             messenger.Send(new ClearStatisticsMessage());
         }
 

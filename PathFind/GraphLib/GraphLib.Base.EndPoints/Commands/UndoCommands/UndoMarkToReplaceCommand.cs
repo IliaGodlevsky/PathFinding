@@ -11,7 +11,7 @@ namespace GraphLib.Base.EndPoints.Commands.UndoCommands
     {
         private readonly IExecutable<IVertex> cancelMarkToReplaceCommand;
 
-        public UndoMarkToReplaceCommand(BaseEndPoints endPoints) : base(endPoints)
+        public UndoMarkToReplaceCommand(BasePathfindingRange endPoints) : base(endPoints)
         {
             cancelMarkToReplaceCommand = new CancelMarkToReplaceCommand(endPoints);
         }

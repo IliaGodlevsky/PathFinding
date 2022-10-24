@@ -32,7 +32,7 @@ namespace WPFVersion3D.ViewModel
 
         private int Index { get; set; }
 
-        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories,
+        public PathFindingViewModel(BasePathfindingRange endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories,
             ILog log) : base(endPoints, algorithmFactories, log)
         {
             messenger = DI.Container.Resolve<IMessenger>();
@@ -51,7 +51,7 @@ namespace WPFVersion3D.ViewModel
         protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
             messenger.Send(new AlgorithmStartedMessage(algorithm));
-            messenger.Send(new EndPointsChosenMessage(endPoints, algorithm));
+            messenger.Send(new PathfindingRangeChosenMessage(pathfindingRange, algorithm));
         }
 
         protected override void SummarizePathfindingResults()

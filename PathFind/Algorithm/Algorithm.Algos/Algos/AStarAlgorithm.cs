@@ -14,13 +14,13 @@ namespace Algorithm.Algos.Algos
         protected readonly ICosts heuristics;
         protected readonly IHeuristic heuristic;
 
-        public AStarAlgorithm(IEndPoints endPoints)
+        public AStarAlgorithm(IPathfindingRange endPoints)
             : this(endPoints, new DefaultStepRule(), new ChebyshevDistance())
         {
 
         }
 
-        public AStarAlgorithm(IEndPoints endPoints, IStepRule stepRule, IHeuristic function)
+        public AStarAlgorithm(IPathfindingRange endPoints, IStepRule stepRule, IHeuristic function)
             : base(endPoints, stepRule)
         {
             heuristic = function;
@@ -38,7 +38,7 @@ namespace Algorithm.Algos.Algos
         protected override void PrepareForLocalPathfinding()
         {
             base.PrepareForLocalPathfinding();
-            accumulatedCosts.Reevaluate(CurrentEndPoints.Source, default);
+            accumulatedCosts.Reevaluate(CurrentRange.Source, default);
         }
 
         protected override void Enqueue(IVertex vertex, double value)
@@ -64,7 +64,7 @@ namespace Algorithm.Algos.Algos
 
         protected virtual double CalculateHeuristic(IVertex vertex)
         {
-            return heuristic.Calculate(vertex, CurrentEndPoints.Target);
+            return heuristic.Calculate(vertex, CurrentRange.Target);
         }
 
         public override string ToString()

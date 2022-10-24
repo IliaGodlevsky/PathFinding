@@ -13,14 +13,14 @@ namespace Algorithm.Algos.Algos
         private readonly ICosts heuristics;
         private readonly IHeuristic heuristic;
 
-        public BestFirstLeeAlgorithm(IEndPoints endPoints, IHeuristic function)
+        public BestFirstLeeAlgorithm(IPathfindingRange endPoints, IHeuristic function)
             : base(endPoints)
         {
             heuristic = function;
             heuristics = new Costs();
         }
 
-        public BestFirstLeeAlgorithm(IEndPoints endPoints)
+        public BestFirstLeeAlgorithm(IPathfindingRange endPoints)
             : this(endPoints, new ManhattanDistance())
         {
 
@@ -51,13 +51,13 @@ namespace Algorithm.Algos.Algos
         protected override void PrepareForLocalPathfinding()
         {
             base.PrepareForLocalPathfinding();
-            double value = CalculateHeuristic(CurrentEndPoints.Source);
-            heuristics.Reevaluate(CurrentEndPoints.Source, value);
+            double value = CalculateHeuristic(CurrentRange.Source);
+            heuristics.Reevaluate(CurrentRange.Source, value);
         }
 
         private double CalculateHeuristic(IVertex vertex)
         {
-            return heuristic.Calculate(vertex, CurrentEndPoints.Target);
+            return heuristic.Calculate(vertex, CurrentRange.Target);
         }
 
         public override string ToString()

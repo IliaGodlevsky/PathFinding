@@ -23,7 +23,7 @@ namespace Algorithm.Factory
 
         }
 
-        public DepthFirstAlgorithm Create(IEndPoints endPoints)
+        public DepthFirstAlgorithm Create(IPathfindingRange endPoints)
         {
             return new DepthFirstAlgorithm(endPoints, heuristic);
         }

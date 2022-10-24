@@ -46,7 +46,7 @@ namespace WPFVersion3D.DependencyInjection
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IViewModel>()).AsSelf().InstancePerDependency();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
-            builder.RegisterType<EndPoints>().As<BaseEndPoints>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<PathfindingRange>().As<BasePathfindingRange>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<GraphEvents>().As<IGraphEvents>().SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();

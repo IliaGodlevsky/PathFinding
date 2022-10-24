@@ -17,11 +17,11 @@ using System.Linq;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal class EndPointsViewModel : IViewModel, IRequireIntInput, IDisposable
+    internal class PathfindingRangeViewModel : IViewModel, IRequireIntInput, IDisposable
     {
         public event Action WindowClosed;
 
-        private readonly BaseEndPoints endPoints;
+        private readonly BasePathfindingRange pathfindingRange;
         private readonly ILog log;
         private readonly IMessenger messenger;
 
@@ -30,43 +30,43 @@ namespace ConsoleVersion.ViewModel
 
         public IInput<int> IntInput { get; set; }
 
-        public EndPointsViewModel(BaseEndPoints endPoints, ILog log)
+        public PathfindingRangeViewModel(BasePathfindingRange pathfindingRange, ILog log)
         {
-            this.endPoints = endPoints;
+            this.pathfindingRange = pathfindingRange;
             this.log = log;
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<ClaimGraphAnswer>(this, SetGraph);
             messenger.Send(new ClaimGraphMessage());
         }
 
-        [Condition(nameof(CanChooseEndPoints))]
-        [MenuItem(MenuItemsNames.ChooseEndPoints, 0)]
-        public void ChooseEndPoints()
+        [Condition(nameof(CanChoosePathfindingRange))]
+        [MenuItem(MenuItemsNames.ChoosePathfindingRange, 0)]
+        public void ChoosePathfindingRange()
         {
             Console.WriteLine(MessagesTexts.SourceAndTargetInputMsg);
-            IntInput.InputRequiredEndPoints(graph, endPoints).OnEndPointChosen();
+            IntInput.InputRequiredPathfindingRange(graph, pathfindingRange).OnEndPointChosen();
         }
 
         [Condition(nameof(HasSourceAndTargetSet))]
         [MenuItem(MenuItemsNames.ReplaceSource, 2)]
         public void ReplaceSourceVertex()
         {
-            endPoints.Source.As<Vertex>().OnEndPointChosen();
-            IntInput.InputEndPoint(MessagesTexts.SourceVertexChoiceMsg, graph, endPoints).OnEndPointChosen();
+            pathfindingRange.Source.As<Vertex>().OnEndPointChosen();
+            IntInput.InputEndPoint(MessagesTexts.SourceVertexChoiceMsg, graph, pathfindingRange).OnEndPointChosen();
         }
 
         [Condition(nameof(HasSourceAndTargetSet))]
         [MenuItem(MenuItemsNames.ReplaceTarget, 3)]
         public void ReplaceTargetVertex()
         {
-            endPoints.Target.As<Vertex>().OnEndPointChosen();
-            IntInput.InputEndPoint(MessagesTexts.TargetVertexChoiceMsg, graph, endPoints).OnEndPointChosen();
+            pathfindingRange.Target.As<Vertex>().OnEndPointChosen();
+            IntInput.InputEndPoint(MessagesTexts.TargetVertexChoiceMsg, graph, pathfindingRange).OnEndPointChosen();
         }
 
-        [MenuItem(MenuItemsNames.ClearEndPoints, 5)]
-        public void ClearEndPoints()
+        [MenuItem(MenuItemsNames.ClearPathfindingRange, 5)]
+        public void ClearPathfindingRange()
         {
-            endPoints.Reset();
+            pathfindingRange.Reset();
         }
 
         [Condition(nameof(CanReplaceIntermediates))]
@@ -76,9 +76,9 @@ namespace ConsoleVersion.ViewModel
             string msg = MessagesTexts.NumberOfIntermediatesVerticesToReplaceMsg;
             int toReplaceNumber = IntInput.Input(msg, numberOfIntermediates);
             Console.WriteLine(MessagesTexts.IntermediateToReplaceMsg);
-            IntInput.InputExistingIntermediates(graph, endPoints, toReplaceNumber).OnMarkedToReplaceIntermediate();
+            IntInput.InputExistingIntermediates(graph, pathfindingRange, toReplaceNumber).OnMarkedToReplaceIntermediate();
             Console.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
-            IntInput.InputEndPoints(graph, endPoints, toReplaceNumber).OnEndPointChosen();
+            IntInput.InputPathfindingRange(graph, pathfindingRange, toReplaceNumber).OnEndPointChosen();
         }
 
         [Condition(nameof(HasSourceAndTargetSet))]
@@ -88,7 +88,7 @@ namespace ConsoleVersion.ViewModel
             string message = MessagesTexts.NumberOfIntermediateVerticesInputMsg;
             int number = IntInput.Input(message, graph.GetAvailableIntermediatesNumber());
             Console.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
-            IntInput.InputEndPoints(graph, endPoints, number).OnEndPointChosen();
+            IntInput.InputPathfindingRange(graph, pathfindingRange, number).OnEndPointChosen();
         }
 
         [MenuItem(MenuItemsNames.Exit, 6)]
@@ -110,17 +110,17 @@ namespace ConsoleVersion.ViewModel
 
         private bool CanReplaceIntermediates()
         {
-            return (numberOfIntermediates = endPoints.GetIntermediates().Count()) > 0;
+            return (numberOfIntermediates = pathfindingRange.GetIntermediates().Count()) > 0;
         }
 
         private bool HasSourceAndTargetSet()
         {
-            return endPoints.HasSourceAndTargetSet();
+            return pathfindingRange.HasSourceAndTargetSet();
         }
 
-        private bool CanChooseEndPoints()
+        private bool CanChoosePathfindingRange()
         {
-            return graph.GetAvailableIntermediatesNumber() > 0 && !endPoints.HasSourceAndTargetSet();
+            return graph.GetAvailableIntermediatesNumber() > 0 && !pathfindingRange.HasSourceAndTargetSet();
         }
     }
 }

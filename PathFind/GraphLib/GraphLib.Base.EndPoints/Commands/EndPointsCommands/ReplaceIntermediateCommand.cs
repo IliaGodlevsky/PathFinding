@@ -7,9 +7,9 @@ using System.Linq;
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [Order(8)]
-    internal sealed class ReplaceIntermediateCommand : BaseIntermediateEndPointsCommand
+    internal sealed class ReplaceIntermediateCommand : BaseIntermediatePathfindingRangeCommand
     {
-        public ReplaceIntermediateCommand(BaseEndPoints endPoints)
+        public ReplaceIntermediateCommand(BasePathfindingRange endPoints)
             : base(endPoints)
         {
 
@@ -29,7 +29,7 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
         public override bool CanExecute(IVertex vertex)
         {
             return MarkedToReplace.Count > 0
-                && endPoints.CanBeEndPoint(vertex);
+                && range.CanBeInPathfindingRange(vertex);
         }
     }
 }

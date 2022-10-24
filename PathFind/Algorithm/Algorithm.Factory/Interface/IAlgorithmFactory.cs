@@ -6,6 +6,6 @@ namespace Algorithm.Factory.Interface
     public interface IAlgorithmFactory<out TAlgorithm>
         where TAlgorithm : IAlgorithm<IGraphPath>
     {
-        TAlgorithm Create(IEndPoints endPoints);
+        TAlgorithm Create(IPathfindingRange endPoints);
     }
 }

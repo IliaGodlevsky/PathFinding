@@ -38,7 +38,7 @@ namespace Algorithm.Factory
 
         }
 
-        public HeuristicCostGreedyAlgorithm Create(IEndPoints endPoints)
+        public HeuristicCostGreedyAlgorithm Create(IPathfindingRange endPoints)
         {
             return new HeuristicCostGreedyAlgorithm(endPoints, heuristic, stepRule);
         }

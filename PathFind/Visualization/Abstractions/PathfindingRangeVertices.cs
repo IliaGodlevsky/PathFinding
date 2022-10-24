@@ -8,11 +8,11 @@ using Visualization.Interfaces;
 
 namespace Visualization.Abstractions
 {
-    internal abstract class EndPointsVertices : IVisualizationSlides<IVertex>, IExecutable<IAlgorithm<IGraphPath>>, IAlgorithmVertices
+    internal abstract class PathfindingRangeVertices : IVisualizationSlides<IVertex>, IExecutable<IAlgorithm<IGraphPath>>, IAlgorithmVertices
     {
         private readonly ConcurrentDictionary<IAlgorithm<IGraphPath>, IVertex> vertices;
 
-        public EndPointsVertices()
+        public PathfindingRangeVertices()
         {
             vertices = new ConcurrentDictionary<IAlgorithm<IGraphPath>, IVertex>();
         }

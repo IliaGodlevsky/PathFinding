@@ -15,7 +15,7 @@ namespace Algorithm.Algos.Algos
         protected Queue<IVertex> verticesQueue;
         protected readonly ICosts accumulatedCosts;
 
-        public LeeAlgorithm(IEndPoints endPoints)
+        public LeeAlgorithm(IPathfindingRange endPoints)
             : base(endPoints)
         {
             verticesQueue = new Queue<IVertex>();

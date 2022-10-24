@@ -25,10 +25,10 @@ namespace Algorithm.Algos.Tests
         #region Test Methods
 
         [Test]
-        public virtual void FindPath_EndpointsBelongToGraph_ReturnsShortestPath()
+        public virtual void FindPath_PathfindingRangeBelongToGraph_ReturnsShortestPath()
         {
             var graph = testgraph2DAssemble.AssembleGraph();
-            var endPoints = new TestEndPoints(graph.First(), graph.Last());
+            var endPoints = new TestPathfindingRange(graph.First(), graph.Last());
             var algorithm = CreateAlgorithm(endPoints);
 
             var graphPath = algorithm.FindPath();
@@ -38,9 +38,9 @@ namespace Algorithm.Algos.Tests
         }
 
         [TestCase(TestName = "Finding path using NullEndPoints throws DeadEndException")]
-        public virtual void FindPath_NullEndPoints_ReturnsNullGraphPath()
+        public virtual void FindPath_NullPathfindingRange_ReturnsNullGraphPath()
         {
-            var algorithm = CreateAlgorithm(NullEndPoints.Interface);
+            var algorithm = CreateAlgorithm(NullPathfindingRange.Interface);
 
             Assert.Throws<DeadendVertexException>(() => algorithm.FindPath());
         }
@@ -55,15 +55,15 @@ namespace Algorithm.Algos.Tests
             var graph = testGraphAssemble.AssembleGraph(0, dimensionSizes);
             var source = graph.FirstOrDefault() ?? NullVertex.Interface;
             var target = graph.LastOrDefault() ?? NullVertex.Interface;
-            var endPoints = new TestEndPoints(source, target);
-            var algorithm = CreateAlgorithm(endPoints);
+            var range = new TestPathfindingRange(source, target);
+            var algorithm = CreateAlgorithm(range);
 
             var graphPath = algorithm.FindPath();
 
             Assert.IsFalse(graph.IsNull());
         }
 
-        protected abstract IAlgorithm<IGraphPath> CreateAlgorithm(IEndPoints endPoints);
+        protected abstract IAlgorithm<IGraphPath> CreateAlgorithm(IPathfindingRange endPoints);
 
         protected abstract int GetExpectedCost();
         protected abstract int GetExpectedLength();

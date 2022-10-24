@@ -3,17 +3,17 @@ using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.BaseCommands
 {
-    internal abstract class BaseEndPointsCommand : IVertexCommand
+    internal abstract class BasePathfindingRangeCommand : IVertexCommand
     {
-        protected IVisualizable Source => endPoints.Source.AsVisualizable();
+        protected IVisualizable Source => range.Source.AsVisualizable();
 
-        protected IVisualizable Target => endPoints.Target.AsVisualizable();
+        protected IVisualizable Target => range.Target.AsVisualizable();
 
-        protected readonly BaseEndPoints endPoints;
+        protected readonly BasePathfindingRange range;
 
-        protected BaseEndPointsCommand(BaseEndPoints endPoints)
+        protected BasePathfindingRangeCommand(BasePathfindingRange range)
         {
-            this.endPoints = endPoints;
+            this.range = range;
         }
 
         public abstract void Execute(IVertex vertex);

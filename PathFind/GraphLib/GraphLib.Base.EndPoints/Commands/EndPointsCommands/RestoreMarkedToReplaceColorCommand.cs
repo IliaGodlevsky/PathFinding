@@ -6,9 +6,9 @@ using GraphLib.Interfaces;
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [Order(2)]
-    internal sealed class RestoreMarkedToReplaceColorCommand : BaseIntermediateEndPointsCommand
+    internal sealed class RestoreMarkedToReplaceColorCommand : BaseIntermediatePathfindingRangeCommand
     {
-        public RestoreMarkedToReplaceColorCommand(BaseEndPoints endPoints)
+        public RestoreMarkedToReplaceColorCommand(BasePathfindingRange endPoints)
             : base(endPoints)
         {
         }

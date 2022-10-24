@@ -2,27 +2,19 @@
 using GraphLib.Interfaces;
 using System;
 using System.Diagnostics;
-using System.Windows.Forms;
+using System.Windows.Input;
 
-namespace WindowsFormsVersion.Model
+namespace WPFVersion.Model
 {
     [DebuggerDisplay("Source - {Source}, Target - {Target}")]
-    internal sealed class EndPoints : BaseEndPoints, IEndPoints
+    internal sealed class PathfindingRange : BasePathfindingRange
     {
         protected override void SubscribeVertex(IVertex vertex)
         {
             if (vertex is Vertex vert)
             {
-                vert.MouseClick += SetEndPoints;
-                vert.MouseClick += MarkIntermediateToReplace;
-            }
-        }
-
-        protected override void SetEndPoints(object sender, EventArgs e)
-        {
-            if (e is MouseEventArgs args && args.Button == MouseButtons.Left)
-            {
-                base.SetEndPoints(sender, e);
+                vert.MouseLeftButtonDown += SetPathfindingRange;
+                vert.MouseUp += MarkIntermediateToReplace;
             }
         }
 
@@ -30,14 +22,14 @@ namespace WindowsFormsVersion.Model
         {
             if (vertex is Vertex vert)
             {
-                vert.MouseClick -= SetEndPoints;
-                vert.MouseClick -= MarkIntermediateToReplace;
+                vert.MouseLeftButtonDown -= SetPathfindingRange;
+                vert.MouseUp -= MarkIntermediateToReplace;
             }
         }
 
         protected override void MarkIntermediateToReplace(object sender, EventArgs e)
         {
-            if (e is MouseEventArgs args && args.Button == MouseButtons.Middle)
+            if (e is MouseButtonEventArgs args && args.ChangedButton == MouseButton.Middle)
             {
                 base.MarkIntermediateToReplace(sender, e);
             }

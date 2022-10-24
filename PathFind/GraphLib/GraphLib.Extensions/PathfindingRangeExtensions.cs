@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace GraphLib.Extensions
 {
-    public static class EndPointsExtensions
+    public static class PathfindingRangeExtensions
     {
-        public static IEnumerable<IEndPoints> ToSubEndPoints(this IEndPoints self)
+        public static IEnumerable<IPathfindingRange> ToSubRanges(this IPathfindingRange self)
         {
             using (var iterator = self.GetEnumerator())
             {
@@ -16,38 +16,38 @@ namespace GraphLib.Extensions
                 while (iterator.MoveNext())
                 {
                     var current = iterator.Current;
-                    yield return new EndPointsProxy(previous, current);
+                    yield return new PathfindingRangeProxy(previous, current);
                     previous = iterator.Current;
                 }
             }
         }
 
-        public static bool IsEndPoint(this IEndPoints self, IVertex vertex)
+        public static bool IsInRange(this IPathfindingRange self, IVertex vertex)
         {
             return self.Contains(vertex);
         }
 
-        public static bool IsIntermediate(this IEndPoints endPoints, IVertex vertex)
+        public static bool IsIntermediate(this IPathfindingRange endPoints, IVertex vertex)
         {
             return endPoints.GetIntermediates().Any(v => v.IsEqual(vertex));
         }
 
-        public static bool CanBeEndPoint(this IEndPoints self, IVertex vertex)
+        public static bool CanBeInPathfindingRange(this IPathfindingRange self, IVertex vertex)
         {
-            return !vertex.IsIsolated() && !self.IsEndPoint(vertex);
+            return !vertex.IsIsolated() && !self.Contains(vertex);
         }
 
-        public static bool HasSourceAndTargetSet(this IEndPoints self)
+        public static bool HasSourceAndTargetSet(this IPathfindingRange self)
         {
             return !self.Source.IsIsolated() && !self.Target.IsIsolated();
         }
 
-        public static bool HasIsolators(this IEndPoints self)
+        public static bool HasIsolators(this IPathfindingRange self)
         {
             return self.Any(vertex => vertex.IsIsolated());
         }
 
-        public static IEnumerable<IVertex> GetIntermediates(this IEndPoints self)
+        public static IEnumerable<IVertex> GetIntermediates(this IPathfindingRange self)
         {
             var vertices = new[] { self.Source, self.Target };
             return self.Where(item => !vertices.Contains(item));

@@ -10,7 +10,7 @@ namespace Algorithm.Algos.Benchmark.Pathfinding
     {
         private const int Limit = 10;
 
-        public IEnumerable<IEndPoints> Arguments()
+        public IEnumerable<IPathfindingRange> Arguments()
         {
             var graphAssemble = new TestGraphAssemble();
             for (int i = 1; i <= Limit; i += 2)
@@ -18,7 +18,7 @@ namespace Algorithm.Algos.Benchmark.Pathfinding
                 int dimension = i * 10;
                 var graph = graphAssemble.AssembleGraph(0, dimension, dimension);
                 InitializeNeighbours(graph);
-                yield return new TestEndPoints(graph);
+                yield return new TestPathfindingRange(graph);
             }
         }
 

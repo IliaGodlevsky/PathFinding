@@ -40,7 +40,7 @@ namespace Algorithm.Factory
 
         }
 
-        public IDAStarAlgorithm Create(IEndPoints endPoints)
+        public IDAStarAlgorithm Create(IPathfindingRange endPoints)
         {
             return new IDAStarAlgorithm(endPoints, stepRule, heuristic);
         }

@@ -10,12 +10,12 @@ namespace Algorithm.Algos.Algos
     {
         private readonly IStepRule stepRule;
 
-        public CostGreedyAlgorithm(IEndPoints endPoints)
+        public CostGreedyAlgorithm(IPathfindingRange endPoints)
             : this(endPoints, new DefaultStepRule())
         {
 
         }
-        public CostGreedyAlgorithm(IEndPoints endPoints, IStepRule stepRule)
+        public CostGreedyAlgorithm(IPathfindingRange endPoints, IStepRule stepRule)
             : base(endPoints)
         {
             this.stepRule = stepRule;
@@ -23,7 +23,7 @@ namespace Algorithm.Algos.Algos
 
         protected override IGraphPath CreateGraphPath()
         {
-            return new GraphPath(parentVertices, endPoints, stepRule);
+            return new GraphPath(parentVertices, pathfindingRange, stepRule);
         }
 
         protected override double GreedyHeuristic(IVertex vertex)

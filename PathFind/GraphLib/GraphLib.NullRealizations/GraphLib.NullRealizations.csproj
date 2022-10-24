@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NullCoordinate.cs" />
-    <Compile Include="NullEndPoints.cs" />
+    <Compile Include="NullPathfindingRange.cs" />
     <Compile Include="NullNeighborhood.cs" />
     <Compile Include="NullCost.cs" />
     <Compile Include="NullGraph.cs" />

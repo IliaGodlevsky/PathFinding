@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstractions\AlgorithmVertices.cs" />
-    <Compile Include="Abstractions\EndPointsVertices.cs" />
+    <Compile Include="Abstractions\PathfindingRangeVertices.cs" />
     <Compile Include="Abstractions\ResultVertices.cs" />
     <Compile Include="Extensions\GraphExtensions.cs" />
     <Compile Include="Extensions\IVisualizationSlidesExtensions.cs" />

@@ -22,7 +22,7 @@ namespace GraphViewModel
 {
     public abstract class PathFindingModel
     {
-        protected readonly BaseEndPoints endPoints;
+        protected readonly BasePathfindingRange pathfindingRange;
         protected readonly Stopwatch timer;
         protected readonly ILog log;
 
@@ -38,9 +38,9 @@ namespace GraphViewModel
 
         public IReadOnlyList<IAlgorithmFactory<PathfindingAlgorithm>> Algorithms { get; }
 
-        protected PathFindingModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> factories, ILog log)
+        protected PathFindingModel(BasePathfindingRange endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> factories, ILog log)
         {
-            this.endPoints = endPoints;
+            this.pathfindingRange = endPoints;
             this.log = log;
             Algorithms = factories
                 .GroupBy(item => item.GetAttributeOrNull<GroupAttribute>())
@@ -54,9 +54,9 @@ namespace GraphViewModel
         {
             try
             {                
-                algorithm = Algorithm.Create(endPoints);
+                algorithm = Algorithm.Create(pathfindingRange);
                 SubscribeOnAlgorithmEvents(algorithm);
-                endPoints.RestoreCurrentColors();
+                pathfindingRange.RestoreCurrentColors();
                 path = await algorithm.FindPathAsync();
                 await path.VisualizeAsPathAsync();
                 SummarizePathfindingResults();
@@ -78,7 +78,7 @@ namespace GraphViewModel
 
         protected virtual void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
-            if (!endPoints.IsEndPoint(e.Current))
+            if (!pathfindingRange.Contains(e.Current))
             {
                 e.Current.AsVisualizable().VisualizeAsVisited();
             }
@@ -98,7 +98,7 @@ namespace GraphViewModel
 
         protected virtual void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
         {
-            if (!endPoints.IsEndPoint(e.Current))
+            if (!pathfindingRange.Contains(e.Current))
             {
                 e.Current.AsVisualizable().VisualizeAsEnqueued();
             }

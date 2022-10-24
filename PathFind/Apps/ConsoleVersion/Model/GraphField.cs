@@ -14,7 +14,7 @@ namespace ConsoleVersion.Model
 
         IReadOnlyCollection<IVertex> IGraphField.Vertices => Vertices;
 
-        private IEnumerable<IDisplayable> Displayables { get; }
+        private IEnumerable<IDisplayable> Children { get; }
 
         public GraphField(Graph2D graph)
         {
@@ -27,14 +27,14 @@ namespace ConsoleVersion.Model
                 new FramedToLeftOrdinate(graph)
             };
             displayables.AddRange(Vertices);
-            Displayables = displayables.AsReadOnly();
+            Children = displayables.AsReadOnly();
         }
 
         public void Display()
         {
             using (Cursor.HideCursor())
             {
-                Displayables.ForEach(display => display.Display());
+                Children.ForEach(child => child.Display());
             }
         }
     }

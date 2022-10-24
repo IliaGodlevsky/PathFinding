@@ -23,7 +23,7 @@ namespace Algorithm.Factory
 
         }
 
-        public DistanceFirstAlgorithm Create(IEndPoints endPoints)
+        public DistanceFirstAlgorithm Create(IPathfindingRange endPoints)
         {
             return new DistanceFirstAlgorithm(endPoints, heuristic);
         }

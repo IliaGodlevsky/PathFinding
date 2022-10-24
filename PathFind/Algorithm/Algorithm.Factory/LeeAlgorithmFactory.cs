@@ -10,7 +10,7 @@ namespace Algorithm.Factory
     [WaveGroup]
     public sealed class LeeAlgorithmFactory : IAlgorithmFactory<LeeAlgorithm>
     {
-        public LeeAlgorithm Create(IEndPoints endPoints)
+        public LeeAlgorithm Create(IPathfindingRange endPoints)
         {
             return new LeeAlgorithm(endPoints);
         }

@@ -17,13 +17,13 @@ namespace Algorithm.Algos.Algos
         protected readonly SimplePriorityQueue<IVertex, double> queue;
         protected readonly IStepRule stepRule;
 
-        public DijkstraAlgorithm(IEndPoints endPoints)
+        public DijkstraAlgorithm(IPathfindingRange endPoints)
             : this(endPoints, new DefaultStepRule())
         {
 
         }
 
-        public DijkstraAlgorithm(IEndPoints endPoints, IStepRule stepRule)
+        public DijkstraAlgorithm(IPathfindingRange endPoints, IStepRule stepRule)
             : base(endPoints)
         {
             this.stepRule = stepRule;
@@ -32,7 +32,7 @@ namespace Algorithm.Algos.Algos
 
         protected override IGraphPath CreateGraphPath()
         {
-            return new GraphPath(parentVertices, CurrentEndPoints, stepRule);
+            return new GraphPath(parentVertices, CurrentRange, stepRule);
         }
 
         protected override void Reset()
@@ -51,7 +51,7 @@ namespace Algorithm.Algos.Algos
         protected override void PrepareForLocalPathfinding()
         {
             base.PrepareForLocalPathfinding();
-            queue.EnqueueOrUpdatePriority(CurrentEndPoints.Source, default);
+            queue.EnqueueOrUpdatePriority(CurrentRange.Source, default);
         }
 
         protected virtual void RelaxVertex(IVertex vertex)

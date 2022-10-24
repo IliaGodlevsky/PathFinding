@@ -17,7 +17,7 @@
         public const string LoadGraph = "Load graph";
         public const string SmoothGraph = "Smooth graph";
         public const string Exit = "Exit";
-        public const string ChooseEndPoints = "Choose end points";
+        public const string ChoosePathfindingRange = "Choose pathfinding range";
         public const string ChooseAlgorithm = "Choose algorithm";
         public const string InputDelayTime = "Input delay time";
         public const string ClearGraph = "Clear graph";
@@ -27,6 +27,6 @@
         public const string InputObstaclePercent = "Input obstacle percent";
         public const string InputGraphParametres = "Input graph parametres";
         public const string ChooseIntermediates = "Choose intermediates";
-        public const string ClearEndPoints = "Clear end points";
+        public const string ClearPathfindingRange = "Clear end points";
     }
 }

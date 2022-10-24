@@ -13,7 +13,7 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
 
         protected IEnumerable<IUndoCommand> UndoCommands { get; }
 
-        protected BaseVerticesCommands(BaseEndPoints endPoints)
+        protected BaseVerticesCommands(BasePathfindingRange endPoints)
         {
             ExecuteCommands = GetCommands(endPoints).OrderByOrderAttribute().ToReadOnly();
             UndoCommands = GetUndoCommands(endPoints).ToReadOnly();
@@ -29,8 +29,8 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
             UndoCommands.ForEach(command => command.Undo());
         }
 
-        protected abstract IEnumerable<IVertexCommand> GetCommands(BaseEndPoints endPoints);
+        protected abstract IEnumerable<IVertexCommand> GetCommands(BasePathfindingRange endPoints);
 
-        protected abstract IEnumerable<IUndoCommand> GetUndoCommands(BaseEndPoints endPoints);
+        protected abstract IEnumerable<IUndoCommand> GetUndoCommands(BasePathfindingRange endPoints);
     }
 }

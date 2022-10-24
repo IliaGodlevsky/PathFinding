@@ -3,13 +3,13 @@ using System.Collections.ObjectModel;
 
 namespace GraphLib.Base.EndPoints.BaseCommands
 {
-    internal abstract class BaseIntermediatesUndoCommand : BaseEndPointsUndoCommand
+    internal abstract class BaseIntermediatesUndoCommand : BasePathfindingRangeUndoCommand
     {
-        protected Collection<IVertex> Intermediates => endPoints.Intermediates;
+        protected Collection<IVertex> Intermediates => range.Intermediates;
 
-        protected Collection<IVertex> MarkedToReplace => endPoints.MarkedToReplace;
+        protected Collection<IVertex> MarkedToReplace => range.MarkedToReplace;
 
-        protected BaseIntermediatesUndoCommand(BaseEndPoints endPoints) : base(endPoints)
+        protected BaseIntermediatesUndoCommand(BasePathfindingRange range) : base(range)
         {
 
         }

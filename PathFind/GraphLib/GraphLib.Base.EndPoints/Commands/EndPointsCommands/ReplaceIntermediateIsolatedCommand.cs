@@ -6,9 +6,9 @@ using GraphLib.Interfaces;
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [Order(3)]
-    internal sealed class ReplaceIntermediateIsolatedCommand : BaseIntermediateEndPointsCommand
+    internal sealed class ReplaceIntermediateIsolatedCommand : BaseIntermediatePathfindingRangeCommand
     {
-        public ReplaceIntermediateIsolatedCommand(BaseEndPoints endPoints)
+        public ReplaceIntermediateIsolatedCommand(BasePathfindingRange endPoints)
             : base(endPoints)
         {
         }
@@ -26,9 +26,9 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 
         public override bool CanExecute(IVertex vertex)
         {
-            return endPoints.HasSourceAndTargetSet()
+            return range.HasSourceAndTargetSet()
                 && HasIsolatedIntermediates
-                && endPoints.CanBeEndPoint(vertex);
+                && range.CanBeInPathfindingRange(vertex);
         }
     }
 }

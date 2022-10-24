@@ -8,6 +8,8 @@ namespace ValueRange
     public readonly struct InclusiveValueRange<T> : IEquatable<InclusiveValueRange<T>>
         where T : IComparable, IComparable<T>
     {
+        private readonly int hashCode;
+
         public T UpperValueOfRange { get; }
 
         public T LowerValueOfRange { get; }
@@ -24,6 +26,7 @@ namespace ValueRange
                 UpperValueOfRange = upperValueOfRange;
                 LowerValueOfRange = lowerValueOfRange;
             }
+            hashCode = HashCode.Combine(UpperValueOfRange, LowerValueOfRange);
         }
 
         public override bool Equals(object obj)
@@ -39,7 +42,7 @@ namespace ValueRange
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(UpperValueOfRange, LowerValueOfRange);
+            return hashCode;
         }
 
         public override string ToString()

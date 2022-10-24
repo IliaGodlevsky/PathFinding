@@ -14,7 +14,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
     internal class ClearColorsViewModel
     {
         private readonly IMessenger messenger;
-        private readonly BaseEndPoints endPoints;
+        private readonly BasePathfindingRange pathfindingRange;
 
         private IGraph Graph { get; set; }
 
@@ -25,7 +25,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
         public ClearColorsViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            endPoints = DI.Container.Resolve<BaseEndPoints>();
+            pathfindingRange = DI.Container.Resolve<BasePathfindingRange>();
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAllAlgorithmFinishedPathfinding);
             ClearColorsCommand = new RelayCommand(ExecuteClearColorsCommand, CanExecuteClearColorsCommand);
@@ -34,12 +34,12 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
         private void ExecuteClearColorsCommand(object param)
         {
             Graph.Refresh();
-            endPoints.RestoreCurrentColors();
+            pathfindingRange.RestoreCurrentColors();
         }
 
         private bool CanExecuteClearColorsCommand(object param)
         {
-            return !Graph.IsNull() && endPoints.HasSourceAndTargetSet() && IsAllAlgorithmFinishedPathfinding;
+            return !Graph.IsNull() && pathfindingRange.HasSourceAndTargetSet() && IsAllAlgorithmFinishedPathfinding;
         }
 
         private void OnAllAlgorithmFinishedPathfinding(IsAllAlgorithmsFinishedMessage message)

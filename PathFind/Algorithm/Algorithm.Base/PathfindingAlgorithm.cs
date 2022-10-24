@@ -31,7 +31,7 @@ namespace Algorithm.Base
         private readonly EventWaitHandle pauseEvent;
         protected readonly IVisitedVertices visitedVertices;
         protected readonly IParentVertices parentVertices;
-        protected readonly IEndPoints endPoints;
+        protected readonly IPathfindingRange pathfindingRange;
 
         public bool IsInProcess { get; private set; }
 
@@ -43,11 +43,11 @@ namespace Algorithm.Base
 
         private bool IsAlgorithmDisposed { get; set; } = false;
 
-        protected PathfindingAlgorithm(IEndPoints endPoints)
+        protected PathfindingAlgorithm(IPathfindingRange endPoints)
         {
             visitedVertices = new VisitedVertices();
             parentVertices = new ParentVertices();
-            this.endPoints = endPoints;
+            this.pathfindingRange = endPoints;
             pauseEvent = new AutoResetEvent(true);
         }
 
@@ -114,7 +114,7 @@ namespace Algorithm.Base
             IsPaused = false;
         }
 
-        protected virtual bool IsDestination(IEndPoints endPoints)
+        protected virtual bool IsDestination(IPathfindingRange endPoints)
         {
             return endPoints.Target.Equals(CurrentVertex) || IsInterruptRequested;
         }

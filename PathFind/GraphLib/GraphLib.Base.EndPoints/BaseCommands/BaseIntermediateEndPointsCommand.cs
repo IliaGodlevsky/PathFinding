@@ -5,16 +5,16 @@ using System.Linq;
 
 namespace GraphLib.Base.EndPoints.BaseCommands
 {
-    internal abstract class BaseIntermediateEndPointsCommand : BaseEndPointsCommand
+    internal abstract class BaseIntermediatePathfindingRangeCommand : BasePathfindingRangeCommand
     {
-        protected Collection<IVertex> Intermediates => endPoints.Intermediates;
+        protected Collection<IVertex> Intermediates => range.Intermediates;
 
-        protected Collection<IVertex> MarkedToReplace => endPoints.MarkedToReplace;
+        protected Collection<IVertex> MarkedToReplace => range.MarkedToReplace;
 
         protected bool HasIsolatedIntermediates => HasIsolated(Intermediates);
 
-        protected BaseIntermediateEndPointsCommand(BaseEndPoints endPoints)
-            : base(endPoints)
+        protected BaseIntermediatePathfindingRangeCommand(BasePathfindingRange range)
+            : base(range)
         {
 
         }

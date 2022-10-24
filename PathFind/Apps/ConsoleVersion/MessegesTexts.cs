@@ -24,12 +24,12 @@ namespace ConsoleVersion
         public const string RangeLowerValueInputMsg = "Input lower value of range: ";
         public const string RangeUpperValueInputMsg = "Input upper value of range: ";
         public const string CouldntFindPathMsg = "Couldn't find path";
-        public const string NoVerticesAsEndPointsMsg = "No vertices to choose as end points";
+        public const string NoVerticesAsPathfindingRangeMsg = "No vertices to choose as end points";
         public const string ObstaclePercentInputMsg = "Input percent of obstacles: ";
         public const string MenuOptionChoiceMsg = "Choose menu option: ";
         public const string XCoordinateInputMsg = "Input X coordinate of vertex: ";
         public const string YCoordinateInputMsg = "Input Y coordinate of vertex: ";
-        public const string EndPointsFirstlyMsg = "Firstly choose endpoints";
+        public const string PathfindingRangeFirstlyMsg = "Firstly choose endpoints";
         public const string VertexCostInputMsg = "Input vertex cost: ";
         public const string NotEnoughParamtres = "Not enough parametres to create graph";
         public const string NumberOfIntermediateVerticesInputMsg = "Input number of intermediates vertices: ";

@@ -40,7 +40,7 @@ namespace Algorithm.Factory
 
         }
 
-        public AStarAlgorithm Create(IEndPoints endPoints)
+        public AStarAlgorithm Create(IPathfindingRange endPoints)
         {
             return new AStarAlgorithm(endPoints, stepRule, heuristic);
         }

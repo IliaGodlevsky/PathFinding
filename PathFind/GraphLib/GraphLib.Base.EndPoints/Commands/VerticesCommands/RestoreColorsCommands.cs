@@ -8,12 +8,12 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
 {
     internal sealed class RestoreColorsCommands : BaseVerticesCommands
     {
-        public RestoreColorsCommands(BaseEndPoints endPoints) : base(endPoints)
+        public RestoreColorsCommands(BasePathfindingRange endPoints) : base(endPoints)
         {
 
         }
 
-        protected override IEnumerable<IVertexCommand> GetCommands(BaseEndPoints endPoints)
+        protected override IEnumerable<IVertexCommand> GetCommands(BasePathfindingRange endPoints)
         {
             yield return new RestoreIntermediateColorCommand(endPoints);
             yield return new RestoreMarkedToReplaceColorCommand(endPoints);
@@ -21,7 +21,7 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
             yield return new RestoreTargetColorCommand(endPoints);
         }
 
-        protected override IEnumerable<IUndoCommand> GetUndoCommands(BaseEndPoints endPoints)
+        protected override IEnumerable<IUndoCommand> GetUndoCommands(BasePathfindingRange endPoints)
         {
             return Enumerable.Empty<IUndoCommand>();
         }

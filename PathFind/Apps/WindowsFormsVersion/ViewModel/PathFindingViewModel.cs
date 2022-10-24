@@ -21,7 +21,7 @@ namespace WindowsFormsVersion.ViewModel
     {
         public event Action WindowClosed;
 
-        public PathFindingViewModel(BaseEndPoints endPoints,
+        public PathFindingViewModel(BasePathfindingRange endPoints,
             IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ILog log)
             : base(endPoints, algorithmFactories, log)
         {

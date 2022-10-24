@@ -9,13 +9,13 @@ namespace Algorithm.Algos.Algos
     {
         private readonly IHeuristic heuristic;
 
-        public DistanceFirstAlgorithm(IEndPoints endPoints, IHeuristic heuristic)
+        public DistanceFirstAlgorithm(IPathfindingRange endPoints, IHeuristic heuristic)
             : base(endPoints)
         {
             this.heuristic = heuristic;
         }
 
-        public DistanceFirstAlgorithm(IEndPoints endPoints)
+        public DistanceFirstAlgorithm(IPathfindingRange endPoints)
             : this(endPoints, new EuclidianDistance())
         {
 
@@ -23,7 +23,7 @@ namespace Algorithm.Algos.Algos
 
         protected override double GreedyHeuristic(IVertex vertex)
         {
-            return heuristic.Calculate(vertex, endPoints.Target);
+            return heuristic.Calculate(vertex, pathfindingRange.Target);
         }
 
         public override string ToString()

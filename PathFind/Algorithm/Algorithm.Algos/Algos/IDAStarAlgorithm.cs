@@ -19,13 +19,13 @@ namespace Algorithm.Algos.Algos
 
         private int ToDeleteCount => queue.Count * PercentToDelete / 100;
 
-        public IDAStarAlgorithm(IEndPoints endPoints)
+        public IDAStarAlgorithm(IPathfindingRange endPoints)
             : this(endPoints, new DefaultStepRule(), new ChebyshevDistance())
         {
 
         }
 
-        public IDAStarAlgorithm(IEndPoints endPoints, IStepRule stepRule, IHeuristic function)
+        public IDAStarAlgorithm(IPathfindingRange endPoints, IStepRule stepRule, IHeuristic function)
             : base(endPoints, stepRule, function)
         {
             deletedVertices = new Dictionary<IVertex, double>(new VertexEqualityComparer());

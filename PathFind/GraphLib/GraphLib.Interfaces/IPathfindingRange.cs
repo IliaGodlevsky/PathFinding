@@ -2,7 +2,7 @@
 
 namespace GraphLib.Interfaces
 {
-    public interface IEndPoints : IEnumerable<IVertex>
+    public interface IPathfindingRange : IEnumerable<IVertex>
     {
         IVertex Target { get; }
 

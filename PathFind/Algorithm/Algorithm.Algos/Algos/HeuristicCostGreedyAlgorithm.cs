@@ -12,14 +12,14 @@ namespace Algorithm.Algos.Algos
         private readonly IStepRule stepRule;
         private readonly IHeuristic heuristic;
 
-        public HeuristicCostGreedyAlgorithm(IEndPoints endPoints,
+        public HeuristicCostGreedyAlgorithm(IPathfindingRange endPoints,
             IHeuristic heuristic, IStepRule stepRule) : base(endPoints)
         {
             this.stepRule = stepRule;
             this.heuristic = heuristic;
         }
 
-        public HeuristicCostGreedyAlgorithm(IEndPoints endPoints)
+        public HeuristicCostGreedyAlgorithm(IPathfindingRange endPoints)
             : this(endPoints, new ChebyshevDistance(), new DefaultStepRule())
         {
 
@@ -27,12 +27,12 @@ namespace Algorithm.Algos.Algos
 
         protected override IGraphPath CreateGraphPath()
         {
-            return new GraphPath(parentVertices, endPoints, stepRule);
+            return new GraphPath(parentVertices, pathfindingRange, stepRule);
         }
 
         protected override double GreedyHeuristic(IVertex vertex)
         {
-            var heuristicResult = heuristic.Calculate(vertex, endPoints.Target);
+            var heuristicResult = heuristic.Calculate(vertex, pathfindingRange.Target);
             var stepCost = stepRule.CalculateStepCost(vertex, CurrentVertex);
             return heuristicResult + stepCost;
         }

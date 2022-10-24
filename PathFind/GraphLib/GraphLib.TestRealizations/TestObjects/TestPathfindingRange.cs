@@ -5,19 +5,19 @@ using System.Linq;
 
 namespace GraphLib.TestRealizations.TestObjects
 {
-    public sealed class TestEndPoints : IEndPoints
+    public sealed class TestPathfindingRange : IPathfindingRange
     {
         public IVertex Target { get; }
 
         public IVertex Source { get; }
 
-        public TestEndPoints(IVertex source, IVertex target)
+        public TestPathfindingRange(IVertex source, IVertex target)
         {
             Source = source;
             Target = target;
         }
 
-        public TestEndPoints(IGraph graph)
+        public TestPathfindingRange(IGraph graph)
             : this(graph.First(), graph.Last())
         {
 

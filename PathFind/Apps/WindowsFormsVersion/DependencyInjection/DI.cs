@@ -46,7 +46,7 @@ namespace WindowsFormsVersion.DependencyInjection
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IViewModel>()).AsSelf().InstancePerDependency();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
-            builder.RegisterType<EndPoints>().As<BaseEndPoints>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<PathfindingRange>().As<BasePathfindingRange>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<VertexEventHolder>().As<IGraphEvents>().SingleInstance();
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
 

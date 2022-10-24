@@ -11,9 +11,9 @@ namespace Algorithm.Base
 {
     public abstract class WaveAlgorithm : PathfindingAlgorithm
     {
-        protected virtual IEndPoints CurrentEndPoints { get; set; }
+        protected virtual IPathfindingRange CurrentRange { get; set; }
 
-        protected WaveAlgorithm(IEndPoints endPoints)
+        protected WaveAlgorithm(IPathfindingRange endPoints)
             : base(endPoints)
         {
 
@@ -23,13 +23,13 @@ namespace Algorithm.Base
         {
             var path = NullGraphPath.Interface;
             PrepareForPathfinding();
-            var subEndPoints = endPoints.ToSubEndPoints().ToReadOnly();
-            for (int i = 0; i < subEndPoints.Count && !IsInterruptRequested; i++)
+            var subRanges = pathfindingRange.ToSubRanges().ToReadOnly();
+            for (int i = 0; i < subRanges.Count && !IsInterruptRequested; i++)
             {
-                CurrentEndPoints = subEndPoints[i];
+                CurrentRange = subRanges[i];
                 PrepareForLocalPathfinding();
                 VisitVertex(CurrentVertex);
-                while (!IsDestination(CurrentEndPoints))
+                while (!IsDestination(CurrentRange))
                 {
                     WaitUntilResumed();
                     InspectVertex(CurrentVertex);
@@ -45,12 +45,12 @@ namespace Algorithm.Base
 
         protected virtual void PrepareForLocalPathfinding()
         {
-            CurrentVertex = CurrentEndPoints.Source;
+            CurrentVertex = CurrentRange.Source;
         }
 
         protected virtual IGraphPath CreateGraphPath()
         {
-            return new GraphPath(parentVertices, CurrentEndPoints);
+            return new GraphPath(parentVertices, CurrentRange);
         }
 
         protected virtual void VisitVertex(IVertex vertex)

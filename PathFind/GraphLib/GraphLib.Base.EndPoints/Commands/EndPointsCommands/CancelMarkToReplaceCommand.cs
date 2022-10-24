@@ -6,9 +6,9 @@ using GraphLib.Interfaces;
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [Order(0)]
-    internal sealed class CancelMarkToReplaceCommand : BaseIntermediateEndPointsCommand
+    internal sealed class CancelMarkToReplaceCommand : BaseIntermediatePathfindingRangeCommand
     {
-        public CancelMarkToReplaceCommand(BaseEndPoints endPoints)
+        public CancelMarkToReplaceCommand(BasePathfindingRange endPoints)
             : base(endPoints)
         {
 

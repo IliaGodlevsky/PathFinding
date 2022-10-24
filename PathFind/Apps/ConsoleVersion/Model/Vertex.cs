@@ -17,7 +17,7 @@ namespace ConsoleVersion.Model
     internal class Vertex : IVertex, IVisualizable, IDisplayable
     {
         public event EventHandler VertexCostChanged;
-        public event EventHandler EndPointChosen;
+        public event EventHandler RangeChosen;
         public event EventHandler VertexReversed;
         public event EventHandler MarkedToReplaceIntermediate;
 
@@ -92,7 +92,7 @@ namespace ConsoleVersion.Model
 
         public void OnEndPointChosen()
         {
-            EndPointChosen?.Invoke(this, EventArgs.Empty);
+            RangeChosen?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnMarkedToReplaceIntermediate()

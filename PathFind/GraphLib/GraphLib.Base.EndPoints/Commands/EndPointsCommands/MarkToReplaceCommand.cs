@@ -6,9 +6,9 @@ using GraphLib.Interfaces;
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [Order(1)]
-    internal sealed class MarkToReplaceCommand : BaseIntermediateEndPointsCommand
+    internal sealed class MarkToReplaceCommand : BaseIntermediatePathfindingRangeCommand
     {
-        public MarkToReplaceCommand(BaseEndPoints endPoints)
+        public MarkToReplaceCommand(BasePathfindingRange endPoints)
             : base(endPoints)
         {
         }
@@ -21,7 +21,7 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 
         public override bool CanExecute(IVertex vertex)
         {
-            return !vertex.IsOneOf(endPoints.Source, endPoints.Target)
+            return !vertex.IsOneOf(range.Source, range.Target)
                 && IsIntermediate(vertex)
                 && !IsMarkedToReplace(vertex);
         }

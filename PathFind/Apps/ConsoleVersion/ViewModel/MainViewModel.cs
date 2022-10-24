@@ -31,7 +31,7 @@ namespace ConsoleVersion.ViewModel
         private readonly IMessenger messenger;
         private readonly IGraphEvents events;
         private readonly IGraphFieldFactory fieldFactory;
-        private readonly BaseEndPoints endPoints;
+        private readonly BasePathfindingRange pathfindingRange;
 
         private IGraph graph;
         private IGraphField graphField;
@@ -43,7 +43,7 @@ namespace ConsoleVersion.ViewModel
         public IInput<Answer> AnswerInput { get; set; }
 
         public MainViewModel(IGraphFieldFactory fieldFactory, 
-            IGraphEvents events, BaseEndPoints endPoints, ILog log)
+            IGraphEvents events, BasePathfindingRange endPoints, ILog log)
         {
             graph = NullGraph.Interface;
             messenger = DI.Container.Resolve<IMessenger>();
@@ -53,7 +53,7 @@ namespace ConsoleVersion.ViewModel
             messenger.Register<ClaimGraphMessage>(this, RecieveClaimGraphMessage);
             this.fieldFactory = fieldFactory;
             this.events = events;
-            this.endPoints = endPoints;
+            this.pathfindingRange = endPoints;
             this.log = log;
         }
 
@@ -101,14 +101,14 @@ namespace ConsoleVersion.ViewModel
         {
             graph.Refresh();
             GraphParamters = GraphParamsProperty.Empty;
-            endPoints.Reset();
+            pathfindingRange.Reset();
             messenger.Send(UpdateStatisticsMessage.Empty);
         }
 
         public void ClearColors()
         {
             graph.Refresh();
-            endPoints.RestoreCurrentColors();
+            pathfindingRange.RestoreCurrentColors();
         }
 
         public void DisplayGraph()
@@ -134,7 +134,7 @@ namespace ConsoleVersion.ViewModel
 
         private void SetGraph(GraphCreatedMessage message)
         {
-            endPoints.Reset();
+            pathfindingRange.Reset();
             events.Unsubscribe(graph);
             graph = message.Graph;
             graphField = fieldFactory.CreateGraphField(graph);

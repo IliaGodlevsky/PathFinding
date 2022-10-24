@@ -6,9 +6,9 @@ using GraphLib.Interfaces;
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [Order(0)]
-    internal sealed class RestoreSourceColorCommand : BaseEndPointsCommand
+    internal sealed class RestoreSourceColorCommand : BasePathfindingRangeCommand
     {
-        public RestoreSourceColorCommand(BaseEndPoints endPoints)
+        public RestoreSourceColorCommand(BasePathfindingRange endPoints)
             : base(endPoints)
         {
         }
@@ -20,7 +20,7 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 
         public override bool CanExecute(IVertex vertex)
         {
-            return vertex.Equals(endPoints.Source);
+            return vertex.Equals(range.Source);
         }
     }
 }

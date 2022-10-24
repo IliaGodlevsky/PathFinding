@@ -44,7 +44,7 @@ namespace WPFVersion.ViewModel.ButtonViewModels
         private void OnGraphCreated(GraphCreatedMessage message)
         {
             var events = DI.Container.Resolve<IGraphEvents>();
-            var endPoints = DI.Container.Resolve<BaseEndPoints>();
+            var endPoints = DI.Container.Resolve<BasePathfindingRange>();
             events.Unsubscribe(Graph);
             endPoints.Reset();
             Graph = message.Graph;

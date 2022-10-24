@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -99,13 +99,13 @@
     <Compile Include="Messages\DataMessages\AlgorithmStatusMessage.cs" />
     <Compile Include="Messages\ActionMessages\ClearStatisticsMessage.cs" />
     <Compile Include="Messages\DataMessages\DelayTimeChangedMessage.cs" />
-    <Compile Include="Messages\DataMessages\EndPointsChosenMessage.cs" />
+    <Compile Include="Messages\DataMessages\PathfindingRangeChosenMessage.cs" />
     <Compile Include="Messages\DataMessages\GraphCreatedMessage.cs" />
     <Compile Include="Messages\ActionMessages\InterruptAllAlgorithmsMessage.cs" />
     <Compile Include="Messages\DataMessages\IsAllAlgorithmsFinishedMessage.cs" />
     <Compile Include="Messages\DataMessages\PathFoundMessage.cs" />
     <Compile Include="Messages\ActionMessages\UpdateStatisticsMessage.cs" />
-    <Compile Include="Model\EndPoints.cs" />
+    <Compile Include="Model\PathfindingRange.cs" />
     <Compile Include="Model\CostColors.cs" />
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\RangedSlider.cs" />

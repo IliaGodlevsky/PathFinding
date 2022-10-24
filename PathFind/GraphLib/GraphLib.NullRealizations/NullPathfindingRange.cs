@@ -9,17 +9,16 @@ namespace GraphLib.NullRealizations
 {
     [Null]
     [DebuggerDisplay("Null")]
-    public sealed class NullEndPoints : Singleton<NullEndPoints, IEndPoints>, IEndPoints
+    public sealed class NullPathfindingRange : Singleton<NullPathfindingRange, IPathfindingRange>, IPathfindingRange
     {
         public IVertex Target => NullVertex.Interface;
 
         public IVertex Source => NullVertex.Interface;
 
-        private NullEndPoints() { }
+        private NullPathfindingRange() { }
 
         public IEnumerator<IVertex> GetEnumerator()
         {
-            yield return NullVertex.Instance;
             yield return NullVertex.Instance;
         }
 

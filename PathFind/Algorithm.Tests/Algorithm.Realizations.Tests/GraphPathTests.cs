@@ -17,7 +17,7 @@ namespace Algorithm.Realizations.Tests
         private readonly IGraphAssemble graphAssemble;
         private readonly IGraph graph;
         private readonly ICoordinate[] expectedPraphPathCoordinates;
-        private readonly IEndPoints endPoints;
+        private readonly IPathfindingRange pathfindingRange;
         private readonly ParentVertices parentVertices;
 
         public GraphPathTests()
@@ -37,7 +37,7 @@ namespace Algorithm.Realizations.Tests
             graph = graphAssemble.AssembleGraph();
             var source = graph.Get(expectedPraphPathCoordinates.First());
             var target = graph.Get(expectedPraphPathCoordinates.Last());
-            endPoints = new TestEndPoints(source, target);
+            pathfindingRange = new TestPathfindingRange(source, target);
             parentVertices = new ParentVertices();
             FormParentVertices(parentVertices);
         }
@@ -47,7 +47,7 @@ namespace Algorithm.Realizations.Tests
         {
             int expectedPathLength = expectedPraphPathCoordinates.Length - 1;
             const int expectedPathCost = 25;
-            var graphPath = new GraphPath(parentVertices, endPoints);
+            var graphPath = new GraphPath(parentVertices, pathfindingRange);
 
             double pathCost = graphPath.Cost;
             int pathLength = graphPath.Count;

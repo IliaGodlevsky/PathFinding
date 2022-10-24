@@ -17,7 +17,7 @@ namespace Algorithm.Base
 
         private IVertex PreviousVertex { get; set; }
 
-        protected GreedyAlgorithm(IEndPoints endPoints)
+        protected GreedyAlgorithm(IPathfindingRange endPoints)
            : base(endPoints)
         {
             visitedVerticesStack = new Stack<IVertex>();
@@ -26,7 +26,7 @@ namespace Algorithm.Base
         public sealed override IGraphPath FindPath()
         {
             PrepareForPathfinding();
-            while (!IsDestination(endPoints))
+            while (!IsDestination(pathfindingRange))
             {
                 WaitUntilResumed();
                 PreviousVertex = CurrentVertex;
@@ -43,7 +43,7 @@ namespace Algorithm.Base
         {
             return IsInterruptRequested
                 ? NullGraphPath.Interface
-                : new GraphPath(parentVertices, endPoints);
+                : new GraphPath(parentVertices, pathfindingRange);
         }
 
         protected abstract double GreedyHeuristic(IVertex vertex);
@@ -66,7 +66,7 @@ namespace Algorithm.Base
         protected override void PrepareForPathfinding()
         {
             base.PrepareForPathfinding();
-            CurrentVertex = endPoints.Source;
+            CurrentVertex = pathfindingRange.Source;
             ThrowIfDeadEnd(CurrentVertex);
             VisitVertex(CurrentVertex);
         }

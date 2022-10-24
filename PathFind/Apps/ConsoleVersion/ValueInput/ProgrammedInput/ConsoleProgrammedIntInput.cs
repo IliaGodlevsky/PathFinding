@@ -13,8 +13,8 @@
         private const int FindPathMenu = 2;
         private const int ChooseAlgorithm = 2;
         private const int Dijkstra = 1;
-        private const int ChooseEndPointsMenu = 3;
-        private const int ChooseEndPoints = 1;
+        private const int ChoosePathfindingRangeMenu = 3;
+        private const int ChoosePathfindingRange = 1;
         private const int SourceX = 0;
         private const int SourceY = 0;
         private const int TargetX = 64;
@@ -31,7 +31,7 @@
         private const int FourthIntermediateY = 30;
         private const int FivethIntermediateX = 64;
         private const int FivethIntermediateY = 5;
-        private const int ExitChoosingEndPoints = 7;
+        private const int ExitChoosingPathfindingRange = 7;
         private const int DelayInputMenu = 4;
         private const int FindPath = 1;
         private const int ClearGraphMenu = 6;

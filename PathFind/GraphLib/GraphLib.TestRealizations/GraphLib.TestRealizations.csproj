@@ -55,7 +55,7 @@
     <Compile Include="TestFactories\TestVertexFactory.cs" />
     <Compile Include="TestFactories\TestVertexFromInfoFactory.cs" />
     <Compile Include="TestObjects\TestCoordinate.cs" />
-    <Compile Include="TestObjects\TestEndPoints.cs" />
+    <Compile Include="TestObjects\TestPathfindingRange.cs" />
     <Compile Include="TestObjects\TestGraph.cs" />
     <Compile Include="TestFactories\TestGraph2DAssemble.cs" />
     <Compile Include="TestObjects\TestVertex.cs" />

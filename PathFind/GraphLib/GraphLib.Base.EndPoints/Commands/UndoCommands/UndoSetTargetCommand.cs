@@ -5,11 +5,11 @@ using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.Commands.UndoCommands
 {
-    internal sealed class UndoSetTargetCommand : BaseEndPointsUndoCommand
+    internal sealed class UndoSetTargetCommand : BasePathfindingRangeUndoCommand
     {
         private readonly IExecutable<IVertex> unsetTargetCommand;
 
-        public UndoSetTargetCommand(BaseEndPoints endPoints) : base(endPoints)
+        public UndoSetTargetCommand(BasePathfindingRange endPoints) : base(endPoints)
         {
             unsetTargetCommand = new UnsetTargetCommand(endPoints);
         }

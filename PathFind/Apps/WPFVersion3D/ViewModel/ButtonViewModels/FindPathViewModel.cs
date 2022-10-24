@@ -10,13 +10,13 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
 {
     internal class FindPathViewModel
     {
-        private readonly BaseEndPoints endPoints;
+        private readonly BasePathfindingRange pathfindingRange;
 
         public ICommand FindPathCommand { get; }
 
         public FindPathViewModel()
         {
-            endPoints = DI.Container.Resolve<BaseEndPoints>();
+            pathfindingRange = DI.Container.Resolve<BasePathfindingRange>();
             FindPathCommand = new RelayCommand(ExecuteFindPathCommand, CanExecuteFindPathCommand);
         }
 
@@ -27,7 +27,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
 
         private bool CanExecuteFindPathCommand(object param)
         {
-            return !endPoints.HasIsolators();
+            return !pathfindingRange.HasIsolators();
         }
     }
 }

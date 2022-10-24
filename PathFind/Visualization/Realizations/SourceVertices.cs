@@ -3,7 +3,7 @@ using Visualization.Abstractions;
 
 namespace Visualization.Realizations
 {
-    internal sealed class SourceVertices : EndPointsVertices
+    internal sealed class SourceVertices : PathfindingRangeVertices
     {
         protected override void Visualize(IVisualizable visualizable)
         {

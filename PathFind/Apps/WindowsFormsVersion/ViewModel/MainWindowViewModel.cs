@@ -75,7 +75,7 @@ namespace WindowsFormsVersion.ViewModel
         public MainWindow MainWindow { get; set; }
 
         public MainWindowViewModel(IGraphFieldFactory fieldFactory,
-            IGraphEvents events, IGraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
+            IGraphEvents events, IGraphSerializationModule serializationModule, BasePathfindingRange endPoints, ILog log)
             : base(fieldFactory, events, serializationModule, endPoints, log)
         {
             messenger = DI.Container.Resolve<IMessenger>();
@@ -160,7 +160,7 @@ namespace WindowsFormsVersion.ViewModel
 
         private bool CanStartPathFinding()
         {
-            return !endPoints.HasIsolators() && !IsPathfindingStarted;
+            return !pathfindingRange.HasIsolators() && !IsPathfindingStarted;
         }
 
         public void Dispose()

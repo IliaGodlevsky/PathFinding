@@ -29,7 +29,7 @@ namespace WPFVersion.ViewModel
 
         public ICommand CancelPathFindAlgorithmChoice { get; }
 
-        public PathFindingViewModel(BaseEndPoints endPoints,
+        public PathFindingViewModel(BasePathfindingRange endPoints,
             IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ILog log)
             : base(endPoints, algorithmFactories, log)
         {
@@ -58,7 +58,7 @@ namespace WPFVersion.ViewModel
         protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
             messenger.Send(new AlgorithmStartedMessage(algorithm, Delay));
-            messenger.Send(new EndPointsChosenMessage(algorithm, endPoints));
+            messenger.Send(new PathfindingRangeChosenMessage(algorithm, pathfindingRange));
         }
 
         protected override void SummarizePathfindingResults()

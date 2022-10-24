@@ -4,25 +4,25 @@ using System;
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace WPFVersion.Model
+namespace WPFVersion3D.Model
 {
     [DebuggerDisplay("Source - {Source}, Target - {Target}")]
-    internal sealed class EndPoints : BaseEndPoints
+    internal sealed class PathfindingRange : BasePathfindingRange
     {
         protected override void SubscribeVertex(IVertex vertex)
         {
-            if (vertex is Vertex vert)
+            if (vertex is Vertex3D vert)
             {
-                vert.MouseLeftButtonDown += SetEndPoints;
+                vert.MouseLeftButtonDown += SetPathfindingRange;
                 vert.MouseUp += MarkIntermediateToReplace;
             }
         }
 
         protected override void UnsubscribeVertex(IVertex vertex)
         {
-            if (vertex is Vertex vert)
+            if (vertex is Vertex3D vert)
             {
-                vert.MouseLeftButtonDown -= SetEndPoints;
+                vert.MouseLeftButtonDown -= SetPathfindingRange;
                 vert.MouseUp -= MarkIntermediateToReplace;
             }
         }

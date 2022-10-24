@@ -13,7 +13,7 @@ using Visualization.Realizations;
 
 namespace Visualization
 {
-    public abstract class PathfindingVisualization : IExecutable<IAlgorithm<IGraphPath>>, IVisualizationSlides<IGraphPath>, IVisualizationSlides<IEndPoints>
+    public abstract class PathfindingVisualization : IExecutable<IAlgorithm<IGraphPath>>, IVisualizationSlides<IGraphPath>, IVisualizationSlides<IPathfindingRange>
     {
         private readonly VisitedVertices visited = new VisitedVertices();
         private readonly EnqueuedVertices enqueued = new EnqueuedVertices();
@@ -56,7 +56,7 @@ namespace Visualization
             algorithm.Started += OnAlgorithmStarted;
         }
 
-        public void Add(IAlgorithm<IGraphPath> algorithm, IEndPoints endPoints)
+        public void Add(IAlgorithm<IGraphPath> algorithm, IPathfindingRange endPoints)
         {
             source.Add(algorithm, endPoints.Source);
             target.Add(algorithm, endPoints.Target);

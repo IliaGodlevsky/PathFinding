@@ -55,7 +55,7 @@ namespace ConsoleVersion.ViewModel
 
         private int AlgorithmIndex => IntInput.Input(AlgorithmKeyInputMessage, algorithmKeysValueRange) - 1;
 
-        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ILog log)
+        public PathFindingViewModel(BasePathfindingRange endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ILog log)
             : base(endPoints, algorithmFactories, log)
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Count, 1);
@@ -100,10 +100,10 @@ namespace ConsoleVersion.ViewModel
         }
 
         [ExecuteSafe(nameof(ExecuteSafe))]
-        [MenuItem(MenuItemsNames.ChooseEndPoints, 2)]
+        [MenuItem(MenuItemsNames.ChoosePathfindingRange, 2)]
         public void ChooseExtremeVertex()
         {
-            DI.Container.Display<EndPointsView>();
+            DI.Container.Display<PathfindingRangeView>();
         }
 
         [MenuItem(MenuItemsNames.ClearGraph, 4)]
@@ -186,7 +186,7 @@ namespace ConsoleVersion.ViewModel
 
         private bool CanExecutePathfinding()
         {
-            return !endPoints.HasIsolators() && !Algorithm.IsNull();
+            return !pathfindingRange.HasIsolators() && !Algorithm.IsNull();
         }
 
         private void ExecuteSafe(Command action)

@@ -42,8 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseCommands\BaseIntermediatesUndoCommand.cs" />
-    <Compile Include="BaseCommands\BaseEndPointsUndoCommand.cs" />
-    <Compile Include="BaseEndPoints.cs" />
+    <Compile Include="BaseCommands\BasePathfindingRangeUndoCommand.cs" />
+    <Compile Include="BasePathfindingRange.cs" />
     <Compile Include="Commands\UndoCommands\UndoMarkToReplaceCommand.cs" />
     <Compile Include="Commands\UndoCommands\UndoSetIntermediatesCommand.cs" />
     <Compile Include="Commands\UndoCommands\UndoSetSourceCommand.cs" />
@@ -70,7 +70,7 @@
     <Compile Include="Commands\EndPointsCommands\MarkToReplaceCommand.cs" />
     <Compile Include="Commands\VerticesCommands\IntermediateToReplaceCommands.cs" />
     <Compile Include="Commands\VerticesCommands\RestoreColorsCommands.cs" />
-    <Compile Include="Commands\VerticesCommands\SetEndPointsCommands.cs" />
+    <Compile Include="Commands\VerticesCommands\SetPathfindingRangeCommands.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Commands\Commands.csproj">

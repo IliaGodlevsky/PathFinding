@@ -6,13 +6,13 @@ using System.Collections.Generic;
 
 namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
 {
-    internal sealed class SetEndPointsCommands : BaseVerticesCommands
+    internal sealed class SetPathfindingRangeCommands : BaseVerticesCommands
     {
-        public SetEndPointsCommands(BaseEndPoints endPoints) : base(endPoints)
+        public SetPathfindingRangeCommands(BasePathfindingRange endPoints) : base(endPoints)
         {
         }
 
-        protected override IEnumerable<IVertexCommand> GetCommands(BaseEndPoints endPoints)
+        protected override IEnumerable<IVertexCommand> GetCommands(BasePathfindingRange endPoints)
         {
             yield return new UnsetIntermediateCommand(endPoints);
             yield return new UnsetTargetCommand(endPoints);
@@ -26,7 +26,7 @@ namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
             yield return new ReplaceIsolatedTargetCommand(endPoints);
         }
 
-        protected override IEnumerable<IUndoCommand> GetUndoCommands(BaseEndPoints endPoints)
+        protected override IEnumerable<IUndoCommand> GetUndoCommands(BasePathfindingRange endPoints)
         {
             yield return new UndoSetIntermediatesCommand(endPoints);
             yield return new UndoSetTargetCommand(endPoints);

@@ -6,9 +6,9 @@ using GraphLib.Interfaces;
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [Order(2)]
-    internal sealed class UnsetIntermediateCommand : BaseIntermediateEndPointsCommand
+    internal sealed class UnsetIntermediateCommand : BaseIntermediatePathfindingRangeCommand
     {
-        public UnsetIntermediateCommand(BaseEndPoints endPoints)
+        public UnsetIntermediateCommand(BasePathfindingRange endPoints)
             : base(endPoints)
         {
         }

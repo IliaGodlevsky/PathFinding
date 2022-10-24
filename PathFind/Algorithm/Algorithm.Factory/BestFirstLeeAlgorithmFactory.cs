@@ -25,7 +25,7 @@ namespace Algorithm.Factory
 
         }
 
-        public BestFirstLeeAlgorithm Create(IEndPoints endPoints)
+        public BestFirstLeeAlgorithm Create(IPathfindingRange endPoints)
         {
             return new BestFirstLeeAlgorithm(endPoints, heuristic);
         }

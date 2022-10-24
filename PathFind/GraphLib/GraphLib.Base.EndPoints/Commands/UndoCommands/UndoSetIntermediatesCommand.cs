@@ -11,7 +11,7 @@ namespace GraphLib.Base.EndPoints.Commands.UndoCommands
     {
         private readonly IExecutable<IVertex> unsetIntermediatesCommand;
 
-        public UndoSetIntermediatesCommand(BaseEndPoints endPoints) : base(endPoints)
+        public UndoSetIntermediatesCommand(BasePathfindingRange endPoints) : base(endPoints)
         {
             unsetIntermediatesCommand = new UnsetIntermediateCommand(endPoints);
         }

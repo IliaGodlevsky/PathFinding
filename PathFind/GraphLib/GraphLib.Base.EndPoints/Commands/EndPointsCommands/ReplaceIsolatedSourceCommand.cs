@@ -7,9 +7,9 @@ using NullObject.Extensions;
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [Order(5)]
-    internal sealed class ReplaceIsolatedSourceCommand : BaseEndPointsCommand
+    internal sealed class ReplaceIsolatedSourceCommand : BasePathfindingRangeCommand
     {
-        public ReplaceIsolatedSourceCommand(BaseEndPoints endPoints)
+        public ReplaceIsolatedSourceCommand(BasePathfindingRange endPoints)
             : base(endPoints)
         {
         }
@@ -17,15 +17,15 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
         public override void Execute(IVertex vertex)
         {
             Source.VisualizeAsRegular();
-            endPoints.Source = vertex;
+            range.Source = vertex;
             Source.VisualizeAsSource();
         }
 
         public override bool CanExecute(IVertex vertex)
         {
-            return endPoints.Source.IsIsolated()
-                && !endPoints.Source.IsNull()
-                && endPoints.CanBeEndPoint(vertex);
+            return range.Source.IsIsolated()
+                && !range.Source.IsNull()
+                && range.CanBeInPathfindingRange(vertex);
         }
     }
 }

@@ -135,7 +135,7 @@
     <Compile Include="Interface\IAnimatedAxisRotator.cs" />
     <Compile Include="Infrastructure\Animators\ForwardAnimatedAxisRotator.cs" />
     <Compile Include="Infrastructure\Animators\NullAnimatedAxisRotator.cs" />
-    <Compile Include="Model\EndPoints.cs" />
+    <Compile Include="Model\PathfindingRange.cs" />
     <Compile Include="Model\GraphField3DContainer.cs" />
     <Compile Include="Model\PathfindingVisualizationModel.cs" />
     <Compile Include="Model\PathInput.cs" />

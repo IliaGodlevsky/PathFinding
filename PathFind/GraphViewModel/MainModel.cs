@@ -16,7 +16,7 @@ namespace GraphViewModel
 
         protected readonly ILog log;
         protected readonly IGraphFieldFactory fieldFactory;
-        protected readonly BaseEndPoints endPoints;
+        protected readonly BasePathfindingRange pathfindingRange;
         protected readonly IGraphSerializationModule serializationModule;
 
         public virtual string GraphParametres { get; set; }
@@ -28,13 +28,13 @@ namespace GraphViewModel
         protected MainModel(IGraphFieldFactory fieldFactory,
             IGraphEvents events,
             IGraphSerializationModule serializationModule,
-            BaseEndPoints endPoints,
+            BasePathfindingRange endPoints,
             ILog log)
         {
             this.events = events;
             this.serializationModule = serializationModule;
             this.fieldFactory = fieldFactory;
-            this.endPoints = endPoints;
+            this.pathfindingRange = endPoints;
             this.log = log;
             Graph = NullGraph.Interface;
         }
@@ -72,12 +72,12 @@ namespace GraphViewModel
         {
             Graph.Refresh();
             GraphParametres = Graph.GetStringRepresentation();
-            endPoints.Reset();
+            pathfindingRange.Reset();
         }
 
         public virtual void ConnectNewGraph(IGraph graph)
         {
-            endPoints.Reset();
+            pathfindingRange.Reset();
             events.Unsubscribe(Graph);
             Graph = graph;
             GraphField = fieldFactory.CreateGraphField(Graph);
@@ -88,7 +88,7 @@ namespace GraphViewModel
         public void ClearColors()
         {
             Graph.Refresh();
-            endPoints.RestoreCurrentColors();
+            pathfindingRange.RestoreCurrentColors();
         }
     }
 }

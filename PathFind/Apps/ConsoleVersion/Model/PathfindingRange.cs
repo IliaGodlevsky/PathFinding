@@ -5,13 +5,13 @@ using System.Diagnostics;
 namespace ConsoleVersion.Model
 {
     [DebuggerDisplay("Source - {Source}, Target - {Target}")]
-    internal sealed class EndPoints : BaseEndPoints
+    internal sealed class PathfindingRange : BasePathfindingRange
     {
         protected override void SubscribeVertex(IVertex vertex)
         {
             if (vertex is Vertex vert)
             {
-                vert.EndPointChosen += SetEndPoints;
+                vert.RangeChosen += SetPathfindingRange;
                 vert.MarkedToReplaceIntermediate += MarkIntermediateToReplace;
             }
         }
@@ -20,7 +20,7 @@ namespace ConsoleVersion.Model
         {
             if (vertex is Vertex vert)
             {
-                vert.EndPointChosen -= SetEndPoints;
+                vert.RangeChosen -= SetPathfindingRange;
                 vert.MarkedToReplaceIntermediate -= MarkIntermediateToReplace;
             }
         }

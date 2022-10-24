@@ -11,10 +11,10 @@ using System.Linq;
 
 namespace GraphLib.Base.EndPoints
 {
-    public abstract class BaseEndPoints : IEndPoints, IGraphEvents
+    public abstract class BasePathfindingRange : IPathfindingRange, IGraphEvents
     {
         private readonly IVerticesCommands markedToReplaceCommands;
-        private readonly IVerticesCommands setEndPointsCommands;
+        private readonly IVerticesCommands setPathfindingRangeCommands;
         private readonly IVerticesCommands returnColorsCommands;
 
         public IVertex Source { get; internal set; }
@@ -25,11 +25,11 @@ namespace GraphLib.Base.EndPoints
 
         internal protected Collection<IVertex> MarkedToReplace { get; }
 
-        protected BaseEndPoints()
+        protected BasePathfindingRange()
         {
             Intermediates = new Collection<IVertex>();
             MarkedToReplace = new Collection<IVertex>();
-            setEndPointsCommands = new SetEndPointsCommands(this);
+            setPathfindingRangeCommands = new SetPathfindingRangeCommands(this);
             markedToReplaceCommands = new IntermediateToReplaceCommands(this);
             returnColorsCommands = new RestoreColorsCommands(this);
             Reset();
@@ -48,7 +48,7 @@ namespace GraphLib.Base.EndPoints
         public void Reset()
         {
             markedToReplaceCommands.Undo();
-            setEndPointsCommands.Undo();
+            setPathfindingRangeCommands.Undo();
         }
 
         public void RestoreCurrentColors()
@@ -56,9 +56,9 @@ namespace GraphLib.Base.EndPoints
             returnColorsCommands.Execute(this);
         }
 
-        protected virtual void SetEndPoints(object sender, EventArgs e)
+        protected virtual void SetPathfindingRange(object sender, EventArgs e)
         {
-            setEndPointsCommands.Execute(sender.AsVertex());
+            setPathfindingRangeCommands.Execute(sender.AsVertex());
         }
 
         protected virtual void MarkIntermediateToReplace(object sender, EventArgs e)

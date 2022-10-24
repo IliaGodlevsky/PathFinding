@@ -7,9 +7,9 @@ using GraphLib.NullRealizations;
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [Order(0)]
-    internal sealed class UnsetSourceCommand : BaseEndPointsCommand
+    internal sealed class UnsetSourceCommand : BasePathfindingRangeCommand
     {
-        public UnsetSourceCommand(BaseEndPoints endPoints)
+        public UnsetSourceCommand(BasePathfindingRange endPoints)
             : base(endPoints)
         {
 
@@ -18,12 +18,12 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
         public override void Execute(IVertex vertex)
         {
             vertex.AsVisualizable().VisualizeAsRegular();
-            endPoints.Source = NullVertex.Interface;
+            range.Source = NullVertex.Interface;
         }
 
         public override bool CanExecute(IVertex vertex)
         {
-            return vertex.IsEqual(endPoints.Source);
+            return vertex.IsEqual(range.Source);
         }
     }
 }

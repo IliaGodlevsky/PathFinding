@@ -18,7 +18,7 @@ namespace WPFVersion.Model
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<PathFoundMessage>(this, PathFound);
             messenger.Register<SubscribeOnAlgorithmEventsMessage>(this, Subscribe);
-            messenger.Register<EndPointsChosenMessage>(this, RegisterEndPointsForAlgorithm);
+            messenger.Register<PathfindingRangeChosenMessage>(this, RegisterPathfindingRangeForAlgorithm);
         }
 
         public void Dispose()
@@ -49,9 +49,9 @@ namespace WPFVersion.Model
             }
         }
 
-        private void RegisterEndPointsForAlgorithm(EndPointsChosenMessage message)
+        private void RegisterPathfindingRangeForAlgorithm(PathfindingRangeChosenMessage message)
         {
-            Add(message.Algorithm, message.EndPoints);
+            Add(message.Algorithm, message.Range);
         }
 
         private void PathFound(PathFoundMessage message)

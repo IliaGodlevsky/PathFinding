@@ -14,7 +14,7 @@ namespace Algorithm.Realizations.GraphPaths
     public sealed class GraphPath : IGraphPath
     {
         private readonly IParentVertices parentVertices;
-        private readonly IEndPoints endPoints;
+        private readonly IPathfindingRange pathfindingRange;
         private readonly IStepRule stepRule;
 
         private readonly Lazy<double> pathCost;
@@ -26,26 +26,26 @@ namespace Algorithm.Realizations.GraphPaths
 
         public int Count => Path.Count == 0 ? 0 : Path.Count - 1;
 
-        public GraphPath(IParentVertices parentVertices, IEndPoints endPoints)
+        public GraphPath(IParentVertices parentVertices, IPathfindingRange endPoints)
             : this(parentVertices, endPoints, new DefaultStepRule())
         {
 
         }
 
         public GraphPath(IParentVertices parentVertices,
-            IEndPoints endPoints, IStepRule stepRule)
+            IPathfindingRange endPoints, IStepRule stepRule)
         {
             path = new Lazy<IReadOnlyList<IVertex>>(GetPath);
             pathCost = new Lazy<double>(GetPathCost);
             this.parentVertices = parentVertices;
-            this.endPoints = endPoints;
+            this.pathfindingRange = endPoints;
             this.stepRule = stepRule;
         }
 
         private IReadOnlyList<IVertex> GetPath()
         {
             var vertices = new List<IVertex>();
-            var vertex = endPoints.Target;
+            var vertex = pathfindingRange.Target;
             vertices.Add(vertex);
             var parent = GetOrNullVertex(vertex);
             while (parent.IsNeighbour(vertex))

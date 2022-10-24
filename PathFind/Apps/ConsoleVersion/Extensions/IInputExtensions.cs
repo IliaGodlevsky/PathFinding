@@ -56,30 +56,30 @@ namespace ConsoleVersion.Extensions
             return (Vertex)graph2D.Get(point);
         }
 
-        public static Vertex InputEndPoint(this IInput<int> self, Graph2D graph, IEndPoints endPoints)
+        public static Vertex InputEndPoint(this IInput<int> self, Graph2D graph, IPathfindingRange endPoints)
         {
-            return self.InputVertex(graph, endPoints.CanBeEndPoint);
+            return self.InputVertex(graph, endPoints.CanBeInPathfindingRange);
         }
 
-        public static Vertex InputEndPoint(this IInput<int> self, string message, Graph2D graph, IEndPoints endPoints)
+        public static Vertex InputEndPoint(this IInput<int> self, string message, Graph2D graph, IPathfindingRange endPoints)
         {
             Console.WriteLine(message);
             return self.InputEndPoint(graph, endPoints);
         }
 
-        public static IEnumerable<Vertex> InputExistingIntermediates(this IInput<int> self, Graph2D graph, IEndPoints endPoints, int count)
+        public static IEnumerable<Vertex> InputExistingIntermediates(this IInput<int> self, Graph2D graph, IPathfindingRange endPoints, int count)
         {
             return self.InputVertices(graph, endPoints.IsIntermediate, count);
         }
 
-        public static IEnumerable<Vertex> InputRequiredEndPoints(this IInput<int> self, Graph2D graph, IEndPoints endPoints)
+        public static IEnumerable<Vertex> InputRequiredPathfindingRange(this IInput<int> self, Graph2D graph, IPathfindingRange endPoints)
         {
-            return self.InputEndPoints(graph, endPoints, 2);
+            return self.InputPathfindingRange(graph, endPoints, 2);
         }
 
-        public static IEnumerable<Vertex> InputEndPoints(this IInput<int> self, Graph2D graph, IEndPoints endPoints, int count)
+        public static IEnumerable<Vertex> InputPathfindingRange(this IInput<int> self, Graph2D graph, IPathfindingRange endPoints, int count)
         {
-            return self.InputVertices(graph, endPoints.CanBeEndPoint, count);
+            return self.InputVertices(graph, endPoints.CanBeInPathfindingRange, count);
         }
 
         private static IEnumerable<Vertex> InputVertices(this IInput<int> self, Graph2D graph, Predicate<IVertex> predicate, int count)
