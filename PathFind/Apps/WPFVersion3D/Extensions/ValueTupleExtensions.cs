@@ -1,4 +1,6 @@
 ﻿using Common.Extensions.EnumerableExtensions;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Windows.Media.Media3D;
 
 namespace WPFVersion3D.Extensions
@@ -9,7 +11,7 @@ namespace WPFVersion3D.Extensions
         {
             var mesh = new MeshGeometry3D();
 
-            mesh.Positions.AddRange(points.p0, points.p1, points.p2, points.p3);
+            mesh.Positions.AddRange(points.Enumerate());
             mesh.TriangleIndices.AddRange(0, 1, 2, 0, 2, 3);
 
             return new GeometryModel3D(mesh, material) { BackMaterial = material };
@@ -19,10 +21,18 @@ namespace WPFVersion3D.Extensions
         {
             var mesh = new MeshGeometry3D();
 
-            mesh.Positions.AddRange(points.p0, points.p1, points.p2);
+            mesh.Positions.AddRange(points.Enumerate());
             mesh.TriangleIndices.AddRange(0, 1, 2);
 
             return new GeometryModel3D(mesh, material) { BackMaterial = material };
+        }
+
+        private static IEnumerable<Point3D> Enumerate(this ITuple tuple)
+        {
+            for (int i = 0; i < tuple.Length; i++)
+            {
+                yield return (Point3D)tuple[i];
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ namespace WPFVersion3D.Model3DFactories
         {
             double radius = diametre / 2;
             var center = new Vector3D(radius, radius, radius);
-            var points = GetPoints3D(0, radius, center);
+            var points = GetPoints3D(radius, center);
             var rectangles = GetTriangleModels(points, material);
             var cylinder = new Model3DGroup();
             cylinder.Children.AddRange(rectangles);
@@ -52,14 +52,13 @@ namespace WPFVersion3D.Model3DFactories
             }
         }
 
-        private Point3D[,] GetPoints3D(double bigRadius,
-            double smallRadius, Vector3D center)
+        private Point3D[,] GetPoints3D(double smallRadius, Vector3D center)
         {
             var points = new Point3D[Segments, Positions];
             for (int i = 0; i < Segments; i++)
             {
-                points[i, 0] = GetPosition(bigRadius, i * PI2 / (Segments - 1), HalfHeight, center);
-                points[i, 1] = GetPosition(bigRadius, i * PI2 / (Segments - 1), -HalfHeight, center);
+                points[i, 0] = GetPosition(0, i * PI2 / (Segments - 1), HalfHeight, center);
+                points[i, 1] = GetPosition(0, i * PI2 / (Segments - 1), -HalfHeight, center);
                 points[i, 2] = GetPosition(smallRadius, i * PI2 / (Segments - 1), -HalfHeight, center);
                 points[i, 3] = GetPosition(smallRadius, i * PI2 / (Segments - 1), HalfHeight, center);
             }
