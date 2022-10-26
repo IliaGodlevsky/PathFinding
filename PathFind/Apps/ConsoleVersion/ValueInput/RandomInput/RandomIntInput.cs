@@ -15,7 +15,7 @@ namespace ConsoleVersion.ValueInput.RandomInput
 
         protected override int GetRandomValue()
         {
-            return Random.Next(Range);
+            return Random.NextInt(Range);
         }
     }
 }

@@ -9,36 +9,16 @@ namespace Random.Realizations.Generators
 {
     public sealed class KnuthRandom : IRandom
     {
-        private const int MBig = int.MaxValue;
-        private const int MSeed = 161803398;
-        private const int MZero = 0;
         private const int ArrayLength = 56;
-        private const int InitializationConst = 21;
+        private const uint InitializationConst = 21;
         private const int CalculationConst = 30;
 
         private readonly InclusiveValueRange<int> indexRange;
-        private readonly Lazy<int[]> seeds;
+        private readonly Lazy<uint[]> seeds;
 
-        private int inext;
-        private int inextp;
+        private int inext, inextp;
 
-        private int[] Seeds => seeds.Value;
-
-        private int Seed
-        {
-            get
-            {
-                inext = indexRange.ReturnInRange(++inext, ReturnOptions.Cycle);
-                inextp = indexRange.ReturnInRange(++inextp, ReturnOptions.Cycle);
-                int result = Seeds[inext] - Seeds[inextp];
-                if (result < MZero)
-                {
-                    result += MBig;
-                }
-                Seeds[inext] = result;
-                return result;
-            }
-        }
+        private uint[] Seeds => seeds.Value;
 
         public KnuthRandom() : this(Environment.TickCount)
         {
@@ -47,35 +27,45 @@ namespace Random.Realizations.Generators
 
         public KnuthRandom(int seed)
         {
-            seeds = new Lazy<int[]>(() => Initialize(seed), true);
+            seeds = new Lazy<uint[]>(() => GenerateSeedsRange(seed), true);
             indexRange = new InclusiveValueRange<int>(ArrayLength - 1, 1);
         }
 
-        public int Next(int minValue, int maxValue)
+        public uint NextUint()
         {
-            var range = new InclusiveValueRange<int>(maxValue, minValue);
-            long module = (long)range.Amplitude() + 1;
-            return (int)(Seed % module) + range.LowerValueOfRange;
+            inext = indexRange.ReturnInRange(++inext, ReturnOptions.Cycle);
+            inextp = indexRange.ReturnInRange(++inextp, ReturnOptions.Cycle);
+            return Seeds[inext] -= Seeds[inextp];
         }
 
-        private int[] Initialize(int seed)
+        private uint[] GenerateSeedsRange(int seed)
         {
-            var seeds = new int[ArrayLength];
-            int seedIndex, mj, mk;
-            mj = Math.Abs(MSeed - (seed == int.MinValue ? int.MaxValue : Math.Abs(seed)));
+            var seeds = CreateSeeds((uint)seed);
+            CombSeeds(seeds);
+            inext = 0;
+            inextp = CalculationConst + 1;
+            return seeds;
+        }
+
+        private static uint[] CreateSeeds(uint initialSeed)
+        {
+            var seeds = new uint[ArrayLength];
+            uint seedIndex, mj, mk = 1;
+            const uint MSeed = 161803398;
+            mj = MSeed - initialSeed;
             seeds[ArrayLength - 1] = mj;
-            mk = 1;
             foreach (int i in (1, ArrayLength - 1))
             {
-                seedIndex = InitializationConst * i % (ArrayLength - 1);
+                seedIndex = InitializationConst * (uint)i % (ArrayLength - 1);
                 seeds[seedIndex] = mk;
                 mk = mj - mk;
-                if (mk < MZero)
-                {
-                    mk += MBig;
-                }
                 mj = seeds[seedIndex];
             }
+            return seeds;
+        }
+
+        private static void CombSeeds(uint[] seeds)
+        {
             int limit = 5;
             while (limit-- > 1)
             {
@@ -83,15 +73,8 @@ namespace Random.Realizations.Generators
                 {
                     int index = 1 + (i + CalculationConst) % (ArrayLength - 1);
                     seeds[i] -= seeds[index];
-                    if (seeds[i] < MZero)
-                    {
-                        seeds[i] += MBig;
-                    }
                 }
             }
-            inext = 0;
-            inextp = CalculationConst + 1;
-            return seeds;
         }
     }
 }

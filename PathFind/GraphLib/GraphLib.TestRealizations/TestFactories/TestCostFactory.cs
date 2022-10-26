@@ -23,7 +23,7 @@ namespace GraphLib.TestRealizations.TestFactories
 
         public IVertexCost CreateCost()
         {
-            int randomCost = random.Next(TestVertexCost.CostRange);
+            int randomCost = random.NextInt(TestVertexCost.CostRange);
             return new TestVertexCost(randomCost);
         }
     }

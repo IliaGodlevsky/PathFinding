@@ -9,9 +9,9 @@ namespace Random.Realizations.Generators
     [DebuggerDisplay("Null")]
     public sealed class NullRandom : Singleton<NullRandom, IRandom>, IRandom
     {
-        public int Next(int minValue, int maxValue)
+        public uint NextUint()
         {
-            return 0;
+            return default;
         }
 
         private NullRandom()

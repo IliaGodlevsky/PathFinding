@@ -13,11 +13,11 @@ namespace Random.Realizations.Generators
             locker = new object();
         }
 
-        public int Next(int minValue, int maxValue)
+        public uint NextUint()
         {
             lock (locker)
             {
-                return random.Next(minValue, maxValue);
+                return random.NextUint();
             }
         }
     }

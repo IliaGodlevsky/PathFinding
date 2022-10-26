@@ -1,8 +1,6 @@
 ﻿using Random.Interface;
 using System;
 using System.Security.Cryptography;
-using ValueRange;
-using ValueRange.Extensions;
 
 namespace Random.Realizations.Generators
 {
@@ -16,21 +14,6 @@ namespace Random.Realizations.Generators
 
         private int currentBufferPosition;
 
-        private uint Seed
-        {
-            get
-            {
-                uint number = BitConverter.ToUInt32(buffer, currentBufferPosition);
-                currentBufferPosition += IntSize;
-                if (currentBufferPosition >= MaxBufferSize)
-                {
-                    currentBufferPosition = 0;
-                    generator.GetBytes(buffer);
-                }
-                return number;
-            }
-        }
-
         public CryptoRandom()
         {
             generator = RandomNumberGenerator.Create();
@@ -39,18 +22,16 @@ namespace Random.Realizations.Generators
             generator.GetBytes(buffer);
         }
 
-        public int Next(int minValue, int maxValue)
+        public uint NextUint()
         {
-            var range = new InclusiveValueRange<int>(maxValue, minValue);
-            long module = (long)range.Amplitude() + 1;
-            long max = 1 + (long)uint.MaxValue;
-            long remainder = max % module;
-            uint seed = Seed;
-            while (seed >= max - remainder)
+            uint number = BitConverter.ToUInt32(buffer, currentBufferPosition);
+            currentBufferPosition += IntSize;
+            if (currentBufferPosition >= MaxBufferSize)
             {
-                seed = Seed;
+                currentBufferPosition = 0;
+                generator.GetBytes(buffer);
             }
-            return (int)(seed % module) + range.LowerValueOfRange;
+            return number;
         }
 
         public void Dispose()

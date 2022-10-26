@@ -1,20 +1,18 @@
 ﻿using Random.Interface;
 using System;
-using ValueRange;
-using ValueRange.Extensions;
 
 namespace Random.Realizations.Generators
 {
     public sealed class PseudoRandom : IRandom
     {
-        private const int Term = 12345;
-        private const int Factor = 1103515245;
+        private const int Increment = 1;
+        private const int Multiplier = 22695477;
 
-        private ulong seed;
+        private uint state;
 
         public PseudoRandom(int seed)
         {
-            this.seed = (ulong)seed;
+            this.state = (uint)seed;
         }
 
         public PseudoRandom() : this(Environment.TickCount)
@@ -22,12 +20,9 @@ namespace Random.Realizations.Generators
 
         }
 
-        public int Next(int minValue, int maxValue)
+        public uint NextUint()
         {
-            var range = new InclusiveValueRange<int>(maxValue, minValue);
-            ulong module = (ulong)range.Amplitude() + 1;
-            seed = seed * Factor + Term;
-            return (int)(seed % module) + range.LowerValueOfRange;
+            return state = state * Multiplier + Increment;
         }
     }
 }

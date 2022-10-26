@@ -41,7 +41,7 @@ namespace WPFVersion3D.Model
             private readonly IRandom random;
             private readonly InclusiveValueRange<TimeSpan> range;
 
-            public TimeSpan Time => random.Next(range);
+            public TimeSpan Time => random.NextTimeSpan(range);
 
             public RandomAnimationSpeed(TimeSpan from, TimeSpan to)
             {

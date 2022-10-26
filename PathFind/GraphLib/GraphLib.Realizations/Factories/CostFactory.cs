@@ -21,7 +21,7 @@ namespace GraphLib.Realizations.Factories
 
         public IVertexCost CreateCost()
         {
-            int randomCost = random.Next(VertexCost.CostRange);
+            int randomCost = random.NextInt(VertexCost.CostRange);
             return new VertexCost(randomCost);
         }
     }
