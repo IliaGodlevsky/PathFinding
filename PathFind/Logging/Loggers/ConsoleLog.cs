@@ -49,9 +49,7 @@ namespace Logging.Loggers
 
         public void Debug(string message)
         {
-#if DEBUG
             Write(message, consoleLogger.Debug, LogLevel.Debug);
-#endif
         }
 
         private void Write(string message, Action<string> action, LogLevel logLevel)

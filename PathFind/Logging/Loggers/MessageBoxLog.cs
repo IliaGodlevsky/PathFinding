@@ -48,9 +48,7 @@ namespace Logging.Loggers
 
         public void Debug(string message)
         {
-#if DEBUG
             Write(message, messageBoxLogger.Debug);
-#endif
         }
 
         private void Write(string message, Action<string> action)
