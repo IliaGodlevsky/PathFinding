@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.ReadOnly;
+using System;
 using System.Collections.ObjectModel;
 using ValueRange;
 
@@ -14,7 +15,7 @@ namespace ConsoleVersion.Model
 
         public static readonly InclusiveValueRange<Answer> Range = new InclusiveValueRange<Answer>(Yes, No);
 
-        public static readonly ReadOnlyCollection<Answer> Answers;
+        public static readonly ReadOnlyList<Answer> Answers;
 
         private readonly int value;
         private readonly string display;
@@ -23,7 +24,7 @@ namespace ConsoleVersion.Model
         static Answer()
         {
             var answers = new[] { Yes, No };
-            Answers = Array.AsReadOnly(answers);
+            Answers = new ReadOnlyList<Answer>(answers);
         }
 
         private Answer(int value, string display)
