@@ -21,7 +21,7 @@ namespace Algorithm.Algos.Benchmark.Random
 
         private void Benchmark(int iterations, IRandom random)
         {
-            while (iterations-- > 0) random.Next();
+            while (iterations-- > 0) random.NextUint();
         }
 
     }

@@ -29,7 +29,7 @@ namespace ConsoleVersion.ValueInput.RandomInput
 
         protected override ConsoleKey GetRandomValue()
         {
-            int random = Random.Next(Range);
+            int random = Random.NextInt(Range);
             return Keys[random];
         }
     }

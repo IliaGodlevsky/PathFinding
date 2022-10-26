@@ -21,7 +21,7 @@ namespace WPFVersion3D.Model
 
         public IVertexCost CreateCost()
         {
-            int randomCost = random.Next(Vertex3DCost.CostRange);
+            int randomCost = random.NextInt(Vertex3DCost.CostRange);
             return new Vertex3DCost(randomCost);
         }
     }

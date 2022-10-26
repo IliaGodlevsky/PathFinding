@@ -45,7 +45,7 @@ namespace Common.Tests
             var numbers = new int[count];
             while (count-- > 0)
             {
-                numbers[count] = random.Next(range);
+                numbers[count] = random.NextInt(range);
             }
             return numbers;
         }

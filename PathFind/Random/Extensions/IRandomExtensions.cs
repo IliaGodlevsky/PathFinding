@@ -7,27 +7,33 @@ namespace Random.Extensions
 {
     public static class IRandomExtensions
     {
-        public static int Next(this IRandom self, InclusiveValueRange<int> range)
+        public static int NextInt(this IRandom random, InclusiveValueRange<int> range)
         {
-            return self.Next(range.LowerValueOfRange, range.UpperValueOfRange);
+            long module = (long)range.Amplitude() + 1;
+            return (int)(random.NextUint() % module) + range.LowerValueOfRange;
         }
 
-        public static int Next(this IRandom random)
+        public static int NextInt(this IRandom random)
         {
-            return random.Next(default, int.MaxValue);
+            return random.NextInt(default, int.MaxValue);
         }
 
-        public static double Next(this IRandom random, InclusiveValueRange<double> range)
+        public static int NextInt(this IRandom random, int minValue, int maxValue)
         {
-            return range.Amplitude() * ((double)random.Next() / int.MaxValue) + range.LowerValueOfRange;
+            return random.NextInt(new InclusiveValueRange<int>(maxValue, minValue));
         }
 
-        public static TimeSpan Next(this IRandom random, InclusiveValueRange<TimeSpan> range)
+        public static double NextDouble(this IRandom random, InclusiveValueRange<double> range)
+        {
+            return range.Amplitude() * ((double)random.NextInt() / int.MaxValue) + range.LowerValueOfRange;
+        }
+
+        public static TimeSpan NextTimeSpan(this IRandom random, InclusiveValueRange<TimeSpan> range)
         {
             double lower = range.LowerValueOfRange.TotalMilliseconds;
             double upper = range.UpperValueOfRange.TotalMilliseconds;
             var valueRange = new InclusiveValueRange<double>(lower, upper);
-            double randomValue = random.Next(valueRange);
+            double randomValue = random.NextDouble(valueRange);
             return TimeSpan.FromMilliseconds(randomValue);
         }
     }
