@@ -7,7 +7,7 @@ namespace Algorithm.Extensions
 {
     public static class AlgorithmExtensions
     {
-        public static async Task<TResult> FindPathAsync<TResult>(this IAlgorithm<TResult> self)
+        public static async ValueTask<TResult> FindPathAsync<TResult>(this IAlgorithm<TResult> self)
             where TResult : IEnumerable<IVertex>
         {
             return await Task.Run(self.FindPath).ConfigureAwait(false);

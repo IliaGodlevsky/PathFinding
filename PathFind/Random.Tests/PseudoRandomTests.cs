@@ -7,6 +7,6 @@ namespace Random.Tests
     [TestFixture]
     public class PseudoRandomTests : RandomTests
     {
-        protected override IRandom Random => new PseudoRandom();
+        protected override IRandom Random { get; } = new PseudoRandom();
     }
 }

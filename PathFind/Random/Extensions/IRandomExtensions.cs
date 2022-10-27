@@ -1,5 +1,4 @@
-﻿using Common.ReadOnly;
-using Random.Interface;
+﻿using Random.Interface;
 using System;
 using ValueRange;
 using ValueRange.Extensions;
@@ -36,27 +35,6 @@ namespace Random.Extensions
             var valueRange = new InclusiveValueRange<double>(lower, upper);
             double randomValue = random.NextDouble(valueRange);
             return TimeSpan.FromMilliseconds(randomValue);
-        }
-
-        public static ReadOnlyList<uint> NextUintArray(this IRandom random, int count)
-        {
-            var numbers = new uint[count];
-            while (count-- > 0)
-            {
-                numbers[count] = random.NextUint();
-            }
-            return new ReadOnlyList<uint>(numbers);
-        }
-
-        public static ReadOnlyList<int> NextIntArray(this IRandom random, 
-            int count, InclusiveValueRange<int> range)
-        {
-            var numbers = new int[count];
-            while (count-- > 0)
-            {
-                numbers[count] = random.NextInt(range);
-            }
-            return new ReadOnlyList<int>(numbers);
         }
     }
 }

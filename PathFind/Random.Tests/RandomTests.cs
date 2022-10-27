@@ -18,22 +18,15 @@ namespace Random.Tests
         [TestCase]
         public void NextUint_ReturnsVariousNumbers()
         {
-            var numbers = Random.NextUintArray(Limit);
+            var numbers = new uint[Limit];
+
+            for (int i = 0; i < Limit; i++)
+            {
+                numbers[i] = Random.NextUint();
+            }
             var unique = numbers.Distinct().ToReadOnly();
 
-            Assert.IsTrue(numbers.Count == unique.Count);
-        }
-
-        [TestCase(-15, 500)]
-        [TestCase(-5000, 6000)]
-        [TestCase(int.MinValue, int.MaxValue)]
-        public void NextInt_VariousRanges_ReturnsValueInRange(int minValue, int maxValue)
-        {
-            var range = new InclusiveValueRange<int>(maxValue, minValue);
-
-            var numbers = Random.NextIntArray(Limit, range);
-
-            Assert.IsTrue(numbers.All(number => range.Contains(number)));
+            Assert.IsTrue(numbers.Length == unique.Count);
         }
     }
 }
