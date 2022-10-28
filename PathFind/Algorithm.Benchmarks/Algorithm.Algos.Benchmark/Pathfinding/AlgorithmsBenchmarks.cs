@@ -1,8 +1,8 @@
-﻿using GraphLib.Interfaces;
+﻿using GraphLib.Extensions;
+using GraphLib.Interfaces;
 using GraphLib.TestRealizations.TestFactories;
 using GraphLib.TestRealizations.TestObjects;
 using System.Collections.Generic;
-using GraphLib.Extensions;
 
 namespace Algorithm.Algos.Benchmark.Pathfinding
 {

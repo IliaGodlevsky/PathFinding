@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using Random.Interface;
+﻿using Random.Interface;
 using System;
 using ValueRange;
 using ValueRange.Enums;
@@ -54,7 +53,7 @@ namespace Random.Realizations.Generators
             const uint MSeed = 161803398;
             mj = MSeed - initialSeed;
             seeds[ArrayLength - 1] = mj;
-            foreach (int i in (1, ArrayLength - 1))
+            for (int i = 1; i < ArrayLength - 1; i++)
             {
                 seedIndex = InitializationConst * (uint)i % (ArrayLength - 1);
                 seeds[seedIndex] = mk;
@@ -69,7 +68,7 @@ namespace Random.Realizations.Generators
             int limit = 5;
             while (limit-- > 1)
             {
-                foreach (int i in (1, ArrayLength))
+                for (int i = 1; i < ArrayLength; i++)
                 {
                     int index = 1 + (i + CalculationConst) % (ArrayLength - 1);
                     seeds[i] -= seeds[index];

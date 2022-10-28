@@ -1,4 +1,6 @@
-﻿namespace GraphLib.TestRealizations.TestFactories.Matrix
+﻿using Common.Extensions.EnumerableExtensions;
+
+namespace GraphLib.TestRealizations.TestFactories.Matrix
 {
     internal sealed class Matrices : IMatrix
     {
@@ -11,10 +13,7 @@
 
         public void Overlay()
         {
-            foreach (var matrix in matrices)
-            {
-                matrix.Overlay();
-            }
+            matrices.ForEach(matrix => matrix.Overlay());
         }
     }
 }

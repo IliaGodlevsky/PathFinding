@@ -1,8 +1,6 @@
 ﻿using Common.Extensions;
-using Common.Extensions.EnumerableExtensions;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using ValueRange.Enums;
 
 namespace ValueRange.Extensions
@@ -74,6 +72,6 @@ namespace ValueRange.Extensions
                 default:
                     return value;
             }
-        }      
+        }
     }
 }

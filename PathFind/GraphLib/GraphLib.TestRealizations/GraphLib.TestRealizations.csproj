@@ -32,13 +32,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
@@ -103,14 +96,9 @@
       <Name>GraphLib.Realizations</Name>
     </ProjectReference>
     <ProjectReference Include="..\GraphLib.Serialization\GraphLib.Serialization.csproj">
-      <Project>{412839A0-77FF-4B66-85C9-50DC07E8FDB7}</Project>
+      <Project>{412839a0-77ff-4b66-85c9-50dc07e8fdb7}</Project>
       <Name>GraphLib.Serialization</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="System.ValueTuple">
-      <Version>4.5.0</Version>
-    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

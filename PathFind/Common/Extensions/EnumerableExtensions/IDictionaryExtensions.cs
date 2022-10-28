@@ -23,9 +23,9 @@ namespace Common.Extensions.EnumerableExtensions
         {
             switch (collection)
             {
-                case IDictionary<TKey, TValue> dictionary: 
+                case IDictionary<TKey, TValue> dictionary:
                     return new ReadOnlyDictionary<TKey, TValue>(dictionary);
-                case ReadOnlyDictionary<TKey, TValue> readOnly: 
+                case ReadOnlyDictionary<TKey, TValue> readOnly:
                     return readOnly;
                 default:
                     var dict = collection.ToDictionary(item => item.Key, item => item.Value);

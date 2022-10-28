@@ -1,5 +1,4 @@
 ﻿using Common.Disposables;
-using Common.Extensions;
 using Common.Extensions.EnumerableExtensions;
 using Common.ReadOnly;
 using GraphLib.Interfaces;
@@ -48,7 +47,7 @@ namespace WPFVersion.Model
             var costValues = CostRange.EnumerateValues().ToReadOnly();
             var colors = new Dictionary<int, Brush>();
             double step = byte.MaxValue / costValues.Count;
-            foreach (int i in (0, costValues.Count))
+            for (int i = 0; i < costValues.Count; i++)
             {
                 var color = CostColor;
                 color.A = Convert.ToByte(i * step);

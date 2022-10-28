@@ -5,7 +5,6 @@ using GraphLib.Interfaces;
 using WPFVersion.DependencyInjection;
 using WPFVersion.Messages.ActionMessages;
 using WPFVersion.Messages.DataMessages;
-using WPFVersion.Model;
 using WPFVersion.ViewModel.BaseViewModels;
 
 namespace WPFVersion.ViewModel

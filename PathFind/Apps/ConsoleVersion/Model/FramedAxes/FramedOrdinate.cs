@@ -1,5 +1,4 @@
 ﻿using Colorful;
-using Common.Extensions;
 using System.Text;
 
 namespace ConsoleVersion.Model.FramedAxes
@@ -27,7 +26,7 @@ namespace ConsoleVersion.Model.FramedAxes
         public override string GetFramedAxis()
         {
             var stringBuilder = new StringBuilder();
-            foreach (int i in (0, graphLength))
+            for (int i = 0; i < graphLength; i++)
             {
                 string line = GetStringToAppend(i);
                 stringBuilder.AppendLine(line);

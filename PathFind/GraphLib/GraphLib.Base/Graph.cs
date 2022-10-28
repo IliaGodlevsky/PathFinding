@@ -20,7 +20,7 @@ namespace GraphLib.Base
 
         public IReadOnlyList<int> DimensionsSizes { get; }
 
-        protected Graph(int requiredNumberOfDimensions, IReadOnlyCollection<IVertex> vertices, 
+        protected Graph(int requiredNumberOfDimensions, IReadOnlyCollection<IVertex> vertices,
             IReadOnlyList<int> dimensionSizes)
         {
             graphType = GetType();
@@ -51,7 +51,7 @@ namespace GraphLib.Base
 
         public override int GetHashCode()
         {
-            var verticesHashCode = this.Select(x => x.GetHashCode()).ToHashCode();
+            var verticesHashCode = vertices.Values.Select(x => x.GetHashCode()).ToHashCode();
             var dimensionsHashCode = DimensionsSizes.ToHashCode();
             return HashCode.Combine(verticesHashCode, dimensionsHashCode);
         }

@@ -1,5 +1,4 @@
 ﻿using Algorithm.Interfaces;
-using Common.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Proxy.Extensions;
 using System;
@@ -38,7 +37,7 @@ namespace Algorithm.Realizations.Heuristic.Angles
         private static double GetScalarProduct(ICoordinate self, ICoordinate coordinate)
         {
             double result = default;
-            foreach (int i in (0, self.Count))
+            for (int i = 0; i < self.Count; i++)
             {
                 result += (self[i] * coordinate[i]);
             }
@@ -48,7 +47,7 @@ namespace Algorithm.Realizations.Heuristic.Angles
         private static double GetVectorLength(ICoordinate self)
         {
             double result = 0;
-            foreach (int i in (0, self.Count))
+            for (int i = 0; i < self.Count; i++)
             {
                 result += (self[i] * self[i]);
             }

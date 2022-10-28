@@ -31,9 +31,9 @@ namespace GraphLib.Extensions
             return number > 0 ? number : 0;
         }
 
-        public static string GetStringRepresentation(this IGraph graph, 
+        public static string GetStringRepresentation(this IGraph graph,
             string format = "Obstacle percent: {0} ({1}/{2})")
-        {           
+        {
             if (!graph.IsNull())
             {
                 const string LargeSpace = "   ";

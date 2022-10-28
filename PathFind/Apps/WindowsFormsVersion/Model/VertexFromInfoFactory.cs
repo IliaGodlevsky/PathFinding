@@ -16,6 +16,6 @@ namespace WindowsFormsVersion.Model
         public IVertex CreateFrom(VertexSerializationInfo info)
         {
             return new Vertex(info, visualization);
-        }      
+        }
     }
 }

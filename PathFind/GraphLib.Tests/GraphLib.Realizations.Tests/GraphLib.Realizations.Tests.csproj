@@ -21,6 +21,7 @@
     <ProjectReference Include="..\..\GraphLib\GraphLib.NullRealizations\GraphLib.NullRealizations.csproj" />
     <ProjectReference Include="..\..\GraphLib\GraphLib.Realizations\GraphLib.Realizations.csproj" />
     <ProjectReference Include="..\..\GraphLib\GraphLib.TestRealizations\GraphLib.TestRealizations.csproj" />
+    <ProjectReference Include="..\..\Random\Random.csproj" />
     <ProjectReference Include="..\..\SingletonLib\SingletonLib.csproj" />
   </ItemGroup>
 

@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using System.Collections.Generic;
 using System.IO;
@@ -23,7 +22,7 @@ namespace GraphLib.Serialization.Extensions
         {
             int verticesCount = reader.ReadInt32();
             var vertices = new VertexSerializationInfo[verticesCount];
-            foreach (int i in (0, verticesCount))
+            for (int i = 0; i < verticesCount; i++)
             {
                 bool isObstacle = reader.ReadBoolean();
                 var cost = reader.ReadCost(costFactory);
@@ -38,7 +37,7 @@ namespace GraphLib.Serialization.Extensions
         {
             int count = reader.ReadInt32();
             var coordinates = new int[count];
-            foreach (int i in (0, count))
+            for (int i = 0; i < count; i++)
             {
                 coordinates[i] = reader.ReadInt32();
             }
@@ -49,7 +48,7 @@ namespace GraphLib.Serialization.Extensions
         {
             int count = reader.ReadInt32();
             var neighborhood = new ICoordinate[count];
-            foreach (int i in (0, count))
+            for (int i = 0; i < count; i++)
             {
                 neighborhood[i] = reader.ReadCoordinate(factory);
             }

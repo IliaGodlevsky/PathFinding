@@ -1,4 +1,5 @@
-﻿using GraphLib.Interfaces.Factories;
+﻿using Common.Extensions.EnumerableExtensions;
+using GraphLib.Interfaces.Factories;
 using Logging.Interface;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace GraphLib.ViewModel
         protected GraphCreatingModel(ILog log, IEnumerable<IGraphAssemble> graphAssembles)
         {
             this.log = log;
-            GraphAssembles = graphAssembles.ToArray();
+            GraphAssembles = graphAssembles.ToReadOnly();
         }
 
         public abstract void CreateGraph();

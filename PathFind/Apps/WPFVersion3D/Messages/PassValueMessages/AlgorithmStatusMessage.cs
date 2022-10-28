@@ -14,7 +14,7 @@ namespace WPFVersion3D.Messages.PassValueMessages
             return new AlgorithmStatusMessage(AlgorithmViewModel.Interrupted, index);
         }
 
-        public static AlgorithmStatusMessage Started(int index) 
+        public static AlgorithmStatusMessage Started(int index)
         {
             return new AlgorithmStatusMessage(AlgorithmViewModel.Started, index);
         }

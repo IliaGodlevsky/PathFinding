@@ -32,13 +32,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AStarAlgorithmFactory.cs" />
@@ -81,7 +74,7 @@
       <Name>Algorithm.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\Algorithm.Realizations\Algorithm.Realizations.csproj">
-      <Project>{600D74AF-A0AE-46AA-BCF5-695650BBE66F}</Project>
+      <Project>{600d74af-a0ae-46aa-bcf5-695650bbe66f}</Project>
       <Name>Algorithm.Realizations</Name>
     </ProjectReference>
   </ItemGroup>

@@ -7,7 +7,6 @@ using System.Windows.Media.Media3D;
 using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Messages.ActionMessages;
 using WPFVersion3D.Messages.PassValueMessages;
-using WPFVersion3D.Model;
 using WPFVersion3D.ViewModel.BaseViewModel;
 
 namespace WPFVersion3D.ViewModel
@@ -21,22 +20,22 @@ namespace WPFVersion3D.ViewModel
         private string graphParametres;
         private Point3D fieldPosition;
 
-        public Point3D FieldPosition 
-        { 
-            get => fieldPosition; 
-            set => Set(ref fieldPosition, value); 
+        public Point3D FieldPosition
+        {
+            get => fieldPosition;
+            set => Set(ref fieldPosition, value);
         }
 
-        public string GraphParametres 
-        { 
-            get => graphParametres; 
-            set => Set(ref graphParametres, value); 
+        public string GraphParametres
+        {
+            get => graphParametres;
+            set => Set(ref graphParametres, value);
         }
 
-        public IGraphField GraphField 
-        { 
-            get => field; 
-            set => Set(ref field, value); 
+        public IGraphField GraphField
+        {
+            get => field;
+            set => Set(ref field, value);
         }
 
         public GraphFieldViewModel()

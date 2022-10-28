@@ -1,10 +1,7 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using NUnit.Framework;
-using Random.Extensions;
 using Random.Interface;
 using System.Linq;
-using ValueRange;
-using ValueRange.Extensions;
 
 namespace Random.Tests
 {
@@ -15,7 +12,7 @@ namespace Random.Tests
 
         protected abstract IRandom Random { get; }
 
-        [TestCase]
+        [Test]
         public void NextUint_ReturnsVariousNumbers()
         {
             var numbers = new uint[Limit];
@@ -26,7 +23,7 @@ namespace Random.Tests
             }
             var unique = numbers.Distinct().ToReadOnly();
 
-            Assert.IsTrue(numbers.Length == unique.Count);
+            Assert.AreEqual(numbers.Length, unique.Count);
         }
     }
 }

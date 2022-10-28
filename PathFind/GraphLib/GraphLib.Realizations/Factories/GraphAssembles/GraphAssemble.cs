@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using Common.Extensions.EnumerableExtensions;
+﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
@@ -49,15 +48,15 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             var obstacles = Enumerable.Repeat(true, numberOfObstacles);
             var obstaclesMatrix = regulars.Concat(obstacles).Shuffle(random.NextInt).ToReadOnly();
             var vertices = new IVertex[graphSize];
-            foreach (var vertexIndex in (0, graphSize))
+            for (int i = 0; i < graphSize; i++)
             {
-                var coordinateValues = graphDimensionsSizes.ToCoordinates(vertexIndex);
+                var coordinateValues = graphDimensionsSizes.ToCoordinates(i);
                 var coordinate = coordinateFactory.CreateCoordinate(coordinateValues);
                 var neighbourhood = neighbourhoodFactory.CreateNeighborhood(coordinate);
                 var vertex = vertexFactory.CreateVertex(neighbourhood, coordinate);
                 vertex.Cost = costFactory.CreateCost();
-                vertex.IsObstacle = obstaclesMatrix[vertexIndex];
-                vertices[vertexIndex] = vertex;
+                vertex.IsObstacle = obstaclesMatrix[i];
+                vertices[i] = vertex;
             }
 
             return graphFactory.CreateGraph(vertices, graphDimensionsSizes);

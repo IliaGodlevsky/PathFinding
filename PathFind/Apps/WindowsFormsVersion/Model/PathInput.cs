@@ -20,7 +20,7 @@ namespace WindowsFormsVersion.Model
         private string InputPath(Func<FileDialog> dialogFactory)
         {
             string path = string.Empty;
-            var thread = new Thread(() => path = InputPath(dialogFactory()));        
+            var thread = new Thread(() => path = InputPath(dialogFactory()));
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
             thread.Join();

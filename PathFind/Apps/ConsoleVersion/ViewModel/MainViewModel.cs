@@ -42,7 +42,7 @@ namespace ConsoleVersion.ViewModel
 
         public IInput<Answer> AnswerInput { get; set; }
 
-        public MainViewModel(IGraphFieldFactory fieldFactory, 
+        public MainViewModel(IGraphFieldFactory fieldFactory,
             IGraphEvents events, BaseEndPoints endPoints, ILog log)
         {
             graph = NullGraph.Interface;

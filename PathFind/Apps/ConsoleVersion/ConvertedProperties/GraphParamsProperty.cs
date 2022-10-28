@@ -12,15 +12,15 @@ namespace ConsoleVersion.ConvertedProperties
         private const string Format = "Obstacle percent: {0} ({1}/{2})";
         private static readonly string[] DimensionNames = new[] { "Width", "Length" };
 
-        public static readonly GraphParamsProperty Empty 
+        public static readonly GraphParamsProperty Empty
             = new GraphParamsProperty(NullGraph.Instance);
 
-        public static GraphParamsProperty Assign(IGraph graph) 
+        public static GraphParamsProperty Assign(IGraph graph)
             => new GraphParamsProperty(graph);
 
         private GraphParamsProperty(IGraph graph) : base(graph)
         {
-            
+
         }
 
         protected override string ConvertTo(IGraph graph)

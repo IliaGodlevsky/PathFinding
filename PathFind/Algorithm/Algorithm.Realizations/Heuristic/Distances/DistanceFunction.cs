@@ -1,5 +1,4 @@
 ﻿using Algorithm.Interfaces;
-using Common.Extensions;
 using GraphLib.Interfaces;
 using System;
 
@@ -13,7 +12,7 @@ namespace Algorithm.Realizations.Heuristic.Distances
             var firstCoordinates = first.Position;
             var secondCoordinates = second.Position;
             int limit = Math.Min(firstCoordinates.Count, secondCoordinates.Count);
-            foreach(int i in (0, limit))
+            for (int i = 0; i < limit; i++)
             {
                 double zipped = ZipMethod(firstCoordinates[i], secondCoordinates[i]);
                 result = AggregateMethod(result, zipped);

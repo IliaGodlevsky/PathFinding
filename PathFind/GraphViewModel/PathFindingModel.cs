@@ -17,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Timers;
 
 namespace GraphViewModel
 {
@@ -54,7 +53,7 @@ namespace GraphViewModel
         public virtual async void FindPath()
         {
             try
-            {                
+            {
                 algorithm = Algorithm.Create(endPoints);
                 SubscribeOnAlgorithmEvents(algorithm);
                 endPoints.RestoreCurrentColors();

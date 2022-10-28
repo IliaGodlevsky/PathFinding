@@ -32,13 +32,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IGraphEvents.cs" />
@@ -67,12 +60,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Commands\Commands.csproj">
-      <Project>{A68B0EB4-3F07-4711-B314-FC1C709A5E2F}</Project>
+      <Project>{a68b0eb4-3f07-4711-b314-fc1c709a5e2f}</Project>
       <Name>Commands</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Common\Common.csproj">
-      <Project>{a5a743f5-d346-4b2b-b6ac-07152f64e4d9}</Project>
-      <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

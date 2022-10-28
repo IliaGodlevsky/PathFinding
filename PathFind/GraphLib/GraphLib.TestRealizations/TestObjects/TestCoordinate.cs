@@ -1,12 +1,11 @@
 ﻿using GraphLib.Base;
-using System;
 using System.Collections.Generic;
 
 namespace GraphLib.TestRealizations.TestObjects
 {
     public sealed class TestCoordinate : BaseCoordinate
     {
-        public TestCoordinate(IReadOnlyList<int> coordinates) 
+        public TestCoordinate(IReadOnlyList<int> coordinates)
             : base(coordinates.Count, coordinates)
         {
 

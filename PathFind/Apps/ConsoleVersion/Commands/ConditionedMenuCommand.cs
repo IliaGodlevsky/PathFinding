@@ -7,7 +7,7 @@ namespace ConsoleVersion.Commands
     {
         private readonly Condition condition;
 
-        public ConditionedMenuCommand(string header, Command command, 
+        public ConditionedMenuCommand(string header, Command command,
             Condition condition) : base(header, command)
         {
             this.condition = condition;

@@ -1,5 +1,4 @@
-﻿using Common.Extensions;
-using System;
+﻿using System;
 using System.Text;
 
 using Console = Colorful.Console;
@@ -32,7 +31,7 @@ namespace ConsoleVersion.Model.FramedAxes
         protected string GetAbscissa()
         {
             var stringBuilder = new StringBuilder(LargeSpace);
-            foreach (int i in (0, graphWidth))
+            for (int i = 0; i < graphWidth; i++)
             {
                 string line = GetAbscissaFragment(i);
                 stringBuilder.Append(line);

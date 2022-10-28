@@ -18,7 +18,7 @@ namespace WPFVersion
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);            
+            base.OnStartup(e);
             var window = DI.Container.Resolve<MainWindow>();
             window.Show();
         }

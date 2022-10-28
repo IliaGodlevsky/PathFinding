@@ -1,6 +1,5 @@
 ﻿using Common.ReadOnly;
 using System;
-using System.Collections.ObjectModel;
 using ValueRange;
 
 namespace ConsoleVersion.Model
@@ -41,8 +40,8 @@ namespace ConsoleVersion.Model
 
         public int CompareTo(object obj)
         {
-            return obj is Answer answer 
-                ? CompareTo(answer) 
+            return obj is Answer answer
+                ? CompareTo(answer)
                 : throw new ArgumentException("Wrong argument", nameof(obj));
         }
 

@@ -36,13 +36,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Heuristics\HeuristicsBenchmarks.cs" />
@@ -66,10 +59,6 @@
       <Project>{04393071-3BA6-42C5-89D8-A89E3AC34511}</Project>
       <Name>Algorithm.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Algorithm\Algorithm.Factory\Algorithm.Factory.csproj">
-      <Project>{8270F3AF-2B53-45E4-9795-89091CEE60D4}</Project>
-      <Name>Algorithm.Factory</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Algorithm\Algorithm.Interfaces\Algorithm.Interfaces.csproj">
       <Project>{FC4F499E-9AB1-4623-9AD8-CFDE0A07B7D0}</Project>
       <Name>Algorithm.Interfaces</Name>
@@ -77,10 +66,6 @@
     <ProjectReference Include="..\..\Algorithm\Algorithm.Realizations\Algorithm.Realizations.csproj">
       <Project>{600D74AF-A0AE-46AA-BCF5-695650BBE66F}</Project>
       <Name>Algorithm.Realizations</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Common\Common.csproj">
-      <Project>{A5A743F5-D346-4B2B-B6AC-07152F64E4D9}</Project>
-      <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.Base\GraphLib.Base.csproj">
       <Project>{6AA3B516-ABFE-4EDA-98DD-1CE799DA747F}</Project>
@@ -99,7 +84,7 @@
       <Name>GraphLib.Realizations</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.TestRealizations\GraphLib.TestRealizations.csproj">
-      <Project>{8DF766E8-189D-4845-917D-DD60EABF556A}</Project>
+      <Project>{8df766e8-189d-4845-917d-dd60eabf556a}</Project>
       <Name>GraphLib.TestRealizations</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Interruptable\Interruptable.csproj">

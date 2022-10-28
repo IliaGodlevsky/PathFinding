@@ -9,7 +9,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using WPFVersion.DependencyInjection;
-using WPFVersion.Extensions;
 using WPFVersion.Infrastructure;
 using WPFVersion.Messages;
 using WPFVersion.Messages.ActionMessages;

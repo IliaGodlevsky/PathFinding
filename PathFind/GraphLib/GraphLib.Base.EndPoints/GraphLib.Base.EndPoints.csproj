@@ -32,13 +32,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseCommands\BaseIntermediatesUndoCommand.cs" />
@@ -98,7 +91,7 @@
       <Name>GraphLib.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\GraphLib.NullRealizations\GraphLib.NullRealizations.csproj">
-      <Project>{FA595CBF-C9AA-4D4F-AFF7-19E571C91D00}</Project>
+      <Project>{fa595cbf-c9aa-4d4f-aff7-19e571c91d00}</Project>
       <Name>GraphLib.NullRealizations</Name>
     </ProjectReference>
   </ItemGroup>
