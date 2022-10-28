@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Linq;
 using ValueRange;
+using ValueRange.Enums;
 using ValueRange.Extensions;
 
 namespace Common.Tests
@@ -59,6 +60,8 @@ namespace Common.Tests
             Assert.AreEqual(range.UpperValueOfRange, valueInRange);
         }
 
+
+
         [TestCase(13, 10, -15)]
         [TestCase(25, 11, -100)]
         [TestCase(98, 43, -4)]
@@ -71,6 +74,34 @@ namespace Common.Tests
             var valueInRange = range.ReturnInRange(outOfRangeValue);
 
             Assert.AreEqual(range.LowerValueOfRange, valueInRange);
+        }
+
+        [TestCase(13, 10, 15)]
+        [TestCase(25, 11, 27)]
+        [TestCase(98, 43, 100)]
+        [TestCase(100, 0, 104)]
+        public void ReturnInRangeCycle_ValueIsCreaterThanUpperValue_ReturnLowerValue(int upperValue,
+            int lowerValue, int outOfRangeValue)
+        {
+            var range = new InclusiveValueRange<int>(upperValue, lowerValue);
+
+            var valueInRange = range.ReturnInRange(outOfRangeValue, ReturnOptions.Cycle);
+
+            Assert.AreEqual(range.LowerValueOfRange, valueInRange);
+        }
+
+        [TestCase(13, 10, -15)]
+        [TestCase(25, 11, -100)]
+        [TestCase(98, 43, -4)]
+        [TestCase(100, 0, -1)]
+        public void ReturnInRangeCycle_ValueIsLesserThanUpperValue_ReturnsUpperValue(int upperValue,
+            int lowerValue, int outOfRangeValue)
+        {
+            var range = new InclusiveValueRange<int>(upperValue, lowerValue);
+
+            var valueInRange = range.ReturnInRange(outOfRangeValue, ReturnOptions.Cycle);
+
+            Assert.AreEqual(range.UpperValueOfRange, valueInRange);
         }
 
         [TestCase(13, 10, 11)]
@@ -90,11 +121,19 @@ namespace Common.Tests
         [Test]
         public void Amplitude_ExtremeValuesOfInt_ReturnsUintMaxValue()
         {
-            var range = new InclusiveValueRange<int>(int.MaxValue, int.MinValue);
-
-            uint amplitude = range.Amplitude();
+            uint amplitude = ValueRanges.IntRange.Amplitude();
 
             Assert.AreEqual(amplitude, uint.MaxValue);
+        }
+
+        [Test]
+        public void Amplitude_ExtremeValueOfDouble_ReturnsInfinity()
+        {
+            var range = new InclusiveValueRange<double>(double.MaxValue, double.MinValue);
+
+            double amplitude = range.Amplitude();
+
+            Assert.AreEqual(double.PositiveInfinity, amplitude);
         }
     }
 }

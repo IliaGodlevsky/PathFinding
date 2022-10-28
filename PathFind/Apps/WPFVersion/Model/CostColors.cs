@@ -1,10 +1,10 @@
 ﻿using Common.Disposables;
 using Common.Extensions;
 using Common.Extensions.EnumerableExtensions;
+using Common.ReadOnly;
 using GraphLib.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Media;
 using ValueRange.Extensions;
@@ -15,7 +15,7 @@ namespace WPFVersion.Model
     internal sealed class CostColors
     {
         private readonly Lazy<IReadOnlyDictionary<int, Brush>> costColors;
-        private readonly ICollection<Brush> previousColors;
+        private readonly List<Brush> previousColors;
         private readonly IReadOnlyCollection<Vertex> graph;
 
         public Color CostColor { get; set; } = Colors.DodgerBlue;
@@ -23,7 +23,7 @@ namespace WPFVersion.Model
         public CostColors(IGraph graph)
         {
             this.graph = graph.Cast<Vertex>().ToReadOnly();
-            previousColors = new Collection<Brush>();
+            previousColors = new List<Brush>();
             costColors = new Lazy<IReadOnlyDictionary<int, Brush>>(FormCostColors);
         }
 
