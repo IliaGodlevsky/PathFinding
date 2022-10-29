@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Random.Extensions;
 using Random.Interface;
 using System;
+using System.Linq;
 using ValueRange;
 
 namespace Random.Tests
@@ -43,6 +44,19 @@ namespace Random.Tests
             random.Setup(r => r.NextUint()).Returns(randomValue);
 
             return Math.Round(random.Object.NextDouble(range));
+        }
+
+        [Test]
+        public void NextBytes_FillsWithNonZeroBytes()
+        {
+            const int bytesLength = 100;
+            var bytes = new byte[bytesLength];
+            var random = new Mock<IRandom>();
+            random.Setup(r => r.NextUint()).Returns(345u);
+
+            random.Object.NextBytes(bytes);
+
+            Assert.IsTrue(bytes.All(b => b > 0));
         }
 
         [TestCase(default(int), int.MaxValue, (uint)int.MaxValue, ExpectedResult = int.MaxValue)]

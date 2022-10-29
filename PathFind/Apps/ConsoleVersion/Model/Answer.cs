@@ -69,7 +69,7 @@ namespace ConsoleVersion.Model
         {
             if (int.TryParse(input, out int value))
             {
-                result = value == Yes ? Yes : (value == No ? No : Default);
+                result = (int)value;
                 return !result.Equals(Default);
             }
             result = input.Equals(Yes, IgnoreCase) ? Yes : (input == No ? No : Default);
@@ -84,6 +84,11 @@ namespace ConsoleVersion.Model
         public static implicit operator int(Answer answer)
         {
             return answer.value;
+        }
+
+        public static implicit operator Answer(int value)
+        {
+            return value == Yes ? Yes : (value == No ? No : Default);
         }
 
         public static implicit operator string(Answer answer)

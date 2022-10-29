@@ -1,5 +1,6 @@
 ﻿using Random.Interface;
 using System;
+using System.Collections.Generic;
 using ValueRange;
 using ValueRange.Extensions;
 
@@ -35,6 +36,14 @@ namespace Random.Extensions
             var valueRange = new InclusiveValueRange<double>(lower, upper);
             double randomValue = random.NextDouble(valueRange);
             return TimeSpan.FromMilliseconds(randomValue);
+        }
+
+        public static void NextBytes(this IRandom random, IList<byte> bytes)
+        {
+            for (int i = 0; i < bytes.Count; i++)
+            {
+                bytes[i] = (byte)random.NextInt(1, byte.MaxValue);
+            }
         }
     }
 }

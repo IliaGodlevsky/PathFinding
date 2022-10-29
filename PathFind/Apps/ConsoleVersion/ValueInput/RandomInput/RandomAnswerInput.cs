@@ -16,8 +16,7 @@ namespace ConsoleVersion.ValueInput.RandomInput
 
         protected override Answer GetRandomValue()
         {
-            int random = Random.NextInt(Range);
-            return random == Answer.Yes ? Answer.Yes : Answer.No;
+            return (Answer)Random.NextInt(Range);
         }
     }
 }
