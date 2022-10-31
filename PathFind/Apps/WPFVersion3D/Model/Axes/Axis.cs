@@ -15,10 +15,10 @@ namespace WPFVersion3D.Model.Axes
 
         protected abstract int Order { get; }
 
-        protected Axis(Graph3D graph)
+        protected Axis(Graph3D<Vertex3D> graph)
         {
             dimensionSize = graph.DimensionsSizes.ElementAtOrDefault(Order);
-            vertices = graph.OfType<Vertex3D>().ToReadOnly();
+            vertices = graph;
             vertices.ForEach(vertex => LocateVertex(vertex));
         }
 

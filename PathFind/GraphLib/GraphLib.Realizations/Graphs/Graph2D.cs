@@ -1,21 +1,26 @@
-﻿using GraphLib.Base;
+﻿using Common.ReadOnly;
+using GraphLib.Base;
 using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Realizations.Graphs
 {
-    public sealed class Graph2D : Graph
+    public sealed class Graph2D<TVertex> : Graph<TVertex>
+        where TVertex : IVertex
     {
+        public static readonly Graph2D<TVertex> Empty
+            = new Graph2D<TVertex>(ReadOnlyList<TVertex>.Empty, ReadOnlyList<int>.Empty);
+
         public int Width { get; }
 
         public int Length { get; }
 
-        public Graph2D(IReadOnlyCollection<IVertex> vertices, IReadOnlyList<int> dimensions)
+        public Graph2D(IReadOnlyCollection<TVertex> vertices, IReadOnlyList<int> dimensions)
             : base(requiredNumberOfDimensions: 2, vertices, dimensions)
         {
-            Width = DimensionsSizes.First();
-            Length = DimensionsSizes.Last();
+            Width = DimensionsSizes.FirstOrDefault();
+            Length = DimensionsSizes.LastOrDefault();
         }
     }
 }

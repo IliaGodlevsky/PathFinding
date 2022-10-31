@@ -5,15 +5,15 @@ namespace Visualization.Extensions
 {
     internal static class IVertexExtensions
     {
-        public static bool TryVisualizeAsVisited(this IVertex vertex) => vertex.TryVisualize(vis => vis.VisualizeAsVisited());
+        public static bool TryVisualizeAsVisited(this IVisualizable vertex) => vertex.TryVisualize(vis => vis.VisualizeAsVisited());
 
-        public static bool TryVisualizeAsEnqueued(this IVertex vertex) => vertex.TryVisualize(vis => vis.VisualizeAsEnqueued());
+        public static bool TryVisualizeAsEnqueued(this IVisualizable vertex) => vertex.TryVisualize(vis => vis.VisualizeAsEnqueued());
 
-        private static bool TryVisualize(this IVertex vertex, Action<IVisualizable> action)
+        private static bool TryVisualize(this IVisualizable vertex, Action<IVisualizable> action)
         {
-            if (vertex is IVisualizable vert && !vert.IsVisualizedAsEndPoint)
+            if (!vertex.IsVisualizedAsEndPoint)
             {
-                action(vert);
+                action(vertex);
                 return true;
             }
 

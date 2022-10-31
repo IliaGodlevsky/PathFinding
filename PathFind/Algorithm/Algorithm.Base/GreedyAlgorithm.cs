@@ -1,7 +1,9 @@
-﻿using Algorithm.Infrastructure.EventArguments;
+﻿using Algorithm.Extensions;
+using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
 using Algorithm.NullRealizations;
 using Algorithm.Realizations.GraphPaths;
+using Common.Disposables;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -26,15 +28,17 @@ namespace Algorithm.Base
         public sealed override IGraphPath FindPath()
         {
             PrepareForPathfinding();
-            while (!IsDestination(endPoints))
+
+            using (Disposable.Use(CompletePathfinding))
             {
-                WaitUntilResumed();
-                PreviousVertex = CurrentVertex;
-                CurrentVertex = GetNextVertex();
-                ProcessCurrentVertex();
-                ThrowIfDeadEnd(CurrentVertex);
+                while (!IsDestination(endPoints))
+                {
+                    WaitUntilResumed();
+                    PreviousVertex = CurrentVertex;
+                    CurrentVertex = GetNextVertex();
+                    ProcessCurrentVertex();
+                }
             }
-            CompletePathfinding();
 
             return CreateGraphPath();
         }
@@ -67,7 +71,6 @@ namespace Algorithm.Base
         {
             base.PrepareForPathfinding();
             CurrentVertex = endPoints.Source;
-            ThrowIfDeadEnd(CurrentVertex);
             VisitVertex(CurrentVertex);
         }
 
@@ -91,9 +94,9 @@ namespace Algorithm.Base
 
         private void ProcessCurrentVertex()
         {
-            if (CurrentVertex.IsNull() && visitedVerticesStack.Count > 0)
+            if (CurrentVertex.Neighbours.Count == 0)
             {
-                CurrentVertex = visitedVerticesStack.Pop();
+                CurrentVertex = visitedVerticesStack.PopOrDeadEndVertex();
             }
             else
             {

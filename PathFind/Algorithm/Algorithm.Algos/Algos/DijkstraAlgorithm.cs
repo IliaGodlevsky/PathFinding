@@ -5,7 +5,6 @@ using Algorithm.Realizations.GraphPaths;
 using Algorithm.Realizations.StepRules;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations;
 using GraphLib.Utility;
 using Priority_Queue;
 using System.Collections.Generic;
@@ -43,9 +42,7 @@ namespace Algorithm.Algos.Algos
 
         protected override IVertex GetNextVertex()
         {
-            return queue.TryFirst(out var vertex)
-                ? vertex
-                : NullVertex.Interface;
+            return queue.TryFirstOrNullVertex();
         }
 
         protected override void PrepareForLocalPathfinding()

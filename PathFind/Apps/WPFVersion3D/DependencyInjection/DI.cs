@@ -12,6 +12,7 @@ using GraphLib.Realizations.Factories.CoordinateFactories;
 using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Factories.GraphFactories;
 using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
+using GraphLib.Realizations.Graphs;
 using GraphLib.Serialization.Interfaces;
 using GraphLib.Serialization.Modules;
 using GraphLib.Serialization.Serializers;
@@ -42,39 +43,39 @@ namespace WPFVersion3D.DependencyInjection
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<MainWindowViewModel>().AsSelf().InstancePerDependency();
+            builder.RegisterType<MainWindowViewModel>().AsSelf().AsImplementedInterfaces().SingleInstance();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IViewModel>()).AsSelf().InstancePerDependency();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
-            builder.RegisterType<EndPoints>().As<BaseEndPoints>().AsImplementedInterfaces().SingleInstance();
-            builder.RegisterType<GraphEvents>().As<IGraphEvents>().SingleInstance();
+            builder.RegisterType<EndPoints>().As<BaseEndPoints<Vertex3D>>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<GraphEvents>().As<IGraphEvents<Vertex3D>>().SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
-            builder.RegisterComposite<CompositeGraphEvents, IGraphEvents>().SingleInstance();
+            builder.RegisterComposite<CompositeGraphEvents<Vertex3D>, IGraphEvents<Vertex3D>>().SingleInstance();
 
             builder.RegisterType<KnuthRandom>().As<IRandom>().SingleInstance();
             builder.RegisterDecorator<ThreadSafeRandom, IRandom>();
-            builder.RegisterType<Vertex3DFactory>().As<IVertexFactory>().SingleInstance();
+            builder.RegisterType<Vertex3DFactory>().As<IVertexFactory<Vertex3D>>().SingleInstance();
             builder.RegisterType<Vertex3DCostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<Coordinate3DFactory>().As<ICoordinateFactory>().SingleInstance();
-            builder.RegisterType<Graph3DFactory>().As<IGraphFactory>().SingleInstance();
-            builder.RegisterType<GraphField3DFactory>().As<IGraphFieldFactory>().SingleInstance();
+            builder.RegisterType<Graph3DFactory<Vertex3D>>().As<IGraphFactory<Graph3D<Vertex3D>, Vertex3D>>().SingleInstance();
+            builder.RegisterType<GraphField3DFactory>().As<IGraphFieldFactory<Graph3D<Vertex3D>, Vertex3D, GraphField3D>>().SingleInstance();
             builder.RegisterType<VonNeumannNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<CubicModel3DFactory>().As<IModel3DFactory>().SingleInstance();
-            builder.RegisterType<GraphAssemble>().As<IGraphAssemble>().SingleInstance();
+            builder.RegisterType<GraphAssemble<Graph3D<Vertex3D>, Vertex3D>>().As<IGraphAssemble<Graph3D<Vertex3D>, Vertex3D>>().SingleInstance();
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
             builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex3D>>().SingleInstance();
 
-            builder.RegisterType<InFileSerializationModule>().As<IGraphSerializationModule>().SingleInstance();
+            builder.RegisterType<InFileSerializationModule<Graph3D<Vertex3D>, Vertex3D>>().As<IGraphSerializationModule<Graph3D<Vertex3D>, Vertex3D>>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
-            builder.RegisterType<XmlGraphSerializer>().As<IGraphSerializer>().SingleInstance();
-            builder.RegisterDecorator<CompressGraphSerializer, IGraphSerializer>();
-            builder.RegisterDecorator<CryptoGraphSerializer, IGraphSerializer>();
-            builder.RegisterType<Vertex3DFromInfoFactory>().As<IVertexFromInfoFactory>().SingleInstance();
+            builder.RegisterType<XmlGraphSerializer<Graph3D<Vertex3D>, Vertex3D>>().As<IGraphSerializer<Graph3D<Vertex3D>, Vertex3D>>().SingleInstance();
+            builder.RegisterDecorator<CompressGraphSerializer<Graph3D<Vertex3D>, Vertex3D>, IGraphSerializer<Graph3D<Vertex3D>, Vertex3D>>();
+            builder.RegisterDecorator<CryptoGraphSerializer<Graph3D<Vertex3D>, Vertex3D>, IGraphSerializer<Graph3D<Vertex3D>, Vertex3D>>();
+            builder.RegisterType<Vertex3DFromInfoFactory>().As<IVertexFromInfoFactory<Vertex3D>>().SingleInstance();
 
             builder.RegisterAssemblyTypes(Assemblies)
                 .Where(type => type.Implements<IAlgorithmFactory<PathfindingAlgorithm>>())

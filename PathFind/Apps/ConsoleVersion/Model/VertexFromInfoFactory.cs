@@ -4,7 +4,7 @@ using GraphLib.Serialization.Interfaces;
 
 namespace ConsoleVersion.Model
 {
-    internal sealed class VertexFromInfoFactory : IVertexFromInfoFactory
+    internal sealed class VertexFromInfoFactory : IVertexFromInfoFactory<Vertex>
     {
         private readonly IVisualization<Vertex> visualization;
 
@@ -13,7 +13,7 @@ namespace ConsoleVersion.Model
             this.visualization = visualization;
         }
 
-        public IVertex CreateFrom(VertexSerializationInfo info)
+        public Vertex CreateFrom(VertexSerializationInfo info)
         {
             return new Vertex(info, visualization);
         }

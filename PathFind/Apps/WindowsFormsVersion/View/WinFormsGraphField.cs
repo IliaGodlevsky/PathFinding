@@ -9,17 +9,17 @@ using WindowsFormsVersion.Model;
 
 namespace WindowsFormsVersion.View
 {
-    internal sealed class WinFormsGraphField : UserControl, IGraphField
+    internal sealed class WinFormsGraphField : UserControl, IGraphField<Vertex>
     {
         private readonly int distanceBetweenVertices;
 
-        public IReadOnlyCollection<IVertex> Vertices { get; }
+        public IReadOnlyCollection<Vertex> Vertices { get; }
 
-        public WinFormsGraphField(Graph2D graph)
+        public WinFormsGraphField(Graph2D<Vertex> graph)
         {
             distanceBetweenVertices = Constants.DistanceBetweenVertices + Constants.VertexSize;
             Vertices = graph;
-            graph.ForEach(vertex => Locate((Vertex)vertex));
+            graph.ForEach(Locate);
         }
 
         public WinFormsGraphField()

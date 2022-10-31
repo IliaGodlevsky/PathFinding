@@ -12,20 +12,22 @@ using ValueRange.Extensions;
 
 namespace GraphLib.Realizations.Factories.GraphAssembles
 {
-    public class GraphAssemble : IGraphAssemble
+    public class GraphAssemble<TGraph, TVertex> : IGraphAssemble<TGraph, TVertex>
+        where TVertex : IVertex
+        where TGraph : IGraph<TVertex>
     {
         protected readonly IVertexCostFactory costFactory;
         protected readonly ICoordinateFactory coordinateFactory;
-        protected readonly IVertexFactory vertexFactory;
-        protected readonly IGraphFactory graphFactory;
+        protected readonly IVertexFactory<TVertex> vertexFactory;
+        protected readonly IGraphFactory<TGraph, TVertex> graphFactory;
         protected readonly INeighborhoodFactory neighbourhoodFactory;
         protected readonly IRandom random;
         protected readonly InclusiveValueRange<int> percentRange;
 
         public GraphAssemble(
-            IVertexFactory vertexFactory,
+            IVertexFactory<TVertex> vertexFactory,
             ICoordinateFactory coordinateFactory,
-            IGraphFactory graphFactory,
+            IGraphFactory<TGraph, TVertex> graphFactory,
             IVertexCostFactory costFactory,
             INeighborhoodFactory neighbourhoodFactory,
             IRandom random)
@@ -39,7 +41,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             percentRange = new InclusiveValueRange<int>(99, 0);
         }
 
-        public virtual IGraph AssembleGraph(int obstaclePercent, IReadOnlyList<int> graphDimensionsSizes)
+        public virtual TGraph AssembleGraph(int obstaclePercent, IReadOnlyList<int> graphDimensionsSizes)
         {
             int graphSize = graphDimensionsSizes.AggregateOrDefault((x, y) => x * y);
             int percentOfObstacles = percentRange.ReturnInRange(obstaclePercent);
@@ -47,19 +49,29 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             var regulars = Enumerable.Repeat(false, graphSize - numberOfObstacles);
             var obstacles = Enumerable.Repeat(true, numberOfObstacles);
             var obstaclesMatrix = regulars.Concat(obstacles).Shuffle(random.NextInt).ToReadOnly();
-            var vertices = new IVertex[graphSize];
+            var vertices = new TVertex[graphSize];
             for (int i = 0; i < graphSize; i++)
             {
                 var coordinateValues = graphDimensionsSizes.ToCoordinates(i);
                 var coordinate = coordinateFactory.CreateCoordinate(coordinateValues);
-                var neighbourhood = neighbourhoodFactory.CreateNeighborhood(coordinate);
-                var vertex = vertexFactory.CreateVertex(neighbourhood, coordinate);
+                var vertex = vertexFactory.CreateVertex(coordinate);
                 vertex.Cost = costFactory.CreateCost();
                 vertex.IsObstacle = obstaclesMatrix[i];
                 vertices[i] = vertex;
             }
+            var graph = graphFactory.CreateGraph(vertices, graphDimensionsSizes);
+            FillNeighbourhood(graph);
+            return graph;
+        }
 
-            return graphFactory.CreateGraph(vertices, graphDimensionsSizes);
+        private void FillNeighbourhood(TGraph graph)
+        {
+            foreach (var vertex in graph)
+            {
+                vertex.Neighbours = neighbourhoodFactory
+                    .CreateNeighborhood(vertex.Position)
+                    .GetNeighboursWithinGraph((IGraph<IVertex>)graph);
+            }
         }
 
         public override string ToString()

@@ -16,6 +16,7 @@ using ConsoleVersion.Views;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
+using GraphLib.Realizations.Graphs;
 using GraphViewModel;
 using Interruptable.Extensions;
 using Logging.Interface;
@@ -28,7 +29,7 @@ using ValueRange.Extensions;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class PathFindingViewModel : PathFindingModel, IViewModel, IRequireTimeSpanInput, IRequireIntInput, IRequireAnswerInput, IRequireConsoleKeyInput, IDisposable
+    internal sealed class PathFindingViewModel : PathFindingModel<Vertex>, IViewModel, IRequireTimeSpanInput, IRequireIntInput, IRequireAnswerInput, IRequireConsoleKeyInput, IDisposable
     {
         public event Action WindowClosed;
 
@@ -55,8 +56,9 @@ namespace ConsoleVersion.ViewModel
 
         private int AlgorithmIndex => IntInput.Input(AlgorithmKeyInputMessage, algorithmKeysValueRange) - 1;
 
-        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ILog log)
-            : base(endPoints, algorithmFactories, log)
+        public PathFindingViewModel(BaseEndPoints<Vertex> endPoints, ICache<Graph2D<Vertex>> graph,
+            IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ILog log)
+            : base(endPoints, algorithmFactories, graph.Cached, log)
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Count, 1);
             keystrokesHook = DI.Container.Resolve<ConsoleKeystrokesHook>();

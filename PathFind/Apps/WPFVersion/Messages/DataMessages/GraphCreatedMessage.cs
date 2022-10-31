@@ -1,12 +1,13 @@
-﻿using GraphLib.Interfaces;
+﻿using GraphLib.Realizations.Graphs;
+using WPFVersion.Model;
 
 namespace WPFVersion.Messages.DataMessages
 {
     internal sealed class GraphCreatedMessage
     {
-        public IGraph Graph { get; }
+        public Graph2D<Vertex> Graph { get; }
 
-        public GraphCreatedMessage(IGraph graph)
+        public GraphCreatedMessage(Graph2D<Vertex> graph)
         {
             Graph = graph;
         }

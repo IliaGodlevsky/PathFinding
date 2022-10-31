@@ -1,12 +1,12 @@
-﻿using GraphLib.Interfaces;
-using GraphLib.Interfaces.Factories;
+﻿using GraphLib.Interfaces.Factories;
+using GraphLib.TestRealizations.TestObjects;
 using System.Collections.Generic;
 
 namespace GraphLib.TestRealizations.TestFactories
 {
-    public class TestGraphFactory : IGraphFactory
+    public class TestGraphFactory : IGraphFactory<TestGraph, TestVertex>
     {
-        public IGraph CreateGraph(IReadOnlyCollection<IVertex> vertices, IReadOnlyList<int> dimensionSizes)
+        public TestGraph CreateGraph(IReadOnlyCollection<TestVertex> vertices, IReadOnlyList<int> dimensionSizes)
         {
             return new TestGraph(vertices, dimensionSizes);
         }

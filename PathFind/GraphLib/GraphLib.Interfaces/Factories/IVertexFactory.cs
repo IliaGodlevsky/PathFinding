@@ -1,7 +1,8 @@
 ﻿namespace GraphLib.Interfaces.Factories
 {
-    public interface IVertexFactory
+    public interface IVertexFactory<out TVertex>
+        where TVertex : IVertex
     {
-        IVertex CreateVertex(INeighborhood neighboursCoordinates, ICoordinate coordinate);
+        TVertex CreateVertex(ICoordinate coordinate);
     }
 }

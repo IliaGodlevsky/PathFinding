@@ -2,9 +2,11 @@
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.Realizations.Graphs;
 using WPFVersion.DependencyInjection;
 using WPFVersion.Messages.ActionMessages;
 using WPFVersion.Messages.DataMessages;
+using WPFVersion.Model;
 using WPFVersion.ViewModel.BaseViewModels;
 
 namespace WPFVersion.ViewModel
@@ -13,11 +15,11 @@ namespace WPFVersion.ViewModel
     {
         private readonly IMessenger messenger;
 
-        private IGraph graph;
-        private IGraphField field;
+        private Graph2D<Vertex> graph;
+        private IGraphField<Vertex> field;
         private string graphParamtres;
 
-        public IGraphField GraphField
+        public IGraphField<Vertex> GraphField
         {
             get => field;
             private set => Set(ref field, value);
@@ -39,7 +41,7 @@ namespace WPFVersion.ViewModel
         private void OnGraphCreated(GraphCreatedMessage message)
         {
             graph = message.Graph;
-            var graphFieldFactory = DI.Container.Resolve<IGraphFieldFactory>();
+            var graphFieldFactory = DI.Container.Resolve<IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField>>();
             GraphField = graphFieldFactory.CreateGraphField(message.Graph);
             GraphParamtres = graph.GetStringRepresentation();
         }

@@ -6,6 +6,7 @@ using Common.Extensions;
 using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
+using GraphLib.Realizations.Graphs;
 using GraphViewModel;
 using Interruptable.EventArguments;
 using Logging.Interface;
@@ -16,22 +17,28 @@ using System.Windows.Input;
 using WPFVersion.DependencyInjection;
 using WPFVersion.Extensions;
 using WPFVersion.Infrastructure;
+using WPFVersion.Interface;
 using WPFVersion.Messages;
 using WPFVersion.Messages.DataMessages;
+using WPFVersion.Model;
 
 namespace WPFVersion.ViewModel
 {
-    public class PathFindingViewModel : PathFindingModel, IViewModel, IDisposable
+    public class PathFindingViewModel : PathFindingModel<Vertex>, IViewModel, IDisposable
     {
         public event Action WindowClosed;
+
+        private readonly IMessenger messenger;
+
+        private int Index { get; set; }
 
         public ICommand ConfirmPathFindAlgorithmChoice { get; }
 
         public ICommand CancelPathFindAlgorithmChoice { get; }
 
-        public PathFindingViewModel(BaseEndPoints endPoints,
-            IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ILog log)
-            : base(endPoints, algorithmFactories, log)
+        public PathFindingViewModel(BaseEndPoints<Vertex> endPoints,
+            IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ICache<Graph2D<Vertex>> graphCache, ILog log)
+            : base(endPoints, algorithmFactories, graphCache.Cached, log)
         {
             messenger = DI.Container.Resolve<IMessenger>();
             ConfirmPathFindAlgorithmChoice = new RelayCommand(ExecuteConfirmPathFindAlgorithmChoice, CanExecuteConfirmPathFindAlgorithmChoice);
@@ -136,9 +143,5 @@ namespace WPFVersion.ViewModel
         {
             WindowClosed = null;
         }
-
-        private int Index { get; set; }
-
-        private readonly IMessenger messenger;
     }
 }

@@ -1,5 +1,4 @@
 ﻿using GraphLib.Base.EndPoints;
-using GraphLib.Interfaces;
 using System;
 using System.Diagnostics;
 using System.Windows.Input;
@@ -7,24 +6,18 @@ using System.Windows.Input;
 namespace WPFVersion3D.Model
 {
     [DebuggerDisplay("Source - {Source}, Target - {Target}")]
-    internal sealed class EndPoints : BaseEndPoints
+    internal sealed class EndPoints : BaseEndPoints<Vertex3D>
     {
-        protected override void SubscribeVertex(IVertex vertex)
+        protected override void SubscribeVertex(Vertex3D vertex)
         {
-            if (vertex is Vertex3D vert)
-            {
-                vert.MouseLeftButtonDown += SetEndPoints;
-                vert.MouseUp += MarkIntermediateToReplace;
-            }
+            vertex.MouseLeftButtonDown += SetEndPoints;
+            vertex.MouseUp += MarkIntermediateToReplace;
         }
 
-        protected override void UnsubscribeVertex(IVertex vertex)
+        protected override void UnsubscribeVertex(Vertex3D vertex)
         {
-            if (vertex is Vertex3D vert)
-            {
-                vert.MouseLeftButtonDown -= SetEndPoints;
-                vert.MouseUp -= MarkIntermediateToReplace;
-            }
+            vertex.MouseLeftButtonDown -= SetEndPoints;
+            vertex.MouseUp -= MarkIntermediateToReplace;
         }
 
         protected override void MarkIntermediateToReplace(object sender, EventArgs e)

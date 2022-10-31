@@ -1,5 +1,6 @@
 ﻿using GraphLib.Interfaces;
 using System.Windows.Forms;
+using WindowsFormsVersion.Model;
 
 namespace WindowsFormsVersion.Extensions
 {
@@ -7,7 +8,7 @@ namespace WindowsFormsVersion.Extensions
     {
         public static bool IsGraphField(this Control control)
         {
-            return control is IGraphField;
+            return control is IGraphField<Vertex>;
         }
     }
 }

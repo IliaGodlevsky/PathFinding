@@ -6,7 +6,7 @@ using WPFVersion3D.Interface;
 
 namespace WPFVersion3D.Model
 {
-    internal sealed class Vertex3DFactory : IVertexFactory
+    internal sealed class Vertex3DFactory : IVertexFactory<Vertex3D>
     {
         private static readonly Dispatcher Dispatcher = Application.Current.Dispatcher;
 
@@ -19,9 +19,9 @@ namespace WPFVersion3D.Model
             this.visualization = visualization;
         }
 
-        public IVertex CreateVertex(INeighborhood coordinateRadar, ICoordinate coordinate)
+        public Vertex3D CreateVertex(ICoordinate coordinate)
         {
-            return Dispatcher.Invoke(() => new Vertex3D(coordinateRadar, coordinate, model3Dfactory, visualization));
+            return Dispatcher.Invoke(() => new Vertex3D(coordinate, model3Dfactory, visualization));
         }
     }
 }

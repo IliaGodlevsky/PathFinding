@@ -8,8 +8,9 @@ namespace GraphLib.Realizations.Extensions
 {
     public static class GraphExtensions
     {
-        public static void Smooth(this IGraph self, IVertexCostFactory costFactory,
+        public static void Smooth<TVertex>(this IGraph<TVertex> self, IVertexCostFactory costFactory,
             IMeanCost meanCost, int smoothLevel)
+            where TVertex : IVertex
         {
             var visited = new VisitedVertices();
             while (smoothLevel-- > 0)

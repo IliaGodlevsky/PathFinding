@@ -2,7 +2,8 @@
 
 namespace GraphLib.Interfaces
 {
-    public interface IVerticesCommands : IExecutable<IVertex>, IUndoCommand
+    public interface IVerticesCommands<TVertex> : IExecutable<TVertex>, IUndoCommand
+        where TVertex : IVertex
     {
 
     }

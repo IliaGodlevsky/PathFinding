@@ -46,43 +46,43 @@ namespace ConsoleVersion.Extensions
             return new InclusiveValueRange<T>(upperValueOfRange, lowerValueOfRange);
         }
 
-        public static Vertex InputVertex(this IInput<int> self, Graph2D graph2D)
+        public static Vertex InputVertex(this IInput<int> self, Graph2D<Vertex> graph2D)
         {
             int upperPossibleXValue = graph2D.Width - 1;
             int upperPossibleYValue = graph2D.Length - 1;
 
             var point = self.InputCoordinate(upperPossibleXValue, upperPossibleYValue);
 
-            return (Vertex)graph2D.Get(point);
+            return graph2D.Get(point);
         }
 
-        public static Vertex InputEndPoint(this IInput<int> self, Graph2D graph, IEndPoints endPoints)
+        public static Vertex InputEndPoint(this IInput<int> self, Graph2D<Vertex> graph, IEndPoints endPoints)
         {
             return self.InputVertex(graph, endPoints.CanBeEndPoint);
         }
 
-        public static Vertex InputEndPoint(this IInput<int> self, string message, Graph2D graph, IEndPoints endPoints)
+        public static Vertex InputEndPoint(this IInput<int> self, string message, Graph2D<Vertex> graph, IEndPoints endPoints)
         {
             Console.WriteLine(message);
             return self.InputEndPoint(graph, endPoints);
         }
 
-        public static IEnumerable<Vertex> InputExistingIntermediates(this IInput<int> self, Graph2D graph, IEndPoints endPoints, int count)
+        public static IEnumerable<Vertex> InputExistingIntermediates(this IInput<int> self, Graph2D<Vertex> graph, IEndPoints endPoints, int count)
         {
             return self.InputVertices(graph, endPoints.IsIntermediate, count);
         }
 
-        public static IEnumerable<Vertex> InputRequiredEndPoints(this IInput<int> self, Graph2D graph, IEndPoints endPoints)
+        public static IEnumerable<Vertex> InputRequiredEndPoints(this IInput<int> self, Graph2D<Vertex> graph, IEndPoints endPoints)
         {
             return self.InputEndPoints(graph, endPoints, 2);
         }
 
-        public static IEnumerable<Vertex> InputEndPoints(this IInput<int> self, Graph2D graph, IEndPoints endPoints, int count)
+        public static IEnumerable<Vertex> InputEndPoints(this IInput<int> self, Graph2D<Vertex> graph, IEndPoints endPoints, int count)
         {
             return self.InputVertices(graph, endPoints.CanBeEndPoint, count);
         }
 
-        private static IEnumerable<Vertex> InputVertices(this IInput<int> self, Graph2D graph, Predicate<IVertex> predicate, int count)
+        private static IEnumerable<Vertex> InputVertices(this IInput<int> self, Graph2D<Vertex> graph, Predicate<IVertex> predicate, int count)
         {
             while (count-- > 0)
             {
@@ -90,7 +90,7 @@ namespace ConsoleVersion.Extensions
             }
         }
 
-        private static Vertex InputVertex(this IInput<int> self, Graph2D graph, Predicate<IVertex> predicate)
+        private static Vertex InputVertex(this IInput<int> self, Graph2D<Vertex> graph, Predicate<IVertex> predicate)
         {
             Vertex vertex;
             do

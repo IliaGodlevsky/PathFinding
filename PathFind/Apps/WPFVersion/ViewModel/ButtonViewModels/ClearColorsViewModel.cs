@@ -8,15 +8,16 @@ using System.Windows.Input;
 using WPFVersion.DependencyInjection;
 using WPFVersion.Infrastructure;
 using WPFVersion.Messages.DataMessages;
+using WPFVersion.Model;
 
 namespace WPFVersion.ViewModel.ButtonViewModels
 {
     internal class ClearColorsViewModel
     {
         private readonly IMessenger messenger;
-        private readonly BaseEndPoints endPoints;
+        private readonly BaseEndPoints<Vertex> endPoints;
 
-        private IGraph Graph { get; set; }
+        private IGraph<Vertex> Graph { get; set; }
 
         private bool IsAllAlgorithmFinishedPathfinding { get; set; } = true;
 
@@ -25,7 +26,7 @@ namespace WPFVersion.ViewModel.ButtonViewModels
         public ClearColorsViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            endPoints = DI.Container.Resolve<BaseEndPoints>();
+            endPoints = DI.Container.Resolve<BaseEndPoints<Vertex>>();
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAllAlgorithmFinishedPathfinding);
             ClearColorsCommand = new RelayCommand(ExecuteClearColorsCommand, CanExecuteClearColorsCommand);

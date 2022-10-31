@@ -2,8 +2,9 @@
 
 namespace GraphLib.Serialization.Interfaces
 {
-    public interface IVertexFromInfoFactory
+    public interface IVertexFromInfoFactory<out TVertex>
+        where TVertex : IVertex
     {
-        IVertex CreateFrom(VertexSerializationInfo info);
+        TVertex CreateFrom(VertexSerializationInfo info);
     }
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 
-using static GraphLib.Serialization.Serializers.XmlGraphSerializer;
+using static GraphLib.Serialization.Serializers.XmlAttributesNames;
 
 namespace GraphLib.Serialization.Extensions
 {

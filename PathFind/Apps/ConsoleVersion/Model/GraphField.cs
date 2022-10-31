@@ -4,21 +4,18 @@ using ConsoleVersion.Model.FramedAxes;
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Graphs;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ConsoleVersion.Model
 {
-    internal sealed class GraphField : IGraphField, IDisplayable
+    internal sealed class GraphField : IGraphField<Vertex>, IDisplayable
     {
         public IReadOnlyCollection<Vertex> Vertices { get; }
 
-        IReadOnlyCollection<IVertex> IGraphField.Vertices => Vertices;
-
         private IEnumerable<IDisplayable> Displayables { get; }
 
-        public GraphField(Graph2D graph)
+        public GraphField(Graph2D<Vertex> graph)
         {
-            Vertices = graph.Cast<Vertex>().ToReadOnly();
+            Vertices = graph;
             var displayables = new List<IDisplayable>()
             {
                 new FramedOverAbscissa(graph),

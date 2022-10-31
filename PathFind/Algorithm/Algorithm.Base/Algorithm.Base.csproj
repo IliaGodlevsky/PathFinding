@@ -100,7 +100,7 @@
     </ProjectReference>
     <ProjectReference Include="..\Algorithm.Сompanions\Algorithm.Сompanions.csproj">
       <Project>{8A717526-D82A-4409-B3B4-5979820253AF}</Project>
-      <Name>Algorithm. ompanions</Name>
+      <Name>Algorithm.Сompanions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Algorithms.NullRealizations\Algorithm.NullRealizations.csproj">
       <Project>{FE692FCB-46C0-47A1-80ED-EFDCC811CF69}</Project>

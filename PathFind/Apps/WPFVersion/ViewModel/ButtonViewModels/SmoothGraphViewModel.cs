@@ -18,7 +18,7 @@ namespace WPFVersion.ViewModel.ButtonViewModels
         private readonly IMeanCost meanCost;
         private readonly IVertexCostFactory costFactory;
 
-        private IGraph Graph { get; set; }
+        private IGraph<Vertex> Graph { get; set; }
 
         public ISmoothLevel SelectSmoothLevel { get; set; }
 

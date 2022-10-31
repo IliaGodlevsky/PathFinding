@@ -6,7 +6,9 @@ namespace GraphLib.Serialization.Extensions
 {
     public static class GraphSerializerExtensions
     {
-        public static void SaveGraphToFile(this IGraphSerializer self, IGraph graph, string filePath)
+        public static void SaveGraphToFile<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, IGraph<IVertex> graph, string filePath)
+            where TGraph : IGraph<TVertex>
+            where TVertex : IVertex
         {
             var fileMode = File.Exists(filePath) ? FileMode.Truncate : FileMode.Create;
             using (var fileStream = new FileStream(filePath, fileMode, FileAccess.Write))
@@ -15,7 +17,9 @@ namespace GraphLib.Serialization.Extensions
             }
         }
 
-        public static IGraph LoadGraphFromFile(this IGraphSerializer self, string filePath)
+        public static TGraph LoadGraphFromFile<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, string filePath)
+            where TGraph : IGraph<TVertex>
+            where TVertex : IVertex
         {
             using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {

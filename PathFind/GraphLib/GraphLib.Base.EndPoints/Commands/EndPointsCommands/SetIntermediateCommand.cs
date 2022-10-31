@@ -6,20 +6,21 @@ using GraphLib.Interfaces;
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [Order(9)]
-    internal sealed class SetIntermediateCommand : BaseIntermediateEndPointsCommand
+    internal sealed class SetIntermediateCommand<TVertex> : BaseIntermediateEndPointsCommand<TVertex>
+        where TVertex : IVertex, IVisualizable
     {
-        public SetIntermediateCommand(BaseEndPoints endPoints)
+        public SetIntermediateCommand(BaseEndPoints<TVertex> endPoints)
             : base(endPoints)
         {
         }
 
-        public override void Execute(IVertex vertex)
+        public override void Execute(TVertex vertex)
         {
             Intermediates.Add(vertex);
-            vertex.AsVisualizable().VisualizeAsIntermediate();
+            vertex.VisualizeAsIntermediate();
         }
 
-        public override bool CanExecute(IVertex vertex)
+        public override bool CanExecute(TVertex vertex)
         {
             return endPoints.HasSourceAndTargetSet()
                 && endPoints.CanBeEndPoint(vertex);

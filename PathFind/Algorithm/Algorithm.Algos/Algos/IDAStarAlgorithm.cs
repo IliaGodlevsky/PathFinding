@@ -1,9 +1,11 @@
 ﻿using Algorithm.Extensions;
 using Algorithm.Interfaces;
+using Algorithm.NullRealizations;
 using Algorithm.Realizations.Heuristic.Distances;
 using Algorithm.Realizations.StepRules;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
+using GraphLib.NullRealizations;
 using GraphLib.Utility;
 using NullObject.Extensions;
 using System.Collections.Generic;
@@ -15,9 +17,9 @@ namespace Algorithm.Algos.Algos
     {
         private const int PercentToDelete = 4;
 
-        private readonly Dictionary<IVertex, double> deletedVertices;
+        private readonly Dictionary<IVertex, double> stashedVertices;
 
-        private int ToDeleteCount => queue.Count * PercentToDelete / 100;
+        private int ToStashCount => queue.Count * PercentToDelete / 100;
 
         public IDAStarAlgorithm(IEndPoints endPoints)
             : this(endPoints, new DefaultStepRule(), new ChebyshevDistance())
@@ -28,26 +30,21 @@ namespace Algorithm.Algos.Algos
         public IDAStarAlgorithm(IEndPoints endPoints, IStepRule stepRule, IHeuristic function)
             : base(endPoints, stepRule, function)
         {
-            deletedVertices = new Dictionary<IVertex, double>(new VertexEqualityComparer());
+            stashedVertices = new Dictionary<IVertex, double>(new VertexEqualityComparer());
         }
 
         protected override IVertex GetNextVertex()
         {
-            queue
-                .OrderByDescending(heuristics.GetCost)
-                .Take(ToDeleteCount)
-                .Select(vertex => (Vertex: vertex, Priority: queue.GetPriorityOrInfinity(vertex)))
-                .ForEach(item =>
-                {
-                    queue.TryRemove(item.Vertex);
-                    deletedVertices[item.Vertex] = item.Priority;
-                });
-            var next = base.GetNextVertex();
-            if (next.IsNull())
+            queue.OrderByDescending(heuristics.GetCost)
+                .Take(ToStashCount)
+                .Select(CreateStashItem)
+                .ForEach(RemoveToStashed);
+            var next = queue.TryFirstOrNullVertex();
+            if (next.Neighbours.Count == 0)
             {
-                deletedVertices.ForEach(node => queue.EnqueueOrUpdatePriority(node.Key, node.Value));
-                deletedVertices.Clear();
-                next = base.GetNextVertex();
+                stashedVertices.ForEach(node => queue.EnqueueOrUpdatePriority(node.Key, node.Value));
+                stashedVertices.Clear();
+                next = queue.TryFirstOrDeadEndVertex();
             }
             return next;
         }
@@ -55,7 +52,18 @@ namespace Algorithm.Algos.Algos
         protected override void Reset()
         {
             base.Reset();
-            deletedVertices.Clear();
+            stashedVertices.Clear();
+        }
+
+        private void RemoveToStashed((IVertex Vertex, double Priority) item)
+        {
+            queue.TryRemove(item.Vertex);
+            stashedVertices[item.Vertex] = item.Priority;
+        }
+
+        private (IVertex Vertex, double Priority) CreateStashItem(IVertex vertex)
+        {
+            return (Vertex: vertex, Priority: queue.GetPriorityOrInfinity(vertex));
         }
 
         public override string ToString()

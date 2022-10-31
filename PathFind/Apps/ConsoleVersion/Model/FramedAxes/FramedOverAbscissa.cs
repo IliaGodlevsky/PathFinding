@@ -8,7 +8,7 @@ namespace ConsoleVersion.Model.FramedAxes
 
         protected override string Offset { get; }
 
-        public FramedOverAbscissa(Graph2D graph)
+        public FramedOverAbscissa(Graph2D<Vertex> graph)
             : base(graph.Width)
         {
             this.graphLength = graph.Length;

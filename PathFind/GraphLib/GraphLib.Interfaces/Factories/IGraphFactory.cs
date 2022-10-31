@@ -2,8 +2,10 @@
 
 namespace GraphLib.Interfaces.Factories
 {
-    public interface IGraphFactory
+    public interface IGraphFactory<out TGraph, in TVertex>
+        where TVertex : IVertex
+        where TGraph : IGraph<TVertex>
     {
-        IGraph CreateGraph(IReadOnlyCollection<IVertex> vertices, IReadOnlyList<int> dimensionSizes);
+        TGraph CreateGraph(IReadOnlyCollection<TVertex> vertices, IReadOnlyList<int> dimensionSizes);
     }
 }

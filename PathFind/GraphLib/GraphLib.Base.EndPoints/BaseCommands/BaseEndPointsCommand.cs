@@ -1,23 +1,23 @@
-﻿using GraphLib.Extensions;
-using GraphLib.Interfaces;
+﻿using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.BaseCommands
 {
-    internal abstract class BaseEndPointsCommand : IVertexCommand
+    internal abstract class BaseEndPointsCommand<TVertex> : IVertexCommand<TVertex>
+        where TVertex : IVertex, IVisualizable
     {
-        protected IVisualizable Source => endPoints.Source.AsVisualizable();
+        protected TVertex Source => endPoints.Source;
 
-        protected IVisualizable Target => endPoints.Target.AsVisualizable();
+        protected TVertex Target => endPoints.Target;
 
-        protected readonly BaseEndPoints endPoints;
+        protected readonly BaseEndPoints<TVertex> endPoints;
 
-        protected BaseEndPointsCommand(BaseEndPoints endPoints)
+        protected BaseEndPointsCommand(BaseEndPoints<TVertex> endPoints)
         {
             this.endPoints = endPoints;
         }
 
-        public abstract void Execute(IVertex vertex);
+        public abstract void Execute(TVertex vertex);
 
-        public abstract bool CanExecute(IVertex vertex);
+        public abstract bool CanExecute(TVertex vertex);
     }
 }

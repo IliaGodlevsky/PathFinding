@@ -13,14 +13,13 @@ using WPFVersion3D.Interface;
 namespace WPFVersion3D.Model
 {
     [DebuggerDisplay("{Position.ToString()}")]
-    internal class Vertex3D : UIElement3D, IVertex, IVisualizable
+    public class Vertex3D : UIElement3D, IVertex, IVisualizable
     {
         public static readonly DependencyProperty SizeProperty;
         public static readonly DependencyProperty BrushProperty;
 
         private readonly IModel3DFactory modelFactory;
         private readonly IVisualization<Vertex3D> visualization;
-        private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
         private bool isObstacle;
 
         public bool IsObstacle
@@ -38,11 +37,9 @@ namespace WPFVersion3D.Model
 
         public TranslateTransform3D FieldPosition => (TranslateTransform3D)Transform;
 
-        public IGraph Graph { get; }
-
         public IVertexCost Cost { get; set; }
 
-        public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
+        public IReadOnlyCollection<IVertex> Neighbours { get; set; }
 
         public ICoordinate Position { get; }
 
@@ -64,8 +61,7 @@ namespace WPFVersion3D.Model
             set => SetValue(SizeProperty, value);
         }
 
-        public Vertex3D(IReadOnlyCollection<ICoordinate> neighborhood, ICoordinate coordinate, IModel3DFactory modelFactory,
-            IVisualization<Vertex3D> visualization)
+        public Vertex3D(ICoordinate coordinate, IModel3DFactory modelFactory, IVisualization<Vertex3D> visualization)
         {
             this.visualization = visualization;
             this.modelFactory = modelFactory;
@@ -74,11 +70,10 @@ namespace WPFVersion3D.Model
             Transform = new TranslateTransform3D();
             Size = Constants.InitialVertexSize;
             this.Initialize();
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighboursWithinGraph(this));
         }
 
         public Vertex3D(VertexSerializationInfo info, IModel3DFactory modelFactory, IVisualization<Vertex3D> visualization)
-            : this(info.Neighbourhood, info.Position, modelFactory, visualization)
+            : this(info.Position, modelFactory, visualization)
         {
             this.Initialize(info);
         }

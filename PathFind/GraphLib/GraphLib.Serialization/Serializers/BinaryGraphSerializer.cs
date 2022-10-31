@@ -7,10 +7,12 @@ using System.Text;
 
 namespace GraphLib.Serialization.Serializers
 {
-    public sealed class BinaryGraphSerializer : GraphSerializer
+    public sealed class BinaryGraphSerializer<TGraph, TVertex> : GraphSerializer<TGraph, TVertex>
+        where TVertex : IVertex
+        where TGraph : IGraph<TVertex>
     {
-        public BinaryGraphSerializer(IVertexFromInfoFactory converter,
-            IGraphFactory graphFactory,
+        public BinaryGraphSerializer(IVertexFromInfoFactory<TVertex> converter,
+            IGraphFactory<TGraph, TVertex> graphFactory,
             IVertexCostFactory costFactory,
             ICoordinateFactory coordinateFactory)
             : base(converter, graphFactory, costFactory, coordinateFactory)
@@ -27,7 +29,7 @@ namespace GraphLib.Serialization.Serializers
             }
         }
 
-        protected override void SaveGraphInternal(IGraph graph, Stream stream)
+        protected override void SaveGraphInternal(IGraph<IVertex> graph, Stream stream)
         {
             using (var writer = new BinaryWriter(stream, Encoding.Default, leaveOpen: true))
             {

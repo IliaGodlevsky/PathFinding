@@ -6,18 +6,20 @@ using System.IO;
 
 namespace GraphLib.Serialization.Serializers.Decorators
 {
-    public sealed class ThreadSafeGraphSerializer : IGraphSerializer
+    public sealed class ThreadSafeGraphSerializer<TGraph, TVertex> : IGraphSerializer<TGraph, TVertex>
+        where TGraph : IGraph<TVertex>
+        where TVertex : IVertex
     {
         private readonly object locker;
-        private readonly IGraphSerializer serializer;
+        private readonly IGraphSerializer<TGraph, TVertex> serializer;
 
-        public ThreadSafeGraphSerializer(IGraphSerializer serializer)
+        public ThreadSafeGraphSerializer(IGraphSerializer<TGraph, TVertex> serializer)
         {
             this.serializer = serializer;
             locker = new object();
         }
 
-        public IGraph LoadGraph(Stream stream)
+        public TGraph LoadGraph(Stream stream)
         {
             lock (locker)
             {
@@ -32,7 +34,7 @@ namespace GraphLib.Serialization.Serializers.Decorators
             }
         }
 
-        public void SaveGraph(IGraph graph, Stream stream)
+        public void SaveGraph(IGraph<IVertex> graph, Stream stream)
         {
             lock (locker)
             {

@@ -7,6 +7,7 @@ using System.Windows.Media.Media3D;
 using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Messages.ActionMessages;
 using WPFVersion3D.Messages.PassValueMessages;
+using WPFVersion3D.Model;
 using WPFVersion3D.ViewModel.BaseViewModel;
 
 namespace WPFVersion3D.ViewModel
@@ -15,8 +16,8 @@ namespace WPFVersion3D.ViewModel
     {
         private readonly IMessenger messenger;
 
-        private Graph3D graph;
-        private IGraphField field;
+        private Graph3D<Vertex3D> graph = Graph3D<Vertex3D>.Empty;
+        private GraphField3D field;
         private string graphParametres;
         private Point3D fieldPosition;
 
@@ -32,7 +33,7 @@ namespace WPFVersion3D.ViewModel
             set => Set(ref graphParametres, value);
         }
 
-        public IGraphField GraphField
+        public GraphField3D GraphField
         {
             get => field;
             set => Set(ref field, value);
@@ -54,8 +55,8 @@ namespace WPFVersion3D.ViewModel
 
         private void OnGraphCreated(GraphCreatedMessage message)
         {
-            graph = (Graph3D)message.Value;
-            var graphFieldFactry = DI.Container.Resolve<IGraphFieldFactory>();
+            graph = message.Value;
+            var graphFieldFactry = DI.Container.Resolve<IGraphFieldFactory<Graph3D<Vertex3D>, Vertex3D, GraphField3D>>();
             GraphField = graphFieldFactry.CreateGraphField(graph);
             messenger.Send(new GraphFieldCreatedMessage(GraphField));
             GraphParametres = graph.GetStringRepresentation();

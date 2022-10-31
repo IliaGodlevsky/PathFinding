@@ -5,18 +5,18 @@ using System.Windows;
 
 namespace WPFVersion.Model
 {
-    internal sealed class VertexFromInfoFactory : IVertexFromInfoFactory
+    internal sealed class VertexFromInfoFactory : IVertexFromInfoFactory<Vertex>
     {
+        private readonly IVisualization<Vertex> visualization;
+
         public VertexFromInfoFactory(IVisualization<Vertex> visualization)
         {
             this.visualization = visualization;
         }
 
-        public IVertex CreateFrom(VertexSerializationInfo info)
+        public Vertex CreateFrom(VertexSerializationInfo info)
         {
             return Application.Current.Dispatcher.Invoke(() => new Vertex(info, visualization));
         }
-
-        private readonly IVisualization<Vertex> visualization;
     }
 }

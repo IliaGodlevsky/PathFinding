@@ -2,29 +2,31 @@
 using GraphLib.Base.EndPoints.BaseCommands;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using System.Linq;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [Order(3)]
-    internal sealed class ReplaceIntermediateIsolatedCommand : BaseIntermediateEndPointsCommand
+    internal sealed class ReplaceIntermediateIsolatedCommand<TVertex> : BaseIntermediateEndPointsCommand<TVertex>
+        where TVertex : IVertex, IVisualizable
     {
-        public ReplaceIntermediateIsolatedCommand(BaseEndPoints endPoints)
+        public ReplaceIntermediateIsolatedCommand(BaseEndPoints<TVertex> endPoints)
             : base(endPoints)
         {
         }
 
-        public override void Execute(IVertex vertex)
+        public override void Execute(TVertex vertex)
         {
-            var isolated = Intermediates.FirstOrNullVertex(v => v.IsIsolated());
+            var isolated = Intermediates.First(v => v.IsIsolated());
             int isolatedIndex = Intermediates.IndexOf(isolated);
             Intermediates.Remove(isolated);
             MarkedToReplace.Remove(isolated);
-            isolated.AsVisualizable().VisualizeAsRegular();
+            isolated.VisualizeAsRegular();
             Intermediates.Insert(isolatedIndex, vertex);
-            vertex.AsVisualizable().VisualizeAsIntermediate();
+            vertex.VisualizeAsIntermediate();
         }
 
-        public override bool CanExecute(IVertex vertex)
+        public override bool CanExecute(TVertex vertex)
         {
             return endPoints.HasSourceAndTargetSet()
                 && HasIsolatedIntermediates

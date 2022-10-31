@@ -6,7 +6,6 @@ using GraphLib.Interfaces;
 using GraphLib.Realizations.Graphs;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel;
-using GraphViewModel.Interfaces;
 using Logging.Interface;
 using NullObject.Extensions;
 using System;
@@ -19,20 +18,19 @@ using WindowsFormsVersion.EventArguments;
 using WindowsFormsVersion.EventHandlers;
 using WindowsFormsVersion.Extensions;
 using WindowsFormsVersion.Forms;
+using WindowsFormsVersion.Interface;
 using WindowsFormsVersion.Messeges;
+using WindowsFormsVersion.Model;
 using WindowsFormsVersion.View;
 
 namespace WindowsFormsVersion.ViewModel
 {
-    internal class MainWindowViewModel : MainModel, IMainModel, INotifyPropertyChanged, IDisposable
+    internal class MainWindowViewModel : MainModel<Graph2D<Vertex>, Vertex, WinFormsGraphField>, ICache<Graph2D<Vertex>>, INotifyPropertyChanged, IDisposable
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public event StatisticsChangedEventHandler StatisticsChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        private readonly IMessenger messenger;
 
         public bool IsPathfindingStarted { private get; set; }
 
@@ -54,30 +52,31 @@ namespace WindowsFormsVersion.ViewModel
             }
         }
 
-        private IGraphField graphField;
-        public override IGraphField GraphField
+        private WinFormsGraphField graphField;
+        public override WinFormsGraphField GraphField
         {
             get => graphField;
             set
             {
                 graphField = value;
-                if (Graph is Graph2D graph2D && graphField is WinFormsGraphField field)
-                {
-                    int width = (graph2D.Width + Constants.VertexSize) * Constants.VertexSize;
-                    int height = (graph2D.Length + Constants.VertexSize) * Constants.VertexSize;
-                    field.Size = new Size(width, height);
-                    MainWindow.Controls.RemoveBy(ctrl => ctrl.IsGraphField());
-                    MainWindow.Controls.Add(field);
-                }
+                int width = (Graph.Width + Constants.VertexSize) * Constants.VertexSize;
+                int height = (Graph.Length + Constants.VertexSize) * Constants.VertexSize;
+                graphField.Size = new Size(width, height);
+                MainWindow.Controls.RemoveBy(ctrl => ctrl.IsGraphField());
+                MainWindow.Controls.Add(graphField);
             }
         }
 
         public MainWindow MainWindow { get; set; }
 
-        public MainWindowViewModel(IGraphFieldFactory fieldFactory,
-            IGraphEvents events, IGraphSerializationModule serializationModule, BaseEndPoints endPoints, ILog log)
+        public Graph2D<Vertex> Cached => Graph;
+
+        public MainWindowViewModel(IGraphFieldFactory<Graph2D<Vertex>, Vertex, WinFormsGraphField> fieldFactory,
+            IGraphEvents<Vertex> events, IGraphSerializationModule<Graph2D<Vertex>, Vertex> serializationModule,
+            BaseEndPoints<Vertex> endPoints, ILog log)
             : base(fieldFactory, events, serializationModule, endPoints, log)
         {
+            Graph = Graph2D<Vertex>.Empty;
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<AlgorithmStatusMessage>(this, MessageTokens.MainModel, SetAlgorithmStatus);
             messenger.Register<UpdateStatisticsMessage>(this, MessageTokens.MainModel, SetStatisticsMessage);
@@ -137,7 +136,7 @@ namespace WindowsFormsVersion.ViewModel
             }
         }
 
-        public override void ConnectNewGraph(IGraph graph)
+        public override void ConnectNewGraph(Graph2D<Vertex> graph)
         {
             base.ConnectNewGraph(graph);
             PathFindingStatistics = string.Empty;
@@ -163,11 +162,14 @@ namespace WindowsFormsVersion.ViewModel
             return !endPoints.HasIsolators() && !IsPathfindingStarted;
         }
 
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public void Dispose()
         {
             messenger.Unregister(this);
         }
-
-        private readonly IMessenger messenger;
     }
 }

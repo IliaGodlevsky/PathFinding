@@ -3,15 +3,16 @@ using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.BaseCommands
 {
-    internal abstract class BaseEndPointsUndoCommand : IUndoCommand
+    internal abstract class BaseEndPointsUndoCommand<TVertex> : IUndoCommand
+        where TVertex : IVertex, IVisualizable
     {
-        protected readonly BaseEndPoints endPoints;
+        protected readonly BaseEndPoints<TVertex> endPoints;
 
-        protected IVertex Source => endPoints.Source;
+        protected TVertex Source => endPoints.Source;
 
-        protected IVertex Target => endPoints.Target;
+        protected TVertex Target => endPoints.Target;
 
-        protected BaseEndPointsUndoCommand(BaseEndPoints endPoints)
+        protected BaseEndPointsUndoCommand(BaseEndPoints<TVertex> endPoints)
         {
             this.endPoints = endPoints;
         }

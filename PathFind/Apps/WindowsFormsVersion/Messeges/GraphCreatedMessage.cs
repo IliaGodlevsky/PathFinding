@@ -1,12 +1,13 @@
-﻿using GraphLib.Interfaces;
+﻿using GraphLib.Realizations.Graphs;
+using WindowsFormsVersion.Model;
 
 namespace WindowsFormsVersion.Messeges
 {
     internal sealed class GraphCreatedMessage
     {
-        public IGraph Graph { get; }
+        public Graph2D<Vertex> Graph { get; }
 
-        public GraphCreatedMessage(IGraph graph)
+        public GraphCreatedMessage(Graph2D<Vertex> graph)
         {
             Graph = graph;
         }

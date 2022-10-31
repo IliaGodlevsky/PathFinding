@@ -2,7 +2,6 @@
 using Algorithm.Realizations.Heuristic.Distances;
 using BenchmarkDotNet.Attributes;
 using GraphLib.Interfaces;
-using GraphLib.Realizations.Neighbourhoods;
 using GraphLib.TestRealizations.TestObjects;
 using System.Collections.Generic;
 
@@ -15,23 +14,23 @@ namespace Algorithm.Algos.Benchmark.Heuristics
         {
             yield return new IVertex[]
             {
-                new TestVertex(new MooreNeighborhood(new TestCoordinate(0, 0)), new TestCoordinate(0, 0)),
-                new TestVertex(new MooreNeighborhood(new TestCoordinate(29, 29)), new TestCoordinate(29, 29))
+                new TestVertex(new TestCoordinate(0, 0)),
+                new TestVertex(new TestCoordinate(29, 29))
             };
             yield return new IVertex[]
             {
-                new TestVertex(new MooreNeighborhood(new TestCoordinate(0, 1)), new TestCoordinate(0, 1)),
-                new TestVertex(new MooreNeighborhood(new TestCoordinate(29, 15)), new TestCoordinate(29, 15))
+                new TestVertex(new TestCoordinate(0, 1)),
+                new TestVertex(new TestCoordinate(29, 15))
             };
             yield return new IVertex[]
             {
-                new TestVertex(new MooreNeighborhood(new TestCoordinate(1, 5)), new TestCoordinate(1, 5)),
-                new TestVertex(new MooreNeighborhood(new TestCoordinate(15, 29)), new TestCoordinate(15, 29))
+                new TestVertex(new TestCoordinate(1, 5)),
+                new TestVertex(new TestCoordinate(15, 29))
             };
             yield return new IVertex[]
             {
-                new TestVertex(new MooreNeighborhood(new TestCoordinate(7, 6)), new TestCoordinate(7, 6)),
-                new TestVertex(new MooreNeighborhood(new TestCoordinate(11, 17)), new TestCoordinate(11, 17))
+                new TestVertex(new TestCoordinate(7, 6)),
+                new TestVertex(new TestCoordinate(11, 17))
             };
         }
 

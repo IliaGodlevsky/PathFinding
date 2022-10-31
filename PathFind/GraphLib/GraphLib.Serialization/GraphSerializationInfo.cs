@@ -15,7 +15,7 @@ namespace GraphLib.Serialization
 
         public InclusiveValueRange<int> CostRange { get; }
 
-        public GraphSerializationInfo(IGraph graph)
+        public GraphSerializationInfo(IGraph<IVertex> graph)
         {
             DimensionsSizes = graph.DimensionsSizes;
             VerticesInfo = graph

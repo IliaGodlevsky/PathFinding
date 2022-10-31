@@ -8,7 +8,7 @@ namespace GraphLib.Serialization.Extensions
 {
     internal static class BinaryWriterExtensions
     {
-        public static void WriteGraph(this BinaryWriter writer, IGraph graph)
+        public static void WriteGraph(this BinaryWriter writer, IGraph<IVertex> graph)
         {
             var info = new GraphSerializationInfo(graph);
             writer.WriteIntArray(info.DimensionsSizes);

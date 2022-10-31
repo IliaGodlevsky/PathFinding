@@ -1,7 +1,7 @@
 ﻿using Algorithm.Infrastructure.EventArguments;
 using Autofac;
 using GalaSoft.MvvmLight.Messaging;
-using GraphLib.Interfaces;
+using GraphLib.Realizations.Graphs;
 using System;
 using System.Threading.Tasks;
 using Visualization;
@@ -11,9 +11,9 @@ using WPFVersion.Messages.DataMessages;
 
 namespace WPFVersion.Model
 {
-    internal sealed class PathfindingVisualizationModel : PathfindingVisualization, IDisposable
+    internal sealed class PathfindingVisualizationModel : PathfindingVisualization<Graph2D<Vertex>, Vertex>, IDisposable
     {
-        public PathfindingVisualizationModel(IGraph graph) : base(graph)
+        public PathfindingVisualizationModel(Graph2D<Vertex> graph) : base(graph)
         {
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<PathFoundMessage>(this, PathFound);

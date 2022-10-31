@@ -1,13 +1,11 @@
-﻿using Autofac;
-using Common.Interface;
+﻿using Common.Interface;
 using ConsoleVersion.Attributes;
-using ConsoleVersion.DependencyInjection;
-using ConsoleVersion.Messages;
-using GalaSoft.MvvmLight.Messaging;
+using ConsoleVersion.Interface;
+using ConsoleVersion.Model;
 using GraphLib.Interfaces;
+using GraphLib.Realizations.Graphs;
 using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
-using NullObject.Extensions;
 using System;
 
 namespace ConsoleVersion.ViewModel
@@ -16,22 +14,18 @@ namespace ConsoleVersion.ViewModel
     {
         public event Action WindowClosed;
 
-        private readonly IMessenger messenger;
-        private readonly IGraphSerializationModule module;
+        private readonly IGraphSerializationModule<Graph2D<Vertex>, Vertex> module;
 
-        private IGraph Graph { get; set; }
+        private IGraph<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
-        public GraphSaveViewModel(IGraphSerializationModule module)
+        public GraphSaveViewModel(IGraphSerializationModule<Graph2D<Vertex>, Vertex> module, ICache<Graph2D<Vertex>> graph)
         {
-            messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<ClaimGraphAnswer>(this, OnClaimAnswerRecieved);
-            messenger.Send(new ClaimGraphMessage());
             this.module = module;
+            Graph = graph.Cached;
         }
 
         public void Dispose()
         {
-            messenger.Unregister(this);
             WindowClosed = null;
         }
 
@@ -48,14 +42,9 @@ namespace ConsoleVersion.ViewModel
             WindowClosed?.Invoke();
         }
 
-        private void OnClaimAnswerRecieved(ClaimGraphAnswer answer)
-        {
-            Graph = answer.Graph;
-        }
-
         private bool IsGraphValid()
         {
-            return !Graph.IsNull();
+            return Graph != Graph2D<Vertex>.Empty;
         }
     }
 }

@@ -1,12 +1,8 @@
-﻿using Autofac;
-using Common.Interface;
+﻿using Common.Interface;
 using ConsoleVersion.Attributes;
-using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
-using ConsoleVersion.Messages;
 using ConsoleVersion.Model;
-using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Realizations.Graphs;
 using System;
 
@@ -16,19 +12,15 @@ namespace ConsoleVersion.ViewModel
     {
         public event Action WindowClosed;
 
-        private readonly IMessenger messenger;
-
-        private Graph2D Graph { get; set; }
+        private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
         public IInput<int> IntInput { get; set; }
 
         private Vertex Vertex => IntInput.InputVertex(Graph);
 
-        public VertexStateViewModel()
+        public VertexStateViewModel(ICache<Graph2D<Vertex>> cache)
         {
-            messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<ClaimGraphAnswer>(this, OnGraphRecieved);
-            messenger.Send(new ClaimGraphMessage());
+            Graph = cache.Cached;
         }
 
         [MenuItem(MenuItemsNames.ReverseVertex, 0)]
@@ -51,13 +43,7 @@ namespace ConsoleVersion.ViewModel
 
         public void Dispose()
         {
-            messenger.Unregister(this);
             WindowClosed = null;
-        }
-
-        private void OnGraphRecieved(ClaimGraphAnswer message)
-        {
-            Graph = (Graph2D)message.Graph;
         }
     }
 }

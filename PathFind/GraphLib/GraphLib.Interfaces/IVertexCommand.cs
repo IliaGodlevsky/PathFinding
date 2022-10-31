@@ -2,7 +2,8 @@
 
 namespace GraphLib.Interfaces
 {
-    public interface IVertexCommand : IExecutable<IVertex>, IExecutionCheck<IVertex>
+    public interface IVertexCommand<TVertex> : IExecutable<TVertex>, IExecutionCheck<TVertex>
+        where TVertex : IVertex
     {
 
     }

@@ -83,6 +83,10 @@
       <Project>{B80C5250-3D81-4742-B8A5-84AE39122BA9}</Project>
       <Name>GraphLib.Realizations</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Serialization\GraphLib.Serialization.csproj">
+      <Project>{412839A0-77FF-4B66-85C9-50DC07E8FDB7}</Project>
+      <Name>GraphLib.Serialization</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\GraphLib\GraphLib.TestRealizations\GraphLib.TestRealizations.csproj">
       <Project>{8df766e8-189d-4845-917d-dd60eabf556a}</Project>
       <Name>GraphLib.TestRealizations</Name>

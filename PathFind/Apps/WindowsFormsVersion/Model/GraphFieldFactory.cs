@@ -5,11 +5,11 @@ using WindowsFormsVersion.View;
 
 namespace WindowsFormsVersion.Model
 {
-    internal sealed class GraphFieldFactory : IGraphFieldFactory
+    internal sealed class GraphFieldFactory : IGraphFieldFactory<Graph2D<Vertex>, Vertex, WinFormsGraphField>
     {
-        public IGraphField CreateGraphField(IGraph graph)
+        public WinFormsGraphField CreateGraphField(Graph2D<Vertex> graph)
         {
-            return new WinFormsGraphField((Graph2D)graph) { Location = new Point(4, 90) };
+            return new WinFormsGraphField(graph) { Location = new Point(4, 90) };
         }
     }
 }

@@ -1,15 +1,12 @@
-﻿using Autofac;
-using Common.Interface;
+﻿using Common.Interface;
 using ConsoleVersion.Attributes;
-using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
-using ConsoleVersion.Messages;
 using ConsoleVersion.Model;
-using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Extensions;
+using GraphLib.Realizations.Graphs;
 using System;
 using System.Collections.Generic;
 
@@ -21,9 +18,8 @@ namespace ConsoleVersion.ViewModel
 
         private readonly IMeanCost meanAlgorithm;
         private readonly IVertexCostFactory costFactory;
-        private readonly IMessenger messenger;
 
-        private IGraph graph;
+        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         public IInput<int> IntInput { get; set; }
 
@@ -35,13 +31,12 @@ namespace ConsoleVersion.ViewModel
 
         private ISmoothLevel SmoothLevel => SmoothLevels[SmoothLevelIndex];
 
-        public GraphSmoothViewModel(IMeanCost meanAlgorithm, IVertexCostFactory costFactory)
+        public GraphSmoothViewModel(IMeanCost meanAlgorithm, 
+            IVertexCostFactory costFactory, ICache<Graph2D<Vertex>> graph)
         {
-            messenger = DI.Container.Resolve<IMessenger>();
             this.costFactory = costFactory;
             this.meanAlgorithm = meanAlgorithm;
-            messenger.Register<ClaimGraphAnswer>(this, GetGraph);
-            messenger.Send(new ClaimGraphMessage());
+            this.graph = graph.Cached;
         }
 
         [MenuItem(MenuItemsNames.SmoothGraph, 0)]
@@ -58,13 +53,7 @@ namespace ConsoleVersion.ViewModel
 
         public void Dispose()
         {
-            messenger.Unregister(this);
             WindowClosed = null;
-        }
-
-        private void GetGraph(ClaimGraphAnswer answer)
-        {
-            graph = answer.Graph;
         }
     }
 }

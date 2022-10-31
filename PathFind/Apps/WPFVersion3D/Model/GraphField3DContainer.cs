@@ -1,5 +1,4 @@
-﻿using GraphLib.Interfaces;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media.Media3D;
 
 namespace WPFVersion3D.Model
@@ -12,12 +11,12 @@ namespace WPFVersion3D.Model
         {
             GraphFieldProperty = DependencyProperty.Register(
                 nameof(GraphField),
-                typeof(IGraphField),
+                typeof(GraphField3D),
                 typeof(GraphField3DContainer),
                 new PropertyMetadata(OnGraphFieldChanged));
         }
 
-        public IGraphField GraphField
+        public GraphField3D GraphField
         {
             get => (GraphField3D)GetValue(GraphFieldProperty);
             set => SetValue(GraphFieldProperty, value);

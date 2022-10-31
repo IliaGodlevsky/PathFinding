@@ -6,21 +6,22 @@ using System.Collections.Generic;
 
 namespace GraphLib.Base.EndPoints.Commands.VerticesCommands
 {
-    internal sealed class IntermediateToReplaceCommands : BaseVerticesCommands
+    internal sealed class IntermediateToReplaceCommands<TVertex> : BaseVerticesCommands<TVertex>
+        where TVertex : IVertex, IVisualizable
     {
-        public IntermediateToReplaceCommands(BaseEndPoints endPoints) : base(endPoints)
+        public IntermediateToReplaceCommands(BaseEndPoints<TVertex> endPoints) : base(endPoints)
         {
         }
 
-        protected override IEnumerable<IVertexCommand> GetCommands(BaseEndPoints endPoints)
+        protected override IEnumerable<IVertexCommand<TVertex>> GetCommands(BaseEndPoints<TVertex> endPoints)
         {
-            yield return new CancelMarkToReplaceCommand(endPoints);
-            yield return new MarkToReplaceCommand(endPoints);
+            yield return new CancelMarkToReplaceCommand<TVertex>(endPoints);
+            yield return new MarkToReplaceCommand<TVertex>(endPoints);
         }
 
-        protected override IEnumerable<IUndoCommand> GetUndoCommands(BaseEndPoints endPoints)
+        protected override IEnumerable<IUndoCommand> GetUndoCommands(BaseEndPoints<TVertex> endPoints)
         {
-            yield return new UndoMarkToReplaceCommand(endPoints);
+            yield return new UndoMarkToReplaceCommand<TVertex>(endPoints);
         }
     }
 }

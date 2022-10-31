@@ -3,7 +3,7 @@ using GraphLib.Interfaces.Factories;
 
 namespace ConsoleVersion.Model
 {
-    internal sealed class VertexFactory : IVertexFactory
+    internal sealed class VertexFactory : IVertexFactory<Vertex>
     {
         private readonly IVisualization<Vertex> visualization;
 
@@ -12,9 +12,9 @@ namespace ConsoleVersion.Model
             this.visualization = visualization;
         }
 
-        public IVertex CreateVertex(INeighborhood coordinateRadar, ICoordinate coordinate)
+        public Vertex CreateVertex(ICoordinate coordinate)
         {
-            return new Vertex(coordinateRadar, coordinate, visualization);
+            return new Vertex(coordinate, visualization);
         }
     }
 }

@@ -13,9 +13,8 @@ using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations;
+using GraphLib.Realizations.Graphs;
 using Logging.Interface;
-using NullObject.Extensions;
 using System;
 using System.Drawing;
 using static GraphLib.Base.BaseVertexCost;
@@ -23,18 +22,17 @@ using Console = Colorful.Console;
 
 namespace ConsoleVersion.ViewModel
 {
-    internal sealed class MainViewModel : IViewModel, IRequireAnswerInput, IRequireIntInput, IDisposable
+    internal sealed class MainViewModel : IViewModel, ICache<Graph2D<Vertex>>, IRequireAnswerInput, IRequireIntInput, IDisposable
     {
         public event Action WindowClosed;
 
         private readonly ILog log;
         private readonly IMessenger messenger;
-        private readonly IGraphEvents events;
-        private readonly IGraphFieldFactory fieldFactory;
-        private readonly BaseEndPoints endPoints;
+        private readonly IGraphEvents<Vertex> events;
+        private readonly IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField> fieldFactory;
+        private readonly BaseEndPoints<Vertex> endPoints;
 
-        private IGraph graph;
-        private IGraphField graphField;
+        private GraphField graphField;
 
         public IProperty<string> GraphParamters { get; private set; }
 
@@ -42,15 +40,16 @@ namespace ConsoleVersion.ViewModel
 
         public IInput<Answer> AnswerInput { get; set; }
 
-        public MainViewModel(IGraphFieldFactory fieldFactory,
-            IGraphEvents events, BaseEndPoints endPoints, ILog log)
+        public Graph2D<Vertex> Cached { get; private set; }
+
+        public MainViewModel(IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField> fieldFactory,
+            IGraphEvents<Vertex> events, BaseEndPoints<Vertex> endPoints, ILog log)
         {
-            graph = NullGraph.Interface;
+            Cached = Graph2D<Vertex>.Empty;
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<GraphCreatedMessage>(this, SetGraph);
             messenger.Register<ClearGraphMessage>(this, message => ClearGraph());
             messenger.Register<ClearColorsMessage>(this, message => ClearColors());
-            messenger.Register<ClaimGraphMessage>(this, RecieveClaimGraphMessage);
             this.fieldFactory = fieldFactory;
             this.events = events;
             this.endPoints = endPoints;
@@ -99,7 +98,7 @@ namespace ConsoleVersion.ViewModel
 
         public void ClearGraph()
         {
-            graph.Refresh();
+            Cached.Refresh();
             GraphParamters = GraphParamsProperty.Empty;
             endPoints.Reset();
             messenger.Send(UpdateStatisticsMessage.Empty);
@@ -107,7 +106,7 @@ namespace ConsoleVersion.ViewModel
 
         public void ClearColors()
         {
-            graph.Refresh();
+            Cached.Refresh();
             endPoints.RestoreCurrentColors();
         }
 
@@ -118,7 +117,7 @@ namespace ConsoleVersion.ViewModel
                 Console.Clear();
                 Console.ForegroundColor = Color.White;
                 Console.WriteLine(GraphParamters);
-                (graphField as IDisplayable)?.Display();
+                graphField?.Display();
                 Console.WriteLine();
                 MainView.SetCursorPositionUnderMenu(1);
             }
@@ -135,24 +134,16 @@ namespace ConsoleVersion.ViewModel
         private void SetGraph(GraphCreatedMessage message)
         {
             endPoints.Reset();
-            events.Unsubscribe(graph);
-            graph = message.Graph;
-            graphField = fieldFactory.CreateGraphField(graph);
-            events.Subscribe(graph);
-            GraphParamters = GraphParamsProperty.Assign(graph);
-        }
-
-        private void RecieveClaimGraphMessage(ClaimGraphMessage message)
-        {
-            if (!graph.IsNull())
-            {
-                messenger.Send(new ClaimGraphAnswer(graph));
-            }
+            events.Unsubscribe(Cached);
+            Cached = message.Graph;
+            graphField = fieldFactory.CreateGraphField(Cached);
+            events.Subscribe(Cached);
+            GraphParamters = GraphParamsProperty.Assign(Cached);
         }
 
         private bool IsGraphValid()
         {
-            return !graph.IsNull() && graph.Count > 0;
+            return Cached != Graph2D<Vertex>.Empty && Cached.Count > 0;
         }
 
         private bool CanExecuteInterrupt()

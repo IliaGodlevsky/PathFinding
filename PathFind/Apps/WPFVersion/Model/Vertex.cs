@@ -2,7 +2,6 @@
 using GraphLib.Interfaces;
 using GraphLib.Serialization;
 using GraphLib.Serialization.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
@@ -13,7 +12,7 @@ using static WPFVersion.Constants;
 namespace WPFVersion.Model
 {
     [DebuggerDisplay("{Position.ToString()}")]
-    internal class Vertex : ContentControl, IVertex, IVisualizable
+    public class Vertex : ContentControl, IVertex, IVisualizable
     {
         public static readonly RoutedEvent EnqueuedEvent;
         public static readonly RoutedEvent ColoredAsPathEvent;
@@ -31,7 +30,6 @@ namespace WPFVersion.Model
         }
 
         private readonly VertexVisualization visualization;
-        private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
 
         private IVertexCost cost;
         private bool isObstacle;
@@ -91,11 +89,9 @@ namespace WPFVersion.Model
             }
         }
 
-        public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
+        public IReadOnlyCollection<IVertex> Neighbours { get; set; }
 
-        public IGraph Graph { get; }
-
-        public Vertex(IReadOnlyCollection<ICoordinate> neighborhood, ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
+        public Vertex(ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
         {
             RenderTransformOrigin = new Point(0.5, 0.5);
             RenderTransform = new ScaleTransform();
@@ -104,11 +100,10 @@ namespace WPFVersion.Model
             Template = (ControlTemplate)TryFindResource("VertexTemplate");
             Position = coordinate;
             this.Initialize();
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighboursWithinGraph(this));
         }
 
         public Vertex(VertexSerializationInfo info, IVisualization<Vertex> visualization)
-            : this(info.Neighbourhood, info.Position, visualization)
+            : this(info.Position, visualization)
         {
             this.Initialize(info);
         }

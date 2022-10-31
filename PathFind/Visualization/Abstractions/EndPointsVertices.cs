@@ -1,24 +1,24 @@
 ﻿using Algorithm.Interfaces;
 using Commands.Interfaces;
-using GraphLib.Extensions;
+using Common.ReadOnly;
 using GraphLib.Interfaces;
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Visualization.Interfaces;
 
 namespace Visualization.Abstractions
 {
-    internal abstract class EndPointsVertices : IVisualizationSlides<IVertex>, IExecutable<IAlgorithm<IGraphPath>>, IAlgorithmVertices
+    internal abstract class EndPointsVertices<TVertex> : IVisualizationSlides<TVertex>, IExecutable<IAlgorithm<IGraphPath>>, IAlgorithmVertices<TVertex>
+        where TVertex : IVertex, IVisualizable
     {
-        private readonly ConcurrentDictionary<IAlgorithm<IGraphPath>, IVertex> vertices;
+        private readonly ConcurrentDictionary<IAlgorithm<IGraphPath>, TVertex> vertices;
 
         public EndPointsVertices()
         {
-            vertices = new ConcurrentDictionary<IAlgorithm<IGraphPath>, IVertex>();
+            vertices = new ConcurrentDictionary<IAlgorithm<IGraphPath>, TVertex>();
         }
 
-        public void Add(IAlgorithm<IGraphPath> algorithm, IVertex vertex)
+        public void Add(IAlgorithm<IGraphPath> algorithm, TVertex vertex)
         {
             vertices[algorithm] = vertex;
         }
@@ -28,9 +28,13 @@ namespace Visualization.Abstractions
             vertices.Clear();
         }
 
-        public IReadOnlyCollection<IVertex> GetVertices(IAlgorithm<IGraphPath> algorithm)
+        public IReadOnlyCollection<TVertex> GetVertices(IAlgorithm<IGraphPath> algorithm)
         {
-            return Array.AsReadOnly(new[] { vertices.GetOrNullVertex(algorithm) });
+            if (vertices.TryGetValue(algorithm, out var vertex))
+            {
+                return new ReadOnlyList<TVertex>(vertex);
+            }
+            return ReadOnlyList<TVertex>.Empty;
         }
 
         public void Remove(IAlgorithm<IGraphPath> algorithm)
@@ -40,8 +44,10 @@ namespace Visualization.Abstractions
 
         public void Execute(IAlgorithm<IGraphPath> algorithm)
         {
-            var vertex = vertices.GetOrNullVertex(algorithm).AsVisualizable();
-            Visualize(vertex);
+            if (vertices.TryGetValue(algorithm, out var vertex))
+            {
+                Visualize(vertex);
+            }
         }
 
         protected abstract void Visualize(IVisualizable visualizable);

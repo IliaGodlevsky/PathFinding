@@ -1,7 +1,6 @@
 ﻿using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
 using GraphLib.Base.EventHolder;
-using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using System;
 
@@ -9,7 +8,7 @@ using static GraphLib.Base.BaseVertexCost;
 
 namespace ConsoleVersion.Model
 {
-    internal sealed class GraphEvents : BaseGraphEvents, IRequireIntInput
+    internal sealed class GraphEvents : BaseGraphEvents<Vertex>, IRequireIntInput
     {
         public IInput<int> IntInput { get; set; }
 
@@ -33,22 +32,16 @@ namespace ConsoleVersion.Model
             return 0;
         }
 
-        protected override void SubscribeToEvents(IVertex vertex)
+        protected override void SubscribeToEvents(Vertex vertex)
         {
-            if (vertex is Vertex vert)
-            {
-                vert.VertexCostChanged += ChangeVertexCost;
-                vert.VertexReversed += Reverse;
-            }
+            vertex.VertexCostChanged += ChangeVertexCost;
+            vertex.VertexReversed += Reverse;
         }
 
-        protected override void UnsubscribeFromEvents(IVertex vertex)
+        protected override void UnsubscribeFromEvents(Vertex vertex)
         {
-            if (vertex is Vertex vert)
-            {
-                vert.VertexCostChanged -= ChangeVertexCost;
-                vert.VertexReversed -= Reverse;
-            }
+            vertex.VertexCostChanged -= ChangeVertexCost;
+            vertex.VertexReversed -= Reverse;
         }
     }
 }

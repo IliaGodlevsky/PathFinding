@@ -3,6 +3,7 @@ using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Extensions;
 using GraphLib.Interfaces.Factories;
+using GraphLib.Realizations.Graphs;
 using GraphLib.ViewModel;
 using Logging.Interface;
 using System;
@@ -11,14 +12,15 @@ using ValueRange.Extensions;
 using WindowsFormsVersion.DependencyInjection;
 using WindowsFormsVersion.Enums;
 using WindowsFormsVersion.Messeges;
+using WindowsFormsVersion.Model;
 
 namespace WindowsFormsVersion.ViewModel
 {
-    internal class GraphCreatingViewModel : GraphCreatingModel, IViewModel, IDisposable
+    internal class GraphCreatingViewModel : GraphCreatingModel<Graph2D<Vertex>, Vertex>, IViewModel, IDisposable
     {
         public event Action WindowClosed;
 
-        public GraphCreatingViewModel(IEnumerable<IGraphAssemble> graphAssembles, ILog log)
+        public GraphCreatingViewModel(IEnumerable<IGraphAssemble<Graph2D<Vertex>, Vertex>> graphAssembles, ILog log)
             : base(log, graphAssembles)
         {
             messenger = DI.Container.Resolve<IMessenger>();

@@ -14,7 +14,7 @@ namespace WindowsFormsVersion.Model
     [DebuggerDisplay("{Position.ToString()}")]
     internal class Vertex : Label, IVertex, IVisualizable
     {
-        public Vertex(IReadOnlyCollection<ICoordinate> neighborhood, ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
+        public Vertex(ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
         {
             this.visualization = visualization;
             float fontSize = VertexSize * TextToSizeRatio;
@@ -23,16 +23,13 @@ namespace WindowsFormsVersion.Model
             TextAlign = ContentAlignment.MiddleCenter;
             this.Initialize();
             Position = coordinate;
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighboursWithinGraph(this));
         }
 
         public Vertex(VertexSerializationInfo info, IVisualization<Vertex> visualization)
-            : this(info.Neighbourhood, info.Position, visualization)
+            : this(info.Position, visualization)
         {
             this.Initialize(info);
         }
-
-        public IGraph Graph { get; }
 
         private IVertexCost cost;
         public IVertexCost Cost
@@ -47,7 +44,7 @@ namespace WindowsFormsVersion.Model
 
         public ICoordinate Position { get; }
 
-        public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
+        public IReadOnlyCollection<IVertex> Neighbours { get; set; }
 
         private bool isObstacle;
         public bool IsObstacle

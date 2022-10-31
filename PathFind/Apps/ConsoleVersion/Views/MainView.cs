@@ -6,9 +6,8 @@ using ConsoleVersion.Model;
 using ConsoleVersion.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
-using GraphLib.Interfaces;
-using GraphLib.NullRealizations;
 using GraphLib.Realizations.Coordinates;
+using GraphLib.Realizations.Graphs;
 using System;
 
 namespace ConsoleVersion.Views
@@ -20,7 +19,7 @@ namespace ConsoleVersion.Views
 
         private readonly IMessenger messenger;
 
-        private IGraph graph = NullGraph.Interface;
+        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         public static int LateralDistanceBetweenVertices { get; private set; }
 

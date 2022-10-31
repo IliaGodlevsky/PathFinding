@@ -19,9 +19,9 @@ namespace WPFVersion.Model
 
         public Color CostColor { get; set; } = Colors.DodgerBlue;
 
-        public CostColors(IGraph graph)
+        public CostColors(IGraph<Vertex> graph)
         {
-            this.graph = graph.Cast<Vertex>().ToReadOnly();
+            this.graph = graph.ToReadOnly();
             previousColors = new List<Brush>();
             costColors = new Lazy<IReadOnlyDictionary<int, Brush>>(FormCostColors);
         }

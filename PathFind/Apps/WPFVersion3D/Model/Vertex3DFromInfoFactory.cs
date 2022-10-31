@@ -7,7 +7,7 @@ using WPFVersion3D.Interface;
 
 namespace WPFVersion3D.Model
 {
-    internal sealed class Vertex3DFromInfoFactory : IVertexFromInfoFactory
+    internal sealed class Vertex3DFromInfoFactory : IVertexFromInfoFactory<Vertex3D>
     {
         private static readonly Dispatcher Dispatcher = Application.Current.Dispatcher;
 
@@ -25,7 +25,7 @@ namespace WPFVersion3D.Model
             this.visualization = visualization;
         }
 
-        public IVertex CreateFrom(VertexSerializationInfo info)
+        public Vertex3D CreateFrom(VertexSerializationInfo info)
         {
             return Application.Current.Dispatcher.Invoke(() => new Vertex3D(info, model3DFactory, visualization));
         }

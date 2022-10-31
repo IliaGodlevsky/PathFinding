@@ -1,13 +1,8 @@
-﻿using Autofac;
-using Common.Extensions;
-using Common.Interface;
+﻿using Common.Interface;
 using ConsoleVersion.Attributes;
-using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.Extensions;
 using ConsoleVersion.Interface;
-using ConsoleVersion.Messages;
 using ConsoleVersion.Model;
-using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
 using GraphLib.Realizations.Graphs;
@@ -21,22 +16,19 @@ namespace ConsoleVersion.ViewModel
     {
         public event Action WindowClosed;
 
-        private readonly BaseEndPoints endPoints;
+        private readonly BaseEndPoints<Vertex> endPoints;
         private readonly ILog log;
-        private readonly IMessenger messenger;
 
         private int numberOfIntermediates;
-        private Graph2D graph;
+        private readonly Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         public IInput<int> IntInput { get; set; }
 
-        public EndPointsViewModel(BaseEndPoints endPoints, ILog log)
+        public EndPointsViewModel(BaseEndPoints<Vertex> endPoints, ICache<Graph2D<Vertex>> graph, ILog log)
         {
             this.endPoints = endPoints;
             this.log = log;
-            messenger = DI.Container.Resolve<IMessenger>();
-            messenger.Register<ClaimGraphAnswer>(this, SetGraph);
-            messenger.Send(new ClaimGraphMessage());
+            this.graph = graph.Cached;
         }
 
         [Condition(nameof(CanChooseEndPoints))]
@@ -51,7 +43,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.ReplaceSource, 2)]
         public void ReplaceSourceVertex()
         {
-            endPoints.Source.As<Vertex>().OnEndPointChosen();
+            endPoints.Source.OnEndPointChosen();
             IntInput.InputEndPoint(MessagesTexts.SourceVertexChoiceMsg, graph, endPoints).OnEndPointChosen();
         }
 
@@ -59,7 +51,7 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.ReplaceTarget, 3)]
         public void ReplaceTargetVertex()
         {
-            endPoints.Target.As<Vertex>().OnEndPointChosen();
+            endPoints.Target.OnEndPointChosen();
             IntInput.InputEndPoint(MessagesTexts.TargetVertexChoiceMsg, graph, endPoints).OnEndPointChosen();
         }
 
@@ -100,12 +92,6 @@ namespace ConsoleVersion.ViewModel
         public void Dispose()
         {
             WindowClosed = null;
-            messenger.Unregister(this);
-        }
-
-        private void SetGraph(ClaimGraphAnswer message)
-        {
-            graph = (Graph2D)message.Graph;
         }
 
         private bool CanReplaceIntermediates()

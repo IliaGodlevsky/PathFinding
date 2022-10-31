@@ -6,7 +6,7 @@ namespace GraphLib.TestRealizations.TestFactories.Matrix
 {
     internal sealed class CostMatrix : BaseMatrix<int>
     {
-        public CostMatrix(Graph2D graph) : base(graph)
+        public CostMatrix(Graph2D<TestVertex> graph) : base(graph)
         {
 
         }

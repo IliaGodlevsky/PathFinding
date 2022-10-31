@@ -1,9 +1,10 @@
 ﻿namespace GraphLib.Interfaces
 {
-    public interface IGraphEvents
+    public interface IGraphEvents<in TVertex>
+        where TVertex : IVertex
     {
-        void Subscribe(IGraph graph);
+        void Subscribe(IGraph<TVertex> graph);
 
-        void Unsubscribe(IGraph graph);
+        void Unsubscribe(IGraph<TVertex> graph);
     }
 }

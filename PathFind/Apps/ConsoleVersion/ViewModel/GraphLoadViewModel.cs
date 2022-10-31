@@ -3,8 +3,10 @@ using Common.Interface;
 using ConsoleVersion.Attributes;
 using ConsoleVersion.DependencyInjection;
 using ConsoleVersion.Messages;
+using ConsoleVersion.Model;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base;
+using GraphLib.Realizations.Graphs;
 using GraphLib.Serialization.Interfaces;
 using System;
 
@@ -15,9 +17,9 @@ namespace ConsoleVersion.ViewModel
         public event Action WindowClosed;
 
         private readonly IMessenger messenger;
-        private readonly IGraphSerializationModule module;
+        private readonly IGraphSerializationModule<Graph2D<Vertex>, Vertex> module;
 
-        public GraphLoadViewModel(IGraphSerializationModule module)
+        public GraphLoadViewModel(IGraphSerializationModule<Graph2D<Vertex>, Vertex> module)
         {
             messenger = DI.Container.Resolve<IMessenger>();
             this.module = module;

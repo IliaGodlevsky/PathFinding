@@ -62,6 +62,7 @@
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IGraphPathExtensions.cs" />
     <Compile Include="Extensions\IInputExtensions.cs" />
+    <Compile Include="Interface\ICache.cs" />
     <Compile Include="Interface\ICompanionMethods.cs" />
     <Compile Include="Interface\IMenu.cs" />
     <Compile Include="Interface\IMenuCommand.cs" />
@@ -72,8 +73,6 @@
     <Compile Include="Interface\IRequireStringInput.cs" />
     <Compile Include="Interface\IRequireTimeSpanInput.cs" />
     <Compile Include="MenuItemsNames.cs" />
-    <Compile Include="Messages\ClaimGraphAnswer.cs" />
-    <Compile Include="Messages\ClaimGraphMessage.cs" />
     <Compile Include="Messages\ClearColorMessage.cs" />
     <Compile Include="Messages\ClearGraphMessage.cs" />
     <Compile Include="Messages\CostRangeChangedMessage.cs" />

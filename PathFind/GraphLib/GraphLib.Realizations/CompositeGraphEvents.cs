@@ -4,21 +4,22 @@ using System.Collections.Generic;
 
 namespace GraphLib.Realizations
 {
-    public sealed class CompositeGraphEvents : IGraphEvents
+    public sealed class CompositeGraphEvents<TVertex> : IGraphEvents<TVertex>
+        where TVertex : IVertex
     {
-        private readonly IEnumerable<IGraphEvents> events;
+        private readonly IEnumerable<IGraphEvents<TVertex>> events;
 
-        public CompositeGraphEvents(params IGraphEvents[] events)
+        public CompositeGraphEvents(params IGraphEvents<TVertex>[] events)
         {
             this.events = events;
         }
 
-        public void Subscribe(IGraph graph)
+        public void Subscribe(IGraph<TVertex> graph)
         {
             events.ForEach(@event => @event.Subscribe(graph));
         }
 
-        public void Unsubscribe(IGraph graph)
+        public void Unsubscribe(IGraph<TVertex> graph)
         {
             events.ForEach(@event => @event.Unsubscribe(graph));
         }

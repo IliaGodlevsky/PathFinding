@@ -4,21 +4,21 @@ using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using Visualization.Interfaces;
 
 namespace Visualization.Abstractions
 {
-    internal abstract class ResultVertices : IVisualizationSlides<IVertex>, IExecutable<IAlgorithm<IGraphPath>>, IAlgorithmVertices
+    internal abstract class ResultVertices<TVertex> : IVisualizationSlides<TVertex>, IExecutable<IAlgorithm<IGraphPath>>, IAlgorithmVertices<TVertex>
+        where TVertex : IVertex, IVisualizable
     {
-        private readonly ConcurrentDictionary<IAlgorithm<IGraphPath>, ConcurrentBag<IVertex>> vertices;
+        private readonly ConcurrentDictionary<IAlgorithm<IGraphPath>, ConcurrentBag<TVertex>> vertices;
 
         public ResultVertices()
         {
-            vertices = new ConcurrentDictionary<IAlgorithm<IGraphPath>, ConcurrentBag<IVertex>>();
+            vertices = new ConcurrentDictionary<IAlgorithm<IGraphPath>, ConcurrentBag<TVertex>>();
         }
 
-        public void Add(IAlgorithm<IGraphPath> algorithm, IVertex vertex)
+        public void Add(IAlgorithm<IGraphPath> algorithm, TVertex vertex)
         {
             vertices.TryGetOrAddNew(algorithm).Add(vertex);
         }
@@ -28,7 +28,7 @@ namespace Visualization.Abstractions
             vertices.Clear();
         }
 
-        public IReadOnlyCollection<IVertex> GetVertices(IAlgorithm<IGraphPath> algorithm)
+        public IReadOnlyCollection<TVertex> GetVertices(IAlgorithm<IGraphPath> algorithm)
         {
             return vertices.GetOrEmpty(algorithm);
         }
@@ -40,7 +40,7 @@ namespace Visualization.Abstractions
 
         public void Execute(IAlgorithm<IGraphPath> algorithm)
         {
-            vertices.GetOrEmpty(algorithm).OfType<IVisualizable>().ForEach(Visualize);
+            vertices.GetOrEmpty(algorithm).ForEach(item => Visualize(item));
         }
 
         protected abstract void Visualize(IVisualizable visualizable);

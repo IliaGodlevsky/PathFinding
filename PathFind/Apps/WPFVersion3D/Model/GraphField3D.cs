@@ -2,14 +2,13 @@
 using GraphLib.Interfaces;
 using GraphLib.Realizations.Graphs;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Media.Media3D;
 using WPFVersion3D.Interface;
 using WPFVersion3D.Model.Axes;
 
 namespace WPFVersion3D.Model
 {
-    internal sealed class GraphField3D : ModelVisual3D, IGraphField
+    internal sealed class GraphField3D : ModelVisual3D, IGraphField<Vertex3D>
     {
         public IAxis Abscissa { get; }
 
@@ -17,13 +16,11 @@ namespace WPFVersion3D.Model
 
         public IAxis Applicate { get; }
 
-        private IReadOnlyCollection<Vertex3D> Vertices { get; }
+        public IReadOnlyCollection<Vertex3D> Vertices { get; }
 
-        IReadOnlyCollection<IVertex> IGraphField.Vertices => Vertices;
-
-        public GraphField3D(Graph3D graph)
+        public GraphField3D(Graph3D<Vertex3D> graph)
         {
-            Vertices = graph.OfType<Vertex3D>().ToReadOnly();
+            Vertices = graph;
             Children.AddRange(Vertices);
             Abscissa = new Abscissa(graph);
             Ordinate = new Ordinate(graph);

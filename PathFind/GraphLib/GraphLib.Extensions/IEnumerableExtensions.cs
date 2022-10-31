@@ -25,18 +25,17 @@ namespace GraphLib.Extensions
             return collection.FirstOrDefault(predicate) ?? NullVertex.Interface;
         }
 
-        public static T VisualizeAsPath<T>(this T path)
-            where T : IEnumerable<IVertex>
+        public static IEnumerable<T> VisualizeAsPath<T>(this IEnumerable<T> path)
+            where T : IVisualizable
         {
-            path.OfType<IVisualizable>()
-                .Reverse()
+            path.Reverse()
                 .Where(vertex => !vertex.IsVisualizedAsEndPoint)
                 .ForEach(vertex => vertex.VisualizeAsPath());
             return path;
         }
 
-        public static async Task<T> VisualizeAsPathAsync<T>(this T path)
-            where T : IEnumerable<IVertex>
+        public static async Task<IEnumerable<T>> VisualizeAsPathAsync<T>(this IEnumerable<T> path)
+            where T : IVisualizable
         {
             return await Task.Run(() => path.VisualizeAsPath()).ConfigureAwait(false);
         }

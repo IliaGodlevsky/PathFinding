@@ -3,7 +3,8 @@ using Visualization.Abstractions;
 
 namespace Visualization.Realizations
 {
-    internal sealed class ObstacleVertices : ResultVertices
+    internal sealed class ObstacleVertices<TVertex> : ResultVertices<TVertex>
+        where TVertex : IVertex, IVisualizable
     {
         protected override void Visualize(IVisualizable visualizable)
         {

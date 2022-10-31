@@ -78,6 +78,7 @@
     <Compile Include="Infrastructure\States\RotationState.cs" />
     <Compile Include="Interface\IAxis.cs" />
     <Compile Include="Interface\IAnimatedAxisRotatorFactory.cs" />
+    <Compile Include="Interface\ICache.cs" />
     <Compile Include="Interface\IChangeColorOpacity.cs" />
     <Compile Include="Interface\IPassValueMessage.cs" />
     <Compile Include="Interface\IRotationState.cs" />

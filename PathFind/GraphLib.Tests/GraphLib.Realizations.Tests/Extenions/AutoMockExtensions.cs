@@ -14,11 +14,13 @@ namespace GraphLib.Realizations.Tests.Extenions
             self.Mock<IVertexCostFactory>().Setup(x => x.CreateCost(It.IsAny<int>())).Returns<int>(returnCallback);
         }
 
-        public static void MockGraphFactory(this AutoMock self, Func<IReadOnlyCollection<IVertex>, int[], IGraph> returnCallback)
+        public static void MockGraphFactory<TGraph, TVertex>(this AutoMock self, Func<IReadOnlyCollection<TVertex>, int[], TGraph> returnCallback)
+            where TGraph : IGraph<TVertex>
+            where TVertex : IVertex
         {
-            self.Mock<IGraphFactory>()
-                .Setup(x => x.CreateGraph(It.IsAny<IReadOnlyCollection<IVertex>>(), It.IsAny<int[]>()))
-                .Returns<IReadOnlyCollection<IVertex>, int[]>(returnCallback);
+            self.Mock<IGraphFactory<TGraph, TVertex>>()
+                .Setup(x => x.CreateGraph(It.IsAny<IReadOnlyCollection<TVertex>>(), It.IsAny<int[]>()))
+                .Returns<IReadOnlyCollection<TVertex>, int[]>(returnCallback);
         }
 
         public static void MockCoordinateFactory(this AutoMock self, Func<int[], ICoordinate> returnCallback)
@@ -31,11 +33,12 @@ namespace GraphLib.Realizations.Tests.Extenions
             self.Mock<INeighborhoodFactory>().Setup(x => x.CreateNeighborhood(It.IsAny<ICoordinate>())).Returns<ICoordinate>(returnCallback);
         }
 
-        public static void MockVertexFactory(this AutoMock self, Func<INeighborhood, ICoordinate, IVertex> returnCallback)
+        public static void MockVertexFactory<TVertex>(this AutoMock self, Func<ICoordinate, TVertex> returnCallback)
+            where TVertex : IVertex
         {
-            self.Mock<IVertexFactory>()
-                .Setup(x => x.CreateVertex(It.IsAny<INeighborhood>(), It.IsAny<ICoordinate>()))
-                .Returns<INeighborhood, ICoordinate>(returnCallback);
+            self.Mock<IVertexFactory<TVertex>>()
+                .Setup(x => x.CreateVertex(It.IsAny<ICoordinate>()))
+                .Returns<ICoordinate>(returnCallback);
         }
     }
 }

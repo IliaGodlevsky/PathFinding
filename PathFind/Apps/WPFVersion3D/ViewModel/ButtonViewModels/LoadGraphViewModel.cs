@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
+using GraphLib.Realizations.Graphs;
 using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
 using Logging.Interface;
@@ -8,6 +9,7 @@ using System.Windows.Input;
 using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Infrastructure.Commands;
 using WPFVersion3D.Messages.PassValueMessages;
+using WPFVersion3D.Model;
 
 namespace WPFVersion3D.ViewModel.ButtonViewModels
 {
@@ -15,7 +17,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
     {
         private readonly IMessenger messenger;
         private readonly ILog log;
-        private readonly IGraphSerializationModule module;
+        private readonly IGraphSerializationModule<Graph3D<Vertex3D>, Vertex3D> module;
 
         private bool IsAllAlgorithmsFinishedPathfinding { get; set; } = true;
 
@@ -25,7 +27,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
         {
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAllAlgorithmFinishedPathfinding);
-            module = DI.Container.Resolve<IGraphSerializationModule>();
+            module = DI.Container.Resolve<IGraphSerializationModule<Graph3D<Vertex3D>, Vertex3D>>();
             log = DI.Container.Resolve<ILog>();
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);
         }

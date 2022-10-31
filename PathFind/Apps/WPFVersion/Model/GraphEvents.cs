@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EventHolder;
-using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using System;
 using System.Windows.Input;
@@ -10,7 +9,7 @@ using WPFVersion.Messages.ActionMessages;
 
 namespace WPFVersion.Model
 {
-    internal sealed class GraphEvents : BaseGraphEvents
+    internal sealed class GraphEvents : BaseGraphEvents<Vertex>
     {
         private readonly IMessenger messenger;
 
@@ -28,24 +27,18 @@ namespace WPFVersion.Model
             return e is MouseWheelEventArgs args ? (args.Delta > 0 ? 1 : -1) : default;
         }
 
-        protected override void SubscribeToEvents(IVertex vertex)
+        protected override void SubscribeToEvents(Vertex vertex)
         {
-            if (vertex is Vertex vert)
-            {
-                vert.MouseEnter += EditorModeReverse;
-                vert.MouseRightButtonDown += Reverse;
-                vert.MouseWheel += ChangeVertexCost;
-            }
+            vertex.MouseEnter += EditorModeReverse;
+            vertex.MouseRightButtonDown += Reverse;
+            vertex.MouseWheel += ChangeVertexCost;
         }
 
-        protected override void UnsubscribeFromEvents(IVertex vertex)
+        protected override void UnsubscribeFromEvents(Vertex vertex)
         {
-            if (vertex is Vertex vert)
-            {
-                vert.MouseEnter -= EditorModeReverse;
-                vert.MouseRightButtonDown -= Reverse;
-                vert.MouseWheel -= ChangeVertexCost;
-            }
+            vertex.MouseEnter -= EditorModeReverse;
+            vertex.MouseRightButtonDown -= Reverse;
+            vertex.MouseWheel -= ChangeVertexCost;
         }
 
         private void EditorModeReverse(object sender, EventArgs e)

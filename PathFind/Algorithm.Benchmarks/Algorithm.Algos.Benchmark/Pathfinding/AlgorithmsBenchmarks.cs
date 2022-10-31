@@ -17,16 +17,7 @@ namespace Algorithm.Algos.Benchmark.Pathfinding
             {
                 int dimension = i * 10;
                 var graph = graphAssemble.AssembleGraph(0, dimension, dimension);
-                InitializeNeighbours(graph);
                 yield return new TestEndPoints(graph);
-            }
-        }
-
-        private void InitializeNeighbours(IGraph graph)
-        {
-            foreach (var vertex in graph)
-            {
-                var neighbours = vertex.Neighbours;
             }
         }
     }

@@ -6,21 +6,22 @@ using Visualization.Interfaces;
 
 namespace Visualization.Realizations
 {
-    internal sealed class CompositeVisualizationSlides : IVisualizationSlides<IVertex>, IEnumerable<IVisualizationSlides<IVertex>>
+    internal sealed class CompositeVisualizationSlides<TVertex> : IVisualizationSlides<TVertex>, IEnumerable<IVisualizationSlides<TVertex>>
+        where TVertex : IVertex, IVisualizable
     {
-        private readonly List<IVisualizationSlides<IVertex>> slides;
+        private readonly List<IVisualizationSlides<TVertex>> slides;
 
         public CompositeVisualizationSlides()
         {
-            slides = new List<IVisualizationSlides<IVertex>>();
+            slides = new List<IVisualizationSlides<TVertex>>();
         }
 
-        public void Add(IAlgorithm<IGraphPath> algorithm, IVertex vertex)
+        public void Add(IAlgorithm<IGraphPath> algorithm, TVertex vertex)
         {
             slides.ForEach(slide => slide.Add(algorithm, vertex));
         }
 
-        public void Add(IVisualizationSlides<IVertex> slide)
+        public void Add(IVisualizationSlides<TVertex> slide)
         {
             slides.Add(slide);
         }
@@ -30,9 +31,9 @@ namespace Visualization.Realizations
             slides.ForEach(slide => slide.Clear());
         }
 
-        public IEnumerator<IVisualizationSlides<IVertex>> GetEnumerator()
+        public IEnumerator<IVisualizationSlides<TVertex>> GetEnumerator()
         {
-            return (IEnumerator<IVisualizationSlides<IVertex>>)slides.GetEnumerator();
+            return (IEnumerator<IVisualizationSlides<TVertex>>)slides.GetEnumerator();
         }
 
         public void Remove(IAlgorithm<IGraphPath> algorithm)

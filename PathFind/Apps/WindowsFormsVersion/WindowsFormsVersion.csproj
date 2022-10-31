@@ -50,6 +50,7 @@
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\ConstrolCollectionExtension.cs" />
     <Compile Include="Extensions\ControlExtension.cs" />
+    <Compile Include="Interface\ICache.cs" />
     <Compile Include="Messeges\AlgorithmStatusMessage.cs" />
     <Compile Include="Messeges\GraphCreatedMessage.cs" />
     <Compile Include="Messeges\UpdateStatisticsMessage.cs" />
@@ -85,7 +86,7 @@
     <Compile Include="View\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\VertexEventHolder.cs" />
+    <Compile Include="Model\GraphEvents.cs" />
     <Compile Include="Model\Vertex.cs">
       <SubType>Component</SubType>
     </Compile>

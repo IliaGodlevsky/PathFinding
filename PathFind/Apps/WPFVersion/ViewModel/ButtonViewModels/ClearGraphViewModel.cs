@@ -9,15 +9,16 @@ using WPFVersion.DependencyInjection;
 using WPFVersion.Infrastructure;
 using WPFVersion.Messages;
 using WPFVersion.Messages.DataMessages;
+using WPFVersion.Model;
 
 namespace WPFVersion.ViewModel.ButtonViewModels
 {
     internal class ClearGraphViewModel
     {
         private readonly IMessenger messenger;
-        private readonly BaseEndPoints endPoints;
+        private readonly BaseEndPoints<Vertex> endPoints;
 
-        private IGraph Graph { get; set; }
+        private IGraph<Vertex> Graph { get; set; }
 
         private bool IsAllAlgorithmFinishedPathfinding { get; set; } = true;
 
@@ -26,7 +27,7 @@ namespace WPFVersion.ViewModel.ButtonViewModels
         public ClearGraphViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            endPoints = DI.Container.Resolve<BaseEndPoints>();
+            endPoints = DI.Container.Resolve<BaseEndPoints<Vertex>>();
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAllAlgorithmFinishedPathfinding);
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteClearGraphCommand);

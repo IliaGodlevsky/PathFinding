@@ -1,5 +1,4 @@
 ﻿using GraphLib.Interfaces;
-using GraphLib.NullRealizations;
 using GraphLib.Serialization.Exceptions;
 using GraphLib.Serialization.Interfaces;
 using System;
@@ -8,28 +7,29 @@ using System.Security.Cryptography;
 
 namespace GraphLib.Serialization.Serializers.Decorators
 {
-    public sealed class CryptoGraphSerializer : IGraphSerializer, IDisposable
+    public sealed class CryptoGraphSerializer<TGraph, TVertex> : IGraphSerializer<TGraph, TVertex>, IDisposable
+        where TGraph : IGraph<TVertex>
+        where TVertex : IVertex
     {
         private readonly ICrypto crypto;
-        private readonly IGraphSerializer serializer;
+        private readonly IGraphSerializer<TGraph, TVertex> serializer;
         private readonly SymmetricAlgorithm algorithm;
 
-        public CryptoGraphSerializer(IGraphSerializer serializer, SymmetricAlgorithm algorithm, ICrypto crypto)
+        public CryptoGraphSerializer(IGraphSerializer<TGraph, TVertex> serializer, SymmetricAlgorithm algorithm, ICrypto crypto)
         {
             this.serializer = serializer;
             this.algorithm = algorithm;
             this.crypto = crypto;
         }
 
-        public CryptoGraphSerializer(IGraphSerializer serializer)
+        public CryptoGraphSerializer(IGraphSerializer<TGraph, TVertex> serializer)
             : this(serializer, new AesCryptoServiceProvider(), new AesCrypto())
         {
 
         }
 
-        public IGraph LoadGraph(Stream stream)
+        public TGraph LoadGraph(Stream stream)
         {
-            var graph = NullGraph.Interface;
             try
             {
                 algorithm.Padding = PaddingMode.None;
@@ -37,10 +37,9 @@ namespace GraphLib.Serialization.Serializers.Decorators
                 {
                     using (var cryptoStream = new CryptoStream(stream, decryptor, CryptoStreamMode.Read, leaveOpen: true))
                     {
-                        graph = serializer.LoadGraph(cryptoStream);
+                        return serializer.LoadGraph(cryptoStream);
                     }
                 }
-                return graph;
             }
             catch (Exception ex)
             {
@@ -48,7 +47,7 @@ namespace GraphLib.Serialization.Serializers.Decorators
             }
         }
 
-        public void SaveGraph(IGraph graph, Stream stream)
+        public void SaveGraph(IGraph<IVertex> graph, Stream stream)
         {
             try
             {

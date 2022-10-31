@@ -2,10 +2,11 @@
 
 namespace GraphLib.Interfaces
 {
-    public interface IGraph : IReadOnlyCollection<IVertex>
+    public interface IGraph<out TVertex> : IReadOnlyCollection<TVertex>
+        where TVertex : IVertex
     {
         IReadOnlyList<int> DimensionsSizes { get; }
 
-        IVertex Get(ICoordinate coordinate);
+        TVertex Get(ICoordinate coordinate);
     }
 }

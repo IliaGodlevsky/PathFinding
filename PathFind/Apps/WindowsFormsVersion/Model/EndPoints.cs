@@ -1,5 +1,4 @@
 ﻿using GraphLib.Base.EndPoints;
-using GraphLib.Interfaces;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
@@ -7,15 +6,12 @@ using System.Windows.Forms;
 namespace WindowsFormsVersion.Model
 {
     [DebuggerDisplay("Source - {Source}, Target - {Target}")]
-    internal sealed class EndPoints : BaseEndPoints, IEndPoints
+    internal sealed class EndPoints : BaseEndPoints<Vertex>
     {
-        protected override void SubscribeVertex(IVertex vertex)
+        protected override void SubscribeVertex(Vertex vertex)
         {
-            if (vertex is Vertex vert)
-            {
-                vert.MouseClick += SetEndPoints;
-                vert.MouseClick += MarkIntermediateToReplace;
-            }
+            vertex.MouseClick += SetEndPoints;
+            vertex.MouseClick += MarkIntermediateToReplace;
         }
 
         protected override void SetEndPoints(object sender, EventArgs e)
@@ -26,13 +22,10 @@ namespace WindowsFormsVersion.Model
             }
         }
 
-        protected override void UnsubscribeVertex(IVertex vertex)
+        protected override void UnsubscribeVertex(Vertex vertex)
         {
-            if (vertex is Vertex vert)
-            {
-                vert.MouseClick -= SetEndPoints;
-                vert.MouseClick -= MarkIntermediateToReplace;
-            }
+            vertex.MouseClick -= SetEndPoints;
+            vertex.MouseClick -= MarkIntermediateToReplace;
         }
 
         protected override void MarkIntermediateToReplace(object sender, EventArgs e)

@@ -1,24 +1,24 @@
 ﻿using Common.Attrbiutes;
 using GraphLib.Base.EndPoints.BaseCommands;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [Order(1)]
-    internal sealed class RestoreTargetColorCommand : BaseEndPointsCommand
+    internal sealed class RestoreTargetColorCommand<TVertex> : BaseEndPointsCommand<TVertex>
+        where TVertex : IVertex, IVisualizable
     {
-        public RestoreTargetColorCommand(BaseEndPoints endPoints)
+        public RestoreTargetColorCommand(BaseEndPoints<TVertex> endPoints)
             : base(endPoints)
         {
         }
 
-        public override void Execute(IVertex vertex)
+        public override void Execute(TVertex vertex)
         {
-            vertex.AsVisualizable().VisualizeAsTarget();
+            vertex.VisualizeAsTarget();
         }
 
-        public override bool CanExecute(IVertex vertex)
+        public override bool CanExecute(TVertex vertex)
         {
             return vertex.Equals(endPoints.Target);
         }

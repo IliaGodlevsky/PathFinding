@@ -11,17 +11,14 @@ namespace GraphLib.TestRealizations.TestObjects
     [DebuggerDisplay("{Position.ToString()}")]
     public sealed class TestVertex : IVertex
     {
-        private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
-
-        public TestVertex(IReadOnlyCollection<ICoordinate> neighborhood, ICoordinate coordinate)
+        public TestVertex(ICoordinate coordinate)
         {
             this.Initialize();
             Position = coordinate;
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighborhood.GetNeighboursWithinGraph(this));
         }
 
         public TestVertex(VertexSerializationInfo info)
-            : this(info.Neighbourhood, info.Position)
+            : this(info.Position)
         {
             this.Initialize(info);
         }
@@ -30,11 +27,9 @@ namespace GraphLib.TestRealizations.TestObjects
 
         public IVertexCost Cost { get; set; }
 
-        public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
+        public IReadOnlyCollection<IVertex> Neighbours { get; set; }
 
         public ICoordinate Position { get; }
-
-        public IGraph Graph { get; }
 
         public bool Equals(IVertex other)
         {

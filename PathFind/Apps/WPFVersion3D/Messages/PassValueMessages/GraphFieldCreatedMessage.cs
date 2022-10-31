@@ -1,12 +1,11 @@
-﻿using GraphLib.Interfaces;
-using WPFVersion3D.Model;
+﻿using WPFVersion3D.Model;
 
 namespace WPFVersion3D.Messages.PassValueMessages
 {
     internal sealed class GraphFieldCreatedMessage : PassValueMessage<GraphField3D>
     {
-        public GraphFieldCreatedMessage(IGraphField field)
-            : base((GraphField3D)field)
+        public GraphFieldCreatedMessage(GraphField3D field)
+            : base(field)
         {
 
         }

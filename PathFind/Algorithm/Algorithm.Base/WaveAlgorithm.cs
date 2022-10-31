@@ -2,6 +2,7 @@
 using Algorithm.Interfaces;
 using Algorithm.NullRealizations;
 using Algorithm.Realizations.GraphPaths;
+using Common.Disposables;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -24,22 +25,24 @@ namespace Algorithm.Base
             var path = NullGraphPath.Interface;
             PrepareForPathfinding();
             var subEndPoints = endPoints.ToSubEndPoints().ToReadOnly();
-            for (int i = 0; i < subEndPoints.Count && !IsInterruptRequested; i++)
+            using (Disposable.Use(CompletePathfinding))
             {
-                CurrentEndPoints = subEndPoints[i];
-                PrepareForLocalPathfinding();
-                VisitVertex(CurrentVertex);
-                while (!IsDestination(CurrentEndPoints))
+                for (int i = 0; i < subEndPoints.Count && !IsInterruptRequested; i++)
                 {
-                    WaitUntilResumed();
-                    InspectVertex(CurrentVertex);
-                    CurrentVertex = GetNextVertex();
+                    CurrentEndPoints = subEndPoints[i];
+                    PrepareForLocalPathfinding();
                     VisitVertex(CurrentVertex);
+                    while (!IsDestination(CurrentEndPoints))
+                    {
+                        WaitUntilResumed();
+                        InspectVertex(CurrentVertex);
+                        CurrentVertex = GetNextVertex();
+                        VisitVertex(CurrentVertex);
+                    }
+                    path = new CompositeGraphPath(path, CreateGraphPath());
+                    Reset();
                 }
-                path = new CompositeGraphPath(path, CreateGraphPath());
-                Reset();
             }
-            CompletePathfinding();
             return IsInterruptRequested ? NullGraphPath.Interface : path;
         }
 
@@ -55,7 +58,6 @@ namespace Algorithm.Base
 
         protected virtual void VisitVertex(IVertex vertex)
         {
-            ThrowIfDeadEnd(vertex);
             visitedVertices.Visit(vertex);
             RaiseVertexVisited(new AlgorithmEventArgs(vertex));
         }

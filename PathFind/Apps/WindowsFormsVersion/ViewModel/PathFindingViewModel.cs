@@ -6,6 +6,7 @@ using Common.Extensions;
 using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
+using GraphLib.Realizations.Graphs;
 using GraphViewModel;
 using Interruptable.EventArguments;
 using Logging.Interface;
@@ -13,17 +14,19 @@ using System;
 using System.Collections.Generic;
 using WindowsFormsVersion.DependencyInjection;
 using WindowsFormsVersion.Enums;
+using WindowsFormsVersion.Interface;
 using WindowsFormsVersion.Messeges;
+using WindowsFormsVersion.Model;
 
 namespace WindowsFormsVersion.ViewModel
 {
-    internal class PathFindingViewModel : PathFindingModel, IViewModel, IDisposable
+    internal class PathFindingViewModel : PathFindingModel<Vertex>, IViewModel, IDisposable
     {
         public event Action WindowClosed;
 
-        public PathFindingViewModel(BaseEndPoints endPoints,
-            IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ILog log)
-            : base(endPoints, algorithmFactories, log)
+        public PathFindingViewModel(BaseEndPoints<Vertex> endPoints,
+            IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ICache<Graph2D<Vertex>> cache, ILog log)
+            : base(endPoints, algorithmFactories, cache.Cached, log)
         {
             Delay = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
             messenger = DI.Container.Resolve<IMessenger>();
@@ -32,6 +35,7 @@ namespace WindowsFormsVersion.ViewModel
         protected override void OnAlgorithmFinished(object sender, ProcessEventArgs e)
         {
             messenger.Send(AlgorithmStatusMessage.Finished, MessageTokens.MainModel);
+            messenger.Unregister(this);
         }
 
         protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
@@ -41,7 +45,7 @@ namespace WindowsFormsVersion.ViewModel
 
         protected override void SummarizePathfindingResults()
         {
-            string statistics = path.Count > 0 ? Statistics : CouldntFindPath;
+            string statistics = path.Count > 0 ? GetStatistics() : CouldntFindPath;
             var message = new UpdateStatisticsMessage(statistics);
             messenger.Send(message, MessageTokens.MainModel);
         }
@@ -50,7 +54,7 @@ namespace WindowsFormsVersion.ViewModel
         {
             Delay.Wait();
             base.OnVertexVisited(sender, e);
-            var message = new UpdateStatisticsMessage(Statistics);
+            var message = new UpdateStatisticsMessage(GetStatistics());
             messenger.Send(message, MessageTokens.MainModel);
         }
 
@@ -83,15 +87,12 @@ namespace WindowsFormsVersion.ViewModel
             WindowClosed = null;
         }
 
-        private string Statistics
+        private string GetStatistics()
         {
-            get
-            {
-                string timerInfo = timer.Elapsed.ToString(@"mm\:ss\.fff");
-                string description = Algorithm.ToString();
-                string pathfindingInfo = string.Format(Format, PathfindingInfo);
-                return string.Join("    ", description, timerInfo, pathfindingInfo);
-            }
+            string timerInfo = timer.Elapsed.ToString(@"mm\:ss\.fff");
+            string description = Algorithm.ToString();
+            string pathfindingInfo = string.Format(Format, PathfindingInfo);
+            return string.Join("    ", description, timerInfo, pathfindingInfo);
         }
 
         private object[] PathfindingInfo => new object[] { path.Count, path.Cost, visitedVerticesCount };

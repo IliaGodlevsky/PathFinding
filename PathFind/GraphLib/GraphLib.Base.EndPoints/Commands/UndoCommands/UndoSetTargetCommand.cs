@@ -5,13 +5,14 @@ using GraphLib.Interfaces;
 
 namespace GraphLib.Base.EndPoints.Commands.UndoCommands
 {
-    internal sealed class UndoSetTargetCommand : BaseEndPointsUndoCommand
+    internal sealed class UndoSetTargetCommand<TVertex> : BaseEndPointsUndoCommand<TVertex>
+        where TVertex : IVertex, IVisualizable
     {
-        private readonly IExecutable<IVertex> unsetTargetCommand;
+        private readonly IExecutable<TVertex> unsetTargetCommand;
 
-        public UndoSetTargetCommand(BaseEndPoints endPoints) : base(endPoints)
+        public UndoSetTargetCommand(BaseEndPoints<TVertex> endPoints) : base(endPoints)
         {
-            unsetTargetCommand = new UnsetTargetCommand(endPoints);
+            unsetTargetCommand = new UnsetTargetCommand<TVertex>(endPoints);
         }
 
         public override void Undo()

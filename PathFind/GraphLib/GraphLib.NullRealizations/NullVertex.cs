@@ -23,17 +23,17 @@ namespace GraphLib.NullRealizations
             set { }
         }
 
-        public IReadOnlyCollection<IVertex> Neighbours => GetMany(0);
-
-        public IGraph Graph => NullGraph.Interface;
+        public IReadOnlyCollection<IVertex> Neighbours
+        {
+            get => GetMany(0);
+            set { }
+        }
 
         public ICoordinate Position
         {
             get => NullCoordinate.Interface;
             set { }
         }
-
-        public INeighborhood Neighborhood => NullNeighborhood.Interface;
 
         private NullVertex()
         {

@@ -2,29 +2,29 @@
 using Commands.Interfaces;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations;
 using System.Collections.Generic;
 
 namespace GraphLib.Base.EventHolder.Commands
 {
-    internal sealed class ReverseVertexCommands : IExecutable<IVertex>
+    internal sealed class ReverseVertexCommands<TVertex> : IExecutable<TVertex>
+        where TVertex : IVertex, IVisualizable
     {
-        private readonly IEnumerable<IVertexCommand> commands;
+        private readonly IEnumerable<IVertexCommand<TVertex>> commands;
 
         public ReverseVertexCommands()
         {
             commands = GetCommands().ToReadOnly();
         }
 
-        public void Execute(IVertex vertex)
+        public void Execute(TVertex vertex)
         {
-            commands.ExecuteFirst(vertex ?? NullVertex.Interface);
+            commands.ExecuteFirst(vertex);
         }
 
-        private IEnumerable<IVertexCommand> GetCommands()
+        private IEnumerable<IVertexCommand<TVertex>> GetCommands()
         {
-            yield return new SetVertexAsObstacleCommand();
-            yield return new SetVertexAsRegularCommand();
+            yield return new SetVertexAsObstacleCommand<TVertex>();
+            yield return new SetVertexAsRegularCommand<TVertex>();
         }
     }
 }

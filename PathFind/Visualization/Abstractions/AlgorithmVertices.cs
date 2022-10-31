@@ -1,28 +1,27 @@
 ﻿using Algorithm.Interfaces;
 using Commands.Interfaces;
 using Common.Extensions.EnumerableExtensions;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using Visualization.Interfaces;
 
 namespace Visualization.Abstractions
 {
-    internal abstract class AlgorithmVertices : IVisualizationSlides<IVertex>, IExecutable<IAlgorithm<IGraphPath>>, IAlgorithmVertices
+    internal abstract class AlgorithmVertices<TVertex> : IVisualizationSlides<TVertex>, IExecutable<IAlgorithm<IGraphPath>>, IAlgorithmVertices<TVertex>
+        where TVertex : IVisualizable, IVertex
     {
-        private readonly ConcurrentDictionary<IAlgorithm<IGraphPath>, ConcurrentDictionary<ICoordinate, IVertex>> vertices;
+        private readonly ConcurrentDictionary<IAlgorithm<IGraphPath>, ConcurrentDictionary<ICoordinate, TVertex>> vertices;
 
         public AlgorithmVertices()
         {
-            vertices = new ConcurrentDictionary<IAlgorithm<IGraphPath>, ConcurrentDictionary<ICoordinate, IVertex>>();
+            vertices = new ConcurrentDictionary<IAlgorithm<IGraphPath>, ConcurrentDictionary<ICoordinate, TVertex>>();
         }
 
-        public virtual void Add(IAlgorithm<IGraphPath> algorithm, IVertex vertex)
+        public virtual void Add(IAlgorithm<IGraphPath> algorithm, TVertex vertex)
         {
             vertices.TryGetOrAddNew(algorithm).TryAddOrUpdate(vertex.Position, vertex);
-            Visualize(vertex.AsVisualizable());
+            Visualize(vertex);
         }
 
         public void Clear()
@@ -35,19 +34,19 @@ namespace Visualization.Abstractions
             vertices.TryRemove(algorithm, out _);
         }
 
-        public void Remove(IAlgorithm<IGraphPath> algorithm, IVertex vertex)
+        public void Remove(IAlgorithm<IGraphPath> algorithm, TVertex vertex)
         {
             vertices.GetOrEmpty(algorithm).TryRemove(vertex.Position, out _);
         }
 
         public void Execute(IAlgorithm<IGraphPath> algorithm)
         {
-            GetVertices(algorithm).OfType<IVisualizable>().ForEach(Visualize);
+            GetVertices(algorithm).ForEach(item => Visualize(item));
         }
 
-        public IReadOnlyCollection<IVertex> GetVertices(IAlgorithm<IGraphPath> algorithm)
+        public IReadOnlyCollection<TVertex> GetVertices(IAlgorithm<IGraphPath> algorithm)
         {
-            return (IReadOnlyCollection<IVertex>)vertices.GetOrEmpty(algorithm).Values;
+            return (IReadOnlyCollection<TVertex>)vertices.GetOrEmpty(algorithm).Values;
         }
 
         protected abstract void Visualize(IVisualizable visualizable);

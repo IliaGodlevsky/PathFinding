@@ -1,29 +1,28 @@
 ﻿using Common.Attrbiutes;
 using GraphLib.Base.EndPoints.BaseCommands;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [Order(0)]
-    internal sealed class UnsetSourceCommand : BaseEndPointsCommand
+    internal sealed class UnsetSourceCommand<TVertex> : BaseEndPointsCommand<TVertex>
+        where TVertex : IVertex, IVisualizable
     {
-        public UnsetSourceCommand(BaseEndPoints endPoints)
+        public UnsetSourceCommand(BaseEndPoints<TVertex> endPoints)
             : base(endPoints)
         {
 
         }
 
-        public override void Execute(IVertex vertex)
+        public override void Execute(TVertex vertex)
         {
-            vertex.AsVisualizable().VisualizeAsRegular();
-            endPoints.Source = NullVertex.Interface;
+            vertex?.VisualizeAsRegular();
+            endPoints.Source = default(TVertex);
         }
 
-        public override bool CanExecute(IVertex vertex)
+        public override bool CanExecute(TVertex vertex)
         {
-            return vertex.IsEqual(endPoints.Source);
+            return endPoints.Source?.Equals(vertex) == true;
         }
     }
 }

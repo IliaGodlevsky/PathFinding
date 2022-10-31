@@ -21,7 +21,6 @@ namespace ConsoleVersion.Model
         public event EventHandler VertexReversed;
         public event EventHandler MarkedToReplaceIntermediate;
 
-        private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
         private readonly IVisualization<Vertex> visualization;
 
         private bool isObstacle;
@@ -50,13 +49,11 @@ namespace ConsoleVersion.Model
             }
         }
 
-        public IGraph Graph { get; }
-
         public Coordinate2D ConsolePosition { get; set; }
 
         public Color Color { get; set; }
 
-        public IReadOnlyCollection<IVertex> Neighbours => neighbours.Value;
+        public IReadOnlyCollection<IVertex> Neighbours { get; set; }
 
         public ICoordinate Position { get; }
 
@@ -66,16 +63,15 @@ namespace ConsoleVersion.Model
 
         private string Text { get; set; }
 
-        public Vertex(IReadOnlyCollection<ICoordinate> neighbourhood, ICoordinate coordinate, IVisualization<Vertex> visualization)
+        public Vertex(ICoordinate coordinate, IVisualization<Vertex> visualization)
         {
             this.visualization = visualization;
             Position = coordinate;
             this.Initialize();
-            neighbours = new Lazy<IReadOnlyCollection<IVertex>>(() => neighbourhood.GetNeighboursWithinGraph(this));
         }
 
         public Vertex(VertexSerializationInfo info, IVisualization<Vertex> visualization)
-            : this(info.Neighbourhood, info.Position, visualization)
+            : this(info.Position, visualization)
         {
             this.Initialize(info);
         }

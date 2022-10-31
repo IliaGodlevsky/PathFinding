@@ -1,31 +1,30 @@
-﻿using GraphLib.Extensions;
-using GraphLib.Interfaces;
-using GraphLib.NullRealizations;
-using NullObject.Extensions;
+﻿using ConsoleVersion.Model;
+using GraphLib.Extensions;
+using GraphLib.Realizations.Graphs;
 using System.Linq;
 
 namespace ConsoleVersion.ConvertedProperties
 {
-    internal sealed class GraphParamsProperty : ConvertedProperty<IGraph, string>
+    internal sealed class GraphParamsProperty : ConvertedProperty<Graph2D<Vertex>, string>
     {
         private const string LargeSpace = "   ";
         private const string Format = "Obstacle percent: {0} ({1}/{2})";
         private static readonly string[] DimensionNames = new[] { "Width", "Length" };
 
         public static readonly GraphParamsProperty Empty
-            = new GraphParamsProperty(NullGraph.Instance);
+            = new GraphParamsProperty(Graph2D<Vertex>.Empty);
 
-        public static GraphParamsProperty Assign(IGraph graph)
+        public static GraphParamsProperty Assign(Graph2D<Vertex> graph)
             => new GraphParamsProperty(graph);
 
-        private GraphParamsProperty(IGraph graph) : base(graph)
+        private GraphParamsProperty(Graph2D<Vertex> graph) : base(graph)
         {
 
         }
 
-        protected override string ConvertTo(IGraph graph)
+        protected override string ConvertTo(Graph2D<Vertex> graph)
         {
-            if (!graph.IsNull())
+            if (graph != Graph2D<Vertex>.Empty)
             {
                 int obstacles = graph.GetObstaclesCount();
                 int obstaclesPercent = graph.GetObstaclePercent();

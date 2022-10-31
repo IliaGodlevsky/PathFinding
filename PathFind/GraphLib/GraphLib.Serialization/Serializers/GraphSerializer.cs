@@ -1,5 +1,6 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Base;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Serialization.Exceptions;
@@ -10,15 +11,17 @@ using System.Linq;
 
 namespace GraphLib.Serialization.Serializers
 {
-    public abstract class GraphSerializer : IGraphSerializer
+    public abstract class GraphSerializer<TGraph, TVertex> : IGraphSerializer<TGraph, TVertex>
+        where TVertex : IVertex
+        where TGraph : IGraph<TVertex>
     {
-        private readonly IVertexFromInfoFactory vertexFactory;
-        private readonly IGraphFactory graphFactory;
+        private readonly IVertexFromInfoFactory<TVertex> vertexFactory;
+        private readonly IGraphFactory<TGraph, TVertex> graphFactory;
         private readonly IVertexCostFactory costFactory;
         private readonly ICoordinateFactory coordinateFactory;
 
-        public GraphSerializer(IVertexFromInfoFactory converter,
-            IGraphFactory graphFactory,
+        public GraphSerializer(IVertexFromInfoFactory<TVertex> converter,
+            IGraphFactory<TGraph, TVertex> graphFactory,
             IVertexCostFactory costFactory,
             ICoordinateFactory coordinateFactory)
         {
@@ -28,14 +31,17 @@ namespace GraphLib.Serialization.Serializers
             this.coordinateFactory = coordinateFactory;
         }
 
-        public IGraph LoadGraph(Stream stream)
+        public TGraph LoadGraph(Stream stream)
         {
             try
             {
                 var graphInfo = LoadGraphInternal(stream, costFactory, coordinateFactory);
                 BaseVertexCost.CostRange = graphInfo.CostRange;
                 var vertices = graphInfo.VerticesInfo.Select(vertexFactory.CreateFrom).ToReadOnly();
-                return graphFactory.CreateGraph(vertices, graphInfo.DimensionsSizes);
+                var graph = graphFactory.CreateGraph(vertices, graphInfo.DimensionsSizes);
+                graphInfo.VerticesInfo.Zip(graph, (info, vertex) => (Vertex: vertex, Info: info))
+                    .ForEach(item => FillNeighbourhood(item, (IGraph<IVertex>)graph));
+                return graph;
             }
             catch (Exception ex)
             {
@@ -43,7 +49,7 @@ namespace GraphLib.Serialization.Serializers
             }
         }
 
-        public void SaveGraph(IGraph graph, Stream stream)
+        public void SaveGraph(IGraph<IVertex> graph, Stream stream)
         {
             try
             {
@@ -58,6 +64,11 @@ namespace GraphLib.Serialization.Serializers
         protected abstract GraphSerializationInfo LoadGraphInternal(Stream stream,
             IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory);
 
-        protected abstract void SaveGraphInternal(IGraph graph, Stream stream);
+        protected abstract void SaveGraphInternal(IGraph<IVertex> graph, Stream stream);
+
+        private void FillNeighbourhood((TVertex Vertex, VertexSerializationInfo Info) info, IGraph<IVertex> graph)
+        {
+            info.Vertex.Neighbours = info.Info.Neighbourhood.GetNeighboursWithinGraph(graph);
+        }
     }
 }

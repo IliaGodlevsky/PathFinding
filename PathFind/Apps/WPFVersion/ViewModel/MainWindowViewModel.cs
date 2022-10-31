@@ -6,18 +6,22 @@ using System.Windows.Input;
 using WPFVersion.DependencyInjection;
 using WPFVersion.Infrastructure.EventArguments;
 using WPFVersion.Infrastructure.EventHandlers;
+using WPFVersion.Interface;
 using WPFVersion.Messages.ActionMessages;
 using WPFVersion.Messages.DataMessages;
+using WPFVersion.Model;
 
 namespace WPFVersion.ViewModel
 {
-    public class MainWindowViewModel : IDisposable
+    public class MainWindowViewModel : ICache<Graph2D<Vertex>>, IDisposable
     {
         internal event GraphCreatedEventHandler GraphCreated;
 
         private readonly IMessenger messenger;
 
         private bool IsEditorModeEnabled { get; set; } = false;
+
+        public Graph2D<Vertex> Cached { get; private set; } = Graph2D<Vertex>.Empty;
 
         public MainWindowViewModel()
         {
@@ -50,7 +54,8 @@ namespace WPFVersion.ViewModel
 
         private void SetGraph(GraphCreatedMessage message)
         {
-            GraphCreated?.Invoke(this, new GraphCreatedEventArgs((Graph2D)message.Graph));
+            Cached = message.Graph;
+            GraphCreated?.Invoke(this, new GraphCreatedEventArgs(Cached));
         }
     }
 }

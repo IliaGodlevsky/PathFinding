@@ -1,5 +1,6 @@
 ﻿using GraphLib.Interfaces;
 using GraphLib.Realizations.Graphs;
+using GraphLib.TestRealizations.TestObjects;
 
 namespace GraphLib.TestRealizations.TestFactories.Matrix
 {
@@ -8,7 +9,7 @@ namespace GraphLib.TestRealizations.TestFactories.Matrix
         private const bool X = true;
         private const bool O = false;
 
-        public ObstacleMatrix(Graph2D graph) : base(graph)
+        public ObstacleMatrix(Graph2D<TestVertex> graph) : base(graph)
         {
 
         }

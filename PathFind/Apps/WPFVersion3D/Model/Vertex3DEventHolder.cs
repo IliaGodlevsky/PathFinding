@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EventHolder;
-using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
 using System;
 using WPFVersion3D.DependencyInjection;
@@ -9,7 +8,7 @@ using WPFVersion3D.Messages.ActionMessages;
 
 namespace WPFVersion3D.Model
 {
-    internal sealed class GraphEvents : BaseGraphEvents
+    internal sealed class GraphEvents : BaseGraphEvents<Vertex3D>
     {
         private readonly IMessenger messenger;
 
@@ -23,22 +22,16 @@ namespace WPFVersion3D.Model
             return 0;
         }
 
-        protected override void SubscribeToEvents(IVertex vertex)
+        protected override void SubscribeToEvents(Vertex3D vertex)
         {
-            if (vertex is Vertex3D vertex3D)
-            {
-                vertex3D.MouseRightButtonDown += Reverse;
-                vertex3D.MouseRightButtonDown += OnGraphChanged;
-            }
+            vertex.MouseRightButtonDown += Reverse;
+            vertex.MouseRightButtonDown += OnGraphChanged;
         }
 
-        protected override void UnsubscribeFromEvents(IVertex vertex)
+        protected override void UnsubscribeFromEvents(Vertex3D vertex)
         {
-            if (vertex is Vertex3D vertex3D)
-            {
-                vertex3D.MouseRightButtonDown -= Reverse;
-                vertex3D.MouseRightButtonDown -= OnGraphChanged;
-            }
+            vertex.MouseRightButtonDown -= Reverse;
+            vertex.MouseRightButtonDown -= OnGraphChanged;
         }
 
         private void OnGraphChanged(object sender, EventArgs e)

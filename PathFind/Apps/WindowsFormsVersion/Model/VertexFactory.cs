@@ -3,16 +3,16 @@ using GraphLib.Interfaces.Factories;
 
 namespace WindowsFormsVersion.Model
 {
-    internal sealed class VertexFactory : IVertexFactory
+    internal sealed class VertexFactory : IVertexFactory<Vertex>
     {
         public VertexFactory(IVisualization<Vertex> visualization)
         {
             this.visualization = visualization;
         }
 
-        public IVertex CreateVertex(INeighborhood coordinateRadar, ICoordinate coordinate)
+        public Vertex CreateVertex(ICoordinate coordinate)
         {
-            return new Vertex(coordinateRadar, coordinate, visualization);
+            return new Vertex(coordinate, visualization);
         }
 
         private readonly IVisualization<Vertex> visualization;

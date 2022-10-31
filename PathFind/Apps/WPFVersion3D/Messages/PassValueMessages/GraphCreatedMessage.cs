@@ -1,10 +1,11 @@
-﻿using GraphLib.Interfaces;
+﻿using GraphLib.Realizations.Graphs;
+using WPFVersion3D.Model;
 
 namespace WPFVersion3D.Messages.PassValueMessages
 {
-    internal sealed class GraphCreatedMessage : PassValueMessage<IGraph>
+    internal sealed class GraphCreatedMessage : PassValueMessage<Graph3D<Vertex3D>>
     {
-        public GraphCreatedMessage(IGraph graph)
+        public GraphCreatedMessage(Graph3D<Vertex3D> graph)
             : base(graph)
         {
 

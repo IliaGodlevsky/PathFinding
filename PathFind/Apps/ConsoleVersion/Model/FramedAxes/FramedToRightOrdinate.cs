@@ -10,7 +10,7 @@ namespace ConsoleVersion.Model.FramedAxes
 
         private int OffsetNumber => graphWidth * LateralDistance + Constants.WidthOfOrdinateView;
 
-        public FramedToRightOrdinate(Graph2D graph)
+        public FramedToRightOrdinate(Graph2D<Vertex> graph)
             : base(graph.Length)
         {
             this.graphWidth = graph.Width;

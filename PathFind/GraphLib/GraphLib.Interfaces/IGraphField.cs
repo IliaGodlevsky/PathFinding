@@ -2,8 +2,8 @@
 
 namespace GraphLib.Interfaces
 {
-    public interface IGraphField
+    public interface IGraphField<out TVertex> where TVertex : IVertex
     {
-        IReadOnlyCollection<IVertex> Vertices { get; }
+        IReadOnlyCollection<TVertex> Vertices { get; }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using Common.Extensions.EnumerableExtensions;
-using GraphLib.Exceptions;
 using GraphLib.Interfaces;
-using NullObject.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using ValueRange;
@@ -11,14 +9,12 @@ namespace GraphLib.Extensions
 {
     public static class INeighbourhoodExtensions
     {
-        public static IReadOnlyCollection<IVertex> GetNeighboursWithinGraph(this IEnumerable<ICoordinate> self, IVertex vertex)
+        public static IReadOnlyCollection<IVertex> GetNeighboursWithinGraph(this IEnumerable<ICoordinate> self, IGraph<IVertex> graph)
         {
-            return vertex.Graph.IsNull()
-                ? throw new LonelyVertexException(vertex)
-                : self.GetNeighborsWithinGraphInternal(vertex);
+            return self.GetNeighborsWithinGraphInternal(graph);
         }
 
-        private static IEnumerable<ICoordinate> WithoutOutOfGraph(this IEnumerable<ICoordinate> self, IVertex vertex)
+        private static IEnumerable<ICoordinate> WithoutOutOfGraph(this IEnumerable<ICoordinate> self, IGraph<IVertex> graph)
         {
             return self.Where(neighbour =>
             {
@@ -27,14 +23,14 @@ namespace GraphLib.Extensions
                     var range = new InclusiveValueRange<int>(graphDimension - 1);
                     return range.Contains(coordinate);
                 }
-                return neighbour.Juxtapose(vertex.Graph.DimensionsSizes, IsWithin);
+                return neighbour.Juxtapose(graph.DimensionsSizes, IsWithin);
             });
         }
 
-        private static IReadOnlyCollection<IVertex> GetNeighborsWithinGraphInternal(this IEnumerable<ICoordinate> self, IVertex vertex)
+        private static IReadOnlyCollection<IVertex> GetNeighborsWithinGraphInternal(this IEnumerable<ICoordinate> self, IGraph<IVertex> graph)
         {
-            return self.WithoutOutOfGraph(vertex)
-                .Select(coordinate => vertex.Graph.Get(coordinate))
+            return self.WithoutOutOfGraph(graph)
+                .Select(coordinate => graph.Get(coordinate))
                 .ToReadOnly();
         }
     }

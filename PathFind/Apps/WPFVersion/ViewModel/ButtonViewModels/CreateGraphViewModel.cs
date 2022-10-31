@@ -2,12 +2,13 @@
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations;
+using GraphLib.Realizations.Graphs;
 using System.Windows.Input;
 using WPFVersion.DependencyInjection;
 using WPFVersion.Infrastructure;
 using WPFVersion.Messages;
 using WPFVersion.Messages.DataMessages;
+using WPFVersion.Model;
 using WPFVersion.View.Windows;
 
 namespace WPFVersion.ViewModel.ButtonViewModels
@@ -18,7 +19,7 @@ namespace WPFVersion.ViewModel.ButtonViewModels
 
         public ICommand CreateGraphCommand { get; }
 
-        private IGraph Graph { get; set; } = NullGraph.Interface;
+        private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
         private bool IsAllAlgorithmsFinishedPathfinding { get; set; } = true;
 
@@ -43,8 +44,8 @@ namespace WPFVersion.ViewModel.ButtonViewModels
 
         private void OnGraphCreated(GraphCreatedMessage message)
         {
-            var events = DI.Container.Resolve<IGraphEvents>();
-            var endPoints = DI.Container.Resolve<BaseEndPoints>();
+            var events = DI.Container.Resolve<IGraphEvents<Vertex>>();
+            var endPoints = DI.Container.Resolve<BaseEndPoints<Vertex>>();
             events.Unsubscribe(Graph);
             endPoints.Reset();
             Graph = message.Graph;

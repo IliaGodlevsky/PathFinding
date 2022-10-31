@@ -4,16 +4,16 @@ using System.Windows;
 
 namespace WPFVersion.Model
 {
-    internal sealed class VertexFactory : IVertexFactory
+    internal sealed class VertexFactory : IVertexFactory<Vertex>
     {
         public VertexFactory(IVisualization<Vertex> visualization)
         {
             this.visualization = visualization;
         }
 
-        public IVertex CreateVertex(INeighborhood coordinateRadar, ICoordinate coordinate)
+        public Vertex CreateVertex(ICoordinate coordinate)
         {
-            return Application.Current.Dispatcher.Invoke(() => new Vertex(coordinateRadar, coordinate, visualization));
+            return Application.Current.Dispatcher.Invoke(() => new Vertex(coordinate, visualization));
         }
 
         private readonly IVisualization<Vertex> visualization;

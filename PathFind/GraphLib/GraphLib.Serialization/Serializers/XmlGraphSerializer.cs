@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace GraphLib.Serialization.Serializers
 {
-    public sealed class XmlGraphSerializer : GraphSerializer
+    internal static class XmlAttributesNames
     {
         internal const string Dimensions = "dimensions";
         internal const string Vertices = "vertices";
@@ -20,9 +20,14 @@ namespace GraphLib.Serialization.Serializers
         internal const string Coordinate = "coordinate";
         internal const string Graph = "graph";
         internal const string Cost = "cost";
+    }
 
-        public XmlGraphSerializer(IVertexFromInfoFactory converter,
-            IGraphFactory graphFactory,
+    public sealed class XmlGraphSerializer<TGraph, TVertex> : GraphSerializer<TGraph, TVertex>
+        where TVertex : IVertex
+        where TGraph : IGraph<TVertex>
+    {
+        public XmlGraphSerializer(IVertexFromInfoFactory<TVertex> converter,
+            IGraphFactory<TGraph, TVertex> graphFactory,
             IVertexCostFactory costFactory,
             ICoordinateFactory coordinateFactory)
             : base(converter, graphFactory, costFactory, coordinateFactory)
@@ -36,7 +41,7 @@ namespace GraphLib.Serialization.Serializers
             return XDocument.Load(stream).Root.GetGraphInfo(costFactory, coordinateFactory);
         }
 
-        protected override void SaveGraphInternal(IGraph graph, Stream stream)
+        protected override void SaveGraphInternal(IGraph<IVertex> graph, Stream stream)
         {
             new XmlDocument().Append(new GraphSerializationInfo(graph)).Save(stream);
         }

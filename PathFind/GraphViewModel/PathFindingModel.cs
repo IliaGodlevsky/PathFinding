@@ -10,6 +10,7 @@ using Common.Extensions;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
+using GraphLib.Interfaces;
 using Interruptable.EventArguments;
 using Logging.Interface;
 using NullObject.Extensions;
@@ -20,14 +21,16 @@ using System.Linq;
 
 namespace GraphViewModel
 {
-    public abstract class PathFindingModel
+    public abstract class PathFindingModel<TVertex>
+        where TVertex : IVertex, IVisualizable
     {
-        protected readonly BaseEndPoints endPoints;
+        protected readonly BaseEndPoints<TVertex> endPoints;
         protected readonly Stopwatch timer;
         protected readonly ILog log;
 
         protected IGraphPath path;
         protected PathfindingAlgorithm algorithm;
+        protected readonly IGraph<TVertex> graph;
         protected int visitedVerticesCount;
 
         public bool IsVisualizationRequired { get; set; } = true;
@@ -38,14 +41,16 @@ namespace GraphViewModel
 
         public IReadOnlyList<IAlgorithmFactory<PathfindingAlgorithm>> Algorithms { get; }
 
-        protected PathFindingModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> factories, ILog log)
+        protected PathFindingModel(BaseEndPoints<TVertex> endPoints, 
+            IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> factories, IGraph<TVertex> graph, ILog log)
         {
+            this.graph = graph;
             this.endPoints = endPoints;
             this.log = log;
             Algorithms = factories
                 .GroupBy(item => item.GetAttributeOrNull<GroupAttribute>())
                 .SelectMany(item => item.OrderByOrderAttribute())
-                .ToReadOnly();
+                .ToList(); // required for data binding
             timer = new Stopwatch();
             path = NullGraphPath.Interface;
         }
@@ -58,7 +63,8 @@ namespace GraphViewModel
                 SubscribeOnAlgorithmEvents(algorithm);
                 endPoints.RestoreCurrentColors();
                 path = await algorithm.FindPathAsync();
-                await path.VisualizeAsPathAsync();
+                await path.Select(vertex => graph.Get(vertex.Position))
+                    .VisualizeAsPathAsync();
                 SummarizePathfindingResults();
             }
             catch (DeadendVertexException)
@@ -80,7 +86,8 @@ namespace GraphViewModel
         {
             if (!endPoints.IsEndPoint(e.Current))
             {
-                e.Current.AsVisualizable().VisualizeAsVisited();
+                var current = graph.Get(e.Current.Position);
+                current.VisualizeAsVisited();
             }
             if (!e.Current.IsNull())
             {
@@ -100,7 +107,8 @@ namespace GraphViewModel
         {
             if (!endPoints.IsEndPoint(e.Current))
             {
-                e.Current.AsVisualizable().VisualizeAsEnqueued();
+                var current = graph.Get(e.Current.Position);
+                current.VisualizeAsEnqueued();
             }
         }
 

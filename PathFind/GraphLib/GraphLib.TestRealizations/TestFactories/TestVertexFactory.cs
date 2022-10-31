@@ -4,11 +4,11 @@ using GraphLib.TestRealizations.TestObjects;
 
 namespace GraphLib.TestRealizations.TestFactories
 {
-    public class TestVertexFactory : IVertexFactory
+    public class TestVertexFactory : IVertexFactory<TestVertex>
     {
-        public IVertex CreateVertex(INeighborhood coordinateRadar, ICoordinate coordinate)
+        public TestVertex CreateVertex(ICoordinate coordinate)
         {
-            return new TestVertex(coordinateRadar, coordinate);
+            return new TestVertex(coordinate);
         }
     }
 }

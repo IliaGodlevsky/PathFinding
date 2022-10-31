@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 namespace Visualization.Interfaces
 {
-    internal interface IAlgorithmVertices
+    internal interface IAlgorithmVertices<TVertex>
+        where TVertex : IVisualizable
     {
-        IReadOnlyCollection<IVertex> GetVertices(IAlgorithm<IGraphPath> algorithm);
+        IReadOnlyCollection<TVertex> GetVertices(IAlgorithm<IGraphPath> algorithm);
     }
 }

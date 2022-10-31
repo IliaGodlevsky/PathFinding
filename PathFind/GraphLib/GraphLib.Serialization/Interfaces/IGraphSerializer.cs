@@ -3,10 +3,12 @@ using System.IO;
 
 namespace GraphLib.Serialization.Interfaces
 {
-    public interface IGraphSerializer
+    public interface IGraphSerializer<out TGraph, TVertex>
+        where TVertex : IVertex
+        where TGraph : IGraph<TVertex>
     {
-        void SaveGraph(IGraph graph, Stream stream);
+        void SaveGraph(IGraph<IVertex> graph, Stream stream);
 
-        IGraph LoadGraph(Stream stream);
+        TGraph LoadGraph(Stream stream);
     }
 }

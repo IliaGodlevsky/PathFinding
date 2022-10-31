@@ -3,6 +3,7 @@ using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Extensions;
 using GraphLib.Interfaces.Factories;
+using GraphLib.Realizations.Graphs;
 using GraphLib.ViewModel;
 using Logging.Interface;
 using System;
@@ -13,10 +14,11 @@ using ValueRange.Extensions;
 using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Infrastructure.Commands;
 using WPFVersion3D.Messages.PassValueMessages;
+using WPFVersion3D.Model;
 
 namespace WPFVersion3D.ViewModel
 {
-    public class GraphCreatingViewModel : GraphCreatingModel, IViewModel, IDisposable
+    public class GraphCreatingViewModel : GraphCreatingModel<Graph3D<Vertex3D>, Vertex3D>, IViewModel, IDisposable
     {
         public event Action WindowClosed;
 
@@ -28,7 +30,7 @@ namespace WPFVersion3D.ViewModel
 
         public ICommand CancelCreateGraphCommand { get; }
 
-        public GraphCreatingViewModel(IEnumerable<IGraphAssemble> graphAssembles, ILog log)
+        public GraphCreatingViewModel(IEnumerable<IGraphAssemble<Graph3D<Vertex3D>, Vertex3D>> graphAssembles, ILog log)
             : base(log, graphAssembles)
         {
             messenger = DI.Container.Resolve<IMessenger>();

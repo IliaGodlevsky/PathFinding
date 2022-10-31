@@ -7,13 +7,14 @@ using System.Linq;
 
 namespace GraphLib.Base.EndPoints.Commands.UndoCommands
 {
-    internal sealed class UndoSetIntermediatesCommand : BaseIntermediatesUndoCommand
+    internal sealed class UndoSetIntermediatesCommand<TVertex> : BaseIntermediatesUndoCommand<TVertex>
+        where TVertex : IVertex, IVisualizable
     {
-        private readonly IExecutable<IVertex> unsetIntermediatesCommand;
+        private readonly IExecutable<TVertex> unsetIntermediatesCommand;
 
-        public UndoSetIntermediatesCommand(BaseEndPoints endPoints) : base(endPoints)
+        public UndoSetIntermediatesCommand(BaseEndPoints<TVertex> endPoints) : base(endPoints)
         {
-            unsetIntermediatesCommand = new UnsetIntermediateCommand(endPoints);
+            unsetIntermediatesCommand = new UnsetIntermediateCommand<TVertex>(endPoints);
         }
 
         public override void Undo()

@@ -2,7 +2,6 @@
 using Autofac.Extras.Moq;
 using GraphLib.Extensions;
 using GraphLib.Interfaces.Factories;
-using GraphLib.NullRealizations;
 using GraphLib.Realizations.Factories.GraphAssembles;
 using GraphLib.Realizations.Neighbourhoods;
 using GraphLib.Realizations.Tests.Extenions;
@@ -40,10 +39,10 @@ namespace GraphLib.Realizations.Tests
             {
                 mock.MockCoordinateFactory(x => new TestCoordinate(x));
                 mock.MockNeighbourhoodFactory(x => new MooreNeighborhood(x));
-                mock.MockVertexFactory((n, c) => new TestVertex(n, c));
-                mock.MockGraphFactory((v, d) => new TestGraph(v, d));
+                mock.MockVertexFactory<TestVertex>(c => new TestVertex(c));
+                mock.MockGraphFactory<TestGraph, TestVertex>((v, d) => new TestGraph(v, d));
 
-                var assemble = mock.Create<GraphAssemble>();
+                var assemble = mock.Create<GraphAssemble<TestGraph, TestVertex>>();
                 var graph = assemble.AssembleGraph(obstaclePercent, dimensionSizes);
 
                 Assert.Multiple(() =>
@@ -52,24 +51,6 @@ namespace GraphLib.Realizations.Tests
                     Assert.AreEqual(obstaclePercent, graph.GetObstaclePercent());
                     Assert.IsTrue(graph.Distinct().Count() == graph.Count);
                 });
-            }
-        }
-
-        [Test]
-        public void AssembleGraph_NullRealizations_ReturnsNullGraph()
-        {
-            using (var mock = AutoMock.GetLoose(RegisterNullRandomNumberGenerator))
-            {
-                mock.MockCoordinateFactory(_ => NullCoordinate.Interface);
-                mock.MockNeighbourhoodFactory(_ => NullNeighborhood.Interface);
-                mock.MockVertexFactory((_, __) => NullVertex.Interface);
-                mock.MockGraphFactory((_, __) => NullGraph.Interface);
-                mock.MockVertexCostFactory(_ => NullCost.Interface);
-
-                var assemble = mock.Create<GraphAssemble>();
-                var graph = assemble.AssembleGraph();
-
-                Assert.AreSame(NullGraph.Interface, graph);
             }
         }
     }

@@ -6,7 +6,7 @@ namespace WPFVersion3D.Model.Axes
     {
         protected override int Order => 0;
 
-        public Applicate(Graph3D graph) : base(graph)
+        public Applicate(Graph3D<Vertex3D> graph) : base(graph)
         {
         }
 

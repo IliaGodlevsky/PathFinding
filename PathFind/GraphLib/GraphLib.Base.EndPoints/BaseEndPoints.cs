@@ -1,7 +1,6 @@
 ﻿using Commands.Extensions;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Base.EndPoints.Commands.VerticesCommands;
-using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using System;
 using System.Collections;
@@ -11,36 +10,40 @@ using System.Linq;
 
 namespace GraphLib.Base.EndPoints
 {
-    public abstract class BaseEndPoints : IEndPoints, IGraphEvents
+    public abstract class BaseEndPoints<TVertex> : IEndPoints, IGraphEvents<TVertex>
+        where TVertex : IVertex, IVisualizable
     {
-        private readonly IVerticesCommands markedToReplaceCommands;
-        private readonly IVerticesCommands setEndPointsCommands;
-        private readonly IVerticesCommands returnColorsCommands;
+        private readonly IVerticesCommands<TVertex> markedToReplaceCommands;
+        private readonly IVerticesCommands<TVertex> setEndPointsCommands;
+        private readonly IVerticesCommands<TVertex> returnColorsCommands;
 
-        public IVertex Source { get; internal set; }
+        IVertex IEndPoints.Source => Source;
 
-        public IVertex Target { get; internal set; }
+        IVertex IEndPoints.Target => Target;
 
-        internal protected Collection<IVertex> Intermediates { get; }
+        public TVertex Source { get; internal set; }
 
-        internal protected Collection<IVertex> MarkedToReplace { get; }
+        public TVertex Target { get; internal set; }
+
+        internal protected Collection<TVertex> Intermediates { get; }
+
+        internal protected Collection<TVertex> MarkedToReplace { get; }
 
         protected BaseEndPoints()
         {
-            Intermediates = new Collection<IVertex>();
-            MarkedToReplace = new Collection<IVertex>();
-            setEndPointsCommands = new SetEndPointsCommands(this);
-            markedToReplaceCommands = new IntermediateToReplaceCommands(this);
-            returnColorsCommands = new RestoreColorsCommands(this);
-            Reset();
+            Intermediates = new Collection<TVertex>();
+            MarkedToReplace = new Collection<TVertex>();
+            setEndPointsCommands = new SetEndPointsCommands<TVertex>(this);
+            markedToReplaceCommands = new IntermediateToReplaceCommands<TVertex>(this);
+            returnColorsCommands = new RestoreColorsCommands<TVertex>(this);
         }
 
-        public void Subscribe(IGraph graph)
+        public void Subscribe(IGraph<TVertex> graph)
         {
             graph.ForEach(SubscribeVertex);
         }
 
-        public void Unsubscribe(IGraph graph)
+        public void Unsubscribe(IGraph<TVertex> graph)
         {
             graph.ForEach(UnsubscribeVertex);
         }
@@ -53,26 +56,30 @@ namespace GraphLib.Base.EndPoints
 
         public void RestoreCurrentColors()
         {
-            returnColorsCommands.Execute(this);
+            returnColorsCommands.Execute(this.OfType<TVertex>());
         }
 
         protected virtual void SetEndPoints(object sender, EventArgs e)
         {
-            setEndPointsCommands.Execute(sender.AsVertex());
+            setEndPointsCommands.Execute((TVertex)sender);
         }
 
         protected virtual void MarkIntermediateToReplace(object sender, EventArgs e)
         {
-            markedToReplaceCommands.Execute(sender.AsVertex());
+            markedToReplaceCommands.Execute((TVertex)sender);
         }
 
-        protected abstract void SubscribeVertex(IVertex vertex);
+        protected abstract void SubscribeVertex(TVertex vertex);
 
-        protected abstract void UnsubscribeVertex(IVertex vertex);
+        protected abstract void UnsubscribeVertex(TVertex vertex);
 
         public IEnumerator<IVertex> GetEnumerator()
         {
-            return Intermediates.Prepend(Source).Append(Target).GetEnumerator();
+            return Intermediates
+                .OfType<IVertex>()
+                .Prepend(Source)
+                .Append(Target)
+                .GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

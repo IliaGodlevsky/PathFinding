@@ -6,18 +6,20 @@ using Visualization.Extensions;
 
 namespace Visualization.Realizations
 {
-    internal sealed class CompositeVisualization : List<IExecutable<IAlgorithm<IGraphPath>>>, IExecutable<IAlgorithm<IGraphPath>>
+    internal sealed class CompositeVisualization<TGraph, TVertex> : List<IExecutable<IAlgorithm<IGraphPath>>>, IExecutable<IAlgorithm<IGraphPath>>
+        where TGraph : IGraph<TVertex>
+        where TVertex : IVertex, IVisualizable
     {
-        private readonly IGraph graph;
+        private readonly TGraph graph;
 
-        public CompositeVisualization(IGraph graph)
+        public CompositeVisualization(TGraph graph)
         {
             this.graph = graph;
         }
 
         public void Execute(IAlgorithm<IGraphPath> algorithm)
         {
-            graph.RemoveAllColors();
+            graph.RemoveAllColors<TGraph, TVertex>();
             ForEach(command => command.Execute(algorithm));
         }
     }

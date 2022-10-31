@@ -6,7 +6,7 @@ namespace ConsoleVersion.Model.FramedAxes
     {
         protected override string Offset { get; }
 
-        public FramedToLeftOrdinate(Graph2D graph)
+        public FramedToLeftOrdinate(Graph2D<Vertex> graph)
             : base(graph.Length)
         {
             Offset = string.Empty;

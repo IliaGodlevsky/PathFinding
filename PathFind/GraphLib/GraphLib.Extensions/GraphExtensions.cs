@@ -8,22 +8,26 @@ namespace GraphLib.Extensions
 {
     public static class GraphExtensions
     {
-        public static void Refresh(this IGraph graph)
+        public static void Refresh<TVertex>(this IGraph<TVertex> graph)
+            where TVertex : IVertex, IVisualizable
         {
             graph.ForEach(vertex => vertex.Refresh());
         }
 
-        public static int GetObstaclePercent(this IGraph self)
+        public static int GetObstaclePercent<TVertex>(this IGraph<TVertex> self)
+            where TVertex : IVertex
         {
             return (int)Math.Round(self.Count == 0 ? 0 : self.GetObstaclesCount() * 100.0 / self.Count);
         }
 
-        public static int GetObstaclesCount(this IGraph self)
+        public static int GetObstaclesCount<TVertex>(this IGraph<TVertex> self)
+            where TVertex : IVertex
         {
             return self.Where(vertex => vertex.IsObstacle).Count();
         }
 
-        public static int GetAvailableIntermediatesNumber(this IGraph graph)
+        public static int GetAvailableIntermediatesNumber<TVertex>(this IGraph<TVertex> graph)
+            where TVertex : IVertex
         {
             const int NumberOfRequiredEndPoints = 2;
             int isolatedCount = graph.Where(vertex => vertex.IsIsolated()).Count();
@@ -31,8 +35,9 @@ namespace GraphLib.Extensions
             return number > 0 ? number : 0;
         }
 
-        public static string GetStringRepresentation(this IGraph graph,
+        public static string GetStringRepresentation<TVertex>(this IGraph<TVertex> graph,
             string format = "Obstacle percent: {0} ({1}/{2})")
+            where TVertex : IVertex
         {
             if (!graph.IsNull())
             {

@@ -1,13 +1,12 @@
-﻿using GraphLib.Interfaces;
-using GraphLib.Serialization;
+﻿using GraphLib.Serialization;
 using GraphLib.Serialization.Interfaces;
 using GraphLib.TestRealizations.TestObjects;
 
 namespace GraphLib.TestRealizations.TestFactories
 {
-    public sealed class TestVertexFromInfoFactory : IVertexFromInfoFactory
+    public sealed class TestVertexFromInfoFactory : IVertexFromInfoFactory<TestVertex>
     {
-        public IVertex CreateFrom(VertexSerializationInfo info)
+        public TestVertex CreateFrom(VertexSerializationInfo info)
         {
             return new TestVertex(info);
         }

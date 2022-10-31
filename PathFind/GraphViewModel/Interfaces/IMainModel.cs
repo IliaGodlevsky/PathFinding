@@ -2,17 +2,20 @@
 
 namespace GraphViewModel.Interfaces
 {
-    public interface IMainModel
+    public interface IMainModel<TGraph, TVertex, TField>
+        where TGraph : IGraph<TVertex>
+        where TVertex : IVertex, IVisualizable
+        where TField : IGraphField<TVertex>
     {
         string GraphParametres { get; set; }
 
-        IGraphField GraphField { get; set; }
+        TField GraphField { get; set; }
 
-        IGraph Graph { get; }
+        TGraph Graph { get; }
 
         void SaveGraph();
 
-        void ConnectNewGraph(IGraph graph);
+        void ConnectNewGraph(TGraph graph);
 
         void CreateNewGraph();
 

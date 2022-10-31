@@ -7,12 +7,12 @@ namespace GraphLib.TestRealizations.TestFactories.Matrix
 {
     internal abstract class BaseMatrix<T> : IMatrix
     {
-        protected readonly Graph2D graph;
+        protected readonly Graph2D<TestVertex> graph;
         protected readonly Lazy<T[,]> matrix;
 
         protected T[,] Matrix => matrix.Value;
 
-        protected BaseMatrix(Graph2D graph)
+        protected BaseMatrix(Graph2D<TestVertex> graph)
         {
             this.graph = graph;
             matrix = new Lazy<T[,]>(CreateMatrix);

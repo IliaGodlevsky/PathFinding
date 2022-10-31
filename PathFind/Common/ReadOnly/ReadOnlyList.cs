@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Common.ReadOnly
 {
     public sealed class ReadOnlyList<T> : IReadOnlyList<T>
     {
+        public static readonly ReadOnlyList<T> Empty = new ReadOnlyList<T>(Array.Empty<T>());
+
         private readonly IList<T> list;
 
         public T this[int index] => list[index];
@@ -14,6 +17,12 @@ namespace Common.ReadOnly
         public ReadOnlyList(IList<T> collection)
         {
             list = collection;
+        }
+
+        public ReadOnlyList(params T[] items)
+            : this((IList<T>)items)
+        {
+
         }
 
         public IEnumerator<T> GetEnumerator()

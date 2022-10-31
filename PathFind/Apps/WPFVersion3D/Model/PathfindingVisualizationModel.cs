@@ -1,7 +1,7 @@
 ﻿using Algorithm.Infrastructure.EventArguments;
 using Autofac;
 using GalaSoft.MvvmLight.Messaging;
-using GraphLib.Interfaces;
+using GraphLib.Realizations.Graphs;
 using System;
 using System.Threading.Tasks;
 using Visualization;
@@ -10,11 +10,11 @@ using WPFVersion3D.Messages.PassValueMessages;
 
 namespace WPFVersion3D.Model
 {
-    internal sealed class PathfindingVisualizationModel : PathfindingVisualization, IDisposable
+    internal sealed class PathfindingVisualizationModel : PathfindingVisualization<Graph3D<Vertex3D>, Vertex3D>, IDisposable
     {
         private readonly IMessenger messenger;
 
-        public PathfindingVisualizationModel(IGraph graph) : base(graph)
+        public PathfindingVisualizationModel(Graph3D<Vertex3D> graph) : base(graph)
         {
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<PathFoundMessage>(this, PathFound);

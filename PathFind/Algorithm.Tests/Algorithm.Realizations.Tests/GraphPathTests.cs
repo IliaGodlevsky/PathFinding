@@ -4,6 +4,7 @@ using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
+using GraphLib.Realizations.Graphs;
 using GraphLib.TestRealizations.TestFactories;
 using GraphLib.TestRealizations.TestObjects;
 using NUnit.Framework;
@@ -14,8 +15,8 @@ namespace Algorithm.Realizations.Tests
     [TestFixture]
     public class GraphPathTests
     {
-        private readonly IGraphAssemble graphAssemble;
-        private readonly IGraph graph;
+        private readonly IGraphAssemble<Graph2D<TestVertex>, TestVertex> graphAssemble;
+        private readonly Graph2D<TestVertex> graph;
         private readonly ICoordinate[] expectedPraphPathCoordinates;
         private readonly IEndPoints endPoints;
         private readonly ParentVertices parentVertices;

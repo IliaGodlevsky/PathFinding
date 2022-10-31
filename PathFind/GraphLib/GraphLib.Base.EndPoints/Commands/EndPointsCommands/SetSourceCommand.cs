@@ -7,20 +7,21 @@ using NullObject.Extensions;
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {
     [Order(4)]
-    internal sealed class SetSourceCommand : BaseEndPointsCommand
+    internal sealed class SetSourceCommand<TVertex> : BaseEndPointsCommand<TVertex>
+        where TVertex : IVertex, IVisualizable
     {
-        public SetSourceCommand(BaseEndPoints endPoints)
+        public SetSourceCommand(BaseEndPoints<TVertex> endPoints)
             : base(endPoints)
         {
         }
 
-        public override void Execute(IVertex vertex)
+        public override void Execute(TVertex vertex)
         {
             endPoints.Source = vertex;
             Source.VisualizeAsSource();
         }
 
-        public override bool CanExecute(IVertex vertex)
+        public override bool CanExecute(TVertex vertex)
         {
             return endPoints.Source.IsNull()
                 && endPoints.CanBeEndPoint(vertex);

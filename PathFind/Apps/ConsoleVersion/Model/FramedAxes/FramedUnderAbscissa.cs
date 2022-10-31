@@ -6,7 +6,7 @@ namespace ConsoleVersion.Model.FramedAxes
     {
         protected override string Offset { get; }
 
-        public FramedUnderAbscissa(Graph2D graph)
+        public FramedUnderAbscissa(Graph2D<Vertex> graph)
             : base(graph.Width)
         {
             Offset = string.Empty;

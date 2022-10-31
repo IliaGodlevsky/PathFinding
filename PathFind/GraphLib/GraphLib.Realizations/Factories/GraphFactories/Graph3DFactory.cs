@@ -5,11 +5,12 @@ using System.Collections.Generic;
 
 namespace GraphLib.Realizations.Factories.GraphFactories
 {
-    public sealed class Graph3DFactory : IGraphFactory
+    public sealed class Graph3DFactory<TVertex> : IGraphFactory<Graph3D<TVertex>, TVertex>
+        where TVertex : IVertex
     {
-        public IGraph CreateGraph(IReadOnlyCollection<IVertex> vertices, IReadOnlyList<int> dimensionSizes)
+        public Graph3D<TVertex> CreateGraph(IReadOnlyCollection<TVertex> vertices, IReadOnlyList<int> dimensionSizes)
         {
-            return new Graph3D(vertices, dimensionSizes);
+            return new Graph3D<TVertex>(vertices, dimensionSizes);
         }
     }
 }

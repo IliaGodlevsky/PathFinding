@@ -6,6 +6,7 @@ using Common.Extensions;
 using Common.Interface;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
+using GraphLib.Realizations.Graphs;
 using GraphViewModel;
 using Interruptable.EventArguments;
 using Logging.Interface;
@@ -16,11 +17,13 @@ using System.Windows.Input;
 using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Extensions;
 using WPFVersion3D.Infrastructure.Commands;
+using WPFVersion3D.Interface;
 using WPFVersion3D.Messages.PassValueMessages;
+using WPFVersion3D.Model;
 
 namespace WPFVersion3D.ViewModel
 {
-    public class PathFindingViewModel : PathFindingModel, IViewModel, IDisposable
+    public class PathFindingViewModel : PathFindingModel<Vertex3D>, IViewModel, IDisposable
     {
         public event Action WindowClosed;
 
@@ -32,8 +35,9 @@ namespace WPFVersion3D.ViewModel
 
         private int Index { get; set; }
 
-        public PathFindingViewModel(BaseEndPoints endPoints, IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories,
-            ILog log) : base(endPoints, algorithmFactories, log)
+        public PathFindingViewModel(BaseEndPoints<Vertex3D> endPoints,
+            IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories,
+            ILog log, ICache<Graph3D<Vertex3D>> graphCache) : base(endPoints, algorithmFactories, graphCache.Cache, log)
         {
             messenger = DI.Container.Resolve<IMessenger>();
             FindPathCommand = new RelayCommand(ExecutePathFindCommand, CanExecutePathFindCommand);

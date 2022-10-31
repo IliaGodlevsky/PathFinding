@@ -6,7 +6,7 @@ namespace WPFVersion3D.Model.Axes
     {
         protected override int Order => 2;
 
-        public Abscissa(Graph3D graph) : base(graph)
+        public Abscissa(Graph3D<Vertex3D> graph) : base(graph)
         {
 
         }

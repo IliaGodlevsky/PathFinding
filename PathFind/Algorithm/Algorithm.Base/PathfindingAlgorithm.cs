@@ -116,7 +116,7 @@ namespace Algorithm.Base
 
         protected virtual bool IsDestination(IEndPoints endPoints)
         {
-            return endPoints.Target.Equals(CurrentVertex) || IsInterruptRequested;
+            return CurrentVertex.Equals(endPoints.Target) || IsInterruptRequested;
         }
 
         protected void RaiseVertexVisited(AlgorithmEventArgs e)
@@ -153,15 +153,6 @@ namespace Algorithm.Base
                 .Where(visitedVertices.IsNotVisited)
                 .Where(v => !v.IsObstacle)
                 .ToReadOnly();
-        }
-
-        protected virtual void ThrowIfDeadEnd(IVertex vertex)
-        {
-            if (vertex.IsNull())
-            {
-                CompletePathfinding();
-                throw new DeadendVertexException();
-            }
         }
 
         protected abstract IVertex GetNextVertex();

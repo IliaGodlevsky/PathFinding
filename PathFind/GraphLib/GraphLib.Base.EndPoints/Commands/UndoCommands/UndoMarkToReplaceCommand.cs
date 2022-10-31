@@ -7,13 +7,14 @@ using System.Linq;
 
 namespace GraphLib.Base.EndPoints.Commands.UndoCommands
 {
-    internal sealed class UndoMarkToReplaceCommand : BaseIntermediatesUndoCommand
+    internal sealed class UndoMarkToReplaceCommand<TVertex> : BaseIntermediatesUndoCommand<TVertex>
+        where TVertex : IVertex, IVisualizable
     {
-        private readonly IExecutable<IVertex> cancelMarkToReplaceCommand;
+        private readonly IExecutable<TVertex> cancelMarkToReplaceCommand;
 
-        public UndoMarkToReplaceCommand(BaseEndPoints endPoints) : base(endPoints)
+        public UndoMarkToReplaceCommand(BaseEndPoints<TVertex> endPoints) : base(endPoints)
         {
-            cancelMarkToReplaceCommand = new CancelMarkToReplaceCommand(endPoints);
+            cancelMarkToReplaceCommand = new CancelMarkToReplaceCommand<TVertex>(endPoints);
         }
 
         public override void Undo()

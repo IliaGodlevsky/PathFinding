@@ -1,7 +1,6 @@
 ﻿using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations;
 using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel.Interfaces;
@@ -10,25 +9,28 @@ using System;
 
 namespace GraphViewModel
 {
-    public abstract class MainModel : IMainModel
+    public abstract class MainModel<TGraph, TVertex, TField> : IMainModel<TGraph, TVertex, TField>
+        where TGraph : IGraph<TVertex>
+        where TVertex : IVertex, IVisualizable
+        where TField : IGraphField<TVertex>
     {
-        private readonly IGraphEvents events;
+        private readonly IGraphEvents<TVertex> events;
 
         protected readonly ILog log;
-        protected readonly IGraphFieldFactory fieldFactory;
-        protected readonly BaseEndPoints endPoints;
-        protected readonly IGraphSerializationModule serializationModule;
+        protected readonly IGraphFieldFactory<TGraph, TVertex, TField> fieldFactory;
+        protected readonly BaseEndPoints<TVertex> endPoints;
+        protected readonly IGraphSerializationModule<TGraph, TVertex> serializationModule;
 
         public virtual string GraphParametres { get; set; }
 
-        public virtual IGraphField GraphField { get; set; }
+        public virtual TField GraphField { get; set; }
 
-        public virtual IGraph Graph { get; protected set; }
+        public virtual TGraph Graph { get; protected set; }
 
-        protected MainModel(IGraphFieldFactory fieldFactory,
-            IGraphEvents events,
-            IGraphSerializationModule serializationModule,
-            BaseEndPoints endPoints,
+        protected MainModel(IGraphFieldFactory<TGraph, TVertex, TField> fieldFactory,
+            IGraphEvents<TVertex> events,
+            IGraphSerializationModule<TGraph, TVertex> serializationModule,
+            BaseEndPoints<TVertex> endPoints,
             ILog log)
         {
             this.events = events;
@@ -36,14 +38,13 @@ namespace GraphViewModel
             this.fieldFactory = fieldFactory;
             this.endPoints = endPoints;
             this.log = log;
-            Graph = NullGraph.Interface;
         }
 
         public virtual async void SaveGraph()
         {
             try
             {
-                await serializationModule.SaveGraphAsync(Graph);
+                await serializationModule.SaveGraphAsync((IGraph<IVertex>)Graph);
             }
             catch (Exception ex)
             {
@@ -75,7 +76,7 @@ namespace GraphViewModel
             endPoints.Reset();
         }
 
-        public virtual void ConnectNewGraph(IGraph graph)
+        public virtual void ConnectNewGraph(TGraph graph)
         {
             endPoints.Reset();
             events.Unsubscribe(Graph);

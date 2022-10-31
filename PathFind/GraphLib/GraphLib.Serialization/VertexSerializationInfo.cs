@@ -1,4 +1,5 @@
-﻿using GraphLib.Interfaces;
+﻿using Common.Extensions.EnumerableExtensions;
+using GraphLib.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +17,7 @@ namespace GraphLib.Serialization
 
         public VertexSerializationInfo(IVertex vertex)
             : this(vertex.IsObstacle, vertex.Cost, vertex.Position,
-                  vertex.Neighbours.Select(v => v.Position).ToArray())
+                  vertex.Neighbours.Select(v => v.Position).ToReadOnly())
         {
 
         }

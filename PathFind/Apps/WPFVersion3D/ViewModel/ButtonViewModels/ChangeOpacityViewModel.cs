@@ -1,11 +1,12 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
-using GraphLib.Interfaces;
+using GraphLib.Realizations.Graphs;
 using NullObject.Extensions;
 using System.Windows.Input;
 using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Infrastructure.Commands;
 using WPFVersion3D.Messages.PassValueMessages;
+using WPFVersion3D.Model;
 using WPFVersion3D.View;
 
 namespace WPFVersion3D.ViewModel.ButtonViewModels
@@ -14,7 +15,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
     {
         private readonly IMessenger messenger;
 
-        private IGraph Graph { get; set; }
+        private Graph3D<Vertex3D> Graph { get; set; } = Graph3D<Vertex3D>.Empty;
 
         public ICommand ChangeVerticesOpacityCommand { get; }
 

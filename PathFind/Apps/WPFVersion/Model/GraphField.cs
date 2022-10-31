@@ -1,6 +1,6 @@
 ﻿using Common.Extensions.EnumerableExtensions;
+using Common.ReadOnly;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations;
 using GraphLib.Realizations.Coordinates;
 using System.Collections.Generic;
 using System.Windows.Controls;
@@ -9,17 +9,17 @@ using static WPFVersion.Constants;
 
 namespace WPFVersion.Model
 {
-    internal sealed class GraphField : Canvas, IGraphField
+    internal sealed class GraphField : Canvas, IGraphField<Vertex>
     {
-        public IReadOnlyCollection<IVertex> Vertices { get; }
+        public IReadOnlyCollection<Vertex> Vertices { get; }
 
-        public GraphField(IGraph graph)
+        public GraphField(IReadOnlyCollection<Vertex> graph)
         {
             Vertices = graph;
-            Vertices.ForEach(vertex => Locate((Vertex)vertex));
+            Vertices.ForEach(vertex => Locate(vertex));
         }
 
-        public GraphField() : this(NullGraph.Interface)
+        public GraphField() : this(ReadOnlyList<Vertex>.Empty)
         {
 
         }

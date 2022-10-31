@@ -17,7 +17,7 @@ namespace GraphLib.TestRealizations.TestObjects
             Target = target;
         }
 
-        public TestEndPoints(IGraph graph)
+        public TestEndPoints(IGraph<IVertex> graph)
             : this(graph.First(), graph.Last())
         {
 

@@ -11,9 +11,9 @@ namespace GraphLib.NullRealizations
     [DebuggerDisplay("Null")]
     public sealed class NullEndPoints : Singleton<NullEndPoints, IEndPoints>, IEndPoints
     {
-        public IVertex Target => NullVertex.Interface;
+        public IVertex Target => NullVertex.Instance;
 
-        public IVertex Source => NullVertex.Interface;
+        public IVertex Source => NullVertex.Instance;
 
         private NullEndPoints() { }
 

@@ -2,12 +2,13 @@
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Base.EndPoints;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations;
+using GraphLib.Realizations.Graphs;
 using System.Windows.Input;
 using WPFVersion3D.DependencyInjection;
 using WPFVersion3D.Infrastructure.Commands;
 using WPFVersion3D.Messages.ActionMessages;
 using WPFVersion3D.Messages.PassValueMessages;
+using WPFVersion3D.Model;
 using WPFVersion3D.View;
 
 namespace WPFVersion3D.ViewModel.ButtonViewModels
@@ -18,7 +19,7 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
 
         public ICommand CreateGraphCommand { get; }
 
-        private IGraph Graph { get; set; } = NullGraph.Interface;
+        private Graph3D<Vertex3D> Graph { get; set; } = Graph3D<Vertex3D>.Empty;
 
         private bool IsAllAlgorithmsFinishedPathfinding { get; set; } = true;
 
@@ -42,8 +43,8 @@ namespace WPFVersion3D.ViewModel.ButtonViewModels
 
         private void OnGraphCreated(GraphCreatedMessage message)
         {
-            var endPoints = DI.Container.Resolve<BaseEndPoints>();
-            var events = DI.Container.Resolve<IGraphEvents>();
+            var endPoints = DI.Container.Resolve<BaseEndPoints<Vertex3D>>();
+            var events = DI.Container.Resolve<IGraphEvents<Vertex3D>>();
             events.Unsubscribe(Graph);
             endPoints.Reset();
             Graph = message.Value;

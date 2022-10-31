@@ -1,4 +1,5 @@
 ﻿using Common.Extensions;
+using Common.ReadOnly;
 using GraphLib.Interfaces;
 using GraphLib.NullRealizations;
 using NullObject.Extensions;
@@ -20,19 +21,19 @@ namespace GraphLib.Extensions
 
         public static bool IsNeighbour(this IVertex self, IVertex candidate)
         {
-            return self.Neighbours.Any(vertex
-                => ReferenceEquals(vertex, candidate) && ReferenceEquals(vertex.Graph, candidate.Graph));
+            return self.Neighbours.Any(vertex => ReferenceEquals(vertex, candidate));
         }
 
-        public static void SetToDefault(this IVertex self)
+        public static void SetToDefault<TVertex>(this TVertex self)
+            where TVertex : IVertex, IVisualizable
         {
             if (self.IsObstacle)
             {
-                self.AsVisualizable().VisualizeAsObstacle();
+                self.VisualizeAsObstacle();
             }
             else
             {
-                self.AsVisualizable().VisualizeAsRegular();
+                self.VisualizeAsRegular();
             }
         }
 
@@ -41,24 +42,27 @@ namespace GraphLib.Extensions
             return vertex.Position.IsCardinal(neighbor.Position);
         }
 
-        public static IVisualizable AsVisualizable(this IVertex vertex)
-        {
-            return vertex.As<IVisualizable>(NullVisualizable.Interface);
-        }
-
         public static IVertex AsVertex(this object self)
         {
             return self.As<IVertex>(NullVertex.Interface);
+        }
+
+        public static void Initialize<TVertex>(this TVertex self)
+            where TVertex : IVertex, IVisualizable
+        {
+            (self as IVertex).Initialize();
+            self.SetToDefault();
         }
 
         public static void Initialize(this IVertex self)
         {
             self.IsObstacle = false;
             self.Cost = NullCost.Interface;
-            self.SetToDefault();
+            self.Neighbours = ReadOnlyList<IVertex>.Empty;
         }
 
-        internal static void Refresh(this IVertex self)
+        internal static void Refresh<TVertex>(this TVertex self)
+            where TVertex : IVertex, IVisualizable
         {
             self.SetToDefault();
         }

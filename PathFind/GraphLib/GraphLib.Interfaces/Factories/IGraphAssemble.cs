@@ -2,8 +2,10 @@
 
 namespace GraphLib.Interfaces.Factories
 {
-    public interface IGraphAssemble
+    public interface IGraphAssemble<out TGraph, in TVertex>
+        where TVertex : IVertex
+        where TGraph : IGraph<TVertex>
     {
-        IGraph AssembleGraph(int obstaclePercent, IReadOnlyList<int> graphDimensionSizes);
+        TGraph AssembleGraph(int obstaclePercent, IReadOnlyList<int> graphDimensionSizes);
     }
 }

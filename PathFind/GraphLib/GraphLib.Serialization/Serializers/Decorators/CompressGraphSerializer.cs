@@ -1,5 +1,4 @@
 ﻿using GraphLib.Interfaces;
-using GraphLib.NullRealizations;
 using GraphLib.Serialization.Exceptions;
 using GraphLib.Serialization.Interfaces;
 using System;
@@ -8,25 +7,25 @@ using System.IO.Compression;
 
 namespace GraphLib.Serialization.Serializers.Decorators
 {
-    public sealed class CompressGraphSerializer : IGraphSerializer
+    public sealed class CompressGraphSerializer<TGraph, TVertex> : IGraphSerializer<TGraph, TVertex>
+        where TGraph : IGraph<TVertex>
+        where TVertex : IVertex
     {
-        private readonly IGraphSerializer serializer;
+        private readonly IGraphSerializer<TGraph, TVertex> serializer;
 
-        public CompressGraphSerializer(IGraphSerializer serializer)
+        public CompressGraphSerializer(IGraphSerializer<TGraph, TVertex> serializer)
         {
             this.serializer = serializer;
         }
 
-        public IGraph LoadGraph(Stream stream)
+        public TGraph LoadGraph(Stream stream)
         {
-            var graph = NullGraph.Interface;
             try
             {
                 using (var compressionStream = new GZipStream(stream, CompressionMode.Decompress, leaveOpen: true))
                 {
-                    graph = serializer.LoadGraph(compressionStream);
+                    return serializer.LoadGraph(compressionStream);
                 }
-                return graph;
             }
             catch (Exception ex)
             {
@@ -34,7 +33,7 @@ namespace GraphLib.Serialization.Serializers.Decorators
             }
         }
 
-        public void SaveGraph(IGraph graph, Stream stream)
+        public void SaveGraph(IGraph<IVertex> graph, Stream stream)
         {
             try
             {
