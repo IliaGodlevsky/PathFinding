@@ -20,30 +20,31 @@ namespace Algorithm.Base
 
         }
 
-        public sealed override IGraphPath FindPath()
+        protected sealed override IGraphPath FindPathImpl()
         {
-            var path = NullGraphPath.Interface;
             PrepareForPathfinding();
-            var subEndPoints = endPoints.ToSubEndPoints().ToReadOnly();
             using (Disposable.Use(CompletePathfinding))
             {
-                for (int i = 0; i < subEndPoints.Count && !IsInterruptRequested; i++)
+                var path = NullGraphPath.Interface;
+                foreach (var subEndPoint in endPoints.ToSubEndPoints())
                 {
-                    CurrentEndPoints = subEndPoints[i];
+                    CurrentEndPoints = subEndPoint;
                     PrepareForLocalPathfinding();
                     VisitVertex(CurrentVertex);
                     while (!IsDestination(CurrentEndPoints))
                     {
+                        ThrowIfInterrupted();
                         WaitUntilResumed();
                         InspectVertex(CurrentVertex);
                         CurrentVertex = GetNextVertex();
                         VisitVertex(CurrentVertex);
                     }
-                    path = new CompositeGraphPath(path, CreateGraphPath());
+                    var subPath = CreateGraphPath();
+                    path = new CompositeGraphPath(path, subPath);
                     Reset();
                 }
+                return path;
             }
-            return IsInterruptRequested ? NullGraphPath.Interface : path;
         }
 
         protected virtual void PrepareForLocalPathfinding()

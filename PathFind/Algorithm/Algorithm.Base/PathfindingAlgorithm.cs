@@ -2,6 +2,7 @@
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
+using Algorithm.NullRealizations;
 using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
 using Common.Extensions.EnumerableExtensions;
@@ -10,7 +11,6 @@ using GraphLib.Realizations;
 using Interruptable.EventArguments;
 using Interruptable.EventHandlers;
 using Interruptable.Interface;
-using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +39,7 @@ namespace Algorithm.Base
 
         protected IVertex CurrentVertex { get; set; }
 
-        protected bool IsInterruptRequested { get; set; }
+        private bool IsInterrupted { get; set; }
 
         private bool IsAlgorithmDisposed { get; set; } = false;
 
@@ -51,7 +51,19 @@ namespace Algorithm.Base
             pauseEvent = new AutoResetEvent(true);
         }
 
-        public abstract IGraphPath FindPath();
+        public IGraphPath FindPath()
+        {
+            try
+            {
+                return FindPathImpl();
+            }
+            catch (AlgorithmInterruptedException)
+            {
+                return NullGraphPath.Interface;
+            }
+        }
+
+        protected abstract IGraphPath FindPathImpl();
 
         public void Dispose()
         {
@@ -73,8 +85,8 @@ namespace Algorithm.Base
             {
                 pauseEvent.Set();
                 IsPaused = false;
-                IsInterruptRequested = true;
                 IsInProcess = false;
+                IsInterrupted = true;
                 Interrupted?.Invoke(this, new ProcessEventArgs());
             }
         }
@@ -110,13 +122,12 @@ namespace Algorithm.Base
         {
             visitedVertices.Clear();
             parentVertices.Clear();
-            IsInterruptRequested = false;
             IsPaused = false;
         }
 
         protected virtual bool IsDestination(IEndPoints endPoints)
         {
-            return CurrentVertex.Equals(endPoints.Target) || IsInterruptRequested;
+            return CurrentVertex.Equals(endPoints.Target);
         }
 
         protected void RaiseVertexVisited(AlgorithmEventArgs e)
@@ -138,6 +149,14 @@ namespace Algorithm.Base
             Reset();
             IsInProcess = true;
             Started?.Invoke(this, new ProcessEventArgs());
+        }
+
+        protected void ThrowIfInterrupted()
+        {
+            if (IsInterrupted)
+            {
+                throw new AlgorithmInterruptedException(this);
+            }
         }
 
         protected virtual void CompletePathfinding()

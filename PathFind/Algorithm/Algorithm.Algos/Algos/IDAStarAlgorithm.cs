@@ -1,13 +1,10 @@
 ﻿using Algorithm.Extensions;
 using Algorithm.Interfaces;
-using Algorithm.NullRealizations;
 using Algorithm.Realizations.Heuristic.Distances;
 using Algorithm.Realizations.StepRules;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations;
 using GraphLib.Utility;
-using NullObject.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -42,7 +39,7 @@ namespace Algorithm.Algos.Algos
             var next = queue.TryFirstOrNullVertex();
             if (next.Neighbours.Count == 0)
             {
-                stashedVertices.ForEach(node => queue.EnqueueOrUpdatePriority(node.Key, node.Value));
+                stashedVertices.ForEach(stashed => queue.EnqueueOrUpdatePriority(stashed.Key, stashed.Value));
                 stashedVertices.Clear();
                 next = queue.TryFirstOrDeadEndVertex();
             }

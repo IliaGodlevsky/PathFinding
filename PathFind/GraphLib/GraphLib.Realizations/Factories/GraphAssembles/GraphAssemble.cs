@@ -60,18 +60,14 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
                 vertices[i] = vertex;
             }
             var graph = graphFactory.CreateGraph(vertices, graphDimensionsSizes);
-            FillNeighbourhood(graph);
+            graph.ForEach(vertex => SetNeighbourhood(vertex, (IGraph<IVertex>)graph));
             return graph;
         }
 
-        private void FillNeighbourhood(TGraph graph)
+        private void SetNeighbourhood(TVertex vertex, IGraph<IVertex> graph)
         {
-            foreach (var vertex in graph)
-            {
-                vertex.Neighbours = neighbourhoodFactory
-                    .CreateNeighborhood(vertex.Position)
-                    .GetNeighboursWithinGraph((IGraph<IVertex>)graph);
-            }
+            var neighbours = neighbourhoodFactory.CreateNeighborhood(vertex.Position);
+            vertex.Neighbours = neighbours.GetNeighboursWithinGraph(graph);
         }
 
         public override string ToString()

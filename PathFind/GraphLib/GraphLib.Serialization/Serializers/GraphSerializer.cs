@@ -40,7 +40,7 @@ namespace GraphLib.Serialization.Serializers
                 var vertices = graphInfo.VerticesInfo.Select(vertexFactory.CreateFrom).ToReadOnly();
                 var graph = graphFactory.CreateGraph(vertices, graphInfo.DimensionsSizes);
                 graphInfo.VerticesInfo.Zip(graph, (info, vertex) => (Vertex: vertex, Info: info))
-                    .ForEach(item => FillNeighbourhood(item, (IGraph<IVertex>)graph));
+                    .ForEach(item => SetNeighbourhood(item, (IGraph<IVertex>)graph));
                 return graph;
             }
             catch (Exception ex)
@@ -66,7 +66,7 @@ namespace GraphLib.Serialization.Serializers
 
         protected abstract void SaveGraphInternal(IGraph<IVertex> graph, Stream stream);
 
-        private void FillNeighbourhood((TVertex Vertex, VertexSerializationInfo Info) info, IGraph<IVertex> graph)
+        private void SetNeighbourhood((TVertex Vertex, VertexSerializationInfo Info) info, IGraph<IVertex> graph)
         {
             info.Vertex.Neighbours = info.Info.Neighbourhood.GetNeighboursWithinGraph(graph);
         }

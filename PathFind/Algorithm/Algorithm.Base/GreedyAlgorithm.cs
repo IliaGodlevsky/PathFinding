@@ -1,13 +1,11 @@
 ﻿using Algorithm.Extensions;
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
-using Algorithm.NullRealizations;
 using Algorithm.Realizations.GraphPaths;
 using Common.Disposables;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using NullObject.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,7 +23,7 @@ namespace Algorithm.Base
             visitedVerticesStack = new Stack<IVertex>();
         }
 
-        public sealed override IGraphPath FindPath()
+        protected sealed override IGraphPath FindPathImpl()
         {
             PrepareForPathfinding();
 
@@ -33,6 +31,7 @@ namespace Algorithm.Base
             {
                 while (!IsDestination(endPoints))
                 {
+                    ThrowIfInterrupted();
                     WaitUntilResumed();
                     PreviousVertex = CurrentVertex;
                     CurrentVertex = GetNextVertex();
@@ -45,9 +44,7 @@ namespace Algorithm.Base
 
         protected virtual IGraphPath CreateGraphPath()
         {
-            return IsInterruptRequested
-                ? NullGraphPath.Interface
-                : new GraphPath(parentVertices, endPoints);
+            return new GraphPath(parentVertices, endPoints);
         }
 
         protected abstract double GreedyHeuristic(IVertex vertex);
