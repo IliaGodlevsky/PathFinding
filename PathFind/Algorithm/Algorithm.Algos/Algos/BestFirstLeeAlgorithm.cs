@@ -1,4 +1,5 @@
-﻿using Algorithm.Interfaces;
+﻿using Algorithm.Base;
+using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic.Distances;
 using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
@@ -24,6 +25,11 @@ namespace Algorithm.Algos.Algos
             : this(endPoints, new ManhattanDistance())
         {
 
+        }
+
+        public override PathfindingAlgorithm GetClone()
+        {
+            return new BestFirstLeeAlgorithm(endPoints, heuristic);
         }
 
         protected override IVertex GetNextVertex()

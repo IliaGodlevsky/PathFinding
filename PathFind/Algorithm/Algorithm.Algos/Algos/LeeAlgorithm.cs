@@ -1,5 +1,6 @@
 ﻿using Algorithm.Base;
 using Algorithm.Extensions;
+using Algorithm.NullRealizations;
 using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
 using Common.Extensions.EnumerableExtensions;
@@ -22,6 +23,11 @@ namespace Algorithm.Algos.Algos
             accumulatedCosts = new Costs();
         }
 
+        public override PathfindingAlgorithm GetClone()
+        {
+            return new LeeAlgorithm(endPoints);
+        }
+
         protected override void Reset()
         {
             base.Reset();
@@ -32,7 +38,7 @@ namespace Algorithm.Algos.Algos
         protected override IVertex GetNextVertex()
         {
             return verticesQueue.Count == 0
-                ? NullVertex.Interface
+                ? DeadEndVertex.Interface
                 : verticesQueue.Dequeue();
         }
 

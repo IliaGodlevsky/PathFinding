@@ -10,6 +10,7 @@ namespace Interruptable.Interface
         bool IsPaused { get; }
 
         void Pause();
+
         void Resume();
     }
 }

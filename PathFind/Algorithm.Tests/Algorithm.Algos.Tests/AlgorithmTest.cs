@@ -37,14 +37,6 @@ namespace Algorithm.Algos.Tests
             Assert.AreEqual(GetExpectedCost(), graphPath.Cost);
         }
 
-        [TestCase(TestName = "Finding path using NullEndPoints throws DeadEndException")]
-        public virtual void FindPath_NullEndPoints_ReturnsNullGraphPath()
-        {
-            var algorithm = CreateAlgorithm(NullEndPoints.Interface);
-
-            Assert.Throws<DeadendVertexException>(() => algorithm.FindPath());
-        }
-
         [TestCase(new int[] { 500 }, TestName = "Finding path in one dimensional graph with 500 vertices")]
         [TestCase(new int[] { 15, 50 }, TestName = "Finding path in two dimensional graph (15x50)")]
         [TestCase(new int[] { 8, 9, 10 }, TestName = "Finding path in three dimensional graph (8x9x10)")]

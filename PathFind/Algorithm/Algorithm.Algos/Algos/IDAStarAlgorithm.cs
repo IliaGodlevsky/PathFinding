@@ -1,4 +1,5 @@
-﻿using Algorithm.Extensions;
+﻿using Algorithm.Base;
+using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic.Distances;
 using Algorithm.Realizations.StepRules;
@@ -28,6 +29,11 @@ namespace Algorithm.Algos.Algos
             : base(endPoints, stepRule, function)
         {
             stashedVertices = new Dictionary<IVertex, double>(new VertexEqualityComparer());
+        }
+
+        public override PathfindingAlgorithm GetClone()
+        {
+            return new IDAStarAlgorithm(endPoints, stepRule, heuristic);
         }
 
         protected override IVertex GetNextVertex()

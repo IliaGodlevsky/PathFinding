@@ -25,6 +25,11 @@ namespace Algorithm.Algos.Algos
 
         }
 
+        public override PathfindingAlgorithm GetClone()
+        {
+            return new HeuristicCostGreedyAlgorithm(endPoints, heuristic, stepRule);
+        }
+
         protected override IGraphPath CreateGraphPath()
         {
             return new GraphPath(parentVertices, endPoints, stepRule);

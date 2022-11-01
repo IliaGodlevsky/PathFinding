@@ -1,4 +1,5 @@
-﻿using Algorithm.Extensions;
+﻿using Algorithm.Base;
+using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic.Distances;
 using Algorithm.Realizations.StepRules;
@@ -26,6 +27,11 @@ namespace Algorithm.Algos.Algos
             heuristic = function;
             heuristics = new Costs();
             accumulatedCosts = new Costs();
+        }
+
+        public override PathfindingAlgorithm GetClone()
+        {
+            return new AStarAlgorithm(endPoints, stepRule, heuristic);
         }
 
         protected override void Reset()

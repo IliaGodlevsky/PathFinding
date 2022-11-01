@@ -1,7 +1,5 @@
-﻿using Common.Extensions.EnumerableExtensions;
-using SingletonLib.Exceptions;
+﻿using SingletonLib.Exceptions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -23,19 +21,12 @@ namespace SingletonLib
             instance = new Lazy<TInstance>(CreateInstance, true);
         }
 
-        public static IReadOnlyList<TInstance> GetMany(int count)
-        {
-            return count > 0
-                ? Enumerable.Repeat(Instance, count).ToReadOnly()
-                : (IReadOnlyList<TInstance>)Array.Empty<TInstance>();
-        }
-
         private static TInstance CreateInstance()
         {
             var instanceType = typeof(TInstance);
             var ctor = instanceType
                 .GetConstructors(NonPublic | BindingFlags.Instance)
-                .FirstOrDefault(c => c.GetParameters().Length == 0);
+                .FirstOrDefault(c => !c.GetParameters().Any());
             return ctor != null
                 ? (TInstance)ctor.Invoke(Array.Empty<object>())
                 : throw new SingletonException(instanceType);

@@ -21,6 +21,11 @@ namespace Algorithm.Algos.Algos
             this.stepRule = stepRule;
         }
 
+        public override PathfindingAlgorithm GetClone()
+        {
+            return new CostGreedyAlgorithm(endPoints, stepRule);
+        }
+
         protected override IGraphPath CreateGraphPath()
         {
             return new GraphPath(parentVertices, endPoints, stepRule);

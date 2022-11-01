@@ -29,6 +29,11 @@ namespace Algorithm.Algos.Algos
             queue = new SimplePriorityQueue<IVertex, double>(new VertexEqualityComparer());
         }
 
+        public override PathfindingAlgorithm GetClone()
+        {
+            return new DijkstraAlgorithm(endPoints, stepRule);
+        }
+
         protected override IGraphPath CreateGraphPath()
         {
             return new GraphPath(parentVertices, CurrentEndPoints, stepRule);
@@ -42,7 +47,7 @@ namespace Algorithm.Algos.Algos
 
         protected override IVertex GetNextVertex()
         {
-            return queue.TryFirstOrNullVertex();
+            return queue.TryFirstOrDeadEndVertex();
         }
 
         protected override void PrepareForLocalPathfinding()

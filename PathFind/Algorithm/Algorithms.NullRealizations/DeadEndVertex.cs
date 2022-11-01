@@ -9,22 +9,22 @@ namespace Algorithm.NullRealizations
     {
         public bool IsObstacle 
         { 
-            get => throw new DeadendVertexException(); 
+            get => throw new DeadendVertexException();
             set => throw new DeadendVertexException();
         }
 
         public IVertexCost Cost 
         { 
-            get => throw new DeadendVertexException(); 
-            set => throw new DeadendVertexException(); 
+            get => throw new DeadendVertexException();
+            set => throw new DeadendVertexException();
         }
 
         public ICoordinate Position => throw new DeadendVertexException();
 
         public IReadOnlyCollection<IVertex> Neighbours 
         { 
-            get => throw new DeadendVertexException(); 
-            set => throw new DeadendVertexException(); 
+            get => throw new DeadendVertexException();
+            set => throw new DeadendVertexException();
         }
 
         public override bool Equals(object obj)

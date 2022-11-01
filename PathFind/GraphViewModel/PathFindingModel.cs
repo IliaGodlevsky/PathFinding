@@ -67,6 +67,10 @@ namespace GraphViewModel
                     .VisualizeAsPathAsync();
                 SummarizePathfindingResults();
             }
+            catch (AlgorithmInterruptedException)
+            {
+                SummarizePathfindingResults();
+            }
             catch (DeadendVertexException)
             {
                 SummarizePathfindingResults();

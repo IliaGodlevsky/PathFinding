@@ -20,7 +20,7 @@ namespace Algorithm.Base
 
         }
 
-        protected sealed override IGraphPath FindPathImpl()
+        public sealed override IGraphPath FindPath()
         {
             PrepareForPathfinding();
             using (Disposable.Use(CompletePathfinding))

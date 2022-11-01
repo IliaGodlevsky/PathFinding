@@ -29,6 +29,9 @@ namespace Algorithm.NullRealizations
                 .GetEnumerator();
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 }

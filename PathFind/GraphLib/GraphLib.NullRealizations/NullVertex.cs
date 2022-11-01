@@ -9,31 +9,15 @@ namespace GraphLib.NullRealizations
 {
     [Null]
     [DebuggerDisplay("Null")]
-    public sealed class NullVertex : Singleton<NullVertex, IVertex>, IVertex, IEquatable<IVertex>
+    public sealed class NullVertex : Singleton<NullVertex, IVertex>, IVertex
     {
-        public bool IsObstacle
-        {
-            get => true;
-            set { }
-        }
+        public bool IsObstacle { get => true; set { } }
 
-        public IVertexCost Cost
-        {
-            get => NullCost.Interface;
-            set { }
-        }
+        public IVertexCost Cost { get => NullCost.Interface; set { } }
 
-        public IReadOnlyCollection<IVertex> Neighbours
-        {
-            get => GetMany(0);
-            set { }
-        }
+        public IReadOnlyCollection<IVertex> Neighbours { get => Array.Empty<IVertex>(); set { } }
 
-        public ICoordinate Position
-        {
-            get => NullCoordinate.Interface;
-            set { }
-        }
+        public ICoordinate Position => NullCoordinate.Interface;
 
         private NullVertex()
         {

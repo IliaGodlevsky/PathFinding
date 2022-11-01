@@ -36,8 +36,15 @@ namespace GraphLib.NullRealizations
             return other is NullCoordinate;
         }
 
-        public IEnumerator<int> GetEnumerator() => Enumerable.Empty<int>().GetEnumerator();
+        public IEnumerator<int> GetEnumerator()
+        {
+            return Enumerable.Empty<int>()
+                .GetEnumerator();
+        }
 
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 }

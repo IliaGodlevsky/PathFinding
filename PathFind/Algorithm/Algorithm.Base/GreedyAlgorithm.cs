@@ -23,7 +23,7 @@ namespace Algorithm.Base
             visitedVerticesStack = new Stack<IVertex>();
         }
 
-        protected sealed override IGraphPath FindPathImpl()
+        public sealed override IGraphPath FindPath()
         {
             PrepareForPathfinding();
 
