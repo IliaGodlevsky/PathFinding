@@ -60,11 +60,11 @@ namespace WPFVersion3D.ViewModel
 
         protected override void SummarizePathfindingResults()
         {
-            var status = !path.IsNull() ? AlgorithmViewModel.Finished : AlgorithmViewModel.Failed;
+            var status = !Path.IsNull() ? AlgorithmViewModel.Finished : AlgorithmViewModel.Failed;
             string time = timer.Elapsed.ToString(@"mm\:ss\.fff");
-            messenger.Send(new UpdateAlgorithmStatisticsMessage(Index, time, visitedVerticesCount, path.Count, path.Cost));
+            messenger.Send(new UpdateAlgorithmStatisticsMessage(Index, time, visitedVerticesCount, Path.Count, Path.Cost));
             messenger.Send(new AlgorithmStatusMessage(status, Index));
-            messenger.Send(new PathFoundMessage(path, algorithm));
+            messenger.Send(new PathFoundMessage(Path, algorithm));
         }
 
         protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)

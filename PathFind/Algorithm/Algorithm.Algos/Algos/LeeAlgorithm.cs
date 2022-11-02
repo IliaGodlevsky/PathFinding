@@ -23,11 +23,6 @@ namespace Algorithm.Algos.Algos
             accumulatedCosts = new Costs();
         }
 
-        public override PathfindingAlgorithm GetClone()
-        {
-            return new LeeAlgorithm(endPoints);
-        }
-
         protected override void Reset()
         {
             base.Reset();

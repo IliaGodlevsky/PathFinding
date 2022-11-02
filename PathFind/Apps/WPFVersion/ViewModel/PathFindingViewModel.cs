@@ -71,10 +71,10 @@ namespace WPFVersion.ViewModel
         protected override void SummarizePathfindingResults()
         {
             string time = timer.Elapsed.ToString(@"mm\:ss\.fff");
-            var updateMessage = new UpdateStatisticsMessage(Index, time, visitedVerticesCount, path.Count, path.Cost);
+            var updateMessage = new UpdateStatisticsMessage(Index, time, visitedVerticesCount, Path.Count, Path.Cost);
             messenger.Send(updateMessage);
-            messenger.Send(new AlgorithmStatusMessage(path.ToStatus(), Index));
-            messenger.Send(new PathFoundMessage(algorithm, path));
+            messenger.Send(new AlgorithmStatusMessage(Path.ToStatus(), Index));
+            messenger.Send(new PathFoundMessage(algorithm, Path));
         }
 
         protected override async void OnVertexVisited(object sender, AlgorithmEventArgs e)

@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="AlgorithmInterruptedException.cs" />
     <Compile Include="DeadendVertexException.cs" />
+    <Compile Include="PathfindingException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

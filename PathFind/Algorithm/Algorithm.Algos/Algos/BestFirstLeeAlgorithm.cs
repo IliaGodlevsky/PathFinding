@@ -27,11 +27,6 @@ namespace Algorithm.Algos.Algos
 
         }
 
-        public override PathfindingAlgorithm GetClone()
-        {
-            return new BestFirstLeeAlgorithm(endPoints, heuristic);
-        }
-
         protected override IVertex GetNextVertex()
         {
             verticesQueue = verticesQueue

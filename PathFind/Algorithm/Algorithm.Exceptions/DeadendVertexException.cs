@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Runtime.Serialization;
 
 namespace Algorithm.Exceptions
 {
-    public class DeadendVertexException : Exception
+    public class DeadendVertexException : PathfindingException
     {
         private const string Msg = "Can't reach the destination";
 
@@ -12,6 +13,18 @@ namespace Algorithm.Exceptions
         }
 
         public DeadendVertexException(string message) : base(message)
+        {
+
+        }
+
+        public DeadendVertexException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+
+        }
+
+        protected DeadendVertexException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
 
         }

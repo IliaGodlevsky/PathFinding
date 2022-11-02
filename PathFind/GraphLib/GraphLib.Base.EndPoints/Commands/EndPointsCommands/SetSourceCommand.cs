@@ -23,7 +23,7 @@ namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 
         public override bool CanExecute(TVertex vertex)
         {
-            return endPoints.Source.IsNull()
+            return endPoints.Source == null
                 && endPoints.CanBeEndPoint(vertex);
         }
     }

@@ -3,10 +3,15 @@ using System.Runtime.Serialization;
 
 namespace Algorithm.Exceptions
 {
-    public class AlgorithmInterruptedException : Exception
+    public class AlgorithmInterruptedException : PathfindingException
     {
         public AlgorithmInterruptedException(object algorithm)
             : base($"{algorithm.ToString()} was interrupted")
+        {
+
+        }
+
+        public AlgorithmInterruptedException(string message) : base(message)
         {
 
         }

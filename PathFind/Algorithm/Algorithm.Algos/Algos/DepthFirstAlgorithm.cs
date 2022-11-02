@@ -21,11 +21,6 @@ namespace Algorithm.Algos.Algos
 
         }
 
-        public override PathfindingAlgorithm GetClone()
-        {
-            return new DepthFirstAlgorithm(endPoints, heuristic);
-        }
-
         protected override double GreedyHeuristic(IVertex vertex)
         {
             return heuristic.Calculate(vertex, endPoints.Source);

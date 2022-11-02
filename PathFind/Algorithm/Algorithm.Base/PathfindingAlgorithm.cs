@@ -5,7 +5,6 @@ using Algorithm.Interfaces;
 using Algorithm.Сompanions;
 using Algorithm.Сompanions.Interface;
 using Common.Extensions.EnumerableExtensions;
-using Common.Interface;
 using GraphLib.Interfaces;
 using GraphLib.Realizations;
 using Interruptable.EventArguments;
@@ -18,8 +17,7 @@ using System.Threading;
 
 namespace Algorithm.Base
 {
-    public abstract class PathfindingAlgorithm : IAlgorithm<IGraphPath>, ICloneable<PathfindingAlgorithm>, 
-        IProcess, IPausable, IInterruptable, IDisposable
+    public abstract class PathfindingAlgorithm : IAlgorithm<IGraphPath>, IProcess, IPausable, IInterruptable, IDisposable
     {
         public event AlgorithmEventHandler VertexVisited;
         public event AlgorithmEventHandler VertexEnqueued;
@@ -53,8 +51,6 @@ namespace Algorithm.Base
         }
 
         public abstract IGraphPath FindPath();
-
-        public abstract PathfindingAlgorithm GetClone();
 
         public void Dispose()
         {

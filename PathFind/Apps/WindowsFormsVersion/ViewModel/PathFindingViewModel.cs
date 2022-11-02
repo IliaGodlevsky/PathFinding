@@ -45,7 +45,7 @@ namespace WindowsFormsVersion.ViewModel
 
         protected override void SummarizePathfindingResults()
         {
-            string statistics = path.Count > 0 ? GetStatistics() : CouldntFindPath;
+            string statistics = Path.Count > 0 ? GetStatistics() : CouldntFindPath;
             var message = new UpdateStatisticsMessage(statistics);
             messenger.Send(message, MessageTokens.MainModel);
         }
@@ -95,7 +95,7 @@ namespace WindowsFormsVersion.ViewModel
             return string.Join("    ", description, timerInfo, pathfindingInfo);
         }
 
-        private object[] PathfindingInfo => new object[] { path.Count, path.Cost, visitedVerticesCount };
+        private object[] PathfindingInfo => new object[] { Path.Count, Path.Cost, visitedVerticesCount };
 
         private readonly string Format = "Steps: {0}   Path cost: {1}   Visited: {2}";
         private readonly string CouldntFindPath = "Could't fing path";

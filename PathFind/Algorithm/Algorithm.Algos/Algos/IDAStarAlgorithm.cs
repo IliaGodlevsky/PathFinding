@@ -31,11 +31,6 @@ namespace Algorithm.Algos.Algos
             stashedVertices = new Dictionary<IVertex, double>(new VertexEqualityComparer());
         }
 
-        public override PathfindingAlgorithm GetClone()
-        {
-            return new IDAStarAlgorithm(endPoints, stepRule, heuristic);
-        }
-
         protected override IVertex GetNextVertex()
         {
             queue.OrderByDescending(heuristics.GetCost)

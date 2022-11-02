@@ -29,11 +29,6 @@ namespace Algorithm.Algos.Algos
             accumulatedCosts = new Costs();
         }
 
-        public override PathfindingAlgorithm GetClone()
-        {
-            return new AStarAlgorithm(endPoints, stepRule, heuristic);
-        }
-
         protected override void Reset()
         {
             base.Reset();

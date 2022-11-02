@@ -52,7 +52,7 @@ namespace ConsoleVersion.ViewModel
 
         public string AlgorithmKeyInputMessage { private get; set; }
 
-        private string Statistics => path.ToStatistics(timer, visitedVerticesCount, Algorithm.ToString());
+        private string Statistics => Path.ToStatistics(timer, visitedVerticesCount, Algorithm.ToString());
 
         private int AlgorithmIndex => IntInput.Input(AlgorithmKeyInputMessage, algorithmKeysValueRange) - 1;
 
@@ -139,7 +139,7 @@ namespace ConsoleVersion.ViewModel
 
         protected override void SummarizePathfindingResults()
         {
-            string statistics = path.IsNull() ? MessagesTexts.CouldntFindPathMsg : Statistics;
+            string statistics = Path.IsNull() ? MessagesTexts.CouldntFindPathMsg : Statistics;
             messenger.Send(new UpdateStatisticsMessage(statistics));
             visitedVerticesCount = 0;
             resetEvent.Set();
