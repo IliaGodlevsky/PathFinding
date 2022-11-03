@@ -88,6 +88,5 @@ namespace WindowsFormsVersion.Model
         }
 
         private readonly IVisualization<Vertex> visualization;
-        private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
     }
 }

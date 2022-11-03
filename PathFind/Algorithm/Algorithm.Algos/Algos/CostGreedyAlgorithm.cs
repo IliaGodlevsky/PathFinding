@@ -23,7 +23,7 @@ namespace Algorithm.Algos.Algos
 
         protected override IGraphPath CreateGraphPath()
         {
-            return new GraphPath(parentVertices, endPoints, stepRule);
+            return new GraphPath(parentVertices, CurrentEndPoints, stepRule);
         }
 
         protected override double GreedyHeuristic(IVertex vertex)

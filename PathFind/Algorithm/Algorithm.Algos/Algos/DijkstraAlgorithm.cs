@@ -45,9 +45,9 @@ namespace Algorithm.Algos.Algos
             return queue.TryFirstOrDeadEndVertex();
         }
 
-        protected override void PrepareForLocalPathfinding()
+        protected override void PrepareForLocalPathfinding(IEndPoints endPoints)
         {
-            base.PrepareForLocalPathfinding();
+            base.PrepareForLocalPathfinding(endPoints);
             queue.EnqueueOrUpdatePriority(CurrentEndPoints.Source, default);
         }
 

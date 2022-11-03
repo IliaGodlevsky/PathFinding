@@ -23,7 +23,7 @@ namespace Algorithm.Algos.Algos
 
         protected override double GreedyHeuristic(IVertex vertex)
         {
-            return heuristic.Calculate(vertex, endPoints.Target);
+            return heuristic.Calculate(vertex, CurrentEndPoints.Target);
         }
 
         public override string ToString()
