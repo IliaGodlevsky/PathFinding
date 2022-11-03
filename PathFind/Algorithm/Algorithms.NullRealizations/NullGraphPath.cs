@@ -22,10 +22,10 @@ namespace Algorithm.NullRealizations
 
         }
 
-        public IEnumerator<IVertex> GetEnumerator()
+        public IEnumerator<ICoordinate> GetEnumerator()
         {
             return Enumerable
-                .Empty<IVertex>()
+                .Empty<ICoordinate>()
                 .GetEnumerator();
         }
 

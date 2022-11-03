@@ -1,20 +1,21 @@
 ﻿using Algorithm.Interfaces;
 using Algorithm.Realizations.StepRules;
-using Algorithm.Сompanions.Interface;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+
+using Traces = System.Collections.Generic.IReadOnlyDictionary<GraphLib.Interfaces.ICoordinate, GraphLib.Interfaces.IVertex>;
 
 namespace Algorithm.Realizations.GraphPaths
 {
     public sealed class GraphPath : IGraphPath
     {
-        private readonly IParentVertices parentVertices;
-        private readonly IEndPoints endPoints;
+        private readonly Traces traces;
+        private readonly IVertex target;
         private readonly IStepRule stepRule;
 
         private readonly Lazy<double> pathCost;
@@ -26,33 +27,32 @@ namespace Algorithm.Realizations.GraphPaths
 
         public int Count => Path.Count == 0 ? 0 : Path.Count - 1;
 
-        public GraphPath(IParentVertices parentVertices, IEndPoints endPoints)
-            : this(parentVertices, endPoints, new DefaultStepRule())
+        public GraphPath(Traces traces, IVertex target)
+            : this(traces, target, new DefaultStepRule())
         {
 
         }
 
-        public GraphPath(IParentVertices parentVertices,
-            IEndPoints endPoints, IStepRule stepRule)
+        public GraphPath(Traces traces, IVertex target, IStepRule stepRule)
         {
             path = new Lazy<IReadOnlyList<IVertex>>(GetPath);
             pathCost = new Lazy<double>(GetPathCost);
-            this.parentVertices = parentVertices;
-            this.endPoints = endPoints;
+            this.traces = traces;
+            this.target = target;
             this.stepRule = stepRule;
         }
 
         private IReadOnlyList<IVertex> GetPath()
         {
             var vertices = new List<IVertex>();
-            var vertex = endPoints.Target;
+            var vertex = target;
             vertices.Add(vertex);
-            var parent = GetOrNullVertex(vertex);
-            while (parent.IsNeighbour(vertex))
+            var parent = traces.GetOrNullVertex(vertex.Position);
+            while (AreNeighbours(parent, vertex))
             {
                 vertices.Add(parent);
                 vertex = parent;
-                parent = GetOrNullVertex(vertex);
+                parent = traces.GetOrNullVertex(vertex.Position);
             }
             return vertices.ToReadOnly();
         }
@@ -67,16 +67,14 @@ namespace Algorithm.Realizations.GraphPaths
             return totalCost;
         }
 
-        private IVertex GetOrNullVertex(IVertex vertex)
+        public bool AreNeighbours(IVertex self, IVertex candidate)
         {
-            return parentVertices.HasParent(vertex)
-                ? parentVertices.GetParent(vertex)
-                : NullVertex.Interface;
+            return self.Neighbours.Any(vertex => ReferenceEquals(vertex, candidate));
         }
 
-        public IEnumerator<IVertex> GetEnumerator()
+        public IEnumerator<ICoordinate> GetEnumerator()
         {
-            return Path.GetEnumerator();
+            return Path.Select(vertex => vertex.Position).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

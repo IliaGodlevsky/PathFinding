@@ -31,7 +31,7 @@ namespace Algorithm.Algos.Algos
 
         protected override IGraphPath CreateGraphPath()
         {
-            return new GraphPath(parentVertices, CurrentEndPoints, stepRule);
+            return new GraphPath(traces.ToReadOnly(), CurrentRange.Target, stepRule);
         }
 
         protected override void Reset()
@@ -45,10 +45,10 @@ namespace Algorithm.Algos.Algos
             return queue.TryFirstOrDeadEndVertex();
         }
 
-        protected override void PrepareForLocalPathfinding(IEndPoints endPoints)
+        protected override void PrepareForSubPathfinding(Range range)
         {
-            base.PrepareForLocalPathfinding(endPoints);
-            queue.EnqueueOrUpdatePriority(CurrentEndPoints.Source, default);
+            base.PrepareForSubPathfinding(range);
+            queue.EnqueueOrUpdatePriority(CurrentRange.Source, default);
         }
 
         protected virtual void RelaxVertex(IVertex vertex)
@@ -58,7 +58,7 @@ namespace Algorithm.Algos.Algos
             if (vertexCost > relaxedCost)
             {
                 Enqueue(vertex, relaxedCost);
-                parentVertices.Add(vertex, CurrentVertex);
+                traces[vertex.Position] = CurrentVertex;
             }
         }
 

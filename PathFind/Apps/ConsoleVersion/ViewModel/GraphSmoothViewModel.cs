@@ -31,7 +31,7 @@ namespace ConsoleVersion.ViewModel
 
         private ISmoothLevel SmoothLevel => SmoothLevels[SmoothLevelIndex];
 
-        public GraphSmoothViewModel(IMeanCost meanAlgorithm, 
+        public GraphSmoothViewModel(IMeanCost meanAlgorithm,
             IVertexCostFactory costFactory, ICache<Graph2D<Vertex>> graph)
         {
             this.costFactory = costFactory;

@@ -1,5 +1,4 @@
 ﻿using GraphLib.Interfaces;
-using GraphLib.Proxy;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,21 +6,6 @@ namespace GraphLib.Extensions
 {
     public static class EndPointsExtensions
     {
-        public static IEnumerable<IEndPoints> ToSubEndPoints(this IEndPoints self)
-        {
-            using (var iterator = self.GetEnumerator())
-            {
-                iterator.MoveNext();
-                var previous = iterator.Current;
-                while (iterator.MoveNext())
-                {
-                    var current = iterator.Current;
-                    yield return new EndPointsProxy(previous, current);
-                    previous = iterator.Current;
-                }
-            }
-        }
-
         public static bool IsEndPoint(this IEndPoints self, IVertex vertex)
         {
             return self.Contains(vertex);

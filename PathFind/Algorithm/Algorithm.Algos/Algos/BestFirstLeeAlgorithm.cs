@@ -1,24 +1,23 @@
-﻿using Algorithm.Base;
-using Algorithm.Interfaces;
+﻿using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic.Distances;
-using Algorithm.Сompanions;
-using Algorithm.Сompanions.Interface;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
+using GraphLib.Utility;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Algorithm.Algos.Algos
 {
     public class BestFirstLeeAlgorithm : LeeAlgorithm
     {
-        private readonly ICosts heuristics;
+        private readonly Dictionary<ICoordinate, double> heuristics;
         private readonly IHeuristic heuristic;
 
         public BestFirstLeeAlgorithm(IEndPoints endPoints, IHeuristic function)
             : base(endPoints)
         {
             heuristic = function;
-            heuristics = new Costs();
+            heuristics = new Dictionary<ICoordinate, double>(new CoordinateEqualityComparer());
         }
 
         public BestFirstLeeAlgorithm(IEndPoints endPoints)
@@ -30,7 +29,7 @@ namespace Algorithm.Algos.Algos
         protected override IVertex GetNextVertex()
         {
             verticesQueue = verticesQueue
-                .OrderBy(heuristics.GetCost)
+                .OrderBy(v => heuristics[v.Position])
                 .ToQueue();
 
             return base.GetNextVertex();
@@ -45,20 +44,20 @@ namespace Algorithm.Algos.Algos
         protected override void Reevaluate(IVertex vertex, double value)
         {
             double result = CalculateHeuristic(vertex);
-            heuristics.Reevaluate(vertex, value + result);
+            heuristics[vertex.Position] = value + result;
             base.Reevaluate(vertex, value);
         }
 
-        protected override void PrepareForLocalPathfinding(IEndPoints endPoints)
+        protected override void PrepareForSubPathfinding(Range range)
         {
-            base.PrepareForLocalPathfinding(endPoints);
-            double value = CalculateHeuristic(CurrentEndPoints.Source);
-            heuristics.Reevaluate(CurrentEndPoints.Source, value);
+            base.PrepareForSubPathfinding(range);
+            double value = CalculateHeuristic(CurrentRange.Source);
+            heuristics[CurrentRange.Source.Position] = value;
         }
 
         private double CalculateHeuristic(IVertex vertex)
         {
-            return heuristic.Calculate(vertex, CurrentEndPoints.Target);
+            return heuristic.Calculate(vertex, CurrentRange.Target);
         }
 
         public override string ToString()

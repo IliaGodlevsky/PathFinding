@@ -13,7 +13,6 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using Interruptable.EventArguments;
 using Logging.Interface;
-using NullObject.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,7 +28,7 @@ namespace GraphViewModel
         protected readonly ILog log;
 
         protected PathfindingAlgorithm algorithm;
-        
+
         protected int visitedVerticesCount;
 
         protected IGraphPath Path { get; set; } = NullGraphPath.Instance;
@@ -44,7 +43,7 @@ namespace GraphViewModel
 
         public IReadOnlyList<IAlgorithmFactory<PathfindingAlgorithm>> Algorithms { get; }
 
-        protected PathFindingModel(BaseEndPoints<TVertex> endPoints, 
+        protected PathFindingModel(BaseEndPoints<TVertex> endPoints,
             IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> factories, IGraph<TVertex> graph, ILog log)
         {
             this.Graph = graph;
@@ -66,14 +65,13 @@ namespace GraphViewModel
                 SubscribeOnAlgorithmEvents(algorithm);
                 endPoints.RestoreCurrentColors();
                 Path = await algorithm.FindPathAsync();
-                await Path.Select(vertex => Graph.Get(vertex.Position))
-                    .VisualizeAsPathAsync();
+                await Path.Select(Graph.Get).VisualizeAsPathAsync();
                 SummarizePathfindingResults();
             }
             catch (PathfindingException ex)
             {
                 log.Debug(ex.Message);
-                SummarizePathfindingResults();              
+                SummarizePathfindingResults();
             }
             catch (Exception ex)
             {

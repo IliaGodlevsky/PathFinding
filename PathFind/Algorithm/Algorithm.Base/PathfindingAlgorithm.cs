@@ -2,17 +2,11 @@
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
-using Algorithm.Сompanions;
-using Algorithm.Сompanions.Interface;
-using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
-using GraphLib.Realizations;
 using Interruptable.EventArguments;
 using Interruptable.EventHandlers;
 using Interruptable.Interface;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 
 namespace Algorithm.Base
@@ -28,9 +22,6 @@ namespace Algorithm.Base
         public event ProcessEventHandler Resumed;
 
         private readonly EventWaitHandle pauseEvent;
-        protected readonly IVisitedVertices visitedVertices;
-        protected readonly IParentVertices parentVertices;
-        protected readonly IEndPoints endPoints;
 
         public bool IsInProcess { get; private set; }
 
@@ -42,11 +33,8 @@ namespace Algorithm.Base
 
         private bool IsAlgorithmDisposed { get; set; } = false;
 
-        protected PathfindingAlgorithm(IEndPoints endPoints)
+        protected PathfindingAlgorithm()
         {
-            visitedVertices = new VisitedVertices();
-            parentVertices = new ParentVertices();
-            this.endPoints = endPoints;
             pauseEvent = new AutoResetEvent(true);
         }
 
@@ -107,14 +95,7 @@ namespace Algorithm.Base
 
         protected virtual void Reset()
         {
-            visitedVertices.Clear();
-            parentVertices.Clear();
             IsPaused = false;
-        }
-
-        protected virtual bool IsDestination(IEndPoints endPoints)
-        {
-            return CurrentVertex.Equals(endPoints.Target);
         }
 
         protected void RaiseVertexVisited(AlgorithmEventArgs e)
@@ -151,16 +132,5 @@ namespace Algorithm.Base
             IsInProcess = false;
             Finished?.Invoke(this, new ProcessEventArgs());
         }
-
-        protected IReadOnlyCollection<IVertex> GetUnvisitedVertices(IVertex vertex)
-        {
-            return vertex
-                .Neighbours
-                .Where(visitedVertices.IsNotVisited)
-                .Where(v => !v.IsObstacle)
-                .ToReadOnly();
-        }
-
-        protected abstract IVertex GetNextVertex();
     }
 }

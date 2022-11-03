@@ -1,11 +1,8 @@
 ﻿using Algorithm.Base;
-using Algorithm.Extensions;
 using Algorithm.NullRealizations;
-using Algorithm.Сompanions;
-using Algorithm.Сompanions.Interface;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
-using GraphLib.NullRealizations;
+using GraphLib.Utility;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,14 +10,16 @@ namespace Algorithm.Algos.Algos
 {
     public class LeeAlgorithm : WaveAlgorithm
     {
+        private const int WaveCost = 1;
+
         protected Queue<IVertex> verticesQueue;
-        protected readonly ICosts accumulatedCosts;
+        protected readonly Dictionary<ICoordinate, double> accumulatedCosts;
 
         public LeeAlgorithm(IEndPoints endPoints)
             : base(endPoints)
         {
             verticesQueue = new Queue<IVertex>();
-            accumulatedCosts = new Costs();
+            accumulatedCosts = new Dictionary<ICoordinate, double>(new CoordinateEqualityComparer());
         }
 
         protected override void Reset()
@@ -39,24 +38,32 @@ namespace Algorithm.Algos.Algos
 
         protected virtual double CreateWave()
         {
-            return accumulatedCosts.GetCostOrDefault(CurrentVertex, default) + 1;
+            if (accumulatedCosts.TryGetValue(CurrentVertex.Position, out var cost))
+            {
+                return cost + WaveCost;
+            }
+            return WaveCost;
         }
 
         protected virtual void RelaxNeighbour(IVertex vertex)
         {
             Reevaluate(vertex, CreateWave());
             verticesQueue.Enqueue(vertex);
-            parentVertices.Add(vertex, CurrentVertex);
+            traces[vertex.Position] = CurrentVertex;
         }
 
         protected virtual void Reevaluate(IVertex vertex, double value)
         {
-            accumulatedCosts.Reevaluate(vertex, value);
+            accumulatedCosts[vertex.Position] = value;
         }
 
         protected bool IsVertexUnwaved(IVertex vertex)
         {
-            return accumulatedCosts.GetCostOrDefault(vertex, default) == 0;
+            if (accumulatedCosts.TryGetValue(vertex.Position, out double cost))
+            {
+                return cost == 0;
+            }
+            return true;
         }
 
         protected override void RelaxNeighbours(IReadOnlyCollection<IVertex> neighbours)

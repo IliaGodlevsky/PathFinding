@@ -2,7 +2,6 @@
 using GraphLib.Base.EndPoints.BaseCommands;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using NullObject.Extensions;
 
 namespace GraphLib.Base.EndPoints.Commands.EndPointsCommands
 {

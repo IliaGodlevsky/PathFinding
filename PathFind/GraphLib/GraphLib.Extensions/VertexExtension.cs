@@ -19,11 +19,6 @@ namespace GraphLib.Extensions
             return IsObstacleOrNull(self) || self.Neighbours.All(IsObstacleOrNull);
         }
 
-        public static bool IsNeighbour(this IVertex self, IVertex candidate)
-        {
-            return self.Neighbours.Any(vertex => ReferenceEquals(vertex, candidate));
-        }
-
         public static void SetToDefault<TVertex>(this TVertex self)
             where TVertex : IVertex, IVisualizable
         {

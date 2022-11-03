@@ -22,7 +22,7 @@ namespace Algorithm.Exceptions
 
         }
 
-        protected AlgorithmInterruptedException(SerializationInfo info, StreamingContext context) 
+        protected AlgorithmInterruptedException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
 

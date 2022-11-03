@@ -112,7 +112,6 @@
     <Compile Include="Interface\IInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ProgrammedInput.cs" />
     <Compile Include="ValueInput\UserInput\ConsoleUserTimeSpanInput.cs" />
-    <Compile Include="ViewModel\AlgorithmsViewModel.cs" />
     <Compile Include="ViewModel\EndPointsViewModel.cs" />
     <Compile Include="ViewModel\GraphLoadViewModel.cs" />
     <Compile Include="ViewModel\GraphSaveViewModel.cs" />

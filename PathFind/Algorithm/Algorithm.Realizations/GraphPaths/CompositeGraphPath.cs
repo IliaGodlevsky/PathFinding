@@ -8,7 +8,7 @@ namespace Algorithm.Realizations.GraphPaths
 {
     public sealed class CompositeGraphPath : IGraphPath
     {
-        private IEnumerable<IVertex> Path { get; }
+        private IEnumerable<ICoordinate> Path { get; }
 
         public int Count { get; }
 
@@ -22,8 +22,14 @@ namespace Algorithm.Realizations.GraphPaths
             Cost = composite.Sum(p => p.Cost);
         }
 
-        public IEnumerator<IVertex> GetEnumerator() => Path.GetEnumerator();
+        public IEnumerator<ICoordinate> GetEnumerator()
+        {
+            return Path.GetEnumerator();
+        }
 
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 }

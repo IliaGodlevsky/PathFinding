@@ -1,5 +1,4 @@
 ﻿using Algorithm.Realizations.GraphPaths;
-using Algorithm.Сompanions;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
@@ -7,7 +6,9 @@ using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Graphs;
 using GraphLib.TestRealizations.TestFactories;
 using GraphLib.TestRealizations.TestObjects;
+using GraphLib.Utility;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Algorithm.Realizations.Tests
@@ -19,7 +20,7 @@ namespace Algorithm.Realizations.Tests
         private readonly Graph2D<TestVertex> graph;
         private readonly ICoordinate[] expectedPraphPathCoordinates;
         private readonly IEndPoints endPoints;
-        private readonly ParentVertices parentVertices;
+        private readonly Dictionary<ICoordinate, IVertex> traces;
 
         public GraphPathTests()
         {
@@ -39,34 +40,36 @@ namespace Algorithm.Realizations.Tests
             var source = graph.Get(expectedPraphPathCoordinates.First());
             var target = graph.Get(expectedPraphPathCoordinates.Last());
             endPoints = new TestEndPoints(source, target);
-            parentVertices = new ParentVertices();
-            FormParentVertices(parentVertices);
+            traces = new Dictionary<ICoordinate, IVertex>(new CoordinateEqualityComparer());
         }
 
         [Test]
-        public void Path_ValidParentVertices_ReturnsFullPath()
+        public void Path_ValidTraces_ReturnsFullPath()
         {
             int expectedPathLength = expectedPraphPathCoordinates.Length - 1;
             const int expectedPathCost = 25;
-            var graphPath = new GraphPath(parentVertices, endPoints);
+            var graphPath = new GraphPath(GenerateTraces(), endPoints.Target);
 
             double pathCost = graphPath.Cost;
             int pathLength = graphPath.Count;
-            var pathCoordinates = graphPath.Select(vertex => vertex.Position).Reverse();
+            var pathCoordinates = graphPath.Reverse();
 
             Assert.AreEqual(expectedPathLength, pathLength);
             Assert.AreEqual(expectedPathCost, pathCost);
             Assert.IsTrue(pathCoordinates.Juxtapose(expectedPraphPathCoordinates));
         }
 
-        private void FormParentVertices(ParentVertices parentVertices)
+        private IReadOnlyDictionary<ICoordinate, IVertex> GenerateTraces()
         {
+            var traces = new Dictionary<ICoordinate, IVertex>(new CoordinateEqualityComparer());
+
             for (int i = 0; i < expectedPraphPathCoordinates.Length - 1; i++)
             {
                 var childCoordinate = graph.Get(expectedPraphPathCoordinates[i + 1]);
                 var parentCoordinate = graph.Get(expectedPraphPathCoordinates[i]);
-                parentVertices.Add(childCoordinate, parentCoordinate);
+                traces[childCoordinate.Position] = parentCoordinate;
             }
+            return traces.ToReadOnly();
         }
     }
 }

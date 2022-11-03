@@ -36,7 +36,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GraphPaths\CombinedGraphPath.cs" />
+    <Compile Include="GraphPaths\CompositeGraphPath.cs" />
     <Compile Include="Heuristic\Angles\AngleFunction.cs" />
     <Compile Include="Heuristic\Distances\ChebyshevDistance.cs" />
     <Compile Include="GraphPaths\GraphPath.cs" />
@@ -86,10 +86,6 @@
     <ProjectReference Include="..\Algorithm.Interfaces\Algorithm.Interfaces.csproj">
       <Project>{fc4f499e-9ab1-4623-9ad8-cfde0a07b7d0}</Project>
       <Name>Algorithm.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Algorithm.Сompanions\Algorithm.Сompanions.csproj">
-      <Project>{8A717526-D82A-4409-B3B4-5979820253AF}</Project>
-      <Name>Algorithm.Сompanions</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

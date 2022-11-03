@@ -7,22 +7,22 @@ namespace Algorithm.NullRealizations
 {
     public sealed class DeadEndVertex : Singleton<DeadEndVertex, IVertex>, IVertex
     {
-        public bool IsObstacle 
-        { 
+        public bool IsObstacle
+        {
             get => throw new DeadendVertexException();
             set => throw new DeadendVertexException();
         }
 
-        public IVertexCost Cost 
-        { 
+        public IVertexCost Cost
+        {
             get => throw new DeadendVertexException();
             set => throw new DeadendVertexException();
         }
 
         public ICoordinate Position => throw new DeadendVertexException();
 
-        public IReadOnlyCollection<IVertex> Neighbours 
-        { 
+        public IReadOnlyCollection<IVertex> Neighbours
+        {
             get => throw new DeadendVertexException();
             set => throw new DeadendVertexException();
         }

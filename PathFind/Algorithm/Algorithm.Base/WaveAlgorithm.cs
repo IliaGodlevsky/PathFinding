@@ -11,19 +11,19 @@ namespace Algorithm.Base
             : base(endPoints)
         {
 
-        }       
+        }
 
-        protected override void VisitVertex(IVertex vertex)
+        protected override void VisitCurrentVertex()
         {
-            visitedVertices.Visit(vertex);
-            RaiseVertexVisited(new AlgorithmEventArgs(vertex));
+            visited.Add(CurrentVertex);
+            RaiseVertexVisited(new AlgorithmEventArgs(CurrentVertex));
         }
 
         protected abstract void RelaxNeighbours(IReadOnlyCollection<IVertex> vertex);
 
         protected override void InspectVertex(IVertex vertex)
         {
-            var neighbours = GetUnvisitedVertices(vertex);
+            var neighbours = GetUnvisitedNeighbours(vertex);
             neighbours.ForEach(Enqueued);
             RelaxNeighbours(neighbours);
         }

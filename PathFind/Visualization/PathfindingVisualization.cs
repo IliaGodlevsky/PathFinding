@@ -72,7 +72,7 @@ namespace Visualization
             var endPoints = source.GetVertices(algorithm)
                 .Concat(target.GetVertices(algorithm))
                 .Concat(intermediate.GetVertices(algorithm));
-            var vertices = graphPath.Select(item => graph.Get(item.Position))
+            var vertices = graphPath.Select(graph.Get)
                 .Where(item => !endPoints.Contains(item));
             path.AddRange(algorithm, vertices);
         }

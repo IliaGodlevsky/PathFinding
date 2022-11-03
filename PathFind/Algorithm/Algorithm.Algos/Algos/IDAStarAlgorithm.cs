@@ -1,5 +1,4 @@
-﻿using Algorithm.Base;
-using Algorithm.Extensions;
+﻿using Algorithm.Extensions;
 using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic.Distances;
 using Algorithm.Realizations.StepRules;
@@ -33,7 +32,7 @@ namespace Algorithm.Algos.Algos
 
         protected override IVertex GetNextVertex()
         {
-            queue.OrderByDescending(heuristics.GetCost)
+            queue.OrderByDescending(v => heuristics[v.Position])
                 .Take(ToStashCount)
                 .Select(CreateStashItem)
                 .ForEach(RemoveToStashed);

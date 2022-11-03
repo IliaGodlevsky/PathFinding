@@ -2,6 +2,7 @@
 using Algorithm.Interfaces;
 using Algorithm.Realizations.GraphPaths;
 using Algorithm.Realizations.StepRules;
+using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
 
 namespace Algorithm.Algos.Algos
@@ -23,7 +24,7 @@ namespace Algorithm.Algos.Algos
 
         protected override IGraphPath CreateGraphPath()
         {
-            return new GraphPath(parentVertices, CurrentEndPoints, stepRule);
+            return new GraphPath(traces.ToReadOnly(), CurrentRange.Target, stepRule);
         }
 
         protected override double GreedyHeuristic(IVertex vertex)

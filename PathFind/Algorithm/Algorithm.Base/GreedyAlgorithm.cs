@@ -11,40 +11,46 @@ namespace Algorithm.Base
 {
     public abstract class GreedyAlgorithm : RangePathfindingAlgorithm
     {
-        private readonly Stack<IVertex> visitedVerticesStack;
+        private readonly Stack<IVertex> tracesFromDeadend;
 
         private IVertex PreviousVertex { get; set; } = NullVertex.Instance;
 
         protected GreedyAlgorithm(IEndPoints endPoints)
            : base(endPoints)
         {
-            visitedVerticesStack = new Stack<IVertex>();
+            tracesFromDeadend = new Stack<IVertex>();
         }
 
         protected abstract double GreedyHeuristic(IVertex vertex);
 
         protected override IVertex GetNextVertex()
         {
-            var neighbours = GetUnvisitedVertices(CurrentVertex);
+            var neighbours = GetUnvisitedNeighbours(CurrentVertex);
             double leastVertexCost = neighbours.Any() ? neighbours.Min(GreedyHeuristic) : default;
-            var next = neighbours
+            return neighbours
                 .ForEach(Enqueued)
                 .FirstOrNullVertex(vertex => GreedyHeuristic(vertex) == leastVertexCost);
-            return next.Neighbours.Count == 0 ? visitedVerticesStack.PopOrDeadEndVertex() : next;
         }
 
         protected override void Reset()
         {
             base.Reset();
-            visitedVerticesStack.Clear();
+            tracesFromDeadend.Clear();
         }
 
-        protected override void VisitVertex(IVertex vertex)
+        protected override void VisitCurrentVertex()
         {
-            visitedVertices.Visit(vertex);
-            RaiseVertexVisited(new AlgorithmEventArgs(vertex));
-            visitedVerticesStack.Push(vertex);
-            parentVertices.Add(vertex, PreviousVertex);
+            if (CurrentVertex.Neighbours.Count == 0)
+            {
+                CurrentVertex = tracesFromDeadend.PopOrDeadEndVertex();
+            }
+            else
+            {
+                visited.Add(CurrentVertex);
+                RaiseVertexVisited(new AlgorithmEventArgs(CurrentVertex));
+                tracesFromDeadend.Push(CurrentVertex);
+                traces[CurrentVertex.Position] = PreviousVertex;
+            }
         }
 
         protected override void InspectVertex(IVertex vertex)

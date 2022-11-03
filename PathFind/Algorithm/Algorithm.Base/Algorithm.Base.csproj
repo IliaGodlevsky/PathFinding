@@ -67,6 +67,10 @@
       <Project>{B80C5250-3D81-4742-B8A5-84AE39122BA9}</Project>
       <Name>GraphLib.Realizations</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\GraphLib\GraphLib.Utility\GraphLib.Utility.csproj">
+      <Project>{9FD961DA-777E-4C9C-9BF2-9EA4FD989C21}</Project>
+      <Name>GraphLib.Utility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Interruptable\Interruptable.csproj">
       <Project>{97260353-B5E4-414B-A789-C4B5568089DC}</Project>
       <Name>Interruptable</Name>
@@ -98,10 +102,6 @@
     <ProjectReference Include="..\Algorithm.Realizations\Algorithm.Realizations.csproj">
       <Project>{600D74AF-A0AE-46AA-BCF5-695650BBE66F}</Project>
       <Name>Algorithm.Realizations</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Algorithm.Сompanions\Algorithm.Сompanions.csproj">
-      <Project>{8A717526-D82A-4409-B3B4-5979820253AF}</Project>
-      <Name>Algorithm.Сompanions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Algorithms.NullRealizations\Algorithm.NullRealizations.csproj">
       <Project>{FE692FCB-46C0-47A1-80ED-EFDCC811CF69}</Project>

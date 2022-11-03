@@ -1,18 +1,16 @@
-﻿using Algorithm.Base;
-using Algorithm.Extensions;
-using Algorithm.Interfaces;
+﻿using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic.Distances;
 using Algorithm.Realizations.StepRules;
-using Algorithm.Сompanions;
-using Algorithm.Сompanions.Interface;
 using GraphLib.Interfaces;
+using GraphLib.Utility;
+using System.Collections.Generic;
 
 namespace Algorithm.Algos.Algos
 {
     public class AStarAlgorithm : DijkstraAlgorithm
     {
-        private readonly ICosts accumulatedCosts;
-        protected readonly ICosts heuristics;
+        private readonly Dictionary<ICoordinate, double> accumulatedCosts;
+        protected readonly Dictionary<ICoordinate, double> heuristics;
         protected readonly IHeuristic heuristic;
 
         public AStarAlgorithm(IEndPoints endPoints)
@@ -25,8 +23,8 @@ namespace Algorithm.Algos.Algos
             : base(endPoints, stepRule)
         {
             heuristic = function;
-            heuristics = new Costs();
-            accumulatedCosts = new Costs();
+            heuristics = new Dictionary<ICoordinate, double>(new CoordinateEqualityComparer());
+            accumulatedCosts = new Dictionary<ICoordinate, double>(new CoordinateEqualityComparer());
         }
 
         protected override void Reset()
@@ -36,36 +34,36 @@ namespace Algorithm.Algos.Algos
             accumulatedCosts.Clear();
         }
 
-        protected override void PrepareForLocalPathfinding(IEndPoints endPoints)
+        protected override void PrepareForSubPathfinding(Range range)
         {
-            base.PrepareForLocalPathfinding(endPoints);
-            accumulatedCosts.Reevaluate(CurrentEndPoints.Source, default);
+            base.PrepareForSubPathfinding(range);
+            accumulatedCosts[CurrentRange.Source.Position] = default;
         }
 
         protected override void Enqueue(IVertex vertex, double value)
         {
             double heusristicCost = default;
-            if (!heuristics.Contains(vertex))
+            if (!heuristics.ContainsKey(vertex.Position))
             {
                 heusristicCost = CalculateHeuristic(vertex);
-                heuristics.Reevaluate(vertex, heusristicCost);
+                heuristics[vertex.Position] = heusristicCost;
             }
             else
             {
-                heusristicCost = heuristics.GetCost(vertex);
+                heusristicCost = heuristics[vertex.Position];
             }
             base.Enqueue(vertex, value + heusristicCost);
-            accumulatedCosts.Reevaluate(vertex, value);
+            accumulatedCosts[vertex.Position] = value;
         }
 
         protected override double GetVertexCurrentCost(IVertex vertex)
         {
-            return accumulatedCosts.GetCostOrDefault(vertex);
+            return accumulatedCosts.TryGetValue(vertex.Position, out double cost) ? cost : double.PositiveInfinity;
         }
 
         protected virtual double CalculateHeuristic(IVertex vertex)
         {
-            return heuristic.Calculate(vertex, CurrentEndPoints.Target);
+            return heuristic.Calculate(vertex, CurrentRange.Target);
         }
 
         public override string ToString()

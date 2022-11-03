@@ -1,7 +1,9 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
+using GraphLib.Utility;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphLib.Realizations.Extensions
@@ -12,16 +14,16 @@ namespace GraphLib.Realizations.Extensions
             IMeanCost meanCost, int smoothLevel)
             where TVertex : IVertex
         {
-            var visited = new VisitedVertices();
+            var visited = new HashSet<IVertex>(new VertexEqualityComparer());
             while (smoothLevel-- > 0)
             {
                 self.ForEach(vertex =>
                 {
-                    visited.Visit(vertex);
-                    if (vertex.Neighbours.Any(visited.IsNotVisited))
+                    visited.Add(vertex);
+                    if (vertex.Neighbours.Any(v => !visited.Contains(v)))
                     {
                         double avgCost = vertex.Neighbours
-                            .Where(visited.IsNotVisited)
+                            .Where(v => !visited.Contains(v))
                             .Average(neighbour => meanCost.Calculate(neighbour, vertex));
                         vertex.Cost = costFactory.CreateCost((int)Math.Round(avgCost, 0));
                     }
