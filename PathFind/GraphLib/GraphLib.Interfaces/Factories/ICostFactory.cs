@@ -3,7 +3,5 @@
     public interface IVertexCostFactory
     {
         IVertexCost CreateCost(int cost);
-
-        IVertexCost CreateCost();
     }
 }

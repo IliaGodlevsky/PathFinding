@@ -16,6 +16,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
         where TVertex : IVertex
         where TGraph : IGraph<TVertex>
     {
+        protected readonly InclusiveValueRange<int> costRange;
         protected readonly IVertexCostFactory costFactory;
         protected readonly ICoordinateFactory coordinateFactory;
         protected readonly IVertexFactory<TVertex> vertexFactory;
@@ -39,6 +40,7 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
             this.neighbourhoodFactory = neighbourhoodFactory;
             this.random = random;
             percentRange = new InclusiveValueRange<int>(99, 0);
+            costRange = new InclusiveValueRange<int>(9, 1);
         }
 
         public virtual TGraph AssembleGraph(int obstaclePercent, IReadOnlyList<int> graphDimensionsSizes)
@@ -55,7 +57,8 @@ namespace GraphLib.Realizations.Factories.GraphAssembles
                 var coordinateValues = graphDimensionsSizes.ToCoordinates(i);
                 var coordinate = coordinateFactory.CreateCoordinate(coordinateValues);
                 var vertex = vertexFactory.CreateVertex(coordinate);
-                vertex.Cost = costFactory.CreateCost();
+                int cost = random.NextInt(costRange);
+                vertex.Cost = costFactory.CreateCost(cost);
                 vertex.IsObstacle = obstaclesMatrix[i];
                 vertices[i] = vertex;
             }

@@ -30,7 +30,7 @@ namespace ConsoleVersion.ViewModel
         {
             var graph = module.LoadGraph();
             messenger.Send(new GraphCreatedMessage(graph));
-            messenger.Send(new CostRangeChangedMessage(BaseVertexCost.CostRange));
+            messenger.Send(new CostRangeChangedMessage(graph.CostRange));
         }
 
         [MenuItem(MenuItemsNames.Exit, 1)]

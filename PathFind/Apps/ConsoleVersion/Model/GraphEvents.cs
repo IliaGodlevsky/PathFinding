@@ -4,8 +4,6 @@ using GraphLib.Base.EventHolder;
 using GraphLib.Interfaces.Factories;
 using System;
 
-using static GraphLib.Base.BaseVertexCost;
-
 namespace ConsoleVersion.Model
 {
     internal sealed class GraphEvents : BaseGraphEvents<Vertex>, IRequireIntInput

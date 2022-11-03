@@ -21,7 +21,7 @@ namespace GraphLib.Serialization
             VerticesInfo = graph
                 .Select(vertex => new VertexSerializationInfo(vertex))
                 .ToReadOnly();
-            CostRange = BaseVertexCost.CostRange;
+            CostRange = graph.CostRange;
         }
 
         internal GraphSerializationInfo(int[] dimensionsSizes,

@@ -121,7 +121,7 @@ namespace Common.Tests
         [Test]
         public void Amplitude_ExtremeValuesOfInt_ReturnsUintMaxValue()
         {
-            uint amplitude = ValueRanges.IntRange.Amplitude();
+            long amplitude = ValueRanges.IntRange.Amplitude();
 
             Assert.AreEqual(amplitude, uint.MaxValue);
         }

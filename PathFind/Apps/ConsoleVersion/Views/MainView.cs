@@ -33,7 +33,6 @@ namespace ConsoleVersion.Views
             messenger.Register<GraphCreatedMessage>(this, OnNewGraphCreated);
             messenger.Register<CostRangeChangedMessage>(this, OnCostRangeChanged);
             messenger.Register<UpdateStatisticsMessage>(this, OnStatisticsUpdated);
-            OnCostRangeChanged(new CostRangeChangedMessage(BaseVertexCost.CostRange));
         }
 
         static MainView()

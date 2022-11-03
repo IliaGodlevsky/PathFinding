@@ -36,9 +36,9 @@ namespace GraphLib.Serialization.Serializers
             try
             {
                 var graphInfo = LoadGraphInternal(stream, costFactory, coordinateFactory);
-                BaseVertexCost.CostRange = graphInfo.CostRange;
                 var vertices = graphInfo.VerticesInfo.Select(vertexFactory.CreateFrom).ToReadOnly();
                 var graph = graphFactory.CreateGraph(vertices, graphInfo.DimensionsSizes);
+                graph.CostRange = graphInfo.CostRange;
                 graphInfo.VerticesInfo.Zip(graph, (info, vertex) => (Vertex: vertex, Info: info))
                     .ForEach(item => SetNeighbourhood(item, (IGraph<IVertex>)graph));
                 return graph;

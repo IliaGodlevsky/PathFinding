@@ -10,8 +10,7 @@ namespace Random.Extensions
     {
         public static int NextInt(this IRandom random, InclusiveValueRange<int> range)
         {
-            long module = (long)range.Amplitude() + 1;
-            return (int)(random.NextUint() % module) + range.LowerValueOfRange;
+            return (int)(random.NextUint() % (range.Amplitude() + 1)) + range.LowerValueOfRange;
         }
 
         public static int NextInt(this IRandom random)

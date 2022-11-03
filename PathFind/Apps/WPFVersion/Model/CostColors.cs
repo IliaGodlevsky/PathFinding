@@ -15,13 +15,13 @@ namespace WPFVersion.Model
     {
         private readonly Lazy<IReadOnlyDictionary<int, Brush>> costColors;
         private readonly List<Brush> previousColors;
-        private readonly IReadOnlyCollection<Vertex> graph;
+        private readonly IGraph<Vertex> graph;
 
         public Color CostColor { get; set; } = Colors.DodgerBlue;
 
         public CostColors(IGraph<Vertex> graph)
         {
-            this.graph = graph.ToReadOnly();
+            this.graph = graph;
             previousColors = new List<Brush>();
             costColors = new Lazy<IReadOnlyDictionary<int, Brush>>(FormCostColors);
         }
@@ -44,7 +44,7 @@ namespace WPFVersion.Model
 
         private IReadOnlyDictionary<int, Brush> FormCostColors()
         {
-            var costValues = CostRange.EnumerateValues().ToReadOnly();
+            var costValues = graph.CostRange.EnumerateValues().ToReadOnly();
             var colors = new Dictionary<int, Brush>();
             double step = byte.MaxValue / costValues.Count;
             for (int i = 0; i < costValues.Count; i++)
