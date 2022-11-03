@@ -6,7 +6,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using ValueRange;
 
 namespace GraphLib.Base
 {
@@ -14,8 +13,6 @@ namespace GraphLib.Base
         where TVertex : IVertex
     {
         private readonly IReadOnlyDictionary<ICoordinate, TVertex> vertices;
-
-        public InclusiveValueRange<int> CostRange { get; set; }
 
         public int Count { get; }
 

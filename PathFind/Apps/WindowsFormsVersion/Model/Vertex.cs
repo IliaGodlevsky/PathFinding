@@ -14,8 +14,6 @@ namespace WindowsFormsVersion.Model
     [DebuggerDisplay("{Position.ToString()}")]
     internal class Vertex : Label, IVertex, IVisualizable
     {
-        private readonly IVisualization<Vertex> visualization;
-
         public Vertex(ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
         {
             this.visualization = visualization;
@@ -88,5 +86,8 @@ namespace WindowsFormsVersion.Model
         {
             return HashCode.Combine(Cost.CurrentCost, Position.GetHashCode());
         }
+
+        private readonly IVisualization<Vertex> visualization;
+        private readonly Lazy<IReadOnlyCollection<IVertex>> neighbours;
     }
 }

@@ -88,8 +88,8 @@ namespace ConsoleVersion.ViewModel
         [MenuItem(MenuItemsNames.ChangeCostRange, 6)]
         private void ChangeVertexCostValueRange()
         {
-            Cached.CostRange = IntInput.InputRange(Constants.VerticesCostRange);
-            messenger.Send(new CostRangeChangedMessage(Cached.CostRange));
+            CostRange = IntInput.InputRange(Constants.VerticesCostRange);
+            messenger.Send(new CostRangeChangedMessage(CostRange));
         }
 
         [Condition(nameof(CanExecuteInterrupt))]

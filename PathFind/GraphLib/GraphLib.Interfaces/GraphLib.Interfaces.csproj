@@ -63,10 +63,6 @@
       <Project>{a68b0eb4-3f07-4711-b314-fc1c709a5e2f}</Project>
       <Name>Commands</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ValueRange\ValueRange.csproj">
-      <Project>{EB70607D-CDF4-4D91-BBFE-55F85ACC0A1B}</Project>
-      <Name>ValueRange</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -15,9 +15,9 @@ namespace ValueRange.Extensions
             }
         }
 
-        public static long Amplitude(this InclusiveValueRange<int> valueRange)
+        public static uint Amplitude(this InclusiveValueRange<int> valueRange)
         {
-            return (long)valueRange.UpperValueOfRange - valueRange.LowerValueOfRange;
+            return (uint)((long)valueRange.UpperValueOfRange - valueRange.LowerValueOfRange);
         }
 
         public static double Amplitude(this InclusiveValueRange<double> valueRange)
