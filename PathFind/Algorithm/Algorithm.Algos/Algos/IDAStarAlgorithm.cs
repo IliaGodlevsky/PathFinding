@@ -40,7 +40,7 @@ namespace Algorithm.Algos.Algos
             var next = queue.TryFirstOrNullVertex();
             if (next.Neighbours.Count == 0)
             {
-                stashedVertices.ForEach(stashed => queue.EnqueueOrUpdatePriority(stashed.Key, stashed.Value));
+                stashedVertices.ForEach(RestoreFromStash);
                 stashedVertices.Clear();
                 next = queue.TryFirstOrDeadEndVertex();
             }
@@ -51,6 +51,11 @@ namespace Algorithm.Algos.Algos
         {
             base.Reset();
             stashedVertices.Clear();
+        }
+
+        private void RestoreFromStash(KeyValuePair<IVertex, double> stashed)
+        {
+            queue.EnqueueOrUpdatePriority(stashed.Key, stashed.Value);
         }
 
         private void RemoveToStashed((IVertex Vertex, double Priority) item)

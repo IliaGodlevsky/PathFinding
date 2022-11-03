@@ -49,9 +49,9 @@ namespace Algorithm.Algos.Algos
             base.Reevaluate(vertex, value);
         }
 
-        protected override void PrepareForLocalPathfinding()
+        protected override void PrepareForLocalPathfinding(IEndPoints endPoints)
         {
-            base.PrepareForLocalPathfinding();
+            base.PrepareForLocalPathfinding(endPoints);
             double value = CalculateHeuristic(CurrentEndPoints.Source);
             heuristics.Reevaluate(CurrentEndPoints.Source, value);
         }

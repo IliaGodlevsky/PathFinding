@@ -1,50 +1,24 @@
 ﻿using Algorithm.Extensions;
 using Algorithm.Infrastructure.EventArguments;
-using Algorithm.Interfaces;
-using Algorithm.Realizations.GraphPaths;
-using Common.Disposables;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
+using GraphLib.NullRealizations;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Algorithm.Base
 {
-    public abstract class GreedyAlgorithm : PathfindingAlgorithm
+    public abstract class GreedyAlgorithm : RangePathfindingAlgorithm
     {
         private readonly Stack<IVertex> visitedVerticesStack;
 
-        private IVertex PreviousVertex { get; set; }
+        private IVertex PreviousVertex { get; set; } = NullVertex.Instance;
 
         protected GreedyAlgorithm(IEndPoints endPoints)
            : base(endPoints)
         {
             visitedVerticesStack = new Stack<IVertex>();
-        }
-
-        public sealed override IGraphPath FindPath()
-        {
-            PrepareForPathfinding();
-
-            using (Disposable.Use(CompletePathfinding))
-            {
-                while (!IsDestination(endPoints))
-                {
-                    ThrowIfInterrupted();
-                    WaitUntilResumed();
-                    PreviousVertex = CurrentVertex;
-                    CurrentVertex = GetNextVertex();
-                    ProcessCurrentVertex();
-                }
-            }
-
-            return CreateGraphPath();
-        }
-
-        protected virtual IGraphPath CreateGraphPath()
-        {
-            return new GraphPath(parentVertices, endPoints);
         }
 
         protected abstract double GreedyHeuristic(IVertex vertex);
@@ -53,9 +27,10 @@ namespace Algorithm.Base
         {
             var neighbours = GetUnvisitedVertices(CurrentVertex);
             double leastVertexCost = neighbours.Any() ? neighbours.Min(GreedyHeuristic) : default;
-            return neighbours
-                .ForEach(Enqueue)
+            var next = neighbours
+                .ForEach(Enqueued)
                 .FirstOrNullVertex(vertex => GreedyHeuristic(vertex) == leastVertexCost);
+            return next.Neighbours.Count == 0 ? visitedVerticesStack.PopOrDeadEndVertex() : next;
         }
 
         protected override void Reset()
@@ -64,41 +39,17 @@ namespace Algorithm.Base
             visitedVerticesStack.Clear();
         }
 
-        protected override void PrepareForPathfinding()
-        {
-            base.PrepareForPathfinding();
-            CurrentVertex = endPoints.Source;
-            VisitVertex(CurrentVertex);
-        }
-
-        private void VisitCurrentVertex()
-        {
-            VisitVertex(CurrentVertex);
-            parentVertices.Add(CurrentVertex, PreviousVertex);
-        }
-
-        private void VisitVertex(IVertex vertex)
+        protected override void VisitVertex(IVertex vertex)
         {
             visitedVertices.Visit(vertex);
             RaiseVertexVisited(new AlgorithmEventArgs(vertex));
             visitedVerticesStack.Push(vertex);
+            parentVertices.Add(vertex, PreviousVertex);
         }
 
-        private void Enqueue(IVertex vertex)
+        protected override void InspectVertex(IVertex vertex)
         {
-            RaiseVertexEnqueued(new AlgorithmEventArgs(vertex));
-        }
-
-        private void ProcessCurrentVertex()
-        {
-            if (CurrentVertex.Neighbours.Count == 0)
-            {
-                CurrentVertex = visitedVerticesStack.PopOrDeadEndVertex();
-            }
-            else
-            {
-                VisitCurrentVertex();
-            }
+            PreviousVertex = vertex;
         }
     }
 }

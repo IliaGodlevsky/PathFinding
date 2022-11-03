@@ -36,9 +36,9 @@ namespace Algorithm.Algos.Algos
             accumulatedCosts.Clear();
         }
 
-        protected override void PrepareForLocalPathfinding()
+        protected override void PrepareForLocalPathfinding(IEndPoints endPoints)
         {
-            base.PrepareForLocalPathfinding();
+            base.PrepareForLocalPathfinding(endPoints);
             accumulatedCosts.Reevaluate(CurrentEndPoints.Source, default);
         }
 
