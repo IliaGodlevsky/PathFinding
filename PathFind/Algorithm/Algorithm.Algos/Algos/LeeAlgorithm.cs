@@ -22,9 +22,9 @@ namespace Algorithm.Algos.Algos
             accumulatedCosts = new Dictionary<ICoordinate, double>(new CoordinateEqualityComparer());
         }
 
-        protected override void Reset()
+        protected override void DropState()
         {
-            base.Reset();
+            base.DropState();
             accumulatedCosts.Clear();
             verticesQueue.Clear();
         }

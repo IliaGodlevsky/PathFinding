@@ -13,6 +13,12 @@ namespace Algorithm.Base
 
         }
 
+        protected override void PrepareForSubPathfinding(Range range)
+        {
+            base.PrepareForSubPathfinding(range);
+            VisitCurrentVertex();
+        }
+
         protected override void VisitCurrentVertex()
         {
             visited.Add(CurrentVertex);

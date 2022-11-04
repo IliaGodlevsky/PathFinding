@@ -35,9 +35,9 @@ namespace Algorithm.Algos.Algos
             return base.GetNextVertex();
         }
 
-        protected override void Reset()
+        protected override void DropState()
         {
-            base.Reset();
+            base.DropState();
             heuristics.Clear();
         }
 

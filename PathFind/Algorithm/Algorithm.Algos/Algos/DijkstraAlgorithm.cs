@@ -34,9 +34,9 @@ namespace Algorithm.Algos.Algos
             return new GraphPath(traces.ToReadOnly(), CurrentRange.Target, stepRule);
         }
 
-        protected override void Reset()
+        protected override void DropState()
         {
-            base.Reset();
+            base.DropState();
             queue.Clear();
         }
 

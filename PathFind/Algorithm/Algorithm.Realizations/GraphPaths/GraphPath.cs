@@ -3,27 +3,23 @@ using Algorithm.Realizations.StepRules;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-using Traces = System.Collections.Generic.IReadOnlyDictionary<GraphLib.Interfaces.ICoordinate, GraphLib.Interfaces.IVertex>;
-
 namespace Algorithm.Realizations.GraphPaths
 {
+    using Traces = System.Collections.Generic.IReadOnlyDictionary<GraphLib.Interfaces.ICoordinate, GraphLib.Interfaces.IVertex>;
+
     public sealed class GraphPath : IGraphPath
     {
         private readonly Traces traces;
         private readonly IVertex target;
         private readonly IStepRule stepRule;
 
-        private readonly Lazy<double> pathCost;
-        private readonly Lazy<IReadOnlyList<IVertex>> path;
+        private IReadOnlyList<IVertex> Path { get; }
 
-        private IReadOnlyList<IVertex> Path => path.Value;
-
-        public double Cost => pathCost.Value;
+        public double Cost { get; }
 
         public int Count => Path.Count == 0 ? 0 : Path.Count - 1;
 
@@ -35,11 +31,11 @@ namespace Algorithm.Realizations.GraphPaths
 
         public GraphPath(Traces traces, IVertex target, IStepRule stepRule)
         {
-            path = new Lazy<IReadOnlyList<IVertex>>(GetPath);
-            pathCost = new Lazy<double>(GetPathCost);
             this.traces = traces;
             this.target = target;
             this.stepRule = stepRule;
+            Path = GetPath();
+            Cost = GetPathCost();           
         }
 
         private IReadOnlyList<IVertex> GetPath()

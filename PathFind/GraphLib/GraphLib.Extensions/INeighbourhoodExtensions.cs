@@ -17,7 +17,7 @@ namespace GraphLib.Extensions
                 return range.Contains(coordinate);
             }
             return self.Where(neighbour => neighbour.Juxtapose(graph.DimensionsSizes, IsWithin))
-                .Select(coordinate => graph.Get(coordinate))
+                .Select(graph.Get)
                 .ToReadOnly();
         }
     }

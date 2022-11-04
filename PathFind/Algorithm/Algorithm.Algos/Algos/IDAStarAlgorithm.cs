@@ -3,6 +3,7 @@ using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic.Distances;
 using Algorithm.Realizations.StepRules;
 using Common.Extensions.EnumerableExtensions;
+using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using GraphLib.Utility;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace Algorithm.Algos.Algos
                 .Select(CreateStashItem)
                 .ForEach(RemoveToStashed);
             var next = queue.TryFirstOrNullVertex();
-            if (next.Neighbours.Count == 0)
+            if (next.HasNoNeighbours())
             {
                 stashedVertices.ForEach(RestoreFromStash);
                 stashedVertices.Clear();
@@ -46,9 +47,9 @@ namespace Algorithm.Algos.Algos
             return next;
         }
 
-        protected override void Reset()
+        protected override void DropState()
         {
-            base.Reset();
+            base.DropState();
             stashedVertices.Clear();
         }
 

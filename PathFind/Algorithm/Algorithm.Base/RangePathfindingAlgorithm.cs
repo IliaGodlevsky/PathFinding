@@ -5,29 +5,31 @@ using Algorithm.Realizations.GraphPaths;
 using Common.Disposables;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
+using GraphLib.NullRealizations;
 using GraphLib.Utility;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-// https://stackoverflow.com/questions/62648189/testing-c-sharp-9-0-in-vs2019-cs0518-isexternalinit-is-not-defined-or-imported
 namespace System.Runtime.CompilerServices
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
-    internal class IsExternalInit { }
+    internal record IsExternalInit;
 }
 
 namespace Algorithm.Base
 {
     public abstract class RangePathfindingAlgorithm : PathfindingAlgorithm
     {
-        internal protected record Range(IVertex Source, IVertex Target);
+        protected record Range(IVertex Source, IVertex Target);
 
         protected readonly ICollection<IVertex> visited;
         protected readonly IDictionary<ICoordinate, IVertex> traces;
         protected readonly IEndPoints endPoints;
 
-        protected virtual Range CurrentRange { get; set; }
+        protected Range CurrentRange { get; set; }
+
+        protected IVertex CurrentVertex { get; set; } = NullVertex.Instance;
 
         protected RangePathfindingAlgorithm(IEndPoints endPoints)
         {
@@ -39,25 +41,26 @@ namespace Algorithm.Base
         public sealed override IGraphPath FindPath()
         {
             PrepareForPathfinding();
-            using var _ = Disposable.Use(CompletePathfinding);
-            var path = NullGraphPath.Interface;
-            foreach (var endPoint in GetSubEndPoints())
+            using (Disposable.Use(CompletePathfinding))
             {
-                PrepareForSubPathfinding(endPoint);
-                VisitCurrentVertex();
-                while (!IsDestination())
+                var path = NullGraphPath.Interface;
+                foreach (var endPoint in GetSubEndPoints())
                 {
-                    ThrowIfInterrupted();
-                    WaitUntilResumed();
-                    InspectVertex(CurrentVertex);
-                    CurrentVertex = GetNextVertex();
-                    VisitCurrentVertex();
+                    PrepareForSubPathfinding(endPoint);
+                    while (!IsDestination())
+                    {
+                        ThrowIfInterrupted();
+                        WaitUntilResumed();
+                        InspectVertex(CurrentVertex);
+                        CurrentVertex = GetNextVertex();
+                        VisitCurrentVertex();
+                    }
+                    var subPath = CreateGraphPath();
+                    path = new CompositeGraphPath(path, subPath);
+                    DropState();
                 }
-                var subPath = CreateGraphPath();
-                path = new CompositeGraphPath(path, subPath);
-                Reset();
+                return path;
             }
-            return path;
         }
 
         protected abstract IVertex GetNextVertex();
@@ -109,11 +112,11 @@ namespace Algorithm.Base
                 .ToReadOnly();
         }
 
-        protected override void Reset()
+        protected override void DropState()
         {
             visited.Clear();
             traces.Clear();
-            base.Reset();
+            base.DropState();
         }
     }
 }

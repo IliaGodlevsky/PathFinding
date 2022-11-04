@@ -51,12 +51,13 @@ namespace Algorithm.Algos.Tests
 
             var graphPath = algorithm.FindPath();
 
-            Assert.IsFalse(graph.IsNull());
+            Assert.IsFalse(graph.Count == 0);
         }
 
         protected abstract IAlgorithm<IGraphPath> CreateAlgorithm(IEndPoints endPoints);
 
         protected abstract int GetExpectedCost();
+
         protected abstract int GetExpectedLength();
 
         #endregion

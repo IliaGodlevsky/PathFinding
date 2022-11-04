@@ -32,6 +32,11 @@ namespace GraphLib.Extensions
             }
         }
 
+        public static bool HasNoNeighbours(this IVertex vertex)
+        {
+            return vertex.Neighbours.Count == 0;
+        }
+
         public static bool IsCardinal(this IVertex vertex, IVertex neighbor)
         {
             return vertex.Position.IsCardinal(neighbor.Position);

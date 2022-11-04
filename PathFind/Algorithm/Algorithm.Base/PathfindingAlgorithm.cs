@@ -2,7 +2,6 @@
 using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Infrastructure.Handlers;
 using Algorithm.Interfaces;
-using GraphLib.Interfaces;
 using Interruptable.EventArguments;
 using Interruptable.EventHandlers;
 using Interruptable.Interface;
@@ -23,11 +22,9 @@ namespace Algorithm.Base
 
         private readonly EventWaitHandle pauseEvent;
 
-        public bool IsInProcess { get; private set; }
+        public bool IsInProcess { get; private set; } = false;
 
-        public bool IsPaused { get; private set; }
-
-        protected IVertex CurrentVertex { get; set; }
+        public bool IsPaused { get; private set; } = false;
 
         private bool IsInterrupted { get; set; } = false;
 
@@ -51,7 +48,7 @@ namespace Algorithm.Base
             Paused = null;
             Resumed = null;
             pauseEvent.Dispose();
-            Reset();
+            DropState();
         }
 
         public void Interrupt()
@@ -68,7 +65,7 @@ namespace Algorithm.Base
 
         public void Pause()
         {
-            if (!IsPaused)
+            if (!IsPaused && IsInProcess)
             {
                 IsPaused = true;
                 Paused?.Invoke(this, new ProcessEventArgs());
@@ -77,7 +74,7 @@ namespace Algorithm.Base
 
         public void Resume()
         {
-            if (IsPaused)
+            if (IsPaused && IsInProcess)
             {
                 IsPaused = false;
                 pauseEvent.Set();
@@ -87,15 +84,15 @@ namespace Algorithm.Base
 
         protected virtual void WaitUntilResumed()
         {
-            if (IsPaused)
+            if (IsPaused && IsInProcess)
             {
                 pauseEvent.WaitOne();
             }
         }
 
-        protected virtual void Reset()
+        protected virtual void DropState()
         {
-            IsPaused = false;
+            IsPaused = false;           
         }
 
         protected void RaiseVertexVisited(AlgorithmEventArgs e)
@@ -110,18 +107,19 @@ namespace Algorithm.Base
 
         protected virtual void PrepareForPathfinding()
         {
-            if (IsAlgorithmDisposed)
+            if (!IsAlgorithmDisposed)
             {
-                throw new ObjectDisposedException(GetType().Name);
+                DropState();
+                IsInProcess = true;
+                Started?.Invoke(this, new ProcessEventArgs());
+                return;
             }
-            Reset();
-            IsInProcess = true;
-            Started?.Invoke(this, new ProcessEventArgs());
+            throw new ObjectDisposedException(GetType().Name);
         }
 
         protected void ThrowIfInterrupted()
         {
-            if (IsInterrupted)
+            if (IsInterrupted && IsInProcess)
             {
                 throw new AlgorithmInterruptedException(this);
             }

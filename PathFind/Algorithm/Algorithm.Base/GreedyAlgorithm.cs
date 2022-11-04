@@ -32,23 +32,34 @@ namespace Algorithm.Base
                 .FirstOrNullVertex(vertex => GreedyHeuristic(vertex) == leastVertexCost);
         }
 
-        protected override void Reset()
+        protected override void PrepareForSubPathfinding(Range range)
         {
-            base.Reset();
+            base.PrepareForSubPathfinding(range);
+            VisitVertex(CurrentVertex);
+        }
+
+        private void VisitVertex(IVertex vertex)
+        {
+            visited.Add(vertex);
+            RaiseVertexVisited(new AlgorithmEventArgs(vertex));
+            tracesFromDeadend.Push(vertex);
+        }
+
+        protected override void DropState()
+        {
+            base.DropState();
             tracesFromDeadend.Clear();
         }
 
         protected override void VisitCurrentVertex()
         {
-            if (CurrentVertex.Neighbours.Count == 0)
+            if (CurrentVertex.HasNoNeighbours())
             {
                 CurrentVertex = tracesFromDeadend.PopOrDeadEndVertex();
             }
             else
             {
-                visited.Add(CurrentVertex);
-                RaiseVertexVisited(new AlgorithmEventArgs(CurrentVertex));
-                tracesFromDeadend.Push(CurrentVertex);
+                VisitVertex(CurrentVertex);
                 traces[CurrentVertex.Position] = PreviousVertex;
             }
         }
