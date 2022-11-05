@@ -82,17 +82,14 @@ namespace Algorithm.Base
             }
         }
 
+        protected abstract void DropState();
+
         protected virtual void WaitUntilResumed()
         {
             if (IsPaused && IsInProcess)
             {
                 pauseEvent.WaitOne();
             }
-        }
-
-        protected virtual void DropState()
-        {
-            IsPaused = false;           
         }
 
         protected void RaiseVertexVisited(AlgorithmEventArgs e)

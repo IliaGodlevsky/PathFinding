@@ -94,7 +94,6 @@ namespace Algorithm.Base
         {
             visited.Clear();
             traces.Clear();
-            base.DropState();
         }
 
         protected IReadOnlyCollection<IVertex> GetUnvisitedNeighbours(IVertex vertex)
