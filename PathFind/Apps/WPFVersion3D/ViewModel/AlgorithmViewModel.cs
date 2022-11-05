@@ -18,7 +18,7 @@ namespace WPFVersion3D.ViewModel
         public const string Failed = "Failed";
         public const string Started = "Started";
 
-        private readonly PathfindingAlgorithm algorithm;
+        private readonly PathfindingProcess algorithm;
         private readonly IMessenger messenger;
 
         private string time;
@@ -51,7 +51,7 @@ namespace WPFVersion3D.ViewModel
 
         public string Status { get => status; set => Set(ref status, value); }
 
-        public AlgorithmViewModel(PathfindingAlgorithm algorithm)
+        public AlgorithmViewModel(PathfindingProcess algorithm)
         {
             this.algorithm = algorithm;
             messenger = DI.Container.Resolve<IMessenger>();

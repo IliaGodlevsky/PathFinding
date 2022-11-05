@@ -9,16 +9,13 @@ using System.Linq;
 
 namespace Algorithm.Base
 {
-    public abstract class GreedyAlgorithm : RangePathfindingAlgorithm
+    public abstract class GreedyAlgorithm : PathfindingAlgorithm<Stack<IVertex>>
     {
-        private readonly Stack<IVertex> tracesFromDeadend;
-
         private IVertex PreviousVertex { get; set; } = NullVertex.Instance;
 
         protected GreedyAlgorithm(IEndPoints endPoints)
            : base(endPoints)
         {
-            tracesFromDeadend = new Stack<IVertex>();
         }
 
         protected abstract double GreedyHeuristic(IVertex vertex);
@@ -42,20 +39,20 @@ namespace Algorithm.Base
         {
             visited.Add(vertex);
             RaiseVertexVisited(new AlgorithmEventArgs(vertex));
-            tracesFromDeadend.Push(vertex);
+            storage.Push(vertex);
         }
 
         protected override void DropState()
         {
             base.DropState();
-            tracesFromDeadend.Clear();
+            storage.Clear();
         }
 
         protected override void VisitCurrentVertex()
         {
             if (CurrentVertex.HasNoNeighbours())
             {
-                CurrentVertex = tracesFromDeadend.PopOrDeadEndVertex();
+                CurrentVertex = storage.PopOrDeadEndVertex();
             }
             else
             {

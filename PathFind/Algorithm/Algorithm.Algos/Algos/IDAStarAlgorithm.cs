@@ -17,7 +17,7 @@ namespace Algorithm.Algos.Algos
 
         private readonly Dictionary<IVertex, double> stashedVertices;
 
-        private int ToStashCount => queue.Count * PercentToDelete / 100;
+        private int ToStashCount => storage.Count * PercentToDelete / 100;
 
         public IDAStarAlgorithm(IEndPoints endPoints)
             : this(endPoints, new DefaultStepRule(), new ChebyshevDistance())
@@ -33,20 +33,20 @@ namespace Algorithm.Algos.Algos
 
         protected override IVertex GetNextVertex()
         {
-            queue.OrderByDescending(v => heuristics[v.Position])
+            storage.OrderByDescending(v => heuristics[v.Position])
                 .Take(ToStashCount)
-                .Select(vertex => (Vertex: vertex, Priority: queue.GetPriorityOrInfinity(vertex)))
+                .Select(vertex => (Vertex: vertex, Priority: storage.GetPriorityOrInfinity(vertex)))
                 .ForEach(item =>
                 {
-                    queue.TryRemove(item.Vertex);
+                    storage.TryRemove(item.Vertex);
                     stashedVertices[item.Vertex] = item.Priority;
                 });
-            var next = queue.TryFirstOrNullVertex();
+            var next = storage.TryFirstOrNullVertex();
             if (next.HasNoNeighbours())
             {
-                stashedVertices.ForEach(item => queue.EnqueueOrUpdatePriority(item.Key, item.Value));
+                stashedVertices.ForEach(item => storage.EnqueueOrUpdatePriority(item.Key, item.Value));
                 stashedVertices.Clear();
-                next = queue.TryFirstOrDeadEndVertex();
+                next = storage.TryFirstOrDeadEndVertex();
             }
             return next;
         }

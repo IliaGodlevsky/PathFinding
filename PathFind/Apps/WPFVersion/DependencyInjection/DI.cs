@@ -82,8 +82,8 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory<Vertex>>().SingleInstance();
 
             builder.RegisterAssemblyTypes(Assemblies)
-                .Where(type => type.Implements<IAlgorithmFactory<PathfindingAlgorithm>>())
-                .As<IAlgorithmFactory<PathfindingAlgorithm>>().SingleInstance();
+                .Where(type => type.Implements<IAlgorithmFactory<PathfindingProcess>>())
+                .As<IAlgorithmFactory<PathfindingProcess>>().SingleInstance();
 
             builder.RegisterType<DefaultStepRule>().As<IStepRule>().SingleInstance();
             builder.RegisterDecorator<CardinalStepRule, IStepRule>();

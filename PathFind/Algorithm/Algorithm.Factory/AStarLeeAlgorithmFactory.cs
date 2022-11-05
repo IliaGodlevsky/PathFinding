@@ -10,29 +10,29 @@ namespace Algorithm.Factory
 {
     [Order(5)]
     [WaveGroup]
-    public sealed class BestFirstLeeAlgorithmFactory : IAlgorithmFactory<BestFirstLeeAlgorithm>
+    public sealed class AStarLeeAlgorithmFactory : IAlgorithmFactory<AStarLeeAlgorithm>
     {
         private readonly IHeuristic heuristic;
 
-        public BestFirstLeeAlgorithmFactory(IHeuristic heuristic)
+        public AStarLeeAlgorithmFactory(IHeuristic heuristic)
         {
             this.heuristic = heuristic;
         }
 
-        public BestFirstLeeAlgorithmFactory()
+        public AStarLeeAlgorithmFactory()
             : this(new ManhattanDistance())
         {
 
         }
 
-        public BestFirstLeeAlgorithm Create(IEndPoints endPoints)
+        public AStarLeeAlgorithm Create(IEndPoints endPoints)
         {
-            return new BestFirstLeeAlgorithm(endPoints, heuristic);
+            return new AStarLeeAlgorithm(endPoints, heuristic);
         }
 
         public override string ToString()
         {
-            return "Lee algorithm (heuristic)";
+            return "A* lee algorithm";
         }
     }
 }

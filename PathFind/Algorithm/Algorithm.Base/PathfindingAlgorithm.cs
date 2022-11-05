@@ -1,134 +1,122 @@
-﻿using Algorithm.Exceptions;
-using Algorithm.Infrastructure.EventArguments;
-using Algorithm.Infrastructure.Handlers;
+﻿using Algorithm.Infrastructure.EventArguments;
 using Algorithm.Interfaces;
-using Interruptable.EventArguments;
-using Interruptable.EventHandlers;
-using Interruptable.Interface;
-using System;
-using System.Threading;
+using Algorithm.NullRealizations;
+using Algorithm.Realizations.GraphPaths;
+using Common.Disposables;
+using Common.Extensions.EnumerableExtensions;
+using GraphLib.Interfaces;
+using GraphLib.NullRealizations;
+using GraphLib.Utility;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+
+namespace System.Runtime.CompilerServices
+{
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    internal record IsExternalInit;
+}
 
 namespace Algorithm.Base
 {
-    public abstract class PathfindingAlgorithm : IAlgorithm<IGraphPath>, IProcess, IPausable, IInterruptable, IDisposable
+    public abstract class PathfindingAlgorithm<TStorage> : PathfindingProcess
+        where TStorage : IEnumerable<IVertex>, new()
     {
-        public event AlgorithmEventHandler VertexVisited;
-        public event AlgorithmEventHandler VertexEnqueued;
-        public event ProcessEventHandler Started;
-        public event ProcessEventHandler Finished;
-        public event ProcessEventHandler Interrupted;
-        public event ProcessEventHandler Paused;
-        public event ProcessEventHandler Resumed;
+        protected record Range(IVertex Source, IVertex Target);
 
-        private readonly EventWaitHandle pauseEvent;
+        protected readonly ICollection<IVertex> visited;
+        protected readonly IDictionary<ICoordinate, IVertex> traces;
+        protected readonly IEndPoints endPoints;
+        protected readonly TStorage storage;
 
-        public bool IsInProcess { get; private set; } = false;
+        protected Range CurrentRange { get; set; }
 
-        public bool IsPaused { get; private set; } = false;
+        protected IVertex CurrentVertex { get; set; } = NullVertex.Instance;
 
-        private bool IsInterrupted { get; set; } = false;
+        private bool IsDestination => CurrentVertex.Equals(CurrentRange.Target);
 
-        private bool IsAlgorithmDisposed { get; set; } = false;
-
-        protected PathfindingAlgorithm()
+        protected PathfindingAlgorithm(IEndPoints endPoints)
         {
-            pauseEvent = new AutoResetEvent(true);
+            storage = new TStorage();
+            this.endPoints = endPoints;
+            visited = new HashSet<IVertex>(new VertexEqualityComparer());
+            traces = new Dictionary<ICoordinate, IVertex>(new CoordinateEqualityComparer());
         }
 
-        public abstract IGraphPath FindPath();
-
-        public void Dispose()
+        public sealed override IGraphPath FindPath()
         {
-            IsAlgorithmDisposed = true;
-            Started = null;
-            Finished = null;
-            VertexEnqueued = null;
-            VertexVisited = null;
-            Interrupted = null;
-            Paused = null;
-            Resumed = null;
-            pauseEvent.Dispose();
-            DropState();
-        }
-
-        public void Interrupt()
-        {
-            if (IsInProcess)
+            PrepareForPathfinding();
+            using (Disposable.Use(CompletePathfinding))
             {
-                pauseEvent.Set();
-                IsPaused = false;
-                IsInProcess = false;
-                IsInterrupted = true;
-                Interrupted?.Invoke(this, new ProcessEventArgs());
+                var path = NullGraphPath.Interface;
+                foreach (var endPoint in GetSubEndPoints())
+                {
+                    PrepareForSubPathfinding(endPoint);
+                    while (!IsDestination)
+                    {
+                        ThrowIfInterrupted();
+                        WaitUntilResumed();
+                        InspectVertex(CurrentVertex);
+                        CurrentVertex = GetNextVertex();
+                        VisitCurrentVertex();
+                    }
+                    var subPath = CreateGraphPath();
+                    path = new CompositeGraphPath(path, subPath);
+                    DropState();
+                }
+                return path;
             }
         }
 
-        public void Pause()
+        protected abstract IVertex GetNextVertex();
+
+        protected abstract void InspectVertex(IVertex vertex);
+
+        protected abstract void VisitCurrentVertex();
+
+        protected virtual void PrepareForSubPathfinding(Range range)
         {
-            if (!IsPaused && IsInProcess)
+            CurrentRange = range;
+            CurrentVertex = CurrentRange.Source;
+        }
+
+        protected virtual IGraphPath CreateGraphPath()
+        {
+            return new GraphPath(traces.ToReadOnly(), CurrentRange.Target);
+        }
+
+        protected virtual void Enqueued(IVertex vertex)
+        {
+            RaiseVertexEnqueued(new AlgorithmEventArgs(vertex));
+        }
+
+        protected override void DropState()
+        {
+            visited.Clear();
+            traces.Clear();
+            base.DropState();
+        }
+
+        protected IReadOnlyCollection<IVertex> GetUnvisitedNeighbours(IVertex vertex)
+        {
+            return vertex.Neighbours
+                .Where(vertex => !vertex.IsObstacle && !visited.Contains(vertex))
+                .ToReadOnly();
+        }
+
+        private IEnumerable<Range> GetSubEndPoints()
+        {
+            using (var iterator = endPoints.GetEnumerator())
             {
-                IsPaused = true;
-                Paused?.Invoke(this, new ProcessEventArgs());
+                iterator.MoveNext();
+                var previous = iterator.Current;
+                while (iterator.MoveNext())
+                {
+                    var current = iterator.Current;
+                    yield return new(previous, current);
+                    previous = iterator.Current;
+                }
             }
-        }
-
-        public void Resume()
-        {
-            if (IsPaused && IsInProcess)
-            {
-                IsPaused = false;
-                pauseEvent.Set();
-                Resumed?.Invoke(this, new ProcessEventArgs());
-            }
-        }
-
-        protected virtual void WaitUntilResumed()
-        {
-            if (IsPaused && IsInProcess)
-            {
-                pauseEvent.WaitOne();
-            }
-        }
-
-        protected virtual void DropState()
-        {
-            IsPaused = false;           
-        }
-
-        protected void RaiseVertexVisited(AlgorithmEventArgs e)
-        {
-            VertexVisited?.Invoke(this, e);
-        }
-
-        protected void RaiseVertexEnqueued(AlgorithmEventArgs e)
-        {
-            VertexEnqueued?.Invoke(this, e);
-        }
-
-        protected virtual void PrepareForPathfinding()
-        {
-            if (!IsAlgorithmDisposed)
-            {
-                DropState();
-                IsInProcess = true;
-                Started?.Invoke(this, new ProcessEventArgs());
-                return;
-            }
-            throw new ObjectDisposedException(GetType().Name);
-        }
-
-        protected void ThrowIfInterrupted()
-        {
-            if (IsInterrupted && IsInProcess)
-            {
-                throw new AlgorithmInterruptedException(this);
-            }
-        }
-
-        protected virtual void CompletePathfinding()
-        {
-            IsInProcess = false;
-            Finished?.Invoke(this, new ProcessEventArgs());
         }
     }
 }

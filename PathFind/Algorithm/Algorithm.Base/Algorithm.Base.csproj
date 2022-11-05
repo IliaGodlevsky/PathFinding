@@ -36,8 +36,9 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RangePathfindingAlgorithm.cs" />
+    <Compile Include="BreadthFirstAlgorithm.cs" />
     <Compile Include="PathfindingAlgorithm.cs" />
+    <Compile Include="PathfindingProcess.cs" />
     <Compile Include="GreedyAlgorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WaveAlgorithm.cs" />

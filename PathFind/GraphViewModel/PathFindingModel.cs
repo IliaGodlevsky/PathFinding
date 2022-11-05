@@ -27,7 +27,7 @@ namespace GraphViewModel
         protected readonly Stopwatch timer;
         protected readonly ILog log;
 
-        protected PathfindingAlgorithm algorithm;
+        protected PathfindingProcess algorithm;
 
         protected int visitedVerticesCount;
 
@@ -39,12 +39,12 @@ namespace GraphViewModel
 
         public virtual TimeSpan Delay { get; set; }
 
-        public IAlgorithmFactory<PathfindingAlgorithm> Algorithm { get; set; }
+        public IAlgorithmFactory<PathfindingProcess> Algorithm { get; set; }
 
-        public IReadOnlyList<IAlgorithmFactory<PathfindingAlgorithm>> Algorithms { get; }
+        public IReadOnlyList<IAlgorithmFactory<PathfindingProcess>> Algorithms { get; }
 
         protected PathFindingModel(BaseEndPoints<TVertex> endPoints,
-            IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> factories, IGraph<TVertex> graph, ILog log)
+            IEnumerable<IAlgorithmFactory<PathfindingProcess>> factories, IGraph<TVertex> graph, ILog log)
         {
             this.Graph = graph;
             this.endPoints = endPoints;
@@ -122,7 +122,7 @@ namespace GraphViewModel
 
         protected abstract void SummarizePathfindingResults();
 
-        protected virtual void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
+        protected virtual void SubscribeOnAlgorithmEvents(PathfindingProcess algorithm)
         {
             if (IsVisualizationRequired)
             {

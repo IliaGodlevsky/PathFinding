@@ -77,8 +77,8 @@ namespace WindowsFormsVersion.DependencyInjection
             builder.RegisterDecorator<CryptoGraphSerializer<Graph2D<Vertex>, Vertex>, IGraphSerializer<Graph2D<Vertex>, Vertex>>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory<Vertex>>().SingleInstance();
 
-            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IAlgorithmFactory<PathfindingAlgorithm>>())
-                .As<IAlgorithmFactory<PathfindingAlgorithm>>().SingleInstance();
+            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IAlgorithmFactory<PathfindingProcess>>())
+                .As<IAlgorithmFactory<PathfindingProcess>>().SingleInstance();
 
             return builder.Build();
         }

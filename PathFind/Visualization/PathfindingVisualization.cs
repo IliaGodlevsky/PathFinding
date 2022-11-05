@@ -50,7 +50,7 @@ namespace Visualization
             visualizations.Execute(algorithm);
         }
 
-        protected virtual void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
+        protected virtual void SubscribeOnAlgorithmEvents(PathfindingProcess algorithm)
         {
             algorithm.VertexVisited += OnVertexVisited;
             algorithm.VertexEnqueued += OnVertexEnqueued;

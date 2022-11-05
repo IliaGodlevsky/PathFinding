@@ -57,7 +57,7 @@ namespace ConsoleVersion.ViewModel
         private int AlgorithmIndex => IntInput.Input(AlgorithmKeyInputMessage, algorithmKeysValueRange) - 1;
 
         public PathFindingViewModel(BaseEndPoints<Vertex> endPoints, ICache<Graph2D<Vertex>> graph,
-            IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ILog log)
+            IEnumerable<IAlgorithmFactory<PathfindingProcess>> algorithmFactories, ILog log)
             : base(endPoints, algorithmFactories, graph.Cached, log)
         {
             algorithmKeysValueRange = new InclusiveValueRange<int>(Algorithms.Count, 1);
@@ -152,7 +152,7 @@ namespace ConsoleVersion.ViewModel
             messenger.Send(new UpdateStatisticsMessage(Statistics));
         }
 
-        protected override void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
+        protected override void SubscribeOnAlgorithmEvents(PathfindingProcess algorithm)
         {
             base.SubscribeOnAlgorithmEvents(algorithm);
             algorithm.Started += keystrokesHook.StartAsync;

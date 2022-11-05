@@ -36,7 +36,7 @@ namespace WPFVersion3D.ViewModel
         private int Index { get; set; }
 
         public PathFindingViewModel(BaseEndPoints<Vertex3D> endPoints,
-            IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories,
+            IEnumerable<IAlgorithmFactory<PathfindingProcess>> algorithmFactories,
             ILog log, ICache<Graph3D<Vertex3D>> graphCache) : base(endPoints, algorithmFactories, graphCache.Cache, log)
         {
             messenger = DI.Container.Resolve<IMessenger>();
@@ -93,7 +93,7 @@ namespace WPFVersion3D.ViewModel
             messenger.Unregister(this);
         }
 
-        protected override void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
+        protected override void SubscribeOnAlgorithmEvents(PathfindingProcess algorithm)
         {
             messenger.Send(new SubscribeOnAlgorithmEventsMessage(algorithm, IsVisualizationRequired));
             algorithm.Paused += OnAlgorithmPaused;

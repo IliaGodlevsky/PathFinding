@@ -5,10 +5,10 @@ namespace WPFVersion.Messages
     internal sealed class SubscribeOnAlgorithmEventsMessage
     {
         public bool IsVisualizationRequired { get; }
-        public PathfindingAlgorithm Algorithm { get; }
+        public PathfindingProcess Algorithm { get; }
 
         public SubscribeOnAlgorithmEventsMessage(
-            PathfindingAlgorithm algorithm, bool isVisualizationRequired)
+            PathfindingProcess algorithm, bool isVisualizationRequired)
         {
             Algorithm = algorithm;
             IsVisualizationRequired = isVisualizationRequired;

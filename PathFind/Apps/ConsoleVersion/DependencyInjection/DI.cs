@@ -110,8 +110,8 @@ namespace ConsoleVersion.DependencyInjection
             builder.RegisterDecorator<ThreadSafeGraphSerializer<Graph2D<Vertex>, Vertex>, IGraphSerializer<Graph2D<Vertex>, Vertex>>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory<Vertex>>().SingleInstance();
 
-            AlgorithmsAssembly.GetTypes().Where(type => type.Implements<IAlgorithmFactory<PathfindingAlgorithm>>())
-                .Register(builder).As<IAlgorithmFactory<PathfindingAlgorithm>>().SingleInstance();
+            AlgorithmsAssembly.GetTypes().Where(type => type.Implements<IAlgorithmFactory<PathfindingProcess>>())
+                .Register(builder).As<IAlgorithmFactory<PathfindingProcess>>().SingleInstance();
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
 
             return builder.Build();

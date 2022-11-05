@@ -37,7 +37,7 @@
     <Compile Include="Algos\AStarAlgorithm.cs" />
     <Compile Include="Algos\HeuristicCostGreedyAlgorithm.cs" />
     <Compile Include="Algos\IDAStarAlgorithm.cs" />
-    <Compile Include="Algos\BestFirstLeeAlgorithm.cs" />
+    <Compile Include="Algos\AStarLeeAlgorithm.cs" />
     <Compile Include="Algos\CostGreedyAlgorithm.cs" />
     <Compile Include="Algos\DepthFirstAlgorithm.cs" />
     <Compile Include="Algos\DijkstraAlgorithm.cs" />

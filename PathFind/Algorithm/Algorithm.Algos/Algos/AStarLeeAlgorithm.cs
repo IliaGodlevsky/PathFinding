@@ -1,26 +1,27 @@
-﻿using Algorithm.Interfaces;
+﻿using Algorithm.Base;
+using Algorithm.Extensions;
+using Algorithm.Interfaces;
 using Algorithm.Realizations.Heuristic.Distances;
-using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
 using GraphLib.Utility;
+using Priority_Queue;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Algorithm.Algos.Algos
 {
-    public class BestFirstLeeAlgorithm : LeeAlgorithm
+    public sealed class AStarLeeAlgorithm : BreadthFirstAlgorithm<SimplePriorityQueue<IVertex, double>>
     {
         private readonly Dictionary<ICoordinate, double> heuristics;
         private readonly IHeuristic heuristic;
 
-        public BestFirstLeeAlgorithm(IEndPoints endPoints, IHeuristic function)
+        public AStarLeeAlgorithm(IEndPoints endPoints, IHeuristic function)
             : base(endPoints)
         {
             heuristic = function;
             heuristics = new Dictionary<ICoordinate, double>(new CoordinateEqualityComparer());
         }
 
-        public BestFirstLeeAlgorithm(IEndPoints endPoints)
+        public AStarLeeAlgorithm(IEndPoints endPoints)
             : this(endPoints, new ManhattanDistance())
         {
 
@@ -28,24 +29,14 @@ namespace Algorithm.Algos.Algos
 
         protected override IVertex GetNextVertex()
         {
-            verticesQueue = verticesQueue
-                .OrderBy(v => heuristics[v.Position])
-                .ToQueue();
-
-            return base.GetNextVertex();
+            return storage.TryFirstOrDeadEndVertex();
         }
 
         protected override void DropState()
         {
             base.DropState();
+            storage.Clear();
             heuristics.Clear();
-        }
-
-        protected override void Reevaluate(IVertex vertex, double value)
-        {
-            double result = CalculateHeuristic(vertex);
-            heuristics[vertex.Position] = value + result;
-            base.Reevaluate(vertex, value);
         }
 
         protected override void PrepareForSubPathfinding(Range range)
@@ -55,14 +46,32 @@ namespace Algorithm.Algos.Algos
             heuristics[CurrentRange.Source.Position] = value;
         }
 
+        protected override void RelaxVertex(IVertex vertex)
+        {
+            double cost = default;
+            if (!heuristics.TryGetValue(vertex.Position, out cost))
+            {
+                cost = CalculateHeuristic(vertex);
+                heuristics[vertex.Position] = cost;
+            }
+            storage.Enqueue(vertex, cost);
+            base.RelaxVertex(vertex);
+        }
+
         private double CalculateHeuristic(IVertex vertex)
         {
             return heuristic.Calculate(vertex, CurrentRange.Target);
         }
 
+        protected override void RelaxNeighbours(IReadOnlyCollection<IVertex> neighbours)
+        {
+            base.RelaxNeighbours(neighbours);
+            storage.TryRemove(CurrentVertex);
+        }
+
         public override string ToString()
         {
-            return "Lee algorithm (heusritic)";
+            return "A* lee algorithm";
         }
     }
 }

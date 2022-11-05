@@ -2,9 +2,9 @@
 
 namespace WPFVersion3D.Messages.PassValueMessages
 {
-    internal sealed class AlgorithmStartedMessage : PassValueMessage<PathfindingAlgorithm>
+    internal sealed class AlgorithmStartedMessage : PassValueMessage<PathfindingProcess>
     {
-        public AlgorithmStartedMessage(PathfindingAlgorithm algorithm) : base(algorithm)
+        public AlgorithmStartedMessage(PathfindingProcess algorithm) : base(algorithm)
         {
 
         }

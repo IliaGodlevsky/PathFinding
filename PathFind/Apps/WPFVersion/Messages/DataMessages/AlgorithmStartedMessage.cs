@@ -7,9 +7,9 @@ namespace WPFVersion.Messages.DataMessages
     {
         public TimeSpan DelayTime { get; }
 
-        public PathfindingAlgorithm Algorithm { get; }
+        public PathfindingProcess Algorithm { get; }
 
-        public AlgorithmStartedMessage(PathfindingAlgorithm algorithm, TimeSpan delayTime)
+        public AlgorithmStartedMessage(PathfindingProcess algorithm, TimeSpan delayTime)
         {
             Algorithm = algorithm;
             DelayTime = delayTime;

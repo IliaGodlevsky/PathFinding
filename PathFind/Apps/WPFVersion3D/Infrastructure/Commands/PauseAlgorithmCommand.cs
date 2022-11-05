@@ -4,7 +4,7 @@ namespace WPFVersion3D.Infrastructure.Commands
 {
     internal sealed class PauseAlgorithmCommand : BaseAlgorithmCommand
     {
-        public PauseAlgorithmCommand(PathfindingAlgorithm algorithm) : base(algorithm)
+        public PauseAlgorithmCommand(PathfindingProcess algorithm) : base(algorithm)
         {
         }
 

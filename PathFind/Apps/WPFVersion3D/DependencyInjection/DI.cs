@@ -78,8 +78,8 @@ namespace WPFVersion3D.DependencyInjection
             builder.RegisterType<Vertex3DFromInfoFactory>().As<IVertexFromInfoFactory<Vertex3D>>().SingleInstance();
 
             builder.RegisterAssemblyTypes(Assemblies)
-                .Where(type => type.Implements<IAlgorithmFactory<PathfindingAlgorithm>>())
-                .As<IAlgorithmFactory<PathfindingAlgorithm>>().SingleInstance();
+                .Where(type => type.Implements<IAlgorithmFactory<PathfindingProcess>>())
+                .As<IAlgorithmFactory<PathfindingProcess>>().SingleInstance();
 
             return builder.Build();
         }

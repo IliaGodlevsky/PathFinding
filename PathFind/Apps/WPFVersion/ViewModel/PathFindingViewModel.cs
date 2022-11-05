@@ -37,7 +37,7 @@ namespace WPFVersion.ViewModel
         public ICommand CancelPathFindAlgorithmChoice { get; }
 
         public PathFindingViewModel(BaseEndPoints<Vertex> endPoints,
-            IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ICache<Graph2D<Vertex>> graphCache, ILog log)
+            IEnumerable<IAlgorithmFactory<PathfindingProcess>> algorithmFactories, ICache<Graph2D<Vertex>> graphCache, ILog log)
             : base(endPoints, algorithmFactories, graphCache.Cached, log)
         {
             messenger = DI.Container.Resolve<IMessenger>();
@@ -125,7 +125,7 @@ namespace WPFVersion.ViewModel
             base.FindPath();
         }
 
-        protected override void SubscribeOnAlgorithmEvents(PathfindingAlgorithm algorithm)
+        protected override void SubscribeOnAlgorithmEvents(PathfindingProcess algorithm)
         {
             var message = new SubscribeOnAlgorithmEventsMessage(algorithm, IsVisualizationRequired);
             messenger.Send(message);

@@ -5,15 +5,13 @@ using Algorithm.Realizations.GraphPaths;
 using Algorithm.Realizations.StepRules;
 using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
-using GraphLib.Utility;
 using Priority_Queue;
 using System.Collections.Generic;
 
 namespace Algorithm.Algos.Algos
 {
-    public class DijkstraAlgorithm : WaveAlgorithm
+    public class DijkstraAlgorithm : WaveAlgorithm<SimplePriorityQueue<IVertex, double>>
     {
-        protected readonly SimplePriorityQueue<IVertex, double> queue;
         protected readonly IStepRule stepRule;
 
         public DijkstraAlgorithm(IEndPoints endPoints)
@@ -26,7 +24,6 @@ namespace Algorithm.Algos.Algos
             : base(endPoints)
         {
             this.stepRule = stepRule;
-            queue = new SimplePriorityQueue<IVertex, double>(new VertexEqualityComparer());
         }
 
         protected override IGraphPath CreateGraphPath()
@@ -37,18 +34,18 @@ namespace Algorithm.Algos.Algos
         protected override void DropState()
         {
             base.DropState();
-            queue.Clear();
+            storage.Clear();
         }
 
         protected override IVertex GetNextVertex()
         {
-            return queue.TryFirstOrDeadEndVertex();
+            return storage.TryFirstOrDeadEndVertex();
         }
 
         protected override void PrepareForSubPathfinding(Range range)
         {
             base.PrepareForSubPathfinding(range);
-            queue.EnqueueOrUpdatePriority(CurrentRange.Source, default);
+            storage.EnqueueOrUpdatePriority(CurrentRange.Source, default);
         }
 
         protected virtual void RelaxVertex(IVertex vertex)
@@ -64,12 +61,12 @@ namespace Algorithm.Algos.Algos
 
         protected virtual void Enqueue(IVertex vertex, double value)
         {
-            queue.EnqueueOrUpdatePriority(vertex, value);
+            storage.EnqueueOrUpdatePriority(vertex, value);
         }
 
         protected virtual double GetVertexCurrentCost(IVertex vertex)
         {
-            return queue.GetPriorityOrInfinity(vertex);
+            return storage.GetPriorityOrInfinity(vertex);
         }
 
         protected virtual double GetVertexRelaxedCost(IVertex neighbour)
@@ -81,7 +78,7 @@ namespace Algorithm.Algos.Algos
         protected override void RelaxNeighbours(IReadOnlyCollection<IVertex> neighbours)
         {
             neighbours.ForEach(RelaxVertex);
-            queue.TryRemove(CurrentVertex);
+            storage.TryRemove(CurrentVertex);
         }
 
         public override string ToString()

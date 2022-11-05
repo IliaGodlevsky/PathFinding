@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace Algorithm.Base
 {
-    public abstract class WaveAlgorithm : RangePathfindingAlgorithm
+    public abstract class WaveAlgorithm<TStorage> : PathfindingAlgorithm<TStorage>
+        where TStorage : IEnumerable<IVertex>, new()
     {
         protected WaveAlgorithm(IEndPoints endPoints)
             : base(endPoints)
         {
-
         }
 
         protected override void PrepareForSubPathfinding(Range range)

@@ -25,7 +25,7 @@ namespace WindowsFormsVersion.ViewModel
         public event Action WindowClosed;
 
         public PathFindingViewModel(BaseEndPoints<Vertex> endPoints,
-            IEnumerable<IAlgorithmFactory<PathfindingAlgorithm>> algorithmFactories, ICache<Graph2D<Vertex>> cache, ILog log)
+            IEnumerable<IAlgorithmFactory<PathfindingProcess>> algorithmFactories, ICache<Graph2D<Vertex>> cache, ILog log)
             : base(endPoints, algorithmFactories, cache.Cached, log)
         {
             Delay = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;

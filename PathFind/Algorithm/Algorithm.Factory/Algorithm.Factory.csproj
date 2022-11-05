@@ -39,7 +39,7 @@
     <Compile Include="IDAStarAlgorithmFactory.cs" />
     <Compile Include="Attrbiutes\GreedyGroupAttribute.cs" />
     <Compile Include="Attrbiutes\WaveGroupAttribute.cs" />
-    <Compile Include="BestFirstLeeAlgorithmFactory.cs" />
+    <Compile Include="AStarLeeAlgorithmFactory.cs" />
     <Compile Include="CostGreedyAlgorithmFactory.cs" />
     <Compile Include="DepthFirstAlgorithmFactory.cs" />
     <Compile Include="DijkstraAlgorithmFactory.cs" />

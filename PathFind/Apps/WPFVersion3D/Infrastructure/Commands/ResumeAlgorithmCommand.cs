@@ -4,7 +4,7 @@ namespace WPFVersion3D.Infrastructure.Commands
 {
     internal sealed class ResumeAlgorithmCommand : BaseAlgorithmCommand
     {
-        public ResumeAlgorithmCommand(PathfindingAlgorithm algorithm) : base(algorithm)
+        public ResumeAlgorithmCommand(PathfindingProcess algorithm) : base(algorithm)
         {
         }
 

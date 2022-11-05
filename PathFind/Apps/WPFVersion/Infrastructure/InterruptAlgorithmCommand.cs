@@ -4,7 +4,7 @@ namespace WPFVersion.Infrastructure
 {
     internal sealed class InterruptAlgorithmCommand : BaseAlgorithmCommand
     {
-        public InterruptAlgorithmCommand(PathfindingAlgorithm algorithm) : base(algorithm)
+        public InterruptAlgorithmCommand(PathfindingProcess algorithm) : base(algorithm)
         {
 
         }

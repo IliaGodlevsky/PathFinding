@@ -1,74 +1,36 @@
 ﻿using Algorithm.Base;
 using Algorithm.NullRealizations;
-using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
-using GraphLib.Utility;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Algorithm.Algos.Algos
 {
-    public class LeeAlgorithm : WaveAlgorithm
+    public sealed class LeeAlgorithm : BreadthFirstAlgorithm<Queue<IVertex>>
     {
-        private const int WaveCost = 1;
-
-        protected Queue<IVertex> verticesQueue;
-        protected readonly Dictionary<ICoordinate, double> accumulatedCosts;
-
         public LeeAlgorithm(IEndPoints endPoints)
             : base(endPoints)
         {
-            verticesQueue = new Queue<IVertex>();
-            accumulatedCosts = new Dictionary<ICoordinate, double>(new CoordinateEqualityComparer());
+
         }
 
         protected override void DropState()
         {
             base.DropState();
-            accumulatedCosts.Clear();
-            verticesQueue.Clear();
+            storage.Clear();
         }
 
         protected override IVertex GetNextVertex()
         {
-            return verticesQueue.Count == 0
+            return storage.Count == 0
                 ? DeadEndVertex.Interface
-                : verticesQueue.Dequeue();
+                : storage.Dequeue();
         }
 
-        protected virtual double CreateWave()
+        protected override void RelaxVertex(IVertex vertex)
         {
-            if (accumulatedCosts.TryGetValue(CurrentVertex.Position, out var cost))
-            {
-                return cost + WaveCost;
-            }
-            return WaveCost;
-        }
-
-        protected virtual void RelaxNeighbour(IVertex vertex)
-        {
-            Reevaluate(vertex, CreateWave());
-            verticesQueue.Enqueue(vertex);
-            traces[vertex.Position] = CurrentVertex;
-        }
-
-        protected virtual void Reevaluate(IVertex vertex, double value)
-        {
-            accumulatedCosts[vertex.Position] = value;
-        }
-
-        protected bool IsVertexUnwaved(IVertex vertex)
-        {
-            if (accumulatedCosts.TryGetValue(vertex.Position, out double cost))
-            {
-                return cost == 0;
-            }
-            return true;
-        }
-
-        protected override void RelaxNeighbours(IReadOnlyCollection<IVertex> neighbours)
-        {
-            neighbours.Where(IsVertexUnwaved).ForEach(RelaxNeighbour);
+            storage.Enqueue(vertex);
+            base.RelaxVertex(vertex);
         }
 
         public override string ToString()

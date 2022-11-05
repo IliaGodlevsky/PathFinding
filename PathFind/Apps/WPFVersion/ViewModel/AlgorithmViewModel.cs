@@ -23,7 +23,7 @@ namespace WPFVersion.ViewModel
         public const string Finished = "Finished";
         public const string Failed = "Failed";
 
-        private readonly PathfindingAlgorithm algorithm;
+        private readonly PathfindingProcess algorithm;
         private readonly IMessenger messenger;
 
         private int pathLength;
@@ -71,7 +71,7 @@ namespace WPFVersion.ViewModel
             }
         }
 
-        public AlgorithmViewModel(PathfindingAlgorithm algorithm, TimeSpan delayTime, int index)
+        public AlgorithmViewModel(PathfindingProcess algorithm, TimeSpan delayTime, int index)
         {
             this.algorithm = algorithm;
             this.delayTime = delayTime;
