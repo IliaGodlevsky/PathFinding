@@ -35,12 +35,16 @@ namespace Algorithm.Algos.Algos
         {
             queue.OrderByDescending(v => heuristics[v.Position])
                 .Take(ToStashCount)
-                .Select(CreateStashItem)
-                .ForEach(RemoveToStashed);
+                .Select(vertex => (Vertex: vertex, Priority: queue.GetPriorityOrInfinity(vertex)))
+                .ForEach(item =>
+                {
+                    queue.TryRemove(item.Vertex);
+                    stashedVertices[item.Vertex] = item.Priority;
+                });
             var next = queue.TryFirstOrNullVertex();
             if (next.HasNoNeighbours())
             {
-                stashedVertices.ForEach(RestoreFromStash);
+                stashedVertices.ForEach(item => queue.EnqueueOrUpdatePriority(item.Key, item.Value));
                 stashedVertices.Clear();
                 next = queue.TryFirstOrDeadEndVertex();
             }
@@ -51,22 +55,6 @@ namespace Algorithm.Algos.Algos
         {
             base.DropState();
             stashedVertices.Clear();
-        }
-
-        private void RestoreFromStash(KeyValuePair<IVertex, double> stashed)
-        {
-            queue.EnqueueOrUpdatePriority(stashed.Key, stashed.Value);
-        }
-
-        private void RemoveToStashed((IVertex Vertex, double Priority) item)
-        {
-            queue.TryRemove(item.Vertex);
-            stashedVertices[item.Vertex] = item.Priority;
-        }
-
-        private (IVertex Vertex, double Priority) CreateStashItem(IVertex vertex)
-        {
-            return (Vertex: vertex, Priority: queue.GetPriorityOrInfinity(vertex));
         }
 
         public override string ToString()

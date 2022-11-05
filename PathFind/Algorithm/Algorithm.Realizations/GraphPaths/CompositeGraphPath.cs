@@ -9,7 +9,7 @@ namespace Algorithm.Realizations.GraphPaths
 {
     public sealed class CompositeGraphPath : IGraphPath
     {
-        private IEnumerable<ICoordinate> Path { get; }
+        private IReadOnlyCollection<ICoordinate> Path { get; }
 
         public int Count { get; }
 
@@ -19,8 +19,8 @@ namespace Algorithm.Realizations.GraphPaths
         {
             var composite = paths.Prepend(second).Prepend(path).ToArray();
             Path = composite.SelectMany(p => p.Reverse()).Reverse().ToArray();
-            Count = composite.Sum(p => p.Count);
-            Cost = composite.Sum(p => p.Cost);
+            Count = Path.Count == 0 ? 0 : composite.Sum(p => p.Count);
+            Cost = Path.Count == 0 ? 0 : composite.Sum(p => p.Cost);
         }
 
         public IEnumerator<ICoordinate> GetEnumerator()

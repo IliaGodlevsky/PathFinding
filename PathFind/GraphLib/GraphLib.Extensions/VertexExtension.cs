@@ -69,10 +69,14 @@ namespace GraphLib.Extensions
 
         public static bool IsEqual(this IVertex self, IVertex vertex)
         {
-            bool hasEqualCost = self.Cost.Equals(vertex.Cost);
-            bool hasEqualPosition = self.Position.Equals(vertex.Position);
-            bool hasSameObstacleStatus = self.IsObstacle == vertex.IsObstacle;
-            return hasEqualCost && hasEqualPosition && hasSameObstacleStatus;
+            if (!ReferenceEquals(self, vertex))
+            {
+                bool hasEqualCost = self.Cost.Equals(vertex.Cost);
+                bool hasEqualPosition = self.Position.Equals(vertex.Position);
+                bool hasSameObstacleStatus = self.IsObstacle == vertex.IsObstacle;
+                return hasEqualCost && hasEqualPosition && hasSameObstacleStatus;
+            }
+            return true;
         }
 
         public static bool IsOneOf(this IVertex self, params IVertex[] vertices)

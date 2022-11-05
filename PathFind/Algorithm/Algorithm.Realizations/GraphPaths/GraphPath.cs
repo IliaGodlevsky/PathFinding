@@ -35,7 +35,7 @@ namespace Algorithm.Realizations.GraphPaths
             this.target = target;
             this.stepRule = stepRule;
             Path = GetPath();
-            Cost = GetPathCost();           
+            Cost = GetPathCost();
         }
 
         private IReadOnlyList<IVertex> GetPath()
@@ -65,12 +65,15 @@ namespace Algorithm.Realizations.GraphPaths
 
         public bool AreNeighbours(IVertex self, IVertex candidate)
         {
-            return self.Neighbours.Any(vertex => ReferenceEquals(vertex, candidate));
+            return self.Neighbours.Any(candidate.Equals);
         }
 
         public IEnumerator<ICoordinate> GetEnumerator()
         {
-            return Path.Select(vertex => vertex.Position).GetEnumerator();
+            for (int i = 0; i < Path.Count; i++)
+            {
+                yield return Path[i].Position;
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
