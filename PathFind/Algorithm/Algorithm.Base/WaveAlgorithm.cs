@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Algorithm.Base
 {
     public abstract class WaveAlgorithm<TStorage> : PathfindingAlgorithm<TStorage>
-        where TStorage : IEnumerable<IVertex>, new()
+        where TStorage : new()
     {
         protected WaveAlgorithm(IEndPoints endPoints)
             : base(endPoints)

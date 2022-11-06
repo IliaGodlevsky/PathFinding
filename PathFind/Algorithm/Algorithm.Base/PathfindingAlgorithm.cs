@@ -20,7 +20,7 @@ namespace System.Runtime.CompilerServices
 namespace Algorithm.Base
 {
     public abstract class PathfindingAlgorithm<TStorage> : PathfindingProcess
-        where TStorage : IEnumerable<IVertex>, new()
+        where TStorage : new()
     {
         protected record Range(IVertex Source, IVertex Target);
 

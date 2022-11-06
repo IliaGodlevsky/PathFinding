@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Algorithm.Base
 {
     public abstract class BreadthFirstAlgorithm<TStorage> : WaveAlgorithm<TStorage>
-        where TStorage : IEnumerable<IVertex>, new()
+        where TStorage : new()
     {
         public BreadthFirstAlgorithm(IEndPoints endPoints)
             : base(endPoints)
