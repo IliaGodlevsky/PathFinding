@@ -13,6 +13,8 @@ namespace Algorithm.Base
         {
         }
 
+        protected abstract void RelaxVertex(IVertex vertex);
+
         protected override void PrepareForSubPathfinding(Range range)
         {
             base.PrepareForSubPathfinding(range);
@@ -25,7 +27,10 @@ namespace Algorithm.Base
             RaiseVertexVisited(new AlgorithmEventArgs(CurrentVertex));
         }
 
-        protected abstract void RelaxNeighbours(IReadOnlyCollection<IVertex> vertex);
+        protected virtual void RelaxNeighbours(IReadOnlyCollection<IVertex> vertices)
+        {
+            vertices.ForEach(RelaxVertex);
+        }
 
         protected override void InspectVertex(IVertex vertex)
         {

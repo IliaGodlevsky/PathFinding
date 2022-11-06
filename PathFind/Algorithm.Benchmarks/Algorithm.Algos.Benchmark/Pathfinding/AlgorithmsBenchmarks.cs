@@ -16,7 +16,7 @@ namespace Algorithm.Algos.Benchmark.Pathfinding
             for (int i = 1; i <= Limit; i += 2)
             {
                 int dimension = i * 10;
-                var graph = graphAssemble.AssembleGraph(0, dimension, dimension);
+                var graph = graphAssemble.AssembleSquareGraph(dimension);
                 yield return new TestEndPoints(graph);
             }
         }

@@ -27,7 +27,7 @@ namespace Algorithm.Algos.Algos
             return new GraphPath(traces.ToReadOnly(), CurrentRange.Target, stepRule);
         }
 
-        protected override double GreedyHeuristic(IVertex vertex)
+        protected override double CalculateHeuristic(IVertex vertex)
         {
             return stepRule.CalculateStepCost(vertex, CurrentVertex);
         }

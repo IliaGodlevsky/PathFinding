@@ -21,7 +21,7 @@ namespace Algorithm.Algos.Algos
 
         }
 
-        protected override double GreedyHeuristic(IVertex vertex)
+        protected override double CalculateHeuristic(IVertex vertex)
         {
             return heuristic.Calculate(vertex, CurrentRange.Target);
         }

@@ -48,7 +48,7 @@ namespace Algorithm.Algos.Algos
             storage.EnqueueOrUpdatePriority(CurrentRange.Source, default);
         }
 
-        protected virtual void RelaxVertex(IVertex vertex)
+        protected override void RelaxVertex(IVertex vertex)
         {
             double relaxedCost = GetVertexRelaxedCost(vertex);
             double vertexCost = GetVertexCurrentCost(vertex);
@@ -77,7 +77,7 @@ namespace Algorithm.Algos.Algos
 
         protected override void RelaxNeighbours(IReadOnlyCollection<IVertex> neighbours)
         {
-            neighbours.ForEach(RelaxVertex);
+            base.RelaxNeighbours(neighbours);
             storage.TryRemove(CurrentVertex);
         }
 

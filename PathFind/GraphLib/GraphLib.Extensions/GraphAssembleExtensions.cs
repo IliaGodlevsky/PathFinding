@@ -15,6 +15,13 @@ namespace GraphLib.Extensions
             return self.AssembleGraph(obstaclePercent, (IReadOnlyList<int>)dimensionSizes);
         }
 
+        public static TGraph AssembleSquareGraph<TGraph, TVertex>(this IGraphAssemble<TGraph, TVertex> self, int dimension)
+            where TGraph : IGraph<TVertex>
+            where TVertex : IVertex
+        {
+            return self.AssembleGraph(0, dimension, dimension);
+        }
+
         public static async Task<TGraph> AssembleGraphAsync<TGraph, TVertex>(this IGraphAssemble<TGraph, TVertex> self,
             int percentOfObstacles, IReadOnlyList<int> dimensionSizes)
             where TGraph : IGraph<TVertex>

@@ -4,7 +4,6 @@ using GraphLib.Interfaces;
 using GraphLib.NullRealizations;
 using GraphLib.TestRealizations.TestFactories;
 using GraphLib.TestRealizations.TestObjects;
-using NullObject.Extensions;
 using NUnit.Framework;
 using System.Linq;
 

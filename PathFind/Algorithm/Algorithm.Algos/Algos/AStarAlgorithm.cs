@@ -42,13 +42,13 @@ namespace Algorithm.Algos.Algos
 
         protected override void Enqueue(IVertex vertex, double value)
         {
-            double heusristicCost = default;
-            if (!heuristics.TryGetValue(vertex.Position, out heusristicCost))
+            double cost = default;
+            if (!heuristics.TryGetValue(vertex.Position, out cost))
             {
-                heusristicCost = CalculateHeuristic(vertex);
-                heuristics[vertex.Position] = heusristicCost;
+                cost = CalculateHeuristic(vertex);
+                heuristics[vertex.Position] = cost;
             }
-            base.Enqueue(vertex, value + heusristicCost);
+            base.Enqueue(vertex, value + cost);
             accumulatedCosts[vertex.Position] = value;
         }
 

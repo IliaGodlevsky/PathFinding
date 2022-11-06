@@ -18,15 +18,15 @@ namespace Algorithm.Base
         {
         }
 
-        protected abstract double GreedyHeuristic(IVertex vertex);
+        protected abstract double CalculateHeuristic(IVertex vertex);
 
         protected override IVertex GetNextVertex()
         {
             var neighbours = GetUnvisitedNeighbours(CurrentVertex);
-            double leastVertexCost = neighbours.Any() ? neighbours.Min(GreedyHeuristic) : default;
+            double leastVertexCost = neighbours.Any() ? neighbours.Min(CalculateHeuristic) : default;
             return neighbours
                 .ForEach(Enqueued)
-                .FirstOrNullVertex(vertex => GreedyHeuristic(vertex) == leastVertexCost);
+                .FirstOrNullVertex(vertex => CalculateHeuristic(vertex) == leastVertexCost);
         }
 
         protected override void PrepareForSubPathfinding(Range range)

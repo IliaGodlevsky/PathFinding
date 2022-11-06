@@ -5,7 +5,8 @@ namespace Common.ReadOnly
 {
     public sealed class ReadOnlyDictionary<TKey, TValue> : IReadOnlyDictionary<TKey, TValue>
     {
-        public static ReadOnlyDictionary<TKey, TValue> Empty = new ReadOnlyDictionary<TKey, TValue>(new Dictionary<TKey, TValue>());
+        public static ReadOnlyDictionary<TKey, TValue> Empty 
+            = new ReadOnlyDictionary<TKey, TValue>(new Dictionary<TKey, TValue>());
 
         private readonly IDictionary<TKey, TValue> dictionary;
 

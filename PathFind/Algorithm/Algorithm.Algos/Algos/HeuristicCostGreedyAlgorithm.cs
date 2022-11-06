@@ -31,10 +31,10 @@ namespace Algorithm.Algos.Algos
             return new GraphPath(traces.ToReadOnly(), CurrentRange.Target, stepRule);
         }
 
-        protected override double GreedyHeuristic(IVertex vertex)
+        protected override double CalculateHeuristic(IVertex vertex)
         {
-            var heuristicResult = heuristic.Calculate(vertex, endPoints.Target);
-            var stepCost = stepRule.CalculateStepCost(vertex, CurrentVertex);
+            double heuristicResult = heuristic.Calculate(vertex, endPoints.Target);
+            double stepCost = stepRule.CalculateStepCost(vertex, CurrentVertex);
             return heuristicResult + stepCost;
         }
 
