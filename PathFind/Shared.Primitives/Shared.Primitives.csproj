@@ -4,17 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A5A743F5-D346-4B2B-B6AC-07152F64E4D9}</ProjectGuid>
+    <ProjectGuid>{30973320-9F61-45FB-8C75-3256ADB1BFB1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Common</RootNamespace>
-    <AssemblyName>Common</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>Shared.Primitives</RootNamespace>
+    <AssemblyName>Shared.Primitives</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,31 +32,31 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attrbiutes\GroupAttribute.cs" />
     <Compile Include="Attrbiutes\OrderAttribute.cs" />
-    <Compile Include="Disposables\Disposable.cs" />
-    <Compile Include="Extensions\EnumerableExtensions\ICollectionExtensions.cs" />
-    <Compile Include="Extensions\EnumerableExtensions\ConcurrentDictionaryExtensions.cs" />
-    <Compile Include="Extensions\GenericExtensions.cs" />
-    <Compile Include="Extensions\EnumerableExtensions\IDictionaryExtensions.cs" />
-    <Compile Include="Extensions\IntExtensions.cs" />
-    <Compile Include="Extensions\TimeSpanExtensions.cs" />
-    <Compile Include="Interface\IViewModel.cs" />
-    <Compile Include="Extensions\EnumerableExtensions\IEnumerableExtension.cs" />
-    <Compile Include="Extensions\MemberInfoExtensions.cs" />
+    <Compile Include="Disposable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReadOnly\ReadOnlyDictionary.cs" />
-    <Compile Include="ReadOnly\ReadOnlyList.cs" />
+    <Compile Include="Single\Exceptions\SingletonException.cs" />
+    <Compile Include="Single\Singleton.cs" />
+    <Compile Include="ValueRange\Enums\ReturnOptions.cs" />
+    <Compile Include="ValueRange\Extensions\InclusiveValueRangeExtensions.cs" />
+    <Compile Include="ValueRange\InclusiveValueRange.cs" />
+    <Compile Include="ValueRange\ValueRanges.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Bcl.HashCode">
-      <Version>1.1.1</Version>
-    </PackageReference>
-    <PackageReference Include="System.Threading.Tasks.Extensions">
-      <Version>4.5.4</Version>
-    </PackageReference>
+    <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
+      <Project>{cd11d46e-4675-4090-b50b-a85ffa3d1d2c}</Project>
+      <Name>Shared.Extensions</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

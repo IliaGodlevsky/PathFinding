@@ -42,11 +42,6 @@ namespace GraphLib.Extensions
             return vertex.Position.IsCardinal(neighbor.Position);
         }
 
-        public static IVertex AsVertex(this object self)
-        {
-            return self.As<IVertex>(NullVertex.Interface);
-        }
-
         public static void Initialize<TVertex>(this TVertex self)
             where TVertex : IVertex, IVisualizable
         {
