@@ -44,7 +44,6 @@
     <Compile Include="IVisualizable.cs" />
     <Compile Include="IVisualization.cs" />
     <Compile Include="IVisualizationCommand.cs" />
-    <Compile Include="IVisualizationSubscription.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

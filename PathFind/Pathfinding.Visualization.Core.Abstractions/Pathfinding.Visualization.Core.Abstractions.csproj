@@ -41,29 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Abstractions\PathfindingRangeVisualizationCommands.cs" />
-    <Compile Include="Commands\Abstractions\PathfindingRangeCommand.cs" />
-    <Compile Include="Commands\Abstractions\PathfindingRangeUndoCommand.cs" />
-    <Compile Include="Commands\Abstractions\PathfindingRangeIntermediateVertexCommand.cs" />
-    <Compile Include="Commands\Abstractions\PathfindingRangeIntermediateVertexUndoCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\RemoveMarkToReplaceVisualizableCommand.cs" />
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\MarkToReplaceCommand.cs" />
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\ReplaceIntermediateCommand.cs" />
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\ReplaceIntermediateIsolatedCommand.cs" />
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\ReplaceIsolatedSourceCommand.cs" />
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\ReplaceIsolatedTargetCommand.cs" />
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\RestoreIntermediateColorCommand.cs" />
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\RestoreMarkedToReplaceColorCommand.cs" />
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\RestoreSourceColorCommand.cs" />
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\RestoreTargetColorCommand.cs" />
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\SetIntermediateCommand.cs" />
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\SetSourceCommand.cs" />
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\SetTargetCommand.cs" />
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\UnsetIntermediateCommand.cs" />
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\UnsetSourceCommand.cs" />
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\UnsetTargetCommand.cs" />
-    <Compile Include="VisualPathfindingRange.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Interface\Pathfinding.AlgorithmLib.Core.Interface.csproj">
@@ -107,9 +85,6 @@
       <Name>Shared.Primitives</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\Realizations\UndoCommands\" />
-    <Folder Include="Commands\Realizations\VisualizationCommands\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,20 +1,16 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Pathfinding.Visualization.Core.Abstractions.Commands.Abstractions
+namespace Pathfinding.AlgorithmLib.Visualization.Commands.Abstractions
 {
     internal abstract class PathfindingRangeIntermediateVertexCommand<TVertex> : PathfindingRangeCommand<TVertex>
         where TVertex : IVertex, IVisualizable
     {
-        protected Collection<IVisualizable> Intermediates => pathfindingRange.IntermediateVertices;
-
-        protected Collection<TVertex> MarkedToReplace => pathfindingRange.MarkedToRemoveIntermediateVertices;
-
-        protected bool HasIsolatedIntermediates => HasIsolated(Intermediates);
+        protected bool HasIsolatedIntermediates => HasIsolated(IntermediateVertices);
 
         protected PathfindingRangeIntermediateVertexCommand(VisualPathfindingRange<TVertex> pathfindingRange)
             : base(pathfindingRange)
@@ -24,12 +20,12 @@ namespace Pathfinding.Visualization.Core.Abstractions.Commands.Abstractions
 
         protected bool IsIntermediate(TVertex vertex)
         {
-            return Intermediates.Contains(vertex);
+            return IntermediateVertices.Contains(vertex);
         }
 
         protected bool IsMarkedToReplace(TVertex vertex)
         {
-            return MarkedToReplace.Contains(vertex);
+            return MarkedToRemoveIntermediates.Contains(vertex);
         }
 
         private static bool HasIsolated(IReadOnlyCollection<TVertex> collection)

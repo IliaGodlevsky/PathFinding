@@ -1,8 +1,9 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Executable;
 
-namespace Pathfinding.Visualization.Core.Abstractions.Commands.Abstractions
+namespace Pathfinding.AlgorithmLib.Visualization.Commands.Abstractions
 {
     internal abstract class PathfindingRangeUndoCommand<TVertex> : IUndo
         where TVertex : IVertex, IVisualizable

@@ -153,8 +153,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.AlgorithmLib.Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.VisualizationLib.Core.Interface", "Pathfinding.VisualizationLib.Core.Interface\Pathfinding.VisualizationLib.Core.Interface.csproj", "{ECC527ED-96BA-44DF-9561-6CD8DE13B550}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.Visualization.Core.Abstractions", "Pathfinding.Visualization.Core.Abstractions\Pathfinding.Visualization.Core.Abstractions.csproj", "{2AD7FD4A-E552-495D-9A9A-B39FCB7D74EA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.AlgorithmLib.Visualization", "Pathfinding.AlgorithmLib.Visualization\Pathfinding.AlgorithmLib.Visualization.csproj", "{6C5443F8-9BF4-4355-8F42-E65EE9562E3A}"
 EndProject
 Global
@@ -427,10 +425,6 @@ Global
 		{ECC527ED-96BA-44DF-9561-6CD8DE13B550}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECC527ED-96BA-44DF-9561-6CD8DE13B550}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECC527ED-96BA-44DF-9561-6CD8DE13B550}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2AD7FD4A-E552-495D-9A9A-B39FCB7D74EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2AD7FD4A-E552-495D-9A9A-B39FCB7D74EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2AD7FD4A-E552-495D-9A9A-B39FCB7D74EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2AD7FD4A-E552-495D-9A9A-B39FCB7D74EA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6C5443F8-9BF4-4355-8F42-E65EE9562E3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6C5443F8-9BF4-4355-8F42-E65EE9562E3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C5443F8-9BF4-4355-8F42-E65EE9562E3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -492,7 +486,6 @@ Global
 		{F936E225-02CF-4CC7-81A1-18866724C693} = {90A664C9-2A22-45A1-AF77-14B998126713}
 		{44D8FBA7-066B-46CC-A711-2315A5A22C70} = {90A664C9-2A22-45A1-AF77-14B998126713}
 		{ECC527ED-96BA-44DF-9561-6CD8DE13B550} = {A0EF35D0-71FD-4B7F-9199-CE522E81E594}
-		{2AD7FD4A-E552-495D-9A9A-B39FCB7D74EA} = {A0EF35D0-71FD-4B7F-9199-CE522E81E594}
 		{6C5443F8-9BF4-4355-8F42-E65EE9562E3A} = {A0EF35D0-71FD-4B7F-9199-CE522E81E594}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

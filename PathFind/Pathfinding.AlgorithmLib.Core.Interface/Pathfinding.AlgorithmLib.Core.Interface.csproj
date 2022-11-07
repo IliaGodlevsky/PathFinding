@@ -44,7 +44,6 @@
     <Compile Include="IAlgorithm.cs" />
     <Compile Include="IGraphPath.cs" />
     <Compile Include="IHeuristic.cs" />
-    <Compile Include="IPathfindingRange.cs" />
     <Compile Include="IStepRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

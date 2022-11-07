@@ -1,7 +1,6 @@
-﻿using Pathfinding.GraphLib.Core.Interface;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Pathfinding.AlgorithmLib.Core.Interface
+namespace Pathfinding.GraphLib.Core.Interface
 {
     public interface IPathfindingRange : IEnumerable<IVertex>
     {

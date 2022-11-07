@@ -1,9 +1,10 @@
-﻿using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.Visualization.Core.Abstractions.Commands.Abstractions;
+﻿using Pathfinding.AlgorithmLib.Visualization.Commands.Abstractions;
+using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Primitives.Attributes;
 
-namespace Pathfinding.Visualization.Core.Abstractions.Commands.Realizations.PathfindingRangeCommands
+namespace Pathfinding.AlgorithmLib.Visualization.Commands.Realizations.PathfindingRangeCommands
 {
     [Order(0)]
     internal sealed class RemoveMarkToReplaceVisualizableCommand<TVertex> : PathfindingRangeIntermediateVertexCommand<TVertex>
@@ -15,13 +16,13 @@ namespace Pathfinding.Visualization.Core.Abstractions.Commands.Realizations.Path
 
         }
 
-        public override void Execute(IVisualizable vertex)
+        public override void Execute(TVertex vertex)
         {
-            MarkedToReplace.Remove(vertex);
+            MarkedToRemoveIntermediates.Remove(vertex);
             vertex.VisualizeAsIntermediate();
         }
 
-        public override bool CanExecute(IVisualizable vertex)
+        public override bool CanExecute(TVertex vertex)
         {
             return IsMarkedToReplace(vertex);
         }

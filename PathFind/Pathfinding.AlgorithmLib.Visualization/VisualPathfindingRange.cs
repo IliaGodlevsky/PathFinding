@@ -1,5 +1,4 @@
-﻿using Pathfinding.AlgorithmLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Interface;
+﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Extensions;
 using System;
@@ -10,12 +9,12 @@ using System.Linq;
 
 namespace Pathfinding.Visualization.Core.Abstractions
 {
-    public abstract class VisualPathfindingRange<TVertex> : IPathfindingRange, IVisualizationSubscription<TVertex>
+    public abstract class VisualPathfindingRange<TVertex> : IPathfindingRange, IGraphSubscription<TVertex>
         where TVertex : IVertex, IVisualizable
     {
-        private readonly IVisualizationCommand markedToReplaceCommands;
-        private readonly IVisualizationCommand setEndPointsCommands;
-        private readonly IVisualizationCommand returnColorsCommands;
+        private readonly IVisualizationCommand<TVertex> markedToReplaceCommands;
+        private readonly IVisualizationCommand<TVertex> setEndPointsCommands;
+        private readonly IVisualizationCommand<TVertex> returnColorsCommands;
 
         IVertex IPathfindingRange.Source => Source;
 

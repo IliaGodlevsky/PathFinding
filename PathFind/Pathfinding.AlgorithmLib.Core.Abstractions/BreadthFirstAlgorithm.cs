@@ -1,5 +1,4 @@
-﻿using Pathfinding.AlgorithmLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Interface;
+﻿using Pathfinding.GraphLib.Core.Interface;
 
 namespace Pathfinding.AlgorithmLib.Core.Abstractions
 {

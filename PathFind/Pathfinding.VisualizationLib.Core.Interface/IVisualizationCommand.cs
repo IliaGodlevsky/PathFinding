@@ -2,7 +2,8 @@
 
 namespace Pathfinding.VisualizationLib.Core.Interface
 {
-    public interface IVisualizationCommand : IExecutable<IVisualizable>, IExecutionCheck<IVisualizable>
+    public interface IVisualizationCommand<T> : IExecutable<T>, IExecutionCheck<T>
+        where T : IVisualizable
     {
 
     }

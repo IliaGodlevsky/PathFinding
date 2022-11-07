@@ -1,6 +1,5 @@
 ﻿using Algorithm.Base;
 using Pathfinding.AlgorithmLib.Core.Events;
-using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Shared.Extensions;
