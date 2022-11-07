@@ -56,6 +56,10 @@
       <Project>{7112EB01-28F4-438D-945D-87CB69D14B99}</Project>
       <Name>Pathfinding.GraphLib.Core.Abstractions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface.Extensions\Pathfinding.GraphLib.Core.Interface.Extensions.csproj">
+      <Project>{3c13810c-ed74-490b-9303-9ccbfe485f5e}</Project>
+      <Name>Pathfinding.GraphLib.Core.Interface.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
       <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface</Name>
@@ -63,6 +67,10 @@
     <ProjectReference Include="..\Shared.Collections\Shared.Collections.csproj">
       <Project>{4DEBD450-FEAE-49E3-9961-06169D59DC03}</Project>
       <Name>Shared.Collections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
+      <Project>{CD11D46E-4675-4090-B50B-A85FFA3D1D2C}</Project>
+      <Name>Shared.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared.Primitives\Shared.Primitives.csproj">
       <Project>{30973320-9F61-45FB-8C75-3256ADB1BFB1}</Project>

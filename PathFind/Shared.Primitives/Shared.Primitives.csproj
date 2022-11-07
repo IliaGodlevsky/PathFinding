@@ -41,14 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attrbiutes\GroupAttribute.cs" />
-    <Compile Include="Attrbiutes\OrderAttribute.cs" />
+    <Compile Include="Attributes\GroupAttribute.cs" />
+    <Compile Include="Attributes\OrderAttribute.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Single\Exceptions\SingletonException.cs" />
     <Compile Include="Single\Singleton.cs" />
     <Compile Include="ValueRange\Enums\ReturnOptions.cs" />
-    <Compile Include="ValueRange\Extensions\InclusiveValueRangeExtensions.cs" />
     <Compile Include="ValueRange\InclusiveValueRange.cs" />
     <Compile Include="ValueRange\ValueRanges.cs" />
   </ItemGroup>

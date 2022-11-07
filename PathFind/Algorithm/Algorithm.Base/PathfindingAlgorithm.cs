@@ -99,7 +99,7 @@ namespace Algorithm.Base
         protected IReadOnlyCollection<IVertex> GetUnvisitedNeighbours(IVertex vertex)
         {
             return vertex.Neighbours
-                .Where(vertex => !vertex.IsObstacle && !visited.Contains(vertex))
+                .Where(v => !v.IsObstacle && !visited.Contains(v))
                 .ToReadOnly();
         }
 

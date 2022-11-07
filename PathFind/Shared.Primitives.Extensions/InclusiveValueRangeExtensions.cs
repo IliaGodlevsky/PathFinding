@@ -1,8 +1,10 @@
-﻿using Shared.Primitives.ValueRange.Enums;
+﻿using Shared.Extensions;
+using Shared.Primitives.ValueRange;
+using Shared.Primitives.ValueRange.Enums;
 using System;
 using System.Collections.Generic;
 
-namespace Shared.Primitives.ValueRange.Extensions
+namespace Shared.Primitives.Extensions
 {
     public static class InclusiveValueRangeExtensions
     {
@@ -45,7 +47,8 @@ namespace Shared.Primitives.ValueRange.Extensions
             return value;
         }
 
-        private static T ReturnInRangeIfGreaterThanRange<T>(this InclusiveValueRange<T> self, T value, ReturnOptions returnOptions)
+        private static T ReturnInRangeIfGreaterThanRange<T>(this InclusiveValueRange<T> self, T value, 
+            ReturnOptions returnOptions)
             where T : IComparable, IComparable<T>
         {
             switch (returnOptions)
@@ -59,7 +62,8 @@ namespace Shared.Primitives.ValueRange.Extensions
             }
         }
 
-        private static T ReturnInRangeIfLessThanRange<T>(this InclusiveValueRange<T> self, T value, ReturnOptions returnOptions)
+        private static T ReturnInRangeIfLessThanRange<T>(this InclusiveValueRange<T> self, T value, 
+            ReturnOptions returnOptions)
             where T : IComparable, IComparable<T>
         {
             switch (returnOptions)

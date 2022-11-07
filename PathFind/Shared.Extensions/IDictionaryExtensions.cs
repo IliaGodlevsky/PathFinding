@@ -18,19 +18,5 @@ namespace Shared.Extensions
         {
             return self.GetOrDefault(key, () => new TValue());
         }
-
-        public static ReadOnlyDictionary<TKey, TValue> ToReadOnly<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> collection)
-        {
-            switch (collection)
-            {
-                case IDictionary<TKey, TValue> dictionary:
-                    return new ReadOnlyDictionary<TKey, TValue>(dictionary);
-                case ReadOnlyDictionary<TKey, TValue> readOnly:
-                    return readOnly;
-                default:
-                    var dict = collection.ToDictionary(item => item.Key, item => item.Value);
-                    return new ReadOnlyDictionary<TKey, TValue>(dict);
-            }
-        }
     }
 }

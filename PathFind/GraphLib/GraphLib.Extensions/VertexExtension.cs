@@ -42,6 +42,11 @@ namespace GraphLib.Extensions
             return vertex.Position.IsCardinal(neighbor.Position);
         }
 
+        public static IVertex AsVertex(this object self)
+        {
+            return self.As<IVertex>(NullVertex.Interface);
+        }
+
         public static void Initialize<TVertex>(this TVertex self)
             where TVertex : IVertex, IVisualizable
         {
@@ -72,11 +77,6 @@ namespace GraphLib.Extensions
                 return hasEqualCost && hasEqualPosition && hasSameObstacleStatus;
             }
             return true;
-        }
-
-        public static bool IsOneOf(this IVertex self, params IVertex[] vertices)
-        {
-            return vertices.Any(vertex => vertex.Equals(self));
         }
     }
 }

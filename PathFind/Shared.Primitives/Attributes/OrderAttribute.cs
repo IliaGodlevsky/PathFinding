@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Shared.Primitives.Attrbiutes
+namespace Shared.Primitives.Attributes
 {
     [AttributeUsage(AttributeTargets.All)]
     public class OrderAttribute : Attribute
