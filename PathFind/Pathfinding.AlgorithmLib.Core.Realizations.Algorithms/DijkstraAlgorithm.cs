@@ -1,6 +1,6 @@
-﻿using Algorithm.Realizations.GraphPaths;
-using Pathfinding.AlgorithmLib.Core.Abstractions;
+﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Interface;
+using Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.AlgorithmLib.Extensions;
 using Pathfinding.GraphLib.Core.Interface;

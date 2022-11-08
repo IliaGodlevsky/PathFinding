@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{44D8FBA7-066B-46CC-A711-2315A5A22C70}</ProjectGuid>
+    <ProjectGuid>{5B3827E8-4CC0-490D-B15C-4190A2982059}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths</RootNamespace>
-    <AssemblyName>Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths</AssemblyName>
+    <RootNamespace>Pathfinding.GraphLib.Serialization.Core.Realizations</RootNamespace>
+    <AssemblyName>Pathfinding.GraphLib.Serialization.Core.Realizations</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,34 +41,57 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompositeGraphPath.cs" />
-    <Compile Include="GraphPath.cs" />
+    <Compile Include="AesCrypto.cs" />
+    <Compile Include="Exceptions\CantSerializeGraphException.cs" />
+    <Compile Include="Extensions\BinaryReaderExtensions.cs" />
+    <Compile Include="Extensions\BinaryWriterExtensions.cs" />
+    <Compile Include="Extensions\IGraphSerializationModuleExtensions.cs" />
+    <Compile Include="Extensions\IGraphSerializerExtensions.cs" />
+    <Compile Include="Extensions\IVertexExtension.cs" />
+    <Compile Include="Extensions\XDocumentExtensions.cs" />
+    <Compile Include="Extensions\XmlDocumentExtensions.cs" />
+    <Compile Include="GraphSerializationInfo.cs" />
+    <Compile Include="Modules\InFileSerializationModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serializers\BinaryGraphSerializer.cs" />
+    <Compile Include="Serializers\Decorators\CompressGraphSerializer.cs" />
+    <Compile Include="Serializers\Decorators\CryptoGraphSerializer.cs" />
+    <Compile Include="Serializers\Decorators\ThreadSafeGraphSerializer.cs" />
+    <Compile Include="Serializers\GraphSerializer.cs" />
+    <Compile Include="Serializers\XmlGraphSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Interface\Pathfinding.AlgorithmLib.Core.Interface.csproj">
-      <Project>{9AB4F0E3-6693-4ACD-95BC-24D04134781F}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Realizations.StepRules\Pathfinding.AlgorithmLib.Core.Realizations.StepRules.csproj">
-      <Project>{F936E225-02CF-4CC7-81A1-18866724C693}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Realizations.StepRules</Name>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface.Extensions\Pathfinding.GraphLib.Core.Interface.Extensions.csproj">
+      <Project>{3c13810c-ed74-490b-9303-9ccbfe485f5e}</Project>
+      <Name>Pathfinding.GraphLib.Core.Interface.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
       <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.NullObjects\Pathfinding.GraphLib.Core.NullObjects.csproj">
-      <Project>{67CCD24F-A5C1-41F9-9FE8-FC8C4C818646}</Project>
-      <Name>Pathfinding.GraphLib.Core.NullObjects</Name>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Realizations\Pathfinding.GraphLib.Core.Realizations.csproj">
+      <Project>{0C7DB792-B30B-4138-8D37-67450E2F0982}</Project>
+      <Name>Pathfinding.GraphLib.Core.Realizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Factory.Interface\Pathfinding.GraphLib.Factory.Interface.csproj">
+      <Project>{8C66CBDB-9899-4D80-846A-F197925D3163}</Project>
+      <Name>Pathfinding.GraphLib.Factory.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Serialization.Core.Interface\Pathfinding.GraphLib.Serialization.Core.Interface.csproj">
+      <Project>{84770BE3-D26C-4800-9DF1-EA33704E9FBD}</Project>
+      <Name>Pathfinding.GraphLib.Serialization.Core.Interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared.Collections\Shared.Collections.csproj">
-      <Project>{4debd450-feae-49e3-9961-06169d59dc03}</Project>
+      <Project>{4DEBD450-FEAE-49E3-9961-06169D59DC03}</Project>
       <Name>Shared.Collections</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
       <Project>{cd11d46e-4675-4090-b50b-a85ffa3d1d2c}</Project>
       <Name>Shared.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Primitives.Extensions\Shared.Primitives.Extensions.csproj">
+      <Project>{597b3252-3165-4574-826c-95399452d0b8}</Project>
+      <Name>Shared.Primitives.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared.Primitives\Shared.Primitives.csproj">
       <Project>{30973320-9F61-45FB-8C75-3256ADB1BFB1}</Project>

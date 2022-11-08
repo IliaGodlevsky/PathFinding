@@ -1,12 +1,13 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.NullObjects;
 using Shared.Extensions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Algorithm.Realizations.GraphPaths
+namespace Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths
 {
     using Traces = IReadOnlyDictionary<ICoordinate, IVertex>;
 
@@ -39,15 +40,15 @@ namespace Algorithm.Realizations.GraphPaths
 
         private IReadOnlyList<IVertex> GetPath()
         {
-            var vertices = new List<IVertex>();
+            var vertices = new HashSet<IVertex>();
             var vertex = target;
             vertices.Add(vertex);
-            var parent = traces.GetOrNullVertex(vertex.Position);
+            var parent = GetParentOrNullVertex(vertex);
             while (AreNeighbours(parent, vertex))
             {
                 vertices.Add(parent);
                 vertex = parent;
-                parent = traces.GetOrNullVertex(vertex.Position);
+                parent = GetParentOrNullVertex(vertex);
             }
             return vertices.ToReadOnly();
         }
@@ -62,7 +63,12 @@ namespace Algorithm.Realizations.GraphPaths
             return totalCost;
         }
 
-        public bool AreNeighbours(IVertex self, IVertex candidate)
+        private IVertex GetParentOrNullVertex(IVertex vertex)
+        {
+            return traces.GetOrDefault(vertex.Position, () => NullVertex.Instance);
+        }
+
+        private static bool AreNeighbours(IVertex self, IVertex candidate)
         {
             return self.Neighbours.Any(candidate.Equals);
         }
