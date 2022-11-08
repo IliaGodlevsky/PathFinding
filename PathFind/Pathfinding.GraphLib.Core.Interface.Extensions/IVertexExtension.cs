@@ -1,4 +1,6 @@
 ﻿using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.GraphLib.Core.NullObjects;
+using Shared.Collections;
 using System.Linq;
 
 namespace Pathfinding.GraphLib.Core.Interface.Extensions

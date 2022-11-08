@@ -1,4 +1,5 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
+using Pathfinding.AlgorithmLib.Extensions;
 using Pathfinding.GraphLib.Core.Interface;
 using System.Collections.Generic;
 
@@ -20,9 +21,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 
         protected override IVertex GetNextVertex()
         {
-            return storage.Count == 0
-                ? DeadEndVertex.Interface
-                : storage.Dequeue();
+            return storage.DequeueOrDeadEndVertex();
         }
 
         protected override void RelaxVertex(IVertex vertex)

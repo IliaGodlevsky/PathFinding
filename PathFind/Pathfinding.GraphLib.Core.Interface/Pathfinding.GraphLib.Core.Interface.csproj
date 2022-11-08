@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comparers\CoordinateEqualityComparer.cs" />
+    <Compile Include="Comparers\VertexEqualityComparer.cs" />
     <Compile Include="ICoordinate.cs" />
     <Compile Include="IGraph.cs" />
     <Compile Include="IGraphSubscription.cs" />
@@ -49,6 +51,11 @@
     <Compile Include="IVertex.cs" />
     <Compile Include="IVertexCost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.HashCode">
+      <Version>1.1.1</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

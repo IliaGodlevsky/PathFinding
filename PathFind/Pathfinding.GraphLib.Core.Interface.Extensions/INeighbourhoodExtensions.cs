@@ -1,6 +1,6 @@
 ﻿using Shared.Extensions;
+using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
-using Shared.Primitives.ValueRange.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -1,7 +1,9 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
+using Pathfinding.AlgorithmLib.Extensions;
 using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Interface.Comparers;
 using Priority_Queue;
 using System.Collections.Generic;
 

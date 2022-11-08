@@ -1,7 +1,8 @@
-﻿using Algorithm.Base;
-using Pathfinding.AlgorithmLib.Core.Events;
+﻿using Pathfinding.AlgorithmLib.Core.Events;
+using Pathfinding.AlgorithmLib.Extensions;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.GraphLib.Core.NullObjects;
 using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;

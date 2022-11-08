@@ -1,4 +1,5 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Events;
+using Pathfinding.AlgorithmLib.Core.Exceptions;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Shared.Process.EventArguments;
 using Shared.Process.EventHandlers;

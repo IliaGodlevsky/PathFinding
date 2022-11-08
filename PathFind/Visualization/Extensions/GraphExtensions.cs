@@ -11,9 +11,7 @@ namespace Visualization.Extensions
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex, IVisualizable
         {
-            graph
-                .OfType<IVisualizable>()
-                .ForEach(vertex => vertex.VisualizeAsRegular());
+            graph.ForEach(vertex => vertex.VisualizeAsRegular());
         }
 
         public static IEnumerable<TVertex> GetObstacles<TGraph, TVertex>(this TGraph graph)

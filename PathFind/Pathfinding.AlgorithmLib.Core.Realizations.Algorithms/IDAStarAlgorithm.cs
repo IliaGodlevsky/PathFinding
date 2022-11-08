@@ -1,7 +1,10 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
+using Pathfinding.AlgorithmLib.Extensions;
 using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Interface.Comparers;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;

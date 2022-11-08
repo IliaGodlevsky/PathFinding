@@ -73,6 +73,14 @@
       <Project>{F936E225-02CF-4CC7-81A1-18866724C693}</Project>
       <Name>Pathfinding.AlgorithmLib.Core.Realizations.StepRules</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Extensions\Pathfinding.AlgorithmLib.Extensions.csproj">
+      <Project>{80cf05f8-a3ef-4957-b56f-614389170221}</Project>
+      <Name>Pathfinding.AlgorithmLib.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface.Extensions\Pathfinding.GraphLib.Core.Interface.Extensions.csproj">
+      <Project>{3C13810C-ED74-490B-9303-9CCBFE485F5E}</Project>
+      <Name>Pathfinding.GraphLib.Core.Interface.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
       <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface</Name>

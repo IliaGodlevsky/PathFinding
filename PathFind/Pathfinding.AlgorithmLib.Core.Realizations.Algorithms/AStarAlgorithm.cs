@@ -2,6 +2,7 @@
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Interface.Comparers;
 using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
@@ -22,7 +23,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
             : base(pathfindingRange, stepRule)
         {
             heuristic = function;
-            heuristics = new Dictionary<ICoordinate, double>(new CoordinateEqualityComparer());
+            heuristics = new Dictionary<ICoordinate, double>(new CoordinateEqualityComparer ());
             accumulatedCosts = new Dictionary<ICoordinate, double>(new CoordinateEqualityComparer());
         }
 

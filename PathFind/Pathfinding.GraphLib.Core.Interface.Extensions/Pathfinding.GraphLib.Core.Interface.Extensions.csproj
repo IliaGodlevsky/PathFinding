@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IPathfindingRangeExtensions.cs" />
     <Compile Include="IGraphExtensions.cs" />
     <Compile Include="ICoordinateExtensions.cs" />
     <Compile Include="INeighbourhoodExtensions.cs" />
@@ -52,6 +53,10 @@
       <Project>{5175b72d-bac7-472c-a396-3936bf1237c0}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.NullObjects\Pathfinding.GraphLib.Core.NullObjects.csproj">
+      <Project>{67CCD24F-A5C1-41F9-9FE8-FC8C4C818646}</Project>
+      <Name>Pathfinding.GraphLib.Core.NullObjects</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Shared.Collections\Shared.Collections.csproj">
       <Project>{4DEBD450-FEAE-49E3-9961-06169D59DC03}</Project>
       <Name>Shared.Collections</Name>
@@ -59,6 +64,10 @@
     <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
       <Project>{cd11d46e-4675-4090-b50b-a85ffa3d1d2c}</Project>
       <Name>Shared.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Primitives.Extensions\Shared.Primitives.Extensions.csproj">
+      <Project>{597b3252-3165-4574-826c-95399452d0b8}</Project>
+      <Name>Shared.Primitives.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared.Primitives\Shared.Primitives.csproj">
       <Project>{30973320-9F61-45FB-8C75-3256ADB1BFB1}</Project>
