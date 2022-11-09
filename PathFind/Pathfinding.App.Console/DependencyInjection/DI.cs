@@ -5,7 +5,8 @@ using Autofac.Features.Scanning;
 #if DEBUG
 using Pathfinding.App.Console.ValueInput.UserInput;
 #elif !DEBUG
-using Pathfinding.App.Console.ValueInput.UserInput;
+using Pathfinding.App.Console.ValueInput.ProgrammedInput;
+using Pathfinding.App.Console.ValueInput.RandomInput;
 #endif
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Serialization.Serializers.Decorators;
@@ -42,6 +43,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+
 
 namespace Pathfinding.App.Console.DependencyInjection
 {
