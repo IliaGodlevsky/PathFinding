@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 
-using static GraphLib.Serialization.Serializers.XmlAttributesNames;
+using static Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.XmlAttributesNames;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
 {

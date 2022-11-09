@@ -32,7 +32,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
         {
             return pathfindingRange.HasSourceAndTargetSet()
                 && HasIsolatedIntermediates
-                && pathfindingRange.CanBeEndPoint(vertex);
+                && pathfindingRange.CanBeInRange(vertex);
         }
     }
 }

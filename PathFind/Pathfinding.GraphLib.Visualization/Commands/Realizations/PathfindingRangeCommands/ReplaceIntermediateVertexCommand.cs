@@ -32,7 +32,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
         public override bool CanExecute(TVertex vertex)
         {
             return MarkedToRemoveIntermediates.Count > 0
-                && pathfindingRange.CanBeEndPoint(vertex);
+                && pathfindingRange.CanBeInRange(vertex);
         }
     }
 }

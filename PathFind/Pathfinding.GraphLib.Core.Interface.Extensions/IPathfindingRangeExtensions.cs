@@ -5,7 +5,7 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
 {
     public static class IPathfindingRangeExtensions
     {
-        public static bool IsEndPoint(this IPathfindingRange self, IVertex vertex)
+        public static bool IsInRange(this IPathfindingRange self, IVertex vertex)
         {
             return self.Contains(vertex);
         }
@@ -15,14 +15,15 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
             return self.GetIntermediates().Any(v => v.IsEqual(vertex));
         }
 
-        public static bool CanBeEndPoint(this IPathfindingRange self, IVertex vertex)
+        public static bool CanBeInRange(this IPathfindingRange self, IVertex vertex)
         {
-            return !vertex.IsIsolated() && !self.IsEndPoint(vertex);
+            return !vertex.IsIsolated() && !self.IsInRange(vertex);
         }
 
         public static bool HasSourceAndTargetSet(this IPathfindingRange self)
         {
-            return !self.Source.IsIsolated() && !self.Target.IsIsolated();
+            return self.Source?.IsIsolated() == false 
+                && self.Target?.IsIsolated() == false;
         }
 
         public static bool HasIsolators(this IPathfindingRange self)

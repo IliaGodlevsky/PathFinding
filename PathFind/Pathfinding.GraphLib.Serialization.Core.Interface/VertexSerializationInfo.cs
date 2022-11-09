@@ -12,14 +12,19 @@ namespace Pathfinding.GraphLib.Serialization.Core.Interface
         {
             private readonly IReadOnlyCollection<ICoordinate> coordinates;
 
-            public Neighborhood(IReadOnlyCollection<IVertex> coordinates)
+            public int Count => coordinates.Count;
+
+            public Neighborhood(IReadOnlyCollection<IVertex> vertices)
             {
-                this.coordinates = coordinates
-                    .Select(vertex=>vertex.Position)
+                this.coordinates = vertices
+                    .Select(vertex => vertex.Position)
                     .ToReadOnly();
             }
 
-            public int Count => coordinates.Count;
+            public Neighborhood(IReadOnlyCollection<ICoordinate> coordinates)
+            {
+                this.coordinates = coordinates;
+            }
 
             public IEnumerator<ICoordinate> GetEnumerator()
             {
@@ -47,12 +52,12 @@ namespace Pathfinding.GraphLib.Serialization.Core.Interface
         }
 
         public VertexSerializationInfo(bool isObstacle, IVertexCost cost,
-            ICoordinate position, INeighborhood neighborhood)
+            ICoordinate position, IReadOnlyCollection<ICoordinate> neighborhood)
         {
             IsObstacle = isObstacle;
             Cost = cost;
             Position = position;
-            Neighbourhood = neighborhood;
+            Neighbourhood = new Neighborhood(neighborhood);
         }
     }
 }

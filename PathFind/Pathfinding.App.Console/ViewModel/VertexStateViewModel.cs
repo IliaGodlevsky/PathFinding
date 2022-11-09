@@ -1,0 +1,48 @@
+﻿using Pathfinding.App.Console.Attributes;
+using Pathfinding.App.Console.Extensions;
+using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using System;
+
+namespace Pathfinding.App.Console.ViewModel
+{
+    internal sealed class VertexStateViewModel : IViewModel, IRequireIntInput, IDisposable
+    {
+        public event Action ViewClosed;
+
+        private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
+
+        public IInput<int> IntInput { get; set; }
+
+        private Vertex Vertex => IntInput.InputVertex(Graph);
+
+        public VertexStateViewModel(ICache<Graph2D<Vertex>> cache)
+        {
+            Graph = cache.Cached;
+        }
+
+        [MenuItem(MenuItemsNames.ReverseVertex, 0)]
+        public void ReverseVertex()
+        {
+            Vertex.Reverse();
+        }
+
+        [MenuItem(MenuItemsNames.ChangeVertexCost, 1)]
+        public void ChangeVertexCost()
+        {
+            Vertex.ChangeCost();
+        }
+
+        [MenuItem(MenuItemsNames.Exit, 2)]
+        public void Interrupt()
+        {
+            ViewClosed?.Invoke();
+        }
+
+        public void Dispose()
+        {
+            ViewClosed = null;
+        }
+    }
+}

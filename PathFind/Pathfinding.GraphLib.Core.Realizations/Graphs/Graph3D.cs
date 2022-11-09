@@ -4,7 +4,7 @@ using Shared.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GraphLib.Realizations.Graphs
+namespace Pathfinding.GraphLib.Core.Realizations.Graphs
 {
     public sealed class Graph3D<TVertex> : Graph<TVertex>
         where TVertex : IVertex

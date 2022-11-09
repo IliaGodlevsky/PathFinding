@@ -25,7 +25,7 @@ namespace Shared.Primitives.Single
         {
             var instanceType = typeof(TInstance);
             var ctor = instanceType
-                .GetConstructors(NonPublic | Instance)
+                .GetConstructors(NonPublic | BindingFlags.Instance)
                 .FirstOrDefault(c => !c.GetParameters().Any());
             return ctor != null
                 ? (TInstance)ctor.Invoke(Array.Empty<object>())

@@ -1,9 +1,9 @@
 ﻿using Shared.Collections;
 using Shared.Extensions;
-using Shared.Primitives.Attrbiutes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Shared.Extensions
 {
@@ -32,6 +32,15 @@ namespace Shared.Extensions
         public static T AggregateOrDefault<T>(this IEnumerable<T> collection, Func<T, T, T> func)
         {
             return collection.Any() ? collection.Aggregate(func) : default;
+        }
+
+        public static async IAsyncEnumerable<T> AsAsyncEnumerable<T>(this IEnumerable<T> items)
+        {
+            foreach (var item in items)
+            {
+                await Task.CompletedTask;
+                yield return item;
+            }
         }
 
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T> action)

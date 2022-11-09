@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IGraphField.cs" />
+    <Compile Include="IGraphFieldFactory.cs" />
     <Compile Include="IVisualizable.cs" />
     <Compile Include="IVisualization.cs" />
     <Compile Include="IVisualizationCommand.cs" />

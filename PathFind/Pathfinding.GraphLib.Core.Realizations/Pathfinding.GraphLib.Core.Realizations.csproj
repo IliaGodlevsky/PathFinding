@@ -72,6 +72,10 @@
       <Project>{CD11D46E-4675-4090-B50B-A85FFA3D1D2C}</Project>
       <Name>Shared.Extensions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Shared.Primitives.Extensions\Shared.Primitives.Extensions.csproj">
+      <Project>{597b3252-3165-4574-826c-95399452d0b8}</Project>
+      <Name>Shared.Primitives.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Shared.Primitives\Shared.Primitives.csproj">
       <Project>{30973320-9F61-45FB-8C75-3256ADB1BFB1}</Project>
       <Name>Shared.Primitives</Name>

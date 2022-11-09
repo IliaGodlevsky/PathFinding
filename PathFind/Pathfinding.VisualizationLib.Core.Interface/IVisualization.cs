@@ -1,27 +1,28 @@
 ﻿namespace Pathfinding.VisualizationLib.Core.Interface
 {
-    public interface IVisualization
+    public interface IVisualization<T>
+        where T : IVisualizable
     {
-        bool IsVisualizedAsPath(IVisualizable vertex);
+        bool IsVisualizedAsPath(T visualizable);
 
-        bool IsVisualizedAsEndPoint(IVisualizable vertex);
+        bool IsVisualizedAsEndPoint(T visualizable);
 
-        void VisualizeAsTarget(IVisualizable vertex);
+        void VisualizeAsTarget(T visualizable);
 
-        void VisualizeAsObstacle(IVisualizable vertex);
+        void VisualizeAsObstacle(T visualizable);
 
-        void VisualizeAsSource(IVisualizable vertex);
+        void VisualizeAsSource(T visualizable);
 
-        void VisualizeAsIntermediate(IVisualizable vertex);
+        void VisualizeAsIntermediate(T visualizable);
 
-        void VisualizeAsRegular(IVisualizable vertex);
+        void VisualizeAsRegular(T visualizable);
 
-        void VisualizeAsPath(IVisualizable vertex);
+        void VisualizeAsPath(T visualizable);
 
-        void VisualizeAsVisited(IVisualizable vertex);
+        void VisualizeAsVisited(T visualizable);
 
-        void VisualizeAsEnqueued(IVisualizable vertex);
+        void VisualizeAsEnqueued(T visualizable);
 
-        void VisualizeAsMarkedToReplaceIntermediate(IVisualizable vertex);
+        void VisualizeAsMarkedToReplaceIntermediate(T visualizable);
     }
 }

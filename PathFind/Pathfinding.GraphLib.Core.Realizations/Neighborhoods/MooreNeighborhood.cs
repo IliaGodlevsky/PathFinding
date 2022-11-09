@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace GraphLib.Realizations.Neighbourhoods
+namespace Pathfinding.GraphLib.Core.Realizations.Neighborhoods
 {
     [DebuggerDisplay("Count = {Neighbours.Count}")]
     public sealed class MooreNeighborhood : INeighborhood

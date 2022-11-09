@@ -7,6 +7,7 @@ using Shared.Executable;
 using Shared.Executable.Extensions;
 using Shared.Extensions;
 using Shared.Primitives.Attributes;
+using System.Linq;
 
 namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRangeCommands
 {
@@ -31,12 +32,12 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
         public override bool CanExecute(TVertex vertex)
         {
             return pathfindingRange.HasSourceAndTargetSet()
-                && pathfindingRange.CanBeEndPoint(vertex);
+                && pathfindingRange.CanBeInRange(vertex);
         }
 
         public void Undo()
         {
-            undoCommand.Execute(IntermediateVertices.ToReadOnly());
+            undoCommand.Execute(IntermediateVertices.ToArray());
         }
     }
 }

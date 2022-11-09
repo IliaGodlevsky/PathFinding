@@ -29,7 +29,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
         public override bool CanExecute(TVertex vertex)
         {
             return pathfindingRange.Source == null
-                && pathfindingRange.CanBeEndPoint(vertex);
+                && pathfindingRange.CanBeInRange(vertex);
         }
 
         public void Undo()

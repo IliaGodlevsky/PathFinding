@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1EC9051F-ADBA-4EA2-BB67-A604153B9FE8}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Pathfinding.App.Console</RootNamespace>
+    <AssemblyName>Pathfinding.App.Console</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>Latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>Latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\CompanionMethodAttribute.cs" />
+    <Compile Include="Attributes\ConditionAttribute.cs" />
+    <Compile Include="Attributes\ExecuteSafeAttribute.cs" />
+    <Compile Include="Attributes\MenuItemAttribute.cs" />
+    <Compile Include="Commands\ConditionedMenuCommand.cs" />
+    <Compile Include="Commands\MenuCommand.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="ConvertedProperties\ConvertedProperty.cs" />
+    <Compile Include="ConvertedProperties\GraphParamsProperty.cs" />
+    <Compile Include="Cursor.cs" />
+    <Compile Include="Delegates\Command.cs" />
+    <Compile Include="Delegates\Condition.cs" />
+    <Compile Include="Delegates\SafeAction.cs" />
+    <Compile Include="DependencyInjection\DI.cs" />
+    <Compile Include="EventArguments\ConsoleKeyPressedEventArgs.cs" />
+    <Compile Include="EventArguments\VertexEventArgs.cs" />
+    <Compile Include="EventHandlers\ConsoleKeyPressedEventHandler.cs" />
+    <Compile Include="EventHandlers\VertexEventHandler.cs" />
+    <Compile Include="Extensions\ConsoleKeystrokesHookExtensions.cs" />
+    <Compile Include="Extensions\IContainerExtensions.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\IGraphPathExtensions.cs" />
+    <Compile Include="Extensions\IInputExtensions.cs" />
+    <Compile Include="Interface\ICache.cs" />
+    <Compile Include="Interface\ICompanionMethods.cs" />
+    <Compile Include="Interface\IDisplayable.cs" />
+    <Compile Include="Interface\IFramedAxis.cs" />
+    <Compile Include="Interface\IInput.cs" />
+    <Compile Include="Interface\IMenu.cs" />
+    <Compile Include="Interface\IMenuCommand.cs" />
+    <Compile Include="Interface\IProperty.cs" />
+    <Compile Include="Interface\IRequireAnswerInput.cs" />
+    <Compile Include="Interface\IRequireConsoleKeyInput.cs" />
+    <Compile Include="Interface\IRequireIntInput.cs" />
+    <Compile Include="Interface\IRequireStringInput.cs" />
+    <Compile Include="Interface\IRequireTimeSpanInput.cs" />
+    <Compile Include="Interface\IView.cs" />
+    <Compile Include="Interface\IViewModel.cs" />
+    <Compile Include="MenuItemsNames.cs" />
+    <Compile Include="Messages\ClearColorMessage.cs" />
+    <Compile Include="Messages\ClearGraphMessage.cs" />
+    <Compile Include="Messages\CostRangeChangedMessage.cs" />
+    <Compile Include="Messages\GraphCreatedMessage.cs" />
+    <Compile Include="Messages\UpdateStatisticsMessage.cs" />
+    <Compile Include="MessegesTexts.cs" />
+    <Compile Include="Model\Answer.cs" />
+    <Compile Include="Model\ConsoleKeystrokesHook.cs" />
+    <Compile Include="Model\ConsoleSmoothLevels.cs" />
+    <Compile Include="Model\ConsoleVertexReverseSubscription.cs" />
+    <Compile Include="Model\ConsoleVisualPathfindingRange.cs" />
+    <Compile Include="Model\FramedAxes\FramedAbscissa.cs" />
+    <Compile Include="Model\FramedAxes\FramedAxis.cs" />
+    <Compile Include="Model\FramedAxes\FramedOrdinate.cs" />
+    <Compile Include="Model\FramedAxes\FramedOverAbscissa.cs" />
+    <Compile Include="Model\FramedAxes\FramedToLeftOrdinate.cs" />
+    <Compile Include="Model\FramedAxes\FramedToRightOrdinate.cs" />
+    <Compile Include="Model\FramedAxes\FramedUnderAbscissa.cs" />
+    <Compile Include="Model\ConsoleVertexChageCostSubscription.cs" />
+    <Compile Include="Model\GraphField.cs" />
+    <Compile Include="Model\GraphFieldFactory.cs" />
+    <Compile Include="Model\Menu.cs" />
+    <Compile Include="Model\MenuList.cs" />
+    <Compile Include="Model\Methods\CompanionMethods.cs" />
+    <Compile Include="Model\Methods\ConditionMethods.cs" />
+    <Compile Include="Model\Methods\SafeMethods.cs" />
+    <Compile Include="Model\PathInput.cs" />
+    <Compile Include="Model\Vertex.cs" />
+    <Compile Include="Model\VertexFactory.cs" />
+    <Compile Include="Model\VertexFromInfoFactory.cs" />
+    <Compile Include="Model\VertexVisualization.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedAnswerInput.cs" />
+    <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedInput.cs" />
+    <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedIntInput.cs" />
+    <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedKeyInput.cs" />
+    <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedStringInput.cs" />
+    <Compile Include="ValueInput\ProgrammedInput\FromFile\FromFileProgrammedAnswerInput.cs" />
+    <Compile Include="ValueInput\ProgrammedInput\FromFile\FromFileProgrammedInput.cs" />
+    <Compile Include="ValueInput\ProgrammedInput\FromFile\FromFileProgrammedIntInput.cs" />
+    <Compile Include="ValueInput\ProgrammedInput\ProgrammedInput.cs" />
+    <Compile Include="ValueInput\RandomInput\RandomAnswerInput.cs" />
+    <Compile Include="ValueInput\RandomInput\RandomInput.cs" />
+    <Compile Include="ValueInput\RandomInput\RandomIntInput.cs" />
+    <Compile Include="ValueInput\RandomInput\RandomKeyInput.cs" />
+    <Compile Include="ValueInput\RandomInput\RandomTimeSpanInput.cs" />
+    <Compile Include="ValueInput\RecordingInput\RecordingAnswerInput.cs" />
+    <Compile Include="ValueInput\RecordingInput\RecordingConsoleKeyInput.cs" />
+    <Compile Include="ValueInput\RecordingInput\RecordingInput.cs" />
+    <Compile Include="ValueInput\RecordingInput\RecordingIntInput.cs" />
+    <Compile Include="ValueInput\RecordingInput\RecordingStringInput.cs" />
+    <Compile Include="ValueInput\UserInput\ConsoleUserAnswerInput.cs" />
+    <Compile Include="ValueInput\UserInput\ConsoleUserInput.cs" />
+    <Compile Include="ValueInput\UserInput\ConsoleUserIntInput.cs" />
+    <Compile Include="ValueInput\UserInput\ConsoleUserKeyInput.cs" />
+    <Compile Include="ValueInput\UserInput\ConsoleUserStringInput.cs" />
+    <Compile Include="ValueInput\UserInput\ConsoleUserTimeSpanInput.cs" />
+    <Compile Include="ViewModel\EndPointsViewModel.cs" />
+    <Compile Include="ViewModel\GraphCreatingViewModel.cs" />
+    <Compile Include="ViewModel\GraphLoadViewModel.cs" />
+    <Compile Include="ViewModel\GraphSaveViewModel.cs" />
+    <Compile Include="ViewModel\GraphSmoothViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\PathFindingViewModel.cs" />
+    <Compile Include="ViewModel\VertexStateViewModel.cs" />
+    <Compile Include="Views\EndPointsView.cs" />
+    <Compile Include="Views\GraphCreateView.cs" />
+    <Compile Include="Views\GraphLoadView.cs" />
+    <Compile Include="Views\GraphSaveView.cs" />
+    <Compile Include="Views\GraphSmoothView.cs" />
+    <Compile Include="Views\MainView.cs" />
+    <Compile Include="Views\PathFindView.cs" />
+    <Compile Include="Views\VertexStateView.cs" />
+    <Compile Include="Views\View.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Abstractions\Pathfinding.AlgorithmLib.Core.Abstractions.csproj">
+      <Project>{BBABA3C7-E177-44D6-B97E-4D8F3D01AFF6}</Project>
+      <Name>Pathfinding.AlgorithmLib.Core.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Events\Pathfinding.AlgorithmLib.Core.Events.csproj">
+      <Project>{943D8D5A-62E0-46A2-9914-DB9973DAF9C6}</Project>
+      <Name>Pathfinding.AlgorithmLib.Core.Events</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Interface\Pathfinding.AlgorithmLib.Core.Interface.csproj">
+      <Project>{9AB4F0E3-6693-4ACD-95BC-24D04134781F}</Project>
+      <Name>Pathfinding.AlgorithmLib.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Realizations.StepRules\Pathfinding.AlgorithmLib.Core.Realizations.StepRules.csproj">
+      <Project>{F936E225-02CF-4CC7-81A1-18866724C693}</Project>
+      <Name>Pathfinding.AlgorithmLib.Core.Realizations.StepRules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Factory\Pathfinding.AlgorithmLib.Factory.csproj">
+      <Project>{E8ECD5E0-009E-4FFA-8FB8-4CB9209A4F25}</Project>
+      <Name>Pathfinding.AlgorithmLib.Factory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Abstractions\Pathfinding.GraphLib.Core.Abstractions.csproj">
+      <Project>{7112EB01-28F4-438D-945D-87CB69D14B99}</Project>
+      <Name>Pathfinding.GraphLib.Core.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface.Extensions\Pathfinding.GraphLib.Core.Interface.Extensions.csproj">
+      <Project>{3c13810c-ed74-490b-9303-9ccbfe485f5e}</Project>
+      <Name>Pathfinding.GraphLib.Core.Interface.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
+      <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
+      <Name>Pathfinding.GraphLib.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Realizations\Pathfinding.GraphLib.Core.Realizations.csproj">
+      <Project>{0C7DB792-B30B-4138-8D37-67450E2F0982}</Project>
+      <Name>Pathfinding.GraphLib.Core.Realizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Factory.Extensions\Pathfinding.GraphLib.Factory.Extensions.csproj">
+      <Project>{992503e9-626f-4ed5-b9cf-239c56c8f440}</Project>
+      <Name>Pathfinding.GraphLib.Factory.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Factory.Interface\Pathfinding.GraphLib.Factory.Interface.csproj">
+      <Project>{8C66CBDB-9899-4D80-846A-F197925D3163}</Project>
+      <Name>Pathfinding.GraphLib.Factory.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Factory.Realizations\Pathfinding.GraphLib.Factory.Realizations.csproj">
+      <Project>{96DE3110-BA88-449C-A514-282BEFF4003E}</Project>
+      <Name>Pathfinding.GraphLib.Factory.Realizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Serialization.Core.Interface\Pathfinding.GraphLib.Serialization.Core.Interface.csproj">
+      <Project>{84770BE3-D26C-4800-9DF1-EA33704E9FBD}</Project>
+      <Name>Pathfinding.GraphLib.Serialization.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Serialization.Core.Realizations\Pathfinding.GraphLib.Serialization.Core.Realizations.csproj">
+      <Project>{5b3827e8-4cc0-490d-b15c-4190a2982059}</Project>
+      <Name>Pathfinding.GraphLib.Serialization.Core.Realizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Smoothing\Pathfinding.GraphLib.Smoothing.csproj">
+      <Project>{50902851-3081-49AF-ACEC-013E78460547}</Project>
+      <Name>Pathfinding.GraphLib.Smoothing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Subscriptions\Pathfinding.GraphLib.Subscriptions.csproj">
+      <Project>{E6D42398-F350-497D-BA03-EB0C08E424A8}</Project>
+      <Name>Pathfinding.GraphLib.Subscriptions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Visualization.Subscriptions\Pathfinding.GraphLib.Visualization.Subscriptions.csproj">
+      <Project>{47B13F23-C3E6-4BBC-87FF-92D2D161CC39}</Project>
+      <Name>Pathfinding.GraphLib.Visualization.Subscriptions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Visualization\Pathfinding.GraphLib.Visualization.csproj">
+      <Project>{5616B5FF-BA13-4805-860C-1F69F2946B89}</Project>
+      <Name>Pathfinding.GraphLib.Visualization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Logging\Pathfinding.Logging.csproj">
+      <Project>{E6B3B73F-7DC6-44AD-A536-0C4E9FD31BDD}</Project>
+      <Name>Pathfinding.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Visualization.Extensions\Pathfinding.Visualization.Extensions.csproj">
+      <Project>{eab4ff1e-bb9c-4c01-b8d6-171b1758b81d}</Project>
+      <Name>Pathfinding.Visualization.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Visualization.Models\Pathfinding.Visualization.Models.csproj">
+      <Project>{A09E51A5-7FEA-4220-9F90-15D92F8BEC0E}</Project>
+      <Name>Pathfinding.Visualization.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.VisualizationLib.Core.Interface\Pathfinding.VisualizationLib.Core.Interface.csproj">
+      <Project>{ECC527ED-96BA-44DF-9561-6CD8DE13B550}</Project>
+      <Name>Pathfinding.VisualizationLib.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Collections\Shared.Collections.csproj">
+      <Project>{4DEBD450-FEAE-49E3-9961-06169D59DC03}</Project>
+      <Name>Shared.Collections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Executable\Shared.Executable.csproj">
+      <Project>{0A7C5FE5-4688-42C4-8202-676042BB0F81}</Project>
+      <Name>Shared.Executable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
+      <Project>{cd11d46e-4675-4090-b50b-a85ffa3d1d2c}</Project>
+      <Name>Shared.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Primitives.Extensions\Shared.Primitives.Extensions.csproj">
+      <Project>{597b3252-3165-4574-826c-95399452d0b8}</Project>
+      <Name>Shared.Primitives.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Primitives\Shared.Primitives.csproj">
+      <Project>{30973320-9F61-45FB-8C75-3256ADB1BFB1}</Project>
+      <Name>Shared.Primitives</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Process\Shared.Process.csproj">
+      <Project>{78DDAA5D-8ABD-4695-A66B-1EAF2BDE77EB}</Project>
+      <Name>Shared.Process</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Random.Extensions\Shared.Random.Extensions.csproj">
+      <Project>{79ad3712-16c7-4f9d-82bb-d9a03f36ebf4}</Project>
+      <Name>Shared.Random.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Random\Shared.Random.csproj">
+      <Project>{8B3BA6E5-2FAD-492E-A51D-8B213A74C5B8}</Project>
+      <Name>Shared.Random</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Autofac">
+      <Version>6.4.0</Version>
+    </PackageReference>
+    <PackageReference Include="Colorful.Console">
+      <Version>1.2.15</Version>
+    </PackageReference>
+    <PackageReference Include="MvvmLightLibs">
+      <Version>5.4.1.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

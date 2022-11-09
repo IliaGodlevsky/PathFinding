@@ -27,7 +27,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
         {
             return pathfindingRange.Target.IsIsolated()
                 && pathfindingRange.Target != null
-                && pathfindingRange.CanBeEndPoint(vertex);
+                && pathfindingRange.CanBeInRange(vertex);
         }
     }
 }

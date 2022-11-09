@@ -1,14 +1,12 @@
-﻿using GraphLib.Interfaces;
-using GraphLib.Interfaces.Factories;
-using GraphLib.Serialization.Interfaces;
-using Pathfinding.GraphLib.Serialization.Core.Realizations;
+﻿using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Factory.Interface;
+using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
-using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace GraphLib.Serialization.Serializers
+namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
 {
     internal static class XmlAttributesNames
     {

@@ -23,7 +23,7 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
             return vertex.Position.IsCardinal(neighbor.Position);
         }
 
-        public static void Initialize(this IVertex self)
+        public static void InitializeComponents(this IVertex self)
         {
             self.IsObstacle = false;
             self.Cost = NullCost.Interface;

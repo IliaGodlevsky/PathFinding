@@ -6,6 +6,7 @@ using Shared.Executable;
 using Shared.Executable.Extensions;
 using Shared.Extensions;
 using Shared.Primitives.Attributes;
+using System.Linq;
 
 namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRangeCommands
 {
@@ -36,7 +37,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
 
         public void Undo()
         {
-            undoCommand.Execute(MarkedToRemoveIntermediates.ToReadOnly());
+            undoCommand.Execute(MarkedToRemoveIntermediates.ToArray());
         }
     }
 }

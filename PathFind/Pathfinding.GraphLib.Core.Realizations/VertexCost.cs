@@ -1,6 +1,6 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
+using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
-using Shared.Primitives.ValueRange.Extensions;
 
 namespace Pathfinding.GraphLib.Core.Realizations
 {
@@ -15,7 +15,7 @@ namespace Pathfinding.GraphLib.Core.Realizations
 
         public int CurrentCost { get; protected set; }
 
-        protected VertexCost(int cost)
+        public VertexCost(int cost)
         {
             CurrentCost = CostRange.ReturnInRange(cost);
         }

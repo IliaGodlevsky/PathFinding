@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChangeVertexCostSunbscription.cs" />
+    <Compile Include="ChangeVertexCostSubscription.cs" />
     <Compile Include="GraphSubscriptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
