@@ -12,12 +12,12 @@ namespace Pathfinding.App.Console.Model
 
         protected override void SubscribeVertex(Vertex vertex)
         {
-            vertex.VertexReversed += ReverseVertex;
+            vertex.Reversed += ReverseVertex;
         }
 
         protected override void UnsubscribeVertex(Vertex vertex)
         {
-            vertex.VertexReversed -= ReverseVertex;
+            vertex.Reversed -= ReverseVertex;
         }
     }
 }

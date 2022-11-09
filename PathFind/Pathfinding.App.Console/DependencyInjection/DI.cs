@@ -78,17 +78,15 @@ namespace Pathfinding.App.Console.DependencyInjection
                 .AsSelf().PropertiesAutowired().OnActivated(OnViewActivated).InstancePerLifetimeScope();
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
-            builder.RegisterType<ConsoleVisualPathfindingRange>().As<VisualPathfindingRange<Vertex>>()
-                .As<IGraphSubscription<Vertex>>().SingleInstance();
-            builder.RegisterType<ConsoleVertexChageCostSubscription>().As<IGraphSubscription<Vertex>>()
-                .SingleInstance().PropertiesAutowired();
-            builder.RegisterType<ConsoleVertexReverseSubscription>().As<IGraphSubscription<Vertex>>().SingleInstance();
+            builder.RegisterType<ConsoleVisualPathfindingRange>().As<VisualPathfindingRange<Vertex>>().SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
+            LocalAssemblyTypes.Where(type => type.Implements<IGraphSubscription<Vertex>>())
+                .Register(builder).AsImplementedInterfaces().SingleInstance().PropertiesAutowired();
             builder.RegisterComposite<GraphSubscriptions<Vertex>, IGraphSubscription<Vertex>>().SingleInstance();
 
             builder.RegisterType<PseudoRandom>().As<IRandom>().SingleInstance();

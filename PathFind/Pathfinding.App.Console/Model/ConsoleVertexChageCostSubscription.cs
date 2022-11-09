@@ -30,12 +30,12 @@ namespace Pathfinding.App.Console.Model
 
         protected override void SubscribeVertex(Vertex vertex)
         {
-            vertex.VertexCostChanged += ChangeVertexCost;
+            vertex.CostChanged += ChangeVertexCost;
         }
 
         protected override void UnsubscribeVertex(Vertex vertex)
         {
-            vertex.VertexCostChanged -= ChangeVertexCost;
+            vertex.CostChanged -= ChangeVertexCost;
         }
     }
 }

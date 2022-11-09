@@ -142,7 +142,7 @@
     <Compile Include="ValueInput\UserInput\ConsoleUserKeyInput.cs" />
     <Compile Include="ValueInput\UserInput\ConsoleUserStringInput.cs" />
     <Compile Include="ValueInput\UserInput\ConsoleUserTimeSpanInput.cs" />
-    <Compile Include="ViewModel\EndPointsViewModel.cs" />
+    <Compile Include="ViewModel\PathfindingRangeViewModel.cs" />
     <Compile Include="ViewModel\GraphCreatingViewModel.cs" />
     <Compile Include="ViewModel\GraphLoadViewModel.cs" />
     <Compile Include="ViewModel\GraphSaveViewModel.cs" />
@@ -150,7 +150,7 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PathFindingViewModel.cs" />
     <Compile Include="ViewModel\VertexStateViewModel.cs" />
-    <Compile Include="Views\EndPointsView.cs" />
+    <Compile Include="Views\PathfindingRangeView.cs" />
     <Compile Include="Views\GraphCreateView.cs" />
     <Compile Include="Views\GraphLoadView.cs" />
     <Compile Include="Views\GraphSaveView.cs" />

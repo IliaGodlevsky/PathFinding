@@ -13,7 +13,7 @@ using ColorfulConsole = Colorful.Console;
 
 namespace Pathfinding.App.Console.ViewModel
 {
-    internal class EndPointsViewModel : IViewModel, IRequireIntInput, IDisposable
+    internal class PathfindingRangeViewModel : IViewModel, IRequireIntInput, IDisposable
     {
         public event Action ViewClosed;
 
@@ -25,67 +25,72 @@ namespace Pathfinding.App.Console.ViewModel
 
         public IInput<int> IntInput { get; set; }
 
-        public EndPointsViewModel(VisualPathfindingRange<Vertex> endPoints, ICache<Graph2D<Vertex>> graph, ILog log)
+        public PathfindingRangeViewModel(VisualPathfindingRange<Vertex> range, 
+            ICache<Graph2D<Vertex>> graph, ILog log)
         {
-            this.pathfindingRange = endPoints;
+            this.pathfindingRange = range;
             this.log = log;
             this.graph = graph.Cached;
         }
 
         [Condition(nameof(CanChooseEndPoints))]
         [MenuItem(MenuItemsNames.ChooseEndPoints, 0)]
-        public void ChooseEndPoints()
+        private void ChooseEndPoints()
         {
             ColorfulConsole.WriteLine(MessagesTexts.SourceAndTargetInputMsg);
-            IntInput.InputRequiredVertices(graph, pathfindingRange).OnEndPointChosen();
+            IntInput.InputRequiredVertices(graph, pathfindingRange)
+                .IncludeInRange();
         }
 
         [Condition(nameof(HasSourceAndTargetSet))]
         [MenuItem(MenuItemsNames.ReplaceSource, 2)]
-        public void ReplaceSourceVertex()
+        private void ReplaceSourceVertex()
         {
-            pathfindingRange.Source.OnEndPointChosen();
-            IntInput.InputVertex(MessagesTexts.SourceVertexChoiceMsg, graph, pathfindingRange).OnEndPointChosen();
+            pathfindingRange.Source.IncludeInRange();
+            IntInput.InputVertex(MessagesTexts.SourceVertexChoiceMsg, graph, pathfindingRange)
+                .IncludeInRange();
         }
 
         [Condition(nameof(HasSourceAndTargetSet))]
         [MenuItem(MenuItemsNames.ReplaceTarget, 3)]
-        public void ReplaceTargetVertex()
+        private void ReplaceTargetVertex()
         {
-            pathfindingRange.Target.OnEndPointChosen();
-            IntInput.InputVertex(MessagesTexts.TargetVertexChoiceMsg, graph, pathfindingRange).OnEndPointChosen();
+            pathfindingRange.Target.IncludeInRange();
+            IntInput.InputVertex(MessagesTexts.TargetVertexChoiceMsg, graph, pathfindingRange)
+                .IncludeInRange();
         }
 
         [MenuItem(MenuItemsNames.ClearEndPoints, 5)]
-        public void ClearEndPoints()
+        private void ClearEndPoints()
         {
             pathfindingRange.Undo();
         }
 
         [Condition(nameof(CanReplaceIntermediates))]
         [MenuItem(MenuItemsNames.ReplaceIntermediate, 4)]
-        public void ReplaceIntermediates()
+        private void ReplaceIntermediates()
         {
             string msg = MessagesTexts.NumberOfIntermediatesVerticesToReplaceMsg;
             int toReplaceNumber = IntInput.Input(msg, numberOfIntermediates);
             ColorfulConsole.WriteLine(MessagesTexts.IntermediateToReplaceMsg);
-            IntInput.InputExistingIntermediates(graph, pathfindingRange, toReplaceNumber).OnMarkedToReplaceIntermediate();
+            IntInput.InputExistingIntermediates(graph, pathfindingRange, toReplaceNumber)
+                .MarkAsIntermediateToReplace();
             ColorfulConsole.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
-            IntInput.InputVertices(graph, pathfindingRange, toReplaceNumber).OnEndPointChosen();
+            IntInput.InputVertices(graph, pathfindingRange, toReplaceNumber).IncludeInRange();
         }
 
         [Condition(nameof(HasSourceAndTargetSet))]
         [MenuItem(MenuItemsNames.ChooseIntermediates, 1)]
-        public void ChooseIntermediates()
+        private void ChooseIntermediates()
         {
             string message = MessagesTexts.NumberOfIntermediateVerticesInputMsg;
             int number = IntInput.Input(message, graph.GetAvailableIntermediatesNumber());
             ColorfulConsole.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
-            IntInput.InputVertices(graph, pathfindingRange, number).OnEndPointChosen();
+            IntInput.InputVertices(graph, pathfindingRange, number).IncludeInRange();
         }
 
         [MenuItem(MenuItemsNames.Exit, 6)]
-        public void Interrupt()
+        private void Interrupt()
         {
             ViewClosed?.Invoke();
         }

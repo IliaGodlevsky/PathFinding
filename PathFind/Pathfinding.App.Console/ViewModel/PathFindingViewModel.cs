@@ -103,7 +103,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ChooseEndPoints, 2)]
         public void ChooseExtremeVertex()
         {
-            DI.Container.Display<EndPointsView>();
+            DI.Container.Display<PathfindingRangeView>();
         }
 
         [MenuItem(MenuItemsNames.ClearGraph, 4)]

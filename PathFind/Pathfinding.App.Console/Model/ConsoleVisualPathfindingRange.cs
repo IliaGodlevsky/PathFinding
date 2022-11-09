@@ -9,14 +9,14 @@ namespace Pathfinding.App.Console.Model
     {
         protected override void SubscribeVertex(Vertex vertex)
         {
-            vertex.PathfindingRangeChosen += SetPathfindingRange;
-            vertex.MarkedToReplaceIntermediate += MarkIntermediateVertexToReplace;
+            vertex.IncludedInRange += SetPathfindingRange;
+            vertex.MarkedAsIntermediateToReplace += MarkIntermediateVertexToReplace;
         }
 
         protected override void UnsubscribeVertex(Vertex vertex)
         {
-            vertex.PathfindingRangeChosen -= SetPathfindingRange;
-            vertex.MarkedToReplaceIntermediate -= MarkIntermediateVertexToReplace;
+            vertex.IncludedInRange -= SetPathfindingRange;
+            vertex.MarkedAsIntermediateToReplace -= MarkIntermediateVertexToReplace;
         }
 
         private void SetPathfindingRange(object sender, VertexEventArgs e)

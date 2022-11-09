@@ -7,14 +7,14 @@ namespace Pathfinding.App.Console.Extensions
 {
     internal static class IEnumerableExtensions
     {
-        public static void OnEndPointChosen(this IEnumerable<Vertex> vertices)
+        public static void IncludeInRange(this IEnumerable<Vertex> vertices)
         {
-            vertices.ForEach(vertex => vertex.OnEndPointChosen());
+            vertices.ForEach(vertex => vertex.IncludeInRange());
         }
 
-        public static void OnMarkedToReplaceIntermediate(this IEnumerable<Vertex> vertices)
+        public static void MarkAsIntermediateToReplace(this IEnumerable<Vertex> vertices)
         {
-            vertices.ForEach(vertex => vertex.OnMarkedToReplaceIntermediate());
+            vertices.ForEach(vertex => vertex.MarkAsIntermediateToReplace());
         }
 
         public static MenuList CreateMenuList<T>(this IEnumerable<T> items, int columnsNumber = 2)

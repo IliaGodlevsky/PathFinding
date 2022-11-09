@@ -21,10 +21,10 @@ namespace Pathfinding.App.Console.Model
     [DebuggerDisplay("{Position.ToString()}")]
     internal class Vertex : IVertex, IVisualizable, IDisplayable
     {
-        public event VertexEventHandler VertexCostChanged;
-        public event VertexEventHandler PathfindingRangeChosen;
-        public event VertexEventHandler VertexReversed;
-        public event VertexEventHandler MarkedToReplaceIntermediate;
+        public event VertexEventHandler CostChanged;
+        public event VertexEventHandler IncludedInRange;
+        public event VertexEventHandler Reversed;
+        public event VertexEventHandler MarkedAsIntermediateToReplace;
 
         private readonly IVisualization<Vertex> visualization;
 
@@ -84,22 +84,22 @@ namespace Pathfinding.App.Console.Model
 
         public void ChangeCost()
         {
-            VertexCostChanged?.Invoke(this, new VertexEventArgs(this));
+            CostChanged?.Invoke(this, new VertexEventArgs(this));
         }
 
         public void Reverse()
         {
-            VertexReversed?.Invoke(this, new VertexEventArgs(this));
+            Reversed?.Invoke(this, new VertexEventArgs(this));
         }
 
-        public void OnEndPointChosen()
+        public void IncludeInRange()
         {
-            PathfindingRangeChosen?.Invoke(this, new VertexEventArgs(this));
+            IncludedInRange?.Invoke(this, new VertexEventArgs(this));
         }
 
-        public void OnMarkedToReplaceIntermediate()
+        public void MarkAsIntermediateToReplace()
         {
-            MarkedToReplaceIntermediate?.Invoke(this, new VertexEventArgs(this));
+            MarkedAsIntermediateToReplace?.Invoke(this, new VertexEventArgs(this));
         }
 
         public void Display()
