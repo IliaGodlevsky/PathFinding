@@ -1,7 +1,7 @@
 ﻿using Common.Extensions.EnumerableExtensions;
 using GraphLib.Interfaces;
 using GraphLib.Interfaces.Factories;
-using Logging.Interface;
+using Pathfinding.Logging.Interface;
 using System.Collections.Generic;
 
 namespace GraphLib.ViewModel

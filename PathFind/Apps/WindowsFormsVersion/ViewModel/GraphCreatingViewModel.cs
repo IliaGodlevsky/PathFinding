@@ -5,7 +5,7 @@ using GraphLib.Extensions;
 using GraphLib.Interfaces.Factories;
 using GraphLib.Realizations.Graphs;
 using GraphLib.ViewModel;
-using Logging.Interface;
+using Pathfinding.Logging.Interface;
 using System;
 using System.Collections.Generic;
 using ValueRange.Extensions;

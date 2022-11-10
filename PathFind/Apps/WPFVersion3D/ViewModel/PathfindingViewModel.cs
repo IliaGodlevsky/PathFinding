@@ -9,7 +9,7 @@ using GraphLib.Base.EndPoints;
 using GraphLib.Realizations.Graphs;
 using GraphViewModel;
 using Interruptable.EventArguments;
-using Logging.Interface;
+using Pathfinding.Logging.Interface;
 using NullObject.Extensions;
 using System;
 using System.Collections.Generic;

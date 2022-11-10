@@ -4,7 +4,7 @@ using GraphLib.Interfaces;
 using GraphLib.Realizations.Graphs;
 using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
-using Logging.Interface;
+using Pathfinding.Logging.Interface;
 using NullObject.Extensions;
 using System;
 using System.Windows.Input;

@@ -233,10 +233,6 @@
       <Project>{5616B5FF-BA13-4805-860C-1F69F2946B89}</Project>
       <Name>Pathfinding.GraphLib.Visualization</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.Logging\Pathfinding.Logging.csproj">
-      <Project>{E6B3B73F-7DC6-44AD-A536-0C4E9FD31BDD}</Project>
-      <Name>Pathfinding.Logging</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.Visualization.Extensions\Pathfinding.Visualization.Extensions.csproj">
       <Project>{eab4ff1e-bb9c-4c01-b8d6-171b1758b81d}</Project>
       <Name>Pathfinding.Visualization.Extensions</Name>

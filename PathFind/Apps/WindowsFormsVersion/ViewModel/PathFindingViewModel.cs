@@ -9,7 +9,7 @@ using GraphLib.Base.EndPoints;
 using GraphLib.Realizations.Graphs;
 using GraphViewModel;
 using Interruptable.EventArguments;
-using Logging.Interface;
+using Pathfinding.Logging.Interface;
 using System;
 using System.Collections.Generic;
 using WindowsFormsVersion.DependencyInjection;

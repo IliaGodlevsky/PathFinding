@@ -51,8 +51,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphLib.Serialization.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algorithm.Realizations.Tests", "Algorithm.Tests\Algorithm.Realizations.Tests\Algorithm.Realizations.Tests.csproj", "{6017E08E-C81E-4507-A2AA-838F15299606}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logging\Logging.csproj", "{37085E09-A2DA-4930-B219-1A3E385C5385}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NullObject", "NullObject\NullObject.csproj", "{51D677FD-7A82-4282-8A2E-51DEBE39E695}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NullObject.Tests", "NullObject.Tests\NullObject.Tests.csproj", "{666D186C-5D2A-4AA3-8671-BEEF51C6DF77}"
@@ -187,13 +185,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.Visualization.E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.Visualization.Models", "Pathfinding.Visualization.Models\Pathfinding.Visualization.Models.csproj", "{A09E51A5-7FEA-4220-9F90-15D92F8BEC0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.Logging", "Pathfinding.Logging\Pathfinding.Logging.csproj", "{E6B3B73F-7DC6-44AD-A536-0C4E9FD31BDD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.GraphLib.Factory.Extensions", "Pathfinding.GraphLib.Factory.Extensions\Pathfinding.GraphLib.Factory.Extensions.csproj", "{992503E9-626F-4ED5-B9CF-239C56C8F440}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.App.Console", "Pathfinding.App.Console\Pathfinding.App.Console.csproj", "{1EC9051F-ADBA-4EA2-BB67-A604153B9FE8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.GraphLib.Smoothing", "Pathfinding.GraphLib.Smoothing\Pathfinding.GraphLib.Smoothing.csproj", "{50902851-3081-49AF-ACEC-013E78460547}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.Logging", "Pathfinding.Logging\Pathfinding.Logging.csproj", "{37085E09-A2DA-4930-B219-1A3E385C5385}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -277,10 +275,6 @@ Global
 		{6017E08E-C81E-4507-A2AA-838F15299606}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6017E08E-C81E-4507-A2AA-838F15299606}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6017E08E-C81E-4507-A2AA-838F15299606}.Release|Any CPU.Build.0 = Release|Any CPU
-		{37085E09-A2DA-4930-B219-1A3E385C5385}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{37085E09-A2DA-4930-B219-1A3E385C5385}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{37085E09-A2DA-4930-B219-1A3E385C5385}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{37085E09-A2DA-4930-B219-1A3E385C5385}.Release|Any CPU.Build.0 = Release|Any CPU
 		{51D677FD-7A82-4282-8A2E-51DEBE39E695}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{51D677FD-7A82-4282-8A2E-51DEBE39E695}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51D677FD-7A82-4282-8A2E-51DEBE39E695}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -521,10 +515,6 @@ Global
 		{A09E51A5-7FEA-4220-9F90-15D92F8BEC0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A09E51A5-7FEA-4220-9F90-15D92F8BEC0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A09E51A5-7FEA-4220-9F90-15D92F8BEC0E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E6B3B73F-7DC6-44AD-A536-0C4E9FD31BDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6B3B73F-7DC6-44AD-A536-0C4E9FD31BDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6B3B73F-7DC6-44AD-A536-0C4E9FD31BDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6B3B73F-7DC6-44AD-A536-0C4E9FD31BDD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{992503E9-626F-4ED5-B9CF-239C56C8F440}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{992503E9-626F-4ED5-B9CF-239C56C8F440}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{992503E9-626F-4ED5-B9CF-239C56C8F440}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -537,6 +527,10 @@ Global
 		{50902851-3081-49AF-ACEC-013E78460547}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50902851-3081-49AF-ACEC-013E78460547}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50902851-3081-49AF-ACEC-013E78460547}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37085E09-A2DA-4930-B219-1A3E385C5385}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37085E09-A2DA-4930-B219-1A3E385C5385}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37085E09-A2DA-4930-B219-1A3E385C5385}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37085E09-A2DA-4930-B219-1A3E385C5385}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

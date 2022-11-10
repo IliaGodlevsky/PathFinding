@@ -4,7 +4,7 @@ using GraphLib.Interfaces;
 using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
 using GraphViewModel.Interfaces;
-using Logging.Interface;
+using Pathfinding.Logging.Interface;
 using System;
 
 namespace GraphViewModel

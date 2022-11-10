@@ -17,8 +17,7 @@ using GraphLib.Serialization.Interfaces;
 using GraphLib.Serialization.Modules;
 using GraphLib.Serialization.Serializers;
 using GraphLib.Serialization.Serializers.Decorators;
-using Logging.Interface;
-using Logging.Loggers;
+using Pathfinding.Logging.Interface;
 using Random.Interface;
 using Random.Realizations.Generators;
 using System;
@@ -28,6 +27,7 @@ using WPFVersion3D.Interface;
 using WPFVersion3D.Model;
 using WPFVersion3D.Model3DFactories;
 using WPFVersion3D.ViewModel;
+using Pathfinding.Logging.Loggers;
 
 namespace WPFVersion3D.DependencyInjection
 {

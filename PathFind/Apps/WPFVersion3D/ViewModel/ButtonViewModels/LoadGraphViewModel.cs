@@ -3,7 +3,7 @@ using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Realizations.Graphs;
 using GraphLib.Serialization.Extensions;
 using GraphLib.Serialization.Interfaces;
-using Logging.Interface;
+using Pathfinding.Logging.Interface;
 using System;
 using System.Windows.Input;
 using WPFVersion3D.DependencyInjection;

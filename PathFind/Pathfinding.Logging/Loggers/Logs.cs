@@ -1,5 +1,5 @@
-﻿using Pathfinding.Logging.Interface;
-using Shared.Extensions;
+﻿using Common.Extensions.EnumerableExtensions;
+using Pathfinding.Logging.Interface;
 using System;
 
 namespace Pathfinding.Logging.Loggers

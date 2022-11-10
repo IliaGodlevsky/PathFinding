@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using Logging.Interface;
+using Pathfinding.Logging.Interface;
 using System.Threading.Tasks;
 using System.Windows;
 using WPFVersion.DependencyInjection;

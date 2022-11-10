@@ -12,7 +12,7 @@ using GraphLib.Base.EndPoints;
 using GraphLib.Extensions;
 using GraphLib.Interfaces;
 using Interruptable.EventArguments;
-using Logging.Interface;
+using Pathfinding.Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
