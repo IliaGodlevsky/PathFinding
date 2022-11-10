@@ -6,12 +6,13 @@ using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Smoothing;
 using Pathfinding.GraphLib.Smoothing.Interface;
+using Shared.Primitives.Attributes;
 using System;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.ViewModel
 {
-    internal class GraphSmoothViewModel : IViewModel, IRequireIntInput, IDisposable
+    internal sealed class GraphSmoothViewModel : IViewModel, IRequireIntInput, IDisposable
     {
         public event Action ViewClosed;
 
@@ -38,13 +39,15 @@ namespace Pathfinding.App.Console.ViewModel
             this.graph = graph.Cached;
         }
 
-        [MenuItem(MenuItemsNames.SmoothGraph, 0)]
+        [Order(0)]
+        [MenuItem(MenuItemsNames.SmoothGraph)]
         private void SmoothGraph()
         {
             graph.Smooth(costFactory, meanAlgorithm, SmoothLevel.Level);
         }
 
-        [MenuItem(MenuItemsNames.Exit, 1)]
+        [Order(1)]
+        [MenuItem(MenuItemsNames.Exit)]
         private void Interrup()
         {
             ViewClosed?.Invoke();

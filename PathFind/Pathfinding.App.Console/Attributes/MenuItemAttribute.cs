@@ -1,16 +1,15 @@
-﻿using Shared.Primitives.Attributes;
-using System;
+﻿using System;
+using System.ComponentModel;
 
 namespace Pathfinding.App.Console.Attributes
 {
     [AttributeUsage(AttributeTargets.Method)]
-    internal sealed class MenuItemAttribute : OrderAttribute
+    internal sealed class MenuItemAttribute : DescriptionAttribute
     {
-        public string Header { get; }
-
-        public MenuItemAttribute(string header, int order) : base(order)
+        public MenuItemAttribute(string header) 
+            : base(header)
         {
-            Header = header;
+            
         }
     }
 }

@@ -6,6 +6,7 @@ using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Core.Abstractions;
+using Shared.Primitives.Attributes;
 using System;
 using System.Linq;
 
@@ -13,7 +14,7 @@ using ColorfulConsole = Colorful.Console;
 
 namespace Pathfinding.App.Console.ViewModel
 {
-    internal class PathfindingRangeViewModel : IViewModel, IRequireIntInput, IDisposable
+    internal sealed class PathfindingRangeViewModel : IViewModel, IRequireIntInput, IDisposable
     {
         public event Action ViewClosed;
 
@@ -33,8 +34,9 @@ namespace Pathfinding.App.Console.ViewModel
             this.graph = graph.Cached;
         }
 
+        [Order(0)]
         [Condition(nameof(CanChooseEndPoints))]
-        [MenuItem(MenuItemsNames.ChooseEndPoints, 0)]
+        [MenuItem(MenuItemsNames.ChooseEndPoints)]
         private void ChooseEndPoints()
         {
             ColorfulConsole.WriteLine(MessagesTexts.SourceAndTargetInputMsg);
@@ -42,8 +44,9 @@ namespace Pathfinding.App.Console.ViewModel
                 .IncludeInRange();
         }
 
+        [Order(2)]
         [Condition(nameof(HasSourceAndTargetSet))]
-        [MenuItem(MenuItemsNames.ReplaceSource, 2)]
+        [MenuItem(MenuItemsNames.ReplaceSource)]
         private void ReplaceSourceVertex()
         {
             pathfindingRange.Source.IncludeInRange();
@@ -51,8 +54,9 @@ namespace Pathfinding.App.Console.ViewModel
                 .IncludeInRange();
         }
 
+        [Order(3)]
         [Condition(nameof(HasSourceAndTargetSet))]
-        [MenuItem(MenuItemsNames.ReplaceTarget, 3)]
+        [MenuItem(MenuItemsNames.ReplaceTarget)]
         private void ReplaceTargetVertex()
         {
             pathfindingRange.Target.IncludeInRange();
@@ -60,14 +64,16 @@ namespace Pathfinding.App.Console.ViewModel
                 .IncludeInRange();
         }
 
-        [MenuItem(MenuItemsNames.ClearEndPoints, 5)]
+        [Order(5)]
+        [MenuItem(MenuItemsNames.ClearEndPoints)]
         private void ClearEndPoints()
         {
             pathfindingRange.Undo();
         }
 
+        [Order(4)]
         [Condition(nameof(CanReplaceIntermediates))]
-        [MenuItem(MenuItemsNames.ReplaceIntermediate, 4)]
+        [MenuItem(MenuItemsNames.ReplaceIntermediate)]
         private void ReplaceIntermediates()
         {
             string msg = MessagesTexts.NumberOfIntermediatesVerticesToReplaceMsg;
@@ -79,8 +85,9 @@ namespace Pathfinding.App.Console.ViewModel
             IntInput.InputVertices(graph, pathfindingRange, toReplaceNumber).IncludeInRange();
         }
 
+        [Order(1)]
         [Condition(nameof(HasSourceAndTargetSet))]
-        [MenuItem(MenuItemsNames.ChooseIntermediates, 1)]
+        [MenuItem(MenuItemsNames.ChooseIntermediates)]
         private void ChooseIntermediates()
         {
             string message = MessagesTexts.NumberOfIntermediateVerticesInputMsg;
@@ -89,7 +96,8 @@ namespace Pathfinding.App.Console.ViewModel
             IntInput.InputVertices(graph, pathfindingRange, number).IncludeInRange();
         }
 
-        [MenuItem(MenuItemsNames.Exit, 6)]
+        [Order(6)]
+        [MenuItem(MenuItemsNames.Exit)]
         private void Interrupt()
         {
             ViewClosed?.Invoke();

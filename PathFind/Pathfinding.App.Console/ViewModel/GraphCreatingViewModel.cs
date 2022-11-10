@@ -11,7 +11,9 @@ using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.Logging.Interface;
-using Pathfinding.Visualization.Models;
+using Shared.Collections;
+using Shared.Extensions;
+using Shared.Primitives.Attributes;
 using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
@@ -20,62 +22,72 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.ViewModel
 {
-    internal sealed class GraphCreatingViewModel : GraphCreatingModel<Graph2D<Vertex>, Vertex>, IViewModel, IRequireIntInput, IDisposable
+    internal sealed class GraphCreatingViewModel : ViewModel, IRequireIntInput, IDisposable
     {
-        public event Action ViewClosed;
-
         private readonly IMessenger messenger;
         private readonly InclusiveValueRange<int> graphAssembleKeyRange;
+
+        private int Width { get; set; }
+
+        private int Length { get; set; }
+
+        private int ObstaclePercent { get; set; }
+
+        public ReadOnlyList<IGraphAssemble<Graph2D<Vertex>, Vertex>> GraphAssembles { get; }
 
         public string GraphAssembleInpuMessage { private get; set; }
 
         public IInput<int> IntInput { get; set; }
 
+        private IGraphAssemble<Graph2D<Vertex>, Vertex> SelectedGraphAssemble { get; set; }
+
         public GraphCreatingViewModel(IEnumerable<IGraphAssemble<Graph2D<Vertex>, Vertex>> graphAssembles, ILog log)
-            : base(log, graphAssembles)
+            : base(log)
         {
+            GraphAssembles = graphAssembles.ToReadOnly();
             graphAssembleKeyRange = new InclusiveValueRange<int>(graphAssembles.Count(), 1);
             messenger = DI.Container.Resolve<IMessenger>();
         }
 
+        [Order(0)]
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(CanCreateGraph))]
-        [MenuItem(MenuItemsNames.CreateNewGraph, 0)]
-        public override void CreateGraph()
+        [MenuItem(MenuItemsNames.CreateNewGraph)]
+        private void CreateGraph()
         {
             var graph = SelectedGraphAssemble.AssembleGraph(ObstaclePercent, Width, Length);
             messenger.Send(new GraphCreatedMessage(graph));
+            throw new Exception();
         }
 
-        [MenuItem(MenuItemsNames.ChooseGraphAssemble, 1)]
-        public void ChooseGraphAssemble()
+        [Order(1)]
+        [MenuItem(MenuItemsNames.ChooseGraphAssemble)]
+        private void ChooseGraphAssemble()
         {
             int graphAssembleIndex = IntInput.Input(GraphAssembleInpuMessage, graphAssembleKeyRange) - 1;
             SelectedGraphAssemble = GraphAssembles[graphAssembleIndex];
         }
 
-        [MenuItem(MenuItemsNames.InputGraphParametres, 2)]
+        [Order(2)]
+        [MenuItem(MenuItemsNames.InputGraphParametres)]
         public void InputGraphParametres()
         {
             Width = IntInput.Input(MessagesTexts.GraphWidthInputMsg, Constants.GraphWidthValueRange);
             Length = IntInput.Input(MessagesTexts.GraphHeightInputMsg, Constants.GraphLengthValueRange);
         }
 
-        [MenuItem(MenuItemsNames.InputObstaclePercent, 3)]
+        [Order(3)]
+        [MenuItem(MenuItemsNames.InputObstaclePercent)]
         public void InputObstaclePercent()
         {
             ObstaclePercent = IntInput.Input(MessagesTexts.ObstaclePercentInputMsg, Constants.ObstaclesPercentValueRange);
         }
 
-        [MenuItem(MenuItemsNames.Exit, 4)]
-        public void Interrupt()
+        [Order(4)]
+        [MenuItem(MenuItemsNames.Exit)]
+        private void Interrupt()
         {
-            ViewClosed?.Invoke();
-        }
-
-        public void Dispose()
-        {
-            ViewClosed = null;
+            RaiseViewClosed();
         }
 
         private bool CanCreateGraph()
@@ -83,18 +95,6 @@ namespace Pathfinding.App.Console.ViewModel
             return SelectedGraphAssemble != null
                 && Constants.GraphWidthValueRange.Contains(Width)
                 && Constants.GraphLengthValueRange.Contains(Length);
-        }
-
-        private void ExecuteSafe(Command action)
-        {
-            try
-            {
-                action.Invoke();
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
         }
     }
 }

@@ -13,8 +13,8 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
     {
         private IVertex PreviousVertex { get; set; } = NullVertex.Instance;
 
-        protected GreedyAlgorithm(IPathfindingRange endPoints)
-           : base(endPoints)
+        protected GreedyAlgorithm(IPathfindingRange pathfindingRange)
+           : base(pathfindingRange)
         {
         }
 

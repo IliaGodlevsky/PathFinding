@@ -5,40 +5,40 @@ using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
+using Pathfinding.Logging.Interface;
+using Shared.Primitives.Attributes;
 using System;
 
 namespace Pathfinding.App.Console.ViewModel
 {
-    internal sealed class GraphSaveViewModel : IViewModel, IDisposable
+    internal sealed class GraphSaveViewModel : ViewModel, IDisposable
     {
-        public event Action ViewClosed;
-
         private readonly IGraphSerializationModule<Graph2D<Vertex>, Vertex> module;
 
         private IGraph<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
-        public GraphSaveViewModel(IGraphSerializationModule<Graph2D<Vertex>, Vertex> module, ICache<Graph2D<Vertex>> graph)
+        public GraphSaveViewModel(IGraphSerializationModule<Graph2D<Vertex>, Vertex> module, 
+            ICache<Graph2D<Vertex>> graph, ILog log)
+            : base(log)
         {
             this.module = module;
             Graph = graph.Cached;
         }
 
-        public void Dispose()
-        {
-            ViewClosed = null;
-        }
-
+        [Order(0)]
+        [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(IsGraphValid))]
-        [MenuItem(MenuItemsNames.SaveGraph, 0)]
+        [MenuItem(MenuItemsNames.SaveGraph)]
         private async void SaveGraph()
         {
             await module.SaveGraphAsync(Graph);
         }
 
-        [MenuItem(MenuItemsNames.Exit, 1)]
+        [Order(1)]
+        [MenuItem(MenuItemsNames.Exit)]
         private void Interrupt()
         {
-            ViewClosed?.Invoke();
+            RaiseViewClosed();
         }
 
         private bool IsGraphValid()

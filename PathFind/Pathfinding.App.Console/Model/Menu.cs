@@ -5,6 +5,7 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model.Methods;
 using Shared.Extensions;
 using Shared.Primitives.Attributes;
+using Shared.Primitives.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,11 @@ namespace Pathfinding.App.Console.Model
 {
     internal sealed class Menu : IMenu
     {
-        private const BindingFlags MethodAccessModificators = NonPublic | Instance | Public;
+        private const BindingFlags MethodAccessModificators 
+            = FlattenHierarchy | NonPublic | Instance | Public;
 
-        private readonly object target;
-        private readonly Type targetType;
+        private readonly IViewModel viewModel;
+        private readonly Type viewModelType;
         private readonly ICompanionMethods<Condition> conditionMethods;
         private readonly ICompanionMethods<SafeAction> safeMethods;
 
@@ -27,21 +29,21 @@ namespace Pathfinding.App.Console.Model
 
         public IReadOnlyList<IMenuCommand> Commands => commands.Value;
 
-        public Menu(object target)
+        public Menu(IViewModel viewModel)
         {
-            safeMethods = new SafeMethods(target);
-            conditionMethods = new ConditionMethods(target);
-            this.target = target;
-            targetType = target.GetType();
+            safeMethods = new SafeMethods(viewModel);
+            conditionMethods = new ConditionMethods(viewModel);
+            this.viewModel = viewModel;
+            viewModelType = viewModel.GetType();
             commands = new Lazy<IReadOnlyList<IMenuCommand>>(GetMenuCommands);
         }
 
         private IReadOnlyList<IMenuCommand> GetMenuCommands()
         {
-            return targetType
+            return viewModelType
                 .GetMethods(MethodAccessModificators)
                 .Where(IsMenuItem)
-                .OrderBy(GetOrder)
+                .OrderByOrderAttribute()
                 .Select(CreateCommandDelegate)
                 .Where(del => del is not null)
                 .Select(CreateMenuCommand)
@@ -50,7 +52,7 @@ namespace Pathfinding.App.Console.Model
 
         private Command CreateCommandDelegate(MethodInfo commandMethod)
         {
-            return commandMethod.TryCreateDelegate(target, out Command action) ? action : null;
+            return commandMethod.TryCreateDelegate(viewModel, out Command action) ? action : null;
         }
 
         private IMenuCommand CreateMenuCommand(Command command)
@@ -58,7 +60,7 @@ namespace Pathfinding.App.Console.Model
             var methodInfo = command.Method;
             var safeAction = safeMethods.GetMethods(methodInfo);
             Command method = () => safeAction.Invoke(command);
-            string header = methodInfo.GetAttributeOrNull<MenuItemAttribute>().Header;
+            string header = methodInfo.GetAttributeOrNull<MenuItemAttribute>().Description;
             var condition = conditionMethods.GetMethods(methodInfo);
             return CreateMenuCommand(condition, method, header);
         }
@@ -68,12 +70,6 @@ namespace Pathfinding.App.Console.Model
             return condition is null
                 ? new MenuCommand(header, method)
                 : new ConditionedMenuCommand(header, method, condition);
-        }
-
-        private static int GetOrder(MethodInfo method)
-        {
-            return method.GetAttributeOrNull<OrderAttribute>()?.Order
-                ?? OrderAttribute.Default.Order;
         }
 
         private static bool IsMenuItem(MethodInfo methodInfo)

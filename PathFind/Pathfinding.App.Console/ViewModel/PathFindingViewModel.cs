@@ -3,7 +3,6 @@ using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Factory.Interface;
-using Pathfinding.App.Console;
 using Pathfinding.App.Console.Attributes;
 using Pathfinding.App.Console.Delegates;
 using Pathfinding.App.Console.DependencyInjection;
@@ -19,6 +18,7 @@ using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.Visualization.Models;
 using Shared.Extensions;
+using Shared.Primitives.Attributes;
 using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
@@ -66,9 +66,10 @@ namespace Pathfinding.App.Console.ViewModel
             messenger = DI.Container.Resolve<IMessenger>();
         }
 
+        [Order(0)]
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(CanExecutePathfinding))]
-        [MenuItem(MenuItemsNames.FindPath, 0)]
+        [MenuItem(MenuItemsNames.FindPath)]
         public override void FindPath()
         {
             using (Cursor.HideCursor())
@@ -80,33 +81,38 @@ namespace Pathfinding.App.Console.ViewModel
             }
         }
 
+        [Order(3)]
         [Condition(nameof(IsVisualizationNeeded))]
-        [MenuItem(MenuItemsNames.InputDelayTime, 3)]
-        public void InputDelayTime()
+        [MenuItem(MenuItemsNames.InputDelayTime)]
+        private void InputDelayTime()
         {
             Delay = TimeSpanInput.Input(MessagesTexts.DelayTimeInputMsg, DelayRange);
         }
 
-        [MenuItem(MenuItemsNames.ChooseAlgorithm, 1)]
-        public void ChooseAlgorithm()
+        [Order(1)]
+        [MenuItem(MenuItemsNames.ChooseAlgorithm)]
+        private void ChooseAlgorithm()
         {
             Algorithm = Algorithms[AlgorithmIndex];
         }
 
-        [MenuItem(MenuItemsNames.Exit, 7)]
+        [Order(7)]
+        [MenuItem(MenuItemsNames.Exit)]
         public void Interrupt()
         {
             ViewClosed?.Invoke();
         }
 
+        [Order(2)]
         [ExecuteSafe(nameof(ExecuteSafe))]
-        [MenuItem(MenuItemsNames.ChooseEndPoints, 2)]
+        [MenuItem(MenuItemsNames.ChooseEndPoints)]
         public void ChooseExtremeVertex()
         {
             DI.Container.Display<PathfindingRangeView>();
         }
 
-        [MenuItem(MenuItemsNames.ClearGraph, 4)]
+        [Order(4)]
+        [MenuItem(MenuItemsNames.ClearGraph)]
         public void ClearGraph()
         {
             using (Cursor.HideCursor())
@@ -115,13 +121,15 @@ namespace Pathfinding.App.Console.ViewModel
             }
         }
 
-        [MenuItem(MenuItemsNames.ClearColors, 5)]
+        [Order(5)]
+        [MenuItem(MenuItemsNames.ClearColors)]
         public void ClearColors()
         {
             messenger.Send(new ClearColorsMessage());
         }
 
-        [MenuItem(MenuItemsNames.ApplyVisualization, 6)]
+        [Order(6)]
+        [MenuItem(MenuItemsNames.ApplyVisualization)]
         public void ApplyVisualization()
         {
             IsVisualizationRequired = AnswerInput.Input(MessagesTexts.ApplyVisualizationMsg, Answer.Range);

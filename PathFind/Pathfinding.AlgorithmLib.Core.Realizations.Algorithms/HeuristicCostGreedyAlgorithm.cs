@@ -33,7 +33,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 
         protected override double CalculateHeuristic(IVertex vertex)
         {
-            double heuristicResult = heuristic.Calculate(vertex, endPoints.Target);
+            double heuristicResult = heuristic.Calculate(vertex, pathfindingRange.Target);
             double stepCost = stepRule.CalculateStepCost(vertex, CurrentVertex);
             return heuristicResult + stepCost;
         }

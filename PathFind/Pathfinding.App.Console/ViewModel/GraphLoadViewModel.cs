@@ -2,30 +2,32 @@
 using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Attributes;
 using Pathfinding.App.Console.DependencyInjection;
-using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
+using Pathfinding.Logging.Interface;
+using Shared.Primitives.Attributes;
 using System;
 
 namespace Pathfinding.App.Console.ViewModel
 {
-    internal sealed class GraphLoadViewModel : IViewModel, IDisposable
+    internal sealed class GraphLoadViewModel : ViewModel, IDisposable
     {
-        public event Action ViewClosed;
-
         private readonly IMessenger messenger;
         private readonly IGraphSerializationModule<Graph2D<Vertex>, Vertex> module;
 
-        public GraphLoadViewModel(IGraphSerializationModule<Graph2D<Vertex>, Vertex> module)
+        public GraphLoadViewModel(IGraphSerializationModule<Graph2D<Vertex>, Vertex> module, ILog log)
+            : base(log)
         {
             messenger = DI.Container.Resolve<IMessenger>();
             this.module = module;
         }
 
-        [MenuItem(MenuItemsNames.LoadGraph, 0)]
+        [Order(0)]
+        [ExecuteSafe(nameof(ExecuteSafe))]
+        [MenuItem(MenuItemsNames.LoadGraph)]
         private void LoadGraph()
         {
             var graph = module.LoadGraph();
@@ -33,15 +35,16 @@ namespace Pathfinding.App.Console.ViewModel
             messenger.Send(new CostRangeChangedMessage(VertexCost.CostRange));
         }
 
-        [MenuItem(MenuItemsNames.Exit, 1)]
+        [Order(1)]
+        [MenuItem(MenuItemsNames.Exit)]
         private void Interrup()
         {
-            ViewClosed?.Invoke();
+            RaiseViewClosed();
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
-            ViewClosed = null;
+            base.Dispose();
             messenger.Unregister(this);
         }
     }

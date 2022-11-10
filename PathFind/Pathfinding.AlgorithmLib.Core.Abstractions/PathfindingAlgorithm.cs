@@ -26,7 +26,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         protected readonly ICollection<IVertex> visited;
         protected readonly IDictionary<ICoordinate, IVertex> traces;
-        protected readonly IPathfindingRange endPoints;
+        protected readonly IPathfindingRange pathfindingRange;
         protected readonly TStorage storage;
 
         protected Range CurrentRange { get; set; }
@@ -35,10 +35,10 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         private bool IsDestination => CurrentVertex.Equals(CurrentRange.Target);
 
-        protected PathfindingAlgorithm(IPathfindingRange endPoints)
+        protected PathfindingAlgorithm(IPathfindingRange pathfindingRange)
         {
             storage = new TStorage();
-            this.endPoints = endPoints;
+            this.pathfindingRange = pathfindingRange;
             visited = new HashSet<IVertex>(new VertexEqualityComparer());
             traces = new Dictionary<ICoordinate, IVertex>(new CoordinateEqualityComparer());
         }
@@ -49,7 +49,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             using (Disposable.Use(CompletePathfinding))
             {
                 var path = NullGraphPath.Interface;
-                foreach (var endPoint in GetSubEndPoints())
+                foreach (var endPoint in GetSubRanges())
                 {
                     PrepareForSubPathfinding(endPoint);
                     while (!IsDestination)
@@ -103,9 +103,9 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
                 .ToReadOnly();
         }
 
-        private IEnumerable<Range> GetSubEndPoints()
+        private IEnumerable<Range> GetSubRanges()
         {
-            using (var iterator = endPoints.GetEnumerator())
+            using (var iterator = pathfindingRange.GetEnumerator())
             {
                 iterator.MoveNext();
                 var previous = iterator.Current;

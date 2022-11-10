@@ -1,5 +1,4 @@
-﻿using Pathfinding.App.Console;
-using Pathfinding.App.Console.EventArguments;
+﻿using Pathfinding.App.Console.EventArguments;
 using Pathfinding.App.Console.EventHandlers;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.GraphLib.Core.Interface;

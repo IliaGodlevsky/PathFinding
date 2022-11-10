@@ -3,6 +3,7 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Shared.Primitives.Attributes;
 using System;
 
 namespace Pathfinding.App.Console.ViewModel
@@ -22,19 +23,22 @@ namespace Pathfinding.App.Console.ViewModel
             Graph = cache.Cached;
         }
 
-        [MenuItem(MenuItemsNames.ReverseVertex, 0)]
+        [Order(0)]
+        [MenuItem(MenuItemsNames.ReverseVertex)]
         public void ReverseVertex()
         {
             Vertex.Reverse();
         }
 
-        [MenuItem(MenuItemsNames.ChangeVertexCost, 1)]
+        [Order(1)]
+        [MenuItem(MenuItemsNames.ChangeVertexCost)]
         public void ChangeVertexCost()
         {
             Vertex.ChangeCost();
         }
 
-        [MenuItem(MenuItemsNames.Exit, 2)]
+        [Order(2)]
+        [MenuItem(MenuItemsNames.Exit)]
         public void Interrupt()
         {
             ViewClosed?.Invoke();

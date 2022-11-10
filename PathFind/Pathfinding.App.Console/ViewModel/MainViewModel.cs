@@ -1,5 +1,4 @@
-﻿using Autofac;
-using GalaSoft.MvvmLight.Messaging;
+﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Attributes;
 using Pathfinding.App.Console.ConvertedProperties;
 using Pathfinding.App.Console.Delegates;
@@ -16,6 +15,7 @@ using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
+using Shared.Primitives.Attributes;
 using System;
 using System.Drawing;
 
@@ -23,19 +23,16 @@ using ColorfulConsole = Colorful.Console;
 
 namespace Pathfinding.App.Console.ViewModel
 {
-    internal sealed class MainViewModel : IViewModel, ICache<Graph2D<Vertex>>, IRequireAnswerInput, IRequireIntInput, IDisposable
+    internal sealed class MainViewModel : ViewModel, ICache<Graph2D<Vertex>>, IRequireAnswerInput, IRequireIntInput
     {
-        public event Action ViewClosed;
-
-        private readonly ILog log;
         private readonly IMessenger messenger;
         private readonly IGraphSubscription<Vertex> subscription;
         private readonly IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField> fieldFactory;
         private readonly VisualPathfindingRange<Vertex> pathfindingRange;
 
-        private GraphField graphField;
+        private GraphField GraphField { get; set; } = GraphField.Empty;
 
-        public IProperty<string> GraphParamters { get; private set; }
+        private IProperty<string> GraphParamters { get; set; }
 
         public IInput<int> IntInput { get; set; }
 
@@ -43,61 +40,70 @@ namespace Pathfinding.App.Console.ViewModel
 
         public Graph2D<Vertex> Cached { get; private set; }
 
-        public MainViewModel(IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField> fieldFactory,
-            IGraphSubscription<Vertex> events, VisualPathfindingRange<Vertex> endPoints, ILog log)
+        public MainViewModel(IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField> fieldFactory, 
+            IGraphSubscription<Vertex> subscription, 
+            VisualPathfindingRange<Vertex> endPoints, IMessenger messenger, ILog log)
+            : base(log)
         {
             Cached = Graph2D<Vertex>.Empty;
-            messenger = DI.Container.Resolve<IMessenger>();
+            this.messenger = messenger;
             messenger.Register<GraphCreatedMessage>(this, SetGraph);
-            messenger.Register<ClearGraphMessage>(this, message => ClearGraph());
-            messenger.Register<ClearColorsMessage>(this, message => ClearColors());
+            messenger.Register<ClearGraphMessage>(this, ClearGraph);
+            messenger.Register<ClearColorsMessage>(this, ClearColors);
             this.fieldFactory = fieldFactory;
-            subscription = events;
+            this.subscription = subscription;
             this.pathfindingRange = endPoints;
-            this.log = log;
         }
 
+        [Order(0)]
         [ExecuteSafe(nameof(ExecuteSafe))]
-        [MenuItem(MenuItemsNames.CreateNewGraph, 0)]
+        [MenuItem(MenuItemsNames.CreateNewGraph)]
         private void CreateNewGraph() => DI.Container.Display<GraphCreateView>();
 
+        [Order(1)]
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(IsGraphValid))]
-        [MenuItem(MenuItemsNames.FindPath, 1)]
+        [MenuItem(MenuItemsNames.FindPath)]
         private void FindPath() => DI.Container.Display<PathFindView>();
 
+        [Order(2)]
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(IsGraphValid))]
-        [MenuItem(MenuItemsNames.SmoothGraph, 2)]
+        [MenuItem(MenuItemsNames.SmoothGraph)]
         private void SmoothGraph() => DI.Container.Display<GraphSmoothView>();
 
+        [Order(3)]
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(IsGraphValid))]
-        [MenuItem(MenuItemsNames.ChangedVertexState, 3)]
+        [MenuItem(MenuItemsNames.ChangedVertexState)]
         private void ChangeVertexState() => DI.Container.Display<VertexStateView>();
 
+        [Order(4)]
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(IsGraphValid))]
-        [MenuItem(MenuItemsNames.SaveGraph, 4)]
+        [MenuItem(MenuItemsNames.SaveGraph)]
         private void SaveGraph() => DI.Container.Display<GraphSaveView>();
 
+        [Order(5)]
         [ExecuteSafe(nameof(ExecuteSafe))]
-        [MenuItem(MenuItemsNames.LoadGraph, 5)]
+        [MenuItem(MenuItemsNames.LoadGraph)]
         private void LoadGraph() => DI.Container.Display<GraphLoadView>();
 
+        [Order(6)]
         [ExecuteSafe(nameof(ExecuteSafe))]
-        [MenuItem(MenuItemsNames.ChangeCostRange, 6)]
+        [MenuItem(MenuItemsNames.ChangeCostRange)]
         private void ChangeVertexCostValueRange()
         {
             VertexCost.CostRange = IntInput.InputRange(Constants.VerticesCostRange);
             messenger.Send(new CostRangeChangedMessage(VertexCost.CostRange));
         }
 
+        [Order(7)]
         [Condition(nameof(CanExecuteInterrupt))]
-        [MenuItem(MenuItemsNames.Exit, 7)]
-        private void Interrupt() => ViewClosed?.Invoke();
+        [MenuItem(MenuItemsNames.Exit)]
+        private void Interrupt() => RaiseViewClosed();
 
-        public void ClearGraph()
+        private void ClearGraph(ClearGraphMessage message)
         {
             Cached.RestoreVerticesVisualState();
             GraphParamters = GraphParamsProperty.Empty;
@@ -105,7 +111,7 @@ namespace Pathfinding.App.Console.ViewModel
             messenger.Send(UpdateStatisticsMessage.Empty);
         }
 
-        public void ClearColors()
+        private void ClearColors(ClearColorsMessage message)
         {
             Cached.RestoreVerticesVisualState();
             pathfindingRange.RestoreVerticesVisualState();
@@ -118,7 +124,7 @@ namespace Pathfinding.App.Console.ViewModel
                 ColorfulConsole.Clear();
                 ColorfulConsole.ForegroundColor = Color.White;
                 ColorfulConsole.WriteLine(GraphParamters);
-                graphField?.Display();
+                GraphField.Display();
                 ColorfulConsole.WriteLine();
                 MainView.SetCursorPositionUnderMenu(1);
             }
@@ -137,7 +143,7 @@ namespace Pathfinding.App.Console.ViewModel
             pathfindingRange.Undo();
             subscription.Unsubscribe(Cached);
             Cached = message.Graph;
-            graphField = fieldFactory.CreateGraphField(Cached);
+            GraphField = fieldFactory.CreateGraphField(Cached);
             subscription.Subscribe(Cached);
             GraphParamters = GraphParamsProperty.Assign(Cached);
         }
@@ -152,22 +158,10 @@ namespace Pathfinding.App.Console.ViewModel
             return AnswerInput.Input(MessagesTexts.ExitAppMsg, Answer.Range);
         }
 
-        private void ExecuteSafe(Command action)
+        public override void Dispose()
         {
-            try
-            {
-                action.Invoke();
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-        }
-
-        public void Dispose()
-        {
+            base.Dispose();
             messenger.Unregister(this);
-            ViewClosed = null;
         }
     }
 }

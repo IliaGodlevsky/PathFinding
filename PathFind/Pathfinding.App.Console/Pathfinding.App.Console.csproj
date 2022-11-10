@@ -150,6 +150,7 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PathFindingViewModel.cs" />
     <Compile Include="ViewModel\VertexStateViewModel.cs" />
+    <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="Views\PathfindingRangeView.cs" />
     <Compile Include="Views\GraphCreateView.cs" />
     <Compile Include="Views\GraphLoadView.cs" />
@@ -169,9 +170,21 @@
       <Project>{943D8D5A-62E0-46A2-9914-DB9973DAF9C6}</Project>
       <Name>Pathfinding.AlgorithmLib.Core.Events</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Exceptions\Pathfinding.AlgorithmLib.Core.Exceptions.csproj">
+      <Project>{70CB989C-EF34-473B-ACEF-23FDB0A47E9B}</Project>
+      <Name>Pathfinding.AlgorithmLib.Core.Exceptions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Interface.Extensions\Pathfinding.AlgorithmLib.Core.Interface.Extensions.csproj">
+      <Project>{1d30187d-dadb-4725-a9c5-c43ee983a080}</Project>
+      <Name>Pathfinding.AlgorithmLib.Core.Interface.Extensions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Interface\Pathfinding.AlgorithmLib.Core.Interface.csproj">
       <Project>{9AB4F0E3-6693-4ACD-95BC-24D04134781F}</Project>
       <Name>Pathfinding.AlgorithmLib.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.NullObjects\Pathfinding.AlgorithmLib.Core.NullObjects.csproj">
+      <Project>{16755D15-4338-4243-8EAA-95673423599F}</Project>
+      <Name>Pathfinding.AlgorithmLib.Core.NullObjects</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Realizations.StepRules\Pathfinding.AlgorithmLib.Core.Realizations.StepRules.csproj">
       <Project>{F936E225-02CF-4CC7-81A1-18866724C693}</Project>
@@ -180,6 +193,10 @@
     <ProjectReference Include="..\Pathfinding.AlgorithmLib.Factory\Pathfinding.AlgorithmLib.Factory.csproj">
       <Project>{E8ECD5E0-009E-4FFA-8FB8-4CB9209A4F25}</Project>
       <Name>Pathfinding.AlgorithmLib.Factory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Visualization\Pathfinding.AlgorithmLib.Visualization.csproj">
+      <Project>{6C5443F8-9BF4-4355-8F42-E65EE9562E3A}</Project>
+      <Name>Pathfinding.AlgorithmLib.Visualization</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Abstractions\Pathfinding.GraphLib.Core.Abstractions.csproj">
       <Project>{7112EB01-28F4-438D-945D-87CB69D14B99}</Project>
@@ -232,6 +249,10 @@
     <ProjectReference Include="..\Pathfinding.GraphLib.Visualization\Pathfinding.GraphLib.Visualization.csproj">
       <Project>{5616B5FF-BA13-4805-860C-1F69F2946B89}</Project>
       <Name>Pathfinding.GraphLib.Visualization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Logging\Pathfinding.Logging.csproj">
+      <Project>{37085E09-A2DA-4930-B219-1A3E385C5385}</Project>
+      <Name>Pathfinding.Logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pathfinding.Visualization.Extensions\Pathfinding.Visualization.Extensions.csproj">
       <Project>{eab4ff1e-bb9c-4c01-b8d6-171b1758b81d}</Project>

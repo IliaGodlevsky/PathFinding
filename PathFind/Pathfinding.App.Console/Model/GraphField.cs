@@ -2,29 +2,36 @@
 using Pathfinding.App.Console.Model.FramedAxes;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.VisualizationLib.Core.Interface;
+using Shared.Collections;
 using Shared.Extensions;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.App.Console.Model
 {
     internal sealed class GraphField : IGraphField<Vertex>, IDisplayable
     {
+        public static GraphField Empty =
+            new GraphField(Graph2D<Vertex>.Empty, Array.Empty<FramedAxis>());
+
         public IReadOnlyCollection<Vertex> Vertices { get; }
 
-        private IEnumerable<IDisplayable> Displayables { get; }
+        private ReadOnlyList<IDisplayable> Displayables { get; }
 
         public GraphField(Graph2D<Vertex> graph)
+            : this(graph, new FramedOverAbscissa(graph), 
+                          new FramedUnderAbscissa(graph), 
+                          new FramedToRightOrdinate(graph),
+                          new FramedToLeftOrdinate(graph))
+        {
+            
+        }
+
+        private GraphField(Graph2D<Vertex> graph, params FramedAxis[] axes)
         {
             Vertices = graph;
-            var displayables = new List<IDisplayable>()
-            {
-                new FramedOverAbscissa(graph),
-                new FramedUnderAbscissa(graph),
-                new FramedToRightOrdinate(graph),
-                new FramedToLeftOrdinate(graph)
-            };
-            displayables.AddRange(Vertices);
-            Displayables = displayables.AsReadOnly();
+            Displayables = axes.Concat<IDisplayable>(graph).ToReadOnly();
         }
 
         public void Display()
