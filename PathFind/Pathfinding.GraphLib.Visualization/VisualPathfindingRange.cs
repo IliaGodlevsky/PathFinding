@@ -57,7 +57,8 @@ namespace Pathfinding.Visualization.Core.Abstractions
 
         public void RestoreVerticesVisualState()
         {
-            returnVerticesVisualCommands.Execute(this.OfType<TVertex>());
+            var vertices = new Collection<TVertex>(IntermediateVertices) { Source, Target };
+            returnVerticesVisualCommands.Execute(vertices);
         }
 
         protected virtual void SetPathfindingRange(TVertex vertex)
