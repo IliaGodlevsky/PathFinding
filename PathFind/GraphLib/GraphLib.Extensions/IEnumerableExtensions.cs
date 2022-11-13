@@ -29,7 +29,6 @@ namespace GraphLib.Extensions
             where T : IVisualizable
         {
             path.Reverse()
-                .Where(vertex => !vertex.IsVisualizedAsEndPoint)
                 .ForEach(vertex => vertex.VisualizeAsPath());
             return path;
         }

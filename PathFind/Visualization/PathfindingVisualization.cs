@@ -88,7 +88,7 @@ namespace Visualization
         protected virtual void OnVertexVisited(object sender, AlgorithmEventArgs e)
         {
             var current = graph.Get(e.Current.Position);
-            if (sender is IAlgorithm<IGraphPath> algo && current.TryVisualizeAsVisited())
+            if (sender is IAlgorithm<IGraphPath> algo)
             {
                 visited.Add(algo, current);
             }
@@ -97,7 +97,7 @@ namespace Visualization
         protected virtual void OnVertexEnqueued(object sender, AlgorithmEventArgs e)
         {
             var current = graph.Get(e.Current.Position);
-            if (sender is IAlgorithm<IGraphPath> algo && current.TryVisualizeAsEnqueued())
+            if (sender is IAlgorithm<IGraphPath> algo)
             {
                 enqueued.Add(algo, current);
             }

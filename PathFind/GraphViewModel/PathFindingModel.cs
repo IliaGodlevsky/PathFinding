@@ -63,6 +63,7 @@ namespace GraphViewModel
             {
                 algorithm = Algorithm.Create(endPoints);
                 SubscribeOnAlgorithmEvents(algorithm);
+                Graph.Refresh();
                 endPoints.RestoreCurrentColors();
                 Path = await algorithm.FindPathAsync();
                 await Path.Select(Graph.Get).VisualizeAsPathAsync();

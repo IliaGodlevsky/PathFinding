@@ -78,13 +78,16 @@ namespace WPFVersion.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (vertex.IsVisualizedAsPath)
+                if (!vertex.IsVisualizedAsEndPoint)
                 {
-                    vertex.VertexColor = AlreadyPathVertexColor;
-                }
-                else
-                {
-                    vertex.VertexColor = PathVertexColor;
+                    if (vertex.IsVisualizedAsPath)
+                    {
+                        vertex.VertexColor = AlreadyPathVertexColor;
+                    }
+                    else
+                    {
+                        vertex.VertexColor = PathVertexColor;
+                    }
                 }
             });
         }
@@ -93,7 +96,7 @@ namespace WPFVersion.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (!vertex.IsVisualizedAsPath)
+                if (!vertex.IsVisualizedAsPath && !vertex.IsVisualizedAsEndPoint)
                 {
                     vertex.VertexColor = VisitedColor;
                 }
@@ -104,7 +107,7 @@ namespace WPFVersion.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (!vertex.IsVisualizedAsPath)
+                if (!vertex.IsVisualizedAsPath && !vertex.IsVisualizedAsEndPoint)
                 {
                     vertex.VertexColor = EnqueuedVertexColor;
                 }
