@@ -1,6 +1,6 @@
-﻿using Pathfinding.App.Console.Delegates;
+﻿using Pathfinding.App.Console.Attributes;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.Logging.Interface;
+using Pathfinding.App.Console.Model.MenuCommands.Attributes;
 using System;
 
 namespace Pathfinding.App.Console.ViewModel
@@ -9,33 +9,20 @@ namespace Pathfinding.App.Console.ViewModel
     {
         public event Action ViewClosed;
 
-        protected readonly ILog log;
-
-        protected ViewModel(ILog log)
-        {
-            this.log = log;
-        }
-
         public virtual void Dispose()
         {
             ViewClosed = null;
         }
 
-        protected void RaiseViewClosed()
+        protected virtual void RaiseViewClosed()
         {
             ViewClosed?.Invoke();
         }
 
-        protected void ExecuteSafe(Command command)
+        [MenuItem(MenuItemsNames.Exit, int.MaxValue)]
+        protected void Exit()
         {
-            try
-            {
-                command.Invoke();
-            }
-            catch(Exception ex)
-            {
-                log.Error(ex);
-            }
+            RaiseViewClosed();
         }
     }
 }

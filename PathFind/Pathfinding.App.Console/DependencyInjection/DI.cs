@@ -43,7 +43,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-
+using Pathfinding.App.Console.Extensions;
 
 namespace Pathfinding.App.Console.DependencyInjection
 {
@@ -71,24 +71,26 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
             builder.RegisterType<ConsoleUserTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
 #endif
-            builder.RegisterType<ConsoleKeystrokesHook>().AsSelf().InstancePerDependency().PropertiesAutowired();
+            builder.RegisterType<ConsoleKeystrokesHook>().AsSelf().SingleInstance().PropertiesAutowired();
 
-            builder.RegisterType<MainViewModel>().AsSelf().As<ICache<Graph2D<Vertex>>>().SingleInstance().PropertiesAutowired();
-            LocalAssemblyTypes.Where(type => type.Implements<IViewModel>()).Register(builder)
-                .Except<MainViewModel>().AsSelf().PropertiesAutowired().InstancePerLifetimeScope();
+            LocalAssemblyTypes.Where(type => type.Implements<IViewModel>()).Where(type => type.IsSingleInstance()).Register(builder)
+               .AsSelf().AsImplementedInterfaces().PropertiesAutowired().SingleInstance();
+            LocalAssemblyTypes.Where(type => type.Implements<IViewModel>()).Where(type => !type.IsSingleInstance()).Register(builder)
+                .AsSelf().AsImplementedInterfaces().PropertiesAutowired().InstancePerLifetimeScope();
             LocalAssemblyTypes.Where(type => type.Implements<IView>()).Register(builder)
                 .AsSelf().PropertiesAutowired().OnActivated(OnViewActivated).InstancePerLifetimeScope();
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
-            builder.RegisterType<ConsoleVisualPathfindingRange>().As<VisualPathfindingRange<Vertex>>().SingleInstance();
+            builder.RegisterType<ConsoleVisualPathfindingRange>().As<VisualPathfindingRange<Vertex>>()
+                .AsImplementedInterfaces().SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
-            LocalAssemblyTypes.Where(type => type.Implements<IGraphSubscription<Vertex>>())
-                .Register(builder).AsImplementedInterfaces().SingleInstance().PropertiesAutowired();
+            builder.RegisterType<ConsoleVertexChangeCostSubscription>().As<IGraphSubscription<Vertex>>().SingleInstance();
+            builder.RegisterType<ConsoleVertexReverseSubscription>().As<IGraphSubscription<Vertex>>().SingleInstance();
             builder.RegisterComposite<GraphSubscriptions<Vertex>, IGraphSubscription<Vertex>>().SingleInstance();
 
             builder.RegisterType<PseudoRandom>().As<IRandom>().SingleInstance();

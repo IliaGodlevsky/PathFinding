@@ -28,44 +28,22 @@ namespace Pathfinding.App.Console.Model
         private readonly IVisualization<Vertex> visualization;
 
         private bool isObstacle;
-        private IVertexCost cost;
 
         public bool IsObstacle
         {
             get => isObstacle;
-            set
-            {
-                isObstacle = value;
-                if (isObstacle)
-                {
-                    VisualizeAsObstacle();
-                }
-            }
+            set { isObstacle = value; if (isObstacle) VisualizeAsObstacle(); }
         }
 
-        public IVertexCost Cost
-        {
-            get => cost;
-            set
-            {
-                cost = value;
-                Text = cost.CurrentCost.ToString();
-            }
-        }
-
-        public Coordinate2D ConsolePosition { get; set; }
-
-        public Color Color { get; set; }
+        public IVertexCost Cost { get; set; }
 
         public IReadOnlyCollection<IVertex> Neighbours { get; set; }
 
         public ICoordinate Position { get; }
 
-        public bool IsVisualizedAsPath => visualization.IsVisualizedAsPath(this);
+        public Coordinate2D ConsolePosition { get; set; } = Coordinate2D.Empty;
 
-        public bool IsVisualizedAsEndPoint => visualization.IsVisualizedAsEndPoint(this);
-
-        private string Text { get; set; }
+        public Color Color { get; set; }
 
         public Vertex(ICoordinate coordinate, IVisualization<Vertex> visualization)
         {
@@ -81,93 +59,46 @@ namespace Pathfinding.App.Console.Model
             this.Initialize(info);
         }
 
-        public void ChangeCost()
-        {
-            CostChanged?.Invoke(this, new VertexEventArgs(this));
-        }
-
-        public void Reverse()
-        {
-            Reversed?.Invoke(this, new VertexEventArgs(this));
-        }
-
-        public void IncludeInRange()
-        {
-            IncludedInRange?.Invoke(this, new VertexEventArgs(this));
-        }
-
-        public void MarkAsIntermediateToReplace()
-        {
-            MarkedAsIntermediateToReplace?.Invoke(this, new VertexEventArgs(this));
-        }
-
         public void Display()
         {
-            if (ConsolePosition != null)
-            {
-                Cursor.SetPosition(ConsolePosition);
-                ColorfulConsole.Write(Text, Color);
-            }
+            Cursor.SetPosition(ConsolePosition);
+            ColorfulConsole.Write(Cost, Color);
         }
 
-        public bool Equals(IVertex other)
-        {
-            return other.IsEqual(this);
-        }
+        public void ChangeCost() => CostChanged?.Invoke(this, new VertexEventArgs(this));
 
-        public override bool Equals(object obj)
-        {
-            return obj is IVertex vertex && Equals(vertex);
-        }
+        public void Reverse() => Reversed?.Invoke(this, new VertexEventArgs(this));
 
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Cost.CurrentCost, Position);
-        }
+        public void IncludeInRange() => IncludedInRange?.Invoke(this, new VertexEventArgs(this));
 
-        public void VisualizeAsTarget()
-        {
-            visualization.VisualizeAsTarget(this);
-        }
+        public void MarkAsIntermediateToReplace() => MarkedAsIntermediateToReplace?.Invoke(this, new VertexEventArgs(this));
 
-        public void VisualizeAsRegular()
-        {
-            visualization.VisualizeAsRegular(this);
-        }
+        public bool Equals(IVertex other) => other.IsEqual(this);
 
-        public void VisualizeAsObstacle()
-        {
-            visualization.VisualizeAsObstacle(this);
-        }
+        public override bool Equals(object obj) => obj is IVertex vertex && Equals(vertex);
 
-        public void VisualizeAsPath()
-        {
-            visualization.VisualizeAsPath(this);
-        }
+        public override int GetHashCode() => HashCode.Combine(Cost, Position);
 
-        public void VisualizeAsSource()
-        {
-            visualization.VisualizeAsSource(this);
-        }
+        public bool IsVisualizedAsPath() => visualization.IsVisualizedAsPath(this);
 
-        public void VisualizeAsVisited()
-        {
-            visualization.VisualizeAsVisited(this);
-        }
+        public bool IsVisualizedAsEndPoint() => visualization.IsVisualizedAsEndPoint(this);
 
-        public void VisualizeAsEnqueued()
-        {
-            visualization.VisualizeAsEnqueued(this);
-        }
+        public void VisualizeAsTarget() => visualization.VisualizeAsTarget(this);
 
-        public void VisualizeAsIntermediate()
-        {
-            visualization.VisualizeAsIntermediate(this);
-        }
+        public void VisualizeAsRegular() => visualization.VisualizeAsRegular(this);
 
-        public void VisualizeAsMarkedToReplaceIntermediate()
-        {
-            visualization.VisualizeAsMarkedToReplaceIntermediate(this);
-        }
+        public void VisualizeAsObstacle() => visualization.VisualizeAsObstacle(this);
+
+        public void VisualizeAsPath() => visualization.VisualizeAsPath(this);
+
+        public void VisualizeAsSource() => visualization.VisualizeAsSource(this);
+
+        public void VisualizeAsVisited() => visualization.VisualizeAsVisited(this);
+
+        public void VisualizeAsEnqueued() => visualization.VisualizeAsEnqueued(this);
+
+        public void VisualizeAsIntermediate() => visualization.VisualizeAsIntermediate(this);
+
+        public void VisualizeAsMarkedToReplaceIntermediate() => visualization.VisualizeAsMarkedToReplaceIntermediate(this);
     }
 }

@@ -1,6 +1,4 @@
-﻿using Shared.Extensions;
-using Shared.Primitives.Attributes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Shared.Primitives.Extensions
@@ -9,7 +7,7 @@ namespace Shared.Primitives.Extensions
     {
         public static IOrderedEnumerable<T> OrderByOrderAttribute<T>(this IEnumerable<T> collection)
         {
-            return collection.OrderBy(item => item.GetAttributeOrNull<OrderAttribute>()?.Order ?? OrderAttribute.Default.Order);
+            return collection.OrderBy(item => item.GetOrderOrDefault());
         }
     }
 }

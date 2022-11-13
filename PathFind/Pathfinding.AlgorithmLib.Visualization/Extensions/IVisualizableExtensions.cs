@@ -11,7 +11,7 @@ namespace Pathfinding.AlgorithmLib.Visualization.Extensions
 
         private static bool TryVisualize(this IVisualizable vertex, Action<IVisualizable> action)
         {
-            if (!vertex.IsVisualizedAsEndPoint)
+            if (!vertex.IsVisualizedAsEndPoint())
             {
                 action(vertex);
                 return true;

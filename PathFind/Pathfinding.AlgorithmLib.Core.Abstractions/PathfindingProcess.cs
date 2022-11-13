@@ -114,7 +114,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         protected void ThrowIfInterrupted()
         {
-            if (IsInterrupted && IsInProcess)
+            if (IsInterrupted)
             {
                 throw new AlgorithmInterruptedException(this);
             }

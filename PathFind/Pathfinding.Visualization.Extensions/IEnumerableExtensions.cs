@@ -13,7 +13,7 @@ namespace Pathfinding.Visualization.Extensions
             where T : IVisualizable
         {
             path.Reverse()
-                .Where(vertex => !vertex.IsVisualizedAsEndPoint)
+                .Where(vertex => !vertex.IsVisualizedAsEndPoint())
                 .ForEach(vertex => vertex.VisualizeAsPath());
         }
 

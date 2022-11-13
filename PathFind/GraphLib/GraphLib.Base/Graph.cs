@@ -54,7 +54,7 @@ namespace GraphLib.Base
         {
             var verticesHashCode = vertices.Values.Select(x => x.GetHashCode()).ToHashCode();
             var dimensionsHashCode = DimensionsSizes.ToHashCode();
-            return HashCode.Combine(verticesHashCode, dimensionsHashCode);
+            return verticesHashCode ^ dimensionsHashCode;
         }
 
         public IEnumerator<TVertex> GetEnumerator()

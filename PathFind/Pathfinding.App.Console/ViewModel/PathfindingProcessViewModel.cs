@@ -6,109 +6,117 @@ using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Interface.Extensions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.AlgorithmLib.Factory.Interface;
-using Pathfinding.App.Console.Attributes;
+using Pathfinding.App.Console.DependencyInjection;
 using Pathfinding.App.Console.EventArguments;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.App.Console.Model.MenuCommands.Attributes;
+using Pathfinding.App.Console.Views;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
+using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.Visualization.Extensions;
 using Shared.Primitives;
-using Shared.Primitives.Attributes;
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.ViewModel
 {
-    internal sealed class PathfindingProcessViewModel : ViewModel, ICache<PathfindingProcess>, IRequireConsoleKeyInput
+    [MenuColumnsNumber(2)]
+    internal sealed class PathfindingProcessViewModel : SafeViewModel, IRequireConsoleKeyInput
     {
         private readonly IMessenger messenger;
-        private readonly IPathfindingRange range;
+        private readonly ConsoleKeystrokesHook keystrokesHook;
+        private readonly VisualPathfindingRange<Vertex> range;
         private readonly Stopwatch timer;
-        private readonly IAlgorithmFactory<PathfindingProcess> algorithmFactory;
         private readonly ManualResetEventSlim resetEvent;
 
         private int visitedVerticesCount;
 
         public IInput<ConsoleKey> KeyInput { get; set; }
 
-        public ConsoleKeystrokesHook KeystrokesHook { get; set; }
-
         private IGraphPath Path { get; set; } = NullGraphPath.Instance;
 
-        private Graph2D<Vertex> Graph { get; }
+        private Graph2D<Vertex> Graph { get; } = Graph2D<Vertex>.Empty;
 
         private PathfindingProcess Algorithm { get; set; }
 
-        PathfindingProcess ICache<PathfindingProcess>.Cached => Algorithm;
+        private string Statistics => Path.ToStatistics(timer, visitedVerticesCount, Algorithm);
 
-        private string Statistics => Path.ToStatistics(timer, visitedVerticesCount, Algorithm.ToString());
+        private IAlgorithmFactory<PathfindingProcess> Factory { get; set; }
 
-        public PathfindingProcessViewModel(IPathfindingRange range, ICache<IAlgorithmFactory<PathfindingProcess>> factory, 
+        public PathfindingProcessViewModel(VisualPathfindingRange<Vertex> range, ConsoleKeystrokesHook hook, 
             ICache<Graph2D<Vertex>> graph, IMessenger messenger, ILog log)
             : base(log)
         {
+            this.messenger = messenger;
+            resetEvent = new ManualResetEventSlim();
+            keystrokesHook = hook;
             Graph = graph.Cached;
-            this.algorithmFactory = factory.Cached;
             this.range = range;
             timer = new Stopwatch();
             Path = NullGraphPath.Interface;
-            KeystrokesHook.KeyPressed += OnConsoleKeyPressed;
+            keystrokesHook.KeyPressed += OnConsoleKeyPressed;
+            messenger.Register<PathfindingAlgorithmChosen>(this, OnAlgorithmChosen);
         }
 
         public override void Dispose()
         {
             base.Dispose();
-            KeystrokesHook.KeyPressed -= OnConsoleKeyPressed;
+            keystrokesHook.KeyPressed -= OnConsoleKeyPressed;
             resetEvent.Dispose();
+            messenger.Unregister(this);
         }
 
-        [Order(0)]
-        [MenuItem("Find path")]
+        [MenuItem(MenuItemsNames.ChooseAlgorithm, 0)]
+        private void ChooseAlgorithm() => DI.Container.Display<PathfindingProcessChooseView>();
+
+        [Condition(nameof(CanStartPathfinding))]
+        [ExecuteSafe(nameof(ExecuteSafe))]
+        [MenuItem(MenuItemsNames.FindPath, 1)]
         private void FindPath()
         {
             using (Cursor.HideCursor())
             {
+#pragma warning disable CS4014
                 FindPathInternal();
+#pragma warning restore CS4014
                 resetEvent.Reset();
                 resetEvent.Wait();
                 KeyInput.Input();
             }
         }
 
-        [Order(1)]
-        [MenuItem("Set visualization")]
-        private void SetVisualization()
+        [MenuItem(MenuItemsNames.ClearColors, 3)]
+        private void ClearColors()
         {
-
+            Graph.RestoreVerticesVisualState();
+            range.RestoreVerticesVisualState();
         }
 
-        [Order(2)]
-        [MenuItem("Exit")]
-        private void Exit()
-        {
-
-        }
+        [MenuItem(MenuItemsNames.CustomizeVisualization, 2)]
+        private void CustomizeVisualization() => DI.Container.Display<PathfindingVisualizationView>();
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
-        {           
+        {
             visitedVerticesCount++;
             messenger.Send(new UpdateStatisticsMessage(Statistics));
         }
 
-        private async void FindPathInternal()
+        private async Task FindPathInternal()
         {
-            using (Algorithm = algorithmFactory.Create(range))
+            using (Algorithm = Factory.Create(range))
             {
                 try
                 {
                     using var _ = Disposable.Use(SummarizeResults);
                     SubscribeOnAlgorithmEvents(Algorithm);
+                    messenger.Send(new SubscribeOnVisualizationMessage(Algorithm));
                     Path = await Algorithm.FindPathAsync();
                     await Path.Select(Graph.Get).VisualizeAsPathAsync();
                 }
@@ -116,12 +124,12 @@ namespace Pathfinding.App.Console.ViewModel
                 {
                     log.Debug(ex.Message);
                 }
-                catch (Exception ex)
-                {
-                    Algorithm.Interrupt();
-                    log.Error(ex);
-                }
             }
+        }
+
+        private void OnAlgorithmChosen(PathfindingAlgorithmChosen message)
+        {
+            Factory = message.Algorithm;
         }
 
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
@@ -129,24 +137,27 @@ namespace Pathfinding.App.Console.ViewModel
             switch (e.PressedKey)
             {
                 case ConsoleKey.Escape:
-                    Algorithm.Interrupt();
+                    Algorithm?.Interrupt();
                     break;
                 case ConsoleKey.P:
-                    Algorithm.Pause();
+                    Algorithm?.Pause();
                     break;
                 case ConsoleKey.Enter:
-                    Algorithm.Resume();
+                    Algorithm?.Resume();
                     break;
             }
         }
 
         private void SummarizeResults()
         {
-            string statistics = Path.Count == 0 ? MessagesTexts.CouldntFindPathMsg : Statistics;
+            var statistics = Path.Count > 0 ? Statistics : MessagesTexts.CouldntFindPathMsg;
             messenger.Send(new UpdateStatisticsMessage(statistics));
             visitedVerticesCount = 0;
             resetEvent.Set();
         }
+
+        [FailMessage(MessagesTexts.NoAlgorithmChosen)]
+        private bool CanStartPathfinding() => Factory is not null;
 
         private void SubscribeOnAlgorithmEvents(PathfindingProcess algorithm)
         {
@@ -156,8 +167,8 @@ namespace Pathfinding.App.Console.ViewModel
             algorithm.Interrupted += (s, e) => timer.Stop();
             algorithm.Paused += (s, e) => timer.Stop();
             algorithm.Resumed += (s, e) => timer.Start();
-            algorithm.Started += KeystrokesHook.StartAsync;
-            algorithm.Finished += (s, e) => KeystrokesHook.Interrupt();
+            algorithm.Started += keystrokesHook.StartAsync;
+            algorithm.Finished += (s, e) => keystrokesHook.Interrupt();
         }
     }
 }

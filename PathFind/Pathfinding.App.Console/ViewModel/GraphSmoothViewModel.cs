@@ -1,21 +1,19 @@
-﻿using Pathfinding.App.Console.Attributes;
-using Pathfinding.App.Console.Extensions;
+﻿using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.MenuCommands.Attributes;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Smoothing;
 using Pathfinding.GraphLib.Smoothing.Interface;
-using Shared.Primitives.Attributes;
 using System;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.ViewModel
 {
-    internal sealed class GraphSmoothViewModel : IViewModel, IRequireIntInput, IDisposable
+    [MenuColumnsNumber(1)]
+    internal sealed class GraphSmoothViewModel : ViewModel, IRequireIntInput, IDisposable
     {
-        public event Action ViewClosed;
-
         private readonly IMeanCost meanAlgorithm;
         private readonly IVertexCostFactory costFactory;
 
@@ -39,23 +37,10 @@ namespace Pathfinding.App.Console.ViewModel
             this.graph = graph.Cached;
         }
 
-        [Order(0)]
-        [MenuItem(MenuItemsNames.SmoothGraph)]
+        [MenuItem(MenuItemsNames.SmoothGraph, 0)]
         private void SmoothGraph()
         {
             graph.Smooth(costFactory, meanAlgorithm, SmoothLevel.Level);
-        }
-
-        [Order(1)]
-        [MenuItem(MenuItemsNames.Exit)]
-        private void Interrup()
-        {
-            ViewClosed?.Invoke();
-        }
-
-        public void Dispose()
-        {
-            ViewClosed = null;
         }
     }
 }

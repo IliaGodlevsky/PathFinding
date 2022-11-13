@@ -8,11 +8,11 @@ using static Pathfinding.GraphLib.Core.Realizations.VertexCost;
 
 namespace Pathfinding.App.Console.Model
 {
-    internal sealed class ConsoleVertexChageCostSubscription : ChangeVertexCostSubscription<Vertex>, IRequireIntInput
+    internal sealed class ConsoleVertexChangeCostSubscription : ChangeVertexCostSubscription<Vertex>, IRequireIntInput
     {
         public IInput<int> IntInput { get; set; }
 
-        public ConsoleVertexChageCostSubscription(IVertexCostFactory costFactory)
+        public ConsoleVertexChangeCostSubscription(IVertexCostFactory costFactory)
             : base(costFactory)
         {
 
@@ -21,7 +21,7 @@ namespace Pathfinding.App.Console.Model
         private void ChangeVertexCost(object sender, VertexEventArgs e)
         {
             var vertex = e.Current;
-            if(!vertex.IsObstacle)
+            if (!vertex.IsObstacle)
             {
                 var cost = IntInput.Input(MessagesTexts.VertexCostInputMsg, CostRange);
                 ChangeVertexCost(vertex, cost);

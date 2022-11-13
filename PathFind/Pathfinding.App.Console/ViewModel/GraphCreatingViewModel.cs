@@ -1,19 +1,18 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.App.Console.Attributes;
 using Pathfinding.App.Console.Delegates;
 using Pathfinding.App.Console.DependencyInjection;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.MenuCommands.Attributes;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.Logging.Interface;
 using Shared.Collections;
 using Shared.Extensions;
-using Shared.Primitives.Attributes;
 using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
@@ -22,7 +21,8 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.ViewModel
 {
-    internal sealed class GraphCreatingViewModel : ViewModel, IRequireIntInput, IDisposable
+    [MenuColumnsNumber(2)]
+    internal sealed class GraphCreatingViewModel : SafeViewModel, IRequireIntInput, IDisposable
     {
         private readonly IMessenger messenger;
         private readonly InclusiveValueRange<int> graphAssembleKeyRange;
@@ -49,51 +49,46 @@ namespace Pathfinding.App.Console.ViewModel
             messenger = DI.Container.Resolve<IMessenger>();
         }
 
-        [Order(0)]
         [ExecuteSafe(nameof(ExecuteSafe))]
-        [Condition(nameof(CanCreateGraph))]
-        [MenuItem(MenuItemsNames.CreateNewGraph)]
+        [Condition(nameof(IsAssembleChosen))]
+        [Condition(nameof(IsGraphSizeSet), 1)]
+        [MenuItem(MenuItemsNames.CreateNewGraph, 0)]
         private void CreateGraph()
         {
             var graph = SelectedGraphAssemble.AssembleGraph(ObstaclePercent, Width, Length);
             messenger.Send(new GraphCreatedMessage(graph));
-            throw new Exception();
         }
 
-        [Order(1)]
-        [MenuItem(MenuItemsNames.ChooseGraphAssemble)]
+        [MenuItem(MenuItemsNames.ChooseGraphAssemble, 1)]
         private void ChooseGraphAssemble()
         {
             int graphAssembleIndex = IntInput.Input(GraphAssembleInpuMessage, graphAssembleKeyRange) - 1;
             SelectedGraphAssemble = GraphAssembles[graphAssembleIndex];
         }
 
-        [Order(2)]
-        [MenuItem(MenuItemsNames.InputGraphParametres)]
+        [MenuItem(MenuItemsNames.InputGraphParametres, 2)]
         public void InputGraphParametres()
         {
             Width = IntInput.Input(MessagesTexts.GraphWidthInputMsg, Constants.GraphWidthValueRange);
             Length = IntInput.Input(MessagesTexts.GraphHeightInputMsg, Constants.GraphLengthValueRange);
         }
 
-        [Order(3)]
-        [MenuItem(MenuItemsNames.InputObstaclePercent)]
+        [MenuItem(MenuItemsNames.InputObstaclePercent, 3)]
         public void InputObstaclePercent()
         {
             ObstaclePercent = IntInput.Input(MessagesTexts.ObstaclePercentInputMsg, Constants.ObstaclesPercentValueRange);
         }
 
-        [Order(4)]
-        [MenuItem(MenuItemsNames.Exit)]
-        private void Interrupt()
+        [FailMessage(MessagesTexts.AssebleIsNotChosen)]
+        private bool IsAssembleChosen()
         {
-            RaiseViewClosed();
+            return SelectedGraphAssemble != null;
         }
 
-        private bool CanCreateGraph()
+        [FailMessage(MessagesTexts.GraphSizeIsNotSet)]
+        private bool IsGraphSizeSet()
         {
-            return SelectedGraphAssemble != null
-                && Constants.GraphWidthValueRange.Contains(Width)
+            return Constants.GraphWidthValueRange.Contains(Width)
                 && Constants.GraphLengthValueRange.Contains(Length);
         }
     }

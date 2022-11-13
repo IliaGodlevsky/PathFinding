@@ -31,11 +31,17 @@ namespace Pathfinding.App.Console
         public const string YCoordinateInputMsg = "Input Y coordinate of vertex: ";
         public const string EndPointsFirstlyMsg = "Firstly choose endpoints";
         public const string VertexCostInputMsg = "Input vertex cost: ";
-        public const string NotEnoughParamtres = "Not enough parametres to create graph";
         public const string NumberOfIntermediateVerticesInputMsg = "Input number of intermediates vertices: ";
         public const string NumberOfIntermediatesVerticesToReplaceMsg = "Input number of intermediates to replace: ";
         public const string OutOfRangeMsg = "Value is out of range. ";
         public const string BadInputMsg = "Bad input. Try again: ";
         public const string InputPathMsg = "Input path: ";
+
+        public const string AssebleIsNotChosen = "Choose assemble for graph";
+        public const string GraphSizeIsNotSet = "Set graph size";
+        public const string GraphIsNotCreated = "Graph is not created";
+        public const string NoAlgorithmChosen = "Choose algorithm to start pathfinding";
+        public const string NoIntermediatesChosen = "No intermediate vertices were chosen";
+        public const string NoPathfindingRange = "Choose pathfinding range";
     }
 }

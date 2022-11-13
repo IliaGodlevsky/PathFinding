@@ -8,16 +8,19 @@ namespace Pathfinding.GraphLib.Core.Realizations
     {
         public static InclusiveValueRange<int> CostRange { get; set; }
 
+        private readonly string stringRepresentation;
+
         static VertexCost()
         {
             CostRange = new InclusiveValueRange<int>(9, 1);
         }
 
-        public int CurrentCost { get; protected set; }
+        public int CurrentCost { get; }
 
         public VertexCost(int cost)
         {
             CurrentCost = CostRange.ReturnInRange(cost);
+            stringRepresentation = CurrentCost.ToString();
         }
 
         public override bool Equals(object obj)
@@ -28,6 +31,11 @@ namespace Pathfinding.GraphLib.Core.Realizations
         public override int GetHashCode()
         {
             return CurrentCost.GetHashCode();
+        }
+
+        public override sealed string ToString()
+        {
+            return stringRepresentation;
         }
     }
 }

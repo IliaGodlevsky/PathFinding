@@ -45,12 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\CompanionMethodAttribute.cs" />
-    <Compile Include="Attributes\ConditionAttribute.cs" />
-    <Compile Include="Attributes\ExecuteSafeAttribute.cs" />
-    <Compile Include="Attributes\MenuItemAttribute.cs" />
-    <Compile Include="Commands\ConditionedMenuCommand.cs" />
-    <Compile Include="Commands\MenuCommand.cs" />
+    <Compile Include="Attributes\SingleInstanceAttribute.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Model\MenuCommands\Attributes\MenuColumnsNumberAttribute.cs" />
+    <Compile Include="Model\MenuCommands\Attributes\MethodMarkAttribute.cs" />
+    <Compile Include="Model\MenuCommands\Attributes\ConditionAttribute.cs" />
+    <Compile Include="Model\MenuCommands\Attributes\ExecuteSafeAttribute.cs" />
+    <Compile Include="Model\MenuCommands\Attributes\FailMessageAttribute.cs" />
+    <Compile Include="Model\MenuCommands\Attributes\IMethodMark.cs" />
+    <Compile Include="Model\MenuCommands\Attributes\MenuItemAttribute.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ConvertedProperties\ConvertedProperty.cs" />
     <Compile Include="ConvertedProperties\GraphParamsProperty.cs" />
@@ -64,12 +67,11 @@
     <Compile Include="EventHandlers\ConsoleKeyPressedEventHandler.cs" />
     <Compile Include="EventHandlers\VertexEventHandler.cs" />
     <Compile Include="Extensions\ConsoleKeystrokesHookExtensions.cs" />
-    <Compile Include="Extensions\IContainerExtensions.cs" />
+    <Compile Include="Extensions\ILifetimeScopeExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IGraphPathExtensions.cs" />
     <Compile Include="Extensions\IInputExtensions.cs" />
     <Compile Include="Interface\ICache.cs" />
-    <Compile Include="Interface\ICompanionMethods.cs" />
     <Compile Include="Interface\IDisplayable.cs" />
     <Compile Include="Interface\IFramedAxis.cs" />
     <Compile Include="Interface\IInput.cs" />
@@ -88,9 +90,12 @@
     <Compile Include="Messages\ClearGraphMessage.cs" />
     <Compile Include="Messages\CostRangeChangedMessage.cs" />
     <Compile Include="Messages\GraphCreatedMessage.cs" />
+    <Compile Include="Messages\PathfindingAlgorithmChosen.cs" />
+    <Compile Include="Messages\SubscribeOnVisualizationMessage.cs" />
     <Compile Include="Messages\UpdateStatisticsMessage.cs" />
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\Answer.cs" />
+    <Compile Include="Model\ConditionFailedException.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
     <Compile Include="Model\ConsoleSmoothLevels.cs" />
     <Compile Include="Model\ConsoleVertexReverseSubscription.cs" />
@@ -102,14 +107,13 @@
     <Compile Include="Model\FramedAxes\FramedToLeftOrdinate.cs" />
     <Compile Include="Model\FramedAxes\FramedToRightOrdinate.cs" />
     <Compile Include="Model\FramedAxes\FramedUnderAbscissa.cs" />
-    <Compile Include="Model\ConsoleVertexChageCostSubscription.cs" />
+    <Compile Include="Model\ConsoleVertexChangeCostSubscription.cs" />
     <Compile Include="Model\GraphField.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
-    <Compile Include="Model\Menu.cs" />
+    <Compile Include="Model\MenuCommands\ConditionPair.cs" />
+    <Compile Include="Model\MenuCommands\Menu.cs" />
+    <Compile Include="Model\MenuCommands\MenuCommand.cs" />
     <Compile Include="Model\MenuList.cs" />
-    <Compile Include="Model\Methods\CompanionMethods.cs" />
-    <Compile Include="Model\Methods\ConditionMethods.cs" />
-    <Compile Include="Model\Methods\SafeMethods.cs" />
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\Vertex.cs" />
     <Compile Include="Model\VertexFactory.cs" />
@@ -117,6 +121,7 @@
     <Compile Include="Model\VertexVisualization.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Screen.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedAnswerInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedIntInput.cs" />
@@ -142,7 +147,7 @@
     <Compile Include="ValueInput\UserInput\ConsoleUserKeyInput.cs" />
     <Compile Include="ValueInput\UserInput\ConsoleUserStringInput.cs" />
     <Compile Include="ValueInput\UserInput\ConsoleUserTimeSpanInput.cs" />
-    <Compile Include="ViewModel\PathfindingProcessSelectingViewModel.cs" />
+    <Compile Include="ViewModel\PathfindingProcessChooseViewModel.cs" />
     <Compile Include="ViewModel\PathfindingProcessViewModel.cs" />
     <Compile Include="ViewModel\PathfindingRangeViewModel.cs" />
     <Compile Include="ViewModel\GraphCreatingViewModel.cs" />
@@ -150,17 +155,21 @@
     <Compile Include="ViewModel\GraphSaveViewModel.cs" />
     <Compile Include="ViewModel\GraphSmoothViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\PathFindingViewModel.cs" />
+    <Compile Include="ViewModel\PathfindingViewModel.cs" />
     <Compile Include="ViewModel\PathfindingVisualizationViewModel.cs" />
+    <Compile Include="ViewModel\SafeViewModel.cs" />
     <Compile Include="ViewModel\VertexStateViewModel.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
+    <Compile Include="Views\PathfindingProcessChooseView.cs" />
+    <Compile Include="Views\PathfindingProcessView.cs" />
     <Compile Include="Views\PathfindingRangeView.cs" />
     <Compile Include="Views\GraphCreateView.cs" />
     <Compile Include="Views\GraphLoadView.cs" />
     <Compile Include="Views\GraphSaveView.cs" />
     <Compile Include="Views\GraphSmoothView.cs" />
     <Compile Include="Views\MainView.cs" />
-    <Compile Include="Views\PathFindView.cs" />
+    <Compile Include="Views\PathfindingVisualizationView.cs" />
+    <Compile Include="Views\PathfindingView.cs" />
     <Compile Include="Views\VertexStateView.cs" />
     <Compile Include="Views\View.cs" />
   </ItemGroup>
@@ -313,5 +322,6 @@
       <Version>5.4.1.1</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

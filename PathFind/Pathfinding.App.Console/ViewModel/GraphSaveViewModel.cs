@@ -1,17 +1,15 @@
-﻿using Pathfinding.App.Console.Attributes;
-using Pathfinding.App.Console.Interface;
+﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.MenuCommands.Attributes;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
-using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
-using Shared.Primitives.Attributes;
-using System;
 
 namespace Pathfinding.App.Console.ViewModel
 {
-    internal sealed class GraphSaveViewModel : ViewModel, IDisposable
+    [MenuColumnsNumber(1)]
+    internal sealed class GraphSaveViewModel : SafeViewModel
     {
         private readonly IGraphSerializationModule<Graph2D<Vertex>, Vertex> module;
 
@@ -25,20 +23,11 @@ namespace Pathfinding.App.Console.ViewModel
             Graph = graph.Cached;
         }
 
-        [Order(0)]
         [ExecuteSafe(nameof(ExecuteSafe))]
-        [Condition(nameof(IsGraphValid))]
-        [MenuItem(MenuItemsNames.SaveGraph)]
-        private async void SaveGraph()
+        [MenuItem(MenuItemsNames.SaveGraph, 0)]
+        private void SaveGraph()
         {
-            await module.SaveGraphAsync(Graph);
-        }
-
-        [Order(1)]
-        [MenuItem(MenuItemsNames.Exit)]
-        private void Interrupt()
-        {
-            RaiseViewClosed();
+            module.SaveGraph(Graph);
         }
 
         private bool IsGraphValid()

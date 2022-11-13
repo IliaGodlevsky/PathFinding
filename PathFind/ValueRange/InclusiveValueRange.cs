@@ -39,7 +39,8 @@ namespace ValueRange
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(UpperValueOfRange, LowerValueOfRange);
+            return 0;
+            //return HashCode.Combine(UpperValueOfRange, LowerValueOfRange);
         }
 
         public override string ToString()

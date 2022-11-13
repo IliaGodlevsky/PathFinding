@@ -5,18 +5,14 @@ namespace Shared.Primitives.Attributes
     [AttributeUsage(AttributeTargets.All)]
     public class OrderAttribute : Attribute
     {
-        public static readonly OrderAttribute Default = new OrderAttribute();
+        public static readonly OrderAttribute Default 
+            = new OrderAttribute(int.MaxValue);
 
         public int Order { get; }
 
         public OrderAttribute(int order)
         {
             Order = order;
-        }
-
-        public OrderAttribute() : this(int.MaxValue)
-        {
-
         }
 
         public override bool Equals(object obj)

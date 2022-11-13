@@ -32,8 +32,8 @@ namespace Pathfinding.Visualization.Core.Abstractions
 
         protected VisualPathfindingRange()
         {
-            IntermediateVertices = new Collection<TVertex>();
-            MarkedToRemoveIntermediateVertices = new Collection<TVertex>();
+            IntermediateVertices = new List<TVertex>();
+            MarkedToRemoveIntermediateVertices = new List<TVertex>();
             setPathfindingRangeCommands = new SetPathfindingRangeCommands<TVertex>(this);
             intermediateVerticesToRemoveCommands = new IntermediateVerticesToRemoveCommands<TVertex>(this);
             returnVerticesVisualCommands = new RestoreVerticesVisualCommands<TVertex>(this);
@@ -57,7 +57,7 @@ namespace Pathfinding.Visualization.Core.Abstractions
 
         public void RestoreVerticesVisualState()
         {
-            var vertices = new Collection<TVertex>(IntermediateVertices) { Source, Target };
+            var vertices = IntermediateVertices.AppendRange(Source, Target).ToArray();
             returnVerticesVisualCommands.Execute(vertices);
         }
 

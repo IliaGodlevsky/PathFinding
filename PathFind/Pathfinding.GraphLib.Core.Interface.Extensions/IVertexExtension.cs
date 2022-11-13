@@ -9,8 +9,8 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
     {
         public static bool IsIsolated(this IVertex self)
         {
-            return self.IsObstacle 
-                || self.Neighbours.All(vertex => vertex.IsObstacle);
+            return self?.IsObstacle == true
+                || self?.Neighbours.All(vertex => vertex.IsObstacle) == true;
         }
 
         public static bool HasNoNeighbours(this IVertex vertex)
@@ -25,8 +25,8 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
 
         public static void InitializeComponents(this IVertex self)
         {
-            self.IsObstacle = false;
             self.Cost = NullCost.Interface;
+            self.IsObstacle = false;            
             self.Neighbours = ReadOnlyList<IVertex>.Empty;
         }
 

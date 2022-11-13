@@ -55,7 +55,7 @@ namespace Pathfinding.App.Console.Model
 
         public void VisualizeAsPath(Vertex vertex)
         {
-            if (vertex.IsVisualizedAsPath)
+            if (vertex.IsVisualizedAsPath())
             {
                 Mark(vertex, AlreadyPathVertexColor);
             }
@@ -67,7 +67,7 @@ namespace Pathfinding.App.Console.Model
 
         public void VisualizeAsVisited(Vertex vertex)
         {
-            if (!vertex.IsVisualizedAsPath)
+            if (!vertex.IsVisualizedAsPath())
             {
                 Mark(vertex, VisitedVertexColor);
             }
@@ -75,7 +75,7 @@ namespace Pathfinding.App.Console.Model
 
         public void VisualizeAsEnqueued(Vertex vertex)
         {
-            if (!vertex.IsVisualizedAsPath)
+            if (!vertex.IsVisualizedAsPath())
             {
                 Mark(vertex, EnqueuedVertexColor);
             }

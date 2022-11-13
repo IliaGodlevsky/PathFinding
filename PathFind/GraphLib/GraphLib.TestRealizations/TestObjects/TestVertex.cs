@@ -43,7 +43,7 @@ namespace GraphLib.TestRealizations.TestObjects
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Cost.CurrentCost, Position.GetHashCode());
+            return Cost.CurrentCost.GetHashCode() ^ Position.GetHashCode();
         }
     }
 }

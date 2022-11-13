@@ -14,7 +14,7 @@ namespace Pathfinding.GraphLib.Visualization.Subscriptions.Commands
 
         public bool CanExecute(TVertex vertex)
         {
-            return vertex.IsObstacle && !vertex.IsVisualizedAsEndPoint;
+            return vertex.IsObstacle && !vertex.IsVisualizedAsEndPoint();
         }
     }
 }

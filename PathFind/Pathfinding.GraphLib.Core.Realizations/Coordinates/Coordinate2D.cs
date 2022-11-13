@@ -8,6 +8,9 @@ namespace Pathfinding.GraphLib.Core.Realizations.Coordinates
     [DebuggerDisplay("{ToString()}")]
     public sealed class Coordinate2D : Coordinate
     {
+        public static readonly Coordinate2D Empty
+            = new Coordinate2D(0, 0);
+
         public int X { get; }
 
         public int Y { get; }

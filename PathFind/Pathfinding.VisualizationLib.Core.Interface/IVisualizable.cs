@@ -2,9 +2,9 @@
 {
     public interface IVisualizable
     {
-        bool IsVisualizedAsPath { get; }
+        bool IsVisualizedAsPath();
 
-        bool IsVisualizedAsEndPoint { get; }
+        bool IsVisualizedAsEndPoint();
 
         void VisualizeAsTarget();
 

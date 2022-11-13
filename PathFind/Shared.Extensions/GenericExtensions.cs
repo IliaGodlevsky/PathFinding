@@ -1,17 +1,18 @@
-﻿namespace Shared.Extensions
+﻿using System;
+using System.Linq;
+
+namespace Shared.Extensions
 {
     public static class GenericExtensions
     {
         public static bool IsOneOf<T>(this T self, params T[] objects)
         {
-            for (int i = 0; i < objects.Length; i++)
-            {
-                if (!objects[i].Equals(self))
-                {
-                    return false;
-                }
-            }
-            return true;
+            return objects.Any(obj => self.Equals(obj));
+        }
+
+        public static bool IsOneOf<T>(this T self, params IEquatable<T>[] objects)
+        {
+            return objects.Any(obj => obj.Equals(self));
         }
     }
 }

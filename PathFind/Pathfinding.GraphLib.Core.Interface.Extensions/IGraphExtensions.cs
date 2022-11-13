@@ -17,13 +17,19 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
             return self.Where(vertex => vertex.IsObstacle).Count();
         }
 
-        public static int GetAvailableIntermediatesNumber<TVertex>(this IGraph<TVertex> graph)
+        public static int GetAvailableIntermediatesVerticesNumber<TVertex>(this IGraph<TVertex> graph)
             where TVertex : IVertex
         {
             const int NumberOfRequiredEndPoints = 2;
             int isolatedCount = graph.Where(vertex => vertex.IsIsolated()).Count();
             int number = graph.Count - (isolatedCount + NumberOfRequiredEndPoints);
             return number > 0 ? number : 0;
+        }
+
+        public static int GetNumberOfNotIsolatedVertices<TVertex>(this IGraph<TVertex> graph)
+            where TVertex : IVertex
+        {
+            return graph.Where(vertex => !vertex.IsIsolated()).Count();
         }
 
         public static string GetStringRepresentation<TVertex>(this IGraph<TVertex> graph,

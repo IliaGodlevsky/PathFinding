@@ -13,18 +13,11 @@ namespace Pathfinding.App.Console.Model
         private static readonly Answer Default = new Answer(-1, string.Empty);
 
         public static readonly InclusiveValueRange<Answer> Range = new InclusiveValueRange<Answer>(Yes, No);
-
-        public static readonly ReadOnlyList<Answer> Answers;
+        public static readonly ReadOnlyList<Answer> Answers = new ReadOnlyList<Answer>(Yes, No);
 
         private readonly int value;
         private readonly string display;
         private readonly int hash;
-
-        static Answer()
-        {
-            var answers = new[] { Yes, No };
-            Answers = new ReadOnlyList<Answer>(answers);
-        }
 
         private Answer(int value, string display)
         {

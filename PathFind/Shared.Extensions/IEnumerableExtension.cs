@@ -52,6 +52,16 @@ namespace Shared.Extensions
             return collection;
         }
 
+        public static IEnumerable<T> AppendRange<T>(this IEnumerable<T> collection, params T[] range)
+        {
+            var temp = collection;
+            foreach (var item in range)
+            {
+                temp = temp.Append(item);
+            }
+            return temp;
+        }
+
         public static bool Juxtapose<T>(this IEnumerable<T> self, IEnumerable<T> second, Func<T, T, bool> predicate)
         {
             return self.SequenceEqual(second, new MatchComparer<T>(predicate));

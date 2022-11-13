@@ -23,5 +23,10 @@ namespace Pathfinding.GraphLib.Core.NullObjects
         {
             return base.GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return string.Empty;
+        }
     }
 }

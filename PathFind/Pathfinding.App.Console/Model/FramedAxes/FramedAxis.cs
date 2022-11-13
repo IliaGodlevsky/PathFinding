@@ -5,7 +5,7 @@ namespace Pathfinding.App.Console.Model.FramedAxes
 {
     internal abstract class FramedAxis : IFramedAxis, IDisplayable
     {
-        protected static int LateralDistance => MainView.LateralDistanceBetweenVertices;
+        protected static int LateralDistance => Screen.LateralDistanceBetweenVertices;
 
         protected const char Space = ' ';
 

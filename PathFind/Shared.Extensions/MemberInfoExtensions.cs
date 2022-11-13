@@ -16,6 +16,10 @@ namespace Shared.Extensions
         {
             try
             {
+                if (self == null)
+                {
+                    throw new ArgumentNullException(nameof(self));
+                }
                 action = (TDelegate)self.CreateDelegate(typeof(TDelegate), target);
                 return true;
             }
@@ -24,6 +28,6 @@ namespace Shared.Extensions
                 action = null;
                 return false;
             }
-        }        
+        }
     }
 }
