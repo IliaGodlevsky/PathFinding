@@ -118,7 +118,7 @@ namespace Pathfinding.App.Console.ViewModel
                     SubscribeOnAlgorithmEvents(Algorithm);
                     messenger.Send(new SubscribeOnVisualizationMessage(Algorithm));
                     Path = await Algorithm.FindPathAsync();
-                    await Path.Select(Graph.Get).VisualizeAsPathAsync();
+                    await Graph.GetVertices(Path).Reverse().VisualizeAsPathAsync();
                 }
                 catch (PathfindingException ex)
                 {

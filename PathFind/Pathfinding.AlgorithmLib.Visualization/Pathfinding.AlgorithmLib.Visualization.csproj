@@ -45,7 +45,6 @@
     <Compile Include="Abstractions\PathfindingRangeVertices.cs" />
     <Compile Include="Abstractions\GraphVertices.cs" />
     <Compile Include="Extensions\IGraphExtensions.cs" />
-    <Compile Include="Extensions\IVisualizableExtensions.cs" />
     <Compile Include="Extensions\IVisualizationSlidesExtensions.cs" />
     <Compile Include="Interfaces\IVisualizationStore.cs" />
     <Compile Include="Interfaces\IVisualizationSlides.cs" />

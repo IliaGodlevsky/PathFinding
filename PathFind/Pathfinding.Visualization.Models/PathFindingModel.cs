@@ -67,7 +67,7 @@ namespace Pathfinding.Visualization.Models
                 SubscribeOnAlgorithmEvents(algorithm);
                 pathfindingRange.RestoreVerticesVisualState();
                 Path = await algorithm.FindPathAsync();
-                await Path.Select(Graph.Get).VisualizeAsPathAsync();
+                await Path.Select(Graph.Get).Reverse().VisualizeAsPathAsync();
                 SummarizePathfindingResults();
             }
             catch (PathfindingException ex)

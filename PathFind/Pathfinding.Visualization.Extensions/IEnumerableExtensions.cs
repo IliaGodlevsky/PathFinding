@@ -12,9 +12,7 @@ namespace Pathfinding.Visualization.Extensions
         public static void VisualizeAsPath<T>(this IEnumerable<T> path)
             where T : IVisualizable
         {
-            path.Reverse()
-                .Where(vertex => !vertex.IsVisualizedAsEndPoint())
-                .ForEach(vertex => vertex.VisualizeAsPath());
+            path.ForEach(vertex => vertex.VisualizeAsPath());
         }
 
         public static async Task VisualizeAsPathAsync<T>(this IEnumerable<T> path)
