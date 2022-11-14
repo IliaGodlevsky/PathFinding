@@ -1,42 +1,47 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Visualization.Commands.Realizations.VisualizationCommands;
+using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Executable;
 using Shared.Executable.Extensions;
 using Shared.Extensions;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Pathfinding.Visualization.Core.Abstractions
 {
-    public abstract class VisualPathfindingRange<TVertex> : IPathfindingRange, IGraphSubscription<TVertex>, IUndo
+    public abstract class PathfindingRangeAdapter<TVertex> : IPathfindingRangeAdapter<TVertex>, IGraphSubscription<TVertex>, IUndo
         where TVertex : IVertex, IVisualizable
     {
         private readonly IntermediateVerticesToRemoveCommands<TVertex> intermediateVerticesToRemoveCommands;
         private readonly SetPathfindingRangeCommands<TVertex> setPathfindingRangeCommands;
         private readonly IExecutable<TVertex> returnVerticesVisualCommands;
-
-        IVertex IPathfindingRange.Source => Source;
-
-        IVertex IPathfindingRange.Target => Target;
+        private readonly IPathfindingRangeFactory rangeFactory;
 
         public TVertex Source { get; internal set; }
 
         public TVertex Target { get; internal set; }
 
-        internal protected IList<TVertex> IntermediateVertices { get; }
+        IReadOnlyCollection<TVertex> IPathfindingRangeAdapter<TVertex>.Intermediates => Intermediates.AsReadOnly();
+
+        internal List<TVertex> Intermediates { get; }
 
         internal protected IList<TVertex> MarkedToRemoveIntermediateVertices { get; }
 
-        protected VisualPathfindingRange()
+        protected PathfindingRangeAdapter(IPathfindingRangeFactory rangeFactory)
         {
-            IntermediateVertices = new List<TVertex>();
+            this.rangeFactory = rangeFactory;
+            Intermediates = new List<TVertex>();
             MarkedToRemoveIntermediateVertices = new List<TVertex>();
             setPathfindingRangeCommands = new SetPathfindingRangeCommands<TVertex>(this);
             intermediateVerticesToRemoveCommands = new IntermediateVerticesToRemoveCommands<TVertex>(this);
             returnVerticesVisualCommands = new RestoreVerticesVisualCommands<TVertex>(this);
+        }
+
+        public IPathfindingRange GetPathfindingRange()
+        {
+            return rangeFactory.CreateRange(Source, Target, Intermediates.OfType<IVertex>());
         }
 
         public void Subscribe(IGraph<TVertex> graph)
@@ -57,7 +62,7 @@ namespace Pathfinding.Visualization.Core.Abstractions
 
         public void RestoreVerticesVisualState()
         {
-            var vertices = IntermediateVertices.AppendRange(Source, Target).ToArray();
+            var vertices = this.GetRange().ToArray();
             returnVerticesVisualCommands.Execute(vertices);
         }
 
@@ -74,19 +79,5 @@ namespace Pathfinding.Visualization.Core.Abstractions
         protected abstract void SubscribeVertex(TVertex vertex);
 
         protected abstract void UnsubscribeVertex(TVertex vertex);
-
-        public IEnumerator<IVertex> GetEnumerator()
-        {
-            return IntermediateVertices
-                .OfType<IVertex>()
-                .Prepend(Source)
-                .Append(Target)
-                .GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
     }
 }

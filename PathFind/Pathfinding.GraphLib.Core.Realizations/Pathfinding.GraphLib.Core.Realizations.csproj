@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Neighborhoods\MooreNeighborhood.cs" />
     <Compile Include="Neighborhoods\VonNeumannNeighborhood.cs" />
+    <Compile Include="PathfindingRange.cs" />
     <Compile Include="VertexCost.cs" />
     <Compile Include="Coordinates\Coordinate2D.cs" />
     <Compile Include="Coordinates\Coordinate3D.cs" />

@@ -1,6 +1,4 @@
-﻿using Pathfinding.App.Console.Attributes;
-using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Model.MenuCommands.Attributes;
+﻿using Pathfinding.App.Console.Menu.Realizations.Attributes;
 using System;
 
 namespace Pathfinding.App.Console.ViewModel

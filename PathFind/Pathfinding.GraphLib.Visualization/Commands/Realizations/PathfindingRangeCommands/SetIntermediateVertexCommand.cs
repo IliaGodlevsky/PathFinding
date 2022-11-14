@@ -1,11 +1,10 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Visualization.Commands.Abstractions;
 using Pathfinding.Visualization.Core.Abstractions;
+using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Executable;
 using Shared.Executable.Extensions;
-using Shared.Extensions;
 using Shared.Primitives.Attributes;
 using System.Linq;
 
@@ -17,10 +16,10 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
     {
         private readonly IExecutable<TVertex> undoCommand;
 
-        public SetIntermediateVertexCommand(VisualPathfindingRange<TVertex> pathifindingRange)
+        public SetIntermediateVertexCommand(PathfindingRangeAdapter<TVertex> pathifindingRange)
             : base(pathifindingRange)
         {
-            undoCommand = new UnsetIntermediateVertexCommand<TVertex>(pathfindingRange);
+            undoCommand = new UnsetIntermediateVertexCommand<TVertex>(adapter);
         }
 
         public override void Execute(TVertex vertex)
@@ -31,8 +30,8 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
 
         public override bool CanExecute(TVertex vertex)
         {
-            return pathfindingRange.HasSourceAndTargetSet()
-                && pathfindingRange.CanBeInRange(vertex);
+            return adapter.HasSourceAndTargetSet()
+                && adapter.CanBeInRange(vertex);
         }
 
         public void Undo()

@@ -49,6 +49,7 @@
     <Compile Include="GraphFactories\Graph3DFactory.cs" />
     <Compile Include="NeighborhoodFactories\MooreNeighborhoodFactory.cs" />
     <Compile Include="NeighborhoodFactories\VonNeumannNeighborhoodFactory.cs" />
+    <Compile Include="PathfindingRangeFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

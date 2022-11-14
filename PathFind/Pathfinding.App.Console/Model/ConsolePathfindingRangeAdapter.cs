@@ -1,12 +1,18 @@
 ﻿using Pathfinding.App.Console.EventArguments;
+using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.Visualization.Core.Abstractions;
 using System.Diagnostics;
 
 namespace Pathfinding.App.Console.Model
 {
     [DebuggerDisplay("Source - {Source}, Target - {Target}")]
-    internal sealed class ConsoleVisualPathfindingRange : VisualPathfindingRange<Vertex>
+    internal sealed class ConsolePathfindingRangeAdapter : PathfindingRangeAdapter<Vertex>
     {
+        public ConsolePathfindingRangeAdapter(IPathfindingRangeFactory rangeFactory) 
+            : base(rangeFactory)
+        {
+        }
+
         protected override void SubscribeVertex(Vertex vertex)
         {
             vertex.IncludedInRange += SetPathfindingRange;

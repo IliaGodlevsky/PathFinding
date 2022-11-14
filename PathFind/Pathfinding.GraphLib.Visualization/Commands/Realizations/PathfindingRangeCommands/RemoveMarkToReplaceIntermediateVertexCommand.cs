@@ -10,7 +10,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
     internal sealed class RemoveMarkToReplaceIntermediateVertexCommand<TVertex> : PathfindingRangeIntermediateVertexCommand<TVertex>
         where TVertex : IVertex, IVisualizable
     {
-        public RemoveMarkToReplaceIntermediateVertexCommand(VisualPathfindingRange<TVertex> endPoints)
+        public RemoveMarkToReplaceIntermediateVertexCommand(PathfindingRangeAdapter<TVertex> endPoints)
             : base(endPoints)
         {
 

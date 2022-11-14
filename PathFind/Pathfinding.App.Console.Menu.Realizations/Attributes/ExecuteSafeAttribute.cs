@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Pathfinding.App.Console.Model.MenuCommands.Attributes
+namespace Pathfinding.App.Console.Menu.Realizations.Attributes
 {
     [AttributeUsage(AttributeTargets.Method)]
     internal sealed class ExecuteSafeAttribute : MethodMarkAttribute

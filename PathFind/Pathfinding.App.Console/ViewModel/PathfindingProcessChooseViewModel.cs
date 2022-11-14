@@ -4,8 +4,8 @@ using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.App.Console.Attributes;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Menu.Realizations.Attributes;
 using Pathfinding.App.Console.Messages;
-using Pathfinding.App.Console.Model.MenuCommands.Attributes;
 using Shared.Collections;
 using Shared.Extensions;
 using Shared.Primitives.Attributes;
@@ -16,8 +16,8 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.ViewModel
 {
-    [MenuColumnsNumber(1)]
     [SingleInstance]
+    [MenuColumnsNumber(1)]    
     internal sealed class PathfindingProcessChooseViewModel : ViewModel, IRequireIntInput
     {
         private readonly IMessenger messenger;

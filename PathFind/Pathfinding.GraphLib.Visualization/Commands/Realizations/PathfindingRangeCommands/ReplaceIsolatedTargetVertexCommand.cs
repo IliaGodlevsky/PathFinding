@@ -2,6 +2,7 @@
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Visualization.Commands.Abstractions;
 using Pathfinding.Visualization.Core.Abstractions;
+using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Primitives.Attributes;
 
@@ -11,7 +12,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
     internal sealed class ReplaceIsolatedTargetVertexCommand<TVertex> : PathfindingRangeCommand<TVertex>
         where TVertex : IVertex, IVisualizable
     {
-        public ReplaceIsolatedTargetVertexCommand(VisualPathfindingRange<TVertex> pathfindingRange)
+        public ReplaceIsolatedTargetVertexCommand(PathfindingRangeAdapter<TVertex> pathfindingRange)
             : base(pathfindingRange)
         {
         }
@@ -19,15 +20,15 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
         public override void Execute(TVertex vertex)
         {
             Target.VisualizeAsRegular();
-            pathfindingRange.Target = vertex;
+            adapter.Target = vertex;
             Target.VisualizeAsTarget();
         }
 
         public override bool CanExecute(TVertex vertex)
         {
-            return pathfindingRange.Target.IsIsolated()
-                && pathfindingRange.Target != null
-                && pathfindingRange.CanBeInRange(vertex);
+            return adapter.Target.IsIsolated()
+                && adapter.Target != null
+                && adapter.CanBeInRange(vertex);
         }
     }
 }

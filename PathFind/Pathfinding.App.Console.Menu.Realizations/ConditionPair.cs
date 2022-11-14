@@ -1,6 +1,6 @@
-﻿using Pathfinding.App.Console.Delegates;
+﻿using Pathfinding.App.Console.Menu.Realizations.Delegates;
 
-namespace Pathfinding.App.Console.Model.MenuCommands
+namespace Pathfinding.App.Console.Menu.Realizations
 {
     internal sealed class ConditionPair
     {

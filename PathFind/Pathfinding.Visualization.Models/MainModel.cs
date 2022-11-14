@@ -20,7 +20,7 @@ namespace Pathfinding.Visualization.Models
 
         protected readonly ILog log;
         protected readonly IGraphFieldFactory<TGraph, TVertex, TField> fieldFactory;
-        protected readonly VisualPathfindingRange<TVertex> pathfindingRange;
+        protected readonly PathfindingRangeAdapter<TVertex> pathfindingRange;
         protected readonly IGraphSerializationModule<TGraph, TVertex> serializationModule;
 
         public virtual string GraphParametres { get; set; }
@@ -32,7 +32,7 @@ namespace Pathfinding.Visualization.Models
         protected MainModel(IGraphFieldFactory<TGraph, TVertex, TField> fieldFactory,
             IGraphSubscription<TVertex> events,
             IGraphSerializationModule<TGraph, TVertex> serializationModule,
-            VisualPathfindingRange<TVertex> endPoints,
+            PathfindingRangeAdapter<TVertex> endPoints,
             ILog log)
         {
             this.events = events;

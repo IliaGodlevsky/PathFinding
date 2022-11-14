@@ -80,30 +80,33 @@ namespace Pathfinding.App.Console.DependencyInjection
             LocalAssemblyTypes.Where(type => type.Implements<IView>()).Register(builder)
                 .AsSelf().PropertiesAutowired().OnActivated(OnViewActivated).InstancePerLifetimeScope();
 
-            builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
-            builder.RegisterType<ConsoleVisualPathfindingRange>().As<VisualPathfindingRange<Vertex>>()
-                .AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
+            builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
+            builder.RegisterType<ConsolePathfindingRangeAdapter>().As<PathfindingRangeAdapter<Vertex>>()
+                .As<IGraphSubscription<Vertex>>().As<IPathfindingRangeAdapter<Vertex>>().SingleInstance();
+
+            builder.RegisterType<PseudoRandom>().As<IRandom>().SingleInstance();
+
             builder.RegisterType<ConsoleVertexChangeCostSubscription>().As<IGraphSubscription<Vertex>>().SingleInstance();
             builder.RegisterType<ConsoleVertexReverseSubscription>().As<IGraphSubscription<Vertex>>().SingleInstance();
             builder.RegisterComposite<GraphSubscriptions<Vertex>, IGraphSubscription<Vertex>>().SingleInstance();
-
-            builder.RegisterType<PseudoRandom>().As<IRandom>().SingleInstance();
-            builder.RegisterType<GraphAssemble<Graph2D<Vertex>, Vertex>>()
-                .As<IGraphAssemble<Graph2D<Vertex>, Vertex>>().SingleInstance();
+            
+            builder.RegisterType<PathfindingRangeFactory>().As<IPathfindingRangeFactory>().SingleInstance();
+            builder.RegisterType<GraphAssemble<Graph2D<Vertex>, Vertex>>().As<IGraphAssemble<Graph2D<Vertex>, Vertex>>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<VertexFactory>().As<IVertexFactory<Vertex>>().SingleInstance();
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField>>().SingleInstance();
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph2DFactory<Vertex>>().As<IGraphFactory<Graph2D<Vertex>, Vertex>>().SingleInstance();
             builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
+
             builder.RegisterType<RootMeanSquareCost>().As<IMeanCost>().SingleInstance();
-            builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
 
             builder.RegisterType<InFileSerializationModule<Graph2D<Vertex>, Vertex>>()
                 .As<IGraphSerializationModule<Graph2D<Vertex>, Vertex>>().SingleInstance();
@@ -126,7 +129,7 @@ namespace Pathfinding.App.Console.DependencyInjection
         {
             var view = (IView)e.Instance;
             var mainModel = e.Context.Resolve<MainViewModel>();
-            view.IterationStarted += mainModel.DisplayGraph;
+            view.NewMenuCycleStarted += mainModel.DisplayGraph;
         }
 
         private static IRegistrationBuilder<object, ScanningActivatorData, DynamicRegistrationStyle> Register(this IEnumerable<Type> types,

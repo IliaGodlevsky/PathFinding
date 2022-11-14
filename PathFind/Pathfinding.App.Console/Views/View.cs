@@ -1,10 +1,10 @@
-﻿using Autofac;
-using Pathfinding.App.Console.DependencyInjection;
-using Pathfinding.App.Console.Extensions;
+﻿using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Model;
-using Pathfinding.App.Console.Model.MenuCommands;
-using Pathfinding.App.Console.Model.MenuCommands.Attributes;
+using Pathfinding.App.Console.Menu.Interface;
+using Pathfinding.App.Console.Menu.Realizations;
+using Pathfinding.App.Console.Menu.Realizations.Attributes;
+using Pathfinding.App.Console.Menu.Realizations.Exceptions;
+using Pathfinding.App.Console.ViewModel;
 using Pathfinding.Logging.Interface;
 using Shared.Extensions;
 using Shared.Primitives.ValueRange;
@@ -12,11 +12,11 @@ using System;
 
 namespace Pathfinding.App.Console.Views
 {
-    internal abstract class View : IView, IRequireIntInput, IDisposable
+    internal abstract class View : IView, IRequireIntInput, IDisplayable, IDisposable
     {
-        public event Action IterationStarted;
+        public event Action NewMenuCycleStarted;
 
-        private readonly IMenu menu;
+        private readonly IMenuCommands menu;
         private readonly IDisplayable menuList;
         private readonly InclusiveValueRange<int> menuRange;
         private readonly ILog log;
@@ -34,7 +34,7 @@ namespace Pathfinding.App.Console.Views
         protected View(IViewModel model, ILog log)
         {
             this.log = log;
-            menu = new Menu(model);
+            menu = new MenuCommands(model);
             var columns = GetMenuColumnsNumber(model);
             menuList = menu.Commands.CreateMenuList(columns);
             menuRange = new InclusiveValueRange<int>(menu.Commands.Count, 1);
@@ -45,7 +45,7 @@ namespace Pathfinding.App.Console.Views
         {
             while (!IsClosureRequested)
             {
-                IterationStarted?.Invoke();
+                NewMenuCycleStarted?.Invoke();
                 menuList.Display();
                 ExecuteCommand(MenuCommand);
             }
@@ -71,7 +71,7 @@ namespace Pathfinding.App.Console.Views
 
         public void Dispose()
         {
-            IterationStarted = null;
+            NewMenuCycleStarted = null;
         }
 
         private void OnClosed()

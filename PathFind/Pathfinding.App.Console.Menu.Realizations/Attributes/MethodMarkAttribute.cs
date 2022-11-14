@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Pathfinding.App.Console.Model.MenuCommands.Attributes
+namespace Pathfinding.App.Console.Menu.Realizations.Attributes
 {
     internal abstract class MethodMarkAttribute : Attribute, IMethodMark
     {

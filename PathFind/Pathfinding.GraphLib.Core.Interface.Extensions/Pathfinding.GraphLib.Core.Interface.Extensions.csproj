@@ -41,10 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPathfindingRangeExtensions.cs" />
     <Compile Include="IGraphExtensions.cs" />
     <Compile Include="ICoordinateExtensions.cs" />
     <Compile Include="INeighbourhoodExtensions.cs" />
+    <Compile Include="IPathfindingRangeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IVertexExtension.cs" />
   </ItemGroup>

@@ -4,9 +4,9 @@ using Pathfinding.App.Console.Delegates;
 using Pathfinding.App.Console.DependencyInjection;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Menu.Realizations.Attributes;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.App.Console.Model.MenuCommands.Attributes;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
@@ -79,13 +79,13 @@ namespace Pathfinding.App.Console.ViewModel
             ObstaclePercent = IntInput.Input(MessagesTexts.ObstaclePercentInputMsg, Constants.ObstaclesPercentValueRange);
         }
 
-        [FailMessage(MessagesTexts.AssebleIsNotChosen)]
+        [FailMessage(MessagesTexts.AssebleIsNotChosenMsg)]
         private bool IsAssembleChosen()
         {
             return SelectedGraphAssemble != null;
         }
 
-        [FailMessage(MessagesTexts.GraphSizeIsNotSet)]
+        [FailMessage(MessagesTexts.GraphSizeIsNotSetMsg)]
         private bool IsGraphSizeSet()
         {
             return Constants.GraphWidthValueRange.Contains(Width)

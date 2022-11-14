@@ -24,7 +24,6 @@ namespace Pathfinding.App.Console
         public const string RangeLowerValueInputMsg = "Input lower value of range: ";
         public const string RangeUpperValueInputMsg = "Input upper value of range: ";
         public const string CouldntFindPathMsg = "Couldn't find path";
-        public const string NoVerticesAsEndPointsMsg = "No vertices to choose as end points";
         public const string ObstaclePercentInputMsg = "Input percent of obstacles: ";
         public const string MenuOptionChoiceMsg = "Choose menu option: ";
         public const string XCoordinateInputMsg = "Input X coordinate of vertex: ";
@@ -37,11 +36,14 @@ namespace Pathfinding.App.Console
         public const string BadInputMsg = "Bad input. Try again: ";
         public const string InputPathMsg = "Input path: ";
 
-        public const string AssebleIsNotChosen = "Choose assemble for graph";
-        public const string GraphSizeIsNotSet = "Set graph size";
-        public const string GraphIsNotCreated = "Graph is not created";
-        public const string NoAlgorithmChosen = "Choose algorithm to start pathfinding";
-        public const string NoIntermediatesChosen = "No intermediate vertices were chosen";
-        public const string NoPathfindingRange = "Choose pathfinding range";
+        public const string AssebleIsNotChosenMsg = "Choose assemble for graph";
+        public const string GraphSizeIsNotSetMsg = "Set graph size";
+        public const string GraphIsNotCreatedMsg = "Graph is not created";
+        public const string NoAlgorithmChosenMsg = "Choose algorithm to start pathfinding";
+        public const string NoIntermediatesChosenMsg = "No intermediate vertices were chosen";
+        public const string NoPathfindingRangeMsg = "Choose pathfinding range";
+        public const string VisualizationIsNotAppliedMsg = "Pathfinding visualization is not applied";
+        public const string NoVerticesToChooseAsRangeMsg = "No available vertices to include in range";
+        public const string PathfindingRangeWasSetMsg = "Source and target vertives were set";
     }
 }

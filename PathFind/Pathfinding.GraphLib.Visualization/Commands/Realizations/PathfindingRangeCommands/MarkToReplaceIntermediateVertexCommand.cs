@@ -16,7 +16,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
     {
         private readonly IExecutable<TVertex> undoCommand;
 
-        public MarkToReplaceIntermediateVertexCommand(VisualPathfindingRange<TVertex> pathfindingRange)
+        public MarkToReplaceIntermediateVertexCommand(PathfindingRangeAdapter<TVertex> pathfindingRange)
             : base(pathfindingRange)
         {
             undoCommand = new RemoveMarkToReplaceIntermediateVertexCommand<TVertex>(pathfindingRange);
@@ -30,7 +30,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
 
         public override bool CanExecute(TVertex vertex)
         {
-            return !vertex.IsOneOf(pathfindingRange.Source, pathfindingRange.Target)
+            return !vertex.IsOneOf(adapter.Source, adapter.Target)
                 && IsIntermediate(vertex)
                 && !IsMarkedToReplace(vertex);
         }

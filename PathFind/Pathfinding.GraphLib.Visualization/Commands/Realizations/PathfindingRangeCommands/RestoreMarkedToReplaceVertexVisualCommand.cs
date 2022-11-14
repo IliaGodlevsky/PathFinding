@@ -10,7 +10,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
     internal sealed class RestoreMarkedToReplaceVertexVisualCommand<TVertex> : PathfindingRangeIntermediateVertexCommand<TVertex>
         where TVertex : IVertex, IVisualizable
     {
-        public RestoreMarkedToReplaceVertexVisualCommand(VisualPathfindingRange<TVertex> pathfindingRange)
+        public RestoreMarkedToReplaceVertexVisualCommand(PathfindingRangeAdapter<TVertex> pathfindingRange)
             : base(pathfindingRange)
         {
         }

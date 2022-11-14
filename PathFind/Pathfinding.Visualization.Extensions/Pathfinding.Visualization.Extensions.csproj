@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="IGraphExtensions.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
+    <Compile Include="IPathfindingRangeAdapterExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IVertexExtension.cs" />
   </ItemGroup>
@@ -60,6 +61,10 @@
     <ProjectReference Include="..\Pathfinding.VisualizationLib.Core.Interface\Pathfinding.VisualizationLib.Core.Interface.csproj">
       <Project>{ECC527ED-96BA-44DF-9561-6CD8DE13B550}</Project>
       <Name>Pathfinding.VisualizationLib.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Executable\Shared.Executable.csproj">
+      <Project>{0A7C5FE5-4688-42C4-8202-676042BB0F81}</Project>
+      <Name>Shared.Executable</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
       <Project>{cd11d46e-4675-4090-b50b-a85ffa3d1d2c}</Project>

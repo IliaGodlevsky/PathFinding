@@ -64,7 +64,7 @@
     <Compile Include="Commands\Realizations\VisualizationCommands\RestoreVerticesVisualCommands.cs" />
     <Compile Include="Commands\Realizations\VisualizationCommands\SetPathfindingRangeCommands.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VisualPathfindingRange.cs" />
+    <Compile Include="PathfindingRangeAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface.Extensions\Pathfinding.GraphLib.Core.Interface.Extensions.csproj">
@@ -74,6 +74,14 @@
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
       <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Factory.Interface\Pathfinding.GraphLib.Factory.Interface.csproj">
+      <Project>{8C66CBDB-9899-4D80-846A-F197925D3163}</Project>
+      <Name>Pathfinding.GraphLib.Factory.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Visualization.Extensions\Pathfinding.Visualization.Extensions.csproj">
+      <Project>{eab4ff1e-bb9c-4c01-b8d6-171b1758b81d}</Project>
+      <Name>Pathfinding.Visualization.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pathfinding.VisualizationLib.Core.Interface\Pathfinding.VisualizationLib.Core.Interface.csproj">
       <Project>{ECC527ED-96BA-44DF-9561-6CD8DE13B550}</Project>

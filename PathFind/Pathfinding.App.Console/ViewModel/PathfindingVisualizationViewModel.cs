@@ -1,15 +1,12 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.App.Console.Attributes;
 using Pathfinding.App.Console.EventArguments;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Menu.Realizations.Attributes;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.App.Console.Model.MenuCommands.Attributes;
-using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Extensions;
 using Shared.Primitives.Extensions;
@@ -18,14 +15,13 @@ using System;
 
 namespace Pathfinding.App.Console.ViewModel
 {
-    [MenuColumnsNumber(1)]
     [SingleInstance]
+    [MenuColumnsNumber(1)]
     internal sealed class PathfindingVisualizationViewModel : ViewModel, IRequireAnswerInput, IRequireTimeSpanInput
     {
         private static readonly TimeSpan Millisecond = TimeSpan.FromMilliseconds(1);
 
         private readonly ICache<Graph2D<Vertex>> graphCache;
-        private readonly IPathfindingRange range;
         private readonly IMessenger messenger;
         private readonly ConsoleKeystrokesHook keyStrokeHook;
 
@@ -41,15 +37,14 @@ namespace Pathfinding.App.Console.ViewModel
 
         private TimeSpan AnimationDelay { get; set; }
 
-        public PathfindingVisualizationViewModel(ICache<Graph2D<Vertex>> graphCache, ConsoleKeystrokesHook keyStrokeHook, 
-            IPathfindingRange range, IMessenger messenger)
+        public PathfindingVisualizationViewModel(ICache<Graph2D<Vertex>> graphCache, 
+            ConsoleKeystrokesHook keyStrokeHook, IMessenger messenger)
         {
             this.keyStrokeHook = keyStrokeHook;
             this.messenger = messenger;
             messenger.Register<SubscribeOnVisualizationMessage>(this, OnPathfindingPrepare);
             AnimationDelay = DelayRange.LowerValueOfRange;
             this.graphCache = graphCache;
-            this.range = range;
             keyStrokeHook.KeyPressed += OnConsoleKeyPressed;
         }
 
@@ -76,20 +71,12 @@ namespace Pathfinding.App.Console.ViewModel
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
         {
             AnimationDelay.Wait();
-            if (!range.IsInRange(e.Current))
-            {
-                var current = Graph.Get(e.Current.Position);
-                current.VisualizeAsVisited();
-            }
+            Graph.Get(e.Current).VisualizeAsVisited();
         }
 
         private void OnVertexEnqueued(object sender, PathfindingEventArgs e)
         {
-            if (!range.IsInRange(e.Current))
-            {
-                var current = Graph.Get(e.Current.Position);
-                current.VisualizeAsEnqueued();
-            }
+            Graph.Get(e.Current).VisualizeAsEnqueued();
         }
 
         private void OnPathfindingPrepare(SubscribeOnVisualizationMessage message)
@@ -101,7 +88,7 @@ namespace Pathfinding.App.Console.ViewModel
             }
         }
 
-        [FailMessage("Visualization is not applied")]
+        [FailMessage(MessagesTexts.VisualizationIsNotAppliedMsg)]
         private bool IsVisualizationApplied() => isVisualizationApplied;
 
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)

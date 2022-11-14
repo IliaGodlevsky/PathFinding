@@ -2,26 +2,25 @@
 using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Pathfinding.GraphLib.Visualization.Commands.Abstractions
 {
     internal abstract class PathfindingRangeCommand<TVertex> : IVisualizationCommand<TVertex>
         where TVertex : IVertex, IVisualizable
     {
-        protected readonly VisualPathfindingRange<TVertex> pathfindingRange;
+        protected readonly PathfindingRangeAdapter<TVertex> adapter;
 
-        protected IList<TVertex> IntermediateVertices => pathfindingRange.IntermediateVertices;
+        protected IList<TVertex> IntermediateVertices => adapter.Intermediates;
 
-        protected IList<TVertex> MarkedToRemoveIntermediates => pathfindingRange.MarkedToRemoveIntermediateVertices;
+        protected IList<TVertex> MarkedToRemoveIntermediates => adapter.MarkedToRemoveIntermediateVertices;
 
-        protected TVertex Source => pathfindingRange.Source;
+        protected TVertex Source => adapter.Source;
 
-        protected TVertex Target => pathfindingRange.Target;
+        protected TVertex Target => adapter.Target;
 
-        protected PathfindingRangeCommand(VisualPathfindingRange<TVertex> endPoints)
+        protected PathfindingRangeCommand(PathfindingRangeAdapter<TVertex> adapter)
         {
-            pathfindingRange = endPoints;
+            this.adapter = adapter;
         }
 
         public abstract void Execute(TVertex obj);

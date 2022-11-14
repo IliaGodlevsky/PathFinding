@@ -2,6 +2,7 @@
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Visualization.Commands.Abstractions;
 using Pathfinding.Visualization.Core.Abstractions;
+using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Primitives.Attributes;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
     internal sealed class ReplaceIntermediateIsolatedVertexCommand<TVertex> : PathfindingRangeIntermediateVertexCommand<TVertex>
         where TVertex : IVertex, IVisualizable
     {
-        public ReplaceIntermediateIsolatedVertexCommand(VisualPathfindingRange<TVertex> endPoints)
+        public ReplaceIntermediateIsolatedVertexCommand(PathfindingRangeAdapter<TVertex> endPoints)
             : base(endPoints)
         {
         }
@@ -30,9 +31,9 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
 
         public override bool CanExecute(TVertex vertex)
         {
-            return pathfindingRange.HasSourceAndTargetSet()
+            return adapter.HasSourceAndTargetSet()
                 && HasIsolatedIntermediates
-                && pathfindingRange.CanBeInRange(vertex);
+                && adapter.CanBeInRange(vertex);
         }
     }
 }

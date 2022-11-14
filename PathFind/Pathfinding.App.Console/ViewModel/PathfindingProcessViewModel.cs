@@ -10,10 +10,11 @@ using Pathfinding.App.Console.DependencyInjection;
 using Pathfinding.App.Console.EventArguments;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Menu.Realizations.Attributes;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.App.Console.Model.MenuCommands.Attributes;
 using Pathfinding.App.Console.Views;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Core.Abstractions;
@@ -22,8 +23,6 @@ using Shared.Primitives;
 using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.ViewModel
 {
@@ -32,9 +31,8 @@ namespace Pathfinding.App.Console.ViewModel
     {
         private readonly IMessenger messenger;
         private readonly ConsoleKeystrokesHook keystrokesHook;
-        private readonly VisualPathfindingRange<Vertex> range;
+        private readonly PathfindingRangeAdapter<Vertex> adapter;
         private readonly Stopwatch timer;
-        private readonly ManualResetEventSlim resetEvent;
 
         private int visitedVerticesCount;
 
@@ -46,19 +44,20 @@ namespace Pathfinding.App.Console.ViewModel
 
         private PathfindingProcess Algorithm { get; set; }
 
+        private IPathfindingRange PathfindingRange => adapter.GetPathfindingRange();
+
         private string Statistics => Path.ToStatistics(timer, visitedVerticesCount, Algorithm);
 
         private IAlgorithmFactory<PathfindingProcess> Factory { get; set; }
 
-        public PathfindingProcessViewModel(VisualPathfindingRange<Vertex> range, ConsoleKeystrokesHook hook, 
+        public PathfindingProcessViewModel(PathfindingRangeAdapter<Vertex> adapter, ConsoleKeystrokesHook hook, 
             ICache<Graph2D<Vertex>> graph, IMessenger messenger, ILog log)
             : base(log)
         {
             this.messenger = messenger;
-            resetEvent = new ManualResetEventSlim();
             keystrokesHook = hook;
             Graph = graph.Cached;
-            this.range = range;
+            this.adapter = adapter;
             timer = new Stopwatch();
             Path = NullGraphPath.Interface;
             keystrokesHook.KeyPressed += OnConsoleKeyPressed;
@@ -69,7 +68,6 @@ namespace Pathfinding.App.Console.ViewModel
         {
             base.Dispose();
             keystrokesHook.KeyPressed -= OnConsoleKeyPressed;
-            resetEvent.Dispose();
             messenger.Unregister(this);
         }
 
@@ -83,11 +81,7 @@ namespace Pathfinding.App.Console.ViewModel
         {
             using (Cursor.HideCursor())
             {
-#pragma warning disable CS4014
                 FindPathInternal();
-#pragma warning restore CS4014
-                resetEvent.Reset();
-                resetEvent.Wait();
                 KeyInput.Input();
             }
         }
@@ -96,7 +90,7 @@ namespace Pathfinding.App.Console.ViewModel
         private void ClearColors()
         {
             Graph.RestoreVerticesVisualState();
-            range.RestoreVerticesVisualState();
+            adapter.RestoreVerticesVisualState();
         }
 
         [MenuItem(MenuItemsNames.CustomizeVisualization, 2)]
@@ -108,17 +102,18 @@ namespace Pathfinding.App.Console.ViewModel
             messenger.Send(new UpdateStatisticsMessage(Statistics));
         }
 
-        private async Task FindPathInternal()
+        private void FindPathInternal()
         {
-            using (Algorithm = Factory.Create(range))
+            using (Algorithm = Factory.Create(PathfindingRange))
             {
                 try
                 {
-                    using var _ = Disposable.Use(SummarizeResults);
-                    SubscribeOnAlgorithmEvents(Algorithm);
-                    messenger.Send(new SubscribeOnVisualizationMessage(Algorithm));
-                    Path = await Algorithm.FindPathAsync();
-                    await Graph.GetVertices(Path).Reverse().VisualizeAsPathAsync();
+                    using (Disposable.Use(SummarizeResults))
+                    {
+                        SubscribeOnAlgorithmEvents(Algorithm);
+                        Path = Algorithm.FindPath();
+                        Graph.GetVertices(Path).Reverse().VisualizeAsPath();
+                    }
                 }
                 catch (PathfindingException ex)
                 {
@@ -153,14 +148,14 @@ namespace Pathfinding.App.Console.ViewModel
             var statistics = Path.Count > 0 ? Statistics : MessagesTexts.CouldntFindPathMsg;
             messenger.Send(new UpdateStatisticsMessage(statistics));
             visitedVerticesCount = 0;
-            resetEvent.Set();
         }
 
-        [FailMessage(MessagesTexts.NoAlgorithmChosen)]
+        [FailMessage(MessagesTexts.NoAlgorithmChosenMsg)]
         private bool CanStartPathfinding() => Factory is not null;
 
         private void SubscribeOnAlgorithmEvents(PathfindingProcess algorithm)
         {
+            messenger.Send(new SubscribeOnVisualizationMessage(Algorithm));
             algorithm.VertexVisited += OnVertexVisited;
             algorithm.Finished += (s, e) => timer.Stop();
             algorithm.Started += (s, e) => timer.Restart();

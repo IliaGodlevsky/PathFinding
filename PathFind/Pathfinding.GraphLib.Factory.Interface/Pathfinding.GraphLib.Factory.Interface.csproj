@@ -46,6 +46,7 @@
     <Compile Include="IGraphAssemble.cs" />
     <Compile Include="IGraphFactory.cs" />
     <Compile Include="INeighborhoodFactory.cs" />
+    <Compile Include="IPathfindingRangeFactory.cs" />
     <Compile Include="IVertexFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

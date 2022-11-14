@@ -13,13 +13,13 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Abstractions
     internal abstract class PathfindingRangeVisualizationCommands<TVertex> : IExecutable<TVertex>
         where TVertex : IVertex, IVisualizable
     {
-        protected readonly VisualPathfindingRange<TVertex> pathfindingRange;
+        protected readonly PathfindingRangeAdapter<TVertex> adapter;
 
         protected ReadOnlyList<IVisualizationCommand<TVertex>> ExecuteCommands { get; }
 
-        protected PathfindingRangeVisualizationCommands(VisualPathfindingRange<TVertex> pathfindingRange)
+        protected PathfindingRangeVisualizationCommands(PathfindingRangeAdapter<TVertex> adapter)
         {
-            this.pathfindingRange = pathfindingRange;
+            this.adapter = adapter;
             ExecuteCommands = GetCommands().OrderByOrderAttribute().ToReadOnly();
         }
 

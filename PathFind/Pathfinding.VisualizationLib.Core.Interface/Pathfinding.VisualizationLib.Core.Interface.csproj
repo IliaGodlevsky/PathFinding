@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="IGraphField.cs" />
     <Compile Include="IGraphFieldFactory.cs" />
+    <Compile Include="IPathfindingRangeAdapter.cs" />
     <Compile Include="IVisualizable.cs" />
     <Compile Include="IVisualization.cs" />
     <Compile Include="IVisualizationCommand.cs" />

@@ -10,7 +10,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
     internal sealed class RestoreSourceVisualCommand<TVertex> : PathfindingRangeCommand<TVertex>
         where TVertex : IVertex, IVisualizable
     {
-        public RestoreSourceVisualCommand(VisualPathfindingRange<TVertex> pathfindingRange)
+        public RestoreSourceVisualCommand(PathfindingRangeAdapter<TVertex> pathfindingRange)
             : base(pathfindingRange)
         {
         }
@@ -22,7 +22,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
 
         public override bool CanExecute(TVertex vertex)
         {
-            return vertex.Equals(pathfindingRange.Source);
+            return vertex.Equals(adapter.Source);
         }
     }
 }

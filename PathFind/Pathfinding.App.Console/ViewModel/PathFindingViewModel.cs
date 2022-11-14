@@ -2,13 +2,13 @@
 using Pathfinding.App.Console.DependencyInjection;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Menu.Realizations.Attributes;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.App.Console.Model.MenuCommands.Attributes;
 using Pathfinding.App.Console.Views;
-using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.Logging.Interface;
+using Pathfinding.Visualization.Extensions;
+using Pathfinding.VisualizationLib.Core.Interface;
 using System;
 
 namespace Pathfinding.App.Console.ViewModel
@@ -17,14 +17,14 @@ namespace Pathfinding.App.Console.ViewModel
     internal sealed class PathfindingViewModel : SafeViewModel, IRequireAnswerInput, IDisposable
     {       
         private readonly IMessenger messenger;
-        private readonly IPathfindingRange range;
+        private readonly IPathfindingRangeAdapter<Vertex> adapter;
 
         public IInput<Answer> AnswerInput { get; set; }
 
-        public PathfindingViewModel(IPathfindingRange range, ILog log, IMessenger messenger)
+        public PathfindingViewModel(IPathfindingRangeAdapter<Vertex> adapter, ILog log, IMessenger messenger)
             : base(log)
         {
-            this.range = range;
+            this.adapter = adapter;
             this.messenger = messenger;
         }
 
@@ -51,10 +51,10 @@ namespace Pathfinding.App.Console.ViewModel
             }
         }
 
-        [FailMessage(MessagesTexts.NoPathfindingRange)]
+        [FailMessage(MessagesTexts.NoPathfindingRangeMsg)]
         private bool CanEnterPathfinding()
         {
-            return range.HasSourceAndTargetSet();
+            return adapter.HasSourceAndTargetSet();
         }
     }
 }

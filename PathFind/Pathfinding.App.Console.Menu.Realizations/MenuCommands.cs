@@ -1,6 +1,7 @@
-﻿using Pathfinding.App.Console.Delegates;
-using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Model.MenuCommands.Attributes;
+﻿using Pathfinding.App.Console.Menu.Interface;
+using Pathfinding.App.Console.Menu.Realizations.Attributes;
+using Pathfinding.App.Console.Menu.Realizations.Delegates;
+using Pathfinding.App.Console.ViewModel;
 using Shared.Extensions;
 using Shared.Primitives.Extensions;
 using System;
@@ -10,9 +11,9 @@ using System.Reflection;
 
 using static System.Reflection.BindingFlags;
 
-namespace Pathfinding.App.Console.Model.MenuCommands
+namespace Pathfinding.App.Console.Menu.Realizations
 {
-    internal sealed class Menu : IMenu
+    internal sealed class MenuCommands : IMenuCommands
     {
         private const BindingFlags MethodAccessModificators
             = FlattenHierarchy | NonPublic | Instance | Public;
@@ -23,7 +24,7 @@ namespace Pathfinding.App.Console.Model.MenuCommands
 
         public IReadOnlyList<IMenuCommand> Commands => commands.Value;
 
-        public Menu(IViewModel viewModel)
+        public MenuCommands(IViewModel viewModel)
         {
             this.viewModel = viewModel;
             viewModelType = viewModel.GetType();

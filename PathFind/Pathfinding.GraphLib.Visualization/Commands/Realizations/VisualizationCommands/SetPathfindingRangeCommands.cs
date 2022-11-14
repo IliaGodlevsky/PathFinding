@@ -17,7 +17,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.Visualization
     {
         private ReadOnlyList<IUndo> UndoCommands { get; }
 
-        public SetPathfindingRangeCommands(VisualPathfindingRange<TVertex> pathfindingRange)
+        public SetPathfindingRangeCommands(PathfindingRangeAdapter<TVertex> pathfindingRange)
             : base(pathfindingRange)
         {
             UndoCommands = ExecuteCommands.OfType<IUndo>().ToReadOnly();
@@ -25,16 +25,16 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.Visualization
 
         protected override IEnumerable<IVisualizationCommand<TVertex>> GetCommands()
         {
-            yield return new UnsetIntermediateVertexCommand<TVertex>(pathfindingRange);
-            yield return new UnsetTargetVertexCommand<TVertex>(pathfindingRange);
-            yield return new UnsetSourceVertexCommand<TVertex>(pathfindingRange);
-            yield return new SetSourceVertexCommand<TVertex>(pathfindingRange);
-            yield return new SetTargetVertexCommand<TVertex>(pathfindingRange);
-            yield return new SetIntermediateVertexCommand<TVertex>(pathfindingRange);
-            yield return new ReplaceIntermediateVertexCommand<TVertex>(pathfindingRange);
-            yield return new ReplaceIntermediateIsolatedVertexCommand<TVertex>(pathfindingRange);
-            yield return new ReplaceIsolatedSourceVertexCommand<TVertex>(pathfindingRange);
-            yield return new ReplaceIsolatedTargetVertexCommand<TVertex>(pathfindingRange);
+            yield return new UnsetIntermediateVertexCommand<TVertex>(adapter);
+            yield return new UnsetTargetVertexCommand<TVertex>(adapter);
+            yield return new UnsetSourceVertexCommand<TVertex>(adapter);
+            yield return new SetSourceVertexCommand<TVertex>(adapter);
+            yield return new SetTargetVertexCommand<TVertex>(adapter);
+            yield return new SetIntermediateVertexCommand<TVertex>(adapter);
+            yield return new ReplaceIntermediateVertexCommand<TVertex>(adapter);
+            yield return new ReplaceIntermediateIsolatedVertexCommand<TVertex>(adapter);
+            yield return new ReplaceIsolatedSourceVertexCommand<TVertex>(adapter);
+            yield return new ReplaceIsolatedTargetVertexCommand<TVertex>(adapter);
         }
 
         public void Undo()

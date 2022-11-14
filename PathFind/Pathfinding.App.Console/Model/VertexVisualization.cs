@@ -1,5 +1,4 @@
-﻿using Pathfinding.App.Console;
-using Pathfinding.VisualizationLib.Core.Interface;
+﻿using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Extensions;
 using System.Drawing;
 

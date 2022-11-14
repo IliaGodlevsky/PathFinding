@@ -1,13 +1,12 @@
 ﻿using Autofac;
-using Pathfinding.App.Console.Extensions;
-using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Views;
 
 namespace Pathfinding.App.Console.Extensions
 {
     internal static class ILifetimeScopeExtensions
     {
         public static void Display<TView>(this ILifetimeScope lifetimeScope)
-            where TView : IView
+            where TView : View
         {
             using (var scope = lifetimeScope.BeginLifetimeScope())
             {

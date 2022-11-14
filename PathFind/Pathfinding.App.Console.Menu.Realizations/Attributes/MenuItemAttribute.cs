@@ -1,7 +1,7 @@
 ﻿using Shared.Primitives.Attributes;
 using System;
 
-namespace Pathfinding.App.Console.Model.MenuCommands.Attributes
+namespace Pathfinding.App.Console.Menu.Realizations.Attributes
 {
     [AttributeUsage(AttributeTargets.Method, Inherited = true)]
     internal sealed class MenuItemAttribute : OrderAttribute

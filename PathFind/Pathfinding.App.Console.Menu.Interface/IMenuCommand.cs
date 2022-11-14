@@ -1,4 +1,4 @@
-﻿namespace Pathfinding.App.Console.Interface
+﻿namespace Pathfinding.App.Console.Menu.Interface
 {
     internal interface IMenuCommand
     {

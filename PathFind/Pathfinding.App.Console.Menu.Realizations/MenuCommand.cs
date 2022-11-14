@@ -1,10 +1,10 @@
-﻿using Pathfinding.App.Console.Delegates;
-using Pathfinding.App.Console.Interface;
-using Shared.Collections;
+﻿using Pathfinding.App.Console.Menu.Interface;
+using Pathfinding.App.Console.Menu.Realizations.Delegates;
+using Pathfinding.App.Console.Menu.Realizations.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Pathfinding.App.Console.Model.MenuCommands
+namespace Pathfinding.App.Console.Menu.Realizations
 {
     internal sealed class MenuCommand : IMenuCommand
     {
@@ -12,7 +12,7 @@ namespace Pathfinding.App.Console.Model.MenuCommands
         private readonly string header;
         private readonly IReadOnlyCollection<ConditionPair> conditions;
 
-        public MenuCommand(string header, Command command, 
+        public MenuCommand(string header, Command command,
             IReadOnlyCollection<ConditionPair> conditionCommands)
         {
             this.header = header;

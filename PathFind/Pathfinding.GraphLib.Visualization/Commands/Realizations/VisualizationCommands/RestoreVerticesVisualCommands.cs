@@ -10,7 +10,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.Visualization
     internal sealed class RestoreVerticesVisualCommands<TVertex> : PathfindingRangeVisualizationCommands<TVertex>
         where TVertex : IVertex, IVisualizable
     {
-        public RestoreVerticesVisualCommands(VisualPathfindingRange<TVertex> pathfindingRange)
+        public RestoreVerticesVisualCommands(PathfindingRangeAdapter<TVertex> pathfindingRange)
             : base(pathfindingRange)
         {
 
@@ -18,10 +18,10 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.Visualization
 
         protected override IEnumerable<IVisualizationCommand<TVertex>> GetCommands()
         {
-            yield return new RestoreIntermediateVertexVisualCommand<TVertex>(pathfindingRange);
-            yield return new RestoreMarkedToReplaceVertexVisualCommand<TVertex>(pathfindingRange);
-            yield return new RestoreSourceVisualCommand<TVertex>(pathfindingRange);
-            yield return new RestoreTargetVisualCommand<TVertex>(pathfindingRange);
+            yield return new RestoreIntermediateVertexVisualCommand<TVertex>(adapter);
+            yield return new RestoreMarkedToReplaceVertexVisualCommand<TVertex>(adapter);
+            yield return new RestoreSourceVisualCommand<TVertex>(adapter);
+            yield return new RestoreTargetVisualCommand<TVertex>(adapter);
         }
     }
 }

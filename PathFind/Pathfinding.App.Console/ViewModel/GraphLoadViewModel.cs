@@ -1,9 +1,9 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.DependencyInjection;
+using Pathfinding.App.Console.Menu.Realizations.Attributes;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.App.Console.Model.MenuCommands.Attributes;
 using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;

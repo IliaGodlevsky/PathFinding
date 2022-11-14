@@ -1,9 +1,10 @@
 ﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Coordinates;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.Visualization.Core.Abstractions;
+using Pathfinding.Visualization.Extensions;
+using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
@@ -58,38 +59,39 @@ namespace Pathfinding.App.Console.Extensions
             return graph2D.Get(point);
         }
 
-        public static Vertex InputVertex(this IInput<int> self, Graph2D<Vertex> graph, IPathfindingRange range)
+        public static Vertex InputVertex(this IInput<int> self, Graph2D<Vertex> graph, 
+            IPathfindingRangeAdapter<Vertex> adapter)
         {
-            return self.InputVertex(graph, range.CanBeInRange);
+            return self.InputVertex(graph, adapter.CanBeInRange);
         }
 
         public static Vertex InputVertex(this IInput<int> self, string message, 
-            Graph2D<Vertex> graph, IPathfindingRange range)
+            Graph2D<Vertex> graph, IPathfindingRangeAdapter<Vertex> adapter)
         {
             ColorfulConsole.WriteLine(message);
-            return self.InputVertex(graph, range);
+            return self.InputVertex(graph, adapter);
         }
 
         public static IEnumerable<Vertex> InputExistingIntermediates(this IInput<int> self, 
-            Graph2D<Vertex> graph, IPathfindingRange range, int count)
+            Graph2D<Vertex> graph, IPathfindingRangeAdapter<Vertex> adapter, int count)
         {
-            return self.InputVertices(graph, range.IsIntermediate, count);
+            return self.InputVertices(graph, adapter.IsIntermediate, count);
         }
 
         public static IEnumerable<Vertex> InputRequiredVertices(this IInput<int> self, 
-            Graph2D<Vertex> graph, IPathfindingRange range)
+            Graph2D<Vertex> graph, IPathfindingRangeAdapter<Vertex> adapter)
         {
-            return self.InputVertices(graph, range, 2);
+            return self.InputVertices(graph, adapter, 2);
         }
 
-        public static IEnumerable<Vertex> InputVertices(this IInput<int> self, Graph2D<Vertex> graph, 
-            IPathfindingRange range, int count)
+        public static IEnumerable<Vertex> InputVertices(this IInput<int> self, Graph2D<Vertex> graph,
+            IPathfindingRangeAdapter<Vertex> adapter, int count)
         {
-            return self.InputVertices(graph, range.CanBeInRange, count);
+            return self.InputVertices(graph, adapter.CanBeInRange, count);
         }
 
         private static IEnumerable<Vertex> InputVertices(this IInput<int> self, Graph2D<Vertex> graph, 
-            Predicate<IVertex> predicate, int count)
+            Predicate<Vertex> predicate, int count)
         {
             while (count-- > 0)
             {
@@ -97,7 +99,7 @@ namespace Pathfinding.App.Console.Extensions
             }
         }
 
-        private static Vertex InputVertex(this IInput<int> self, Graph2D<Vertex> graph, Predicate<IVertex> predicate)
+        private static Vertex InputVertex(this IInput<int> self, Graph2D<Vertex> graph, Predicate<Vertex> predicate)
         {
             Vertex vertex;
             do

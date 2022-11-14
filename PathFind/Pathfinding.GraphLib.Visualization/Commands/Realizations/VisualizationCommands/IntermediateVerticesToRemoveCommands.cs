@@ -17,7 +17,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.Visualization
     {
         private ReadOnlyList<IUndo> UndoCommands { get; }
 
-        public IntermediateVerticesToRemoveCommands(VisualPathfindingRange<TVertex> endPoints)
+        public IntermediateVerticesToRemoveCommands(PathfindingRangeAdapter<TVertex> endPoints)
             : base(endPoints)
         {
             UndoCommands = ExecuteCommands.OfType<IUndo>().ToReadOnly();
@@ -30,8 +30,8 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.Visualization
 
         protected override IEnumerable<IVisualizationCommand<TVertex>> GetCommands()
         {
-            yield return new RemoveMarkToReplaceIntermediateVertexCommand<TVertex>(pathfindingRange);
-            yield return new MarkToReplaceIntermediateVertexCommand<TVertex>(pathfindingRange);
+            yield return new RemoveMarkToReplaceIntermediateVertexCommand<TVertex>(adapter);
+            yield return new MarkToReplaceIntermediateVertexCommand<TVertex>(adapter);
         }
     }
 }

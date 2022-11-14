@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Pathfinding.App.Console.Interface
+namespace Pathfinding.App.Console.Menu.Interface
 {
-    internal interface IMenu
+    internal interface IMenuCommands
     {
         IReadOnlyList<IMenuCommand> Commands { get; }
     }

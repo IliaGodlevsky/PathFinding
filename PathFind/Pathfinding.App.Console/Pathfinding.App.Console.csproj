@@ -47,13 +47,6 @@
   <ItemGroup>
     <Compile Include="Attributes\SingleInstanceAttribute.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
-    <Compile Include="Model\MenuCommands\Attributes\MenuColumnsNumberAttribute.cs" />
-    <Compile Include="Model\MenuCommands\Attributes\MethodMarkAttribute.cs" />
-    <Compile Include="Model\MenuCommands\Attributes\ConditionAttribute.cs" />
-    <Compile Include="Model\MenuCommands\Attributes\ExecuteSafeAttribute.cs" />
-    <Compile Include="Model\MenuCommands\Attributes\FailMessageAttribute.cs" />
-    <Compile Include="Model\MenuCommands\Attributes\IMethodMark.cs" />
-    <Compile Include="Model\MenuCommands\Attributes\MenuItemAttribute.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ConvertedProperties\ConvertedProperty.cs" />
     <Compile Include="ConvertedProperties\GraphParamsProperty.cs" />
@@ -75,16 +68,12 @@
     <Compile Include="Interface\IDisplayable.cs" />
     <Compile Include="Interface\IFramedAxis.cs" />
     <Compile Include="Interface\IInput.cs" />
-    <Compile Include="Interface\IMenu.cs" />
-    <Compile Include="Interface\IMenuCommand.cs" />
     <Compile Include="Interface\IProperty.cs" />
     <Compile Include="Interface\IRequireAnswerInput.cs" />
     <Compile Include="Interface\IRequireConsoleKeyInput.cs" />
     <Compile Include="Interface\IRequireIntInput.cs" />
     <Compile Include="Interface\IRequireStringInput.cs" />
     <Compile Include="Interface\IRequireTimeSpanInput.cs" />
-    <Compile Include="Interface\IView.cs" />
-    <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="MenuItemsNames.cs" />
     <Compile Include="Messages\ClearColorMessage.cs" />
     <Compile Include="Messages\ClearGraphMessage.cs" />
@@ -95,11 +84,10 @@
     <Compile Include="Messages\UpdateStatisticsMessage.cs" />
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\Answer.cs" />
-    <Compile Include="Model\ConditionFailedException.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
     <Compile Include="Model\ConsoleSmoothLevels.cs" />
     <Compile Include="Model\ConsoleVertexReverseSubscription.cs" />
-    <Compile Include="Model\ConsoleVisualPathfindingRange.cs" />
+    <Compile Include="Model\ConsolePathfindingRangeAdapter.cs" />
     <Compile Include="Model\FramedAxes\FramedAbscissa.cs" />
     <Compile Include="Model\FramedAxes\FramedAxis.cs" />
     <Compile Include="Model\FramedAxes\FramedOrdinate.cs" />
@@ -110,9 +98,6 @@
     <Compile Include="Model\ConsoleVertexChangeCostSubscription.cs" />
     <Compile Include="Model\GraphField.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
-    <Compile Include="Model\MenuCommands\ConditionPair.cs" />
-    <Compile Include="Model\MenuCommands\Menu.cs" />
-    <Compile Include="Model\MenuCommands\MenuCommand.cs" />
     <Compile Include="Model\MenuList.cs" />
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\Vertex.cs" />
@@ -209,6 +194,18 @@
     <ProjectReference Include="..\Pathfinding.AlgorithmLib.Visualization\Pathfinding.AlgorithmLib.Visualization.csproj">
       <Project>{6C5443F8-9BF4-4355-8F42-E65EE9562E3A}</Project>
       <Name>Pathfinding.AlgorithmLib.Visualization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.App.Console.Menu.Interface\Pathfinding.App.Console.Menu.Interface.csproj">
+      <Project>{C6DEC0FA-F917-4241-B8C3-67E975F2F52D}</Project>
+      <Name>Pathfinding.App.Console.Menu.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.App.Console.Menu.Realizations\Pathfinding.App.Console.Menu.Realizations.csproj">
+      <Project>{79830F4C-4732-4DFD-AE52-378E9B2C2FC3}</Project>
+      <Name>Pathfinding.App.Console.Menu.Realizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.App.Console.ViewModel\Pathfinding.App.Console.ViewModel.csproj">
+      <Project>{73D40DEB-B638-44A7-880E-CF1E4D6D0485}</Project>
+      <Name>Pathfinding.App.Console.ViewModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Abstractions\Pathfinding.GraphLib.Core.Abstractions.csproj">
       <Project>{7112EB01-28F4-438D-945D-87CB69D14B99}</Project>

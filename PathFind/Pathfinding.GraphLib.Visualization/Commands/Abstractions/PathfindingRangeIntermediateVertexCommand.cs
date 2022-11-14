@@ -12,8 +12,8 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Abstractions
     {
         protected bool HasIsolatedIntermediates => HasIsolated(IntermediateVertices);
 
-        protected PathfindingRangeIntermediateVertexCommand(VisualPathfindingRange<TVertex> pathfindingRange)
-            : base(pathfindingRange)
+        protected PathfindingRangeIntermediateVertexCommand(PathfindingRangeAdapter<TVertex> adapter)
+            : base(adapter)
         {
 
         }

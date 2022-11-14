@@ -1,12 +1,13 @@
 ﻿using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Menu.Realizations.Attributes;
 using Pathfinding.App.Console.Model;
-using Pathfinding.App.Console.Model.MenuCommands.Attributes;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Visualization.Core.Abstractions;
+using Pathfinding.Visualization.Extensions;
+using Pathfinding.VisualizationLib.Core.Interface;
 using System;
-using System.Linq;
 
 using ColorfulConsole = Colorful.Console;
 
@@ -15,17 +16,16 @@ namespace Pathfinding.App.Console.ViewModel
     [MenuColumnsNumber(3)]
     internal sealed class PathfindingRangeViewModel : ViewModel, IRequireIntInput, IDisposable
     {
-        private readonly VisualPathfindingRange<Vertex> range;
+        private readonly PathfindingRangeAdapter<Vertex> adapter;
         private readonly Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         private int numberOfIntermediates;
 
         public IInput<int> IntInput { get; set; }
 
-        public PathfindingRangeViewModel(VisualPathfindingRange<Vertex> range, 
-            ICache<Graph2D<Vertex>> graph)
+        public PathfindingRangeViewModel(PathfindingRangeAdapter<Vertex> range, ICache<Graph2D<Vertex>> graph)
         {
-            this.range = range;
+            this.adapter = range;
             this.graph = graph.Cached;
         }
 
@@ -35,29 +35,29 @@ namespace Pathfinding.App.Console.ViewModel
         private void ChooseEndPoints()
         {
             ColorfulConsole.WriteLine(MessagesTexts.SourceAndTargetInputMsg);
-            IntInput.InputRequiredVertices(graph, range).IncludeInRange();
+            IntInput.InputRequiredVertices(graph, adapter).IncludeInRange();
         }
 
         [Condition(nameof(HasSourceAndTargetSet))]
         [MenuItem(MenuItemsNames.ReplaceSource, 2)]
         private void ReplaceSourceVertex()
         {
-            range.Source.IncludeInRange();
-            IntInput.InputVertex(MessagesTexts.SourceVertexChoiceMsg, graph, range).IncludeInRange();
+            adapter.Source.IncludeInRange();
+            IntInput.InputVertex(MessagesTexts.SourceVertexChoiceMsg, graph, adapter).IncludeInRange();
         }
 
         [Condition(nameof(HasSourceAndTargetSet))]
         [MenuItem(MenuItemsNames.ReplaceTarget, 3)]
         private void ReplaceTargetVertex()
         {
-            range.Target.IncludeInRange();
-            IntInput.InputVertex(MessagesTexts.TargetVertexChoiceMsg, graph, range).IncludeInRange();
+            adapter.Target.IncludeInRange();
+            IntInput.InputVertex(MessagesTexts.TargetVertexChoiceMsg, graph, adapter).IncludeInRange();
         }
 
         [MenuItem(MenuItemsNames.ClearEndPoints, 5)]
         private void ClearEndPoints()
         {
-            range.Undo();
+            adapter.Undo();
         }
 
         [Condition(nameof(CanReplaceIntermediates))]
@@ -67,10 +67,10 @@ namespace Pathfinding.App.Console.ViewModel
             string msg = MessagesTexts.NumberOfIntermediatesVerticesToReplaceMsg;
             int toReplaceNumber = IntInput.Input(msg, numberOfIntermediates);
             ColorfulConsole.WriteLine(MessagesTexts.IntermediateToReplaceMsg);
-            IntInput.InputExistingIntermediates(graph, range, toReplaceNumber)
+            IntInput.InputExistingIntermediates(graph, adapter, toReplaceNumber)
                 .MarkAsIntermediateToReplace();
             ColorfulConsole.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
-            IntInput.InputVertices(graph, range, toReplaceNumber).IncludeInRange();
+            IntInput.InputVertices(graph, adapter, toReplaceNumber).IncludeInRange();
         }
 
         [Condition(nameof(HasSourceAndTargetSet))]
@@ -80,31 +80,32 @@ namespace Pathfinding.App.Console.ViewModel
             string message = MessagesTexts.NumberOfIntermediateVerticesInputMsg;
             int number = IntInput.Input(message, graph.GetAvailableIntermediatesVerticesNumber());
             ColorfulConsole.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
-            IntInput.InputVertices(graph, range, number).IncludeInRange();
+            IntInput.InputVertices(graph, adapter, number).IncludeInRange();
         }
 
-        [FailMessage(MessagesTexts.NoIntermediatesChosen)]
+        [FailMessage(MessagesTexts.NoIntermediatesChosenMsg)]
         private bool CanReplaceIntermediates()
         {
-            return (numberOfIntermediates = range.GetIntermediates().Count()) > 0;
+            var adapterInterface = (IPathfindingRangeAdapter<Vertex>)adapter;
+            return (numberOfIntermediates = adapterInterface.Intermediates.Count) > 0;
         }
 
-        [FailMessage(MessagesTexts.NoPathfindingRange)]
+        [FailMessage(MessagesTexts.NoPathfindingRangeMsg)]
         private bool HasSourceAndTargetSet()
         {
-            return range.HasSourceAndTargetSet();
+            return adapter.HasSourceAndTargetSet();
         }
 
-        [FailMessage("No available vertices to include in range")]
+        [FailMessage(MessagesTexts.NoVerticesToChooseAsRangeMsg)]
         private bool HasAvailableVerticesToIncludeInRange()
         {
             return graph.GetNumberOfNotIsolatedVertices() > 1;
         }
 
-        [FailMessage("Source and target vertives were set")]
+        [FailMessage(MessagesTexts.PathfindingRangeWasSetMsg)]
         private bool HasSourceAndTargetNotSet()
         {
-            return !range.HasSourceAndTargetSet();
+            return !adapter.HasSourceAndTargetSet();
         }
     }
 }

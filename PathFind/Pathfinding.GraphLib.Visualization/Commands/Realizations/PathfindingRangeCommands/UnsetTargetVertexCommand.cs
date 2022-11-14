@@ -10,7 +10,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
     internal sealed class UnsetTargetVertexCommand<TVertex> : PathfindingRangeCommand<TVertex>
         where TVertex : IVertex, IVisualizable
     {
-        public UnsetTargetVertexCommand(VisualPathfindingRange<TVertex> endPoints)
+        public UnsetTargetVertexCommand(PathfindingRangeAdapter<TVertex> endPoints)
             : base(endPoints)
         {
         }
@@ -18,12 +18,12 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
         public override void Execute(TVertex vertex)
         {
             vertex?.VisualizeAsRegular();
-            pathfindingRange.Target = default;
+            adapter.Target = default;
         }
 
         public override bool CanExecute(TVertex vertex)
         {
-            return pathfindingRange.Target?.Equals(vertex) == true;
+            return adapter.Target?.Equals(vertex) == true;
         }
     }
 }

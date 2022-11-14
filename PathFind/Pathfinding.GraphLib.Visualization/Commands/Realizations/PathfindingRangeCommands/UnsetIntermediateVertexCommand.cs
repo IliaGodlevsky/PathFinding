@@ -10,7 +10,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
     internal sealed class UnsetIntermediateVertexCommand<TVertex> : PathfindingRangeIntermediateVertexCommand<TVertex>
         where TVertex : IVertex, IVisualizable
     {
-        public UnsetIntermediateVertexCommand(VisualPathfindingRange<TVertex> pathfindingRange)
+        public UnsetIntermediateVertexCommand(PathfindingRangeAdapter<TVertex> pathfindingRange)
             : base(pathfindingRange)
         {
         }

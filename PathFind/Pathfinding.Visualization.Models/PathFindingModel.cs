@@ -25,9 +25,10 @@ namespace Pathfinding.Visualization.Models
     public abstract class PathFindingModel<TVertex>
         where TVertex : IVertex, IVisualizable
     {
-        protected readonly VisualPathfindingRange<TVertex> pathfindingRange;
+        protected readonly PathfindingRangeAdapter<TVertex> pathfindingRange;
         protected readonly Stopwatch timer;
         protected readonly ILog log;
+        protected IPathfindingRange range;
 
         protected PathfindingProcess algorithm;
 
@@ -45,7 +46,7 @@ namespace Pathfinding.Visualization.Models
 
         public IReadOnlyList<IAlgorithmFactory<PathfindingProcess>> Algorithms { get; }
 
-        protected PathFindingModel(VisualPathfindingRange<TVertex> endPoints,
+        protected PathFindingModel(PathfindingRangeAdapter<TVertex> endPoints,
             IEnumerable<IAlgorithmFactory<PathfindingProcess>> factories, IGraph<TVertex> graph, ILog log)
         {
             Graph = graph;
@@ -63,7 +64,8 @@ namespace Pathfinding.Visualization.Models
         {
             try
             {
-                algorithm = Algorithm.Create(pathfindingRange);
+                range = pathfindingRange.GetPathfindingRange();
+                algorithm = Algorithm.Create(range);
                 SubscribeOnAlgorithmEvents(algorithm);
                 pathfindingRange.RestoreVerticesVisualState();
                 Path = await algorithm.FindPathAsync();
@@ -88,9 +90,9 @@ namespace Pathfinding.Visualization.Models
 
         protected virtual void OnVertexVisited(object sender, PathfindingEventArgs e)
         {
-            if (!pathfindingRange.IsInRange(e.Current))
+            var current = Graph.Get(e.Current);
+            if (!range.IsInRange(current))
             {
-                var current = Graph.Get(e.Current.Position);
                 current.VisualizeAsVisited();
             }
             visitedVerticesCount++;
@@ -103,9 +105,9 @@ namespace Pathfinding.Visualization.Models
 
         protected virtual void OnVertexEnqueued(object sender, PathfindingEventArgs e)
         {
-            if (!pathfindingRange.IsInRange(e.Current))
+            var current = Graph.Get(e.Current);
+            if (!range.IsInRange(current))
             {
-                var current = Graph.Get(e.Current.Position);
                 current.VisualizeAsEnqueued();
             }
         }

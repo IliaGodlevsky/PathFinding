@@ -96,7 +96,7 @@ namespace Pathfinding.AlgorithmLib.Visualization
 
         protected virtual void OnVertexVisited(object sender, PathfindingEventArgs e)
         {
-            var current = graph.Get(e.Current.Position);
+            var current = graph.Get(e.Current);
             if (sender is IAlgorithm<IGraphPath> algo)
             {
                 visited.Add(algo, current);
@@ -105,7 +105,7 @@ namespace Pathfinding.AlgorithmLib.Visualization
 
         protected virtual void OnVertexEnqueued(object sender, PathfindingEventArgs e)
         {
-            var current = graph.Get(e.Current.Position);
+            var current = graph.Get(e.Current);
             if (sender is IAlgorithm<IGraphPath> algo)
             {
                 enqueued.Add(algo, current);
