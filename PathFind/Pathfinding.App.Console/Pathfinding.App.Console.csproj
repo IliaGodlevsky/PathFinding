@@ -46,14 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\SingleInstanceAttribute.cs" />
+    <Compile Include="Extensions\AdapterExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ConvertedProperties\ConvertedProperty.cs" />
     <Compile Include="ConvertedProperties\GraphParamsProperty.cs" />
     <Compile Include="Cursor.cs" />
-    <Compile Include="Delegates\Command.cs" />
-    <Compile Include="Delegates\Condition.cs" />
-    <Compile Include="Delegates\SafeAction.cs" />
     <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="EventArguments\ConsoleKeyPressedEventArgs.cs" />
     <Compile Include="EventArguments\VertexEventArgs.cs" />
@@ -86,7 +84,7 @@
     <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
     <Compile Include="Model\ConsoleSmoothLevels.cs" />
-    <Compile Include="Model\ConsoleVertexReverseSubscription.cs" />
+    <Compile Include="Model\ConsoleVertexReverseModule.cs" />
     <Compile Include="Model\ConsolePathfindingRangeAdapter.cs" />
     <Compile Include="Model\FramedAxes\FramedAbscissa.cs" />
     <Compile Include="Model\FramedAxes\FramedAxis.cs" />
@@ -95,7 +93,7 @@
     <Compile Include="Model\FramedAxes\FramedToLeftOrdinate.cs" />
     <Compile Include="Model\FramedAxes\FramedToRightOrdinate.cs" />
     <Compile Include="Model\FramedAxes\FramedUnderAbscissa.cs" />
-    <Compile Include="Model\ConsoleVertexChangeCostSubscription.cs" />
+    <Compile Include="Model\ConsoleVertexChangeCostModule.cs" />
     <Compile Include="Model\GraphField.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
     <Compile Include="Model\MenuList.cs" />

@@ -46,10 +46,11 @@ namespace Pathfinding.App.Console.Menu.Realizations
             if (targetMethod.TryCreateDelegate(viewModel, out Command command))
             {
                 string header = targetMethod.GetAttributeOrNull<MenuItemAttribute>().Header;
-                var safeAttribute = targetMethod.GetAttributeOrNull<ExecuteSafeAttribute>();
-                var safeMethodName = safeAttribute?.MethodName ?? string.Empty;
-                var safeMethod = viewModelType.GetMethod(safeMethodName, MethodAccessModificators);
-                var safeAction = CreateDelegateOrNull<SafeAction>(safeMethod);
+                var safeAction = targetMethod
+                    .GetCustomAttributes<ExecuteSafeAttribute>()
+                    .Select(attr => viewModelType.GetMethod(attr.MethodName, MethodAccessModificators))
+                    .Select(CreateDelegateOrNull<SafeAction>)
+                    .FirstOrDefault();
                 Command menuCommand = safeAction == null ? command : () => safeAction(command);
                 var conditions = targetMethod
                     .GetCustomAttributes<ConditionAttribute>()
@@ -66,7 +67,7 @@ namespace Pathfinding.App.Console.Menu.Realizations
             var method = viewModelType.GetMethod(attribute.MethodName, MethodAccessModificators);
             var condition = CreateDelegateOrNull<Condition>(method);
             var messageAttribute = method.GetAttributeOrNull<FailMessageAttribute>();
-            return (condition, messageAttribute?.Message ?? "Message missing");
+            return (condition, messageAttribute?.Message ?? FailMessageAttribute.Default.Message);
         }
 
         private ConditionPair GetConditionPair((Condition Condition, string Message) info)

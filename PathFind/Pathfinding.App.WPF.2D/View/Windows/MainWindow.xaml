@@ -1,0 +1,41 @@
+﻿<Window x:Class="WPFVersion.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:viewmodel="clr-namespace:WPFVersion.ViewModel" 
+        xmlns:windows="clr-namespace:WPFVersion.View.Windows" 
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        mc:Ignorable="d"
+        Background="White"
+        Title="Path find"
+        ResizeMode="CanResize"        
+        WindowStartupLocation="CenterScreen"
+        Icon="../../Resources/Images/mainwindow2.png"
+        x:Name="Window">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="KeyDown">
+            <ei:CallMethodAction TargetObject="{Binding Path=DataContext, ElementName=Window}" MethodName="OnKeyDown"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="KeyUp">
+            <ei:CallMethodAction TargetObject="{Binding Path=DataContext, ElementName=Window}" MethodName="OnKeyUp"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <windows:ButtonPanelUserControl Grid.Row="0"/>
+        <windows:GraphFieldUserControl Grid.Row="1">
+            <windows:GraphFieldUserControl.DataContext>
+                <viewmodel:GraphFieldViewModel/>
+            </windows:GraphFieldUserControl.DataContext>
+        </windows:GraphFieldUserControl>
+        <Expander Background="White" Grid.Row="2">
+            <windows:AlgorithmStatisticsUserControl/>
+        </Expander>
+    </Grid>
+</Window>

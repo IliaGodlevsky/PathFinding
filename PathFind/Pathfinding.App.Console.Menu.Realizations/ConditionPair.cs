@@ -4,19 +4,19 @@ namespace Pathfinding.App.Console.Menu.Realizations
 {
     internal sealed class ConditionPair
     {
-        private Condition Condition { get; }
+        private readonly Condition condition;
 
         public string FailMessage { get; }
 
         public ConditionPair(Condition condition, string failMessage)
         {
-            Condition = condition;
+            this.condition = condition;
             FailMessage = failMessage;
         }
 
         public bool IsValidCondition()
         {
-            return Condition == null || Condition();
+            return condition == null || condition();
         }
     }
 }

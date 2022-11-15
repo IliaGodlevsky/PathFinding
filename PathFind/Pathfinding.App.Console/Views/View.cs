@@ -16,7 +16,7 @@ namespace Pathfinding.App.Console.Views
     {
         public event Action NewMenuCycleStarted;
 
-        private readonly IMenuCommands menu;
+        private readonly IMenuCommands menuCommands;
         private readonly IDisplayable menuList;
         private readonly InclusiveValueRange<int> menuRange;
         private readonly ILog log;
@@ -27,17 +27,17 @@ namespace Pathfinding.App.Console.Views
 
         private int MenuItemIndex => IntInput.Input(OptionsMsg, menuRange) - 1;
 
-        private IMenuCommand MenuCommand => menu.Commands[MenuItemIndex];
+        private IMenuCommand MenuCommand => menuCommands.Commands[MenuItemIndex];
 
         private bool IsClosureRequested { get; set; }
 
         protected View(IViewModel model, ILog log)
         {
             this.log = log;
-            menu = new MenuCommands(model);
+            menuCommands = new MenuCommands(model);
             var columns = GetMenuColumnsNumber(model);
-            menuList = menu.Commands.CreateMenuList(columns);
-            menuRange = new InclusiveValueRange<int>(menu.Commands.Count, 1);
+            menuList = menuCommands.Commands.CreateMenuList(columns);
+            menuRange = new InclusiveValueRange<int>(menuCommands.Commands.Count, 1);
             model.ViewClosed += OnClosed;
         }
 

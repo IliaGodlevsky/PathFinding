@@ -88,14 +88,10 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
-            builder.RegisterType<ConsolePathfindingRangeAdapter>().As<PathfindingRangeAdapter<Vertex>>()
-                .As<IGraphSubscription<Vertex>>().As<IPathfindingRangeAdapter<Vertex>>().SingleInstance();
+            builder.RegisterType<ConsolePathfindingRangeAdapter>().AsSelf()
+                .As<PathfindingRangeAdapter<Vertex>>().As<IPathfindingRangeAdapter<Vertex>>().SingleInstance();
 
             builder.RegisterType<PseudoRandom>().As<IRandom>().SingleInstance();
-
-            builder.RegisterType<ConsoleVertexChangeCostSubscription>().As<IGraphSubscription<Vertex>>().SingleInstance();
-            builder.RegisterType<ConsoleVertexReverseSubscription>().As<IGraphSubscription<Vertex>>().SingleInstance();
-            builder.RegisterComposite<GraphSubscriptions<Vertex>, IGraphSubscription<Vertex>>().SingleInstance();
             
             builder.RegisterType<PathfindingRangeFactory>().As<IPathfindingRangeFactory>().SingleInstance();
             builder.RegisterType<GraphAssemble<Graph2D<Vertex>, Vertex>>().As<IGraphAssemble<Graph2D<Vertex>, Vertex>>().SingleInstance();

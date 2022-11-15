@@ -46,7 +46,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         public sealed override IGraphPath FindPath()
         {
             PrepareForPathfinding();
-            using (Disposable.Use(CompletePathfinding))
+            using (Disposable.Use(CompletePathfinding, DropState))
             {
                 var path = NullGraphPath.Interface;
                 foreach (var endPoint in GetSubRanges())

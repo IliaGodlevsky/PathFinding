@@ -1,0 +1,70 @@
+﻿<windows:ViewModelWindow  xmlns:windows="clr-namespace:WPFVersion.View.Windows"
+                          x:Class="WPFVersion.View.Windows.PathFindWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:WPFVersion.Converters"
+        xmlns:model="clr-namespace:WPFVersion.Model" 
+        xmlns:rules="clr-namespace:WPFVersion.ValidationRules"
+        mc:Ignorable="d"       
+        Title="Algorithms" 
+        SizeToContent="WidthAndHeight">
+    <Window.Resources>
+        <converters:IntToStringConverter x:Key="SliderValueConverter"/>
+        <converters:TimeSpanMillisecondsConverter x:Key="TimeSpanConverter"/>
+        <converters:BoolToVisibilityConverter x:Key="boolToVisibiltyConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Grid.Row="2">
+            <CheckBox Margin="5" x:Name="ProcessDisplayRequire" IsChecked="{Binding IsVisualizationRequired}"/>
+            <TextBlock Margin="5" Text="Apply visualization"/>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Center"  Orientation="Horizontal" Grid.Row="3">
+            <Button Command="{Binding ConfirmPathFindAlgorithmChoice, IsAsync=True}" Margin ="5" Content="Start">
+            </Button>
+            <Button Command="{Binding CancelPathFindAlgorithmChoice}" Margin ="5" Content="Cancel">
+            </Button>
+        </StackPanel>
+        <ListBox ItemsSource="{Binding Algorithms }" x:Name="algoListBox" BorderThickness="0" Margin="5" SelectedValue="{Binding Path = Algorithm, UpdateSourceTrigger=PropertyChanged}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="3" Text="{Binding}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Grid Visibility="{Binding ElementName=ProcessDisplayRequire, Path=IsChecked, Converter={StaticResource boolToVisibiltyConverter}}" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+            
+                <TextBlock Grid.ColumnSpan="2" Margin="5" Grid.Row="0" Text="Algorithm speed" HorizontalAlignment="Center" Grid.Column="0"/>
+
+            <model:RangedSlider Grid.Row="1" Value ="{Binding Path=Delay, Converter={StaticResource TimeSpanConverter}}" x:Name="delayTimeSlider" MinWidth="100" Margin="5"/>
+
+            <TextBox MaxWidth="35" Grid.Row="1" Grid.Column="1" Margin="5">
+                <TextBox.Text>
+                    <Binding Mode="TwoWay" Path="Value" ElementName="delayTimeSlider" UpdateSourceTrigger = "PropertyChanged" Converter="{StaticResource SliderValueConverter}">
+                        <Binding.ValidationRules>
+                            <rules:NonInt32InputValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </Grid>
+       
+    </Grid>
+</windows:ViewModelWindow>

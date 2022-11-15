@@ -1,0 +1,38 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vertex="clr-namespace:WPFVersion.Model"
+                    x:Name="TemplateDictionary">
+    <ControlTemplate x:Key="VertexTemplate" TargetType="vertex:Vertex">
+        <ControlTemplate.Resources>
+            <Storyboard x:Key="ScalingAnimation">
+                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1.2" To="1" Duration="0:0:0.230">
+                    <DoubleAnimation.EasingFunction>
+                        <BackEase/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+                <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1.2" To="1" Duration="0:0:0.230">
+                    <DoubleAnimation.EasingFunction>
+                        <BackEase/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+        </ControlTemplate.Resources>
+        <Grid>
+            <Rectangle  RadiusX="8" RadiusY="8" Fill="{TemplateBinding Background}" Stroke="LightGray"/>
+            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <EventTrigger RoutedEvent="vertex:Vertex.Enqueued">
+                <BeginStoryboard Storyboard="{StaticResource ScalingAnimation}"/>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="vertex:Vertex.ColoredAsPath">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="Background.Opacity" From="0" To="1" Duration="0:0:2"/>
+                    </Storyboard>
+                </BeginStoryboard>
+                <BeginStoryboard Storyboard="{StaticResource ScalingAnimation}"/>
+            </EventTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+</ResourceDictionary>

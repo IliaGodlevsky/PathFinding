@@ -1,0 +1,353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4743DDA2-FB80-4BD9-B54B-55C315EF625C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Pathfinding.App.WPF._2D</RootNamespace>
+    <AssemblyName>Pathfinding.App.WPF.2D</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Interface\IViewModel.cs" />
+    <Compile Include="Model\Wpf2DVertexChangeCostModule.cs" />
+    <Compile Include="Model\Wpf2DVertexReverseModule.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="ValidationRules\NonDoubleInputValidationRule.cs" />
+    <Compile Include="ValidationRules\NonInt32InputValidationRule.cs" />
+    <Compile Include="ValidationRules\RangedDoubleValidationRule.cs" />
+    <Compile Include="ValidationRules\RangedIntValidationRule.cs" />
+    <Compile Include="ViewModel\AlgorithmsViewModel.cs" />
+    <Compile Include="ViewModel\AlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\BaseViewModels\BaseAllAlgorithmsOperationViewModel.cs" />
+    <Compile Include="ViewModel\BaseViewModels\NotifyPropertyChanged.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\ClearColorsViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\ClearGraphViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\CreateGraphViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\FindPathViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\InterruptAllAlgorithmsMessage.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\LoadGraphViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\PauseAllAlgorithmsViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\ResumeAllAlgorithmsViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\SaveGraphViewModel.cs" />
+    <Compile Include="ViewModel\ButtonViewModels\SmoothGraphViewModel.cs" />
+    <Compile Include="ViewModel\ColorizeGraphViewModel.cs" />
+    <Compile Include="ViewModel\GraphCreatingViewModel.cs" />
+    <Compile Include="ViewModel\GraphFieldViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\PathFindingViewModel.cs" />
+    <Compile Include="View\Windows\AlgorithmStatisticsUserControl.xaml.cs">
+      <DependentUpon>AlgorithmStatisticsUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\ButtonPanelUserControl.xaml.cs">
+      <DependentUpon>ButtonPanelUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\ColorizeGraphUserControl.xaml.cs">
+      <DependentUpon>ColorizeGraphUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\GraphCreateWindow.xaml.cs">
+      <DependentUpon>GraphCreateWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\GraphFieldUserControl.xaml.cs">
+      <DependentUpon>GraphFieldUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\PathFindWindow.xaml.cs">
+      <DependentUpon>PathFindWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\SmoothGraphUserControl.xaml.cs">
+      <DependentUpon>SmoothGraphUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\ViewModelWindow.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Attributes\AppWindowAttribute.cs" />
+    <Compile Include="Converters\AlgorithmStatusToStringConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\IntToStringConverter.cs" />
+    <Compile Include="Converters\PrecisedDoubleToStringConverter.cs" />
+    <Compile Include="Converters\SmoothLevelToDataContextConverter.cs" />
+    <Compile Include="Converters\SmoothLevelToVisibilityConverter.cs" />
+    <Compile Include="Converters\TimeSpanMillisecondsConverter.cs" />
+    <Compile Include="DependencyInjection\DI.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\IGraphPathExtensions.cs" />
+    <Compile Include="Extensions\IMessengerExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Infrastructure\BaseAlgorithmCommands.cs" />
+    <Compile Include="Infrastructure\BaseCommand.cs" />
+    <Compile Include="Infrastructure\EventArguments\GraphCreatedEventArgs.cs" />
+    <Compile Include="Infrastructure\EventHandlers\GraphCreatedEventHandler.cs" />
+    <Compile Include="Infrastructure\InterruptAlgorithmCommand.cs" />
+    <Compile Include="Infrastructure\PauseAlgorithmCommand.cs" />
+    <Compile Include="Infrastructure\RelayCommand.cs" />
+    <Compile Include="Infrastructure\ResumeAlgorithmCommand.cs" />
+    <Compile Include="Interface\ICache.cs" />
+    <Page Include="Resources\Images\SvgImages.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Styles\ImageStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Templates\VertexTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Windows\AlgorithmStatisticsUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Windows\ButtonPanelUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Windows\ColorizeGraphUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Windows\GraphCreateWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Windows\GraphFieldUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Windows\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Windows\PathFindWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Windows\SmoothGraphUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Messages\ActionMessages\ClearStatisticsMessage.cs" />
+    <Compile Include="Messages\ActionMessages\GraphChangedMessage.cs" />
+    <Compile Include="Messages\ActionMessages\InterruptAllAlgorithmsMessage.cs" />
+    <Compile Include="Messages\ActionMessages\PauseAllAlgorithmMessage.cs" />
+    <Compile Include="Messages\ActionMessages\RemoveAlgorithmMessage.cs" />
+    <Compile Include="Messages\ActionMessages\ResumeAllAlgorithmsMessage.cs" />
+    <Compile Include="Messages\ActionMessages\StartEditorModeMessage.cs" />
+    <Compile Include="Messages\ActionMessages\StopEditorModeMessage.cs" />
+    <Compile Include="Messages\ActionMessages\SubscribeOnAlgorithmEventsMessage.cs" />
+    <Compile Include="Messages\ActionMessages\UpdateStatisticsMessage.cs" />
+    <Compile Include="Messages\DataMessages\AlgorithmIndexMessage.cs" />
+    <Compile Include="Messages\DataMessages\AlgorithmStartedMessage.cs" />
+    <Compile Include="Messages\DataMessages\AlgorithmStatusMessage.cs" />
+    <Compile Include="Messages\DataMessages\DelayTimeChangedMessage.cs" />
+    <Compile Include="Messages\DataMessages\PathfindingRangeChosenMessage.cs" />
+    <Compile Include="Messages\DataMessages\GraphCreatedMessage.cs" />
+    <Compile Include="Messages\DataMessages\IsAllAlgorithmsFinishedMessage.cs" />
+    <Compile Include="Messages\DataMessages\PathFoundMessage.cs" />
+    <Compile Include="Model\CostColors.cs" />
+    <Compile Include="Model\Wpf2DPathfindingRangeAdapter.cs" />
+    <Compile Include="Model\GraphField.cs" />
+    <Compile Include="Model\GraphFieldFactory.cs" />
+    <Compile Include="Model\PathfindingVisualizationModel.cs" />
+    <Compile Include="Model\PathInput.cs" />
+    <Compile Include="Model\RangedSlider.cs" />
+    <Compile Include="Model\Vertex.cs" />
+    <Compile Include="Model\VertexFactory.cs" />
+    <Compile Include="Model\VertexFromInfoFactory.cs" />
+    <Compile Include="Model\VertexVisualization.cs" />
+    <Compile Include="Model\WpfSmoothLevels.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\mainwindow2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Abstractions\Pathfinding.AlgorithmLib.Core.Abstractions.csproj">
+      <Project>{BBABA3C7-E177-44D6-B97E-4D8F3D01AFF6}</Project>
+      <Name>Pathfinding.AlgorithmLib.Core.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Events\Pathfinding.AlgorithmLib.Core.Events.csproj">
+      <Project>{943D8D5A-62E0-46A2-9914-DB9973DAF9C6}</Project>
+      <Name>Pathfinding.AlgorithmLib.Core.Events</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Interface\Pathfinding.AlgorithmLib.Core.Interface.csproj">
+      <Project>{9AB4F0E3-6693-4ACD-95BC-24D04134781F}</Project>
+      <Name>Pathfinding.AlgorithmLib.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Factory\Pathfinding.AlgorithmLib.Factory.csproj">
+      <Project>{E8ECD5E0-009E-4FFA-8FB8-4CB9209A4F25}</Project>
+      <Name>Pathfinding.AlgorithmLib.Factory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Visualization\Pathfinding.AlgorithmLib.Visualization.csproj">
+      <Project>{6C5443F8-9BF4-4355-8F42-E65EE9562E3A}</Project>
+      <Name>Pathfinding.AlgorithmLib.Visualization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Abstractions\Pathfinding.GraphLib.Core.Abstractions.csproj">
+      <Project>{7112EB01-28F4-438D-945D-87CB69D14B99}</Project>
+      <Name>Pathfinding.GraphLib.Core.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
+      <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
+      <Name>Pathfinding.GraphLib.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Realizations\Pathfinding.GraphLib.Core.Realizations.csproj">
+      <Project>{0C7DB792-B30B-4138-8D37-67450E2F0982}</Project>
+      <Name>Pathfinding.GraphLib.Core.Realizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Factory.Extensions\Pathfinding.GraphLib.Factory.Extensions.csproj">
+      <Project>{992503e9-626f-4ed5-b9cf-239c56c8f440}</Project>
+      <Name>Pathfinding.GraphLib.Factory.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Factory.Interface\Pathfinding.GraphLib.Factory.Interface.csproj">
+      <Project>{8C66CBDB-9899-4D80-846A-F197925D3163}</Project>
+      <Name>Pathfinding.GraphLib.Factory.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Serialization.Core.Interface\Pathfinding.GraphLib.Serialization.Core.Interface.csproj">
+      <Project>{84770BE3-D26C-4800-9DF1-EA33704E9FBD}</Project>
+      <Name>Pathfinding.GraphLib.Serialization.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Serialization.Core.Realizations\Pathfinding.GraphLib.Serialization.Core.Realizations.csproj">
+      <Project>{5b3827e8-4cc0-490d-b15c-4190a2982059}</Project>
+      <Name>Pathfinding.GraphLib.Serialization.Core.Realizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Smoothing\Pathfinding.GraphLib.Smoothing.csproj">
+      <Project>{50902851-3081-49AF-ACEC-013E78460547}</Project>
+      <Name>Pathfinding.GraphLib.Smoothing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Subscriptions\Pathfinding.GraphLib.Subscriptions.csproj">
+      <Project>{E6D42398-F350-497D-BA03-EB0C08E424A8}</Project>
+      <Name>Pathfinding.GraphLib.Subscriptions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Visualization.Subscriptions\Pathfinding.GraphLib.Visualization.Subscriptions.csproj">
+      <Project>{47B13F23-C3E6-4BBC-87FF-92D2D161CC39}</Project>
+      <Name>Pathfinding.GraphLib.Visualization.Subscriptions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Visualization\Pathfinding.GraphLib.Visualization.csproj">
+      <Project>{5616B5FF-BA13-4805-860C-1F69F2946B89}</Project>
+      <Name>Pathfinding.GraphLib.Visualization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Logging\Pathfinding.Logging.csproj">
+      <Project>{37085E09-A2DA-4930-B219-1A3E385C5385}</Project>
+      <Name>Pathfinding.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Visualization.Extensions\Pathfinding.Visualization.Extensions.csproj">
+      <Project>{eab4ff1e-bb9c-4c01-b8d6-171b1758b81d}</Project>
+      <Name>Pathfinding.Visualization.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Visualization.Models\Pathfinding.Visualization.Models.csproj">
+      <Project>{A09E51A5-7FEA-4220-9F90-15D92F8BEC0E}</Project>
+      <Name>Pathfinding.Visualization.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.VisualizationLib.Core.Interface\Pathfinding.VisualizationLib.Core.Interface.csproj">
+      <Project>{ECC527ED-96BA-44DF-9561-6CD8DE13B550}</Project>
+      <Name>Pathfinding.VisualizationLib.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Collections\Shared.Collections.csproj">
+      <Project>{4debd450-feae-49e3-9961-06169d59dc03}</Project>
+      <Name>Shared.Collections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Executable.Extensions\Shared.Executable.Extensions.csproj">
+      <Project>{715b890d-caec-46e6-bf18-a556e1ae81a9}</Project>
+      <Name>Shared.Executable.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Executable\Shared.Executable.csproj">
+      <Project>{0A7C5FE5-4688-42C4-8202-676042BB0F81}</Project>
+      <Name>Shared.Executable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
+      <Project>{cd11d46e-4675-4090-b50b-a85ffa3d1d2c}</Project>
+      <Name>Shared.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Primitives.Extensions\Shared.Primitives.Extensions.csproj">
+      <Project>{597b3252-3165-4574-826c-95399452d0b8}</Project>
+      <Name>Shared.Primitives.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Primitives\Shared.Primitives.csproj">
+      <Project>{30973320-9F61-45FB-8C75-3256ADB1BFB1}</Project>
+      <Name>Shared.Primitives</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Process\Shared.Process.csproj">
+      <Project>{78DDAA5D-8ABD-4695-A66B-1EAF2BDE77EB}</Project>
+      <Name>Shared.Process</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MvvmLightLibs">
+      <Version>5.4.1.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

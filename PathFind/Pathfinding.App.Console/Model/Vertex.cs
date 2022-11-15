@@ -1,6 +1,4 @@
-﻿using Pathfinding.App.Console.EventArguments;
-using Pathfinding.App.Console.EventHandlers;
-using Pathfinding.App.Console.Interface;
+﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Coordinates;
@@ -20,11 +18,6 @@ namespace Pathfinding.App.Console.Model
     [DebuggerDisplay("{Position.ToString()}")]
     internal class Vertex : IVertex, IVisualizable, IDisplayable
     {
-        public event VertexEventHandler CostChanged;
-        public event VertexEventHandler IncludedInRange;
-        public event VertexEventHandler Reversed;
-        public event VertexEventHandler MarkedAsIntermediateToReplace;
-
         private readonly IVisualization<Vertex> visualization;
 
         private bool isObstacle;
@@ -64,14 +57,6 @@ namespace Pathfinding.App.Console.Model
             Cursor.SetPosition(ConsolePosition);
             ColorfulConsole.Write(Cost, Color);
         }
-
-        public void ChangeCost() => CostChanged?.Invoke(this, new VertexEventArgs(this));
-
-        public void Reverse() => Reversed?.Invoke(this, new VertexEventArgs(this));
-
-        public void IncludeInRange() => IncludedInRange?.Invoke(this, new VertexEventArgs(this));
-
-        public void MarkAsIntermediateToReplace() => MarkedAsIntermediateToReplace?.Invoke(this, new VertexEventArgs(this));
 
         public bool Equals(IVertex other) => other.IsEqual(this);
 

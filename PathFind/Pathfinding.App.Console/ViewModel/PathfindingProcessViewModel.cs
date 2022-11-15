@@ -74,8 +74,8 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ChooseAlgorithm, 0)]
         private void ChooseAlgorithm() => DI.Container.Display<PathfindingProcessChooseView>();
 
-        [Condition(nameof(CanStartPathfinding))]
         [ExecuteSafe(nameof(ExecuteSafe))]
+        [Condition(nameof(CanStartPathfinding))]
         [MenuItem(MenuItemsNames.FindPath, 1)]
         private void FindPath()
         {
@@ -132,13 +132,13 @@ namespace Pathfinding.App.Console.ViewModel
             switch (e.PressedKey)
             {
                 case ConsoleKey.Escape:
-                    Algorithm?.Interrupt();
+                    Algorithm.Interrupt();
                     break;
                 case ConsoleKey.P:
-                    Algorithm?.Pause();
+                    Algorithm.Pause();
                     break;
                 case ConsoleKey.Enter:
-                    Algorithm?.Resume();
+                    Algorithm.Resume();
                     break;
             }
         }

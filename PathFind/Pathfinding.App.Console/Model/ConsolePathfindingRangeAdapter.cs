@@ -1,5 +1,4 @@
-﻿using Pathfinding.App.Console.EventArguments;
-using Pathfinding.GraphLib.Factory.Interface;
+﻿using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.Visualization.Core.Abstractions;
 using System.Diagnostics;
 
@@ -13,26 +12,14 @@ namespace Pathfinding.App.Console.Model
         {
         }
 
-        protected override void SubscribeVertex(Vertex vertex)
+        public void IncludeInRange(Vertex vertex)
         {
-            vertex.IncludedInRange += SetPathfindingRange;
-            vertex.MarkedAsIntermediateToReplace += MarkIntermediateVertexToReplace;
+            SetPathfindingRange(vertex);
         }
 
-        protected override void UnsubscribeVertex(Vertex vertex)
+        public void MarkAsIntermediateToReplace(Vertex vertex)
         {
-            vertex.IncludedInRange -= SetPathfindingRange;
-            vertex.MarkedAsIntermediateToReplace -= MarkIntermediateVertexToReplace;
-        }
-
-        private void SetPathfindingRange(object sender, VertexEventArgs e)
-        {
-            SetPathfindingRange(e.Current);
-        }
-
-        private void MarkIntermediateVertexToReplace(object sender, VertexEventArgs e)
-        {
-            MarkIntermediateVertexToReplace(e.Current);
+            MarkIntermediateVertexToReplace(vertex);
         }
     }
 }

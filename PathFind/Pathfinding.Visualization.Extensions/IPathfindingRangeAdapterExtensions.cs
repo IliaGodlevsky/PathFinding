@@ -37,5 +37,11 @@ namespace Pathfinding.Visualization.Extensions
         {
             return adapter.Source?.IsIsolated() == false && adapter.Target?.IsIsolated() == false;
         }
+
+        public static bool HasIsolators<TVertex>(this IPathfindingRangeAdapter<TVertex> adapter)
+            where TVertex : IVertex , IVisualizable
+        {
+            return adapter.GetRange().Any(vertex => vertex.IsIsolated());
+        }
     }
 }

@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="WPFVersion.View.Windows.SmoothGraphUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFVersion.ViewModel.ButtonViewModels" 
+             xmlns:converters="clr-namespace:WPFVersion.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="45" d:DesignWidth="150">
+    <UserControl.Resources>
+        <converters:SmoothLevelToDataContextConverter x:Key="LevelToDataContext"/>
+        <converters:SmoothLevelToVisibilityConverter x:Key="LevelToVisibility"/>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <local:SmoothGraphViewModel/>
+    </UserControl.DataContext>
+    <Grid>
+        <StackPanel Background="White" Margin="5" VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button MaxWidth="25" MaxHeight="25" BorderBrush="White" Background="White" Margin="5" Content="{StaticResource Smooth}" Command="{Binding SmoothCommand}"></Button>
+            <ComboBox Margin="7" MinWidth="85" SelectedIndex="0" SelectedValue="{Binding SelectSmoothLevel, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Levels}"/>
+            <TextBox Margin="6" MinWidth="25" DataContext="{Binding SelectSmoothLevel, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource LevelToDataContext}}" 
+                     Visibility="{Binding RelativeSource={RelativeSource Self}, Path=DataContext, Converter={StaticResource LevelToVisibility}, UpdateSourceTrigger=PropertyChanged}"  
+                     Text="{Binding Level, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        </StackPanel>
+    </Grid>
+</UserControl>

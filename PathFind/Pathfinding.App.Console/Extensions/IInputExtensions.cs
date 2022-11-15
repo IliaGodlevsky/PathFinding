@@ -2,7 +2,6 @@
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Coordinates;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Primitives.Extensions;
@@ -65,23 +64,10 @@ namespace Pathfinding.App.Console.Extensions
             return self.InputVertex(graph, adapter.CanBeInRange);
         }
 
-        public static Vertex InputVertex(this IInput<int> self, string message, 
-            Graph2D<Vertex> graph, IPathfindingRangeAdapter<Vertex> adapter)
-        {
-            ColorfulConsole.WriteLine(message);
-            return self.InputVertex(graph, adapter);
-        }
-
         public static IEnumerable<Vertex> InputExistingIntermediates(this IInput<int> self, 
             Graph2D<Vertex> graph, IPathfindingRangeAdapter<Vertex> adapter, int count)
         {
             return self.InputVertices(graph, adapter.IsIntermediate, count);
-        }
-
-        public static IEnumerable<Vertex> InputRequiredVertices(this IInput<int> self, 
-            Graph2D<Vertex> graph, IPathfindingRangeAdapter<Vertex> adapter)
-        {
-            return self.InputVertices(graph, adapter, 2);
         }
 
         public static IEnumerable<Vertex> InputVertices(this IInput<int> self, Graph2D<Vertex> graph,

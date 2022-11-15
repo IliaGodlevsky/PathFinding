@@ -5,13 +5,12 @@ using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Executable;
 using Shared.Executable.Extensions;
-using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.Visualization.Core.Abstractions
 {
-    public abstract class PathfindingRangeAdapter<TVertex> : IPathfindingRangeAdapter<TVertex>, IGraphSubscription<TVertex>, IUndo
+    public abstract class PathfindingRangeAdapter<TVertex> : IPathfindingRangeAdapter<TVertex>, IUndo
         where TVertex : IVertex, IVisualizable
     {
         private readonly IntermediateVerticesToRemoveCommands<TVertex> intermediateVerticesToRemoveCommands;
@@ -44,16 +43,6 @@ namespace Pathfinding.Visualization.Core.Abstractions
             return rangeFactory.CreateRange(Source, Target, Intermediates.OfType<IVertex>());
         }
 
-        public void Subscribe(IGraph<TVertex> graph)
-        {
-            graph.ForEach(SubscribeVertex);
-        }
-
-        public void Unsubscribe(IGraph<TVertex> graph)
-        {
-            graph.ForEach(UnsubscribeVertex);
-        }
-
         public void Undo()
         {
             setPathfindingRangeCommands.Undo();
@@ -75,9 +64,5 @@ namespace Pathfinding.Visualization.Core.Abstractions
         {
             intermediateVerticesToRemoveCommands.Execute(vertex);
         }
-
-        protected abstract void SubscribeVertex(TVertex vertex);
-
-        protected abstract void UnsubscribeVertex(TVertex vertex);
     }
 }
