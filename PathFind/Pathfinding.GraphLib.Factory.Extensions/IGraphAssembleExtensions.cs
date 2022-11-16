@@ -35,7 +35,7 @@ namespace Pathfinding.GraphLib.Factory.Extensions
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex
         {
-            return await self.AssembleGraphAsync(percentOfObstacles, dimensionSizes);
+            return await self.AssembleGraphAsync(percentOfObstacles, (IReadOnlyList<int>)dimensionSizes);
         }
     }
 }

@@ -1,5 +1,8 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
+using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
+using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -98,7 +101,6 @@ namespace Pathfinding.App.WPF._2D.Model
             Width = Height = VertexSize;
             Template = (ControlTemplate)TryFindResource("VertexTemplate");
             Position = coordinate;
-            this.InitializeComponents();
             this.Initialize();
         }
 

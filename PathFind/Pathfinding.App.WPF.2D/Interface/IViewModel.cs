@@ -2,7 +2,7 @@
 
 namespace Pathfinding.App.WPF._2D.Interface
 {
-    internal interface IViewModel
+    public interface IViewModel
     {
         event Action WindowClosed;
     }

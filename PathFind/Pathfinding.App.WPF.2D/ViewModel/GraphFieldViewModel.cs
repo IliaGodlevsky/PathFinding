@@ -1,15 +1,15 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
-using GraphLib.Extensions;
-using GraphLib.Interfaces;
-using GraphLib.Realizations.Graphs;
 using Pathfinding.App.WPF._2D.Messages.ActionMessages;
 using Pathfinding.App.WPF._2D.Messages.DataMessages;
 using Pathfinding.App.WPF._2D.Model;
 using Pathfinding.App.WPF._2D.ViewModel.BaseViewModels;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.VisualizationLib.Core.Interface;
 using WPFVersion.DependencyInjection;
 
-namespace WPFVersion.ViewModel
+namespace Pathfinding.App.WPF._2D.ViewModel
 {
     internal class GraphFieldViewModel : NotifyPropertyChanged
     {

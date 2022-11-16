@@ -16,14 +16,14 @@ namespace Pathfinding.App.WPF._2D.Model
 
         private void SetPathfindingRange(object sender, MouseButtonEventArgs e)
         {
-            SetPathfindingRange((Vertex)e.OriginalSource);
+            SetPathfindingRange((Vertex)e.Source);
         }
 
         private void MarkAsIntermediateToRemove(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Middle)
             {
-                MarkIntermediateVertexToReplace((Vertex)e.OriginalSource);
+                MarkIntermediateVertexToReplace((Vertex)e.Source);
             }
         }
 

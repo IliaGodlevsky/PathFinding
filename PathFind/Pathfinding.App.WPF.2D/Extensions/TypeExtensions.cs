@@ -1,7 +1,7 @@
 ﻿using Pathfinding.App.WPF._2D.Attributes;
 using System;
 
-namespace WPFVersion.Extensions
+namespace Pathfinding.App.WPF._2D.Extensions
 {
     internal static class TypeExtensions
     {

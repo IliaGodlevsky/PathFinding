@@ -1,6 +1,8 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using Autofac;
+using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Interface;
+using Pathfinding.App.WPF._2D.Extensions;
 using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.App.WPF._2D.Messages.ActionMessages;
 using Pathfinding.App.WPF._2D.Messages.DataMessages;
@@ -10,7 +12,6 @@ using Shared.Primitives.ValueRange.Enums;
 using System;
 using System.Windows.Input;
 using WPFVersion.DependencyInjection;
-using WPFVersion.Extensions;
 
 namespace Pathfinding.App.WPF._2D.ViewModel
 {

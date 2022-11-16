@@ -1,36 +1,38 @@
-﻿using Algorithm.Base;
-using Algorithm.Factory.Interface;
-using Algorithm.Interfaces;
-using Algorithm.Realizations.StepRules;
-using Autofac;
-using Common.Extensions;
-using Common.Interface;
+﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
-using GraphLib.Base.EndPoints;
-using GraphLib.Interfaces;
-using GraphLib.Interfaces.Factories;
-using GraphLib.Realizations;
-using GraphLib.Realizations.Factories;
-using GraphLib.Realizations.Factories.CoordinateFactories;
-using GraphLib.Realizations.Factories.GraphAssembles;
-using GraphLib.Realizations.Factories.GraphFactories;
-using GraphLib.Realizations.Factories.NeighboursCoordinatesFactories;
-using GraphLib.Realizations.Graphs;
-using GraphLib.Realizations.MeanCosts;
-using GraphLib.Serialization.Interfaces;
-using GraphLib.Serialization.Modules;
-using GraphLib.Serialization.Serializers;
 using GraphLib.Serialization.Serializers.Decorators;
+using Pathfinding.AlgorithmLib.Core.Abstractions;
+using Pathfinding.AlgorithmLib.Core.Interface;
+using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
+using Pathfinding.AlgorithmLib.Factory.Interface;
+using Pathfinding.App.WPF._2D.Extensions;
 using Pathfinding.App.WPF._2D.Interface;
 using Pathfinding.App.WPF._2D.Model;
 using Pathfinding.App.WPF._2D.ViewModel;
+using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Factory.Interface;
+using Pathfinding.GraphLib.Factory.Realizations;
+using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
+using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
+using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
+using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
+using Pathfinding.GraphLib.Serialization.Core.Interface;
+using Pathfinding.GraphLib.Serialization.Core.Realizations.Modules;
+using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers;
+using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decorators;
+using Pathfinding.GraphLib.Smoothing.Interface;
+using Pathfinding.GraphLib.Smoothing.Realizations.MeanCosts;
+using Pathfinding.GraphLib.Subscriptions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Logging.Loggers;
-using Random.Interface;
-using Random.Realizations.Generators;
+using Pathfinding.Visualization.Core.Abstractions;
+using Pathfinding.VisualizationLib.Core.Interface;
+using Shared.Extensions;
+using Shared.Random;
+using Shared.Random.Realizations;
 using System;
 using System.Reflection;
-using WPFVersion.Extensions;
 
 namespace WPFVersion.DependencyInjection
 {
@@ -51,27 +53,32 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
-            builder.RegisterType<Wpf2DPathfindingRangeAdapter>().As<BaseEndPoints<Vertex>>().AsImplementedInterfaces().SingleInstance();
-            builder.RegisterType<GraphEvents>().As<IGraphEvents<Vertex>>().SingleInstance();
+            builder.RegisterType<Wpf2DPathfindingRangeAdapter>().As<PathfindingRangeAdapter<Vertex>>()
+                .AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<Wpf2DVertexChangeCostModule>().As<IGraphSubscription<Vertex>>().SingleInstance();
+            builder.RegisterType<Wpf2DVertexReverseModule>().As<IGraphSubscription<Vertex>>().SingleInstance();
+
+            builder.RegisterComposite<GraphSubscriptions<Vertex>, IGraphSubscription<Vertex>>().SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
-            builder.RegisterComposite<CompositeGraphEvents<Vertex>, IGraphEvents<Vertex>>().SingleInstance();
-
             builder.RegisterType<CryptoRandom>().As<IRandom>().SingleInstance();
             builder.RegisterDecorator<ThreadSafeRandom, IRandom>();
+
             builder.RegisterType<GraphAssemble<Graph2D<Vertex>, Vertex>>().As<IGraphAssemble<Graph2D<Vertex>, Vertex>>().SingleInstance();
             builder.RegisterType<VertexFactory>().As<IVertexFactory<Vertex>>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
+            builder.RegisterType<PathfindingRangeFactory>().As<IPathfindingRangeFactory>().SingleInstance();
             builder.RegisterType<Graph2DFactory<Vertex>>().As<IGraphFactory<Graph2D<Vertex>, Vertex>>().SingleInstance();
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField>>().SingleInstance();
-            builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
-            builder.RegisterType<GeometricMeanCost>().As<IMeanCost>().SingleInstance();
+            builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();            
             builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
+
+            builder.RegisterType<GeometricMeanCost>().As<IMeanCost>().SingleInstance();
 
             builder.RegisterType<InFileSerializationModule<Graph2D<Vertex>, Vertex>>().As<IGraphSerializationModule<Graph2D<Vertex>, Vertex>>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();

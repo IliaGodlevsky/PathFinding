@@ -1,14 +1,13 @@
-﻿using Algorithm.Interfaces;
-using NullObject.Extensions;
+﻿using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.App.WPF._2D.ViewModel;
 
-namespace WPFVersion.Extensions
+namespace Pathfinding.App.WPF._2D.Extensions
 {
     internal static class IGraphPathExtensions
     {
         public static string ToStatus(this IGraphPath self)
         {
-            return self.IsNull() ? AlgorithmViewModel.Failed : AlgorithmViewModel.Finished;
+            return self.Count == 0 ? AlgorithmViewModel.Failed : AlgorithmViewModel.Finished;
         }
     }
 }

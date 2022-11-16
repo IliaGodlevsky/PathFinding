@@ -31,7 +31,7 @@ namespace Pathfinding.App.WPF._2D.Model
 
         private void ChangeVertexCost(object sender, MouseWheelEventArgs e)
         {
-            var vertex = (Vertex)e.OriginalSource;
+            var vertex = (Vertex)e.Source;
             if (!vertex.IsObstacle)
             {
                 int delta = (e.Delta > 0 ? 1 : -1);

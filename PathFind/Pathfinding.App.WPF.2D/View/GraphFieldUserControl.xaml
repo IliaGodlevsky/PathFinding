@@ -1,0 +1,87 @@
+﻿<UserControl x:Class="Pathfinding.App.WPF._2D.View.GraphFieldUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:range="clr-namespace:Pathfinding.App.WPF._2D" 
+             xmlns:model="clr-namespace:Pathfinding.App.WPF._2D.Model" 
+             xmlns:rules="clr-namespace:Pathfinding.App.WPF._2D.ValidationRules" 
+             xmlns:converters="clr-namespace:Pathfinding.App.WPF._2D.Converters" 
+             xmlns:viewmodel="clr-namespace:Pathfinding.App.WPF._2D.ViewModel" 
+             d:DataContext="{d:DesignInstance Type=viewmodel:GraphFieldViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <!--Number suffix in a key name is a round precision-->
+        <converters:PrecisedDoubleToStringConverter Precision="2" x:Key="doubleConverter2"/>
+        <converters:PrecisedDoubleToStringConverter Precision="0" x:Key="doubleConverter0"/>
+        <converters:AlgorithmStatusToStringConverter x:Key="StatusToStringConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StatusBar Margin="5" Background="White" Grid.Row="0">
+            <TextBlock Text="{Binding GraphParamtres}"></TextBlock>
+        </StatusBar>
+        <Expander Grid.Row="1" Background="White" Panel.ZIndex="1" Margin="5" >
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                <TextBlock HorizontalAlignment="Center" Margin="1" Text="Scaling"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <model:RangedSlider Margin="1" MinWidth="250" x:Name="ScaleSlider" Value="1" ValueRange="{x:Static range:Constants.GraphFieldScaleValueRange}"/>
+                    <TextBox Margin="1" MinWidth="25">
+                        <TextBox.Text>
+                            <Binding Mode="TwoWay" Path="Value" ElementName="ScaleSlider" Converter="{StaticResource doubleConverter2}">
+                                <Binding.ValidationRules>
+                                    <rules:NonDoubleInputValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </StackPanel>
+                <TextBlock Margin="1" HorizontalAlignment="Center" Text="Offset"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <model:RangedSlider MinWidth="250" Margin="1" x:Name="XSlider" ValueRange="{x:Static range:Constants.OffsetValueRange}"></model:RangedSlider>
+                    <TextBox Margin="1" MinWidth="25">
+                        <TextBox.Text>
+                            <Binding Mode="TwoWay" Path="Value" ElementName="XSlider" Converter="{StaticResource doubleConverter0}">
+                                <Binding.ValidationRules>
+                                    <rules:NonInt32InputValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <model:RangedSlider MinWidth="250" Margin="1" x:Name="YSlider" ValueRange="{x:Static range:Constants.OffsetValueRange}"></model:RangedSlider>
+                    <TextBox Margin="2" MinWidth="25">
+                        <TextBox.Text>
+                            <Binding Mode="TwoWay" Path="Value" ElementName="YSlider" Converter="{StaticResource doubleConverter0}">
+                                <Binding.ValidationRules>
+                                    <rules:NonInt32InputValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </StackPanel>
+            </StackPanel>
+        </Expander>
+        <model:GraphField Grid.Row="2" Panel.ZIndex="0" Margin="3" x:Name="graphField">
+            <model:GraphField.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform 
+                        ScaleX="{Binding ElementName=ScaleSlider, Path=Value, IsAsync=True}"
+                        ScaleY="{Binding ElementName=ScaleSlider, Path=Value, IsAsync=True}">
+                    </ScaleTransform>
+                    <TranslateTransform 
+                        X="{Binding ElementName=XSlider, Path=Value}"
+                        Y="{Binding ElementName=YSlider, Path=Value}">
+                    </TranslateTransform>
+                </TransformGroup>
+            </model:GraphField.RenderTransform>
+            <ContentPresenter Content="{Binding GraphField}"/>
+        </model:GraphField>
+    </Grid>
+</UserControl>

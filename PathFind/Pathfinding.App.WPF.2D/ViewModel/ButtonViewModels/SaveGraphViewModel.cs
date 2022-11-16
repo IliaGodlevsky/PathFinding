@@ -9,6 +9,7 @@ using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
+using Autofac;
 
 namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
 {

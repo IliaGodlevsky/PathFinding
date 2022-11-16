@@ -1,7 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using System.Threading.Tasks;
 
-namespace WPFVersion.Extensions
+namespace Pathfinding.App.WPF._2D.Extensions
 {
     internal static class IMessengerExtensions
     {

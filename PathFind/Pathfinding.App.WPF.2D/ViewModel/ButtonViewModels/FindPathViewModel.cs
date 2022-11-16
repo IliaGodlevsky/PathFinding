@@ -1,10 +1,11 @@
-﻿using Pathfinding.App.WPF._2D.Infrastructure;
+﻿using Autofac;
+using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.App.WPF._2D.Model;
+using Pathfinding.App.WPF._2D.View;
 using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.Visualization.Extensions;
 using System.Windows.Input;
 using WPFVersion.DependencyInjection;
-using WPFVersion.View.Windows;
 
 namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
 {
@@ -22,7 +23,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
 
         private void ExecuteFindPathCommand(object param)
         {
-            DI.Container.Resolve<PathFindWindow>().Show();
+            DI.Container.Resolve<PathfindingWindow>().Show();
         }
 
         private bool CanExecuteFindPathCommand(object param)

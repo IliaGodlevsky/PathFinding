@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.App.Console.Delegates;
 using Pathfinding.App.Console.DependencyInjection;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;

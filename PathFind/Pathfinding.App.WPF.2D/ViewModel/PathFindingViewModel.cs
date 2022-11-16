@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using WPFVersion.DependencyInjection;
-using WPFVersion.Extensions;
 using Pathfinding.App.WPF._2D.Model;
 using Pathfinding.App.WPF._2D.Messages.DataMessages;
 using Pathfinding.App.WPF._2D.Interface;
@@ -18,6 +17,8 @@ using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Shared.Extensions;
+using Autofac;
+using Pathfinding.App.WPF._2D.Extensions;
 
 namespace Pathfinding.App.WPF._2D.ViewModel
 {

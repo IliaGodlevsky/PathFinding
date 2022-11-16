@@ -1,9 +1,9 @@
-﻿using System.Globalization;
+﻿using Shared.Primitives.Extensions;
+using Shared.Primitives.ValueRange;
+using System.Globalization;
 using System.Windows.Controls;
-using ValueRange;
-using ValueRange.Extensions;
 
-namespace WPFVersion.ValidationRules
+namespace Pathfinding.App.WPF._2D.ValidationRules
 {
     internal sealed class RangedDoubleValidationRule : ValidationRule
     {

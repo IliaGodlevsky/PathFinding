@@ -1,14 +1,15 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using Autofac;
+using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.App.WPF._2D.Messages.ActionMessages;
 using Pathfinding.App.WPF._2D.Messages.DataMessages;
 using Pathfinding.App.WPF._2D.Model;
+using Pathfinding.App.WPF._2D.View;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Visualization.Core.Abstractions;
 using System.Windows.Input;
 using WPFVersion.DependencyInjection;
-using WPFVersion.View.Windows;
 
 namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
 {
@@ -32,7 +33,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
 
         private void ExecuteCreateGraphCommand(object param)
         {
-            var window = DI.Container.Resolve<GraphCreatesWindow>();
+            var window = DI.Container.Resolve<GraphCreateWindow>();
             window.Show();
         }
 

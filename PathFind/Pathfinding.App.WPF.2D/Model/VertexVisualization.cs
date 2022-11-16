@@ -1,9 +1,9 @@
-﻿using Pathfinding.VisualizationLib.Core.Interface;
+﻿using Pathfinding.App.WPF._2D.Extensions;
+using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Extensions;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
-using WPFVersion.Extensions;
 
 namespace Pathfinding.App.WPF._2D.Model
 {

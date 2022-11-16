@@ -1,10 +1,9 @@
-﻿using Common.Extensions;
+﻿using Shared.Primitives.Extensions;
+using Shared.Primitives.ValueRange;
 using System;
 using System.Windows.Media;
-using ValueRange;
-using ValueRange.Extensions;
 
-namespace WPFVersion.Extensions
+namespace Pathfinding.App.WPF._2D.Extensions
 {
     internal static class ColorExtensions
     {
@@ -12,7 +11,7 @@ namespace WPFVersion.Extensions
         {
             var percentValueRange = new InclusiveValueRange<double>(0, 100);
             percentFromMax = percentValueRange.ReturnInRange(percentFromMax);
-            int newBrightness = ((int)byte.MaxValue).GetPercentage(percentFromMax);
+            int newBrightness = (byte)(byte.MaxValue * percentFromMax / 100);
             color.A = Convert.ToByte(newBrightness);
             return color;
         }

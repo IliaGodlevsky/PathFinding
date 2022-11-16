@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
 
-namespace WPFVersion.ValidationRules
+namespace Pathfinding.App.WPF._2D.ValidationRules
 {
     internal sealed class NonInt32InputValidationRule : ValidationRule
     {

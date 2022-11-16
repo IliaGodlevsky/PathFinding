@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using Autofac;
+using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.WPF._2D.Infrastructure.EventArguments;
 using Pathfinding.App.WPF._2D.Infrastructure.EventHandlers;
 using Pathfinding.App.WPF._2D.Interface;

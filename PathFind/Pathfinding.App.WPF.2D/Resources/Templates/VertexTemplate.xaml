@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:vertex="clr-namespace:WPFVersion.Model"
+                    xmlns:vertex="clr-namespace:Pathfinding.App.WPF._2D.Model"
                     x:Name="TemplateDictionary">
     <ControlTemplate x:Key="VertexTemplate" TargetType="vertex:Vertex">
         <ControlTemplate.Resources>
