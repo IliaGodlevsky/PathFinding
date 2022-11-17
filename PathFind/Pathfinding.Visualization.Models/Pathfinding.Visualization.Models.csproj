@@ -76,6 +76,10 @@
       <Project>{E8ECD5E0-009E-4FFA-8FB8-4CB9209A4F25}</Project>
       <Name>Pathfinding.AlgorithmLib.Factory</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.History.Interface\Pathfinding.AlgorithmLib.History.Interface.csproj">
+      <Project>{A0750471-F960-42D7-B4B4-0571EA0EAB78}</Project>
+      <Name>Pathfinding.AlgorithmLib.History.Interface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface.Extensions\Pathfinding.GraphLib.Core.Interface.Extensions.csproj">
       <Project>{3c13810c-ed74-490b-9303-9ccbfe485f5e}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface.Extensions</Name>

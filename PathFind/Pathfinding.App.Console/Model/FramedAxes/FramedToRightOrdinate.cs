@@ -8,7 +8,7 @@ namespace Pathfinding.App.Console.Model.FramedAxes
 
         protected override string Offset => new string(Space, OffsetNumber);
 
-        private int OffsetNumber => graphWidth * LateralDistance + Constants.WidthOfOrdinateView;
+        private int OffsetNumber => graphWidth * LateralDistance + Screen.WidthOfOrdinateView;
 
         public FramedToRightOrdinate(Graph2D<Vertex> graph)
             : base(graph.Length)

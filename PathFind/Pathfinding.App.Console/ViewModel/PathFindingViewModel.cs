@@ -2,9 +2,9 @@
 using Pathfinding.App.Console.DependencyInjection;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Menu.Realizations.Attributes;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.Menu.Attributes;
 using Pathfinding.App.Console.Views;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Extensions;
@@ -32,11 +32,11 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.FindPath, 0)]
         private void FindPath()
         {
-            DI.Container.Display<PathfindingProcessView>();
+            DI.Container.DisplayScoped<PathfindingProcessView>();
         }
 
         [ExecuteSafe(nameof(ExecuteSafe))]
-        [MenuItem(MenuItemsNames.ChooseEndPoints, 1)]
+        [MenuItem(MenuItemsNames.ChoosePathfindingRange, 1)]
         private void ChooseExtremeVertex()
         {
             DI.Container.Display<PathfindingRangeView>();

@@ -6,7 +6,7 @@ namespace Pathfinding.AlgorithmLib.Core.Interface.Extensions
 {
     public static class IGraphExtensions
     {
-        public static IEnumerable<TVertex> GetVertices<TVertex>(this IGraph<TVertex> graph, IGraphPath path)
+        public static IEnumerable<TVertex> GetVertices<TVertex>(this IGraph<TVertex> graph, IEnumerable<ICoordinate> path)
             where TVertex : IVertex
         {
             return path.Select(graph.Get);

@@ -19,6 +19,7 @@ using Pathfinding.AlgorithmLib.Core.Events;
 using Shared.Extensions;
 using Autofac;
 using Pathfinding.App.WPF._2D.Extensions;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.WPF._2D.ViewModel
 {
@@ -28,7 +29,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel
 
         private readonly IMessenger messenger;
 
-        private int Index { get; set; }
+        private Guid Id { get; set; }
 
         public ICommand ConfirmPathFindAlgorithmChoice { get; }
 
@@ -41,20 +42,13 @@ namespace Pathfinding.App.WPF._2D.ViewModel
             messenger = DI.Container.Resolve<IMessenger>();
             ConfirmPathFindAlgorithmChoice = new RelayCommand(ExecuteConfirmPathFindAlgorithmChoice, CanExecuteConfirmPathFindAlgorithmChoice);
             CancelPathFindAlgorithmChoice = new RelayCommand(ExecuteCloseWindowCommand);
-            messenger.Register<AlgorithmIndexMessage>(this, SetAlgorithmIndex);
             messenger.Register<DelayTimeChangedMessage>(this, SetAlgorithmDelayTime);
             Delay = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
         }
 
-        private void SetAlgorithmIndex(AlgorithmIndexMessage message)
-        {
-            messenger.Unregister<AlgorithmIndexMessage>(this, SetAlgorithmIndex);
-            Index = message.Index;
-        }
-
         private void SetAlgorithmDelayTime(DelayTimeChangedMessage message)
         {
-            if (Index == message.Index)
+            if (Id == message.Id)
             {
                 Delay = message.DelayTime;
             }
@@ -63,44 +57,48 @@ namespace Pathfinding.App.WPF._2D.ViewModel
         protected override void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
             messenger.Send(new AlgorithmStartedMessage(algorithm, Delay));
-            messenger.Send(new PathfindingRangeChosenMessage(algorithm, range));
+            messenger.Send(new PathfindingRangeChosenMessage(algorithm.Id, range));
         }
 
         protected override void SummarizePathfindingResults()
         {
             string time = timer.Elapsed.ToString(@"mm\:ss\.fff");
-            var updateMessage = new UpdateStatisticsMessage(Index, time, visitedVerticesCount, Path.Count, Path.Cost);
+            var updateMessage = new UpdateStatisticsMessage(Id, time, visitedVerticesCount, Path.Count, Path.Cost);
             messenger.Send(updateMessage);
-            messenger.Send(new AlgorithmStatusMessage(Path.ToStatus(), Index));
-            messenger.Send(new PathFoundMessage(algorithm, Path));
+            messenger.Send(new AlgorithmStatusMessage(Path.ToStatus(), Id));
+            messenger.Send(new PathFoundMessage(algorithm.Id, Path));
         }
 
         protected override async void OnVertexVisited(object sender, PathfindingEventArgs e)
         {
             Delay.Wait();
             string time = timer.Elapsed.ToString(@"mm\:ss\.fff");
-            var message = new UpdateStatisticsMessage(Index, time, visitedVerticesCount);
+            var message = new UpdateStatisticsMessage(Id, time, visitedVerticesCount);
+            await Task.Run(() => base.OnVertexVisited(sender, e)).ConfigureAwait(false);
             await messenger.SendAsync(message).ConfigureAwait(false);
             visitedVerticesCount++;
         }
 
-        protected override void OnVertexEnqueued(object sender, PathfindingEventArgs e) { }
+        protected override async void OnVertexEnqueued(object sender, PathfindingEventArgs e)
+        {
+            await Task.Run(() => base.OnVertexEnqueued(sender, e)).ConfigureAwait(false);
+        }
 
         protected override void OnAlgorithmInterrupted(object sender, ProcessEventArgs e)
         {
-            var message = new AlgorithmStatusMessage(AlgorithmViewModel.Interrupted, Index);
+            var message = new AlgorithmStatusMessage(AlgorithmViewModel.Interrupted, Id);
             messenger.Send(message);
         }
 
         protected void OnAlgorithmPaused(object sender, ProcessEventArgs e)
         {
-            var message = new AlgorithmStatusMessage(AlgorithmViewModel.Paused, Index);
+            var message = new AlgorithmStatusMessage(AlgorithmViewModel.Paused, Id);
             messenger.Send(message);
         }
 
         protected void OnAlgorithmUnpaused(object sender, ProcessEventArgs e)
         {
-            var message = new AlgorithmStatusMessage(AlgorithmViewModel.Started, Index);
+            var message = new AlgorithmStatusMessage(AlgorithmViewModel.Started, Id);
             messenger.Send(message);
         }
 
@@ -118,12 +116,11 @@ namespace Pathfinding.App.WPF._2D.ViewModel
         {
             ExecuteCloseWindowCommand(null);
             base.FindPath();
+            Id = algorithm.Id;
         }
 
         protected override void SubscribeOnAlgorithmEvents(PathfindingProcess algorithm)
         {
-            var message = new SubscribeOnAlgorithmEventsMessage(algorithm, IsVisualizationRequired);
-            messenger.Send(message);
             algorithm.Paused += OnAlgorithmPaused;
             algorithm.Resumed += OnAlgorithmUnpaused;
             base.SubscribeOnAlgorithmEvents(algorithm);

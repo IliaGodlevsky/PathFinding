@@ -1,16 +1,17 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Interface;
+using System;
 
 namespace Pathfinding.App.WPF._2D.Messages.DataMessages
 {
     internal sealed class PathFoundMessage
     {
-        public IAlgorithm<IGraphPath> Algorithm { get; }
+        public Guid Id { get; }
 
         public IGraphPath Path { get; }
 
-        public PathFoundMessage(IAlgorithm<IGraphPath> algorithm, IGraphPath path)
+        public PathFoundMessage(Guid id, IGraphPath path)
         {
-            Algorithm = algorithm;
+            Id = id;
             Path = path;
         }
     }

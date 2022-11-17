@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.GraphLib.Core.Interface.Extensions
@@ -11,10 +12,22 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
             return (int)Math.Round(self.Count == 0 ? 0 : self.GetObstaclesCount() * 100.0 / self.Count);
         }
 
+        public static IEnumerable<TVertex> GetObstacles<TVertex>(this IGraph<TVertex> graph)
+            where TVertex : IVertex
+        {
+            return graph.Where(vertex => vertex.IsObstacle);
+        }
+
+        public static IEnumerable<ICoordinate> GetObstaclesCoordinates<TVertex>(this IGraph<TVertex> graph)
+            where TVertex : IVertex
+        {
+            return graph.GetObstacles().Select(vertex => vertex.Position);
+        }
+
         public static int GetObstaclesCount<TVertex>(this IGraph<TVertex> self)
             where TVertex : IVertex
         {
-            return self.Where(vertex => vertex.IsObstacle).Count();
+            return self.GetObstacles().Count();
         }
 
         public static int GetAvailableIntermediatesVerticesNumber<TVertex>(this IGraph<TVertex> graph)

@@ -8,6 +8,7 @@ namespace Pathfinding.App.Console
 
         public static readonly string ApplyVisualizationMsg = $"Apply visualization {AnswerOptions}?: ";
         public static readonly string ExitAppMsg = $"Do you want to exit {AnswerOptions}?: ";
+        public static readonly string ApplyHistoryMsg = $"Apply history recording {AnswerOptions}?:";
 
         public const string SourceAndTargetInputMsg = "Input source and target vertices: ";
         public const string PathfindingStatisticsFormat = "Steps: {0}  Path cost: {1}  Visited: {2}";
@@ -28,7 +29,7 @@ namespace Pathfinding.App.Console
         public const string MenuOptionChoiceMsg = "Choose menu option: ";
         public const string XCoordinateInputMsg = "Input X coordinate of vertex: ";
         public const string YCoordinateInputMsg = "Input Y coordinate of vertex: ";
-        public const string EndPointsFirstlyMsg = "Firstly choose endpoints";
+        public const string PathfindingRangeFirstlyMsg = "Firstly choose pathfinding range";
         public const string VertexCostInputMsg = "Input vertex cost: ";
         public const string NumberOfIntermediateVerticesInputMsg = "Input number of intermediates vertices: ";
         public const string NumberOfIntermediatesVerticesToReplaceMsg = "Input number of intermediates to replace: ";
@@ -45,5 +46,7 @@ namespace Pathfinding.App.Console
         public const string VisualizationIsNotAppliedMsg = "Pathfinding visualization is not applied";
         public const string NoVerticesToChooseAsRangeMsg = "No available vertices to include in range";
         public const string PathfindingRangeWasSetMsg = "Source and target vertives were set";
+        public const string NoAlgorithmsWereStartedMsg = "No algorithms were started";
+        public const string HistoryWasNotApplied = "Algorithms history recording was not applied";
     }
 }

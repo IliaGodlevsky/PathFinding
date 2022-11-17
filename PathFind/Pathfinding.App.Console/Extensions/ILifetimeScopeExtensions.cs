@@ -8,10 +8,16 @@ namespace Pathfinding.App.Console.Extensions
         public static void Display<TView>(this ILifetimeScope lifetimeScope)
             where TView : View
         {
-            using (var scope = lifetimeScope.BeginLifetimeScope())
+            var view = lifetimeScope.Resolve<TView>();
+            view.Display();
+        }
+
+        public static void DisplayScoped<TView>(this ILifetimeScope lifetimeScope)
+            where TView : View
+        {
+            using(var scope = lifetimeScope.BeginLifetimeScope())
             {
-                var view = scope.Resolve<TView>();
-                view.Display();
+                scope.Display<TView>();
             }
         }
     }

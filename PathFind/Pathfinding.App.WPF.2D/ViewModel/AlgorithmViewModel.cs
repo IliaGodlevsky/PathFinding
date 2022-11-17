@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.App.WPF._2D.Extensions;
 using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.App.WPF._2D.Messages.ActionMessages;
@@ -43,9 +42,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel
 
         public bool IsStarted => algorithm.IsInProcess;
 
-        public IAlgorithm<IGraphPath> Algorithm => algorithm;
-
-        public int Index { get; }
+        public Guid Id => algorithm.Id;
 
         public string AlgorithmName { get; }
 
@@ -67,17 +64,16 @@ namespace Pathfinding.App.WPF._2D.ViewModel
             set
             {
                 Set(ref delayTime, Constants.AlgorithmDelayTimeValueRange.ReturnInRange(value, ReturnOptions.Cycle));
-                messenger.SendParallel(new DelayTimeChangedMessage(delayTime, Index));
+                messenger.SendParallel(new DelayTimeChangedMessage(delayTime, Id));
             }
         }
 
-        public AlgorithmViewModel(PathfindingProcess algorithm, TimeSpan delayTime, int index)
+        public AlgorithmViewModel(PathfindingProcess algorithm, TimeSpan delayTime)
         {
             this.algorithm = algorithm;
             this.delayTime = delayTime;
             AlgorithmName = algorithm.ToString();
             Status = Started;
-            Index = index;
             messenger = DI.Container.Resolve<IMessenger>();
             InterruptCommand = new InterruptAlgorithmCommand(algorithm);
             PauseCommand = new PauseAlgorithmCommand(algorithm);
@@ -85,8 +81,8 @@ namespace Pathfinding.App.WPF._2D.ViewModel
             RemoveCommand = new RelayCommand(ExecuteRemoveCommand, CanExecuteRemoveCommand);
         }
 
-        public AlgorithmViewModel(AlgorithmStartedMessage message, int index)
-            : this(message.Algorithm, message.DelayTime, index)
+        public AlgorithmViewModel(AlgorithmStartedMessage message)
+            : this(message.Algorithm, message.DelayTime)
         {
 
         }
@@ -108,7 +104,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel
 
         private void ExecuteRemoveCommand(object param)
         {
-            messenger.Send(new RemoveAlgorithmMessage(this));
+            messenger.Send(new RemoveAlgorithmMessage(Id));
         }
 
         private bool CanExecuteRemoveCommand(object param)

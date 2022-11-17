@@ -15,6 +15,13 @@ namespace Pathfinding.App.Console
 {
     internal static class Screen
     {
+        public const int HeightOfAbscissaView = 2;
+        public const int HeightOfGraphParametresView = 1;
+
+        public static readonly int WidthOfOrdinateView 
+            = (Constants.GraphLengthValueRange.UpperValueOfRange - 1).ToString().Length + 1;
+        public static readonly int YCoordinatePadding = WidthOfOrdinateView - 1;
+
         private static readonly object recipient = new object();
         private static readonly IMessenger messenger;
 
@@ -22,6 +29,8 @@ namespace Pathfinding.App.Console
         private static int CurrentMaxValueOfRange;
 
         private static Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
+
+        
 
         public static int LateralDistanceBetweenVertices { get; private set; }
 
@@ -36,8 +45,8 @@ namespace Pathfinding.App.Console
             messenger.Register<UpdateStatisticsMessage>(recipient, OnStatisticsUpdated);
             messenger.Register<GraphCreatedMessage>(recipient, OnNewGraphCreated);
             OnCostRangeChanged(new CostRangeChangedMessage(VertexCost.CostRange));
-            int x = Constants.WidthOfOrdinateView;
-            int y = Constants.HeightOfAbscissaView + Constants.HeightOfGraphParametresView;
+            int x = WidthOfOrdinateView;
+            int y = HeightOfAbscissaView + HeightOfGraphParametresView;
             GraphFieldPosition = new Coordinate2D(x, y);
             StatisticsPosition = Coordinate2D.Empty;
         }
@@ -51,8 +60,7 @@ namespace Pathfinding.App.Console
         {
             Graph = message.Graph;
             PreviousMaxValueOfRange = CurrentMaxValueOfRange;
-            int pathFindingStatisticsOffset = message.Graph.Length
-                + Constants.HeightOfAbscissaView * 2 + Constants.HeightOfGraphParametresView;
+            int pathFindingStatisticsOffset = message.Graph.Length + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
             StatisticsPosition = new Coordinate2D(0, pathFindingStatisticsOffset);
             LateralDistanceBetweenVertices = CalculateLateralDistanceBetweenVertices();
             Graph.ForEach(RecalculateConsolePosition);

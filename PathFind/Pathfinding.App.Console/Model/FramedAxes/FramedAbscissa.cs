@@ -14,7 +14,7 @@ namespace Pathfinding.App.Console.Model.FramedAxes
         protected const char Endl = '\n';
         protected const string NewLine = "\n";
 
-        private static readonly string LargeSpace = new string(Space, Constants.WidthOfOrdinateView);
+        private static readonly string LargeSpace = new string(Space, Screen.WidthOfOrdinateView);
 
         private readonly int graphWidth;
 
@@ -25,7 +25,7 @@ namespace Pathfinding.App.Console.Model.FramedAxes
 
         public override void Display()
         {
-            ColorfulConsole.SetCursorPosition(0, Constants.HeightOfGraphParametresView);
+            ColorfulConsole.SetCursorPosition(0, Screen.HeightOfGraphParametresView);
             ColorfulConsole.Write(GetFramedAxis());
         }
 

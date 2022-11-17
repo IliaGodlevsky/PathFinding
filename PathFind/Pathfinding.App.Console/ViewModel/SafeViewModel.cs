@@ -1,4 +1,4 @@
-﻿using Pathfinding.App.Console.Menu.Realizations.Delegates;
+﻿using Pathfinding.App.Console.Model.Menu.Delegates;
 using Pathfinding.Logging.Interface;
 using System;
 

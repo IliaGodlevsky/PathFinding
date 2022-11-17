@@ -1,10 +1,8 @@
 ﻿using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Menu.Interface;
-using Pathfinding.App.Console.Menu.Realizations;
-using Pathfinding.App.Console.Menu.Realizations.Attributes;
-using Pathfinding.App.Console.Menu.Realizations.Exceptions;
-using Pathfinding.App.Console.ViewModel;
+using Pathfinding.App.Console.Model.Menu;
+using Pathfinding.App.Console.Model.Menu.Attributes;
+using Pathfinding.App.Console.Model.Menu.Exceptions;
 using Pathfinding.Logging.Interface;
 using Shared.Extensions;
 using Shared.Primitives.ValueRange;

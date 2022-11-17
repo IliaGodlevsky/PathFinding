@@ -1,7 +1,7 @@
 ﻿using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Menu.Realizations.Attributes;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.Menu.Attributes;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Visualization.Extensions;
@@ -33,7 +33,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         [Condition(nameof(HasAvailableVerticesToIncludeInRange))]
         [Condition(nameof(HasSourceAndTargetNotSet), 1)]
-        [MenuItem(MenuItemsNames.ChooseEndPoints, 0)]
+        [MenuItem(MenuItemsNames.ChoosePathfindingRange, 0)]
         private void ChooseEndPoints()
         {
             ColorfulConsole.WriteLine(MessagesTexts.SourceAndTargetInputMsg);

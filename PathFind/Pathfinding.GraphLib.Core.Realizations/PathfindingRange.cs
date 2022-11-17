@@ -7,7 +7,7 @@ namespace Pathfinding.GraphLib.Core.Realizations
 {
     public sealed class PathfindingRange : IPathfindingRange
     {
-        private IEnumerable<IVertex> IntermediateVertices { get; }
+        private IReadOnlyCollection<IVertex> IntermediateVertices { get; }
 
         public IVertex Target { get; }
 
@@ -17,7 +17,7 @@ namespace Pathfinding.GraphLib.Core.Realizations
         {
             Source = source;
             Target = target;
-            IntermediateVertices = intermediate;
+            IntermediateVertices = intermediate.ToArray();
         }
 
         public IEnumerator<IVertex> GetEnumerator()

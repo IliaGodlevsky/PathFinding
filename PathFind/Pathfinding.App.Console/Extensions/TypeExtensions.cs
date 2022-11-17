@@ -5,9 +5,9 @@ namespace Pathfinding.App.Console.Extensions
 {
     internal static class TypeExtensions
     {
-        public static bool IsSingleInstance(this Type type)
+        public static bool IsInstancePerLifetimeScope(this Type type)
         {
-            return Attribute.IsDefined(type, typeof(SingleInstanceAttribute));
+            return Attribute.IsDefined(type, typeof(InstancePerLifetimeScopeAttribute));
         }
     }
 }

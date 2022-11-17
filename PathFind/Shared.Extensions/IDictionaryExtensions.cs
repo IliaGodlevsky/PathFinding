@@ -1,8 +1,6 @@
-﻿using Shared.Collections;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Shared.Extensions
 {
@@ -17,6 +15,29 @@ namespace Shared.Extensions
             where TValue : IEnumerable, new()
         {
             return self.GetOrDefault(key, () => new TValue());
+        }
+
+        public static TValue TryGetOrAddNew<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key)
+            where TValue : new()
+        {
+            if (self.TryGetValue(key, out var value))
+            {
+                return value;
+            }
+
+            value = new TValue();
+            self.Add(key, value);
+            return value;
+        }
+
+        public static void TryAddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key, TValue value)
+        {
+            if (self.TryGetValue(key, out _))
+            {
+                self[key] = value;
+            }
+
+            self.Add(key, value);
         }
     }
 }

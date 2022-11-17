@@ -6,12 +6,12 @@ namespace Pathfinding.App.WPF._2D.Messages.DataMessages
     {
         public TimeSpan DelayTime { get; }
 
-        public int Index { get; }
+        public Guid Id { get; }
 
-        public DelayTimeChangedMessage(TimeSpan delayTime, int index)
+        public DelayTimeChangedMessage(TimeSpan delayTime, Guid id)
         {
             DelayTime = delayTime;
-            Index = index;
+            Id = id;
         }
     }
 }

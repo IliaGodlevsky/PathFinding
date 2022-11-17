@@ -1,6 +1,7 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Core.Exceptions;
 using Pathfinding.AlgorithmLib.Core.Interface;
+using Pathfinding.AlgorithmLib.History.Interface;
 using Shared.Process.EventArguments;
 using Shared.Process.EventHandlers;
 using Shared.Process.Interface;
@@ -9,7 +10,7 @@ using System.Threading;
 
 namespace Pathfinding.AlgorithmLib.Core.Abstractions
 {
-    public abstract class PathfindingProcess : IAlgorithm<IGraphPath>, IProcess, IPausable, IInterruptable, IDisposable
+    public abstract class PathfindingProcess : IAlgorithm<IGraphPath>, IHistoryPageKey, IProcess, IPausable, IInterruptable, IDisposable
     {
         public event PathfindingEventHandler VertexVisited;
         public event PathfindingEventHandler VertexEnqueued;
@@ -20,6 +21,8 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         public event ProcessEventHandler Resumed;
 
         private readonly EventWaitHandle pauseEvent;
+
+        public Guid Id { get; }
 
         public bool IsInProcess { get; private set; } = false;
 
@@ -32,6 +35,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         protected PathfindingProcess()
         {
             pauseEvent = new AutoResetEvent(true);
+            Id = Guid.NewGuid();
         }
 
         public abstract IGraphPath FindPath();

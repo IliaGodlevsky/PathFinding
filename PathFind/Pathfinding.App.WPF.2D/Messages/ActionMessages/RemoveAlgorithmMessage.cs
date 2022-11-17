@@ -1,14 +1,14 @@
-﻿using Pathfinding.App.WPF._2D.ViewModel;
+﻿using System;
 
 namespace Pathfinding.App.WPF._2D.Messages.ActionMessages
 {
     internal sealed class RemoveAlgorithmMessage
     {
-        public AlgorithmViewModel Model { get; }
+        public Guid Id { get; }
 
-        public RemoveAlgorithmMessage(AlgorithmViewModel model)
+        public RemoveAlgorithmMessage(Guid id)
         {
-            Model = model;
+            Id = id;
         }
     }
 }

@@ -4,9 +4,9 @@ using Pathfinding.App.Console.Attributes;
 using Pathfinding.App.Console.EventArguments;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Menu.Realizations.Attributes;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.Menu.Attributes;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Extensions;
 using Shared.Primitives.Extensions;
@@ -15,8 +15,8 @@ using System;
 
 namespace Pathfinding.App.Console.ViewModel
 {
-    [SingleInstance]
     [MenuColumnsNumber(1)]
+    [InstancePerLifetimeScope]
     internal sealed class PathfindingVisualizationViewModel : ViewModel, IRequireAnswerInput, IRequireTimeSpanInput
     {
         private static readonly TimeSpan Millisecond = TimeSpan.FromMilliseconds(1);
@@ -40,12 +40,12 @@ namespace Pathfinding.App.Console.ViewModel
         public PathfindingVisualizationViewModel(ICache<Graph2D<Vertex>> graphCache, 
             ConsoleKeystrokesHook keyStrokeHook, IMessenger messenger)
         {
+            AnimationDelay = DelayRange.LowerValueOfRange;
             this.keyStrokeHook = keyStrokeHook;
             this.messenger = messenger;
-            messenger.Register<SubscribeOnVisualizationMessage>(this, OnPathfindingPrepare);
-            AnimationDelay = DelayRange.LowerValueOfRange;
             this.graphCache = graphCache;
             keyStrokeHook.KeyPressed += OnConsoleKeyPressed;
+            messenger.Register<SubscribeOnVisualizationMessage>(this, OnPathfindingPrepare);
         }
 
         [MenuItem(MenuItemsNames.ApplyVisualization, 0)]

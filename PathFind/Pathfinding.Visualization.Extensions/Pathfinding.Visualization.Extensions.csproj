@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HistoryExtensions.cs" />
     <Compile Include="IGraphExtensions.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
     <Compile Include="IPathfindingRangeAdapterExtensions.cs" />
@@ -50,6 +51,18 @@
     <Compile Include="IVertexExtension.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Interface.Extensions\Pathfinding.AlgorithmLib.Core.Interface.Extensions.csproj">
+      <Project>{1D30187D-DADB-4725-A9C5-C43EE983A080}</Project>
+      <Name>Pathfinding.AlgorithmLib.Core.Interface.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.History.Interface\Pathfinding.AlgorithmLib.History.Interface.csproj">
+      <Project>{A0750471-F960-42D7-B4B4-0571EA0EAB78}</Project>
+      <Name>Pathfinding.AlgorithmLib.History.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.History\Pathfinding.AlgorithmLib.History.csproj">
+      <Project>{3CEBE00A-5EC9-4904-A20C-10817B0E5318}</Project>
+      <Name>Pathfinding.AlgorithmLib.History</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface.Extensions\Pathfinding.GraphLib.Core.Interface.Extensions.csproj">
       <Project>{3c13810c-ed74-490b-9303-9ccbfe485f5e}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface.Extensions</Name>

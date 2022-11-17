@@ -17,12 +17,12 @@ namespace Pathfinding.App.Console.Model.FramedAxes
             : base()
         {
             this.graphLength = graphLength;
-            yCoordinatePadding = Constants.YCoordinatePadding;
+            yCoordinatePadding = Screen.YCoordinatePadding;
         }
 
         public override void Display()
         {
-            ColorfulConsole.SetCursorPosition(0, Constants.HeightOfAbscissaView + 1);
+            ColorfulConsole.SetCursorPosition(0, Screen.HeightOfAbscissaView + 1);
             ColorfulConsole.Write(GetFramedAxis());
         }
 

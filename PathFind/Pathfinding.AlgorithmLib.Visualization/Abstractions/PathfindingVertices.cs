@@ -22,7 +22,6 @@ namespace Pathfinding.AlgorithmLib.Visualization.Abstractions
         public virtual void Add(IAlgorithm<IGraphPath> algorithm, TVertex vertex)
         {
             vertices.TryGetOrAddNew(algorithm).TryAddOrUpdate(vertex.Position, vertex);
-            Visualize(vertex);
         }
 
         public void Clear()

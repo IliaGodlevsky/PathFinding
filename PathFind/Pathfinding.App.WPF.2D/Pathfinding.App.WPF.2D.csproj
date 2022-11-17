@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Interface\IViewModel.cs" />
+    <Compile Include="Model\PathfindingHistoryVolume.cs" />
     <Compile Include="Model\Wpf2DVertexChangeCostModule.cs" />
     <Compile Include="Model\Wpf2DVertexReverseModule.cs" />
     <Compile Include="Constants.cs" />
@@ -189,7 +190,6 @@
     <Compile Include="Messages\ActionMessages\StopEditorModeMessage.cs" />
     <Compile Include="Messages\ActionMessages\SubscribeOnAlgorithmEventsMessage.cs" />
     <Compile Include="Messages\ActionMessages\UpdateStatisticsMessage.cs" />
-    <Compile Include="Messages\DataMessages\AlgorithmIndexMessage.cs" />
     <Compile Include="Messages\DataMessages\AlgorithmStartedMessage.cs" />
     <Compile Include="Messages\DataMessages\AlgorithmStatusMessage.cs" />
     <Compile Include="Messages\DataMessages\DelayTimeChangedMessage.cs" />
@@ -201,7 +201,6 @@
     <Compile Include="Model\Wpf2DPathfindingRangeAdapter.cs" />
     <Compile Include="Model\GraphField.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
-    <Compile Include="Model\PathfindingVisualizationModel.cs" />
     <Compile Include="Model\PathInput.cs" />
     <Compile Include="Model\RangedSlider.cs" />
     <Compile Include="Model\Vertex.cs" />
@@ -254,6 +253,14 @@
     <ProjectReference Include="..\Pathfinding.AlgorithmLib.Factory\Pathfinding.AlgorithmLib.Factory.csproj">
       <Project>{E8ECD5E0-009E-4FFA-8FB8-4CB9209A4F25}</Project>
       <Name>Pathfinding.AlgorithmLib.Factory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.History.Interface\Pathfinding.AlgorithmLib.History.Interface.csproj">
+      <Project>{A0750471-F960-42D7-B4B4-0571EA0EAB78}</Project>
+      <Name>Pathfinding.AlgorithmLib.History.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.History\Pathfinding.AlgorithmLib.History.csproj">
+      <Project>{3CEBE00A-5EC9-4904-A20C-10817B0E5318}</Project>
+      <Name>Pathfinding.AlgorithmLib.History</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pathfinding.AlgorithmLib.Visualization\Pathfinding.AlgorithmLib.Visualization.csproj">
       <Project>{6C5443F8-9BF4-4355-8F42-E65EE9562E3A}</Project>

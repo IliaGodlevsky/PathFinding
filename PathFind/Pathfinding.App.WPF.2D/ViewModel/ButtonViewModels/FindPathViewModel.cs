@@ -28,7 +28,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
 
         private bool CanExecuteFindPathCommand(object param)
         {
-            return !adapter.HasIsolators();
+            return !adapter.HasIsolators() && adapter.HasSourceAndTargetSet();
         }
     }
 }

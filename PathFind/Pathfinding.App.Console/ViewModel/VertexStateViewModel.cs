@@ -1,7 +1,7 @@
 ﻿using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Menu.Realizations.Attributes;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.Menu.Attributes;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
 using System;

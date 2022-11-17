@@ -17,7 +17,6 @@ using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.ViewModel;
-using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations;
@@ -31,7 +30,6 @@ using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decorators;
 using Pathfinding.GraphLib.Smoothing.Interface;
 using Pathfinding.GraphLib.Smoothing.Realizations.MeanCosts;
-using Pathfinding.GraphLib.Subscriptions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Logging.Loggers;
 using Pathfinding.Visualization.Core.Abstractions;
@@ -42,7 +40,6 @@ using Shared.Random.Realizations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Pathfinding.App.Console.Extensions;
 
 namespace Pathfinding.App.Console.DependencyInjection
@@ -73,12 +70,13 @@ namespace Pathfinding.App.Console.DependencyInjection
 #endif
             builder.RegisterType<ConsoleKeystrokesHook>().AsSelf().SingleInstance().PropertiesAutowired();
 
-            LocalAssemblyTypes.Where(type => type.Implements<IViewModel>()).Where(type => type.IsSingleInstance()).Register(builder)
-               .AsSelf().AsImplementedInterfaces().PropertiesAutowired().SingleInstance();
-            LocalAssemblyTypes.Where(type => type.Implements<IViewModel>()).Where(type => !type.IsSingleInstance()).Register(builder)
-                .AsSelf().AsImplementedInterfaces().PropertiesAutowired().InstancePerLifetimeScope();
+            builder.RegisterType<MainViewModel>().AsSelf().AsImplementedInterfaces().SingleInstance();
+            LocalAssemblyTypes.Where(type => type.Implements<IViewModel>()).Where(type => !type.IsInstancePerLifetimeScope())
+                .Register(builder).Except<MainViewModel>().AsSelf().AsImplementedInterfaces().PropertiesAutowired().InstancePerDependency();
+            LocalAssemblyTypes.Where(type => type.Implements<IViewModel>()).Where(type => type.IsInstancePerLifetimeScope())
+                .Register(builder).AsSelf().AsImplementedInterfaces().PropertiesAutowired().InstancePerLifetimeScope();
             LocalAssemblyTypes.Where(type => type.Implements<IView>()).Register(builder)
-                .AsSelf().PropertiesAutowired().OnActivated(OnViewActivated).InstancePerLifetimeScope();
+                .AsSelf().PropertiesAutowired().OnActivated(OnViewActivated).InstancePerDependency();
 
             builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
 
@@ -88,8 +86,8 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
-            builder.RegisterType<ConsolePathfindingRangeAdapter>().AsSelf()
-                .As<PathfindingRangeAdapter<Vertex>>().As<IPathfindingRangeAdapter<Vertex>>().SingleInstance();
+            builder.RegisterType<ConsolePathfindingRangeAdapter>().AsSelf().As<PathfindingRangeAdapter<Vertex>>()
+                .As<IPathfindingRangeAdapter<Vertex>>().SingleInstance();
 
             builder.RegisterType<PseudoRandom>().As<IRandom>().SingleInstance();
             

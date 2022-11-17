@@ -1,12 +1,11 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.App.Console.Attributes;
 using Pathfinding.App.Console.ConvertedProperties;
 using Pathfinding.App.Console.DependencyInjection;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Menu.Realizations.Attributes;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.Menu.Attributes;
 using Pathfinding.App.Console.Views;
 using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
@@ -21,7 +20,6 @@ using ColorfulConsole = Colorful.Console;
 
 namespace Pathfinding.App.Console.ViewModel
 {
-    [SingleInstance]
     [MenuColumnsNumber(3)]
     internal sealed class MainViewModel : SafeViewModel, ICache<Graph2D<Vertex>>, IRequireAnswerInput, IRequireIntInput
     {

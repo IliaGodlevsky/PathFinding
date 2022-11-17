@@ -1,11 +1,10 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Factory.Interface;
-using Pathfinding.App.Console.Attributes;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Menu.Realizations.Attributes;
 using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Model.Menu.Attributes;
 using Shared.Collections;
 using Shared.Extensions;
 using Shared.Primitives.Attributes;
@@ -16,7 +15,6 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.ViewModel
 {
-    [SingleInstance]
     [MenuColumnsNumber(1)]    
     internal sealed class PathfindingProcessChooseViewModel : ViewModel, IRequireIntInput
     {
