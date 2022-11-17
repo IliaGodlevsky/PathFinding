@@ -72,11 +72,10 @@ namespace Pathfinding.App.Console.DependencyInjection
 
             builder.RegisterType<MainViewModel>().AsSelf().PropertiesAutowired().AsImplementedInterfaces().SingleInstance();
             LocalAssemblyTypes.Where(type => type.Implements<IViewModel>()).Where(type => !type.IsInstancePerLifetimeScope())
-                .Register(builder).Except<MainViewModel>().AsSelf().AsImplementedInterfaces().PropertiesAutowired().InstancePerDependency();
+                .Register(builder).Except<MainViewModel>().AsSelf().AsImplementedInterfaces().PropertiesAutowired();
             LocalAssemblyTypes.Where(type => type.Implements<IViewModel>()).Where(type => type.IsInstancePerLifetimeScope())
                 .Register(builder).AsSelf().AsImplementedInterfaces().PropertiesAutowired().InstancePerLifetimeScope();
-            LocalAssemblyTypes.Where(type => type.Implements<IView>()).Register(builder)
-                .AsSelf().PropertiesAutowired().OnActivated(OnViewActivated).InstancePerDependency();
+            LocalAssemblyTypes.Where(type => type.Implements<IView>()).Register(builder).AsSelf().PropertiesAutowired();
 
             builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
 
@@ -117,13 +116,6 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
 
             return builder.Build();
-        }
-
-        private static void OnViewActivated(IActivatedEventArgs<object> e)
-        {
-            var view = (IView)e.Instance;
-            var mainModel = e.Context.Resolve<MainViewModel>();
-            view.NewMenuCycleStarted += mainModel.DisplayGraph;
         }
 
         private static IRegistrationBuilder<object, ScanningActivatorData, DynamicRegistrationStyle> Register(this IEnumerable<Type> types,

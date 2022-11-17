@@ -1,6 +1,4 @@
-﻿using Pathfinding.App.Console;
-using Pathfinding.App.Console.Interface;
-using System;
+﻿using Pathfinding.App.Console.Interface;
 
 using ColorfulConsole = Colorful.Console;
 

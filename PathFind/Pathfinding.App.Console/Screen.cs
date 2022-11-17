@@ -30,8 +30,6 @@ namespace Pathfinding.App.Console
 
         private static Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
-        
-
         public static int LateralDistanceBetweenVertices { get; private set; }
 
         public static Coordinate2D GraphFieldPosition { get; }

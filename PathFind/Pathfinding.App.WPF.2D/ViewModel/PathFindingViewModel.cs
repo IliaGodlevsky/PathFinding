@@ -17,9 +17,9 @@ using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Shared.Extensions;
-using Autofac;
 using Pathfinding.App.WPF._2D.Extensions;
 using System.Threading.Tasks;
+using Autofac;
 
 namespace Pathfinding.App.WPF._2D.ViewModel
 {
@@ -72,11 +72,12 @@ namespace Pathfinding.App.WPF._2D.ViewModel
         protected override async void OnVertexVisited(object sender, PathfindingEventArgs e)
         {
             Delay.Wait();
+            visitedVerticesCount++;
             string time = timer.Elapsed.ToString(@"mm\:ss\.fff");
             var message = new UpdateStatisticsMessage(Id, time, visitedVerticesCount);
-            await Task.Run(() => base.OnVertexVisited(sender, e)).ConfigureAwait(false);
-            await messenger.SendAsync(message).ConfigureAwait(false);
-            visitedVerticesCount++;
+            await Task.Run(() => base.OnVertexVisited(sender, e))
+                .ContinueWith(task => messenger.SendAsync(message))
+                .ConfigureAwait(false);            
         }
 
         protected override async void OnVertexEnqueued(object sender, PathfindingEventArgs e)

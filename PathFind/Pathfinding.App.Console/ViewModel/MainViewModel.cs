@@ -100,7 +100,9 @@ namespace Pathfinding.App.Console.ViewModel
             messenger.Send(UpdatePathfindingStatisticsMessage.Empty);
         }
 
-        public void DisplayGraph()
+        [Condition(nameof(IsGraphValid))]
+        [MenuItem("Show graph", 5)]
+        private void DisplayGraph()
         {
             try
             {
@@ -115,7 +117,7 @@ namespace Pathfinding.App.Console.ViewModel
             {
                 log.Warn(ex);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 log.Error(ex);
             }

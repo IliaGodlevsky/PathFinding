@@ -37,6 +37,14 @@ namespace Pathfinding.App.Console.Model
 
         public void Display()
         {
+            using (Cursor.UseCurrentPosition())
+            {
+                int limit = 20;
+                while (limit-- > 0)
+                {
+                    ColorfulConsole.Write(new string(' ', ColorfulConsole.WindowWidth));
+                }
+            }
             ColorfulConsole.WriteLine(ToString());
         }
 

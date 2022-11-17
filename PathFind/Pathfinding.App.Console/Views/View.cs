@@ -7,6 +7,8 @@ using Pathfinding.Logging.Interface;
 using Shared.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
+using System.Linq;
+using ColorfulConsole = Colorful.Console;
 
 namespace Pathfinding.App.Console.Views
 {
@@ -43,6 +45,7 @@ namespace Pathfinding.App.Console.Views
         {
             while (!IsClosureRequested)
             {
+                Screen.SetCursorPositionUnderMenu(1);
                 NewMenuCycleStarted?.Invoke();
                 menuList.Display();
                 ExecuteCommand(MenuCommand);
