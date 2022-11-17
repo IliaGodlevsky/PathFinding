@@ -8,7 +8,7 @@ namespace Pathfinding.App.Console
 
         public static readonly string ApplyVisualizationMsg = $"Apply visualization {AnswerOptions}?: ";
         public static readonly string ExitAppMsg = $"Do you want to exit {AnswerOptions}?: ";
-        public static readonly string ApplyHistoryMsg = $"Apply history recording {AnswerOptions}?:";
+        public static readonly string ApplyHistoryMsg = $"Apply history recording {AnswerOptions}?: ";
 
         public const string SourceAndTargetInputMsg = "Input source and target vertices: ";
         public const string PathfindingStatisticsFormat = "Steps: {0}  Path cost: {1}  Visited: {2}";

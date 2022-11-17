@@ -1,13 +1,13 @@
 ﻿namespace Pathfinding.App.Console.Messages
 {
-    internal sealed class UpdateStatisticsMessage
+    internal sealed class UpdatePathfindingStatisticsMessage
     {
-        public static readonly UpdateStatisticsMessage Empty
-            = new UpdateStatisticsMessage(string.Empty);
+        public static readonly UpdatePathfindingStatisticsMessage Empty
+            = new UpdatePathfindingStatisticsMessage(string.Empty);
 
         public string Statistics { get; }
 
-        public UpdateStatisticsMessage(string statistics)
+        public UpdatePathfindingStatisticsMessage(string statistics)
         {
             Statistics = statistics;
         }

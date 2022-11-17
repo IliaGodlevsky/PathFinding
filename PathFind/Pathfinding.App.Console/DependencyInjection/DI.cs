@@ -70,7 +70,7 @@ namespace Pathfinding.App.Console.DependencyInjection
 #endif
             builder.RegisterType<ConsoleKeystrokesHook>().AsSelf().SingleInstance().PropertiesAutowired();
 
-            builder.RegisterType<MainViewModel>().AsSelf().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<MainViewModel>().AsSelf().PropertiesAutowired().AsImplementedInterfaces().SingleInstance();
             LocalAssemblyTypes.Where(type => type.Implements<IViewModel>()).Where(type => !type.IsInstancePerLifetimeScope())
                 .Register(builder).Except<MainViewModel>().AsSelf().AsImplementedInterfaces().PropertiesAutowired().InstancePerDependency();
             LocalAssemblyTypes.Where(type => type.Implements<IViewModel>()).Where(type => type.IsInstancePerLifetimeScope())

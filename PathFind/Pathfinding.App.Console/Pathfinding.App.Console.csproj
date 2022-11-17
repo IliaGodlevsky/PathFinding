@@ -78,12 +78,12 @@
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="MenuItemsNames.cs" />
     <Compile Include="Messages\AlgorithmFinishedMessage.cs" />
-    <Compile Include="Messages\ClearColorMessage.cs" />
+    <Compile Include="Messages\ClearPathfindingVisualizationColorsMessage.cs" />
     <Compile Include="Messages\ClearGraphMessage.cs" />
     <Compile Include="Messages\CostRangeChangedMessage.cs" />
     <Compile Include="Messages\GraphCreatedMessage.cs" />
     <Compile Include="Messages\IHistoryMessage.cs" />
-    <Compile Include="Messages\PathfindingAlgorithmChosen.cs" />
+    <Compile Include="Messages\PathfindingAlgorithmChosenMessage.cs" />
     <Compile Include="Messages\PathfindingRangeChosenMessage.cs" />
     <Compile Include="Messages\PathFoundMessage.cs" />
     <Compile Include="Messages\SubscribeOnHistoryMessage.cs" />

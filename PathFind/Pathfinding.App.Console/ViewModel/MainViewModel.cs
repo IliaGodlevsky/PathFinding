@@ -97,7 +97,7 @@ namespace Pathfinding.App.Console.ViewModel
         {
             Cached.RestoreVerticesVisualState();
             adapter.Undo();
-            messenger.Send(UpdateStatisticsMessage.Empty);
+            messenger.Send(UpdatePathfindingStatisticsMessage.Empty);
         }
 
         public void DisplayGraph()

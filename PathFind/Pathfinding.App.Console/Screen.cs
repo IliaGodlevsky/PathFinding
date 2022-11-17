@@ -42,7 +42,7 @@ namespace Pathfinding.App.Console
         {
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<CostRangeChangedMessage>(recipient, OnCostRangeChanged);
-            messenger.Register<UpdateStatisticsMessage>(recipient, OnStatisticsUpdated);
+            messenger.Register<UpdatePathfindingStatisticsMessage>(recipient, OnStatisticsUpdated);
             messenger.Register<GraphCreatedMessage>(recipient, OnNewGraphCreated);
             OnCostRangeChanged(new CostRangeChangedMessage(VertexCost.CostRange));
             int x = WidthOfOrdinateView;
@@ -77,7 +77,7 @@ namespace Pathfinding.App.Console
             Graph.ForEach(RecalculateConsolePosition);
         }
 
-        private static void OnStatisticsUpdated(UpdateStatisticsMessage message)
+        private static void OnStatisticsUpdated(UpdatePathfindingStatisticsMessage message)
         {
             Cursor.SetPosition(StatisticsPosition);
             ColorfulConsole.Write(message.Statistics.PadRight(ColorfulConsole.BufferWidth));

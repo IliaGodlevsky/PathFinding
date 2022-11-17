@@ -47,7 +47,7 @@ namespace Pathfinding.App.Console.Model.Menu
                 string header = targetMethod.GetAttributeOrNull<MenuItemAttribute>().Header;
                 var safeAction = targetMethod
                     .GetCustomAttributes<ExecuteSafeAttribute>()
-                    .Select(attr => viewModelType.GetMethod(attr.MethodName, MethodAccessModificators))
+                    .Select(GetMethod)
                     .Select(CreateDelegateOrNull<SafeAction>)
                     .FirstOrDefault();
                 Command menuCommand = safeAction == null ? command : () => safeAction(command);
@@ -63,10 +63,15 @@ namespace Pathfinding.App.Console.Model.Menu
 
         private (Condition Condition, string Message) CreateConditionInfo(ConditionAttribute attribute)
         {
-            var method = viewModelType.GetMethod(attribute.MethodName, MethodAccessModificators);
+            var method = GetMethod(attribute);
             var condition = CreateDelegateOrNull<Condition>(method);
             var messageAttribute = method.GetAttributeOrNull<FailMessageAttribute>();
             return (condition, messageAttribute?.Message ?? FailMessageAttribute.Default.Message);
+        }
+
+        private MethodInfo GetMethod(IMethodMark attribute)
+        {
+            return viewModelType.GetMethod(attribute.MethodName, MethodAccessModificators);
         }
 
         private ConditionPair GetConditionPair((Condition Condition, string Message) info)

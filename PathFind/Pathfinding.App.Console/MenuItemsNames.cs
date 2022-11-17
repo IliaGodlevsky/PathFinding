@@ -32,5 +32,6 @@
         public const string ApplyHistoryRecording = "Apply history recording";
         public const string ShowHistory = "Show history";
         public const string ClearHistory = "Clear history";
+        public const string History = "History";
     }
 }

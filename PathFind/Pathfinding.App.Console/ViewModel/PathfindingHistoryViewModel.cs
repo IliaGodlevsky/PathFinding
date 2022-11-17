@@ -49,7 +49,7 @@ namespace Pathfinding.App.Console.ViewModel
             this.history = new History<PathfindingHistoryVolume>();
             this.graph = graphCache.Cached;
             this.startedAlgorithms = new Dictionary<Guid, string>();
-            this.messenger = messenger;            
+            this.messenger = messenger;
         }
 
         private void OnHistoryMessageRecieved(IHistoryMessage message)

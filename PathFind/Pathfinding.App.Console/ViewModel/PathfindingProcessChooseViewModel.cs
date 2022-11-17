@@ -44,7 +44,7 @@ namespace Pathfinding.App.Console.ViewModel
         private void ChoosePathfindingAlgorithm()
         {
             var algorithm = Factories[AlgorithmIndex];
-            messenger.Send(new PathfindingAlgorithmChosen(algorithm));
+            messenger.Send(new PathfindingAlgorithmChosenMessage(algorithm));
         }
     }
 }

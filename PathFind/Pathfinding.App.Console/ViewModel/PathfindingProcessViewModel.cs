@@ -66,7 +66,7 @@ namespace Pathfinding.App.Console.ViewModel
             timer = new Stopwatch();
             Path = NullGraphPath.Interface;
             keystrokesHook.KeyPressed += OnConsoleKeyPressed;
-            messenger.Register<PathfindingAlgorithmChosen>(this, OnAlgorithmChosen);
+            messenger.Register<PathfindingAlgorithmChosenMessage>(this, OnAlgorithmChosen);
         }
 
         public override void Dispose()
@@ -102,13 +102,13 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.CustomizeVisualization, 2)]
         private void CustomizeVisualization() => lifetimeScope.Display<PathfindingVisualizationView>();
 
-        [MenuItem("History", 3)]
+        [MenuItem(MenuItemsNames.History, 3)]
         private void PathfindingHistory() => lifetimeScope.Display<PathfindingHistoryView>();
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
         {
             visitedVerticesCount++;
-            messenger.Send(new UpdateStatisticsMessage(Statistics));
+            messenger.Send(new UpdatePathfindingStatisticsMessage(Statistics));
         }
 
         private void FindPathInternal()
@@ -131,7 +131,7 @@ namespace Pathfinding.App.Console.ViewModel
             }
         }
 
-        private void OnAlgorithmChosen(PathfindingAlgorithmChosen message)
+        private void OnAlgorithmChosen(PathfindingAlgorithmChosenMessage message)
         {
             Factory = message.Algorithm;
         }
@@ -155,7 +155,7 @@ namespace Pathfinding.App.Console.ViewModel
         private void SummarizeResults()
         {
             var statistics = Path.Count > 0 ? Statistics : MessagesTexts.CouldntFindPathMsg;
-            messenger.Send(new UpdateStatisticsMessage(statistics));
+            messenger.Send(new UpdatePathfindingStatisticsMessage(statistics));
             messenger.Send(new PathFoundMessage(Path, Algorithm));
             messenger.Send(new AlgorithmFinishedMessage(Algorithm, statistics));
             visitedVerticesCount = 0;
