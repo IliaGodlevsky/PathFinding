@@ -30,7 +30,7 @@ namespace Pathfinding.App.Console.ViewModel
 {
     [MenuColumnsNumber(2)]
     [InstancePerLifetimeScope]
-    internal sealed class PathfindingProcessViewModel : SafeViewModel, IRequireConsoleKeyInput
+    internal sealed class PathfindingProcessViewModel : SafeViewModel
     {
         private readonly IMessenger messenger;
         private readonly ConsoleKeystrokesHook keystrokesHook;
@@ -39,8 +39,6 @@ namespace Pathfinding.App.Console.ViewModel
         private readonly ILifetimeScope lifetimeScope;
 
         private int visitedVerticesCount;
-
-        public IInput<ConsoleKey> KeyInput { get; set; }
 
         private IGraphPath Path { get; set; } = NullGraphPath.Instance;
 
@@ -88,13 +86,13 @@ namespace Pathfinding.App.Console.ViewModel
             using (Cursor.HideCursor())
             {
                 FindPathInternal();
-                KeyInput.Input();
             }
         }
 
         [MenuItem(MenuItemsNames.ClearColors, 4)]
         private void ClearColors()
         {
+            messenger.Send(UpdatePathfindingStatisticsMessage.Empty);
             Graph.RestoreVerticesVisualState();
             adapter.RestoreVerticesVisualState();
         }

@@ -22,7 +22,7 @@ namespace Pathfinding.App.Console.ViewModel
     [InstancePerLifetimeScope]
     internal sealed class PathfindingHistoryViewModel : SafeViewModel, IRequireAnswerInput, IRequireIntInput
     {
-        private const int MenuOffset = 6;
+        private const int MenuOffset = 8;
 
         private readonly Graph2D<Vertex> graph;
         private readonly Dictionary<Guid, string> startedAlgorithms;
@@ -36,8 +36,6 @@ namespace Pathfinding.App.Console.ViewModel
         public IInput<Answer> AnswerInput { get; set; }
 
         private int QuitIndex => startedAlgorithms.Count;
-
-        private int Offset => startedAlgorithms.Count + MenuOffset;
 
         private IDisplayable MenuList => startedAlgorithms.Values.Append("Quit").CreateMenuList(columnsNumber: 1);
 
@@ -103,7 +101,7 @@ namespace Pathfinding.App.Console.ViewModel
                     graph.RestoreVerticesVisualState();
                     history.VisualizeHistory(id, graph);
                 }
-                Screen.SetCursorPositionUnderMenu(Offset);
+                Screen.SetCursorPositionUnderMenu(MenuOffset);
                 index = GetAlgorithmIndex(inputMessage);
             }
         }

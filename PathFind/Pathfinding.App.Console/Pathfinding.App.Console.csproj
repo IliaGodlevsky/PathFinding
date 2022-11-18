@@ -89,9 +89,11 @@
     <Compile Include="Messages\SubscribeOnHistoryMessage.cs" />
     <Compile Include="Messages\SubscribeOnVisualizationMessage.cs" />
     <Compile Include="Messages\UpdateStatisticsMessage.cs" />
+    <Compile Include="Messages\VerticesConsolePositionsRecalculatedMessage.cs" />
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
+    <Compile Include="Model\ConsoleLog.cs" />
     <Compile Include="Model\ConsolePathfindingVisualization.cs" />
     <Compile Include="Model\ConsoleSmoothLevels.cs" />
     <Compile Include="Model\ConsoleVertexReverseModule.cs" />

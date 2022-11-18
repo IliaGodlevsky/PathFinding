@@ -77,7 +77,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel
             var message = new UpdateStatisticsMessage(Id, time, visitedVerticesCount);
             await Task.Run(() => base.OnVertexVisited(sender, e))
                 .ContinueWith(task => messenger.SendAsync(message))
-                .ConfigureAwait(false);            
+                .ConfigureAwait(false);
         }
 
         protected override async void OnVertexEnqueued(object sender, PathfindingEventArgs e)

@@ -7,8 +7,6 @@ using Pathfinding.Logging.Interface;
 using Shared.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
-using System.Linq;
-using ColorfulConsole = Colorful.Console;
 
 namespace Pathfinding.App.Console.Views
 {
@@ -39,28 +37,22 @@ namespace Pathfinding.App.Console.Views
             menuList = menuCommands.Commands.CreateMenuList(columns);
             menuRange = new InclusiveValueRange<int>(menuCommands.Commands.Count, 1);
             model.ViewClosed += OnClosed;
+            NewMenuCycleStarted += menuList.Display;
         }
 
         public virtual void Display()
         {
             while (!IsClosureRequested)
             {
-                Screen.SetCursorPositionUnderMenu(1);
-                NewMenuCycleStarted?.Invoke();
-                menuList.Display();
-                ExecuteCommand(MenuCommand);
-            }
-        }
-
-        private void ExecuteCommand(IMenuCommand command)
-        {
-            try
-            {
-                command.Execute();
-            }
-            catch (ConditionFailedException ex)
-            {
-                log.Warn(ex.Message);
+                try
+                {
+                    NewMenuCycleStarted?.Invoke();
+                    MenuCommand.Execute();
+                }
+                catch (ConditionFailedException ex)
+                {
+                    log.Warn(ex.Message);
+                }
             }
         }
 

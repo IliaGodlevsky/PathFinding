@@ -42,11 +42,11 @@ namespace Pathfinding.App.Console
             messenger.Register<CostRangeChangedMessage>(recipient, OnCostRangeChanged);
             messenger.Register<UpdatePathfindingStatisticsMessage>(recipient, OnStatisticsUpdated);
             messenger.Register<GraphCreatedMessage>(recipient, OnNewGraphCreated);
+            StatisticsPosition = Coordinate2D.Empty;
             OnCostRangeChanged(new CostRangeChangedMessage(VertexCost.CostRange));
             int x = WidthOfOrdinateView;
             int y = HeightOfAbscissaView + HeightOfGraphParametresView;
-            GraphFieldPosition = new Coordinate2D(x, y);
-            StatisticsPosition = Coordinate2D.Empty;
+            GraphFieldPosition = new Coordinate2D(x, y);            
         }
 
         public static void SetCursorPositionUnderMenu(int menuOffset)
@@ -60,8 +60,7 @@ namespace Pathfinding.App.Console
             PreviousMaxValueOfRange = CurrentMaxValueOfRange;
             int pathFindingStatisticsOffset = message.Graph.Length + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
             StatisticsPosition = new Coordinate2D(0, pathFindingStatisticsOffset);
-            LateralDistanceBetweenVertices = CalculateLateralDistanceBetweenVertices();
-            Graph.ForEach(RecalculateConsolePosition);
+            RecalculateVerticesConsolePosition();
         }
 
         private static void OnCostRangeChanged(CostRangeChangedMessage message)
@@ -71,8 +70,14 @@ namespace Pathfinding.App.Console
             int max = Math.Max(upperValueRange, Math.Abs(lowerValueRange));
             PreviousMaxValueOfRange = Math.Max(CurrentMaxValueOfRange, PreviousMaxValueOfRange);
             CurrentMaxValueOfRange = max;
+            RecalculateVerticesConsolePosition();
+        }
+
+        private static void RecalculateVerticesConsolePosition()
+        {
             LateralDistanceBetweenVertices = CalculateLateralDistanceBetweenVertices();
             Graph.ForEach(RecalculateConsolePosition);
+            messenger.Send(new VerticesConsolePositionsRecalculatedMessage());
         }
 
         private static void OnStatisticsUpdated(UpdatePathfindingStatisticsMessage message)

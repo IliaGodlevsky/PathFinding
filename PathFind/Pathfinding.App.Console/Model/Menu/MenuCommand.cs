@@ -17,7 +17,7 @@ namespace Pathfinding.App.Console.Model.Menu
         {
             this.header = header;
             this.command = command;
-            conditions = conditionCommands;
+            this.conditions = conditionCommands;
         }
 
         public void Execute()

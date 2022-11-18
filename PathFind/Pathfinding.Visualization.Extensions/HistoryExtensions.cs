@@ -13,10 +13,10 @@ namespace Pathfinding.Visualization.Extensions
             where TVertex : IVertex, IVisualizable
             where TVolume : IHistoryVolume<ICoordinate>, new()
         {
-            graph.GetVertices(history.GetPath(key)).VisualizeAsPath();
+            graph.GetVertices(history.GetObstacles(key)).VisualizeAsObstacles();
             graph.GetVertices(history.GetVisitedVertices(key)).VisualizeAsVisited();
             graph.GetVertices(history.GetPathfindingRange(key)).VisualizeAsRange();
-            graph.GetVertices(history.GetObstacles(key)).VisualizeAsObstacles();
+            graph.GetVertices(history.GetPath(key)).VisualizeAsPath();
         }
     }
 }

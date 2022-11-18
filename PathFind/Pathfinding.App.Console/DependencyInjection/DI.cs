@@ -80,7 +80,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
-            builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<ColorConsoleLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 

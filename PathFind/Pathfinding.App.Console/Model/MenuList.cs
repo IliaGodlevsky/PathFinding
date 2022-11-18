@@ -12,6 +12,22 @@ namespace Pathfinding.App.Console.Model
 {
     internal sealed class MenuList : IDisplayable
     {
+        private const int ClearLinesLimit = 20;
+
+        private static void ClearMenuList()
+        {
+            Screen.SetCursorPositionUnderMenu(1);
+            using (Cursor.UseCurrentPosition())
+            {
+                string emptyLine = new string(' ', ColorfulConsole.WindowWidth);
+                int limit = ClearLinesLimit;
+                while (limit-- > 0)
+                {
+                    ColorfulConsole.Write(emptyLine);
+                }
+            }
+        }
+
         private const string NewLine = "\n";
         private const string Space = " ";
         private const string MenuFormat = "{0}. {1}";
@@ -37,14 +53,7 @@ namespace Pathfinding.App.Console.Model
 
         public void Display()
         {
-            using (Cursor.UseCurrentPosition())
-            {
-                int limit = 20;
-                while (limit-- > 0)
-                {
-                    ColorfulConsole.Write(new string(' ', ColorfulConsole.WindowWidth));
-                }
-            }
+            ClearMenuList();
             ColorfulConsole.WriteLine(ToString());
         }
 

@@ -45,6 +45,7 @@ namespace Pathfinding.App.Console.ViewModel
             this.messenger = messenger;
             messenger.Register<GraphCreatedMessage>(this, SetGraph);
             messenger.Register<ClearGraphMessage>(this, ClearGraph);
+            messenger.Register<VerticesConsolePositionsRecalculatedMessage>(this, OnPositionsRecalculated);
             this.fieldFactory = fieldFactory;
             this.adapter = adapter;
         }
@@ -100,8 +101,6 @@ namespace Pathfinding.App.Console.ViewModel
             messenger.Send(UpdatePathfindingStatisticsMessage.Empty);
         }
 
-        [Condition(nameof(IsGraphValid))]
-        [MenuItem("Show graph", 5)]
         private void DisplayGraph()
         {
             try
@@ -117,7 +116,7 @@ namespace Pathfinding.App.Console.ViewModel
             {
                 log.Warn(ex);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.Error(ex);
             }
@@ -129,6 +128,14 @@ namespace Pathfinding.App.Console.ViewModel
             Cached = message.Graph;
             GraphField = fieldFactory.CreateGraphField(Cached);
             GraphParamters = GraphParamsProperty.Assign(Cached);
+        }
+
+        private void OnPositionsRecalculated(VerticesConsolePositionsRecalculatedMessage message)
+        {
+            using (Cursor.UseCurrentPosition())
+            {
+                DisplayGraph();
+            }
         }
 
         [FailMessage(MessagesTexts.GraphIsNotCreatedMsg)]
