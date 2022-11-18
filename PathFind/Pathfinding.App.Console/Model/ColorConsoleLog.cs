@@ -15,8 +15,7 @@ namespace Pathfinding.App.Console.Model
 
         public void Error(Exception ex, string message = null)
         {
-            Error(message);
-            ColorfulConsole.Write(ex, Color.Red);
+            ShowMessage(message + ex.ToString(), Color.Red);
         }
 
         public void Error(string message)
@@ -26,8 +25,7 @@ namespace Pathfinding.App.Console.Model
 
         public void Fatal(Exception ex, string message = null)
         {
-            Fatal(message);
-            ColorfulConsole.Write(ex, Color.DarkRed);
+            ShowMessage(message + ex.ToString(), Color.DarkRed);
         }
 
         public void Fatal(string message)
@@ -47,8 +45,7 @@ namespace Pathfinding.App.Console.Model
 
         public void Warn(Exception ex, string message = null)
         {
-            Warn(message);
-            ColorfulConsole.Write(ex, Color.Orange);
+            ShowMessage(message + ex.ToString(), Color.Orange);
         }
 
         public void Warn(string message)

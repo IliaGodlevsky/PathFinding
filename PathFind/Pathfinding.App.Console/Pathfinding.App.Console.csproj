@@ -93,7 +93,7 @@
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
-    <Compile Include="Model\ConsoleLog.cs" />
+    <Compile Include="Model\ColorConsoleLog.cs" />
     <Compile Include="Model\ConsolePathfindingVisualization.cs" />
     <Compile Include="Model\ConsoleSmoothLevels.cs" />
     <Compile Include="Model\ConsoleVertexReverseModule.cs" />
