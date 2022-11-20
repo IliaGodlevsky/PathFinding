@@ -131,7 +131,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screen.cs" />
-    <Compile Include="ValueInput\Decorators\SelfClearInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedAnswerInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedIntInput.cs" />
