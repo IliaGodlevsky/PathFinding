@@ -1,14 +1,38 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Visualization.Subscriptions;
+using Pathfinding.Visualization.Extensions;
+using Pathfinding.VisualizationLib.Core.Interface;
 using System.Windows.Input;
 
 namespace Pathfinding.App.WPF._2D.Model
 {
-    internal sealed class Wpf2DVertexReverseModule : ReverseVertexModule<Vertex>, IGraphSubscription<Vertex>
+    internal sealed class Wpf2DVertexReverseModule : IGraphSubscription<Vertex>
     {
+        private readonly IPathfindingRangeAdapter<Vertex> adapter;
+
+        public Wpf2DVertexReverseModule(IPathfindingRangeAdapter<Vertex> adapter)
+        {
+            this.adapter = adapter;
+        }
+
+        private void ReverseVertex(Vertex vertex)
+        {
+            if (vertex.IsObstacle)
+            {
+                vertex.IsObstacle = false;
+                vertex.VisualizeAsRegular();
+            }
+            else
+            {
+                if (!adapter.IsInRange(vertex))
+                {
+                    vertex.IsObstacle = true;
+                }
+            }
+        }
+
         private void ReverseVertex(object sender, MouseButtonEventArgs e)
         {
-            Reverse((Vertex)e.Source);
+            ReverseVertex((Vertex)e.Source);
         }
 
         public void Subscribe(IGraph<Vertex> graph)

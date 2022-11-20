@@ -29,7 +29,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.LoadGraph, 0)]
         private void LoadGraph()
         {
-            using (Cursor.UsePositionAndClear())
+            using (Cursor.ClearInputToCurrentPosition())
             {
                 var graph = module.LoadGraph();
                 messenger.Send(new GraphCreatedMessage(graph));

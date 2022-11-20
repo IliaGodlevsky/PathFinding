@@ -54,9 +54,8 @@ namespace Pathfinding.App.Console.Model
         }
 
         private void ShowMessage(string message, Color color)
-        {
-            //Screen.SetCursorPositionUnderMenu(1);            
-            using (Cursor.UsePositionAndClear())
+        {          
+            using (Cursor.ClearInputToCurrentPosition())
             {
                 ColorfulConsole.Write(message, color);
                 ColorfulConsole.ReadKey();

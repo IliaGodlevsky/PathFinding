@@ -1,6 +1,7 @@
 ﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.GraphLib.Core.NullObjects;
 using Pathfinding.GraphLib.Core.Realizations.Coordinates;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
@@ -28,11 +29,11 @@ namespace Pathfinding.App.Console.Model
             set { isObstacle = value; if (isObstacle) VisualizeAsObstacle(); }
         }
 
-        public IVertexCost Cost { get; set; }
+        public IVertexCost Cost { get; set; } = NullCost.Interface;
 
-        public IReadOnlyCollection<IVertex> Neighbours { get; set; }
+        public IReadOnlyCollection<IVertex> Neighbours { get; set; } = Array.Empty<IVertex>();
 
-        public ICoordinate Position { get; }
+        public ICoordinate Position { get; } = NullCoordinate.Interface;
 
         public Coordinate2D ConsolePosition { get; set; } = Coordinate2D.Empty;
 

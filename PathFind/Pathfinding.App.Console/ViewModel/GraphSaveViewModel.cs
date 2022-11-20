@@ -27,7 +27,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.SaveGraph, 0)]
         private void SaveGraph()
         {
-            using (Cursor.UsePositionAndClear())
+            using (Cursor.ClearInputToCurrentPosition())
             {
                 module.SaveGraph(Graph);
             }

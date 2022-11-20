@@ -167,8 +167,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.AlgorithmLib.Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.GraphLib.Subscriptions", "Pathfinding.GraphLib.Subscriptions\Pathfinding.GraphLib.Subscriptions.csproj", "{E6D42398-F350-497D-BA03-EB0C08E424A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.GraphLib.Visualization.Subscriptions", "Pathfinding.GraphLib.Visualization.Subscriptions\Pathfinding.GraphLib.Visualization.Subscriptions.csproj", "{47B13F23-C3E6-4BBC-87FF-92D2D161CC39}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.GraphLib.Serialization.Core.Interface", "Pathfinding.GraphLib.Serialization.Core.Interface\Pathfinding.GraphLib.Serialization.Core.Interface.csproj", "{84770BE3-D26C-4800-9DF1-EA33704E9FBD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.GraphLib.Serialization.Core.Realizations", "Pathfinding.GraphLib.Serialization.Core.Realizations\Pathfinding.GraphLib.Serialization.Core.Realizations.csproj", "{5B3827E8-4CC0-490D-B15C-4190A2982059}"
@@ -481,10 +479,6 @@ Global
 		{E6D42398-F350-497D-BA03-EB0C08E424A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6D42398-F350-497D-BA03-EB0C08E424A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6D42398-F350-497D-BA03-EB0C08E424A8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{47B13F23-C3E6-4BBC-87FF-92D2D161CC39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{47B13F23-C3E6-4BBC-87FF-92D2D161CC39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{47B13F23-C3E6-4BBC-87FF-92D2D161CC39}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{47B13F23-C3E6-4BBC-87FF-92D2D161CC39}.Release|Any CPU.Build.0 = Release|Any CPU
 		{84770BE3-D26C-4800-9DF1-EA33704E9FBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{84770BE3-D26C-4800-9DF1-EA33704E9FBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84770BE3-D26C-4800-9DF1-EA33704E9FBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -601,7 +595,6 @@ Global
 		{16755D15-4338-4243-8EAA-95673423599F} = {D159F18B-38B4-4942-9D0C-BB71C4BD9EFD}
 		{70CB989C-EF34-473B-ACEF-23FDB0A47E9B} = {D159F18B-38B4-4942-9D0C-BB71C4BD9EFD}
 		{E6D42398-F350-497D-BA03-EB0C08E424A8} = {8C2F4077-5F32-44E4-BB76-8F77F2D63CBB}
-		{47B13F23-C3E6-4BBC-87FF-92D2D161CC39} = {A0EF35D0-71FD-4B7F-9199-CE522E81E594}
 		{84770BE3-D26C-4800-9DF1-EA33704E9FBD} = {8C2F4077-5F32-44E4-BB76-8F77F2D63CBB}
 		{5B3827E8-4CC0-490D-B15C-4190A2982059} = {8C2F4077-5F32-44E4-BB76-8F77F2D63CBB}
 		{96DE3110-BA88-449C-A514-282BEFF4003E} = {8C2F4077-5F32-44E4-BB76-8F77F2D63CBB}

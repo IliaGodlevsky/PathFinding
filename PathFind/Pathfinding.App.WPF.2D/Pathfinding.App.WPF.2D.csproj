@@ -306,10 +306,6 @@
       <Project>{E6D42398-F350-497D-BA03-EB0C08E424A8}</Project>
       <Name>Pathfinding.GraphLib.Subscriptions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Visualization.Subscriptions\Pathfinding.GraphLib.Visualization.Subscriptions.csproj">
-      <Project>{47B13F23-C3E6-4BBC-87FF-92D2D161CC39}</Project>
-      <Name>Pathfinding.GraphLib.Visualization.Subscriptions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Visualization\Pathfinding.GraphLib.Visualization.csproj">
       <Project>{5616B5FF-BA13-4805-860C-1F69F2946B89}</Project>
       <Name>Pathfinding.GraphLib.Visualization</Name>

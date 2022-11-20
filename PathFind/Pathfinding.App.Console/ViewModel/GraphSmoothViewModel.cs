@@ -6,6 +6,7 @@ using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Smoothing;
 using Pathfinding.GraphLib.Smoothing.Interface;
+using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 
@@ -40,12 +41,13 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.SmoothGraph, 0)]
         private void SmoothGraph()
         {
-            using (Cursor.UsePositionAndClear())
+            using (Cursor.ClearInputToCurrentPosition())
             {
                 int index = IntInput.Input(ChooseSmoothLevelMsg, SmoothLevels.Count, 1) - 1;
                 var level = SmoothLevels[index];
                 graph.Smooth(costFactory, meanAlgorithm, level.Level);
             }
+            graph.Display();
         }
     }
 }

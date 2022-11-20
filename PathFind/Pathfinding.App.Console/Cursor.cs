@@ -28,7 +28,7 @@ namespace Pathfinding.App.Console
             return Disposable.Use(ShowCursor);
         }
 
-        public static IDisposable UseCurrentPosition()
+        public static IDisposable RestoreCurrentPosition()
         {
             var cursorLeft = ColorfulConsole.CursorLeft;
             var cursorRight = ColorfulConsole.CursorTop;
@@ -36,7 +36,7 @@ namespace Pathfinding.App.Console
             return Disposable.Use(cursor.RestoreCursorPosition);
         }
 
-        public static IDisposable UsePositionAndClear()
+        public static IDisposable ClearInputToCurrentPosition()
         {
             var left = ColorfulConsole.CursorLeft;
             var top = ColorfulConsole.CursorTop;
@@ -48,7 +48,7 @@ namespace Pathfinding.App.Console
         {
             int limit = Cursor.CurrentPosition.Y - offset.Y;
             SetPosition(offset);
-            using (Cursor.UseCurrentPosition())
+            using (Cursor.RestoreCurrentPosition())
             {
                 string emptyLine = BufferLengthString;
                 while (limit-- > 0)

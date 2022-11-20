@@ -53,7 +53,6 @@ namespace Pathfinding.App.Console.ViewModel
             int index = GetAlgorithmIndex(InputMessage);
             while (index != QuitIndex)
             {
-                //Screen.ClearUnderMenu(MenuOffset);
                 var factory = Factories[index];
                 messenger.Send(new PathfindingAlgorithmChosenMessage(factory));
                 index = GetAlgorithmIndex(InputMessage);
@@ -62,7 +61,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         private int GetAlgorithmIndex(string message)
         {
-            using (Cursor.UsePositionAndClear())
+            using (Cursor.ClearInputToCurrentPosition())
             {
                 return IntInput.Input(message, Factories.Count + 1, 1) - 1;
             }

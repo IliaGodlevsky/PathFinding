@@ -8,11 +8,11 @@ namespace Pathfinding.App.Console.Model
 {
     internal sealed class PathfindingHistoryVolume : IHistoryVolume<ICoordinate>
     {
-        private readonly Dictionary<Guid, List<ICoordinate>> history;
+        private readonly Dictionary<Guid, HashSet<ICoordinate>> history;
 
         public PathfindingHistoryVolume()
         {
-            history = new Dictionary<Guid, List<ICoordinate>>();
+            history = new Dictionary<Guid, HashSet<ICoordinate>>();
         }
 
         public void Add(Guid key, ICoordinate item)

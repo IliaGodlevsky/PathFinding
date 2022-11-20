@@ -119,14 +119,12 @@ namespace Pathfinding.App.Console.ViewModel
                 {
                     try
                     {
-                        using (Disposable.Use(SummarizeResults))
+                        using (Disposable.Use(SummarizeResults, WaitKeyInput, ClearColors))
                         {
                             PrepareForPathfinding(algorithm);
                             path = algorithm.FindPath();
                             graph.GetVertices(path).Reverse().VisualizeAsPath();
                         }
-                        KeyInput.Input();
-                        ClearColors();
                     }
                     catch (PathfindingException ex)
                     {
@@ -135,6 +133,8 @@ namespace Pathfinding.App.Console.ViewModel
                 }
             }
         }
+
+        private void WaitKeyInput() => KeyInput.Input();
 
         private void OnAlgorithmChosen(PathfindingAlgorithmChosenMessage message)
         {

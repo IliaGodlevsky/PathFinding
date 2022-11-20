@@ -37,7 +37,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ChoosePathfindingRange, 0)]
         private void ChooseEndPoints()
         {
-            using (Cursor.UsePositionAndClear())
+            using (Cursor.ClearInputToCurrentPosition())
             {
                 ColorfulConsole.WriteLine(MessagesTexts.SourceAndTargetInputMsg);
                 InputVertices(RequiredVerticesForRange).ForEach(IncludeInRange);
@@ -48,7 +48,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ReplaceSource, 2)]
         private void ReplaceSourceVertex()
         {
-            using (Cursor.UsePositionAndClear())
+            using (Cursor.ClearInputToCurrentPosition())
             {
                 IncludeInRange(adapter.Source);
                 IncludeInRange(InputVertex(MessagesTexts.SourceVertexChoiceMsg));
@@ -59,7 +59,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ReplaceTarget, 3)]
         private void ReplaceTargetVertex()
         {
-            using (Cursor.UsePositionAndClear())
+            using (Cursor.ClearInputToCurrentPosition())
             {
                 IncludeInRange(adapter.Target);
                 IncludeInRange(InputVertex(MessagesTexts.TargetVertexChoiceMsg));
@@ -76,7 +76,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ReplaceIntermediate, 4)]
         private void ReplaceIntermediates()
         {
-            using (Cursor.UsePositionAndClear())
+            using (Cursor.ClearInputToCurrentPosition())
             {
                 string msg = MessagesTexts.NumberOfIntermediatesVerticesToReplaceMsg;
                 int toReplaceNumber = IntInput.Input(msg, numberOfIntermediates);
@@ -91,7 +91,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ChooseIntermediates, 1)]
         private void ChooseIntermediates()
         {
-            using (Cursor.UsePositionAndClear())
+            using (Cursor.ClearInputToCurrentPosition())
             {
                 string message = MessagesTexts.NumberOfIntermediateVerticesInputMsg;
                 int available = graph.GetAvailableIntermediatesVerticesNumber();
@@ -103,7 +103,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         private void IncludeInRange(Vertex vertex)
         {
-            using (Cursor.UseCurrentPosition())
+            using (Cursor.RestoreCurrentPosition())
             {
                 adapter.IncludeInRange(vertex);
             }
@@ -111,7 +111,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         private void MarkAsToReplace(Vertex vertex)
         {
-            using(Cursor.UseCurrentPosition())
+            using(Cursor.RestoreCurrentPosition())
             {
                 adapter.MarkAsIntermediateToReplace(vertex);
             }
