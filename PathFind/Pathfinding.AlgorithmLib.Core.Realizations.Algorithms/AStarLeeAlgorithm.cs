@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
-    public sealed class AStarLeeAlgorithm : BreadthFirstAlgorithm<SimplePriorityQueue<IVertex, double>>
+    internal sealed class AStarLeeAlgorithm : BreadthFirstAlgorithm<SimplePriorityQueue<IVertex, double>>
     {
         private readonly Dictionary<ICoordinate, double> heuristics;
         private readonly IHeuristic heuristic;
@@ -39,7 +39,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
             heuristics.Clear();
         }
 
-        protected override void PrepareForSubPathfinding(Range range)
+        protected override void PrepareForSubPathfinding(SubRange range)
         {
             base.PrepareForSubPathfinding(range);
             double value = CalculateHeuristic(CurrentRange.Source);

@@ -1,4 +1,5 @@
-﻿using Pathfinding.AlgorithmLib.Core.Interface;
+﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
+using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.AlgorithmLib.Factory.Attrbiutes;
@@ -8,7 +9,7 @@ using Pathfinding.GraphLib.Core.Interface;
 namespace Pathfinding.AlgorithmLib.Factory
 {
     [GreedyGroup]
-    public sealed class CostGreedyAlgorithmFactory : IAlgorithmFactory<CostGreedyAlgorithm>
+    public sealed class CostGreedyAlgorithmFactory : IAlgorithmFactory<PathfindingProcess>
     {
         private readonly IStepRule stepRule;
 
@@ -23,7 +24,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 
         }
 
-        public CostGreedyAlgorithm Create(IPathfindingRange pathfindingRange)
+        public PathfindingProcess Create(IPathfindingRange pathfindingRange)
         {
             return new CostGreedyAlgorithm(pathfindingRange, stepRule);
         }

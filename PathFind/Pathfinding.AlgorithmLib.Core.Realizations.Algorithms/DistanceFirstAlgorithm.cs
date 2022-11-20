@@ -5,7 +5,7 @@ using Pathfinding.GraphLib.Core.Interface;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
-    public class DistanceFirstAlgorithm : GreedyAlgorithm
+    internal class DistanceFirstAlgorithm : GreedyAlgorithm
     {
         private readonly IHeuristic heuristic;
 

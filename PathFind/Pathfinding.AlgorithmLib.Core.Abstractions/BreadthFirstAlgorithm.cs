@@ -2,7 +2,7 @@
 
 namespace Pathfinding.AlgorithmLib.Core.Abstractions
 {
-    public abstract class BreadthFirstAlgorithm<TStorage> : WaveAlgorithm<TStorage>
+    internal abstract class BreadthFirstAlgorithm<TStorage> : WaveAlgorithm<TStorage>
         where TStorage : new()
     {
         public BreadthFirstAlgorithm(IPathfindingRange pathfindingRange)

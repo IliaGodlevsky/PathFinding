@@ -1,6 +1,7 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Core.Exceptions;
 using Pathfinding.AlgorithmLib.Core.Interface;
+using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.AlgorithmLib.History.Interface;
 using Shared.Process.EventArguments;
 using Shared.Process.EventHandlers;
@@ -12,6 +13,34 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 {
     public abstract class PathfindingProcess : IAlgorithm<IGraphPath>, IHistoryPageKey, IProcess, IPausable, IInterruptable, IDisposable
     {
+        private sealed class NullProcess : PathfindingProcess
+        {
+            public override Guid Id => Guid.Empty;
+
+            public override IGraphPath FindPath() => NullGraphPath.Instance;
+
+            public override void Interrupt() { }
+
+            public override void Pause() { }
+
+            public override void Resume() { }
+
+            public override void Dispose()
+            {
+                Started = null;
+                Finished = null;
+                VertexEnqueued = null;
+                VertexVisited = null;
+                Interrupted = null;
+                Paused = null;
+                Resumed = null;
+            }
+
+            protected override void DropState() { }
+        }
+
+        public static readonly PathfindingProcess Null = new NullProcess();
+
         public event PathfindingEventHandler VertexVisited;
         public event PathfindingEventHandler VertexEnqueued;
         public event ProcessEventHandler Started;
@@ -22,7 +51,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         private readonly EventWaitHandle pauseEvent;
 
-        public Guid Id { get; }
+        public virtual Guid Id { get; }
 
         public bool IsInProcess { get; private set; } = false;
 
@@ -40,7 +69,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         public abstract IGraphPath FindPath();
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             IsAlgorithmDisposed = true;
             Started = null;
@@ -54,7 +83,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             DropState();
         }
 
-        public void Interrupt()
+        public virtual void Interrupt()
         {
             if (IsInProcess)
             {
@@ -66,7 +95,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             }
         }
 
-        public void Pause()
+        public virtual void Pause()
         {
             if (!IsPaused && IsInProcess)
             {
@@ -75,7 +104,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             }
         }
 
-        public void Resume()
+        public virtual void Resume()
         {
             if (IsPaused && IsInProcess)
             {

@@ -1,12 +1,11 @@
-﻿using Shared.Primitives.ValueRange;
+﻿using Pathfinding.GraphLib.Core.Realizations;
+using Shared.Primitives.ValueRange;
 using System;
 
 namespace Pathfinding.App.Console
 {
     internal static class Constants
     {
-        
-
         public static InclusiveValueRange<int> GraphWidthValueRange { get; }
 
         public static InclusiveValueRange<int> GraphLengthValueRange { get; }

@@ -5,7 +5,7 @@ using Pathfinding.GraphLib.Core.Interface;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
-    public sealed class DepthFirstAlgorithm : GreedyAlgorithm
+    internal sealed class DepthFirstAlgorithm : GreedyAlgorithm
     {
         private readonly IHeuristic heuristic;
 

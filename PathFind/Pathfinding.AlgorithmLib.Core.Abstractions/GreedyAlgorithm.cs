@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Pathfinding.AlgorithmLib.Core.Abstractions
 {
-    public abstract class GreedyAlgorithm : PathfindingAlgorithm<Stack<IVertex>>
+    internal abstract class GreedyAlgorithm : PathfindingAlgorithm<Stack<IVertex>>
     {
         private IVertex PreviousVertex { get; set; } = NullVertex.Instance;
 
@@ -29,7 +29,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
                 .FirstOrNullVertex(vertex => CalculateHeuristic(vertex) == leastVertexCost);
         }
 
-        protected override void PrepareForSubPathfinding(Range range)
+        protected override void PrepareForSubPathfinding(SubRange range)
         {
             base.PrepareForSubPathfinding(range);
             VisitVertex(CurrentVertex);

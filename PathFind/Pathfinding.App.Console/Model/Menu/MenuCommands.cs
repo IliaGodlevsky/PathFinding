@@ -35,7 +35,7 @@ namespace Pathfinding.App.Console.Model.Menu
             return viewModelType
                 .GetMethods(MethodAccessModificators)
                 .Where(IsMenuItem)
-                .OrderByOrderAttribute()
+                .OrderByOrderAttribute<MethodInfo, MenuItemAttribute>()
                 .SelectMany(CreateMenuCommand)
                 .ToReadOnly();
         }
@@ -44,16 +44,16 @@ namespace Pathfinding.App.Console.Model.Menu
         {
             if (targetMethod.TryCreateDelegate(viewModel, out Command command))
             {
-                string header = targetMethod.GetAttributeOrNull<MenuItemAttribute>().Header;
+                string header = targetMethod.GetAttributeOrDefault<MenuItemAttribute>().Header;
                 var safeAction = targetMethod
                     .GetCustomAttributes<ExecuteSafeAttribute>()
-                    .Select(GetMethod)
+                    .Select(GetMarkedMethod)
                     .Select(CreateDelegateOrNull<SafeAction>)
                     .FirstOrDefault();
                 Command menuCommand = safeAction == null ? command : () => safeAction(command);
                 var conditions = targetMethod
                     .GetCustomAttributes<ConditionAttribute>()
-                    .OrderByOrderAttribute()
+                    .OrderBy(attr => attr.Order)
                     .Select(CreateConditionInfo)
                     .Select(GetConditionPair)
                     .ToReadOnly();
@@ -63,13 +63,13 @@ namespace Pathfinding.App.Console.Model.Menu
 
         private (Condition Condition, string Message) CreateConditionInfo(ConditionAttribute attribute)
         {
-            var method = GetMethod(attribute);
+            var method = GetMarkedMethod(attribute);
             var condition = CreateDelegateOrNull<Condition>(method);
-            var messageAttribute = method.GetAttributeOrNull<FailMessageAttribute>();
-            return (condition, messageAttribute?.Message ?? FailMessageAttribute.Default.Message);
+            var messageAttribute = method.GetAttributeOrDefault<FailMessageAttribute>();
+            return (condition, messageAttribute.Message);
         }
 
-        private MethodInfo GetMethod(IMethodMark attribute)
+        private MethodInfo GetMarkedMethod(IMethodMark attribute)
         {
             return viewModelType.GetMethod(attribute.MethodName, MethodAccessModificators);
         }

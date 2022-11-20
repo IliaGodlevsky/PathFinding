@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
-    public sealed class LeeAlgorithm : BreadthFirstAlgorithm<Queue<IVertex>>
+    internal sealed class LeeAlgorithm : BreadthFirstAlgorithm<Queue<IVertex>>
     {
         public LeeAlgorithm(IPathfindingRange pathfindingRange)
             : base(pathfindingRange)

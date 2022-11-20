@@ -1,7 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.DependencyInjection;
 using Pathfinding.App.Console.Extensions;
-using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
@@ -14,12 +13,10 @@ using System;
 namespace Pathfinding.App.Console.ViewModel
 {
     [MenuColumnsNumber(2)]
-    internal sealed class PathfindingViewModel : SafeViewModel, IRequireAnswerInput, IDisposable
+    internal sealed class PathfindingViewModel : SafeViewModel, IDisposable
     {       
         private readonly IMessenger messenger;
         private readonly IPathfindingRangeAdapter<Vertex> adapter;
-
-        public IInput<Answer> AnswerInput { get; set; }
 
         public PathfindingViewModel(IPathfindingRangeAdapter<Vertex> adapter, ILog log, IMessenger messenger)
             : base(log)

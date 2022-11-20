@@ -22,6 +22,8 @@ using System.Linq;
 
 namespace Pathfinding.Visualization.Models
 {
+    using AlgorithmFactory = IAlgorithmFactory<PathfindingProcess>;
+
     public abstract class PathFindingModel<TVertex>
         where TVertex : IVertex, IVisualizable
     {
@@ -53,8 +55,8 @@ namespace Pathfinding.Visualization.Models
             this.pathfindingRange = endPoints;
             this.log = log;
             Algorithms = factories
-                .GroupBy(item => item.GetAttributeOrNull<GroupAttribute>())
-                .SelectMany(item => item.OrderByOrderAttribute())
+                .GroupBy(item => item.GetAttributeOrDefault<GroupAttribute>())
+                .SelectMany(item => item.OrderByOrderAttribute<AlgorithmFactory, OrderAttribute>())
                 .ToList();
             timer = new Stopwatch();
             Path = NullGraphPath.Interface;

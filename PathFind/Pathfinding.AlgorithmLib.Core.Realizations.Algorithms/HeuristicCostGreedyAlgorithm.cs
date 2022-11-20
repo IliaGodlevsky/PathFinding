@@ -8,7 +8,7 @@ using Shared.Extensions;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
-    public sealed class HeuristicCostGreedyAlgorithm : GreedyAlgorithm
+    internal sealed class HeuristicCostGreedyAlgorithm : GreedyAlgorithm
     {
         private readonly IStepRule stepRule;
         private readonly IHeuristic heuristic;

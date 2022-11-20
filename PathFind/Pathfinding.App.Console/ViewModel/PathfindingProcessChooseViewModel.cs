@@ -9,42 +9,63 @@ using Shared.Collections;
 using Shared.Extensions;
 using Shared.Primitives.Attributes;
 using Shared.Primitives.Extensions;
-using Shared.Primitives.ValueRange;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.ViewModel
 {
-    [MenuColumnsNumber(1)]    
+    using AlgorithmFactory = IAlgorithmFactory<PathfindingProcess>;
+
+    [MenuColumnsNumber(1)]
     internal sealed class PathfindingProcessChooseViewModel : ViewModel, IRequireIntInput
     {
+        private const int MenuOffset = 6;
+
         private readonly IMessenger messenger;
-        private readonly InclusiveValueRange<int> algorithmKeysValueRange;
 
         public IInput<int> IntInput { get; set; }
 
-        public string AlgorithmKeyInputMessage { private get; set; }
+        private IDisplayable MenuList { get; }
 
-        private int AlgorithmIndex => IntInput.Input(AlgorithmKeyInputMessage, algorithmKeysValueRange) - 1;
+        private string InputMessage { get; }
 
-        public ReadOnlyList<IAlgorithmFactory<PathfindingProcess>> Factories { get; }
+        private int QuitIndex { get; }
 
-        public PathfindingProcessChooseViewModel(IEnumerable<IAlgorithmFactory<PathfindingProcess>> factories, 
-            IMessenger messenger)
+        public ReadOnlyList<AlgorithmFactory> Factories { get; }
+
+        public PathfindingProcessChooseViewModel(IEnumerable<AlgorithmFactory> factories, IMessenger messenger)
         {
             Factories = factories
-                .GroupBy(item => item.GetAttributeOrNull<GroupAttribute>())
-                .SelectMany(item => item.OrderByOrderAttribute())
+                .GroupBy(item => item.GetAttributeOrDefault<GroupAttribute>())
+                .SelectMany(item => item.OrderByOrderAttribute<AlgorithmFactory, OrderAttribute>())
                 .ToReadOnly();
+            MenuList = Factories.Select(item => item.ToString())
+                .Append("Quit")
+                .CreateMenuList(columnsNumber: 1);
+            InputMessage = MenuList + "\n" + MessagesTexts.AlgorithmChoiceMsg;
+            QuitIndex = Factories.Count;
             this.messenger = messenger;
-            algorithmKeysValueRange = new InclusiveValueRange<int>(Factories.Count, 1);
         }
 
         [MenuItem(MenuItemsNames.ChooseAlgorithm, 0)]
         private void ChoosePathfindingAlgorithm()
         {
-            var algorithm = Factories[AlgorithmIndex];
-            messenger.Send(new PathfindingAlgorithmChosenMessage(algorithm));
+            int index = GetAlgorithmIndex(InputMessage);
+            while (index != QuitIndex)
+            {
+                //Screen.ClearUnderMenu(MenuOffset);
+                var factory = Factories[index];
+                messenger.Send(new PathfindingAlgorithmChosenMessage(factory));
+                index = GetAlgorithmIndex(InputMessage);
+            }
+        }
+
+        private int GetAlgorithmIndex(string message)
+        {
+            using (Cursor.UsePositionAndClear())
+            {
+                return IntInput.Input(message, Factories.Count + 1, 1) - 1;
+            }
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using Shared.Random;
-
-namespace Shared.Random.Realizations
+﻿namespace Shared.Random.Realizations
 {
     public sealed class ThreadSafeRandom : IRandom
     {

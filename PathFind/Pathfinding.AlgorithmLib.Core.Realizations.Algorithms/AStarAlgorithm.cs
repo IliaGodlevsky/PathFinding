@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
-    public class AStarAlgorithm : DijkstraAlgorithm
+    internal class AStarAlgorithm : DijkstraAlgorithm
     {
         private readonly Dictionary<ICoordinate, double> accumulatedCosts;
         protected readonly Dictionary<ICoordinate, double> heuristics;
@@ -34,7 +34,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
             accumulatedCosts.Clear();
         }
 
-        protected override void PrepareForSubPathfinding(Range range)
+        protected override void PrepareForSubPathfinding(SubRange range)
         {
             base.PrepareForSubPathfinding(range);
             accumulatedCosts[CurrentRange.Source.Position] = default;

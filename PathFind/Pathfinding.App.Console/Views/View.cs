@@ -8,6 +8,8 @@ using Shared.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
 
+using ColorfulConsole = Colorful.Console;
+
 namespace Pathfinding.App.Console.Views
 {
     internal abstract class View : IView, IRequireIntInput, IDisplayable, IDisposable
@@ -21,7 +23,7 @@ namespace Pathfinding.App.Console.Views
 
         public IInput<int> IntInput { get; set; }
 
-        private string OptionsMsg => MessagesTexts.MenuOptionChoiceMsg;
+        private string OptionsMsg => menuList + "\n" + MessagesTexts.MenuOptionChoiceMsg;
 
         private int MenuItemIndex => IntInput.Input(OptionsMsg, menuRange) - 1;
 
@@ -37,17 +39,24 @@ namespace Pathfinding.App.Console.Views
             menuList = menuCommands.Commands.CreateMenuList(columns);
             menuRange = new InclusiveValueRange<int>(menuCommands.Commands.Count, 1);
             model.ViewClosed += OnClosed;
-            NewMenuCycleStarted += menuList.Display;
         }
 
         public virtual void Display()
         {
             while (!IsClosureRequested)
             {
+                Screen.SetCursorPositionUnderMenu(1);
                 try
                 {
+                    
                     NewMenuCycleStarted?.Invoke();
-                    MenuCommand.Execute();
+                    IMenuCommand command;
+                    using (Cursor.UsePositionAndClear())
+                    {
+                        int index = IntInput.Input(OptionsMsg, menuRange) - 1;
+                        command = menuCommands.Commands[index];                       
+                    }
+                    command.Execute();
                 }
                 catch (ConditionFailedException ex)
                 {
@@ -58,8 +67,7 @@ namespace Pathfinding.App.Console.Views
 
         private int GetMenuColumnsNumber(IViewModel viewModel)
         {
-            var attribute = viewModel.GetAttributeOrNull<MenuColumnsNumberAttribute>() ?? MenuColumnsNumberAttribute.Default;
-            return attribute.MenuColumns;
+            return viewModel.GetAttributeOrDefault<MenuColumnsNumberAttribute>().MenuColumns;
         }
 
         public void Dispose()

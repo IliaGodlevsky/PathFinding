@@ -18,7 +18,13 @@ namespace Pathfinding.App.Console.ViewModel
 
         public IInput<int> IntInput { get; set; }
 
-        private Vertex Vertex => IntInput.InputVertex(Graph);
+        private Vertex GetInputVertex()
+        {
+            using (Cursor.UsePositionAndClear())
+            {
+                return IntInput.InputVertex(Graph);
+            }
+        }
 
         public VertexStateViewModel(IVertexCostFactory costFactory, ICache<Graph2D<Vertex>> cache)
         {
@@ -28,9 +34,9 @@ namespace Pathfinding.App.Console.ViewModel
         }
 
         [MenuItem(MenuItemsNames.ReverseVertex, 0)]
-        public void ReverseVertex() => reverseModule.ReverseVertex(Vertex);
+        public void ReverseVertex() => reverseModule.ReverseVertex(GetInputVertex());
 
         [MenuItem(MenuItemsNames.ChangeVertexCost, 1)]
-        public void ChangeVertexCost() => costModule.ChangeVertexCost(Vertex);
+        public void ChangeVertexCost() => costModule.ChangeVertexCost(GetInputVertex());
     }
 }

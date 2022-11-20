@@ -1,4 +1,5 @@
-﻿using Pathfinding.AlgorithmLib.Core.Interface;
+﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
+using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
@@ -9,7 +10,7 @@ using Pathfinding.GraphLib.Core.Interface;
 namespace Pathfinding.AlgorithmLib.Factory
 {
     [GreedyGroup]
-    public sealed class HeuristicCostGreedyAlgorithmFactory : IAlgorithmFactory<HeuristicCostGreedyAlgorithm>
+    public sealed class HeuristicCostGreedyAlgorithmFactory : IAlgorithmFactory<PathfindingProcess>
     {
         private readonly IStepRule stepRule;
         private readonly IHeuristic heuristic;
@@ -38,7 +39,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 
         }
 
-        public HeuristicCostGreedyAlgorithm Create(IPathfindingRange pathfindingRange)
+        public PathfindingProcess Create(IPathfindingRange pathfindingRange)
         {
             return new HeuristicCostGreedyAlgorithm(pathfindingRange, heuristic, stepRule);
         }

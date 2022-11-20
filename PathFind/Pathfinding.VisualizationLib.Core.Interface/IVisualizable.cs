@@ -4,7 +4,7 @@
     {
         bool IsVisualizedAsPath();
 
-        bool IsVisualizedAsEndPoint();
+        bool IsVisualizedAsPathfindingRange();
 
         void VisualizeAsTarget();
 

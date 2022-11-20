@@ -5,13 +5,16 @@ namespace Shared.Extensions
 {
     public static class ObjectExtensions
     {
-        public static TAttribute GetAttributeOrNull<TAttribute>(this object self)
+        public static TAttribute GetAttributeOrDefault<TAttribute>(this object self)
             where TAttribute : Attribute
         {
-            var memberInfo = self is Enum e
-                ? e.GetType().GetField(e.ToString())
-                : (MemberInfo)self.GetType();
-            return memberInfo.GetAttributeOrNull<TAttribute>();
+            MemberInfo info = self switch
+            {
+                Enum e => e.GetType().GetField(e.ToString()),
+                MemberInfo i => i,
+                _ => self.GetType()
+            };
+            return info.GetAttributeOrDefault<TAttribute>();
         }
     }
 }

@@ -22,39 +22,39 @@ namespace Pathfinding.App.Console.Model
             return vertex.Color.IsOneOf(PathVertexColor, AlreadyPathVertexColor, IntermediateVertexColor);
         }
 
-        public bool IsVisualizedAsEndPoint(Vertex vertex)
+        public bool IsVisualizedAsPathfindingRange(Vertex vertex)
         {
             return vertex.Color.IsOneOf(SourceVertexColor, TargetVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
         }
 
         public void VisualizeAsTarget(Vertex vertex)
         {
-            MarkClean(vertex, TargetVertexColor);
+            Mark(vertex, TargetVertexColor);
         }
 
         public void VisualizeAsObstacle(Vertex vertex)
         {
-            MarkClean(vertex, ObstacleVertexColor);
+            Mark(vertex, ObstacleVertexColor);
         }
 
         public void VisualizeAsSource(Vertex vertex)
         {
-            MarkClean(vertex, SourceVertexColor);
+            Mark(vertex, SourceVertexColor);
         }
 
         public void VisualizeAsIntermediate(Vertex vertex)
         {
-            MarkClean(vertex, IntermediateVertexColor);
+            Mark(vertex, IntermediateVertexColor);
         }
 
         public void VisualizeAsRegular(Vertex vertex)
         {
-            MarkClean(vertex, RegularVertexColor);
+            Mark(vertex, RegularVertexColor);
         }
 
         public void VisualizeAsPath(Vertex vertex)
         {
-            if (!vertex.IsVisualizedAsEndPoint())
+            if (!vertex.IsVisualizedAsPathfindingRange())
             {
                 if (vertex.IsVisualizedAsPath())
                 {
@@ -69,7 +69,7 @@ namespace Pathfinding.App.Console.Model
 
         public void VisualizeAsVisited(Vertex vertex)
         {
-            if (!vertex.IsVisualizedAsPath() && !vertex.IsVisualizedAsEndPoint())
+            if (!vertex.IsVisualizedAsPath() && !vertex.IsVisualizedAsPathfindingRange())
             {
                 Mark(vertex, VisitedVertexColor);
             }
@@ -77,7 +77,7 @@ namespace Pathfinding.App.Console.Model
 
         public void VisualizeAsEnqueued(Vertex vertex)
         {
-            if (!vertex.IsVisualizedAsPath() && !vertex.IsVisualizedAsEndPoint())
+            if (!vertex.IsVisualizedAsPath() && !vertex.IsVisualizedAsPathfindingRange())
             {
                 Mark(vertex, EnqueuedVertexColor);
             }
@@ -87,7 +87,7 @@ namespace Pathfinding.App.Console.Model
         {
             if (vertex.Color == IntermediateVertexColor)
             {
-                MarkClean(vertex, ToReplaceMarkColor);
+                Mark(vertex, ToReplaceMarkColor);
             }
         }
 
@@ -95,14 +95,6 @@ namespace Pathfinding.App.Console.Model
         {
             vertex.Color = color;
             vertex.Display();
-        }
-
-        private void MarkClean(Vertex vertex, Color color)
-        {
-            using (Cursor.UseCurrentPosition())
-            {
-                Mark(vertex, color);
-            }
         }
     }
 }

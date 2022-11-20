@@ -61,21 +61,30 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ChooseGraphAssemble, 1)]
         private void ChooseGraphAssemble()
         {
-            int graphAssembleIndex = IntInput.Input(GraphAssembleInpuMessage, graphAssembleKeyRange) - 1;
-            SelectedGraphAssemble = GraphAssembles[graphAssembleIndex];
+            using (Cursor.UsePositionAndClear())
+            {
+                int graphAssembleIndex = IntInput.Input(GraphAssembleInpuMessage, graphAssembleKeyRange) - 1;
+                SelectedGraphAssemble = GraphAssembles[graphAssembleIndex];
+            }
         }
 
         [MenuItem(MenuItemsNames.InputGraphParametres, 2)]
         public void InputGraphParametres()
         {
-            Width = IntInput.Input(MessagesTexts.GraphWidthInputMsg, Constants.GraphWidthValueRange);
-            Length = IntInput.Input(MessagesTexts.GraphHeightInputMsg, Constants.GraphLengthValueRange);
+            using (Cursor.UsePositionAndClear())
+            {
+                Width = IntInput.Input(MessagesTexts.GraphWidthInputMsg, Constants.GraphWidthValueRange);
+                Length = IntInput.Input(MessagesTexts.GraphHeightInputMsg, Constants.GraphLengthValueRange);
+            }
         }
 
         [MenuItem(MenuItemsNames.InputObstaclePercent, 3)]
         public void InputObstaclePercent()
         {
-            ObstaclePercent = IntInput.Input(MessagesTexts.ObstaclePercentInputMsg, Constants.ObstaclesPercentValueRange);
+            using (Cursor.UsePositionAndClear())
+            {
+                ObstaclePercent = IntInput.Input(MessagesTexts.ObstaclePercentInputMsg, Constants.ObstaclesPercentValueRange);
+            }
         }
 
         [FailMessage(MessagesTexts.AssebleIsNotChosenMsg)]

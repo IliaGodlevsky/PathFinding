@@ -30,7 +30,7 @@ namespace Pathfinding.App.WPF._2D.Model
             });
         }
 
-        public bool IsVisualizedAsEndPoint(Vertex vertex)
+        public bool IsVisualizedAsPathfindingRange(Vertex vertex)
         {
             return Dispatcher.Invoke(() =>
             {
@@ -78,7 +78,7 @@ namespace Pathfinding.App.WPF._2D.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (!vertex.IsVisualizedAsEndPoint())
+                if (!vertex.IsVisualizedAsPathfindingRange())
                 {
                     if (vertex.IsVisualizedAsPath())
                     {
@@ -96,7 +96,7 @@ namespace Pathfinding.App.WPF._2D.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (!vertex.IsVisualizedAsPath() && !vertex.IsVisualizedAsEndPoint())
+                if (!vertex.IsVisualizedAsPath() && !vertex.IsVisualizedAsPathfindingRange())
                 {
                     vertex.VertexColor = VisitedColor;
                 }
@@ -107,7 +107,7 @@ namespace Pathfinding.App.WPF._2D.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (!vertex.IsVisualizedAsPath() && !vertex.IsVisualizedAsEndPoint())
+                if (!vertex.IsVisualizedAsPath() && !vertex.IsVisualizedAsPathfindingRange())
                 {
                     vertex.VertexColor = EnqueuedVertexColor;
                 }

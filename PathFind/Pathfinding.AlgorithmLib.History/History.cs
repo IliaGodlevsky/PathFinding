@@ -4,12 +4,14 @@ using Pathfinding.GraphLib.Core.Interface;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.AlgorithmLib.History
 {
     public sealed class History<TVolume> 
         where TVolume : IHistoryVolume<ICoordinate>, new()
     {
+        private const int VolumesCount = 4;
         private const int RangeHistory = 0;
         private const int PathHistory = 1;
         private const int VisitedHistory = 2;
@@ -19,13 +21,7 @@ namespace Pathfinding.AlgorithmLib.History
 
         public History()
         {
-            volumes = new []
-            {
-                new TVolume(),
-                new TVolume(),
-                new TVolume(),
-                new TVolume()
-            };
+            volumes = VolumesCount.Times<TVolume>().ToArray();
         }
 
         public IEnumerable<ICoordinate> GetObstacles(Guid key)

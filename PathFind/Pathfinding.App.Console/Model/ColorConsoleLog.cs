@@ -55,9 +55,12 @@ namespace Pathfinding.App.Console.Model
 
         private void ShowMessage(string message, Color color)
         {
-            Screen.SetCursorPositionUnderMenu(1);
-            ColorfulConsole.Write(message, color);
-            ColorfulConsole.ReadKey();
+            //Screen.SetCursorPositionUnderMenu(1);            
+            using (Cursor.UsePositionAndClear())
+            {
+                ColorfulConsole.Write(message, color);
+                ColorfulConsole.ReadKey();
+            }
         }
     }
 }

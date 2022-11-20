@@ -7,7 +7,7 @@ using Shared.Extensions;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
-    public sealed class CostGreedyAlgorithm : GreedyAlgorithm
+    internal sealed class CostGreedyAlgorithm : GreedyAlgorithm
     {
         private readonly IStepRule stepRule;
 

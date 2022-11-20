@@ -6,7 +6,7 @@ namespace Pathfinding.App.Console.Model.Menu.Attributes
     internal sealed class FailMessageAttribute : Attribute
     {
         public static readonly FailMessageAttribute Default
-            = new FailMessageAttribute("Something went wrong");
+            = new FailMessageAttribute("You did something wrong");
 
         public string Message { get; }
 

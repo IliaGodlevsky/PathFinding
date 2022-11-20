@@ -39,7 +39,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         private IDisplayable MenuList => startedAlgorithms.Values.Append("Quit").CreateMenuList(columnsNumber: 1);
 
-        private string InputMessage => MenuList + "\n" + MessagesTexts.AlgorithmChoiceMsg;
+        private string InputMessage => string.Concat(MenuList, "\n", MessagesTexts.AlgorithmChoiceMsg);
 
         public PathfindingHistoryViewModel(ICache<Graph2D<Vertex>> graphCache, IMessenger messenger, ILog log) 
             : base(log)
@@ -48,46 +48,52 @@ namespace Pathfinding.App.Console.ViewModel
             this.graph = graphCache.Cached;
             this.startedAlgorithms = new Dictionary<Guid, string>();
             this.messenger = messenger;
+            this.messenger.Register<IHistoryMessage>(this, true, OnHistoryMessageRecieved);
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            ClearHistory();
+            messenger.Unregister(this);
         }
 
         private void OnHistoryMessageRecieved(IHistoryMessage message)
         {
-            switch (message)
+            if (IsHistoryApplied())
             {
-                case AlgorithmFinishedMessage msg:
-                    startedAlgorithms[message.Algorithm.Id] = msg.Statistics;
-                    break;
-                case PathfindingRangeChosenMessage msg:
-                    history.AddPathfindingRange(msg.Algorithm.Id, msg.Range);
-                    break;
-                case PathFoundMessage msg:
-                    history.AddPath(msg.Algorithm.Id, msg.Path);
-                    break;
-                case SubscribeOnHistoryMessage msg:
-                    startedAlgorithms[message.Algorithm.Id] = string.Empty;
-                    history.AddObstacles(msg.Algorithm.Id, graph.GetObstaclesCoordinates());
-                    msg.Algorithm.VertexVisited += OnVertexVisited;
-                    break;
+                switch (message)
+                {
+                    case AlgorithmFinishedMessage msg:
+                        startedAlgorithms[message.Algorithm.Id] = msg.Statistics;
+                        break;
+                    case PathfindingRangeChosenMessage msg:
+                        history.AddPathfindingRange(msg.Algorithm.Id, msg.Range);
+                        break;
+                    case PathFoundMessage msg:
+                        history.AddPath(msg.Algorithm.Id, msg.Path);
+                        break;
+                    case SubscribeOnHistoryMessage msg:
+                        startedAlgorithms[message.Algorithm.Id] = string.Empty;
+                        history.AddObstacles(msg.Algorithm.Id, graph.GetObstaclesCoordinates());
+                        msg.Algorithm.VertexVisited += OnVertexVisited;
+                        break;
+                }
             }
         }
 
         [MenuItem(MenuItemsNames.ApplyHistoryRecording, 0)]
         private void ApplyHistory()
         {
-            isHistoryApplied = AnswerInput.Input(MessagesTexts.ApplyHistoryMsg, Answer.Range);
-            if (isHistoryApplied)
+            using (Cursor.UsePositionAndClear())
             {
-                messenger.Register<IHistoryMessage>(this, true, OnHistoryMessageRecieved);
-            }
-            else
-            {
-                messenger.Unregister<IHistoryMessage>(this, OnHistoryMessageRecieved);
+                isHistoryApplied = AnswerInput.Input(MessagesTexts.ApplyHistoryMsg, Answer.Range);
             }
         }
 
-        [ExecuteSafe(nameof(ExecuteSafe))]
-        [Condition(nameof(IsHistoryApplied))]
+        [ExecuteSafe(nameof(ExecuteSafe))]        
         [Condition(nameof(CanShowHistory), 1)]
+        [Condition(nameof(IsHistoryApplied))]
         [MenuItem(MenuItemsNames.ShowHistory, 1)]
         private void ShowHistory()
         {
@@ -95,13 +101,16 @@ namespace Pathfinding.App.Console.ViewModel
             int index = GetAlgorithmIndex(inputMessage);
             while (index != QuitIndex)
             {
-                var id = startedAlgorithms.Keys.ElementAt(index);
-                using (Cursor.HideCursor())
+                var page = startedAlgorithms.ElementAt(index);
+                using (Cursor.UseCurrentPosition())
                 {
-                    graph.RestoreVerticesVisualState();
-                    history.VisualizeHistory(id, graph);
+                    using (Cursor.HideCursor())
+                    {
+                        graph.RestoreVerticesVisualState();
+                        history.VisualizeHistory(page.Key, graph);
+                        messenger.Send(new UpdatePathfindingStatisticsMessage(page.Value));
+                    }
                 }
-                Screen.SetCursorPositionUnderMenu(MenuOffset);
                 index = GetAlgorithmIndex(inputMessage);
             }
         }
@@ -123,7 +132,10 @@ namespace Pathfinding.App.Console.ViewModel
 
         private int GetAlgorithmIndex(string message)
         {
-            return IntInput.Input(message, startedAlgorithms.Count + 1, 1) - 1;
+            using (Cursor.UsePositionAndClear())
+            {
+                return IntInput.Input(message, startedAlgorithms.Count + 1, 1) - 1;
+            }
         }
 
         [FailMessage(MessagesTexts.NoAlgorithmsWereStartedMsg)]

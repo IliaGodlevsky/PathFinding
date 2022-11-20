@@ -94,7 +94,6 @@
     <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
     <Compile Include="Model\ColorConsoleLog.cs" />
-    <Compile Include="Model\ConsolePathfindingVisualization.cs" />
     <Compile Include="Model\ConsoleSmoothLevels.cs" />
     <Compile Include="Model\ConsoleVertexReverseModule.cs" />
     <Compile Include="Model\ConsolePathfindingRangeAdapter.cs" />
@@ -132,6 +131,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screen.cs" />
+    <Compile Include="ValueInput\Decorators\SelfClearInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedAnswerInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedIntInput.cs" />
@@ -210,6 +210,10 @@
       <Project>{16755D15-4338-4243-8EAA-95673423599F}</Project>
       <Name>Pathfinding.AlgorithmLib.Core.NullObjects</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Realizations.Heuristics\Pathfinding.AlgorithmLib.Core.Realizations.Heuristics.csproj">
+      <Project>{AC9456F4-D4A9-4025-9E8F-6BA056FBA37D}</Project>
+      <Name>Pathfinding.AlgorithmLib.Core.Realizations.Heuristics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Realizations.StepRules\Pathfinding.AlgorithmLib.Core.Realizations.StepRules.csproj">
       <Project>{F936E225-02CF-4CC7-81A1-18866724C693}</Project>
       <Name>Pathfinding.AlgorithmLib.Core.Realizations.StepRules</Name>
@@ -225,10 +229,6 @@
     <ProjectReference Include="..\Pathfinding.AlgorithmLib.History\Pathfinding.AlgorithmLib.History.csproj">
       <Project>{3CEBE00A-5EC9-4904-A20C-10817B0E5318}</Project>
       <Name>Pathfinding.AlgorithmLib.History</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Visualization\Pathfinding.AlgorithmLib.Visualization.csproj">
-      <Project>{6C5443F8-9BF4-4355-8F42-E65EE9562E3A}</Project>
-      <Name>Pathfinding.AlgorithmLib.Visualization</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Abstractions\Pathfinding.GraphLib.Core.Abstractions.csproj">
       <Project>{7112EB01-28F4-438D-945D-87CB69D14B99}</Project>

@@ -33,8 +33,7 @@ namespace Pathfinding.App.Console.Extensions
             var input = self.Input(msg);
             while (!range.Contains(input))
             {
-                ColorfulConsole.Write(MessagesTexts.OutOfRangeMsg);
-                input = self.Input(msg);
+                input = self.Input(MessagesTexts.OutOfRangeMsg);
             }
             return input;
         }

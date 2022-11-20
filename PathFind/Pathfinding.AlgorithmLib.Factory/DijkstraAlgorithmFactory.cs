@@ -1,4 +1,5 @@
-﻿using Pathfinding.AlgorithmLib.Core.Interface;
+﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
+using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.AlgorithmLib.Factory.Attrbiutes;
@@ -10,7 +11,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 {
     [Order(1)]
     [WaveGroup]
-    public sealed class DijkstraAlgorithmFactory : IAlgorithmFactory<DijkstraAlgorithm>
+    public sealed class DijkstraAlgorithmFactory : IAlgorithmFactory<PathfindingProcess>
     {
         private readonly IStepRule stepRule;
 
@@ -25,7 +26,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 
         }
 
-        public DijkstraAlgorithm Create(IPathfindingRange endPoints)
+        public PathfindingProcess Create(IPathfindingRange endPoints)
         {
             return new DijkstraAlgorithm(endPoints, stepRule);
         }

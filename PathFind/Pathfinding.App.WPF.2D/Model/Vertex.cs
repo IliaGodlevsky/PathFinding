@@ -39,7 +39,7 @@ namespace Pathfinding.App.WPF._2D.Model
 
         public bool IsVisualizedAsPath() => visualization.IsVisualizedAsPath(this);
 
-        public bool IsVisualizedAsEndPoint() => visualization.IsVisualizedAsEndPoint(this);
+        public bool IsVisualizedAsPathfindingRange() => visualization.IsVisualizedAsPathfindingRange(this);
 
         public bool IsObstacle
         {

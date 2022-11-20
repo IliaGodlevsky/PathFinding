@@ -5,7 +5,7 @@
     {
         bool IsVisualizedAsPath(T visualizable);
 
-        bool IsVisualizedAsEndPoint(T visualizable);
+        bool IsVisualizedAsPathfindingRange(T visualizable);
 
         void VisualizeAsTarget(T visualizable);
 

@@ -72,6 +72,12 @@ namespace Shared.Extensions
             return self.Juxtapose(second, (a, b) => a.Equals(b));
         }
 
+        public static IEnumerable<T> Times<T>(this int count)
+            where T : new()
+        {
+            while (count-- > 0) yield return new();
+        }
+
         public static ReadOnlyList<T> ToReadOnly<T>(this IEnumerable<T> collection)
         {
             switch (collection)

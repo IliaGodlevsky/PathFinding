@@ -19,17 +19,17 @@ namespace System.Runtime.CompilerServices
 
 namespace Pathfinding.AlgorithmLib.Core.Abstractions
 {
-    public abstract class PathfindingAlgorithm<TStorage> : PathfindingProcess
+    internal abstract class PathfindingAlgorithm<TStorage> : PathfindingProcess
         where TStorage : new()
     {
-        protected record Range(IVertex Source, IVertex Target);
+        protected record SubRange(IVertex Source, IVertex Target);
 
         protected readonly ICollection<IVertex> visited;
         protected readonly IDictionary<ICoordinate, IVertex> traces;
         protected readonly IPathfindingRange pathfindingRange;
         protected readonly TStorage storage;
 
-        protected Range CurrentRange { get; set; }
+        protected SubRange CurrentRange { get; set; }
 
         protected IVertex CurrentVertex { get; set; } = NullVertex.Instance;
 
@@ -49,9 +49,9 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             using (Disposable.Use(CompletePathfinding, DropState))
             {
                 var path = NullGraphPath.Interface;
-                foreach (var endPoint in GetSubRanges())
+                foreach (var subRange in GetSubRanges())
                 {
-                    PrepareForSubPathfinding(endPoint);
+                    PrepareForSubPathfinding(subRange);
                     while (!IsDestination)
                     {
                         ThrowIfInterrupted();
@@ -74,7 +74,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         protected abstract void VisitCurrentVertex();
 
-        protected virtual void PrepareForSubPathfinding(Range range)
+        protected virtual void PrepareForSubPathfinding(SubRange range)
         {
             CurrentRange = range;
             CurrentVertex = CurrentRange.Source;
@@ -103,7 +103,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
                 .ToReadOnly();
         }
 
-        private IEnumerable<Range> GetSubRanges()
+        private IEnumerable<SubRange> GetSubRanges()
         {
             using (var iterator = pathfindingRange.GetEnumerator())
             {

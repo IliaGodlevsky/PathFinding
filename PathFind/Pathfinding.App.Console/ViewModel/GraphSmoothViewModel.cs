@@ -40,7 +40,12 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.SmoothGraph, 0)]
         private void SmoothGraph()
         {
-            graph.Smooth(costFactory, meanAlgorithm, SmoothLevel.Level);
+            using (Cursor.UsePositionAndClear())
+            {
+                int index = IntInput.Input(ChooseSmoothLevelMsg, SmoothLevels.Count, 1) - 1;
+                var level = SmoothLevels[index];
+                graph.Smooth(costFactory, meanAlgorithm, level.Level);
+            }
         }
     }
 }

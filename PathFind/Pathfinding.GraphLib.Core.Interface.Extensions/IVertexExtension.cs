@@ -1,5 +1,4 @@
-﻿using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.NullObjects;
+﻿using Pathfinding.GraphLib.Core.NullObjects;
 using Shared.Collections;
 using System.Linq;
 

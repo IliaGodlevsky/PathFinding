@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="IEnumerableExtensions.cs" />
     <Compile Include="InclusiveValueRangeExtensions.cs" />
-    <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

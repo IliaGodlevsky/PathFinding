@@ -1,4 +1,5 @@
-﻿using Pathfinding.AlgorithmLib.Core.Interface;
+﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
+using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
@@ -11,7 +12,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 {
     [Order(3)]
     [WaveGroup]
-    public sealed class IDAStarAlgorithmFactory : IAlgorithmFactory<IDAStarAlgorithm>
+    public sealed class IDAStarAlgorithmFactory : IAlgorithmFactory<PathfindingProcess>
     {
         private readonly IStepRule stepRule;
         private readonly IHeuristic heuristic;
@@ -40,7 +41,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 
         }
 
-        public IDAStarAlgorithm Create(IPathfindingRange pathfindingRange)
+        public PathfindingProcess Create(IPathfindingRange pathfindingRange)
         {
             return new IDAStarAlgorithm(pathfindingRange, stepRule, heuristic);
         }

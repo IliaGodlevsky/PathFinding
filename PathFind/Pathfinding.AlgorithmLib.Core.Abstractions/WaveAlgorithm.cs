@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Core.Abstractions
 {
-    public abstract class WaveAlgorithm<TStorage> : PathfindingAlgorithm<TStorage>
+    internal abstract class WaveAlgorithm<TStorage> : PathfindingAlgorithm<TStorage>
         where TStorage : new()
     {
         protected WaveAlgorithm(IPathfindingRange endPoints)
@@ -15,7 +15,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         protected abstract void RelaxVertex(IVertex vertex);
 
-        protected override void PrepareForSubPathfinding(Range range)
+        protected override void PrepareForSubPathfinding(SubRange range)
         {
             base.PrepareForSubPathfinding(range);
             VisitCurrentVertex();

@@ -33,9 +33,10 @@ namespace Pathfinding.App.Console
         public const string VertexCostInputMsg = "Input vertex cost: ";
         public const string NumberOfIntermediateVerticesInputMsg = "Input number of intermediates vertices: ";
         public const string NumberOfIntermediatesVerticesToReplaceMsg = "Input number of intermediates to replace: ";
-        public const string OutOfRangeMsg = "Value is out of range. ";
-        public const string BadInputMsg = "Bad input. Try again: ";
+        public const string OutOfRangeMsg = "Value is out of range. Try again: ";
+        public const string BadInputMsg = "Bad value input. Try again: ";
         public const string InputPathMsg = "Input path: ";
+        public const string Quit = "Quit";
 
         public const string AssebleIsNotChosenMsg = "Choose assemble for graph";
         public const string GraphSizeIsNotSetMsg = "Set graph size";

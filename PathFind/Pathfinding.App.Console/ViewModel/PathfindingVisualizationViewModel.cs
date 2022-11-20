@@ -51,14 +51,20 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ApplyVisualization, 0)]
         private void ApplyVisualization()
         {
-            isVisualizationApplied = AnswerInput.Input(MessagesTexts.ApplyVisualizationMsg, Answer.Range);
+            using (Cursor.UsePositionAndClear())
+            {
+                isVisualizationApplied = AnswerInput.Input(MessagesTexts.ApplyVisualizationMsg, Answer.Range);
+            }
         }
 
         [Condition(nameof(IsVisualizationApplied))]
         [MenuItem(MenuItemsNames.InputDelayTime, 1)]
         private void SetAnimationDelay()
         {
-            AnimationDelay = TimeSpanInput.Input(MessagesTexts.DelayTimeInputMsg, DelayRange);
+            using (Cursor.UsePositionAndClear())
+            {
+                AnimationDelay = TimeSpanInput.Input(MessagesTexts.DelayTimeInputMsg, DelayRange);
+            }
         }
 
         public override void Dispose()

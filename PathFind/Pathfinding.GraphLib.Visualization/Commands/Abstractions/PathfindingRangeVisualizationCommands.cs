@@ -5,6 +5,7 @@ using Shared.Collections;
 using Shared.Executable;
 using Shared.Executable.Extensions;
 using Shared.Extensions;
+using Shared.Primitives.Attributes;
 using Shared.Primitives.Extensions;
 using System.Collections.Generic;
 
@@ -20,7 +21,9 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Abstractions
         protected PathfindingRangeVisualizationCommands(PathfindingRangeAdapter<TVertex> adapter)
         {
             this.adapter = adapter;
-            ExecuteCommands = GetCommands().OrderByOrderAttribute().ToReadOnly();
+            ExecuteCommands = GetCommands()
+                .OrderByOrderAttribute<IVisualizationCommand<TVertex>, OrderAttribute>()
+                .ToReadOnly();
         }
 
         public void Execute(TVertex vertex)

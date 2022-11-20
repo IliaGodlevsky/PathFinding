@@ -262,10 +262,6 @@
       <Project>{3CEBE00A-5EC9-4904-A20C-10817B0E5318}</Project>
       <Name>Pathfinding.AlgorithmLib.History</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Visualization\Pathfinding.AlgorithmLib.Visualization.csproj">
-      <Project>{6C5443F8-9BF4-4355-8F42-E65EE9562E3A}</Project>
-      <Name>Pathfinding.AlgorithmLib.Visualization</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Abstractions\Pathfinding.GraphLib.Core.Abstractions.csproj">
       <Project>{7112EB01-28F4-438D-945D-87CB69D14B99}</Project>
       <Name>Pathfinding.GraphLib.Core.Abstractions</Name>

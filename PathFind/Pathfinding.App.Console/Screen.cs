@@ -49,7 +49,7 @@ namespace Pathfinding.App.Console
             GraphFieldPosition = new Coordinate2D(x, y);            
         }
 
-        public static void SetCursorPositionUnderMenu(int menuOffset)
+        public static void SetCursorPositionUnderMenu(int menuOffset = 0)
         {
             ColorfulConsole.SetCursorPosition(StatisticsPosition.X, StatisticsPosition.Y + menuOffset);
         }

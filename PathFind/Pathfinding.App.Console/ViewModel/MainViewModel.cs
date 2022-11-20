@@ -51,13 +51,13 @@ namespace Pathfinding.App.Console.ViewModel
         }
 
         [ExecuteSafe(nameof(ExecuteSafe))]
-        [MenuItem(MenuItemsNames.CreateNewGraph, 0)]
-        private void CreateNewGraph() => DI.Container.Display<GraphCreateView>();
-
-        [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.FindPath, 1)]
         private void FindPath() => DI.Container.Display<PathfindingView>();
+
+        [ExecuteSafe(nameof(ExecuteSafe))]
+        [MenuItem(MenuItemsNames.CreateNewGraph, 0)]
+        private void CreateNewGraph() => DI.Container.Display<GraphCreateView>();
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(IsGraphValid))]
@@ -82,15 +82,21 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ChangeCostRange, 6)]
         private void ChangeVertexCostValueRange()
         {
-            VertexCost.CostRange = IntInput.InputRange(Constants.VerticesCostRange);
-            messenger.Send(new CostRangeChangedMessage(VertexCost.CostRange));
+            using (Cursor.UsePositionAndClear())
+            {
+                VertexCost.CostRange = IntInput.InputRange(Constants.VerticesCostRange);
+                messenger.Send(new CostRangeChangedMessage(VertexCost.CostRange));
+            }
         }
 
         protected override void RaiseViewClosed()
         {
-            if (AnswerInput.Input(MessagesTexts.ExitAppMsg, Answer.Range))
+            using (Cursor.UsePositionAndClear())
             {
-                base.RaiseViewClosed();
+                if (AnswerInput.Input(MessagesTexts.ExitAppMsg, Answer.Range))
+                {
+                    base.RaiseViewClosed();
+                }
             }
         }
 
@@ -110,7 +116,6 @@ namespace Pathfinding.App.Console.ViewModel
                 ColorfulConsole.WriteLine(GraphParamters);
                 GraphField.Display();
                 ColorfulConsole.WriteLine();
-                Screen.SetCursorPositionUnderMenu(1);
             }
             catch (ArgumentOutOfRangeException ex)
             {

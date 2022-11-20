@@ -29,9 +29,12 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.LoadGraph, 0)]
         private void LoadGraph()
         {
-            var graph = module.LoadGraph();
-            messenger.Send(new GraphCreatedMessage(graph));
-            messenger.Send(new CostRangeChangedMessage(VertexCost.CostRange));
+            using (Cursor.UsePositionAndClear())
+            {
+                var graph = module.LoadGraph();
+                messenger.Send(new GraphCreatedMessage(graph));
+                messenger.Send(new CostRangeChangedMessage(VertexCost.CostRange));
+            }
         }
 
         public override void Dispose()

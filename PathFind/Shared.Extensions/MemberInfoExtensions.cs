@@ -5,10 +5,21 @@ namespace Shared.Extensions
 {
     public static class MemberInfoExtensions
     {
-        public static TAttribute GetAttributeOrNull<TAttribute>(this MemberInfo self, bool inherit = false)
+        public static TAttribute GetAttributeOrDefault<TAttribute>(this MemberInfo self, 
+            bool inherit = false, string defaultFieldName = "Default")
             where TAttribute : Attribute
         {
-            return Attribute.GetCustomAttribute(self, typeof(TAttribute), inherit) as TAttribute;
+            var attributeType = typeof(TAttribute);
+            if (Attribute.IsDefined(self, attributeType))
+            {
+                return (TAttribute)Attribute.GetCustomAttribute(self, attributeType, inherit);
+            }
+            var flags = BindingFlags.Static | BindingFlags.Public 
+                | BindingFlags.FlattenHierarchy | BindingFlags.Instance;
+            var property = attributeType.GetField(defaultFieldName, flags);
+            return property == null 
+                ? default(TAttribute) 
+                : (TAttribute)property.GetValue(null);
         }
 
         public static bool TryCreateDelegate<TDelegate>(this MethodInfo self, object target,

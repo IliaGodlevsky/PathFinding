@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
-    public class DijkstraAlgorithm : WaveAlgorithm<SimplePriorityQueue<IVertex, double>>
+    internal class DijkstraAlgorithm : WaveAlgorithm<SimplePriorityQueue<IVertex, double>>
     {
         protected readonly IStepRule stepRule;
 
@@ -42,7 +42,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
             return storage.TryFirstOrDeadEndVertex();
         }
 
-        protected override void PrepareForSubPathfinding(Range range)
+        protected override void PrepareForSubPathfinding(SubRange range)
         {
             base.PrepareForSubPathfinding(range);
             storage.EnqueueOrUpdatePriority(CurrentRange.Source, default);
