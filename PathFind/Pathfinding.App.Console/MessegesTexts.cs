@@ -19,7 +19,7 @@ namespace Pathfinding.App.Console
         public const string PlaceToPutIntermediateMsg = "Choose place where to put intermediate: ";
         public const string AlgorithmChoiceMsg = "Choose algorithm: ";
         public const string GraphAssembleChoiceMsg = "Choose graph assemble: ";
-        public const string DelayTimeInputMsg = "Input delay time: ";
+        public const string DelayTimeInputMsg = "Input animation speed delay time (milliseconds): ";
         public const string GraphHeightInputMsg = "Input height of graph: ";
         public const string GraphWidthInputMsg = "Input width of graph: ";
         public const string RangeLowerValueInputMsg = "Input lower value of range: ";

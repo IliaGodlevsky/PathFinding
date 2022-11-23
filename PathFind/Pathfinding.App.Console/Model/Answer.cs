@@ -65,7 +65,8 @@ namespace Pathfinding.App.Console.Model
                 result = value;
                 return !result.Equals(Default);
             }
-            result = input.Equals(Yes, IgnoreCase) ? Yes : input == No ? No : Default;
+            result = input.Equals(Yes, IgnoreCase) 
+                ? Yes : input.Equals(No, IgnoreCase) ? No : Default;
             return !result.Equals(Default);
         }
 

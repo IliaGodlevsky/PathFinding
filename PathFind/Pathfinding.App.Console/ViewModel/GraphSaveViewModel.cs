@@ -32,10 +32,5 @@ namespace Pathfinding.App.Console.ViewModel
                 module.SaveGraph(Graph);
             }
         }
-
-        private bool IsGraphValid()
-        {
-            return Graph != Graph2D<Vertex>.Empty;
-        }
     }
 }

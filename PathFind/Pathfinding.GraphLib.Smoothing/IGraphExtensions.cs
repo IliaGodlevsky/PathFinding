@@ -18,7 +18,7 @@ namespace Pathfinding.GraphLib.Smoothing
             var visited = new HashSet<IVertex>(new VertexEqualityComparer());
             while (smoothLevel-- > 0)
             {
-                self.ForEach(vertex =>
+                foreach (var vertex in self)
                 {
                     visited.Add(vertex);
                     if (vertex.Neighbours.Any(v => !visited.Contains(v)))
@@ -28,7 +28,7 @@ namespace Pathfinding.GraphLib.Smoothing
                             .Average(neighbour => meanCost.Calculate(neighbour, vertex));
                         vertex.Cost = costFactory.CreateCost((int)Math.Round(avgCost, 0));
                     }
-                });
+                }
                 visited.Clear();
             }
         }

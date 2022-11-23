@@ -74,8 +74,6 @@ namespace Pathfinding.App.Console.ViewModel
                         history.AddPath(msg.Algorithm.Id, msg.Path);
                         break;
                     case SubscribeOnHistoryMessage msg:
-                        startedAlgorithms[message.Algorithm.Id] = string.Empty;
-                        history.AddObstacles(msg.Algorithm.Id, graph.GetObstaclesCoordinates());
                         msg.Algorithm.VertexVisited += OnVertexVisited;
                         break;
                 }

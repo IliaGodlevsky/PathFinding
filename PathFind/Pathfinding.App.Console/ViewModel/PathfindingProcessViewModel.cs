@@ -123,7 +123,7 @@ namespace Pathfinding.App.Console.ViewModel
                         {
                             PrepareForPathfinding(algorithm);
                             path = algorithm.FindPath();
-                            graph.GetVertices(path).Reverse().VisualizeAsPath();
+                            graph.GetVertices(path).VisualizeAsPath();
                         }
                     }
                     catch (PathfindingException ex)
@@ -183,7 +183,7 @@ namespace Pathfinding.App.Console.ViewModel
             algorithm.Paused += (s, e) => timer.Stop();
             algorithm.Resumed += (s, e) => timer.Start();
             algorithm.Started += keystrokesHook.StartAsync;
-            algorithm.Finished += (s, e) => keystrokesHook.Interrupt();           
+            algorithm.Finished += (s, e) => keystrokesHook.Interrupt();
         }
     }
 }

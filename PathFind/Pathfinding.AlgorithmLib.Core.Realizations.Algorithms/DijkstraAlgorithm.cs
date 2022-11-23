@@ -26,9 +26,10 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
             this.stepRule = stepRule;
         }
 
-        protected override IGraphPath CreateGraphPath()
+        protected override IGraphPath GetSubPath()
         {
-            return new GraphPath(traces.ToReadOnly(), CurrentRange.Target, stepRule);
+            var traces = new Dictionary<ICoordinate, IVertex>(this.traces);
+            return new GraphPath(traces, CurrentRange.Target, stepRule);
         }
 
         protected override void DropState()

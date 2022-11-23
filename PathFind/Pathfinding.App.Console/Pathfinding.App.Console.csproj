@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Attributes\InstancePerLifetimeScopeAttribute.cs" />
     <Compile Include="Extensions\AdapterExtensions.cs" />
+    <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ConvertedProperties\ConvertedProperty.cs" />
@@ -54,9 +55,7 @@
     <Compile Include="Cursor.cs" />
     <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="EventArguments\ConsoleKeyPressedEventArgs.cs" />
-    <Compile Include="EventArguments\VertexEventArgs.cs" />
     <Compile Include="EventHandlers\ConsoleKeyPressedEventHandler.cs" />
-    <Compile Include="EventHandlers\VertexEventHandler.cs" />
     <Compile Include="Extensions\ConsoleKeystrokesHookExtensions.cs" />
     <Compile Include="Extensions\ILifetimeScopeExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
@@ -78,7 +77,6 @@
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="MenuItemsNames.cs" />
     <Compile Include="Messages\AlgorithmFinishedMessage.cs" />
-    <Compile Include="Messages\ClearPathfindingVisualizationColorsMessage.cs" />
     <Compile Include="Messages\ClearGraphMessage.cs" />
     <Compile Include="Messages\CostRangeChangedMessage.cs" />
     <Compile Include="Messages\GraphCreatedMessage.cs" />
@@ -89,7 +87,7 @@
     <Compile Include="Messages\SubscribeOnHistoryMessage.cs" />
     <Compile Include="Messages\SubscribeOnVisualizationMessage.cs" />
     <Compile Include="Messages\UpdateStatisticsMessage.cs" />
-    <Compile Include="Messages\VerticesConsolePositionsRecalculatedMessage.cs" />
+    <Compile Include="MessageTokens.cs" />
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
@@ -139,6 +137,7 @@
     <Compile Include="ValueInput\ProgrammedInput\FromFile\FromFileProgrammedAnswerInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\FromFile\FromFileProgrammedInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\FromFile\FromFileProgrammedIntInput.cs" />
+    <Compile Include="ValueInput\ProgrammedInput\FromFile\FromFileProgrammedStringInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ProgrammedInput.cs" />
     <Compile Include="ValueInput\RandomInput\RandomAnswerInput.cs" />
     <Compile Include="ValueInput\RandomInput\RandomInput.cs" />

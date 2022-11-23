@@ -25,7 +25,7 @@ namespace Pathfinding.App.Console.ValueInput.RecordingInput
         {
             using (var stream = new StreamWriter(path, append: true))
             {
-                stream.WriteLine("Record: {0}", value);
+                stream.WriteLine("Record:{0}", value);
             }
         }
     }

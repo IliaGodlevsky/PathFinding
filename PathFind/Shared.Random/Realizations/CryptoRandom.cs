@@ -1,13 +1,12 @@
-﻿using Shared.Random;
-using System;
+﻿using System;
 using System.Security.Cryptography;
 
 namespace Shared.Random.Realizations
 {
     public sealed class CryptoRandom : IRandom, IDisposable
     {
-        private const int IntSize = sizeof(int);
-        private const int MaxBufferSize = IntSize << 4;
+        private const int PositionIncrement = 4;
+        private const int MaxBufferSize = 512;
 
         private readonly byte[] buffer;
         private readonly RandomNumberGenerator generator;
@@ -25,7 +24,7 @@ namespace Shared.Random.Realizations
         public uint NextUint()
         {
             uint number = BitConverter.ToUInt32(buffer, currentBufferPosition);
-            currentBufferPosition += IntSize;
+            currentBufferPosition += PositionIncrement;
             if (currentBufferPosition >= MaxBufferSize)
             {
                 currentBufferPosition = 0;

@@ -42,6 +42,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
+using Pathfinding.App.Console.ValueInput.RecordingInput;
+using Pathfinding.App.Console.ValueInput.ProgrammedInput.FromFile;
+using Pathfinding.App.Console.ValueInput.RandomInput;
 
 namespace Pathfinding.App.Console.DependencyInjection
 {
@@ -63,11 +66,11 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<RandomKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
             builder.RegisterType<RandomTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
 #elif DEBUG
-            builder.RegisterType<ConsoleUserAnswerInput>().As<IInput<Answer>>().SingleInstance();
-            builder.RegisterType<ConsoleUserIntInput>().As<IInput<int>>().SingleInstance();
-            builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance();
-            builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
-            builder.RegisterType<ConsoleUserTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
+            builder.RegisterType<FromFileProgrammedAnswerInput>().As<IInput<Answer>>().SingleInstance();
+            builder.RegisterType<FromFileProgrammedIntInput>().As<IInput<int>>().SingleInstance();
+            builder.RegisterType<FromFileProgrammedStringInput>().As<IInput<string>>().SingleInstance();
+            builder.RegisterType<RandomKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
+            builder.RegisterType<RandomTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
 #endif
             builder.RegisterType<ConsoleKeystrokesHook>().AsSelf().SingleInstance().PropertiesAutowired();
 

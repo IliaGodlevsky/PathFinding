@@ -3,6 +3,7 @@ using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.NullObjects;
 using Shared.Extensions;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,15 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths
         private readonly Traces traces;
         private readonly IVertex target;
         private readonly IStepRule stepRule;
+        private readonly Lazy<IReadOnlyList<IVertex>> path;
+        private readonly Lazy<double> cost;
+        private readonly Lazy<int> count;
 
-        private IReadOnlyList<IVertex> Path { get; }
+        private IReadOnlyList<IVertex> Path => path.Value;
 
-        public double Cost { get; }
+        public double Cost => cost.Value;
 
-        public int Count => Path.Count == 0 ? 0 : Path.Count - 1;
+        public int Count => count.Value;
 
         public GraphPath(Traces traces, IVertex target)
             : this(traces, target, new DefaultStepRule())
@@ -34,8 +38,9 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths
             this.traces = traces;
             this.target = target;
             this.stepRule = stepRule;
-            Path = GetPath();
-            Cost = GetPathCost();
+            path = new Lazy<IReadOnlyList<IVertex>>(GetPath);
+            cost = new Lazy<double>(GetPathCost);
+            count = new Lazy<int>(GetCount);
         }
 
         private IReadOnlyList<IVertex> GetPath()
@@ -56,11 +61,16 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths
         private double GetPathCost()
         {
             double totalCost = 0;
-            for (int i = 0; i < Path.Count - 1; i++)
+            for (int i = 0; i < Count; i++)
             {
                 totalCost += stepRule.CalculateStepCost(Path[i], Path[i + 1]);
             }
             return totalCost;
+        }
+
+        private int GetCount()
+        {
+            return Path.Count == 0 ? 0 : Path.Count - 1;
         }
 
         private IVertex GetParentOrNullVertex(IVertex vertex)

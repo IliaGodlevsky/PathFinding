@@ -1,9 +1,9 @@
-﻿using Pathfinding.AlgorithmLib.Core.Interface.Extensions;
-using Pathfinding.AlgorithmLib.History;
+﻿using Pathfinding.AlgorithmLib.History;
 using Pathfinding.AlgorithmLib.History.Interface;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.VisualizationLib.Core.Interface;
 using System;
+using System.Linq;
 
 namespace Pathfinding.Visualization.Extensions
 {
@@ -13,10 +13,10 @@ namespace Pathfinding.Visualization.Extensions
             where TVertex : IVertex, IVisualizable
             where TVolume : IHistoryVolume<ICoordinate>, new()
         {
-            graph.GetVertices(history.GetObstacles(key)).VisualizeAsObstacles();
-            graph.GetVertices(history.GetVisitedVertices(key)).VisualizeAsVisited();
-            graph.GetVertices(history.GetPathfindingRange(key)).VisualizeAsRange();
-            graph.GetVertices(history.GetPath(key)).VisualizeAsPath();
+            history.GetObstacles(key).Select(graph.Get).VisualizeAsObstacles();
+            history.GetVisitedVertices(key).Select(graph.Get).VisualizeAsVisited();
+            history.GetPathfindingRange(key).Select(graph.Get).VisualizeAsRange();
+            history.GetPath(key).Select(graph.Get).VisualizeAsPath();
         }
     }
 }

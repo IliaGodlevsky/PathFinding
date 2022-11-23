@@ -1,4 +1,5 @@
-﻿using Shared.Extensions;
+﻿using Shared.Collections;
+using Shared.Extensions;
 using Shared.Primitives.ValueRange;
 using Shared.Random;
 using Shared.Random.Extensions;
@@ -11,13 +12,13 @@ namespace Pathfinding.App.Console.ValueInput.RandomInput
 {
     internal sealed class RandomKeyInput : RandomInput<ConsoleKey, int>
     {
-        private IReadOnlyList<ConsoleKey> Keys { get; }
+        private ReadOnlyList<ConsoleKey> Keys { get; }
 
         protected override InclusiveValueRange<int> Range { get; }
 
         public RandomKeyInput(IRandom random) : base(random)
         {
-            Keys = new[] { Enter, UpArrow, DownArrow };
+            Keys = new ReadOnlyList<ConsoleKey>(Enter, UpArrow, DownArrow);
             Range = new InclusiveValueRange<int>(Keys.Count - 1);
         }
 

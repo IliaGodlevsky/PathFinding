@@ -8,10 +8,12 @@ using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Shared.Collections;
 using Shared.Extensions;
 using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
+using System.Linq;
 
 namespace Pathfinding.App.Console.ViewModel
 {

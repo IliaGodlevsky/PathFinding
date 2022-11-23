@@ -1,6 +1,4 @@
-﻿using Autofac;
-using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.App.Console.DependencyInjection;
+﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
@@ -20,6 +18,8 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.ViewModel
 {
+    using GraphAssemble = IGraphAssemble<Graph2D<Vertex>, Vertex>;
+
     [MenuColumnsNumber(2)]
     internal sealed class GraphCreatingViewModel : SafeViewModel, IRequireIntInput, IDisposable
     {
@@ -32,20 +32,21 @@ namespace Pathfinding.App.Console.ViewModel
 
         private int ObstaclePercent { get; set; }
 
-        public ReadOnlyList<IGraphAssemble<Graph2D<Vertex>, Vertex>> GraphAssembles { get; }
+        public ReadOnlyList<GraphAssemble> GraphAssembles { get; }
+
+        private GraphAssemble SelectedGraphAssemble { get; set; }
 
         public string GraphAssembleInpuMessage { private get; set; }
 
-        public IInput<int> IntInput { get; set; }
+        public IInput<int> IntInput { get; set; }        
 
-        private IGraphAssemble<Graph2D<Vertex>, Vertex> SelectedGraphAssemble { get; set; }
-
-        public GraphCreatingViewModel(IEnumerable<IGraphAssemble<Graph2D<Vertex>, Vertex>> graphAssembles, ILog log)
+        public GraphCreatingViewModel(IEnumerable<GraphAssemble> graphAssembles,
+            IMessenger messenger, ILog log)
             : base(log)
         {
             GraphAssembles = graphAssembles.ToReadOnly();
             graphAssembleKeyRange = new InclusiveValueRange<int>(graphAssembles.Count(), 1);
-            messenger = DI.Container.Resolve<IMessenger>();
+            this.messenger = messenger;
         }
 
         [ExecuteSafe(nameof(ExecuteSafe))]
@@ -55,7 +56,8 @@ namespace Pathfinding.App.Console.ViewModel
         private void CreateGraph()
         {
             var graph = SelectedGraphAssemble.AssembleGraph(ObstaclePercent, Width, Length);
-            messenger.Send(new GraphCreatedMessage(graph));
+            messenger.Send(new GraphCreatedMessage(graph), MessageTokens.Screen);
+            messenger.Send(new GraphCreatedMessage(graph), MessageTokens.MainViewModel);
         }
 
         [MenuItem(MenuItemsNames.ChooseGraphAssemble, 1)]
@@ -63,8 +65,8 @@ namespace Pathfinding.App.Console.ViewModel
         {
             using (Cursor.ClearInputToCurrentPosition())
             {
-                int graphAssembleIndex = IntInput.Input(GraphAssembleInpuMessage, graphAssembleKeyRange) - 1;
-                SelectedGraphAssemble = GraphAssembles[graphAssembleIndex];
+                int index = IntInput.Input(GraphAssembleInpuMessage, graphAssembleKeyRange) - 1;
+                SelectedGraphAssemble = GraphAssembles[index];
             }
         }
 

@@ -47,8 +47,7 @@ namespace Pathfinding.App.Console.Views
             {
                 Screen.SetCursorPositionUnderMenu(1);
                 try
-                {
-                    
+                {                   
                     NewMenuCycleStarted?.Invoke();
                     IMenuCommand command;
                     using (Cursor.ClearInputToCurrentPosition())

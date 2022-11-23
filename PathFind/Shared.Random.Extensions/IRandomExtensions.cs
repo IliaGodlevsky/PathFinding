@@ -24,7 +24,7 @@ namespace Shared.Random.Extensions
 
         public static double NextDouble(this IRandom random, InclusiveValueRange<double> range)
         {
-            return range.Amplitude() * ((double)random.NextInt() / int.MaxValue) + range.LowerValueOfRange;
+            return range.Amplitude() * ((double)random.NextUint() / uint.MaxValue) + range.LowerValueOfRange;
         }
 
         public static TimeSpan NextTimeSpan(this IRandom random, InclusiveValueRange<TimeSpan> range)

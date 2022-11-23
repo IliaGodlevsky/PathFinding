@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.DependencyInjection;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations;
@@ -19,7 +20,7 @@ namespace Pathfinding.App.Console
         public const int HeightOfGraphParametresView = 1;
 
         public static readonly int WidthOfOrdinateView 
-            = (Constants.GraphLengthValueRange.UpperValueOfRange - 1).ToString().Length + 1;
+            = (Constants.GraphLengthValueRange.UpperValueOfRange - 1).GetDigitsNumber() + 1;
         public static readonly int YCoordinatePadding = WidthOfOrdinateView - 1;
 
         private static readonly object recipient = new object();
@@ -34,15 +35,14 @@ namespace Pathfinding.App.Console
 
         public static Coordinate2D GraphFieldPosition { get; }
 
-        public static Coordinate2D StatisticsPosition { get; private set; }
+        public static Coordinate2D StatisticsPosition { get; private set; } = Coordinate2D.Empty;
 
         static Screen()
         {
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<CostRangeChangedMessage>(recipient, OnCostRangeChanged);
             messenger.Register<UpdatePathfindingStatisticsMessage>(recipient, OnStatisticsUpdated);
-            messenger.Register<GraphCreatedMessage>(recipient, OnNewGraphCreated);
-            StatisticsPosition = Coordinate2D.Empty;
+            messenger.Register<GraphCreatedMessage>(recipient, MessageTokens.Screen, OnNewGraphCreated);
             OnCostRangeChanged(new CostRangeChangedMessage(VertexCost.CostRange));
             int x = WidthOfOrdinateView;
             int y = HeightOfAbscissaView + HeightOfGraphParametresView;
@@ -77,7 +77,6 @@ namespace Pathfinding.App.Console
         {
             LateralDistanceBetweenVertices = CalculateLateralDistanceBetweenVertices();
             Graph.ForEach(RecalculateConsolePosition);
-            messenger.Send(new VerticesConsolePositionsRecalculatedMessage());
         }
 
         private static void OnStatisticsUpdated(UpdatePathfindingStatisticsMessage message)
@@ -96,10 +95,10 @@ namespace Pathfinding.App.Console
 
         private static int CalculateLateralDistanceBetweenVertices()
         {
-            int currentCostWidth = CurrentMaxValueOfRange.ToString().Length;
-            int previousCostWidth = PreviousMaxValueOfRange.ToString().Length;
+            int currentCostWidth = CurrentMaxValueOfRange.GetDigitsNumber();
+            int previousCostWidth = PreviousMaxValueOfRange.GetDigitsNumber();
             int costWidth = Math.Max(currentCostWidth, previousCostWidth);
-            int width = (Constants.GraphWidthValueRange.UpperValueOfRange - 1).ToString().Length;
+            int width = (Constants.GraphWidthValueRange.UpperValueOfRange - 1).GetDigitsNumber();
             return costWidth >= width ? costWidth + 2 : width + width - costWidth;
         }
     }

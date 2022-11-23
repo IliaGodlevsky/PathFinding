@@ -43,9 +43,8 @@ namespace Pathfinding.App.Console.ViewModel
         {
             Cached = Graph2D<Vertex>.Empty;
             this.messenger = messenger;
-            messenger.Register<GraphCreatedMessage>(this, SetGraph);
+            messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainViewModel, SetGraph);
             messenger.Register<ClearGraphMessage>(this, ClearGraph);
-            messenger.Register<VerticesConsolePositionsRecalculatedMessage>(this, OnPositionsRecalculated);
             this.fieldFactory = fieldFactory;
             this.adapter = adapter;
         }
@@ -115,7 +114,6 @@ namespace Pathfinding.App.Console.ViewModel
                 ColorfulConsole.ForegroundColor = Color.White;
                 ColorfulConsole.WriteLine(GraphParamters);
                 GraphField.Display();
-                ColorfulConsole.WriteLine();
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -133,14 +131,7 @@ namespace Pathfinding.App.Console.ViewModel
             Cached = message.Graph;
             GraphField = fieldFactory.CreateGraphField(Cached);
             GraphParamters = GraphParamsProperty.Assign(Cached);
-        }
-
-        private void OnPositionsRecalculated(VerticesConsolePositionsRecalculatedMessage message)
-        {
-            using (Cursor.RestoreCurrentPosition())
-            {
-                DisplayGraph();
-            }
+            DisplayGraph();
         }
 
         [FailMessage(MessagesTexts.GraphIsNotCreatedMsg)]

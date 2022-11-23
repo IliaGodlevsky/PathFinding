@@ -23,7 +23,7 @@ namespace Pathfinding.App.Console.ValueInput.ProgrammedInput.FromFile
                 while (!stream.EndOfStream)
                 {
                     string line = stream.ReadLine();
-                    var splited = line.Split(':');
+                    var splited = line.Split(' ', ':');
                     string value = splited.LastOrDefault();
                     if (!Parse(value, out var output))
                     {

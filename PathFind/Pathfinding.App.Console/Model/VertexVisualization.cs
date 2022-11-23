@@ -5,18 +5,18 @@ using System.Drawing;
 namespace Pathfinding.App.Console.Model
 {
     internal sealed class VertexVisualization : IVisualization<Vertex>
-    {
-        private static readonly Color RegularVertexColor = Color.FromKnownColor(KnownColor.WhiteSmoke);
-        private static readonly Color ObstacleVertexColor = Color.FromKnownColor(KnownColor.Black);
-        private static readonly Color PathVertexColor = Color.FromKnownColor(KnownColor.Yellow);
-        private static readonly Color EnqueuedVertexColor = Color.FromKnownColor(KnownColor.Magenta);
-        private static readonly Color SourceVertexColor = Color.FromKnownColor(KnownColor.Green);
-        private static readonly Color TargetVertexColor = Color.FromKnownColor(KnownColor.Red);
-        private static readonly Color AlreadyPathVertexColor = Color.FromKnownColor(KnownColor.Orange);
-        private static readonly Color VisitedVertexColor = Color.FromKnownColor(KnownColor.Blue);
-        private static readonly Color IntermediateVertexColor = Color.FromKnownColor(KnownColor.DarkOrange);
-        private static readonly Color ToReplaceMarkColor = Color.FromKnownColor(KnownColor.DarkRed);
-
+    {   
+        private static readonly Color RegularVertexColor = Color.White;
+        private static readonly Color ObstacleVertexColor = Color.Black;
+        private static readonly Color PathVertexColor = Color.Yellow;
+        private static readonly Color EnqueuedVertexColor = Color.Magenta;
+        private static readonly Color SourceVertexColor = Color.Green;
+        private static readonly Color TargetVertexColor = Color.Red;
+        private static readonly Color AlreadyPathVertexColor = Color.Orange;
+        private static readonly Color VisitedVertexColor = Color.Blue;
+        private static readonly Color IntermediateVertexColor = Color.DarkOrange;
+        private static readonly Color ToReplaceMarkColor = Color.DarkRed;
+        
         public bool IsVisualizedAsPath(Vertex vertex)
         {
             return vertex.Color.IsOneOf(PathVertexColor, AlreadyPathVertexColor, IntermediateVertexColor);

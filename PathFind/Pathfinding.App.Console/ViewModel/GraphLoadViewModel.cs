@@ -1,6 +1,4 @@
-﻿using Autofac;
-using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.App.Console.DependencyInjection;
+﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
@@ -18,10 +16,11 @@ namespace Pathfinding.App.Console.ViewModel
         private readonly IMessenger messenger;
         private readonly IGraphSerializationModule<Graph2D<Vertex>, Vertex> module;
 
-        public GraphLoadViewModel(IGraphSerializationModule<Graph2D<Vertex>, Vertex> module, ILog log)
+        public GraphLoadViewModel(IGraphSerializationModule<Graph2D<Vertex>, Vertex> module, 
+            IMessenger messenger, ILog log)
             : base(log)
         {
-            messenger = DI.Container.Resolve<IMessenger>();
+            this.messenger = messenger;
             this.module = module;
         }
 
@@ -29,18 +28,19 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.LoadGraph, 0)]
         private void LoadGraph()
         {
+            Graph2D<Vertex> graph;
             using (Cursor.ClearInputToCurrentPosition())
             {
-                var graph = module.LoadGraph();
-                messenger.Send(new GraphCreatedMessage(graph));
-                messenger.Send(new CostRangeChangedMessage(VertexCost.CostRange));
+                graph = module.LoadGraph();
             }
+            messenger.Send(new GraphCreatedMessage(graph), MessageTokens.Screen);
+            messenger.Send(new CostRangeChangedMessage(VertexCost.CostRange));
+            messenger.Send(new GraphCreatedMessage(graph), MessageTokens.MainViewModel);
         }
 
         public override void Dispose()
         {
             base.Dispose();
-            messenger.Unregister(this);
         }
     }
 }

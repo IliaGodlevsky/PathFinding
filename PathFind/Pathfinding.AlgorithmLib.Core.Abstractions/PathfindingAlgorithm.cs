@@ -1,6 +1,5 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Core.Interface;
-using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Comparers;
@@ -19,15 +18,17 @@ namespace System.Runtime.CompilerServices
 
 namespace Pathfinding.AlgorithmLib.Core.Abstractions
 {
+    using Traces = Dictionary<ICoordinate, IVertex>;
+
     internal abstract class PathfindingAlgorithm<TStorage> : PathfindingProcess
         where TStorage : new()
     {
         protected record SubRange(IVertex Source, IVertex Target);
 
         protected readonly ICollection<IVertex> visited;
-        protected readonly IDictionary<ICoordinate, IVertex> traces;
         protected readonly IPathfindingRange pathfindingRange;
         protected readonly TStorage storage;
+        protected readonly Traces traces;
 
         protected SubRange CurrentRange { get; set; }
 
@@ -37,18 +38,18 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         protected PathfindingAlgorithm(IPathfindingRange pathfindingRange)
         {
-            storage = new TStorage();
+            this.storage = new TStorage();
             this.pathfindingRange = pathfindingRange;
-            visited = new HashSet<IVertex>(new VertexEqualityComparer());
-            traces = new Dictionary<ICoordinate, IVertex>(new CoordinateEqualityComparer());
+            this.visited = new HashSet<IVertex>(new VertexEqualityComparer());
+            this.traces = new Traces(new CoordinateEqualityComparer());
         }
 
         public sealed override IGraphPath FindPath()
         {
-            PrepareForPathfinding();
-            using (Disposable.Use(CompletePathfinding, DropState))
+            var paths = new List<IGraphPath>();
+            using (Disposable.Use(CompletePathfinding))
             {
-                var path = NullGraphPath.Interface;
+                PrepareForPathfinding();
                 foreach (var subRange in GetSubRanges())
                 {
                     PrepareForSubPathfinding(subRange);
@@ -60,12 +61,11 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
                         CurrentVertex = GetNextVertex();
                         VisitCurrentVertex();
                     }
-                    var subPath = CreateGraphPath();
-                    path = new CompositeGraphPath(path, subPath);
+                    paths.Add(GetSubPath());
                     DropState();
                 }
-                return path;
             }
+            return new CompositeGraphPath(paths);
         }
 
         protected abstract IVertex GetNextVertex();
@@ -80,9 +80,10 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             CurrentVertex = CurrentRange.Source;
         }
 
-        protected virtual IGraphPath CreateGraphPath()
+        protected virtual IGraphPath GetSubPath()
         {
-            return new GraphPath(traces.ToReadOnly(), CurrentRange.Target);
+            var traces = new Dictionary<ICoordinate, IVertex>(this.traces);
+            return new GraphPath(traces, CurrentRange.Target);
         }
 
         protected virtual void Enqueued(IVertex vertex)

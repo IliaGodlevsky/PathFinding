@@ -1,4 +1,5 @@
 ﻿using Pathfinding.App.Console;
+using Pathfinding.App.Console.Extensions;
 using System;
 using System.Text;
 
@@ -65,8 +66,8 @@ namespace Pathfinding.App.Console.Model.FramedAxes
 
         private string GetSpace(int index)
         {
-            int indexLog = index.ToString().Length;
-            int count = Math.Abs(LateralDistance - indexLog);
+            int numberLength = index.GetDigitsNumber();
+            int count = Math.Abs(LateralDistance - numberLength);
             return new string(Space, count);
         }
     }

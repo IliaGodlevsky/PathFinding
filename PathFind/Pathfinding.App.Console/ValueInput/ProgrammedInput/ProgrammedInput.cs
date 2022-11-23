@@ -9,7 +9,7 @@ namespace Pathfinding.App.Console.ValueInput.ProgrammedInput
 {
     internal abstract class ProgrammedInput<T> : IInput<T>
     {
-        protected static readonly TimeSpan Wait = TimeSpan.FromMilliseconds(500);
+        protected static readonly TimeSpan Wait = TimeSpan.FromMilliseconds(750);
 
         private readonly Lazy<Queue<T>> steps;
 

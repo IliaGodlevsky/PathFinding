@@ -16,12 +16,12 @@ namespace Pathfinding.GraphLib.Factory.Realizations.GraphAssembles
         where TVertex : IVertex
         where TGraph : IGraph<TVertex>
     {
+        protected readonly IRandom random;
         protected readonly IVertexCostFactory costFactory;
         protected readonly ICoordinateFactory coordinateFactory;
         protected readonly IVertexFactory<TVertex> vertexFactory;
         protected readonly IGraphFactory<TGraph, TVertex> graphFactory;
-        protected readonly INeighborhoodFactory neighbourhoodFactory;
-        protected readonly IRandom random;
+        protected readonly INeighborhoodFactory neighbourhoodFactory;        
         protected readonly InclusiveValueRange<int> percentRange;
 
         public GraphAssemble(
@@ -72,14 +72,13 @@ namespace Pathfinding.GraphLib.Factory.Realizations.GraphAssembles
 
         private static IReadOnlyList<int> ToCoordinates(IReadOnlyList<int> dimensionSizes, int index)
         {
-            int GetCoordinate(int i)
+            var range = new InclusiveValueRange<int>(dimensionSizes.Count - 1);
+            return range.EnumerateValues().Select(i =>
             {
                 var coordinate = index % dimensionSizes[i];
                 index /= dimensionSizes[i];
                 return coordinate;
-            }
-            var range = new InclusiveValueRange<int>(dimensionSizes.Count - 1);
-            return range.EnumerateValues().Select(GetCoordinate).ToReadOnly();
+            }).ToReadOnly();
         }
 
         public override string ToString()
