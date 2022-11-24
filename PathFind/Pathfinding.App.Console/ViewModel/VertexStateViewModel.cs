@@ -22,7 +22,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         private Vertex GetInputVertex()
         {
-            using (Cursor.ClearUpAfter())
+            using (Cursor.CleanUpAfter())
             {
                 return IntInput.InputVertex(Graph);
             }

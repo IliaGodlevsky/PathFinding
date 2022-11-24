@@ -61,7 +61,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         private int GetAlgorithmIndex(string message)
         {
-            using (Cursor.ClearUpAfter())
+            using (Cursor.CleanUpAfter())
             {
                 return IntInput.Input(message, Factories.Count + 1, 1) - 1;
             }

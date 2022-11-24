@@ -63,7 +63,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ChooseGraphAssemble, 1)]
         private void ChooseGraphAssemble()
         {
-            using (Cursor.ClearUpAfter())
+            using (Cursor.CleanUpAfter())
             {
                 int index = IntInput.Input(GraphAssembleInpuMessage, graphAssembleKeyRange) - 1;
                 SelectedGraphAssemble = GraphAssembles[index];
@@ -73,7 +73,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.InputGraphParametres, 2)]
         public void InputGraphParametres()
         {
-            using (Cursor.ClearUpAfter())
+            using (Cursor.CleanUpAfter())
             {
                 Width = IntInput.Input(MessagesTexts.GraphWidthInputMsg, Constants.GraphWidthValueRange);
                 Length = IntInput.Input(MessagesTexts.GraphHeightInputMsg, Constants.GraphLengthValueRange);
@@ -83,7 +83,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.InputObstaclePercent, 3)]
         public void InputObstaclePercent()
         {
-            using (Cursor.ClearUpAfter())
+            using (Cursor.CleanUpAfter())
             {
                 ObstaclePercent = IntInput.Input(MessagesTexts.ObstaclePercentInputMsg, Constants.ObstaclesPercentValueRange);
             }

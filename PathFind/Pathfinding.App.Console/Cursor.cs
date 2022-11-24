@@ -42,15 +42,15 @@ namespace Pathfinding.App.Console
             return Disposable.Use(Restore);
         }
 
-        public static IDisposable ClearUpAfter()
+        public static IDisposable CleanUpAfter()
         {
             var left = System.Console.CursorLeft;
             var top = System.Console.CursorTop;
             var position = new Coordinate2D(left, top);
-            return Disposable.Use(() => ClearArea(position));
+            return Disposable.Use(() => CleanUpTo(position));
         }
 
-        private static void ClearArea(Coordinate2D offset)
+        private static void CleanUpTo(Coordinate2D offset)
         {
             int limit = Cursor.CurrentPosition.Y - offset.Y;
             SetPosition(offset);

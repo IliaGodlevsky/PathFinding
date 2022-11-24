@@ -48,7 +48,7 @@ namespace Pathfinding.App.Console.Views
                 {                   
                     NewMenuCycleStarted?.Invoke();
                     IMenuCommand command;
-                    using (Cursor.ClearUpAfter())
+                    using (Cursor.CleanUpAfter())
                     {
                         int index = IntInput.Input(OptionsMsg, menuRange) - 1;
                         command = menuCommands.Commands[index];                       

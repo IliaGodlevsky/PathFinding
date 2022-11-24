@@ -35,7 +35,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ChoosePathfindingRange, 0)]
         private void ChooseEndPoints()
         {
-            using (Cursor.ClearUpAfter())
+            using (Cursor.CleanUpAfter())
             {
                 System.Console.WriteLine(MessagesTexts.SourceAndTargetInputMsg);
                 InputVertices(RequiredVerticesForRange).ForEach(IncludeInRange);
@@ -46,7 +46,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ReplaceSource, 2)]
         private void ReplaceSourceVertex()
         {
-            using (Cursor.ClearUpAfter())
+            using (Cursor.CleanUpAfter())
             {
                 IncludeInRange(range.Source);
                 IncludeInRange(InputVertex(MessagesTexts.SourceVertexChoiceMsg));
@@ -57,7 +57,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ReplaceTarget, 3)]
         private void ReplaceTargetVertex()
         {
-            using (Cursor.ClearUpAfter())
+            using (Cursor.CleanUpAfter())
             {
                 IncludeInRange(range.Target);
                 IncludeInRange(InputVertex(MessagesTexts.TargetVertexChoiceMsg));
@@ -74,7 +74,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ReplaceIntermediate, 4)]
         private void ReplaceIntermediates()
         {
-            using (Cursor.ClearUpAfter())
+            using (Cursor.CleanUpAfter())
             {
                 string msg = MessagesTexts.NumberOfIntermediatesVerticesToReplaceMsg;
                 int toReplaceNumber = IntInput.Input(msg, numberOfIntermediates);
@@ -89,7 +89,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ChooseIntermediates, 1)]
         private void ChooseIntermediates()
         {
-            using (Cursor.ClearUpAfter())
+            using (Cursor.CleanUpAfter())
             {
                 string message = MessagesTexts.NumberOfIntermediateVerticesInputMsg;
                 int available = graph.GetAvailableIntermediatesVerticesNumber();

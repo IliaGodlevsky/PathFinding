@@ -79,7 +79,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ChangeCostRange, 6)]
         private void ChangeVertexCostValueRange()
         {
-            using (Cursor.ClearUpAfter())
+            using (Cursor.CleanUpAfter())
             {
                 VertexCost.CostRange = IntInput.InputRange(Constants.VerticesCostRange);
                 messenger.Send(new CostRangeChangedMessage(VertexCost.CostRange));
@@ -88,7 +88,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         protected override void RaiseViewClosed()
         {
-            using (Cursor.ClearUpAfter())
+            using (Cursor.CleanUpAfter())
             {
                 if (AnswerInput.Input(MessagesTexts.ExitAppMsg, Answer.Range))
                 {

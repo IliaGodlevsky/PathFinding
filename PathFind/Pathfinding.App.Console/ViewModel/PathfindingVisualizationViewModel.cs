@@ -53,7 +53,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ApplyVisualization, 0)]
         private void ApplyVisualization()
         {
-            using (Cursor.ClearUpAfter())
+            using (Cursor.CleanUpAfter())
             {
                 isVisualizationApplied = AnswerInput.Input(MessagesTexts.ApplyVisualizationMsg, Answer.Range);
             }
@@ -63,7 +63,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.InputDelayTime, 1)]
         private void SetAnimationDelay()
         {
-            using (Cursor.ClearUpAfter())
+            using (Cursor.CleanUpAfter())
             {
                 AnimationDelay = TimeSpanInput.Input(MessagesTexts.DelayTimeInputMsg, DelayRange);
             }

@@ -41,7 +41,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.SmoothGraph, 0)]
         private void SmoothGraph()
         {
-            using (Cursor.ClearUpAfter())
+            using (Cursor.CleanUpAfter())
             {
                 int index = IntInput.Input(ChooseSmoothLevelMsg, SmoothLevels.Count, 1) - 1;
                 var level = SmoothLevels[index];
