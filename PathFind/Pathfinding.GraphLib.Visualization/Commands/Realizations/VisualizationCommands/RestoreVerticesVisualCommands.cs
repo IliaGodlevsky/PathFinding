@@ -1,22 +1,22 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Visualization.Commands.Abstractions;
+using Pathfinding.GraphLib.Core.Realizations.Adapter;
+using Pathfinding.GraphLib.Core.Realizations.Adapter.Commands.Abstractions;
 using Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRangeCommands;
-using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using System.Collections.Generic;
 
 namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.VisualizationCommands
 {
-    internal sealed class RestoreVerticesVisualCommands<TVertex> : PathfindingRangeVisualizationCommands<TVertex>
+    internal sealed class RestoreVerticesVisualCommands<TVertex> : PathfindingRangeCommands<TVertex>
         where TVertex : IVertex, IVisualizable
     {
-        public RestoreVerticesVisualCommands(PathfindingRangeAdapter<TVertex> pathfindingRange)
+        public RestoreVerticesVisualCommands(PathfindingRange<TVertex> pathfindingRange)
             : base(pathfindingRange)
         {
 
         }
 
-        protected override IEnumerable<IVisualizationCommand<TVertex>> GetCommands()
+        protected override IEnumerable<PathfindingRangeCommand<TVertex>> GetCommands()
         {
             yield return new RestoreIntermediateVertexVisualCommand<TVertex>(adapter);
             yield return new RestoreMarkedToReplaceVertexVisualCommand<TVertex>(adapter);

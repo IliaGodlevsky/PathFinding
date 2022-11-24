@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="Pathfinding.App.WPF._3D.View.ButtonPanelUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:buttonviewmodels="clr-namespace:Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="385">
+    <StackPanel Orientation="Horizontal">
+        <ToolBar>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource LoadGraph}" ToolTip="Load graph" Command="{Binding LoadGraphCommand}">
+                <Button.DataContext>
+                    <buttonviewmodels:LoadGraphViewModel/>
+                </Button.DataContext>
+            </Button>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource SaveGraph}" ToolTip="Save graph" Command="{Binding SaveGraphCommand}">
+                <Button.DataContext>
+                    <buttonviewmodels:SaveGraphViewModel/>
+                </Button.DataContext>
+            </Button>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource CreateNewGraph}" ToolTip="Create graph" Command="{Binding CreateGraphCommand}">
+                <Button.DataContext>
+                    <buttonviewmodels:CreateGraphViewModel/>
+                </Button.DataContext>
+            </Button>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource ClearGraph}" ToolTip="Clear graph" Command="{Binding ClearGraphCommand}">
+                <Button.DataContext>
+                    <buttonviewmodels:ClearGraphViewModel/>
+                </Button.DataContext>
+            </Button>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource ClearColors}" ToolTip="Clear colors" Command="{Binding ClearColorsCommand}">
+                <Button.DataContext>
+                    <buttonviewmodels:ClearColorsViewModel/>
+                </Button.DataContext>
+            </Button>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource FindPath}" ToolTip="Choose graph" Command ="{Binding FindPathCommand}">
+                <Button.DataContext>
+                    <buttonviewmodels:FindPathViewModel/>
+                </Button.DataContext>
+            </Button>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource Interrupt}" ToolTip="Interrupt all" Command ="{Binding Command}">
+                <Button.DataContext>
+                    <buttonviewmodels:InterruptAllAlgorithmsViewModel/>
+                </Button.DataContext>
+            </Button>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource Pause}" ToolTip="Pause all" Command="{Binding Command}">
+                <Button.DataContext>
+                    <buttonviewmodels:PauseAllAlgorithmsViewModel/>
+                </Button.DataContext>
+            </Button>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource Resume}" ToolTip="Resume all" Command="{Binding Command}">
+                <Button.DataContext>
+                    <buttonviewmodels:ResumeAllAlgorithmViewModel/>
+                </Button.DataContext>
+            </Button>
+            <Button Style="{StaticResource ImageStyle}" Content="{StaticResource Transperency}" ToolTip="Change opacity" Command="{Binding ChangeVerticesOpacityCommand}">
+                <Button.DataContext>
+                    <buttonviewmodels:ChangeOpacityViewModel/>
+                </Button.DataContext>
+            </Button>
+        </ToolBar>
+    </StackPanel>
+</UserControl>

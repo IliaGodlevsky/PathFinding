@@ -6,6 +6,19 @@ namespace Pathfinding.Logging.Loggers
 {
     public sealed class FileLog : ILog
     {
+        private readonly ILogger infoLogger;
+        private readonly ILogger debugLogger;
+        private readonly ILogger errorLogger;
+        private readonly ILogger traceLogger;
+
+        public FileLog()
+        {
+            infoLogger = LogManager.GetLogger("Info");
+            errorLogger = LogManager.GetLogger("Error");
+            debugLogger = LogManager.GetLogger("Debug");
+            traceLogger = LogManager.GetLogger("Trace");
+        }
+
         public void Trace(string message)
         {
             Write(message, traceLogger.Trace);
@@ -61,18 +74,5 @@ namespace Pathfinding.Logging.Loggers
         {
             action(ex, string.IsNullOrEmpty(message) ? string.Empty : message);
         }
-
-        public FileLog()
-        {
-            infoLogger = LogManager.GetLogger("Info");
-            errorLogger = LogManager.GetLogger("Error");
-            debugLogger = LogManager.GetLogger("Debug");
-            traceLogger = LogManager.GetLogger("Trace");
-        }
-
-        private readonly ILogger infoLogger;
-        private readonly ILogger debugLogger;
-        private readonly ILogger errorLogger;
-        private readonly ILogger traceLogger;
     }
 }

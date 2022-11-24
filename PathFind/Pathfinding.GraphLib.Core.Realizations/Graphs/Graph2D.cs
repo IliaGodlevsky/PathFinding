@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Pathfinding.GraphLib.Core.Realizations.Graphs
 {
-    public sealed class Graph2D<TVertex> : Graph<TVertex>
+    public class Graph2D<TVertex> : Graph<TVertex>
         where TVertex : IVertex
     {
         public static readonly Graph2D<TVertex> Empty

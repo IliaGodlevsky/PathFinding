@@ -1,9 +1,7 @@
 ﻿using Autofac;
 using Autofac.Builder;
-using Autofac.Core;
 using Autofac.Features.Scanning;
 #if DEBUG
-using Pathfinding.App.Console.ValueInput.UserInput;
 #elif !DEBUG
 using Pathfinding.App.Console.ValueInput.ProgrammedInput;
 using Pathfinding.App.Console.ValueInput.RandomInput;
@@ -41,10 +39,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Pathfinding.App.Console.Extensions;
-using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
-using Pathfinding.App.Console.ValueInput.RecordingInput;
-using Pathfinding.App.Console.ValueInput.ProgrammedInput.FromFile;
-using Pathfinding.App.Console.ValueInput.RandomInput;
+using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.App.Console.ValueInput.UserInput;
 
 namespace Pathfinding.App.Console.DependencyInjection
 {
@@ -66,11 +62,11 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<RandomKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
             builder.RegisterType<RandomTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
 #elif DEBUG
-            builder.RegisterType<FromFileProgrammedAnswerInput>().As<IInput<Answer>>().SingleInstance();
-            builder.RegisterType<FromFileProgrammedIntInput>().As<IInput<int>>().SingleInstance();
-            builder.RegisterType<FromFileProgrammedStringInput>().As<IInput<string>>().SingleInstance();
-            builder.RegisterType<RandomKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
-            builder.RegisterType<RandomTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
+            builder.RegisterType<ConsoleUserAnswerInput>().As<IInput<Answer>>().SingleInstance();
+            builder.RegisterType<ConsoleUserIntInput>().As<IInput<int>>().SingleInstance();
+            builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance();
+            builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
+            builder.RegisterType<ConsoleUserTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
 #endif
             builder.RegisterType<ConsoleKeystrokesHook>().AsSelf().SingleInstance().PropertiesAutowired();
 
@@ -89,12 +85,11 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
-            builder.RegisterType<ConsolePathfindingRangeAdapter>().AsSelf().As<PathfindingRangeAdapter<Vertex>>()
-                .As<IPathfindingRangeAdapter<Vertex>>().SingleInstance();
+            builder.RegisterType<ConsolePathfindingRange>().AsSelf().As<VisualPathfindingRange<Vertex>>()
+                .As<IPathfindingRange>().SingleInstance();
 
             builder.RegisterType<PseudoRandom>().As<IRandom>().SingleInstance();
             
-            builder.RegisterType<PathfindingRangeFactory>().As<IPathfindingRangeFactory>().SingleInstance();
             builder.RegisterType<GraphAssemble<Graph2D<Vertex>, Vertex>>().As<IGraphAssemble<Graph2D<Vertex>, Vertex>>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<VertexFactory>().As<IVertexFactory<Vertex>>().SingleInstance();

@@ -53,7 +53,7 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
-            builder.RegisterType<Wpf2DPathfindingRangeAdapter>().As<PathfindingRangeAdapter<Vertex>>()
+            builder.RegisterType<Wpf2DPathfindingRange>().As<VisualPathfindingRange<Vertex>>()
                 .AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<Wpf2DVertexChangeCostModule>().As<IGraphSubscription<Vertex>>().SingleInstance();
             builder.RegisterType<Wpf2DVertexReverseModule>().As<IGraphSubscription<Vertex>>().SingleInstance();
@@ -72,8 +72,8 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterType<VertexFactory>().As<IVertexFactory<Vertex>>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
-            builder.RegisterType<PathfindingRangeFactory>().As<IPathfindingRangeFactory>().SingleInstance();
             builder.RegisterType<Graph2DFactory<Vertex>>().As<IGraphFactory<Graph2D<Vertex>, Vertex>>().SingleInstance();
+            builder.RegisterDecorator<Graph2dWrapFactory, IGraphFactory<Graph2D<Vertex>, Vertex>>();
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField>>().SingleInstance();
             builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();            
             builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();

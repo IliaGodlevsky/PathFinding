@@ -1,30 +1,33 @@
 ﻿using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Extensions;
+using System;
 using System.Drawing;
 
 namespace Pathfinding.App.Console.Model
 {
     internal sealed class VertexVisualization : IVisualization<Vertex>
-    {   
-        private static readonly Color RegularVertexColor = Color.White;
-        private static readonly Color ObstacleVertexColor = Color.Black;
-        private static readonly Color PathVertexColor = Color.Yellow;
-        private static readonly Color EnqueuedVertexColor = Color.Magenta;
-        private static readonly Color SourceVertexColor = Color.Green;
-        private static readonly Color TargetVertexColor = Color.Red;
-        private static readonly Color AlreadyPathVertexColor = Color.Orange;
-        private static readonly Color VisitedVertexColor = Color.Blue;
-        private static readonly Color IntermediateVertexColor = Color.DarkOrange;
-        private static readonly Color ToReplaceMarkColor = Color.DarkRed;
-        
+    {
+        private const ConsoleColor RegularVertexColor = ConsoleColor.DarkGray;
+        private const ConsoleColor ObstacleVertexColor = ConsoleColor.Black;
+        private const ConsoleColor PathVertexColor = ConsoleColor.DarkYellow;
+        private const ConsoleColor EnqueuedVertexColor = ConsoleColor.Magenta;
+        private const ConsoleColor SourceVertexColor = ConsoleColor.DarkGreen;
+        private const ConsoleColor TargetVertexColor = ConsoleColor.Red;
+        private const ConsoleColor AlreadyPathVertexColor = ConsoleColor.DarkCyan;
+        private const ConsoleColor VisitedVertexColor = ConsoleColor.White;
+        private const ConsoleColor IntermediateVertexColor = ConsoleColor.Green;
+        private const ConsoleColor ToReplaceMarkColor = ConsoleColor.DarkMagenta;
+
         public bool IsVisualizedAsPath(Vertex vertex)
         {
-            return vertex.Color.IsOneOf(PathVertexColor, AlreadyPathVertexColor, IntermediateVertexColor);
+            return vertex.Color.IsOneOf(PathVertexColor, AlreadyPathVertexColor, 
+                IntermediateVertexColor);
         }
 
         public bool IsVisualizedAsPathfindingRange(Vertex vertex)
         {
-            return vertex.Color.IsOneOf(SourceVertexColor, TargetVertexColor, IntermediateVertexColor, ToReplaceMarkColor);
+            return vertex.Color.IsOneOf(SourceVertexColor, TargetVertexColor,
+                IntermediateVertexColor, ToReplaceMarkColor);
         }
 
         public void VisualizeAsTarget(Vertex vertex)
@@ -91,7 +94,7 @@ namespace Pathfinding.App.Console.Model
             }
         }
 
-        private void Mark(Vertex vertex, Color color)
+        private void Mark(Vertex vertex, ConsoleColor color)
         {
             vertex.Color = color;
             vertex.Display();

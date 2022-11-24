@@ -5,6 +5,8 @@ using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
 using Pathfinding.App.Console.Views;
+using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
@@ -16,12 +18,12 @@ namespace Pathfinding.App.Console.ViewModel
     internal sealed class PathfindingViewModel : SafeViewModel, IDisposable
     {       
         private readonly IMessenger messenger;
-        private readonly IPathfindingRangeAdapter<Vertex> adapter;
+        private readonly IPathfindingRange range;
 
-        public PathfindingViewModel(IPathfindingRangeAdapter<Vertex> adapter, ILog log, IMessenger messenger)
+        public PathfindingViewModel(IPathfindingRange range, ILog log, IMessenger messenger)
             : base(log)
         {
-            this.adapter = adapter;
+            this.range = range;
             this.messenger = messenger;
         }
 
@@ -51,7 +53,7 @@ namespace Pathfinding.App.Console.ViewModel
         [FailMessage(MessagesTexts.NoPathfindingRangeMsg)]
         private bool CanEnterPathfinding()
         {
-            return adapter.HasSourceAndTargetSet();
+            return range.HasSourceAndTargetSet();
         }
     }
 }

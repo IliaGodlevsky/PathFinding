@@ -35,7 +35,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel
 
         public ICommand CancelPathFindAlgorithmChoice { get; }
 
-        public PathFindingViewModel(PathfindingRangeAdapter<Vertex> adapter,
+        public PathFindingViewModel(VisualPathfindingRange<Vertex> adapter,
             IEnumerable<IAlgorithmFactory<PathfindingProcess>> algorithmFactories, ICache<Graph2D<Vertex>> graphCache, ILog log)
             : base(adapter, algorithmFactories, graphCache.Cached, log)
         {

@@ -16,8 +16,6 @@ using Pathfinding.VisualizationLib.Core.Interface;
 using System;
 using System.Drawing;
 
-using ColorfulConsole = Colorful.Console;
-
 namespace Pathfinding.App.Console.ViewModel
 {
     [MenuColumnsNumber(3)]
@@ -25,7 +23,7 @@ namespace Pathfinding.App.Console.ViewModel
     {
         private readonly IMessenger messenger;
         private readonly IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField> fieldFactory;
-        private readonly PathfindingRangeAdapter<Vertex> adapter;
+        private readonly VisualPathfindingRange<Vertex> adapter;
 
         private GraphField GraphField { get; set; } = GraphField.Empty;
 
@@ -38,7 +36,7 @@ namespace Pathfinding.App.Console.ViewModel
         public Graph2D<Vertex> Cached { get; private set; } = Graph2D<Vertex>.Empty;
 
         public MainViewModel(IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField> fieldFactory,
-            PathfindingRangeAdapter<Vertex> adapter, IMessenger messenger, ILog log)
+            VisualPathfindingRange<Vertex> adapter, IMessenger messenger, ILog log)
             : base(log)
         {
             Cached = Graph2D<Vertex>.Empty;
@@ -81,7 +79,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ChangeCostRange, 6)]
         private void ChangeVertexCostValueRange()
         {
-            using (Cursor.ClearInputToCurrentPosition())
+            using (Cursor.ClearUpAfter())
             {
                 VertexCost.CostRange = IntInput.InputRange(Constants.VerticesCostRange);
                 messenger.Send(new CostRangeChangedMessage(VertexCost.CostRange));
@@ -90,7 +88,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         protected override void RaiseViewClosed()
         {
-            using (Cursor.ClearInputToCurrentPosition())
+            using (Cursor.ClearUpAfter())
             {
                 if (AnswerInput.Input(MessagesTexts.ExitAppMsg, Answer.Range))
                 {
@@ -110,9 +108,9 @@ namespace Pathfinding.App.Console.ViewModel
         {
             try
             {
-                ColorfulConsole.Clear();
-                ColorfulConsole.ForegroundColor = Color.White;
-                ColorfulConsole.WriteLine(GraphParamters);
+                System.Console.Clear();
+                System.Console.ForegroundColor = ConsoleColor.White;
+                System.Console.WriteLine(GraphParamters);
                 GraphField.Display();
             }
             catch (ArgumentOutOfRangeException ex)

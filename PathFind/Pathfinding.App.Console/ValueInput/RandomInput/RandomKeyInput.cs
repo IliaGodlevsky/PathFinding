@@ -18,7 +18,7 @@ namespace Pathfinding.App.Console.ValueInput.RandomInput
 
         public RandomKeyInput(IRandom random) : base(random)
         {
-            Keys = new ReadOnlyList<ConsoleKey>(Enter, UpArrow, DownArrow);
+            Keys = new ReadOnlyList<ConsoleKey>(Enter/*, UpArrow, DownArrow*/);
             Range = new InclusiveValueRange<int>(Keys.Count - 1);
         }
 

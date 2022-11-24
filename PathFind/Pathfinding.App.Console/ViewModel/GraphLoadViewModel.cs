@@ -29,7 +29,7 @@ namespace Pathfinding.App.Console.ViewModel
         private void LoadGraph()
         {
             Graph2D<Vertex> graph;
-            using (Cursor.ClearInputToCurrentPosition())
+            using (Cursor.ClearUpAfter())
             {
                 graph = module.LoadGraph();
             }

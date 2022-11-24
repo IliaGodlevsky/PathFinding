@@ -8,8 +8,6 @@ using Shared.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
 
-using ColorfulConsole = Colorful.Console;
-
 namespace Pathfinding.App.Console.Views
 {
     internal abstract class View : IView, IRequireIntInput, IDisplayable, IDisposable
@@ -50,7 +48,7 @@ namespace Pathfinding.App.Console.Views
                 {                   
                     NewMenuCycleStarted?.Invoke();
                     IMenuCommand command;
-                    using (Cursor.ClearInputToCurrentPosition())
+                    using (Cursor.ClearUpAfter())
                     {
                         int index = IntInput.Input(OptionsMsg, menuRange) - 1;
                         command = menuCommands.Commands[index];                       

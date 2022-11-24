@@ -10,8 +10,6 @@ using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Extensions;
 using System;
 
-using ColorfulConsole = Colorful.Console;
-
 namespace Pathfinding.App.Console
 {
     internal static class Screen
@@ -51,7 +49,7 @@ namespace Pathfinding.App.Console
 
         public static void SetCursorPositionUnderMenu(int menuOffset = 0)
         {
-            ColorfulConsole.SetCursorPosition(StatisticsPosition.X, StatisticsPosition.Y + menuOffset);
+            System.Console.SetCursorPosition(StatisticsPosition.X, StatisticsPosition.Y + menuOffset);
         }
 
         private static void OnNewGraphCreated(GraphCreatedMessage message)
@@ -82,7 +80,7 @@ namespace Pathfinding.App.Console
         private static void OnStatisticsUpdated(UpdatePathfindingStatisticsMessage message)
         {
             Cursor.SetPosition(StatisticsPosition);
-            ColorfulConsole.Write(message.Statistics.PadRight(ColorfulConsole.BufferWidth));
+            System.Console.Write(message.Statistics.PadRight(System.Console.BufferWidth));
         }
 
         private static void RecalculateConsolePosition(Vertex vertex)

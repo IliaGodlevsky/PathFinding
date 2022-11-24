@@ -15,7 +15,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
     internal class ClearGraphViewModel
     {
         private readonly IMessenger messenger;
-        private readonly PathfindingRangeAdapter<Vertex> adapter;
+        private readonly VisualPathfindingRange<Vertex> adapter;
 
         private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
@@ -26,7 +26,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
         public ClearGraphViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            adapter = DI.Container.Resolve<PathfindingRangeAdapter<Vertex>>();
+            adapter = DI.Container.Resolve<VisualPathfindingRange<Vertex>>();
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAllAlgorithmFinishedPathfinding);
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteClearGraphCommand);

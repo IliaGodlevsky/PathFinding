@@ -2,6 +2,7 @@
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.VisualizationLib.Core.Interface;
@@ -21,14 +22,14 @@ namespace Pathfinding.App.Console.ViewModel
 
         private Vertex GetInputVertex()
         {
-            using (Cursor.ClearInputToCurrentPosition())
+            using (Cursor.ClearUpAfter())
             {
                 return IntInput.InputVertex(Graph);
             }
         }
 
         public VertexStateViewModel(IVertexCostFactory costFactory,
-            ICache<Graph2D<Vertex>> cache, IPathfindingRangeAdapter<Vertex> adapter)
+            ICache<Graph2D<Vertex>> cache, IPathfindingRange adapter)
         {
             Graph = cache.Cached;
             reverseModule = new ConsoleVertexReverseModule(adapter);

@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="Pathfinding.App.WPF._3D.View.GraphFieldUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:model="clr-namespace:Pathfinding.App.WPF._3D.Model" 
+             xmlns:converters="clr-namespace:Pathfinding.App.WPF._3D.Converters" 
+             xmlns:viewmodel="clr-namespace:Pathfinding.App.WPF._3D.ViewModel" 
+             xmlns:validationrules="clr-namespace:Pathfinding.App.WPF._3D.ValidationRules"
+             xmlns:range="clr-namespace:Pathfinding.App.WPF._3D"
+             d:DataContext="{d:DesignInstance Type=viewmodel:GraphFieldViewModel}"
+             mc:Ignorable="d" 
+             x:Name="UserControl"
+             d:DesignHeight="200" d:DesignWidth="400">
+    <UserControl.Resources>
+        <converters:InvertPointConverter x:Key="invertPointConverter"/>
+        <converters:PointToNumberConverter x:Key="coordinateToDistance"/>
+        <converters:PrecisedDoubleToStringConverter Precision="2" x:Key="doubleConverter2"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StatusBar>
+            <TextBlock Text="{Binding GraphParametres}"/>
+        </StatusBar>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock Margin="5" Text="Zoom"/>
+            <model:RangedSlider x:Name="Slider" Style="{StaticResource SliderStyle}" ValueRange="{x:Static range:Constants.ZoomValueRange}" Value="{Binding ElementName=Camera, Path=Position, Converter={StaticResource coordinateToDistance}}"/>
+
+            <TextBox Style="{StaticResource TextBoxStyle}">
+                <TextBox.Text>
+                    <Binding Path="Value" ElementName="Slider" Converter="{StaticResource doubleConverter2}" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <validationrules:NonInt32InputValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </StackPanel>
+
+        <Viewport3D Grid.Row="2">
+            <Viewport3D.Camera>
+                <PerspectiveCamera x:Name="Camera" LookDirection="{Binding RelativeSource={RelativeSource Self}, Path=Position, Converter={StaticResource invertPointConverter}}" Position="{Binding FieldPosition}"/>
+            </Viewport3D.Camera>
+            <Viewport3D.Children>
+                <model:GraphField3DContainer GraphField="{Binding GraphField, UpdateSourceTrigger=PropertyChanged}">
+                    <ModelVisual3D.Content>
+                        <DirectionalLight Direction="{Binding ElementName=Camera, Path=LookDirection}" Color="White"/>
+                    </ModelVisual3D.Content>
+                    <ModelVisual3D.Transform>
+                        <Transform3DGroup>
+                            <RotateTransform3D Rotation="{Binding ElementName=UserControl, Path=XAngleRotation}"/>
+                            <RotateTransform3D Rotation="{Binding ElementName=UserControl, Path=YAngleRotation}"/>
+                            <RotateTransform3D Rotation="{Binding ElementName=UserControl, Path=ZAngleRotation}"/>
+                        </Transform3DGroup>
+                    </ModelVisual3D.Transform>
+                </model:GraphField3DContainer>
+            </Viewport3D.Children>
+        </Viewport3D>
+    </Grid>
+</UserControl>

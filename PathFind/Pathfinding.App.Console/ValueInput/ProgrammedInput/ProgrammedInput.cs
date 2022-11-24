@@ -3,8 +3,6 @@ using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 
-using ColorfulConsole = Colorful.Console;
-
 namespace Pathfinding.App.Console.ValueInput.ProgrammedInput
 {
     internal abstract class ProgrammedInput<T> : IInput<T>
@@ -23,7 +21,7 @@ namespace Pathfinding.App.Console.ValueInput.ProgrammedInput
         public virtual T Input()
         {
             var input = Steps.Dequeue();
-            ColorfulConsole.WriteLine(input);
+            System.Console.WriteLine(input);
             Wait.Wait();
             return input;
         }

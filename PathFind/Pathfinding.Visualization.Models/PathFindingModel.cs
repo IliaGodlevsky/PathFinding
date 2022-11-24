@@ -27,10 +27,9 @@ namespace Pathfinding.Visualization.Models
     public abstract class PathFindingModel<TVertex>
         where TVertex : IVertex, IVisualizable
     {
-        protected readonly PathfindingRangeAdapter<TVertex> pathfindingRange;
+        protected readonly VisualPathfindingRange<TVertex> range;
         protected readonly Stopwatch timer;
         protected readonly ILog log;
-        protected IPathfindingRange range;
 
         protected PathfindingProcess algorithm;
 
@@ -48,11 +47,11 @@ namespace Pathfinding.Visualization.Models
 
         public IReadOnlyList<IAlgorithmFactory<PathfindingProcess>> Algorithms { get; }
 
-        protected PathFindingModel(PathfindingRangeAdapter<TVertex> endPoints,
+        protected PathFindingModel(VisualPathfindingRange<TVertex> range,
             IEnumerable<IAlgorithmFactory<PathfindingProcess>> factories, IGraph<TVertex> graph, ILog log)
         {
             Graph = graph;
-            this.pathfindingRange = endPoints;
+            this.range = range;
             this.log = log;
             Algorithms = factories
                 .GroupBy(item => item.GetAttributeOrDefault<GroupAttribute>())
@@ -66,10 +65,9 @@ namespace Pathfinding.Visualization.Models
         {
             try
             {
-                range = pathfindingRange.GetPathfindingRange();
                 algorithm = Algorithm.Create(range);
                 SubscribeOnAlgorithmEvents(algorithm);
-                pathfindingRange.RestoreVerticesVisualState();
+                range.RestoreVerticesVisualState();
                 Path = await algorithm.FindPathAsync();
                 await Path.Select(Graph.Get).VisualizeAsPathAsync();
                 SummarizePathfindingResults();

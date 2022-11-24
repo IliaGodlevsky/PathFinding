@@ -1,8 +1,5 @@
 ﻿using Pathfinding.Logging.Interface;
 using System;
-using System.Drawing;
-
-using ColorfulConsole = Colorful.Console;
 
 namespace Pathfinding.App.Console.Model
 {
@@ -15,22 +12,22 @@ namespace Pathfinding.App.Console.Model
 
         public void Error(Exception ex, string message = null)
         {
-            ShowMessage(message + ex.ToString(), Color.Red);
+            ShowMessage(message + ex.Message, ConsoleColor.Red);
         }
 
         public void Error(string message)
         {
-            ShowMessage(message, Color.Red);
+            ShowMessage(message, ConsoleColor.Red);
         }
 
         public void Fatal(Exception ex, string message = null)
         {
-            ShowMessage(message + ex.ToString(), Color.DarkRed);
+            ShowMessage(message + ex.Message, ConsoleColor.DarkRed);
         }
 
         public void Fatal(string message)
         {
-            ShowMessage(message, Color.DarkRed);
+            ShowMessage(message, ConsoleColor.DarkRed);
         }
 
         public void Info(string message)
@@ -45,20 +42,23 @@ namespace Pathfinding.App.Console.Model
 
         public void Warn(Exception ex, string message = null)
         {
-            ShowMessage(message + ex.ToString(), Color.Orange);
+            ShowMessage(message + ex.Message, ConsoleColor.DarkYellow);
         }
 
         public void Warn(string message)
         {
-            ShowMessage(message, Color.Orange);
+            ShowMessage(message, ConsoleColor.DarkYellow);
         }
 
-        private void ShowMessage(string message, Color color)
+        private void ShowMessage(string message, ConsoleColor color)
         {          
-            using (Cursor.ClearInputToCurrentPosition())
+            using (Cursor.ClearUpAfter())
             {
-                ColorfulConsole.Write(message, color);
-                ColorfulConsole.ReadKey();
+                using (Cursor.UseColor(color))
+                {
+                    System.Console.Write(message);
+                    System.Console.ReadKey();
+                }
             }
         }
     }

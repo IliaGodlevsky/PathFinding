@@ -1,15 +1,17 @@
-﻿using Pathfinding.Visualization.Extensions;
+﻿using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
 
 namespace Pathfinding.App.Console.Model
 {
     internal sealed class ConsoleVertexReverseModule
     {
-        private readonly IPathfindingRangeAdapter<Vertex> adapter;
+        private readonly IPathfindingRange range;
 
-        public ConsoleVertexReverseModule(IPathfindingRangeAdapter<Vertex> adapter)
+        public ConsoleVertexReverseModule(IPathfindingRange range)
         {
-            this.adapter = adapter;
+            this.range = range;
         }
 
         public void ReverseVertex(Vertex vertex)
@@ -21,7 +23,7 @@ namespace Pathfinding.App.Console.Model
             }
             else
             {
-                if (!adapter.IsInRange(vertex))
+                if (!range.IsInRange(vertex))
                 {
                     vertex.IsObstacle = true;
                 }

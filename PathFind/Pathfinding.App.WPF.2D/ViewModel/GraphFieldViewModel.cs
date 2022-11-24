@@ -43,12 +43,12 @@ namespace Pathfinding.App.WPF._2D.ViewModel
             graph = message.Graph;
             var graphFieldFactory = DI.Container.Resolve<IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField>>();
             GraphField = graphFieldFactory.CreateGraphField(message.Graph);
-            GraphParamtres = graph.GetStringRepresentation();
+            GraphParamtres = graph.ToString();
         }
 
         private void OnGraphChanged(GraphChangedMessage message)
         {
-            GraphParamtres = graph.GetStringRepresentation();
+            GraphParamtres = graph.ToString();
         }
     }
 }

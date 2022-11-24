@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using ColorfulConsole = Colorful.Console;
-
 namespace Pathfinding.App.Console.Model
 {
     internal sealed class MenuList : IDisplayable
@@ -37,7 +35,7 @@ namespace Pathfinding.App.Console.Model
 
         public void Display()
         {
-            ColorfulConsole.WriteLine(ToString());
+            System.Console.WriteLine(ToString());
         }
 
         public override string ToString()

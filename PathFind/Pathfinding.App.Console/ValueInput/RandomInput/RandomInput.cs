@@ -4,8 +4,6 @@ using Shared.Primitives.ValueRange;
 using Shared.Random;
 using System;
 
-using ColorfulConsole = Colorful.Console;
-
 namespace Pathfinding.App.Console.ValueInput.RandomInput
 {
     internal abstract class RandomInput<T, TRange> : IInput<T>
@@ -26,7 +24,7 @@ namespace Pathfinding.App.Console.ValueInput.RandomInput
         public virtual T Input()
         {
             T value = GetRandomValue();
-            ColorfulConsole.WriteLine(value);
+            System.Console.WriteLine(value);
             Delay.Wait();
             return value;
         }

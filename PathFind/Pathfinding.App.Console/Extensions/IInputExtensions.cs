@@ -1,5 +1,7 @@
 ﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Coordinates;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Visualization.Extensions;
@@ -9,15 +11,13 @@ using Shared.Primitives.ValueRange;
 using System;
 using System.Collections.Generic;
 
-using ColorfulConsole = Colorful.Console;
-
 namespace Pathfinding.App.Console.Extensions
 {
     internal static class IInputExtensions
     {
         public static T Input<T>(this IInput<T> self, string msg)
         {
-            ColorfulConsole.Write(msg);
+            System.Console.Write(msg);
             return self.Input();
         }
 
@@ -58,21 +58,21 @@ namespace Pathfinding.App.Console.Extensions
         }
 
         public static Vertex InputVertex(this IInput<int> self, Graph2D<Vertex> graph, 
-            IPathfindingRangeAdapter<Vertex> adapter)
+            IPathfindingRange range)
         {
-            return self.InputVertex(graph, adapter.CanBeInRange);
+            return self.InputVertex(graph, range.CanBeInRange);
         }
 
         public static IEnumerable<Vertex> InputExistingIntermediates(this IInput<int> self, 
-            Graph2D<Vertex> graph, IPathfindingRangeAdapter<Vertex> adapter, int count)
+            Graph2D<Vertex> graph, IPathfindingRange range, int count)
         {
-            return self.InputVertices(graph, adapter.IsIntermediate, count);
+            return self.InputVertices(graph, range.IsIntermediate, count);
         }
 
         public static IEnumerable<Vertex> InputVertices(this IInput<int> self, Graph2D<Vertex> graph,
-            IPathfindingRangeAdapter<Vertex> adapter, int count)
+            IPathfindingRange range, int count)
         {
-            return self.InputVertices(graph, adapter.CanBeInRange, count);
+            return self.InputVertices(graph, range.CanBeInRange, count);
         }
 
         private static IEnumerable<Vertex> InputVertices(this IInput<int> self, Graph2D<Vertex> graph, 

@@ -45,7 +45,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
         private void OnGraphCreated(GraphCreatedMessage message)
         {
             var subscription = DI.Container.Resolve<IGraphSubscription<Vertex>>();
-            var adapter = DI.Container.Resolve<PathfindingRangeAdapter<Vertex>>();
+            var adapter = DI.Container.Resolve<VisualPathfindingRange<Vertex>>();
             subscription.Unsubscribe(Graph);
             adapter.Undo();
             Graph = message.Graph;

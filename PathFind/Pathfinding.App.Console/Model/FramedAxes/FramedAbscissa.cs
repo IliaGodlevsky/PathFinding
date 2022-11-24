@@ -3,8 +3,6 @@ using Pathfinding.App.Console.Extensions;
 using System;
 using System.Text;
 
-using ColorfulConsole = Colorful.Console;
-
 namespace Pathfinding.App.Console.Model.FramedAxes
 {
     internal abstract class FramedAbscissa : FramedAxis
@@ -26,8 +24,8 @@ namespace Pathfinding.App.Console.Model.FramedAxes
 
         public override void Display()
         {
-            ColorfulConsole.SetCursorPosition(0, Screen.HeightOfGraphParametresView);
-            ColorfulConsole.Write(GetFramedAxis());
+            System.Console.SetCursorPosition(0, Screen.HeightOfGraphParametresView);
+            System.Console.Write(GetFramedAxis());
         }
 
         protected string GetAbscissa()

@@ -6,12 +6,12 @@ namespace Pathfinding.App.Console.Extensions
 {
     internal static class AdapterExtensions
     {
-        public static void IncludeInRange(this ConsolePathfindingRangeAdapter adapter, IEnumerable<Vertex> vertices)
+        public static void IncludeInRange(this ConsolePathfindingRange range, IEnumerable<Vertex> vertices)
         {
-            vertices.ForEach(vertex => adapter.IncludeInRange(vertex));
+            vertices.ForEach(vertex => range.IncludeInPathfindingRange(vertex));
         }
 
-        public static void MarkAsIntermediateToReplace(this ConsolePathfindingRangeAdapter adapter, IEnumerable<Vertex> vertices)
+        public static void MarkAsIntermediateToReplace(this ConsolePathfindingRange adapter, IEnumerable<Vertex> vertices)
         {
             vertices.ForEach(vertex => adapter.MarkAsIntermediateToReplace(vertex));
         }

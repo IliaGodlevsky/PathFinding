@@ -1,8 +1,4 @@
-﻿using Colorful;
-using Pathfinding.App.Console;
-using System.Text;
-
-using ColorfulConsole = Colorful.Console;
+﻿using System.Text;
 
 namespace Pathfinding.App.Console.Model.FramedAxes
 {
@@ -22,8 +18,8 @@ namespace Pathfinding.App.Console.Model.FramedAxes
 
         public override void Display()
         {
-            ColorfulConsole.SetCursorPosition(0, Screen.HeightOfAbscissaView + 1);
-            ColorfulConsole.Write(GetFramedAxis());
+            System.Console.SetCursorPosition(0, Screen.HeightOfAbscissaView + 1);
+            System.Console.Write(GetFramedAxis());
         }
 
         public override string GetFramedAxis()

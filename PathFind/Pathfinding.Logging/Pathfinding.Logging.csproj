@@ -34,12 +34,10 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Loggers\ConsoleLog.cs" />
     <Compile Include="Interface\ILog.cs" />
     <Compile Include="Loggers\FileLog.cs" />
     <Compile Include="Loggers\Logs.cs" />
     <Compile Include="Loggers\MailLog.cs" />
-    <Compile Include="Loggers\MessageBoxLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

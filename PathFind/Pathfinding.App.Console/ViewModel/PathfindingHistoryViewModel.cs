@@ -83,7 +83,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ApplyHistoryRecording, 0)]
         private void ApplyHistory()
         {
-            using (Cursor.ClearInputToCurrentPosition())
+            using (Cursor.ClearUpAfter())
             {
                 isHistoryApplied = AnswerInput.Input(MessagesTexts.ApplyHistoryMsg, Answer.Range);
             }
@@ -130,7 +130,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         private int GetAlgorithmIndex(string message)
         {
-            using (Cursor.ClearInputToCurrentPosition())
+            using (Cursor.ClearUpAfter())
             {
                 return IntInput.Input(message, startedAlgorithms.Count + 1, 1) - 1;
             }

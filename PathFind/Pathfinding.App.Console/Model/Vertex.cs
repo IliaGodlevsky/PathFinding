@@ -12,8 +12,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 
-using ColorfulConsole = Colorful.Console;
-
 namespace Pathfinding.App.Console.Model
 {
     [DebuggerDisplay("{Position.ToString()}")]
@@ -37,7 +35,7 @@ namespace Pathfinding.App.Console.Model
 
         public Coordinate2D ConsolePosition { get; set; } = Coordinate2D.Empty;
 
-        public Color Color { get; set; }
+        public ConsoleColor Color { get; set; }
 
         public Vertex(ICoordinate coordinate, IVisualization<Vertex> visualization)
         {
@@ -56,7 +54,10 @@ namespace Pathfinding.App.Console.Model
         public void Display()
         {
             Cursor.SetPosition(ConsolePosition);
-            ColorfulConsole.Write(Cost, Color);
+            using (Cursor.UseColor(Color))
+            {
+                System.Console.Write(Cost);
+            }
         }
 
         public bool Equals(IVertex other) => other.IsEqual(this);

@@ -2,19 +2,17 @@
 using Shared.Primitives;
 using System;
 
-using ColorfulConsole = Colorful.Console;
-
 namespace Pathfinding.App.Console
 {
     internal sealed class Cursor
     {
-        private static string BufferLengthString => new string(' ', ColorfulConsole.BufferWidth);
+        private static string BufferLengthString => new string(' ', System.Console.BufferWidth);
 
         private readonly int cursorLeft;
         private readonly int cursorRight;
 
         public static Coordinate2D CurrentPosition 
-            => new Coordinate2D(ColorfulConsole.CursorLeft, ColorfulConsole.CursorTop);
+            => new Coordinate2D(System.Console.CursorLeft, System.Console.CursorTop);
 
         private Cursor(int left, int right)
         {
@@ -24,22 +22,30 @@ namespace Pathfinding.App.Console
 
         public static IDisposable HideCursor()
         {
-            ColorfulConsole.CursorVisible = false;
+            System.Console.CursorVisible = false;
             return Disposable.Use(ShowCursor);
         }
 
         public static IDisposable RestoreCurrentPosition()
         {
-            var cursorLeft = ColorfulConsole.CursorLeft;
-            var cursorRight = ColorfulConsole.CursorTop;
+            var cursorLeft = System.Console.CursorLeft;
+            var cursorRight = System.Console.CursorTop;
             var cursor = new Cursor(cursorLeft, cursorRight);
             return Disposable.Use(cursor.RestoreCursorPosition);
         }
 
-        public static IDisposable ClearInputToCurrentPosition()
+        public static IDisposable UseColor(ConsoleColor color)
         {
-            var left = ColorfulConsole.CursorLeft;
-            var top = ColorfulConsole.CursorTop;
+            var currentColor = System.Console.ForegroundColor;
+            void Restore() => System.Console.ForegroundColor = currentColor;
+            System.Console.ForegroundColor = color;
+            return Disposable.Use(Restore);
+        }
+
+        public static IDisposable ClearUpAfter()
+        {
+            var left = System.Console.CursorLeft;
+            var top = System.Console.CursorTop;
             var position = new Coordinate2D(left, top);
             return Disposable.Use(() => ClearArea(position));
         }
@@ -51,26 +57,26 @@ namespace Pathfinding.App.Console
             using (Cursor.RestoreCurrentPosition())
             {
                 string emptyLine = BufferLengthString;
-                while (limit-- > 0)
+                while (limit-- >= 0)
                 {
-                    ColorfulConsole.Write(emptyLine);
+                    System.Console.Write(emptyLine);
                 }
             }
         }
 
         public static void SetPosition(Coordinate2D point)
         {
-            ColorfulConsole.SetCursorPosition(point.X, point.Y);
+            System.Console.SetCursorPosition(point.X, point.Y);
         }
 
         private void RestoreCursorPosition()
         {
-            ColorfulConsole.SetCursorPosition(cursorLeft, cursorRight);
+            System.Console.SetCursorPosition(cursorLeft, cursorRight);
         }
 
         private static void ShowCursor()
         {
-            ColorfulConsole.CursorVisible = true;
+            System.Console.CursorVisible = true;
         }
     }
 }

@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.App.WPF._2D.Messages.DataMessages;
 using Pathfinding.App.WPF._2D.Model;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.Visualization.Extensions;
@@ -14,7 +15,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
     internal class ClearColorsViewModel
     {
         private readonly IMessenger messenger;
-        private readonly PathfindingRangeAdapter<Vertex> adapter;
+        private readonly VisualPathfindingRange<Vertex> adapter;
 
         private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
@@ -25,7 +26,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
         public ClearColorsViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            adapter = DI.Container.Resolve<PathfindingRangeAdapter<Vertex>>();
+            adapter = DI.Container.Resolve<VisualPathfindingRange<Vertex>>();
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAllAlgorithmFinishedPathfinding);
             ClearColorsCommand = new RelayCommand(ExecuteClearColorsCommand, CanExecuteClearColorsCommand);

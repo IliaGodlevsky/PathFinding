@@ -1,6 +1,5 @@
 ﻿using Pathfinding.App.Console.Interface;
 
-using ColorfulConsole = Colorful.Console;
 
 namespace Pathfinding.App.Console.ValueInput.UserInput
 {
@@ -9,11 +8,11 @@ namespace Pathfinding.App.Console.ValueInput.UserInput
         public TOutput Input()
         {
             TInner result;
-            string userInput = ColorfulConsole.ReadLine();
+            string userInput = System.Console.ReadLine();
             while (!IsValidInput(userInput, out result))
             {
-                ColorfulConsole.Write(MessagesTexts.BadInputMsg);
-                userInput = ColorfulConsole.ReadLine();
+                System.Console.Write(MessagesTexts.BadInputMsg);
+                userInput = System.Console.ReadLine();
             }
             return Convert(result);
         }
