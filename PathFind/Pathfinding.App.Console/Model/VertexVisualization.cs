@@ -10,10 +10,10 @@ namespace Pathfinding.App.Console.Model
         private const ConsoleColor RegularVertexColor = ConsoleColor.DarkGray;
         private const ConsoleColor ObstacleVertexColor = ConsoleColor.Black;
         private const ConsoleColor PathVertexColor = ConsoleColor.DarkYellow;
-        private const ConsoleColor EnqueuedVertexColor = ConsoleColor.Magenta;
-        private const ConsoleColor SourceVertexColor = ConsoleColor.DarkGreen;
+        private const ConsoleColor EnqueuedVertexColor = ConsoleColor.Blue;
+        private const ConsoleColor SourceVertexColor = ConsoleColor.Magenta;
         private const ConsoleColor TargetVertexColor = ConsoleColor.Red;
-        private const ConsoleColor AlreadyPathVertexColor = ConsoleColor.DarkCyan;
+        private const ConsoleColor AlreadyPathVertexColor = ConsoleColor.DarkRed;
         private const ConsoleColor VisitedVertexColor = ConsoleColor.White;
         private const ConsoleColor IntermediateVertexColor = ConsoleColor.Green;
         private const ConsoleColor ToReplaceMarkColor = ConsoleColor.DarkMagenta;

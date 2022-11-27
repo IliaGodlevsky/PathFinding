@@ -60,6 +60,7 @@
     <Compile Include="Model\Graph2dWrapFactory.cs" />
     <Compile Include="Model\MessageBoxLog.cs" />
     <Compile Include="Model\PathfindingHistoryVolume.cs" />
+    <Compile Include="Model\Wpf2dRestoreIntermediatesModule.cs" />
     <Compile Include="Model\Wpf2DVertexChangeCostModule.cs" />
     <Compile Include="Model\Wpf2DVertexReverseModule.cs" />
     <Compile Include="Constants.cs" />

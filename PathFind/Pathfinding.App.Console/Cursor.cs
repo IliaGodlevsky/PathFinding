@@ -26,7 +26,7 @@ namespace Pathfinding.App.Console
             return Disposable.Use(ShowCursor);
         }
 
-        public static IDisposable RestoreCurrentPosition()
+        public static IDisposable UseCurrentPosition()
         {
             var cursorLeft = System.Console.CursorLeft;
             var cursorRight = System.Console.CursorTop;
@@ -54,7 +54,7 @@ namespace Pathfinding.App.Console
         {
             int limit = Cursor.CurrentPosition.Y - offset.Y;
             SetPosition(offset);
-            using (Cursor.RestoreCurrentPosition())
+            using (Cursor.UseCurrentPosition())
             {
                 string emptyLine = BufferLengthString;
                 while (limit-- >= 0)

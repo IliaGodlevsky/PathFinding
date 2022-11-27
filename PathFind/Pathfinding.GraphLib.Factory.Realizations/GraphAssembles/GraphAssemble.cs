@@ -9,6 +9,7 @@ using Shared.Random.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 
 namespace Pathfinding.GraphLib.Factory.Realizations.GraphAssembles
 {
@@ -66,8 +67,7 @@ namespace Pathfinding.GraphLib.Factory.Realizations.GraphAssembles
 
         private void SetNeighbourhood(TVertex vertex, IGraph<IVertex> graph)
         {
-            var neighbours = neighbourhoodFactory.CreateNeighborhood(vertex.Position);
-            vertex.Neighbours = neighbours.GetNeighboursWithinGraph(graph);
+            vertex.Neighbours = neighbourhoodFactory.CreateNeighborhood(vertex.Position).GetNeighboursWithinGraph(graph);
         }
 
         private static IReadOnlyList<int> ToCoordinates(IReadOnlyList<int> dimensionSizes, int index)

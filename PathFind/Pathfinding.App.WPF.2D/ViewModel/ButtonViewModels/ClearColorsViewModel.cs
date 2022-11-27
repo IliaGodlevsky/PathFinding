@@ -5,7 +5,7 @@ using Pathfinding.App.WPF._2D.Messages.DataMessages;
 using Pathfinding.App.WPF._2D.Model;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Pathfinding.Visualization.Core.Abstractions;
+using Pathfinding.GraphLib.Core.Realizations.Range;
 using Pathfinding.Visualization.Extensions;
 using System.Windows.Input;
 using WPFVersion.DependencyInjection;
@@ -15,7 +15,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
     internal class ClearColorsViewModel
     {
         private readonly IMessenger messenger;
-        private readonly VisualPathfindingRange<Vertex> adapter;
+        private readonly PathfindingRange<Vertex> range;
 
         private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
@@ -26,7 +26,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
         public ClearColorsViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            adapter = DI.Container.Resolve<VisualPathfindingRange<Vertex>>();
+            range = DI.Container.Resolve<PathfindingRange<Vertex>>();
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAllAlgorithmFinishedPathfinding);
             ClearColorsCommand = new RelayCommand(ExecuteClearColorsCommand, CanExecuteClearColorsCommand);
@@ -35,13 +35,13 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
         private void ExecuteClearColorsCommand(object param)
         {
             Graph.RestoreVerticesVisualState();
-            adapter.RestoreVerticesVisualState();
+            range.RestoreVerticesVisualState();
         }
 
         private bool CanExecuteClearColorsCommand(object param)
         {
             return Graph != Graph2D<Vertex>.Empty 
-                && adapter.HasSourceAndTargetSet() 
+                && range.HasSourceAndTargetSet() 
                 && IsAllAlgorithmFinishedPathfinding;
         }
 

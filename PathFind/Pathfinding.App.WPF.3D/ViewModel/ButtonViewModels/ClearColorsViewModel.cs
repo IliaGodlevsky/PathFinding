@@ -6,7 +6,7 @@ using Pathfinding.App.WPF._3D.Messages.PassValueMessages;
 using Pathfinding.App.WPF._3D.Model;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Pathfinding.Visualization.Core.Abstractions;
+using Pathfinding.GraphLib.Core.Realizations.Range;
 using Pathfinding.Visualization.Extensions;
 using System.Windows.Input;
 
@@ -15,7 +15,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
     internal class ClearColorsViewModel
     {
         private readonly IMessenger messenger;
-        private readonly VisualPathfindingRange<Vertex3D> adapter;
+        private readonly PathfindingRange<Vertex3D> range;
 
         private Graph3D<Vertex3D> Graph { get; set; } = Graph3D<Vertex3D>.Empty;
 
@@ -26,7 +26,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
         public ClearColorsViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            adapter = DI.Container.Resolve<VisualPathfindingRange<Vertex3D>>();
+            range = DI.Container.Resolve<PathfindingRange<Vertex3D>>();
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAllAlgorithmFinishedPathfinding);
             ClearColorsCommand = new RelayCommand(ExecuteClearColorsCommand, CanExecuteClearColorsCommand);
@@ -35,13 +35,13 @@ namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
         private void ExecuteClearColorsCommand(object param)
         {
             Graph.RestoreVerticesVisualState();
-            adapter.RestoreVerticesVisualState();
+            range.RestoreVerticesVisualState();
         }
 
         private bool CanExecuteClearColorsCommand(object param)
         {
             return Graph != Graph3D<Vertex3D>.Empty 
-                && adapter.HasSourceAndTargetSet() 
+                && range.HasSourceAndTargetSet() 
                 && IsAllAlgorithmFinishedPathfinding;
         }
 

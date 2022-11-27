@@ -1,19 +1,23 @@
 ﻿namespace Shared.Random.Realizations
 {
+    /// <summary>
+    /// A thread safe decorator for random number generators, 
+    /// that implement <see cref="IRandom"/> interface
+    /// </summary>
     public sealed class ThreadSafeRandom : IRandom
     {
         private readonly IRandom random;
-        private readonly object locker;
+        private readonly object syncRoot;
 
         public ThreadSafeRandom(IRandom random)
         {
             this.random = random;
-            locker = new object();
+            syncRoot = new object();
         }
 
         public uint NextUint()
         {
-            lock (locker)
+            lock (syncRoot)
             {
                 return random.NextUint();
             }

@@ -10,20 +10,21 @@ using Pathfinding.App.Console.Views;
 using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
-using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
+using Shared.Executable;
 using System;
-using System.Drawing;
 
 namespace Pathfinding.App.Console.ViewModel
 {
+    using FieldFactory = IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField>;
+
     [MenuColumnsNumber(3)]
     internal sealed class MainViewModel : SafeViewModel, ICache<Graph2D<Vertex>>, IRequireAnswerInput, IRequireIntInput
     {
         private readonly IMessenger messenger;
-        private readonly IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField> fieldFactory;
-        private readonly VisualPathfindingRange<Vertex> adapter;
+        private readonly FieldFactory fieldFactory;
+        private readonly IUndo undo;
 
         private GraphField GraphField { get; set; } = GraphField.Empty;
 
@@ -35,8 +36,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         public Graph2D<Vertex> Cached { get; private set; } = Graph2D<Vertex>.Empty;
 
-        public MainViewModel(IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField> fieldFactory,
-            VisualPathfindingRange<Vertex> adapter, IMessenger messenger, ILog log)
+        public MainViewModel(FieldFactory fieldFactory, IMessenger messenger, IUndo undo, ILog log)
             : base(log)
         {
             Cached = Graph2D<Vertex>.Empty;
@@ -44,7 +44,6 @@ namespace Pathfinding.App.Console.ViewModel
             messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainViewModel, SetGraph);
             messenger.Register<ClearGraphMessage>(this, ClearGraph);
             this.fieldFactory = fieldFactory;
-            this.adapter = adapter;
         }
 
         [ExecuteSafe(nameof(ExecuteSafe))]
@@ -100,8 +99,8 @@ namespace Pathfinding.App.Console.ViewModel
         private void ClearGraph(ClearGraphMessage message)
         {
             Cached.RestoreVerticesVisualState();
-            adapter.Undo();
-            messenger.Send(UpdatePathfindingStatisticsMessage.Empty);
+            undo.Undo();
+            messenger.Send(PathfindingStatisticsMessage.Empty);
         }
 
         private void DisplayGraph()
@@ -125,7 +124,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         private void SetGraph(GraphCreatedMessage message)
         {
-            adapter.Undo();
+            undo.Undo();
             Cached = message.Graph;
             GraphField = fieldFactory.CreateGraphField(Cached);
             GraphParamters = GraphParamsProperty.Assign(Cached);
@@ -133,10 +132,7 @@ namespace Pathfinding.App.Console.ViewModel
         }
 
         [FailMessage(MessagesTexts.GraphIsNotCreatedMsg)]
-        private bool IsGraphValid()
-        {
-            return Cached != Graph2D<Vertex>.Empty;
-        }
+        private bool IsGraphValid() => Cached != Graph2D<Vertex>.Empty;
 
         public override void Dispose()
         {

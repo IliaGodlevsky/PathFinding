@@ -106,6 +106,7 @@
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="Model\MessageBoxLog.cs" />
     <Compile Include="Model\PathfindingHistoryVolume.cs" />
+    <Compile Include="Model\Wpf3dReplaceIntermediateVerticesModule.cs" />
     <Compile Include="Model\Wpf3DVertexReverseModule.cs" />
     <Compile Include="ValidationRules\NonDoubleInputValidationRule.cs" />
     <Compile Include="ValidationRules\NonInt32InputValidationRule.cs" />

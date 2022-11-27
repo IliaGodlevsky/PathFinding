@@ -19,6 +19,7 @@ using Pathfinding.App.WPF._3D.Extensions;
 using System.Threading.Tasks;
 using Pathfinding.App.WPF._3D.DependencyInjection;
 using Autofac;
+using Pathfinding.GraphLib.Core.Realizations.Range;
 
 namespace Pathfinding.App.WPF._3D.ViewModel
 {
@@ -34,9 +35,9 @@ namespace Pathfinding.App.WPF._3D.ViewModel
 
         private Guid Id { get; set; }
 
-        public PathFindingViewModel(VisualPathfindingRange<Vertex3D> adapter,
+        public PathFindingViewModel(PathfindingRange<Vertex3D> range,
             IEnumerable<IAlgorithmFactory<PathfindingProcess>> algorithmFactories,
-            ILog log, ICache<Graph3D<Vertex3D>> graphCache) : base(adapter, algorithmFactories, graphCache.Cache, log)
+            ILog log, ICache<Graph3D<Vertex3D>> graphCache) : base(range, algorithmFactories, graphCache.Cache, log)
         {
             messenger = DI.Container.Resolve<IMessenger>();
             FindPathCommand = new RelayCommand(ExecutePathFindCommand, CanExecutePathFindCommand);

@@ -42,7 +42,7 @@ namespace Pathfinding.GraphLib.Core.Abstractions
         {
             if (obj is IGraph<TVertex> graph)
             {
-                bool hasEqualDimensionSizes = DimensionsSizes.SequenceEqual(graph.DimensionsSizes);
+                bool hasEqualDimensionSizes = DimensionsSizes.Juxtapose(graph.DimensionsSizes);
                 bool hasEqualNumberOfObstacles = graph.GetObstaclesCount() == this.GetObstaclesCount();
                 bool hasEqualVertices = graph.Juxtapose(this, (a, b) => a.Equals(b));
                 return hasEqualNumberOfObstacles && hasEqualVertices && hasEqualDimensionSizes;

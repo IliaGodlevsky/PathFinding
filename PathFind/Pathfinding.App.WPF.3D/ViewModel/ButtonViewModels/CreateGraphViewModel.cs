@@ -9,6 +9,7 @@ using Pathfinding.App.WPF._3D.View;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Visualization.Core.Abstractions;
+using Shared.Executable;
 using System.Windows.Input;
 
 namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
@@ -43,10 +44,10 @@ namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
 
         private void OnGraphCreated(GraphCreatedMessage message)
         {
-            var adapter = DI.Container.Resolve<VisualPathfindingRange<Vertex3D>>();
+            var undo = DI.Container.Resolve<IUndo>();
             var subscription = DI.Container.Resolve<IGraphSubscription<Vertex3D>>();
             subscription.Unsubscribe(Graph);
-            adapter.Undo();
+            undo.Undo();
             Graph = message.Value;
             subscription.Subscribe(Graph);
             messenger.Send(new ClearStatisticsMessage());

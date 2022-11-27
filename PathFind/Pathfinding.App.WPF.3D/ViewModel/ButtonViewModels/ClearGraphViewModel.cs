@@ -6,8 +6,8 @@ using Pathfinding.App.WPF._3D.Messages.ActionMessages;
 using Pathfinding.App.WPF._3D.Messages.PassValueMessages;
 using Pathfinding.App.WPF._3D.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.Visualization.Extensions;
+using Shared.Executable;
 using System.Windows.Input;
 
 namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
@@ -15,7 +15,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
     internal class ClearGraphViewModel
     {
         private readonly IMessenger messenger;
-        private readonly VisualPathfindingRange<Vertex3D> adapter;
+        private readonly IUndo undo;
 
         private Graph3D<Vertex3D> Graph { get; set; } = Graph3D<Vertex3D>.Empty;
 
@@ -26,7 +26,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
         public ClearGraphViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            adapter = DI.Container.Resolve<VisualPathfindingRange<Vertex3D>>();
+            undo = DI.Container.Resolve<IUndo>();
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAllAlgorithmFinishedPathfinding);
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             ClearGraphCommand = new RelayCommand(ExecuteClearGraphCommand, CanExecuteClearGraphCommand);
@@ -35,7 +35,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
         private void ExecuteClearGraphCommand(object param)
         {
             Graph.RestoreVerticesVisualState();
-            adapter.Undo();
+            undo.Undo();
             messenger.Send(new ClearStatisticsMessage());
         }
 

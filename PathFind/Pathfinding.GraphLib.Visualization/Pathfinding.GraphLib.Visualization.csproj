@@ -41,10 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\RestoreIntermediateVertexVisualCommand.cs" />
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\RestoreMarkedToReplaceVertexVisualCommand.cs" />
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\RestoreSourceVisualCommand.cs" />
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\RestoreTargetVisualCommand.cs" />
+    <Compile Include="Commands\Realizations\PathfindingRangeCommands\RestoreIntermediateVertexVisual.cs" />
+    <Compile Include="Commands\Realizations\PathfindingRangeCommands\RestoreSourceVisual.cs" />
+    <Compile Include="Commands\Realizations\PathfindingRangeCommands\RestoreTargetVisual.cs" />
     <Compile Include="Commands\Realizations\VisualizationCommands\RestoreVerticesVisualCommands.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VisualPathfindingRange.cs" />
@@ -65,10 +64,6 @@
     <ProjectReference Include="..\Pathfinding.GraphLib.Factory.Interface\Pathfinding.GraphLib.Factory.Interface.csproj">
       <Project>{8C66CBDB-9899-4D80-846A-F197925D3163}</Project>
       <Name>Pathfinding.GraphLib.Factory.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.Visualization.Extensions\Pathfinding.Visualization.Extensions.csproj">
-      <Project>{eab4ff1e-bb9c-4c01-b8d6-171b1758b81d}</Project>
-      <Name>Pathfinding.Visualization.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pathfinding.VisualizationLib.Core.Interface\Pathfinding.VisualizationLib.Core.Interface.csproj">
       <Project>{ECC527ED-96BA-44DF-9561-6CD8DE13B550}</Project>

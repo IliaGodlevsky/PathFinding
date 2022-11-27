@@ -46,6 +46,7 @@
     <Compile Include="HistoryExtensions.cs" />
     <Compile Include="IGraphExtensions.cs" />
     <Compile Include="IEnumerableExtensions.cs" />
+    <Compile Include="PathfindingRangeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IVertexExtension.cs" />
   </ItemGroup>
@@ -70,9 +71,21 @@
       <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Realizations\Pathfinding.GraphLib.Core.Realizations.csproj">
+      <Project>{0C7DB792-B30B-4138-8D37-67450E2F0982}</Project>
+      <Name>Pathfinding.GraphLib.Core.Realizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Visualization\Pathfinding.GraphLib.Visualization.csproj">
+      <Project>{5616b5ff-ba13-4805-860c-1f69f2946b89}</Project>
+      <Name>Pathfinding.GraphLib.Visualization</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.VisualizationLib.Core.Interface\Pathfinding.VisualizationLib.Core.Interface.csproj">
       <Project>{ECC527ED-96BA-44DF-9561-6CD8DE13B550}</Project>
       <Name>Pathfinding.VisualizationLib.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Executable.Extensions\Shared.Executable.Extensions.csproj">
+      <Project>{715B890D-CAEC-46E6-BF18-A556E1AE81A9}</Project>
+      <Name>Shared.Executable.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared.Executable\Shared.Executable.csproj">
       <Project>{0A7C5FE5-4688-42C4-8202-676042BB0F81}</Project>

@@ -17,9 +17,11 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
 using Pathfinding.App.Console.Views;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Realizations.Range;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.Visualization.Extensions;
+using Shared.Extensions;
 using Shared.Primitives;
 using System;
 using System.Collections.Generic;
@@ -33,9 +35,11 @@ namespace Pathfinding.App.Console.ViewModel
     [InstancePerLifetimeScope]
     internal sealed class PathfindingProcessViewModel : SafeViewModel, IRequireConsoleKeyInput
     {
+        private static readonly TimeSpan StepDelay = TimeSpan.FromMilliseconds(0.5);
+
         private readonly IMessenger messenger;
         private readonly ConsoleKeystrokesHook keystrokesHook;
-        private readonly VisualPathfindingRange<Vertex> range;
+        private readonly PathfindingRange<Vertex> range;
         private readonly Stopwatch timer;
         private readonly ILifetimeScope lifetimeScope;
         private readonly Queue<AlgorithmFactory> factories;
@@ -49,8 +53,8 @@ namespace Pathfinding.App.Console.ViewModel
 
         private string Statistics => path.ToStatistics(timer, visitedVerticesCount, algorithm);
         
-        public PathfindingProcessViewModel(VisualPathfindingRange<Vertex> adapter, ConsoleKeystrokesHook hook, 
-            ICache<Graph2D<Vertex>> graph, IMessenger messenger, ILog log)
+        public PathfindingProcessViewModel(PathfindingRange<Vertex> range, 
+            ConsoleKeystrokesHook hook, ICache<Graph2D<Vertex>> graph, IMessenger messenger, ILog log)
             : base(log)
         {
             this.factories = new Queue<AlgorithmFactory>();
@@ -58,7 +62,7 @@ namespace Pathfinding.App.Console.ViewModel
             this.messenger = messenger;
             this.keystrokesHook = hook;
             this.graph = graph.Cached;
-            this.range = adapter;
+            this.range = range;
             this.timer = new Stopwatch();
             keystrokesHook.KeyPressed += OnConsoleKeyPressed;
             messenger.Register<PathfindingAlgorithmChosenMessage>(this, OnAlgorithmChosen);
@@ -89,7 +93,7 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ClearColors, 4)]
         private void ClearColors()
         {
-            messenger.Send(UpdatePathfindingStatisticsMessage.Empty);
+            messenger.Send(PathfindingStatisticsMessage.Empty);
             graph.RestoreVerticesVisualState();
             range.RestoreVerticesVisualState();
         }
@@ -103,7 +107,7 @@ namespace Pathfinding.App.Console.ViewModel
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
         {
             visitedVerticesCount++;
-            messenger.Send(new UpdatePathfindingStatisticsMessage(Statistics));
+            messenger.Send(new PathfindingStatisticsMessage(Statistics));
         }
 
         private void FindPathInternal()
@@ -115,12 +119,14 @@ namespace Pathfinding.App.Console.ViewModel
                 {
                     try
                     {
-                        using (Disposable.Use(SummarizeResults, WaitKeyInput, ClearColors))
+                        using (Disposable.Use(SummarizeResults))
                         {
                             PrepareForPathfinding(algorithm);
                             path = algorithm.FindPath();
                             graph.GetVertices(path).VisualizeAsPath();
                         }
+                        KeyInput.Input();
+                        ClearColors();
                     }
                     catch (PathfindingException ex)
                     {
@@ -129,8 +135,6 @@ namespace Pathfinding.App.Console.ViewModel
                 }
             }
         }
-
-        private void WaitKeyInput() => KeyInput.Input();
 
         private void OnAlgorithmChosen(PathfindingAlgorithmChosenMessage message)
         {
@@ -156,7 +160,7 @@ namespace Pathfinding.App.Console.ViewModel
         private void SummarizeResults()
         {
             var statistics = path.Count > 0 ? Statistics : MessagesTexts.CouldntFindPathMsg;
-            messenger.Send(new UpdatePathfindingStatisticsMessage(statistics));
+            messenger.Send(new PathfindingStatisticsMessage(statistics));
             messenger.Send(new PathFoundMessage(path, algorithm));
             messenger.Send(new AlgorithmFinishedMessage(algorithm, statistics));
             visitedVerticesCount = 0;

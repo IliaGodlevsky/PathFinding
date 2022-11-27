@@ -9,7 +9,6 @@ using Pathfinding.App.WPF._3D.ViewModel;
 using Pathfinding.GraphLib.Subscriptions;
 using Pathfinding.GraphLib.Core.Interface;
 using Autofac;
-using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.App.WPF._3D.Extensions;
 using Shared.Extensions;
 using Pathfinding.App.WPF._3D.Interface;
@@ -30,7 +29,8 @@ using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decorators;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.GraphLib.Factory.Realizations;
+using Pathfinding.GraphLib.Core.Realizations.Range;
+using Shared.Executable;
 
 namespace Pathfinding.App.WPF._3D.DependencyInjection
 {
@@ -50,8 +50,12 @@ namespace Pathfinding.App.WPF._3D.DependencyInjection
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IViewModel>()).AsSelf().InstancePerDependency();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
-            builder.RegisterType<Wpf3DPathfindingRange>().As<VisualPathfindingRange<Vertex3D>>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<Wpf3DPathfindingRange>().As<PathfindingRange<Vertex3D>>().AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<Wpf3DVertexReverseModule>().As<IGraphSubscription<Vertex3D>>().SingleInstance();
+            builder.RegisterType<Wpf3dReplaceIntermediateVerticesModule>().As<ReplaceIntermediateVerticesModule<Vertex3D>>()
+               .As<IGraphSubscription<Vertex3D>>().As<IUndo>().SingleInstance();
+
+            builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();

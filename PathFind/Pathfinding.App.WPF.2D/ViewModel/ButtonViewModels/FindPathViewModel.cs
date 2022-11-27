@@ -3,6 +3,7 @@ using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.App.WPF._2D.Model;
 using Pathfinding.App.WPF._2D.View;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.GraphLib.Core.Realizations.Range;
 using Pathfinding.Visualization.Core.Abstractions;
 using System.Windows.Input;
 using WPFVersion.DependencyInjection;
@@ -11,13 +12,13 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
 {
     internal class FindPathViewModel
     {
-        private readonly VisualPathfindingRange<Vertex> adapter;
+        private readonly PathfindingRange<Vertex> range;
 
         public ICommand FindPathCommand { get; }
 
         public FindPathViewModel()
         {
-            adapter = DI.Container.Resolve<VisualPathfindingRange<Vertex>>();
+            range = DI.Container.Resolve<PathfindingRange<Vertex>>();
             FindPathCommand = new RelayCommand(ExecuteFindPathCommand, CanExecuteFindPathCommand);
         }
 
@@ -28,7 +29,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
 
         private bool CanExecuteFindPathCommand(object param)
         {
-            return !adapter.HasIsolators() && adapter.HasSourceAndTargetSet();
+            return !range.HasIsolators() && range.HasSourceAndTargetSet();
         }
     }
 }

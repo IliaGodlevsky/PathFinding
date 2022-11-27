@@ -7,21 +7,37 @@ namespace Shared.Random.Extensions
 {
     public static class IRandomExtensions
     {
+        /// <summary>
+        /// Generates a random number that lays within the <paramref name="range"/>
+        /// </summary>
+        /// <param name="random"></param>
+        /// <param name="range">A range within which a number should be generated</param>
+        /// <returns>A random int within <paramref name="range"/></returns>
         public static int NextInt(this IRandom random, InclusiveValueRange<int> range)
         {
             return (int)(random.NextUint() % (range.Amplitude() + 1)) + range.LowerValueOfRange;
         }
 
+        /// <summary>
+        /// Generates a random number that lays within 
+        /// the range between 0 and <see cref="int.MaxValue"/>
+        /// </summary>
+        /// <param name="random"></param>
+        /// <returns>A random int within the range 
+        /// between 0 and <see cref="int.MaxValue"/></returns>
         public static int NextInt(this IRandom random)
         {
             return random.NextInt(new InclusiveValueRange<int>(int.MaxValue));
         }
 
-        public static int NextInt(this IRandom random, int minValue, int maxValue)
-        {
-            return random.NextInt(new InclusiveValueRange<int>(maxValue, minValue));
-        }
-
+        /// <summary>
+        /// Generates a random double within the <paramref name="range"/>
+        /// </summary>
+        /// <param name="random"></param>
+        /// <param name="range">A range within which a 
+        /// random number should be generated</param>
+        /// <returns>A random number within 
+        /// the <paramref name="range"/></returns>
         public static double NextDouble(this IRandom random, InclusiveValueRange<double> range)
         {
             return range.Amplitude() * ((double)random.NextUint() / uint.MaxValue) + range.LowerValueOfRange;

@@ -8,6 +8,12 @@ namespace Shared.Primitives.Extensions
 {
     public static class InclusiveValueRangeExtensions
     {
+        /// <summary>
+        /// Returns all values from <paramref name="range"/>
+        /// </summary>
+        /// <param name="range"></param>
+        /// <returns>An enumerable, that contains all 
+        /// values from <paramref name="range"/></returns>
         public static IEnumerable<int> EnumerateValues(this InclusiveValueRange<int> range)
         {
             for (int value = range.LowerValueOfRange; value <= range.UpperValueOfRange; value++)

@@ -10,7 +10,6 @@ using Pathfinding.VisualizationLib.Core.Interface;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 
 namespace Pathfinding.App.Console.Model
 {

@@ -13,20 +13,11 @@ namespace Pathfinding.App.WPF._2D.Model
             IncludeInPathfindingRange((Vertex)e.Source);
         }
 
-        private void MarkAsIntermediateToRemove(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Middle)
-            {
-                MarkIntermediateVertexToReplace((Vertex)e.Source);
-            }
-        }
-
         public void Subscribe(IGraph<Vertex> graph)
         {
             foreach (var vertex in graph)
             {
                 vertex.MouseLeftButtonDown += SetPathfindingRange;
-                vertex.MouseUp += MarkAsIntermediateToRemove;
             }
         }
 
@@ -35,7 +26,6 @@ namespace Pathfinding.App.WPF._2D.Model
             foreach (var vertex in graph)
             {
                 vertex.MouseLeftButtonDown -= SetPathfindingRange;
-                vertex.MouseUp -= MarkAsIntermediateToRemove;
             }
         }
     }

@@ -12,7 +12,6 @@ using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Shared.Process.EventArguments;
 using Pathfinding.Visualization.Models;
 using Pathfinding.AlgorithmLib.Factory.Interface;
-using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.AlgorithmLib.Core.Events;
@@ -20,6 +19,7 @@ using Shared.Extensions;
 using Pathfinding.App.WPF._2D.Extensions;
 using System.Threading.Tasks;
 using Autofac;
+using Pathfinding.GraphLib.Core.Realizations.Range;
 
 namespace Pathfinding.App.WPF._2D.ViewModel
 {
@@ -35,9 +35,9 @@ namespace Pathfinding.App.WPF._2D.ViewModel
 
         public ICommand CancelPathFindAlgorithmChoice { get; }
 
-        public PathFindingViewModel(VisualPathfindingRange<Vertex> adapter,
+        public PathFindingViewModel(PathfindingRange<Vertex> range,
             IEnumerable<IAlgorithmFactory<PathfindingProcess>> algorithmFactories, ICache<Graph2D<Vertex>> graphCache, ILog log)
-            : base(adapter, algorithmFactories, graphCache.Cached, log)
+            : base(range, algorithmFactories, graphCache.Cached, log)
         {
             messenger = DI.Container.Resolve<IMessenger>();
             ConfirmPathFindAlgorithmChoice = new RelayCommand(ExecuteConfirmPathFindAlgorithmChoice, CanExecuteConfirmPathFindAlgorithmChoice);

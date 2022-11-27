@@ -3,6 +3,10 @@ using System.Security.Cryptography;
 
 namespace Shared.Random.Realizations
 {
+    /// <summary>
+    /// A random number generator that produces a 
+    /// cryptographically strong random sequence of numbers
+    /// </summary>
     public sealed class CryptoRandom : IRandom, IDisposable
     {
         private const int PositionIncrement = 4;

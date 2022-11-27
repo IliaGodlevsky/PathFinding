@@ -2,10 +2,13 @@
 
 namespace Shared.Random.Realizations
 {
+    /// <summary>
+    /// A random number generator based on linear congruential method
+    /// </summary>
     public sealed class PseudoRandom : IRandom
     {
-        private const int Increment = 1;
-        private const int Multiplier = 22695477;
+        private const uint Increment = 1;
+        private const uint Multiplier = 22695477;
 
         private uint state;
 

@@ -86,7 +86,7 @@
     <Compile Include="Messages\PathFoundMessage.cs" />
     <Compile Include="Messages\SubscribeOnHistoryMessage.cs" />
     <Compile Include="Messages\SubscribeOnVisualizationMessage.cs" />
-    <Compile Include="Messages\UpdateStatisticsMessage.cs" />
+    <Compile Include="Messages\PathfindingStatisticsMessage.cs" />
     <Compile Include="MessageTokens.cs" />
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\Answer.cs" />
@@ -94,7 +94,6 @@
     <Compile Include="Model\ColorConsoleLog.cs" />
     <Compile Include="Model\ConsoleSmoothLevels.cs" />
     <Compile Include="Model\ConsoleVertexReverseModule.cs" />
-    <Compile Include="Model\ConsolePathfindingRangeAdapter.cs" />
     <Compile Include="Model\FramedAxes\FramedAbscissa.cs" />
     <Compile Include="Model\FramedAxes\FramedAxis.cs" />
     <Compile Include="Model\FramedAxes\FramedOrdinate.cs" />

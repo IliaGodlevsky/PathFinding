@@ -11,6 +11,7 @@ using Pathfinding.App.WPF._2D.Model;
 using Pathfinding.App.WPF._2D.ViewModel;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Realizations.Range;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations;
 using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
@@ -28,6 +29,7 @@ using Pathfinding.Logging.Interface;
 using Pathfinding.Logging.Loggers;
 using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.VisualizationLib.Core.Interface;
+using Shared.Executable;
 using Shared.Extensions;
 using Shared.Random;
 using Shared.Random.Realizations;
@@ -53,12 +55,15 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
-            builder.RegisterType<Wpf2DPathfindingRange>().As<VisualPathfindingRange<Vertex>>()
+            builder.RegisterType<Wpf2DPathfindingRange>().As<PathfindingRange<Vertex>>()
                 .AsImplementedInterfaces().SingleInstance();
             builder.RegisterType<Wpf2DVertexChangeCostModule>().As<IGraphSubscription<Vertex>>().SingleInstance();
             builder.RegisterType<Wpf2DVertexReverseModule>().As<IGraphSubscription<Vertex>>().SingleInstance();
+            builder.RegisterType<Wpf2dReplaceIntermediateVerticesModule>().As<ReplaceIntermediateVerticesModule<Vertex>>()
+                .As<IGraphSubscription<Vertex>>().As<IUndo>().SingleInstance();
 
             builder.RegisterComposite<GraphSubscriptions<Vertex>, IGraphSubscription<Vertex>>().SingleInstance();
+            builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();

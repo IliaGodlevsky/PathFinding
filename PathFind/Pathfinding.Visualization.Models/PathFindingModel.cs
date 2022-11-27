@@ -7,6 +7,7 @@ using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.GraphLib.Core.Realizations.Range;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.Visualization.Extensions;
@@ -27,7 +28,7 @@ namespace Pathfinding.Visualization.Models
     public abstract class PathFindingModel<TVertex>
         where TVertex : IVertex, IVisualizable
     {
-        protected readonly VisualPathfindingRange<TVertex> range;
+        protected readonly PathfindingRange<TVertex> range;
         protected readonly Stopwatch timer;
         protected readonly ILog log;
 
@@ -47,7 +48,7 @@ namespace Pathfinding.Visualization.Models
 
         public IReadOnlyList<IAlgorithmFactory<PathfindingProcess>> Algorithms { get; }
 
-        protected PathFindingModel(VisualPathfindingRange<TVertex> range,
+        protected PathFindingModel(PathfindingRange<TVertex> range,
             IEnumerable<IAlgorithmFactory<PathfindingProcess>> factories, IGraph<TVertex> graph, ILog log)
         {
             Graph = graph;

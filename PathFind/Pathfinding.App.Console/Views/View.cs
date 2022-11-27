@@ -25,8 +25,6 @@ namespace Pathfinding.App.Console.Views
 
         private int MenuItemIndex => IntInput.Input(OptionsMsg, menuRange) - 1;
 
-        private IMenuCommand MenuCommand => menuCommands.Commands[MenuItemIndex];
-
         private bool IsClosureRequested { get; set; }
 
         protected View(IViewModel model, ILog log)
@@ -41,17 +39,16 @@ namespace Pathfinding.App.Console.Views
 
         public virtual void Display()
         {
+            IMenuCommand command;
             while (!IsClosureRequested)
             {
                 Screen.SetCursorPositionUnderMenu(1);
                 try
                 {                   
                     NewMenuCycleStarted?.Invoke();
-                    IMenuCommand command;
                     using (Cursor.CleanUpAfter())
                     {
-                        int index = IntInput.Input(OptionsMsg, menuRange) - 1;
-                        command = menuCommands.Commands[index];                       
+                        command = menuCommands.Commands[MenuItemIndex];
                     }
                     command.Execute();
                 }

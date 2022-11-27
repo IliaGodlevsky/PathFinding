@@ -100,13 +100,13 @@ namespace Pathfinding.App.Console.ViewModel
             while (index != QuitIndex)
             {
                 var page = startedAlgorithms.ElementAt(index);
-                using (Cursor.RestoreCurrentPosition())
+                using (Cursor.UseCurrentPosition())
                 {
                     using (Cursor.HideCursor())
                     {
                         graph.RestoreVerticesVisualState();
                         history.VisualizeHistory(page.Key, graph);
-                        messenger.Send(new UpdatePathfindingStatisticsMessage(page.Value));
+                        messenger.Send(new PathfindingStatisticsMessage(page.Value));
                     }
                 }
                 index = GetAlgorithmIndex(inputMessage);

@@ -4,6 +4,7 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Realizations.Range;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Extensions;
 using System;
@@ -17,17 +18,19 @@ namespace Pathfinding.App.Console.ViewModel
     {
         private const int RequiredVerticesForRange = 2;
 
-        private readonly ConsolePathfindingRange range;
+        private readonly ReplaceIntermediateVerticesModule<Vertex> module;
+        private readonly PathfindingRange<Vertex> range;
         private readonly Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         private int numberOfIntermediates;
 
         public IInput<int> IntInput { get; set; }
 
-        public PathfindingRangeViewModel(ConsolePathfindingRange range, ICache<Graph2D<Vertex>> graph)
+        public PathfindingRangeViewModel(PathfindingRange<Vertex> range, ReplaceIntermediateVerticesModule<Vertex> module, ICache<Graph2D<Vertex>> graph)
         {
             this.range = range;
             this.graph = graph.Cached;
+            this.module = module;
         }
 
         [Condition(nameof(HasAvailableVerticesToIncludeInRange))]
@@ -101,7 +104,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         private void IncludeInRange(Vertex vertex)
         {
-            using (Cursor.RestoreCurrentPosition())
+            using (Cursor.UseCurrentPosition())
             {
                 range.IncludeInPathfindingRange(vertex);
             }
@@ -109,9 +112,9 @@ namespace Pathfinding.App.Console.ViewModel
 
         private void MarkAsToReplace(Vertex vertex)
         {
-            using (Cursor.RestoreCurrentPosition())
+            using (Cursor.UseCurrentPosition())
             {
-                range.MarkAsIntermediateToReplace(vertex);
+                module.MarkIntermediateVertexToReplace(vertex);
             }
         }
 

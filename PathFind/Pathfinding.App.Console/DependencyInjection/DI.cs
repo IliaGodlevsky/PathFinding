@@ -39,8 +39,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Pathfinding.App.Console.Extensions;
-using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.App.Console.ValueInput.UserInput;
+using Pathfinding.GraphLib.Core.Realizations.Range;
+using Shared.Executable;
+using Pathfinding.GraphLib.Visualization;
 
 namespace Pathfinding.App.Console.DependencyInjection
 {
@@ -85,8 +87,10 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
-            builder.RegisterType<ConsolePathfindingRange>().AsSelf().As<VisualPathfindingRange<Vertex>>()
-                .As<IPathfindingRange>().SingleInstance();
+            builder.RegisterType<VisualPathfindingRange<Vertex>>().AsSelf().As<PathfindingRange<Vertex>>()
+                .AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<ReplaceIntermediateVerticesModule<Vertex>>().AsSelf().As<IUndo>().SingleInstance();
+            builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
 
             builder.RegisterType<PseudoRandom>().As<IRandom>().SingleInstance();
             

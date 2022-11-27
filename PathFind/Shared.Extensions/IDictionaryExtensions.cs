@@ -29,15 +29,5 @@ namespace Shared.Extensions
             self.Add(key, value);
             return value;
         }
-
-        public static void TryAddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key, TValue value)
-        {
-            if (self.TryGetValue(key, out _))
-            {
-                self[key] = value;
-            }
-
-            self.Add(key, value);
-        }
     }
 }
