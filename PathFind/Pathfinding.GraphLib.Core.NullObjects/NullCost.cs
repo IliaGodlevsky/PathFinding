@@ -1,5 +1,6 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Shared.Primitives.Single;
+using Shared.Primitives.ValueRange;
 using System.Diagnostics;
 
 namespace Pathfinding.GraphLib.Core.NullObjects
@@ -8,6 +9,8 @@ namespace Pathfinding.GraphLib.Core.NullObjects
     public sealed class NullCost : Singleton<NullCost, IVertexCost>, IVertexCost
     {
         public int CurrentCost => default;
+
+        public InclusiveValueRange<int> CostRange => default;
 
         private NullCost()
         {
@@ -27,6 +30,11 @@ namespace Pathfinding.GraphLib.Core.NullObjects
         public override string ToString()
         {
             return string.Empty;
+        }
+
+        public IVertexCost SetCost(int cost)
+        {
+            return Instance;
         }
     }
 }

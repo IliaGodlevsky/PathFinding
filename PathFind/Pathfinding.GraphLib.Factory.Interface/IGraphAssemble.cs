@@ -7,6 +7,6 @@ namespace Pathfinding.GraphLib.Factory.Interface
         where TVertex : IVertex
         where TGraph : IGraph<TVertex>
     {
-        TGraph AssembleGraph(int obstaclePercent, IReadOnlyList<int> graphDimensionSizes);
+        TGraph AssembleGraph(IReadOnlyList<int> graphDimensionsSizes);
     }
 }

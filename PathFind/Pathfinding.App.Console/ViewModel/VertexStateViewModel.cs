@@ -5,7 +5,7 @@ using Pathfinding.App.Console.Model.Menu.Attributes;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
-using Pathfinding.VisualizationLib.Core.Interface;
+using Shared.Primitives.ValueRange;
 using System;
 
 namespace Pathfinding.App.Console.ViewModel
@@ -28,12 +28,12 @@ namespace Pathfinding.App.Console.ViewModel
             }
         }
 
-        public VertexStateViewModel(IVertexCostFactory costFactory,
-            ICache<Graph2D<Vertex>> cache, IPathfindingRange adapter)
+        public VertexStateViewModel(ICache<Graph2D<Vertex>> cache,
+            ConsoleVertexChangeCostModule costModule, ConsoleVertexReverseModule reverseModule)
         {
             Graph = cache.Cached;
-            reverseModule = new ConsoleVertexReverseModule(adapter);
-            costModule = new ConsoleVertexChangeCostModule(costFactory);
+            this.costModule = costModule;
+            this.reverseModule = reverseModule;
         }
 
         [MenuItem(MenuItemsNames.ReverseVertex, 0)]

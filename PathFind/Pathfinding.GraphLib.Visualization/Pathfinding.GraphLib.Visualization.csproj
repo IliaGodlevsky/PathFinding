@@ -41,10 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Realizations\PathfindingRangeCommands\RestoreIntermediateVertexVisual.cs" />
+    <Compile Include="Commands\Realizations\PathfindingRangeCommands\IVisualCommand.cs" />
+    <Compile Include="Commands\Realizations\PathfindingRangeCommands\RestoreTransitVerticesVisual.cs" />
     <Compile Include="Commands\Realizations\PathfindingRangeCommands\RestoreSourceVisual.cs" />
     <Compile Include="Commands\Realizations\PathfindingRangeCommands\RestoreTargetVisual.cs" />
-    <Compile Include="Commands\Realizations\VisualizationCommands\RestoreVerticesVisualCommands.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VisualPathfindingRange.cs" />
   </ItemGroup>

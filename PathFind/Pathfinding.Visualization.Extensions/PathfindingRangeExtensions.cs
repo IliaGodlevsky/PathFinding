@@ -1,21 +1,27 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Realizations.Range;
-using Pathfinding.GraphLib.Visualization.Commands.Realizations.VisualizationCommands;
+using Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRangeCommands;
 using Pathfinding.VisualizationLib.Core.Interface;
-using Shared.Executable.Extensions;
-using Shared.Extensions;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.Visualization.Extensions
 {
     public static class PathfindingRangeExtensions
     {
-        public static void RestoreVerticesVisualState<TVertex>(this PathfindingRange<TVertex> range)
+        public static void RestoreVerticesVisualState<TVertex>(this IPathfindingRange<TVertex> range)
             where TVertex : IVertex, IVisualizable
         {
-            var commands = new RestoreVerticesVisualCommands<TVertex>(range);
-            var vertices = range.Cast<TVertex>().ToList();
-            vertices.ForEach(commands.Execute);
+            var commands = new List<IVisualCommand<TVertex>>()
+            {
+                new RestoreTransitVerticesVisual<TVertex>(),
+                new RestoreSourceVisual<TVertex>(),
+                new RestoreTargetVisual<TVertex>()
+            };
+
+            foreach (TVertex vertex in range)
+            {
+                commands.FirstOrDefault(command => command.CanExecute(range, vertex))?.Execute(vertex);
+            }
         }
     }
 }

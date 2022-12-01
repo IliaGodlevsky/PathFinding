@@ -14,14 +14,14 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
         private readonly IStepRule stepRule;
         private readonly IHeuristic heuristic;
 
-        public HeuristicCostGreedyAlgorithm(IPathfindingRange pathfindingRange,
+        public HeuristicCostGreedyAlgorithm(IEnumerable<IVertex> pathfindingRange,
             IHeuristic heuristic, IStepRule stepRule) : base(pathfindingRange)
         {
             this.stepRule = stepRule;
             this.heuristic = heuristic;
         }
 
-        public HeuristicCostGreedyAlgorithm(IPathfindingRange pathfindingRange)
+        public HeuristicCostGreedyAlgorithm(IEnumerable<IVertex> pathfindingRange)
             : this(pathfindingRange, new ChebyshevDistance(), new DefaultStepRule())
         {
 
@@ -35,7 +35,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 
         protected override double CalculateHeuristic(IVertex vertex)
         {
-            double heuristicResult = heuristic.Calculate(vertex, pathfindingRange.Target);
+            double heuristicResult = heuristic.Calculate(vertex, CurrentRange.Target);
             double stepCost = stepRule.CalculateStepCost(vertex, CurrentVertex);
             return heuristicResult + stepCost;
         }

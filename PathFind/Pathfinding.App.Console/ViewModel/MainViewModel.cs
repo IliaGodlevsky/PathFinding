@@ -7,12 +7,12 @@ using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
 using Pathfinding.App.Console.Views;
-using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Executable;
+using Shared.Primitives.ValueRange;
 using System;
 
 namespace Pathfinding.App.Console.ViewModel
@@ -40,9 +40,10 @@ namespace Pathfinding.App.Console.ViewModel
             : base(log)
         {
             Cached = Graph2D<Vertex>.Empty;
+            this.undo = undo;
             this.messenger = messenger;
-            messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainViewModel, SetGraph);
-            messenger.Register<ClearGraphMessage>(this, ClearGraph);
+            this.messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainViewModel, SetGraph);
+            this.messenger.Register<ClearGraphMessage>(this, ClearGraph);
             this.fieldFactory = fieldFactory;
         }
 
@@ -73,17 +74,6 @@ namespace Pathfinding.App.Console.ViewModel
         [ExecuteSafe(nameof(ExecuteSafe))]
         [MenuItem(MenuItemsNames.LoadGraph, 5)]
         private void LoadGraph() => DI.Container.Display<GraphLoadView>();
-
-        [ExecuteSafe(nameof(ExecuteSafe))]
-        [MenuItem(MenuItemsNames.ChangeCostRange, 6)]
-        private void ChangeVertexCostValueRange()
-        {
-            using (Cursor.CleanUpAfter())
-            {
-                VertexCost.CostRange = IntInput.InputRange(Constants.VerticesCostRange);
-                messenger.Send(new CostRangeChangedMessage(VertexCost.CostRange));
-            }
-        }
 
         protected override void RaiseViewClosed()
         {

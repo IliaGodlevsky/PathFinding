@@ -58,19 +58,19 @@ namespace Pathfinding.App.Console.Extensions
         }
 
         public static Vertex InputVertex(this IInput<int> self, Graph2D<Vertex> graph, 
-            IPathfindingRange range)
+            IPathfindingRange<Vertex> range)
         {
             return self.InputVertex(graph, range.CanBeInRange);
         }
 
         public static IEnumerable<Vertex> InputExistingIntermediates(this IInput<int> self, 
-            Graph2D<Vertex> graph, IPathfindingRange range, int count)
+            Graph2D<Vertex> graph, IPathfindingRange<Vertex> range, int count)
         {
-            return self.InputVertices(graph, range.IsIntermediate, count);
+            return self.InputVertices(graph, range.Transit.Contains, count);
         }
 
         public static IEnumerable<Vertex> InputVertices(this IInput<int> self, Graph2D<Vertex> graph,
-            IPathfindingRange range, int count)
+            IPathfindingRange<Vertex> range, int count)
         {
             return self.InputVertices(graph, range.CanBeInRange, count);
         }

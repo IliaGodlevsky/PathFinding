@@ -140,7 +140,6 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             {
                 throw new ObjectDisposedException(GetType().Name);
             }
-            DropState();
             IsInProcess = true;
             Started?.Invoke(this, new ProcessEventArgs());
         }

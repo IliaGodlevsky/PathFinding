@@ -1,25 +1,20 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
-using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 
 namespace Pathfinding.GraphLib.Core.Realizations
 {
     public class VertexCost : IVertexCost
     {
-        public static InclusiveValueRange<int> CostRange { get; set; }
-
         private readonly string stringRepresentation;
-
-        static VertexCost()
-        {
-            CostRange = new InclusiveValueRange<int>(9, 1);
-        }
 
         public int CurrentCost { get; }
 
-        public VertexCost(int cost)
+        public InclusiveValueRange<int> CostRange { get; }
+
+        public VertexCost(int cost, InclusiveValueRange<int> costRange)
         {
-            CurrentCost = CostRange.ReturnInRange(cost);
+            CostRange = costRange;
+            CurrentCost = cost;
             stringRepresentation = CurrentCost.ToString();
         }
 
@@ -36,6 +31,11 @@ namespace Pathfinding.GraphLib.Core.Realizations
         public override sealed string ToString()
         {
             return stringRepresentation;
+        }
+
+        public IVertexCost SetCost(int cost)
+        {
+            return new VertexCost(cost, CostRange);
         }
     }
 }

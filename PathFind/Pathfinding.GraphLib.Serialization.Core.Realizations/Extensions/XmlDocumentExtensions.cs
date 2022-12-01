@@ -20,8 +20,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
         private static IEnumerable<XmlNode> CreateNodes(this XmlDocument document, GraphSerializationInfo info)
         {
             yield return document.CreateElement(Dimensions).WithAttributes(info.DimensionsSizes);
-            yield return document.CreateNode(info.VerticesInfo);
-            yield return document.CreateElement(Range).WithAttributes(info.CostRange.LowerValueOfRange, info.CostRange.UpperValueOfRange);
+            yield return document.CreateNode(info.VerticesInfo);            
         }
 
         private static XmlNode CreateNode(this XmlDocument document, IReadOnlyCollection<VertexSerializationInfo> infos)
@@ -38,6 +37,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             yield return document.CreateElement(Neighbours).WithChildren(() => document.CreateNodes(vertex.Neighbourhood));
             yield return document.CreateElement(Coordinate).WithAttributes(vertex.Position);
             yield return document.CreateElement(Cost).WithAttributes(vertex.Cost.CurrentCost);
+            yield return document.CreateElement(Range).WithAttributes(vertex.Cost.CostRange.LowerValueOfRange, vertex.Cost.CostRange.UpperValueOfRange);
         }
 
         private static IEnumerable<XmlNode> CreateNodes(this XmlDocument document, IEnumerable<ICoordinate> neighborhood)

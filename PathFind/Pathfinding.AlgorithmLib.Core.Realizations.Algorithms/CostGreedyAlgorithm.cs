@@ -12,12 +12,12 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
     {
         private readonly IStepRule stepRule;
 
-        public CostGreedyAlgorithm(IPathfindingRange pathfindingRange)
+        public CostGreedyAlgorithm(IEnumerable<IVertex> pathfindingRange)
             : this(pathfindingRange, new DefaultStepRule())
         {
 
         }
-        public CostGreedyAlgorithm(IPathfindingRange pathfindingRange, IStepRule stepRule)
+        public CostGreedyAlgorithm(IEnumerable<IVertex> pathfindingRange, IStepRule stepRule)
             : base(pathfindingRange)
         {
             this.stepRule = stepRule;

@@ -36,7 +36,6 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
             try
             {
                 var graphInfo = LoadGraphInternal(stream, costFactory, coordinateFactory);
-                VertexCost.CostRange = graphInfo.CostRange;
                 var vertices = graphInfo.VerticesInfo.Select(vertexFactory.CreateFrom).ToReadOnly();
                 var graph = graphFactory.CreateGraph(vertices, graphInfo.DimensionsSizes);
                 graphInfo.VerticesInfo.Zip(graph, (info, vertex) => (Vertex: vertex, Info: info))

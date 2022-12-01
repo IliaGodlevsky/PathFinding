@@ -7,8 +7,6 @@ using Pathfinding.App.WPF._2D.Model;
 using Pathfinding.App.WPF._2D.View;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Pathfinding.GraphLib.Core.Realizations.Range;
-using Pathfinding.Visualization.Core.Abstractions;
 using Shared.Executable;
 using System.Windows.Input;
 using WPFVersion.DependencyInjection;
@@ -18,6 +16,8 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
     internal class CreateGraphViewModel
     {
         private readonly IMessenger messenger;
+        private readonly IGraphSubscription<Vertex> subscription;
+        private readonly IUndo undo;
 
         public ICommand CreateGraphCommand { get; }
 
@@ -27,6 +27,8 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
 
         public CreateGraphViewModel()
         {
+            undo = DI.Container.Resolve<IUndo>();
+            subscription = DI.Container.Resolve<IGraphSubscription<Vertex>>();
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAllAlgorithmFinished);
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
@@ -46,8 +48,6 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
 
         private void OnGraphCreated(GraphCreatedMessage message)
         {
-            var subscription = DI.Container.Resolve<IGraphSubscription<Vertex>>();
-            var undo = DI.Container.Resolve<IUndo>();
             subscription.Unsubscribe(Graph);
             undo.Undo();
             Graph = message.Graph;

@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>Latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>Latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -41,27 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Range\Commands\Abstractions\PathfindingRangeCommand.cs" />
-    <Compile Include="Range\Commands\Abstractions\PathfindingRangeCommands.cs" />
-    <Compile Include="Range\Commands\Abstractions\ReplaceIntermediatesCommand.cs" />
-    <Compile Include="Range\Commands\Realizations\PathfindingRangeCommands\MarkToReplaceIntermediateVertexCommand.cs" />
-    <Compile Include="Range\Commands\Realizations\PathfindingRangeCommands\RemoveMarkToReplaceIntermediateVertexCommand.cs" />
-    <Compile Include="Range\Commands\Realizations\PathfindingRangeCommands\ReplaceIntermediateIsolatedVertexCommand.cs" />
-    <Compile Include="Range\Commands\Realizations\PathfindingRangeCommands\ReplaceIntermediateVertexCommand.cs" />
-    <Compile Include="Range\Commands\Realizations\PathfindingRangeCommands\ReplaceIsolatedSourceVertexCommand.cs" />
-    <Compile Include="Range\Commands\Realizations\PathfindingRangeCommands\ReplaceIsolatedTargetVertexCommand.cs" />
-    <Compile Include="Range\Commands\Realizations\PathfindingRangeCommands\IncludeIntermediateVertex.cs" />
-    <Compile Include="Range\Commands\Realizations\PathfindingRangeCommands\IncludeSourceVertex.cs" />
-    <Compile Include="Range\Commands\Realizations\PathfindingRangeCommands\IncludeTargetVertex.cs" />
-    <Compile Include="Range\Commands\Realizations\PathfindingRangeCommands\ExcludeIntermediateVertex.cs" />
-    <Compile Include="Range\Commands\Realizations\PathfindingRangeCommands\ExcludeSourceVertex.cs" />
-    <Compile Include="Range\Commands\Realizations\PathfindingRangeCommands\ExcludeTargetVertex.cs" />
-    <Compile Include="Range\Commands\Realizations\CommandCollections\IntermediateVerticesToRemoveCommands.cs" />
-    <Compile Include="Range\Commands\Realizations\CommandCollections\IncludeInRangeCommands.cs" />
-    <Compile Include="Range\PathfindingRange.cs" />
     <Compile Include="Neighborhoods\MooreNeighborhood.cs" />
     <Compile Include="Neighborhoods\VonNeumannNeighborhood.cs" />
-    <Compile Include="Range\ReplaceIntermediateVerticesModule.cs" />
+    <Compile Include="PathfindingRange.cs" />
     <Compile Include="VertexCost.cs" />
     <Compile Include="Coordinates\Coordinate2D.cs" />
     <Compile Include="Coordinates\Coordinate3D.cs" />

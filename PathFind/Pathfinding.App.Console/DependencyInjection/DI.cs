@@ -1,6 +1,4 @@
 ﻿using Autofac;
-using Autofac.Builder;
-using Autofac.Features.Scanning;
 #if DEBUG
 #elif !DEBUG
 using Pathfinding.App.Console.ValueInput.ProgrammedInput;
@@ -40,19 +38,33 @@ using System.Collections.Generic;
 using System.Linq;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.ValueInput.UserInput;
-using Pathfinding.GraphLib.Core.Realizations.Range;
 using Shared.Executable;
-using Pathfinding.GraphLib.Visualization;
+using Autofac.Core;
+using Autofac.Features.Metadata;
+using System.Reflection;
+using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Modules.Interface;
+using Pathfinding.GraphLib.Core.Modules.Commands;
+using Pathfinding.GraphLib.Core.Modules;
 
 namespace Pathfinding.App.Console.DependencyInjection
 {
+    using Command = IPathfindingRangeCommand<Vertex>;
+    using Commands = IReadOnlyCollection<IPathfindingRangeCommand<Vertex>>;
+    using AlgorithmFactory = IAlgorithmFactory<PathfindingProcess>;
+    using GraphSerializer = IGraphSerializer<Graph2D<Vertex>, Vertex>;
+
     internal static class DI
     {
+        private const string Order = "Order";
+
+        private enum CommandType { Include, Exclude }
+
         private static readonly Lazy<IContainer> container = new Lazy<IContainer>(Configure);
 
         public static IContainer Container => container.Value;
 
-        private static readonly Type[] LocalAssemblyTypes = typeof(DI).Assembly.GetTypes();
+        private static readonly Assembly[] Assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
         private static IContainer Configure()
         {
@@ -73,23 +85,31 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<ConsoleKeystrokesHook>().AsSelf().SingleInstance().PropertiesAutowired();
 
             builder.RegisterType<MainViewModel>().AsSelf().PropertiesAutowired().AsImplementedInterfaces().SingleInstance();
-            LocalAssemblyTypes.Where(type => type.Implements<IViewModel>()).Where(type => !type.IsInstancePerLifetimeScope())
-                .Register(builder).Except<MainViewModel>().AsSelf().AsImplementedInterfaces().PropertiesAutowired();
-            LocalAssemblyTypes.Where(type => type.Implements<IViewModel>()).Where(type => type.IsInstancePerLifetimeScope())
-                .Register(builder).AsSelf().AsImplementedInterfaces().PropertiesAutowired().InstancePerLifetimeScope();
-            LocalAssemblyTypes.Where(type => type.Implements<IView>()).Register(builder).AsSelf().PropertiesAutowired();
+            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IViewModel>())
+                .Where(type => !type.IsInstancePerLifetimeScope()).Except<MainViewModel>().AsSelf().AsImplementedInterfaces().PropertiesAutowired();
+            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IViewModel>())
+                .Where(type => type.IsInstancePerLifetimeScope()).AsSelf().AsImplementedInterfaces().PropertiesAutowired().InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IView>()).AsSelf().PropertiesAutowired();
 
-            builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
-
+            builder.RegisterType<ConsoleVertexReverseModule>().AsSelf().SingleInstance();
+            builder.RegisterType<ConsoleVertexChangeCostModule>().AsSelf().PropertiesAutowired();
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<ColorConsoleLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
-            builder.RegisterType<VisualPathfindingRange<Vertex>>().AsSelf().As<PathfindingRange<Vertex>>()
-                .AsImplementedInterfaces().SingleInstance();
-            builder.RegisterType<ReplaceIntermediateVerticesModule<Vertex>>().AsSelf().As<IUndo>().SingleInstance();
+
+            builder.RegisterType<VisualPathfindingRange<Vertex>>().As<IPathfindingRange<Vertex>>().SingleInstance();
+            builder.RegisterType<PathfindingRangeBuilder<Vertex>>().As<IPathfindingRangeBuilder<Vertex>>()
+                .SingleInstance().OnActivated(OnPathfindingRangeActivated);
+            builder.RegisterType<IncludeTargetVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 2).SingleInstance();
+            builder.RegisterType<IncludeTransitVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 3).SingleInstance();
+            builder.RegisterType<IncludeSourceVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 1).SingleInstance();
+            builder.RegisterType<ExcludeTargetVertex<Vertex>>().Keyed<Command>(CommandType.Exclude).WithMetadata(Order, 2).SingleInstance();
+            builder.RegisterType<ExcludeSourceVertex<Vertex>>().Keyed<Command>(CommandType.Exclude).WithMetadata(Order, 1).SingleInstance();
+            builder.RegisterType<ReplaceTransitVerticesModule<Vertex>>().AsSelf().As<IUndo>().SingleInstance();
+
             builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
 
             builder.RegisterType<PseudoRandom>().As<IRandom>().SingleInstance();
@@ -101,30 +121,37 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph2DFactory<Vertex>>().As<IGraphFactory<Graph2D<Vertex>, Vertex>>().SingleInstance();
             builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
+            builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
 
             builder.RegisterType<RootMeanSquareCost>().As<IMeanCost>().SingleInstance();
 
             builder.RegisterType<InFileSerializationModule<Graph2D<Vertex>, Vertex>>()
                 .As<IGraphSerializationModule<Graph2D<Vertex>, Vertex>>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance().PropertiesAutowired();
-            builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>()
-                .As<IGraphSerializer<Graph2D<Vertex>, Vertex>>().SingleInstance();
-            builder.RegisterDecorator<CompressGraphSerializer<Graph2D<Vertex>, Vertex>, IGraphSerializer<Graph2D<Vertex>, Vertex>>();
-            builder.RegisterDecorator<CryptoGraphSerializer<Graph2D<Vertex>, Vertex>, IGraphSerializer<Graph2D<Vertex>, Vertex>>();
-            builder.RegisterDecorator<ThreadSafeGraphSerializer<Graph2D<Vertex>, Vertex>, IGraphSerializer<Graph2D<Vertex>, Vertex>>();
+            builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>().As<GraphSerializer>().SingleInstance();
+            builder.RegisterDecorator<CompressGraphSerializer<Graph2D<Vertex>, Vertex>, GraphSerializer>();
+            builder.RegisterDecorator<CryptoGraphSerializer<Graph2D<Vertex>, Vertex>, GraphSerializer>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory<Vertex>>().SingleInstance();
 
-            typeof(IAlgorithmFactory<>).Assembly.GetTypes().Where(type => type.Implements<IAlgorithmFactory<PathfindingProcess>>())
-                .Register(builder).As<IAlgorithmFactory<PathfindingProcess>>().SingleInstance();
+            builder.RegisterAssemblyTypes(typeof(IAlgorithmFactory<>).Assembly)
+                .Where(type => type.Implements<AlgorithmFactory>()).As<AlgorithmFactory>().SingleInstance();
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
 
             return builder.Build();
         }
 
-        private static IRegistrationBuilder<object, ScanningActivatorData, DynamicRegistrationStyle> Register(this IEnumerable<Type> types,
-            ContainerBuilder builder)
+        private static void OnPathfindingRangeActivated(IActivatedEventArgs<PathfindingRangeBuilder<Vertex>> args)
         {
-            return builder.RegisterTypes(types.ToArray());
+            args.Instance.IncludeCommands = ResolveKeyed(args.Context, CommandType.Include);
+            args.Instance.ExcludeCommands = ResolveKeyed(args.Context, CommandType.Exclude);
+        }
+
+        private static Commands ResolveKeyed(IComponentContext context, CommandType key)
+        {
+            return context.ResolveKeyed<IEnumerable<Meta<Command>>>(key)
+                .OrderBy(x => x.Metadata[Order])
+                .Select(x => x.Value)
+                .ToReadOnly();
         }
     }
 }

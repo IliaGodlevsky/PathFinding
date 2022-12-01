@@ -4,20 +4,20 @@ using Pathfinding.App.WPF._3D.Infrastructure.Commands;
 using Pathfinding.App.WPF._3D.Model;
 using Pathfinding.App.WPF._3D.View;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.Realizations.Range;
+using Pathfinding.GraphLib.Core.Modules.Interface;
 using System.Windows.Input;
 
 namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
 {
     internal class FindPathViewModel
     {
-        private readonly PathfindingRange<Vertex3D> range;
+        private readonly IPathfindingRangeBuilder<Vertex3D> rangeBuilder;
 
         public ICommand FindPathCommand { get; }
 
         public FindPathViewModel()
         {
-            range = DI.Container.Resolve<PathfindingRange<Vertex3D>>();
+            rangeBuilder = DI.Container.Resolve<IPathfindingRangeBuilder<Vertex3D>>();
             FindPathCommand = new RelayCommand(ExecuteFindPathCommand, CanExecuteFindPathCommand);
         }
 
@@ -28,7 +28,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
 
         private bool CanExecuteFindPathCommand(object param)
         {
-            return !range.HasIsolators();
+            return !rangeBuilder.Range.HasIsolators();
         }
     }
 }

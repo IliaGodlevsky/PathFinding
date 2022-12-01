@@ -2,10 +2,13 @@
 
 namespace Pathfinding.GraphLib.Core.Interface
 {
-    public interface IPathfindingRange : IEnumerable<IVertex>
+    public interface IPathfindingRange<TVertex> : IEnumerable<TVertex>
+        where TVertex : IVertex
     {
-        IVertex Target { get; }
+        TVertex Source { get; set; }
 
-        IVertex Source { get; }
+        TVertex Target { get; set; }
+
+        IList<TVertex> Transit { get; }
     }
 }

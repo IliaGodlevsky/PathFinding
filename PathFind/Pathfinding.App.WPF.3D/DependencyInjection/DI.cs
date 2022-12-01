@@ -20,7 +20,6 @@ using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
 using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
 using Pathfinding.VisualizationLib.Core.Interface;
-using Pathfinding.App.WPF._2D.Model;
 using Pathfinding.App.WPF._3D.Model3DFactories;
 using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Modules;
@@ -29,13 +28,30 @@ using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decorators;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.GraphLib.Core.Realizations.Range;
 using Shared.Executable;
+using Pathfinding.Visualization.Core.Abstractions;
+using System.Data;
+using System.Collections.Generic;
+using Autofac.Core;
+using Autofac.Features.Metadata;
+using System.Linq;
+using Pathfinding.GraphLib.Core.Modules.Interface;
+using Pathfinding.GraphLib.Core.Modules;
+using Pathfinding.GraphLib.Core.Modules.Commands;
+using Pathfinding.GraphLib.Factory.Realizations;
 
 namespace Pathfinding.App.WPF._3D.DependencyInjection
 {
+    using Command = IPathfindingRangeCommand<Vertex3D>;
+    using Commands = IReadOnlyCollection<IPathfindingRangeCommand<Vertex3D>>;
+    using AlgorithmFactory = IAlgorithmFactory<PathfindingProcess>;
+
     internal static class DI
     {
+        private const string Order = "Order";
+
+        private enum CommandType { Include, Exclude }
+
         private static readonly Lazy<IContainer> container = new Lazy<IContainer>(Configure);
 
         public static IContainer Container => container.Value;
@@ -47,34 +63,43 @@ namespace Pathfinding.App.WPF._3D.DependencyInjection
             var builder = new ContainerBuilder();
 
             builder.RegisterType<MainWindowViewModel>().AsSelf().AsImplementedInterfaces().SingleInstance();
-            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IViewModel>()).AsSelf().InstancePerDependency();
+            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IViewModel>()).AsSelf().InstancePerDependency().PropertiesAutowired();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
-            builder.RegisterType<Wpf3DPathfindingRange>().As<PathfindingRange<Vertex3D>>().AsImplementedInterfaces().SingleInstance();
-            builder.RegisterType<Wpf3DVertexReverseModule>().As<IGraphSubscription<Vertex3D>>().SingleInstance();
-            builder.RegisterType<Wpf3dReplaceIntermediateVerticesModule>().As<ReplaceIntermediateVerticesModule<Vertex3D>>()
-               .As<IGraphSubscription<Vertex3D>>().As<IUndo>().SingleInstance();
+            builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
 
-            builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
+            builder.RegisterType<VisualPathfindingRange<Vertex3D>>().As<IPathfindingRange<Vertex3D>>().SingleInstance();
+            builder.RegisterType<PathfindingRangeBuilder<Vertex3D>>().As<IPathfindingRangeBuilder<Vertex3D>>()
+                .SingleInstance().OnActivated(OnPathfindingRangeActivated);
+            builder.RegisterType<IncludeSourceVertex<Vertex3D>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 1).SingleInstance();
+            builder.RegisterType<IncludeTargetVertex<Vertex3D>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 3).SingleInstance();            
+            builder.RegisterType<ReplaceIsolatedSourceVertex<Vertex3D>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 2).SingleInstance();
+            builder.RegisterType<ReplaceIsolatedTargetVertex<Vertex3D>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 4).SingleInstance();
+            builder.RegisterType<ExcludeSourceVertex<Vertex3D>>().Keyed<Command>(CommandType.Exclude).WithMetadata(Order, 1).SingleInstance();
+            builder.RegisterType<ExcludeTargetVertex<Vertex3D>>().Keyed<Command>(CommandType.Exclude).WithMetadata(Order, 2).SingleInstance();           
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
+            builder.RegisterType<VertexReverseModuleSubscription>().As<IGraphSubscription<Vertex3D>>().SingleInstance();
+            builder.RegisterType<PathfindingRangeBuilderSubscription>().As<IGraphSubscription<Vertex3D>>().SingleInstance();
             builder.RegisterComposite<GraphSubscriptions<Vertex3D>, IGraphSubscription<Vertex3D>>().SingleInstance();
+
+            builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
 
             builder.RegisterType<KnuthRandom>().As<IRandom>().SingleInstance();
             builder.RegisterDecorator<ThreadSafeRandom, IRandom>();
+
             builder.RegisterType<Vertex3DFactory>().As<IVertexFactory<Vertex3D>>().SingleInstance();
-            builder.RegisterType<Vertex3DCostFactory>().As<IVertexCostFactory>().SingleInstance();
+            builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
             builder.RegisterType<Coordinate3DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph3DFactory<Vertex3D>>().As<IGraphFactory<Graph3D<Vertex3D>, Vertex3D>>().SingleInstance();
             builder.RegisterType<GraphField3DFactory>().As<IGraphFieldFactory<Graph3D<Vertex3D>, Vertex3D, GraphField3D>>().SingleInstance();
             builder.RegisterType<VonNeumannNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<CubicModel3DFactory>().As<IModel3DFactory>().SingleInstance();
-            builder.RegisterType<GraphAssemble<Graph3D<Vertex3D>, Vertex3D>>().As<IGraphAssemble<Graph3D<Vertex3D>, Vertex3D>>().SingleInstance();
-            builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
+            builder.RegisterType<GraphAssemble<Graph3D<Vertex3D>, Vertex3D>>().As<IGraphAssemble<Graph3D<Vertex3D>, Vertex3D>>().SingleInstance();           
             builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex3D>>().SingleInstance();
 
             builder.RegisterType<InFileSerializationModule<Graph3D<Vertex3D>, Vertex3D>>().As<IGraphSerializationModule<Graph3D<Vertex3D>, Vertex3D>>().SingleInstance();
@@ -84,11 +109,23 @@ namespace Pathfinding.App.WPF._3D.DependencyInjection
             builder.RegisterDecorator<CryptoGraphSerializer<Graph3D<Vertex3D>, Vertex3D>, IGraphSerializer<Graph3D<Vertex3D>, Vertex3D>>();
             builder.RegisterType<Vertex3DFromInfoFactory>().As<IVertexFromInfoFactory<Vertex3D>>().SingleInstance();
 
-            builder.RegisterAssemblyTypes(Assemblies)
-                .Where(type => type.Implements<IAlgorithmFactory<PathfindingProcess>>())
-                .As<IAlgorithmFactory<PathfindingProcess>>().SingleInstance();
+            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<AlgorithmFactory>()).As<AlgorithmFactory>().SingleInstance();
 
             return builder.Build();
+        }
+
+        private static void OnPathfindingRangeActivated(IActivatedEventArgs<PathfindingRangeBuilder<Vertex3D>> args)
+        {
+            args.Instance.IncludeCommands = ResolveKeyed(args.Context, CommandType.Include);
+            args.Instance.ExcludeCommands = ResolveKeyed(args.Context, CommandType.Exclude);
+        }
+
+        private static Commands ResolveKeyed(IComponentContext context, CommandType key)
+        {
+            return context.ResolveKeyed<IEnumerable<Meta<Command>>>(key)
+                .OrderBy(x => x.Metadata[Order])
+                .Select(x => x.Value)
+                .ToReadOnly();
         }
     }
 }

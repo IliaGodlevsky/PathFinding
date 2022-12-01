@@ -2,11 +2,11 @@
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
-using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
 using System;
+using System.Linq;
 
 namespace Pathfinding.App.Console.ViewModel
 {
@@ -33,8 +33,9 @@ namespace Pathfinding.App.Console.ViewModel
             {
                 graph = module.LoadGraph();
             }
+            var range = graph.First().Cost.CostRange;
+            messenger.Send(new CostRangeChangedMessage(range));
             messenger.Send(new GraphCreatedMessage(graph), MessageTokens.Screen);
-            messenger.Send(new CostRangeChangedMessage(VertexCost.CostRange));
             messenger.Send(new GraphCreatedMessage(graph), MessageTokens.MainViewModel);
         }
 

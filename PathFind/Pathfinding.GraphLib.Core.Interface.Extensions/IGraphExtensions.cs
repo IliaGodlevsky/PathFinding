@@ -30,7 +30,7 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
             return self.GetObstacles().Count();
         }
 
-        public static int GetAvailableIntermediatesVerticesNumber<TVertex>(this IGraph<TVertex> graph)
+        public static int GetAvailableTransitVerticesNumber<TVertex>(this IGraph<TVertex> graph)
             where TVertex : IVertex
         {
             const int NumberOfRequiredEndPoints = 2;

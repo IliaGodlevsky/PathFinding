@@ -16,12 +16,10 @@ using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
 using Pathfinding.App.Console.Views;
+using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Pathfinding.GraphLib.Core.Realizations.Range;
 using Pathfinding.Logging.Interface;
-using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.Visualization.Extensions;
-using Shared.Extensions;
 using Shared.Primitives;
 using System;
 using System.Collections.Generic;
@@ -39,7 +37,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         private readonly IMessenger messenger;
         private readonly ConsoleKeystrokesHook keystrokesHook;
-        private readonly PathfindingRange<Vertex> range;
+        private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         private readonly Stopwatch timer;
         private readonly ILifetimeScope lifetimeScope;
         private readonly Queue<AlgorithmFactory> factories;
@@ -53,7 +51,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         private string Statistics => path.ToStatistics(timer, visitedVerticesCount, algorithm);
         
-        public PathfindingProcessViewModel(PathfindingRange<Vertex> range, 
+        public PathfindingProcessViewModel(IPathfindingRangeBuilder<Vertex> rangeBuilder, 
             ConsoleKeystrokesHook hook, ICache<Graph2D<Vertex>> graph, IMessenger messenger, ILog log)
             : base(log)
         {
@@ -62,7 +60,7 @@ namespace Pathfinding.App.Console.ViewModel
             this.messenger = messenger;
             this.keystrokesHook = hook;
             this.graph = graph.Cached;
-            this.range = range;
+            this.rangeBuilder = rangeBuilder;
             this.timer = new Stopwatch();
             keystrokesHook.KeyPressed += OnConsoleKeyPressed;
             messenger.Register<PathfindingAlgorithmChosenMessage>(this, OnAlgorithmChosen);
@@ -95,7 +93,7 @@ namespace Pathfinding.App.Console.ViewModel
         {
             messenger.Send(PathfindingStatisticsMessage.Empty);
             graph.RestoreVerticesVisualState();
-            range.RestoreVerticesVisualState();
+            rangeBuilder.Range.RestoreVerticesVisualState();
         }
 
         [MenuItem(MenuItemsNames.CustomizeVisualization, 2)]
@@ -115,7 +113,7 @@ namespace Pathfinding.App.Console.ViewModel
             while (CanStartPathfinding())
             {
                 var factory = factories.Dequeue();
-                using (algorithm = factory.Create(range))
+                using (algorithm = factory.Create(rangeBuilder.Range))
                 {
                     try
                     {
@@ -175,7 +173,7 @@ namespace Pathfinding.App.Console.ViewModel
         {
             messenger.Send(new SubscribeOnVisualizationMessage(algorithm));
             messenger.Send(new SubscribeOnHistoryMessage(algorithm));
-            messenger.Send(new PathfindingRangeChosenMessage(range, algorithm));
+            messenger.Send(new PathfindingRangeChosenMessage(rangeBuilder.Range, algorithm));
             algorithm.VertexVisited += OnVertexVisited;
             algorithm.Finished += (s, e) => timer.Stop();
             algorithm.Started += (s, e) => timer.Restart();

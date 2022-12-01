@@ -6,7 +6,6 @@ using System.Windows.Input;
 using Pathfinding.App.WPF._3D.Messages.PassValueMessages;
 using Pathfinding.Visualization.Models;
 using Pathfinding.App.WPF._3D.Model;
-using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.App.WPF._3D.Interface;
@@ -19,7 +18,7 @@ using Pathfinding.App.WPF._3D.Extensions;
 using System.Threading.Tasks;
 using Pathfinding.App.WPF._3D.DependencyInjection;
 using Autofac;
-using Pathfinding.GraphLib.Core.Realizations.Range;
+using Pathfinding.GraphLib.Core.Modules.Interface;
 
 namespace Pathfinding.App.WPF._3D.ViewModel
 {
@@ -35,9 +34,9 @@ namespace Pathfinding.App.WPF._3D.ViewModel
 
         private Guid Id { get; set; }
 
-        public PathFindingViewModel(PathfindingRange<Vertex3D> range,
-            IEnumerable<IAlgorithmFactory<PathfindingProcess>> algorithmFactories,
-            ILog log, ICache<Graph3D<Vertex3D>> graphCache) : base(range, algorithmFactories, graphCache.Cache, log)
+        public PathFindingViewModel(IPathfindingRangeBuilder<Vertex3D> rangeBuilder, 
+            IEnumerable<IAlgorithmFactory<PathfindingProcess>> algorithmFactories,  ILog log, ICache<Graph3D<Vertex3D>> graphCache) 
+            : base(rangeBuilder.Range, algorithmFactories, graphCache.Cache, log)
         {
             messenger = DI.Container.Resolve<IMessenger>();
             FindPathCommand = new RelayCommand(ExecutePathFindCommand, CanExecutePathFindCommand);

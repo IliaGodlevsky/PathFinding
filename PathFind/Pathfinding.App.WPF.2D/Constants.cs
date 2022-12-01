@@ -6,6 +6,8 @@ namespace Pathfinding.App.WPF._2D
 {
     internal static class Constants
     {
+        public static InclusiveValueRange<double> CostValueRange { get; }
+
         public static InclusiveValueRange<double> GraphFieldScaleValueRange { get; }
 
         public static InclusiveValueRange<int> GraphWidthValueRange { get; }
@@ -26,7 +28,7 @@ namespace Pathfinding.App.WPF._2D
 
         static Constants()
         {
-            VertexCost.CostRange = new InclusiveValueRange<int>(9, 1);
+            CostValueRange = new InclusiveValueRange<double>(99, 1);
             GraphFieldScaleValueRange = new InclusiveValueRange<double>(2.5, 0.1);
             GraphWidthValueRange = new InclusiveValueRange<int>(Leverage * WidthBase, 1);
             GraphLengthValueRange = new InclusiveValueRange<int>(Leverage * LengthBase, 1);

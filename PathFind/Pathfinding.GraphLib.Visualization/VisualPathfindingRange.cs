@@ -1,44 +1,48 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Realizations.Range;
 using Pathfinding.VisualizationLib.Core.Interface;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
 
 namespace Pathfinding.Visualization.Core.Abstractions
 {
-    public class VisualPathfindingRange<TVertex> : PathfindingRange<TVertex>
+    public sealed class VisualPathfindingRange<TVertex> : IPathfindingRange<TVertex>
         where TVertex : IVertex, IVisualizable
     {
-        public override TVertex Source
+        private TVertex source;
+        private TVertex target;
+
+        public TVertex Source
         {
-            get => base.Source;
-            protected set
+            get => source;
+            set
             {
-                base.Source?.VisualizeAsRegular();
-                base.Source = value;
-                base.Source?.VisualizeAsSource();
+                source?.VisualizeAsRegular();
+                source = value;
+                source?.VisualizeAsSource();
             }
         }
 
-        public override TVertex Target 
+        public TVertex Target 
         {
-            get => base.Target;
-            protected set
+            get => target;
+            set
             {
-                base.Target?.VisualizeAsRegular();
-                base.Target = value;
-                base.Target?.VisualizeAsTarget();
+                target?.VisualizeAsRegular();
+                target = value;
+                target?.VisualizeAsTarget();
             }
         }
 
-        protected override IList<TVertex> Intermediates { get; }
+        private ObservableCollection<TVertex> Transit { get; } = new ObservableCollection<TVertex>();
+
+        IList<TVertex> IPathfindingRange<TVertex>.Transit => Transit;
 
         public VisualPathfindingRange()
         {
-            var intermediates = new ObservableCollection<TVertex>();
-            intermediates.CollectionChanged += OnIntermediatesChanged;
-            Intermediates = intermediates;
+            Transit.CollectionChanged += OnIntermediatesChanged;
         }
 
         private void OnIntermediatesChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -52,6 +56,18 @@ namespace Pathfinding.Visualization.Core.Abstractions
                     ((TVertex)e.OldItems[0]).VisualizeAsRegular();
                     break;
             }
+        }
+
+        public IEnumerator<TVertex> GetEnumerator()
+        {
+            return Transit.Append(Target)
+                .Prepend(Source)
+                .GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

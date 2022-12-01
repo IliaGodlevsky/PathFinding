@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3209A405-6C93-4406-8F1A-E1141CADD0FB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Pathfinding.GraphLib.UnitTest.Realizations</RootNamespace>
+    <AssemblyName>Pathfinding.GraphLib.UnitTest.Realizations</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Constants.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestFactories\IGraphAssembleExtensions.cs" />
+    <Compile Include="TestFactories\Layers\Graph2DLayer.cs" />
+    <Compile Include="TestFactories\Layers\CostLayer.cs" />
+    <Compile Include="TestFactories\Layers\NeighborhoodLayer.cs" />
+    <Compile Include="TestFactories\Layers\ObstacleLayer.cs" />
+    <Compile Include="TestFactories\TestCoordinateFactory.cs" />
+    <Compile Include="TestFactories\TestCostFactory.cs" />
+    <Compile Include="TestFactories\TestGraphFactory.cs" />
+    <Compile Include="TestFactories\TestVertexFactory.cs" />
+    <Compile Include="TestFactories\TestVertexFromInfoFactory.cs" />
+    <Compile Include="TestObjects\TestCoordinate.cs" />
+    <Compile Include="TestObjects\TestGraph.cs" />
+    <Compile Include="TestObjects\TestVertex.cs" />
+    <Compile Include="TestObjects\TestVertexCost.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Abstractions\Pathfinding.GraphLib.Core.Abstractions.csproj">
+      <Project>{7112EB01-28F4-438D-945D-87CB69D14B99}</Project>
+      <Name>Pathfinding.GraphLib.Core.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface.Extensions\Pathfinding.GraphLib.Core.Interface.Extensions.csproj">
+      <Project>{3c13810c-ed74-490b-9303-9ccbfe485f5e}</Project>
+      <Name>Pathfinding.GraphLib.Core.Interface.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
+      <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
+      <Name>Pathfinding.GraphLib.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Realizations\Pathfinding.GraphLib.Core.Realizations.csproj">
+      <Project>{0C7DB792-B30B-4138-8D37-67450E2F0982}</Project>
+      <Name>Pathfinding.GraphLib.Core.Realizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Factory.Extensions\Pathfinding.GraphLib.Factory.Extensions.csproj">
+      <Project>{992503e9-626f-4ed5-b9cf-239c56c8f440}</Project>
+      <Name>Pathfinding.GraphLib.Factory.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Factory.Interface\Pathfinding.GraphLib.Factory.Interface.csproj">
+      <Project>{8C66CBDB-9899-4D80-846A-F197925D3163}</Project>
+      <Name>Pathfinding.GraphLib.Factory.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Factory.Realizations\Pathfinding.GraphLib.Factory.Realizations.csproj">
+      <Project>{96DE3110-BA88-449C-A514-282BEFF4003E}</Project>
+      <Name>Pathfinding.GraphLib.Factory.Realizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Serialization.Core.Interface\Pathfinding.GraphLib.Serialization.Core.Interface.csproj">
+      <Project>{84770BE3-D26C-4800-9DF1-EA33704E9FBD}</Project>
+      <Name>Pathfinding.GraphLib.Serialization.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Serialization.Core.Realizations\Pathfinding.GraphLib.Serialization.Core.Realizations.csproj">
+      <Project>{5b3827e8-4cc0-490d-b15c-4190a2982059}</Project>
+      <Name>Pathfinding.GraphLib.Serialization.Core.Realizations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Collections\Shared.Collections.csproj">
+      <Project>{4DEBD450-FEAE-49E3-9961-06169D59DC03}</Project>
+      <Name>Shared.Collections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
+      <Project>{CD11D46E-4675-4090-B50B-A85FFA3D1D2C}</Project>
+      <Name>Shared.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Primitives.Extensions\Shared.Primitives.Extensions.csproj">
+      <Project>{597b3252-3165-4574-826c-95399452d0b8}</Project>
+      <Name>Shared.Primitives.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Primitives\Shared.Primitives.csproj">
+      <Project>{30973320-9F61-45FB-8C75-3256ADB1BFB1}</Project>
+      <Name>Shared.Primitives</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Random.Extensions\Shared.Random.Extensions.csproj">
+      <Project>{79ad3712-16c7-4f9d-82bb-d9a03f36ebf4}</Project>
+      <Name>Shared.Random.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Random\Shared.Random.csproj">
+      <Project>{8B3BA6E5-2FAD-492E-A51D-8B213A74C5B8}</Project>
+      <Name>Shared.Random</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

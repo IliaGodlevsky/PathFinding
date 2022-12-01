@@ -2,6 +2,7 @@
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
 using Pathfinding.GraphLib.Core.Interface;
+using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
@@ -9,13 +10,13 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
     {
         private readonly IHeuristic heuristic;
 
-        public DistanceFirstAlgorithm(IPathfindingRange pathfindingRange, IHeuristic heuristic)
+        public DistanceFirstAlgorithm(IEnumerable<IVertex> pathfindingRange, IHeuristic heuristic)
             : base(pathfindingRange)
         {
             this.heuristic = heuristic;
         }
 
-        public DistanceFirstAlgorithm(IPathfindingRange pathfindingRange)
+        public DistanceFirstAlgorithm(IEnumerable<IVertex> pathfindingRange)
             : this(pathfindingRange, new EuclidianDistance())
         {
 

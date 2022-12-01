@@ -22,11 +22,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
                 .Select(element => element.GetVertex(costFactory, coordinateFactory))
                 .ToReadOnly();
 
-            var rangeValues = root.Element(Range).Attributes<int>();
-
-            var range = new InclusiveValueRange<int>(rangeValues[0], rangeValues[1]);
-
-            return new GraphSerializationInfo(dimensions, vertices, range);
+            return new GraphSerializationInfo(dimensions, vertices);
         }
 
         private static VertexSerializationInfo GetVertex(this XElement element,
@@ -36,7 +32,11 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
 
             int costValue = element.Element(Cost).Attribute<int>(string.Format(Value, 0));
 
-            var cost = costFactory.CreateCost(costValue);
+            var rangeValues = element.Element(Range).Attributes<int>();
+
+            var range = new InclusiveValueRange<int>(rangeValues[0], rangeValues[1]);
+
+            var cost = costFactory.CreateCost(costValue, range);
 
             var coordinateValues = element.Element(Coordinate).Attributes<int>();
 

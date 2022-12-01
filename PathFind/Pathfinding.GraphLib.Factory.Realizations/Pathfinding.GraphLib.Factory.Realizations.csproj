@@ -47,6 +47,9 @@
     <Compile Include="GraphAssembles\GraphAssemble.cs" />
     <Compile Include="GraphFactories\Graph2DFactory.cs" />
     <Compile Include="GraphFactories\Graph3DFactory.cs" />
+    <Compile Include="Layers\NeighborhoodLayer.cs" />
+    <Compile Include="Layers\ObstacleLayer.cs" />
+    <Compile Include="Layers\VertexCostLayer.cs" />
     <Compile Include="NeighborhoodFactories\MooreNeighborhoodFactory.cs" />
     <Compile Include="NeighborhoodFactories\VonNeumannNeighborhoodFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,13 +1,22 @@
-﻿using Pathfinding.GraphLib.Core.Interface;
+﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
 using Shared.Collections;
 using Shared.Extensions;
 using Shared.Primitives;
 using Shared.Primitives.Extensions;
+using Shared.Primitives.ValueRange;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Media;
+
+namespace System.Runtime.CompilerServices
+{
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    internal record IsExternalInit;
+}
 
 namespace Pathfinding.App.WPF._2D.Model
 {
@@ -19,11 +28,13 @@ namespace Pathfinding.App.WPF._2D.Model
 
         public Color CostColor { get; set; } = Colors.DodgerBlue;
 
+        public InclusiveValueRange<int> CostRange { get; set; }
+
         public CostColors(IGraph<Vertex> graph)
         {
             this.graph = graph.ToReadOnly();
-            previousColors = new List<Brush>();
-            costColors = new Lazy<IReadOnlyDictionary<int, Brush>>(FormCostColors);
+            this.previousColors = new List<Brush>();
+            this.costColors = new Lazy<IReadOnlyDictionary<int, Brush>>(FormCostColors);
         }
 
         public void ColorizeAccordingToCost()
@@ -44,7 +55,7 @@ namespace Pathfinding.App.WPF._2D.Model
 
         private IReadOnlyDictionary<int, Brush> FormCostColors()
         {
-            var costValues = VertexCost.CostRange.EnumerateValues().ToReadOnly();
+            var costValues = CostRange.EnumerateValues().ToReadOnly();
             var colors = new Dictionary<int, Brush>();
             double step = byte.MaxValue / costValues.Count;
             for (int i = 0; i < costValues.Count; i++)

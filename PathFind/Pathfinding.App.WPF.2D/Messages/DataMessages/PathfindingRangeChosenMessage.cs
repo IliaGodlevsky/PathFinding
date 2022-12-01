@@ -1,4 +1,5 @@
-﻿using Pathfinding.GraphLib.Core.Interface;
+﻿using Pathfinding.App.WPF._2D.Model;
+using Pathfinding.GraphLib.Core.Interface;
 using System;
 
 namespace Pathfinding.App.WPF._2D.Messages.DataMessages
@@ -7,9 +8,9 @@ namespace Pathfinding.App.WPF._2D.Messages.DataMessages
     {
         public Guid Id { get; }
 
-        public IPathfindingRange PathfindingRange { get; }
+        public IPathfindingRange<Vertex> PathfindingRange { get; }
 
-        public PathfindingRangeChosenMessage(Guid id, IPathfindingRange pathfindingRange)
+        public PathfindingRangeChosenMessage(Guid id, IPathfindingRange<Vertex> pathfindingRange)
         {
             Id = id;
             PathfindingRange = pathfindingRange;

@@ -12,5 +12,10 @@ namespace Shared.Primitives.Extensions
         {
             return collection.OrderBy(item => item.GetAttributeOrDefault<TAttribute>().Order);
         }
+
+        public static IOrderedEnumerable<T> OrderByOrderAttribute<T>(this IEnumerable<T> collection)
+        {
+            return collection.OrderBy(item => item.GetAttributeOrDefault<OrderAttribute>().Order);
+        }
     }
 }

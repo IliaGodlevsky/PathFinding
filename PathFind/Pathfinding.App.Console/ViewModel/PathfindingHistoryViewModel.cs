@@ -15,6 +15,7 @@ using Pathfinding.Visualization.Extensions;
 using Pathfinding.AlgorithmLib.History.Interface;
 using Pathfinding.AlgorithmLib.History;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.GraphLib.Core.Interface;
 
 namespace Pathfinding.App.Console.ViewModel
 {
@@ -68,7 +69,7 @@ namespace Pathfinding.App.Console.ViewModel
                         startedAlgorithms[message.Algorithm.Id] = msg.Statistics;
                         break;
                     case PathfindingRangeChosenMessage msg:
-                        history.AddPathfindingRange(msg.Algorithm.Id, msg.Range);
+                        history.AddPathfindingRange(msg.Algorithm.Id, msg.Range.AsEnumerable());
                         break;
                     case PathFoundMessage msg:
                         history.AddPath(msg.Algorithm.Id, msg.Path);

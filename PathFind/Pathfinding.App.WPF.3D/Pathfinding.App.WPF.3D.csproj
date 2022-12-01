@@ -106,8 +106,8 @@
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="Model\MessageBoxLog.cs" />
     <Compile Include="Model\PathfindingHistoryVolume.cs" />
-    <Compile Include="Model\Wpf3dReplaceIntermediateVerticesModule.cs" />
-    <Compile Include="Model\Wpf3DVertexReverseModule.cs" />
+    <Compile Include="Model\PathfindingRangeBuilderSubscription.cs" />
+    <Compile Include="Model\VertexReverseModuleSubscription.cs" />
     <Compile Include="ValidationRules\NonDoubleInputValidationRule.cs" />
     <Compile Include="ValidationRules\NonInt32InputValidationRule.cs" />
     <Compile Include="ValidationRules\RangedDoubleValidationRule.cs" />
@@ -251,7 +251,6 @@
     <Compile Include="Model\Axes\Applicate.cs" />
     <Compile Include="Model\Axes\Axis.cs" />
     <Compile Include="Model\Axes\Ordinate.cs" />
-    <Compile Include="Model\Wpf3DPathfindingRangeAdapter.cs" />
     <Compile Include="Model\GraphField3D.cs" />
     <Compile Include="Model\GraphField3DContainer.cs" />
     <Compile Include="Model\GraphField3DFactory.cs" />
@@ -261,8 +260,6 @@
     <Compile Include="Model\RotatorFactories\ForwardAnimatedAxisRotatorFactory.cs" />
     <Compile Include="Model\RotatorFactories\NullAnimatedAxisRotatorFactory.cs" />
     <Compile Include="Model\Vertex3D.cs" />
-    <Compile Include="Model\Vertex3DCost.cs" />
-    <Compile Include="Model\Vertex3DCostFactory.cs" />
     <Compile Include="Model\Vertex3DFactory.cs" />
     <Compile Include="Model\Vertex3DFromInfoFactory.cs" />
     <Compile Include="Model\VertexVisualization.cs" />
@@ -396,6 +393,14 @@
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
       <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Modules.Interface\Pathfinding.GraphLib.Core.Modules.Interface.csproj">
+      <Project>{580F22FB-42C3-45C4-9328-2D968DC63C5E}</Project>
+      <Name>Pathfinding.GraphLib.Core.Modules.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Modules\Pathfinding.GraphLib.Core.Modules.csproj">
+      <Project>{4B07371D-1C8E-4EFE-9BF5-97C9E13C25BA}</Project>
+      <Name>Pathfinding.GraphLib.Core.Modules</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Realizations\Pathfinding.GraphLib.Core.Realizations.csproj">
       <Project>{0C7DB792-B30B-4138-8D37-67450E2F0982}</Project>

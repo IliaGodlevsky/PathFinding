@@ -19,13 +19,13 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 
         private int ToStashCount => storage.Count * PercentToDelete / 100;
 
-        public IDAStarAlgorithm(IPathfindingRange pathfindingRange)
+        public IDAStarAlgorithm(IEnumerable<IVertex> pathfindingRange)
             : this(pathfindingRange, new DefaultStepRule(), new ChebyshevDistance())
         {
 
         }
 
-        public IDAStarAlgorithm(IPathfindingRange pathfindingRange, IStepRule stepRule, IHeuristic function)
+        public IDAStarAlgorithm(IEnumerable<IVertex> pathfindingRange, IStepRule stepRule, IHeuristic function)
             : base(pathfindingRange, stepRule, function)
         {
             stashedVertices = new Dictionary<IVertex, double>(new VertexEqualityComparer());

@@ -3,9 +3,9 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.GraphLib.Core.Modules;
+using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Pathfinding.GraphLib.Core.Realizations.Range;
-using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
@@ -18,17 +18,17 @@ namespace Pathfinding.App.Console.ViewModel
     {
         private const int RequiredVerticesForRange = 2;
 
-        private readonly ReplaceIntermediateVerticesModule<Vertex> module;
-        private readonly PathfindingRange<Vertex> range;
+        private readonly ReplaceTransitVerticesModule<Vertex> module;
+        private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         private readonly Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         private int numberOfIntermediates;
 
         public IInput<int> IntInput { get; set; }
 
-        public PathfindingRangeViewModel(PathfindingRange<Vertex> range, ReplaceIntermediateVerticesModule<Vertex> module, ICache<Graph2D<Vertex>> graph)
+        public PathfindingRangeViewModel(IPathfindingRangeBuilder<Vertex> rangeBuilder, ReplaceTransitVerticesModule<Vertex> module, ICache<Graph2D<Vertex>> graph)
         {
-            this.range = range;
+            this.rangeBuilder = rangeBuilder;
             this.graph = graph.Cached;
             this.module = module;
         }
@@ -36,7 +36,7 @@ namespace Pathfinding.App.Console.ViewModel
         [Condition(nameof(HasAvailableVerticesToIncludeInRange))]
         [Condition(nameof(HasSourceAndTargetNotSet), 1)]
         [MenuItem(MenuItemsNames.ChoosePathfindingRange, 0)]
-        private void ChooseEndPoints()
+        private void ChoosePathfindingRange()
         {
             using (Cursor.CleanUpAfter())
             {
@@ -51,7 +51,7 @@ namespace Pathfinding.App.Console.ViewModel
         {
             using (Cursor.CleanUpAfter())
             {
-                IncludeInRange(range.Source);
+                ExcludeFromRange(rangeBuilder.Range.Source);
                 IncludeInRange(InputVertex(MessagesTexts.SourceVertexChoiceMsg));
             }
         }
@@ -62,7 +62,7 @@ namespace Pathfinding.App.Console.ViewModel
         {
             using (Cursor.CleanUpAfter())
             {
-                IncludeInRange(range.Target);
+                ExcludeFromRange(rangeBuilder.Range.Target);
                 IncludeInRange(InputVertex(MessagesTexts.TargetVertexChoiceMsg));
             }
         }
@@ -70,10 +70,11 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.ClearEndPoints, 5)]
         private void ClearPathfindingRange()
         {
-            range.Undo();
+            rangeBuilder.Undo();
         }
 
-        [Condition(nameof(CanReplaceIntermediates))]
+        [Condition(nameof(CanReplaceTransitVertices), 0)]
+        [Condition(nameof(HasTransitVerticesToReplace), 1)]
         [MenuItem(MenuItemsNames.ReplaceIntermediate, 4)]
         private void ReplaceIntermediates()
         {
@@ -82,23 +83,31 @@ namespace Pathfinding.App.Console.ViewModel
                 string msg = MessagesTexts.NumberOfIntermediatesVerticesToReplaceMsg;
                 int toReplaceNumber = IntInput.Input(msg, numberOfIntermediates);
                 System.Console.WriteLine(MessagesTexts.IntermediateToReplaceMsg);
-                IntInput.InputExistingIntermediates(graph, range, toReplaceNumber).ForEach(MarkAsToReplace);
+                IntInput.InputExistingIntermediates(graph, rangeBuilder.Range, toReplaceNumber).ForEach(MarkTransitVertex);
                 System.Console.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
-                InputVertices(toReplaceNumber).ForEach(IncludeInRange);
+                InputVertices(toReplaceNumber).ForEach(ReplaceTransitVertex);
             }
         }
 
         [Condition(nameof(HasSourceAndTargetSet))]
-        [MenuItem(MenuItemsNames.ChooseIntermediates, 1)]
-        private void ChooseIntermediates()
+        [MenuItem(MenuItemsNames.ChooseTransit, 1)]
+        private void ChooseTransitVertices()
         {
             using (Cursor.CleanUpAfter())
             {
-                string message = MessagesTexts.NumberOfIntermediateVerticesInputMsg;
-                int available = graph.GetAvailableIntermediatesVerticesNumber();
+                string message = MessagesTexts.NumberOfTransitVerticesInputMsg;
+                int available = graph.GetAvailableTransitVerticesNumber();
                 int number = IntInput.Input(message, available);
                 System.Console.WriteLine(MessagesTexts.IntermediateVertexChoiceMsg);
                 InputVertices(number).ForEach(IncludeInRange);
+            }
+        }
+
+        private void ReplaceTransitVertex(Vertex vertex)
+        {
+            using (Cursor.UseCurrentPosition())
+            {
+                module.ReplaceTransitWith(rangeBuilder.Range, vertex);
             }
         }
 
@@ -106,51 +115,50 @@ namespace Pathfinding.App.Console.ViewModel
         {
             using (Cursor.UseCurrentPosition())
             {
-                range.IncludeInPathfindingRange(vertex);
+                rangeBuilder.Include(vertex);
             }
         }
 
-        private void MarkAsToReplace(Vertex vertex)
+        private void ExcludeFromRange(Vertex vertex)
         {
             using (Cursor.UseCurrentPosition())
             {
-                module.MarkIntermediateVertexToReplace(vertex);
+                rangeBuilder.Exclude(vertex);
+            }
+        }
+
+        private void MarkTransitVertex(Vertex vertex)
+        {
+            using (Cursor.UseCurrentPosition())
+            {
+                module.MarkTransitVertex(rangeBuilder.Range, vertex);
             }
         }
 
         private IEnumerable<Vertex> InputVertices(int number)
         {
-            return IntInput.InputVertices(graph, range, number);
+            return IntInput.InputVertices(graph, rangeBuilder.Range, number);
         }
 
         private Vertex InputVertex(string message)
         {
             System.Console.WriteLine(message);
-            return IntInput.InputVertex(graph, range);
+            return IntInput.InputVertex(graph, rangeBuilder.Range);
         }
 
         [FailMessage(MessagesTexts.NoIntermediatesChosenMsg)]
-        private bool CanReplaceIntermediates()
-        {
-            return (numberOfIntermediates = range.Count() - 2) > 0;
-        }
+        private bool HasTransitVerticesToReplace() => (numberOfIntermediates = rangeBuilder.Range.Count() - 2) > 0;
 
         [FailMessage(MessagesTexts.NoPathfindingRangeMsg)]
-        private bool HasSourceAndTargetSet()
-        {
-            return range.HasSourceAndTargetSet();
-        }
+        private bool HasSourceAndTargetSet() => rangeBuilder.Range.HasSourceAndTargetSet();
 
         [FailMessage(MessagesTexts.NoVerticesToChooseAsRangeMsg)]
-        private bool HasAvailableVerticesToIncludeInRange()
-        {
-            return graph.GetNumberOfNotIsolatedVertices() > 1;
-        }
+        private bool HasAvailableVerticesToIncludeInRange() => graph.GetNumberOfNotIsolatedVertices() > 1;
 
         [FailMessage(MessagesTexts.PathfindingRangeWasSetMsg)]
-        private bool HasSourceAndTargetNotSet()
-        {
-            return !range.HasSourceAndTargetSet();
-        }
+        private bool HasSourceAndTargetNotSet() => !rangeBuilder.Range.HasSourceAndTargetSet();
+
+        [FailMessage("Replacing transit vertices is not supported")]
+        private bool CanReplaceTransitVertices() => module != null;
     }
 }

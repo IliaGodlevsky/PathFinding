@@ -14,14 +14,14 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
         private readonly Dictionary<ICoordinate, double> heuristics;
         private readonly IHeuristic heuristic;
 
-        public AStarLeeAlgorithm(IPathfindingRange pathfindingRange, IHeuristic function)
+        public AStarLeeAlgorithm(IEnumerable<IVertex> pathfindingRange, IHeuristic function)
             : base(pathfindingRange)
         {
             heuristic = function;
             heuristics = new Dictionary<ICoordinate, double>(new CoordinateEqualityComparer());
         }
 
-        public AStarLeeAlgorithm(IPathfindingRange pathfindingRange)
+        public AStarLeeAlgorithm(IEnumerable<IVertex> pathfindingRange)
             : this(pathfindingRange, new ManhattanDistance())
         {
 

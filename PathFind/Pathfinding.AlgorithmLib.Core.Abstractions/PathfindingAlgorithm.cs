@@ -26,7 +26,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         protected record SubRange(IVertex Source, IVertex Target);
 
         protected readonly ICollection<IVertex> visited;
-        protected readonly IPathfindingRange pathfindingRange;
+        protected readonly IEnumerable<IVertex> pathfindingRange;
         protected readonly TStorage storage;
         protected readonly Traces traces;
 
@@ -36,7 +36,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         private bool IsDestination => CurrentVertex.Equals(CurrentRange.Target);
 
-        protected PathfindingAlgorithm(IPathfindingRange pathfindingRange)
+        protected PathfindingAlgorithm(IEnumerable<IVertex> pathfindingRange)
         {
             this.storage = new TStorage();
             this.pathfindingRange = pathfindingRange;
@@ -108,13 +108,15 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         {
             using (var iterator = pathfindingRange.GetEnumerator())
             {
-                iterator.MoveNext();
-                var previous = iterator.Current;
-                while (iterator.MoveNext())
+                if (iterator.MoveNext())
                 {
-                    var current = iterator.Current;
-                    yield return new(previous, current);
-                    previous = iterator.Current;
+                    var previous = iterator.Current;
+                    while (iterator.MoveNext())
+                    {
+                        var current = iterator.Current;
+                        yield return new(previous, current);
+                        previous = iterator.Current;
+                    }
                 }
             }
         }

@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>Latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,6 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>Latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -56,13 +58,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Interface\IViewModel.cs" />
+    <Compile Include="Messages\DataMessages\CostRangeChangedMessage.cs" />
+    <Compile Include="MessageTokens.cs" />
     <Compile Include="Model\Graph2dWrap.cs" />
     <Compile Include="Model\Graph2dWrapFactory.cs" />
     <Compile Include="Model\MessageBoxLog.cs" />
     <Compile Include="Model\PathfindingHistoryVolume.cs" />
-    <Compile Include="Model\Wpf2dRestoreIntermediatesModule.cs" />
-    <Compile Include="Model\Wpf2DVertexChangeCostModule.cs" />
-    <Compile Include="Model\Wpf2DVertexReverseModule.cs" />
+    <Compile Include="Model\PathfindingRangeBuilderSubscription.cs" />
+    <Compile Include="Model\ReplaceTransitVerticesSubscribtion.cs" />
+    <Compile Include="Model\VertexChangeCostSubscription.cs" />
+    <Compile Include="Model\VertexReverseModuleSubscription.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ValidationRules\NonDoubleInputValidationRule.cs" />
     <Compile Include="ValidationRules\NonInt32InputValidationRule.cs" />
@@ -202,7 +207,6 @@
     <Compile Include="Messages\DataMessages\IsAllAlgorithmsFinishedMessage.cs" />
     <Compile Include="Messages\DataMessages\PathFoundMessage.cs" />
     <Compile Include="Model\CostColors.cs" />
-    <Compile Include="Model\Wpf2DPathfindingRange.cs" />
     <Compile Include="Model\GraphField.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
     <Compile Include="Model\PathInput.cs" />
@@ -277,6 +281,14 @@
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
       <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Modules.Interface\Pathfinding.GraphLib.Core.Modules.Interface.csproj">
+      <Project>{580F22FB-42C3-45C4-9328-2D968DC63C5E}</Project>
+      <Name>Pathfinding.GraphLib.Core.Modules.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Modules\Pathfinding.GraphLib.Core.Modules.csproj">
+      <Project>{4B07371D-1C8E-4EFE-9BF5-97C9E13C25BA}</Project>
+      <Name>Pathfinding.GraphLib.Core.Modules</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Realizations\Pathfinding.GraphLib.Core.Realizations.csproj">
       <Project>{0C7DB792-B30B-4138-8D37-67450E2F0982}</Project>

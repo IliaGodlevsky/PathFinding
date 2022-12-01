@@ -3,10 +3,8 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Smoothing;
 using Pathfinding.GraphLib.Smoothing.Interface;
-using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 
@@ -16,7 +14,6 @@ namespace Pathfinding.App.Console.ViewModel
     internal sealed class GraphSmoothViewModel : ViewModel, IRequireIntInput, IDisposable
     {
         private readonly IMeanCost meanAlgorithm;
-        private readonly IVertexCostFactory costFactory;
 
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
@@ -30,10 +27,8 @@ namespace Pathfinding.App.Console.ViewModel
 
         private ISmoothLevel SmoothLevel => SmoothLevels[SmoothLevelIndex];
 
-        public GraphSmoothViewModel(IMeanCost meanAlgorithm,
-            IVertexCostFactory costFactory, ICache<Graph2D<Vertex>> graph)
+        public GraphSmoothViewModel(IMeanCost meanAlgorithm, ICache<Graph2D<Vertex>> graph)
         {
-            this.costFactory = costFactory;
             this.meanAlgorithm = meanAlgorithm;
             this.graph = graph.Cached;
         }
@@ -45,7 +40,7 @@ namespace Pathfinding.App.Console.ViewModel
             {
                 int index = IntInput.Input(ChooseSmoothLevelMsg, SmoothLevels.Count, 1) - 1;
                 var level = SmoothLevels[index];
-                graph.Smooth(costFactory, meanAlgorithm, level.Level);
+                graph.Smooth(meanAlgorithm, level.Level);
             }
             graph.Display();
         }

@@ -8,6 +8,7 @@ using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Core.Realizations.Coordinates;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Extensions;
+using Shared.Primitives.ValueRange;
 using System;
 
 namespace Pathfinding.App.Console
@@ -24,7 +25,6 @@ namespace Pathfinding.App.Console
         private static readonly object recipient = new object();
         private static readonly IMessenger messenger;
 
-        private static int PreviousMaxValueOfRange;
         private static int CurrentMaxValueOfRange;
 
         private static Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
@@ -41,10 +41,9 @@ namespace Pathfinding.App.Console
             messenger.Register<CostRangeChangedMessage>(recipient, OnCostRangeChanged);
             messenger.Register<PathfindingStatisticsMessage>(recipient, OnStatisticsUpdated);
             messenger.Register<GraphCreatedMessage>(recipient, MessageTokens.Screen, OnNewGraphCreated);
-            OnCostRangeChanged(new CostRangeChangedMessage(VertexCost.CostRange));
             int x = WidthOfOrdinateView;
             int y = HeightOfAbscissaView + HeightOfGraphParametresView;
-            GraphFieldPosition = new Coordinate2D(x, y);            
+            GraphFieldPosition = new Coordinate2D(x, y);
         }
 
         public static void SetCursorPositionUnderMenu(int menuOffset = 0)
@@ -55,7 +54,6 @@ namespace Pathfinding.App.Console
         private static void OnNewGraphCreated(GraphCreatedMessage message)
         {
             Graph = message.Graph;
-            PreviousMaxValueOfRange = CurrentMaxValueOfRange;
             int pathFindingStatisticsOffset = message.Graph.Length + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
             StatisticsPosition = new Coordinate2D(0, pathFindingStatisticsOffset);
             RecalculateVerticesConsolePosition();
@@ -65,8 +63,7 @@ namespace Pathfinding.App.Console
         {
             int upperValueRange = message.CostRange.UpperValueOfRange;
             int lowerValueRange = message.CostRange.LowerValueOfRange;
-            int max = Math.Max(upperValueRange, Math.Abs(lowerValueRange));
-            PreviousMaxValueOfRange = Math.Max(CurrentMaxValueOfRange, PreviousMaxValueOfRange);
+            int max = Math.Max(Math.Abs(upperValueRange), Math.Abs(lowerValueRange));
             CurrentMaxValueOfRange = max;
             RecalculateVerticesConsolePosition();
         }
@@ -93,9 +90,7 @@ namespace Pathfinding.App.Console
 
         private static int CalculateLateralDistanceBetweenVertices()
         {
-            int currentCostWidth = CurrentMaxValueOfRange.GetDigitsNumber();
-            int previousCostWidth = PreviousMaxValueOfRange.GetDigitsNumber();
-            int costWidth = Math.Max(currentCostWidth, previousCostWidth);
+            int costWidth = CurrentMaxValueOfRange.GetDigitsNumber();
             int width = (Constants.GraphWidthValueRange.UpperValueOfRange - 1).GetDigitsNumber();
             return costWidth >= width ? costWidth + 2 : width + width - costWidth;
         }

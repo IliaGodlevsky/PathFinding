@@ -49,12 +49,12 @@ namespace Pathfinding.AlgorithmLib.History
             return VisitedHistory.Get(key);
         }
 
-        public void AddPath(Guid key, IGraphPath path)
+        public void AddPath(Guid key, IEnumerable<ICoordinate> path)
         {
             path.ForEach(item => PathHistory.Add(key, item));
         }
 
-        public void AddPathfindingRange(Guid key, IPathfindingRange range)
+        public void AddPathfindingRange(Guid key, IEnumerable<IVertex> range)
         {
             range.ForEach(item => RangeHistory.Add(key, item.Position));
         }

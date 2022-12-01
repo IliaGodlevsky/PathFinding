@@ -8,8 +8,8 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
     internal abstract class WaveAlgorithm<TStorage> : PathfindingAlgorithm<TStorage>
         where TStorage : new()
     {
-        protected WaveAlgorithm(IPathfindingRange endPoints)
-            : base(endPoints)
+        protected WaveAlgorithm(IEnumerable<IVertex> pathfindingRange)
+            : base(pathfindingRange)
         {
         }
 

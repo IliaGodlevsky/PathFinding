@@ -3,12 +3,12 @@ using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.App.WPF._2D.Messages.DataMessages;
 using Pathfinding.App.WPF._2D.Model;
-using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Smoothing;
 using Pathfinding.GraphLib.Smoothing.Interface;
+using Shared.Primitives.ValueRange;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using WPFVersion.DependencyInjection;
 
@@ -18,9 +18,8 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
     {
         private readonly IMessenger messenger;
         private readonly IMeanCost meanCost;
-        private readonly IVertexCostFactory costFactory;
 
-        private IGraph<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
+        private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
         public ISmoothLevel SelectSmoothLevel { get; set; }
 
@@ -32,14 +31,17 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
         {
             messenger = DI.Container.Resolve<IMessenger>();
             meanCost = DI.Container.Resolve<IMeanCost>();
-            costFactory = DI.Container.Resolve<IVertexCostFactory>();
             SmoothCommand = new RelayCommand(ExecuteSmoothCommand);
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
         private void ExecuteSmoothCommand(object param)
         {
-            Graph.Smooth(costFactory, meanCost, SelectSmoothLevel.Level);
+            Graph.Smooth(meanCost, SelectSmoothLevel.Level);
+            int maxValue = Graph.Max(vertex => vertex.Cost.CurrentCost);
+            int minValue = Graph.Min(vertex => vertex.Cost.CurrentCost);
+            var range = new InclusiveValueRange<int>(maxValue, minValue);
+            messenger.Send(new CostRangeChangedMessage(range), MessageTokens.CostColors);
         }
 
         private void OnGraphCreated(GraphCreatedMessage message)

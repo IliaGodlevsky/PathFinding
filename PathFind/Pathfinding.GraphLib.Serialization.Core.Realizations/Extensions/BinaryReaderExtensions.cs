@@ -14,8 +14,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
         {
             var dimensionsSizes = reader.ReadIntArray();
             var verticesInfo = reader.ReadVertices(costFactory, coordinateFactory);
-            var costRange = reader.ReadRange();
-            return new GraphSerializationInfo(dimensionsSizes, verticesInfo, costRange);
+            return new GraphSerializationInfo(dimensionsSizes, verticesInfo);
         }
 
         private static VertexSerializationInfo[] ReadVertices(this BinaryReader reader,
@@ -45,6 +44,13 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             return coordinates;
         }
 
+        private static InclusiveValueRange<int> ReadRange(this BinaryReader reader)
+        {
+            int upperValueOfCostRange = reader.ReadInt32();
+            int lowerValueOfCostRange = reader.ReadInt32();
+            return new InclusiveValueRange<int>(upperValueOfCostRange, lowerValueOfCostRange);
+        }
+
         private static IReadOnlyCollection<ICoordinate> ReadNeighborhood(this BinaryReader reader, ICoordinateFactory factory)
         {
             int count = reader.ReadInt32();
@@ -56,17 +62,11 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             return neighborhood;
         }
 
-        private static InclusiveValueRange<int> ReadRange(this BinaryReader reader)
-        {
-            int upperValueOfCostRange = reader.ReadInt32();
-            int lowerValueOfCostRange = reader.ReadInt32();
-            return new InclusiveValueRange<int>(upperValueOfCostRange, lowerValueOfCostRange);
-        }
-
         private static IVertexCost ReadCost(this BinaryReader reader, IVertexCostFactory factory)
         {
             int cost = reader.ReadInt32();
-            return factory.CreateCost(cost);
+            var range = reader.ReadRange();
+            return factory.CreateCost(cost, range);
         }
 
         private static ICoordinate ReadCoordinate(this BinaryReader reader, ICoordinateFactory factory)

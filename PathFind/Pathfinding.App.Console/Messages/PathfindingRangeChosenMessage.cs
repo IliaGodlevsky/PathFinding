@@ -1,4 +1,5 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
+using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 
 namespace Pathfinding.App.Console.Messages
@@ -7,9 +8,9 @@ namespace Pathfinding.App.Console.Messages
     {
         public PathfindingProcess Algorithm { get; }
 
-        public IPathfindingRange Range { get; }
+        public IPathfindingRange<Vertex> Range { get; }
 
-        public PathfindingRangeChosenMessage(IPathfindingRange range, PathfindingProcess algorithm)
+        public PathfindingRangeChosenMessage(IPathfindingRange<Vertex> range, PathfindingProcess algorithm)
         {
             Algorithm = algorithm;
             Range = range;

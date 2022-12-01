@@ -13,13 +13,13 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
         protected readonly Dictionary<ICoordinate, double> heuristics;
         protected readonly IHeuristic heuristic;
 
-        public AStarAlgorithm(IPathfindingRange pathfindingRange)
+        public AStarAlgorithm(IEnumerable<IVertex> pathfindingRange)
             : this(pathfindingRange, new DefaultStepRule(), new ChebyshevDistance())
         {
 
         }
 
-        public AStarAlgorithm(IPathfindingRange pathfindingRange, IStepRule stepRule, IHeuristic function)
+        public AStarAlgorithm(IEnumerable<IVertex> pathfindingRange, IStepRule stepRule, IHeuristic function)
             : base(pathfindingRange, stepRule)
         {
             heuristic = function;

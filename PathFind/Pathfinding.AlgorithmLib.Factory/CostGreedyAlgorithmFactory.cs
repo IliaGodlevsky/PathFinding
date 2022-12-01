@@ -5,6 +5,8 @@ using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.AlgorithmLib.Factory.Attrbiutes;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.GraphLib.Core.Interface;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Factory
 {
@@ -24,7 +26,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 
         }
 
-        public PathfindingProcess Create(IPathfindingRange pathfindingRange)
+        public PathfindingProcess Create(IEnumerable<IVertex> pathfindingRange)
         {
             return new CostGreedyAlgorithm(pathfindingRange, stepRule);
         }

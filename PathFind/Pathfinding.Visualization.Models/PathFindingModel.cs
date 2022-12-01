@@ -7,9 +7,7 @@ using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.Realizations.Range;
 using Pathfinding.Logging.Interface;
-using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Extensions;
@@ -28,7 +26,7 @@ namespace Pathfinding.Visualization.Models
     public abstract class PathFindingModel<TVertex>
         where TVertex : IVertex, IVisualizable
     {
-        protected readonly PathfindingRange<TVertex> range;
+        protected readonly IPathfindingRange<TVertex> range;
         protected readonly Stopwatch timer;
         protected readonly ILog log;
 
@@ -48,7 +46,7 @@ namespace Pathfinding.Visualization.Models
 
         public IReadOnlyList<IAlgorithmFactory<PathfindingProcess>> Algorithms { get; }
 
-        protected PathFindingModel(PathfindingRange<TVertex> range,
+        protected PathFindingModel(IPathfindingRange<TVertex> range,
             IEnumerable<IAlgorithmFactory<PathfindingProcess>> factories, IGraph<TVertex> graph, ILog log)
         {
             Graph = graph;
@@ -66,7 +64,7 @@ namespace Pathfinding.Visualization.Models
         {
             try
             {
-                algorithm = Algorithm.Create(range);
+                algorithm = Algorithm.Create(range.AsEnumerable());
                 SubscribeOnAlgorithmEvents(algorithm);
                 range.RestoreVerticesVisualState();
                 Path = await algorithm.FindPathAsync();
@@ -96,7 +94,6 @@ namespace Pathfinding.Visualization.Models
             {
                 current.VisualizeAsVisited();
             }
-            visitedVerticesCount++;
         }
 
         protected virtual void OnVertexVisitedNoVisualization(object sender, PathfindingEventArgs e)

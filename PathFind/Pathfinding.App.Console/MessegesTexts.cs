@@ -31,7 +31,7 @@ namespace Pathfinding.App.Console
         public const string YCoordinateInputMsg = "Input Y coordinate of vertex: ";
         public const string PathfindingRangeFirstlyMsg = "Firstly choose pathfinding range";
         public const string VertexCostInputMsg = "Input vertex cost: ";
-        public const string NumberOfIntermediateVerticesInputMsg = "Input number of intermediates vertices: ";
+        public const string NumberOfTransitVerticesInputMsg = "Input number of intermediates vertices: ";
         public const string NumberOfIntermediatesVerticesToReplaceMsg = "Input number of intermediates to replace: ";
         public const string OutOfRangeMsg = "Value is out of range. Try again: ";
         public const string BadInputMsg = "Bad value input. Try again: ";

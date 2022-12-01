@@ -26,6 +26,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
         <TextBlock Margin="5" Text="Obstacle percent" Grid.Row="0" Grid.ColumnSpan="2" 
@@ -85,10 +86,20 @@
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
-
         </TextBox>
+
+        <StackPanel Grid.Row="4" Grid.ColumnSpan="2">
+            <TextBlock Margin="5" HorizontalAlignment="Center" Text="Cost range"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Margin="5" Text="{Binding ElementName=CostRangeSlider, Path=Minimum}"/>
+                <model:RangedSlider MinWidth="130" Margin="5" x:Name="CostRangeSlider" ValueRange="{x:Static range:Constants.CostValueRange}" Value="{Binding UpperValueOfRange, Mode=TwoWay}" />
+                <TextBlock Margin="5" Text="{Binding ElementName=CostRangeSlider, Path=Value}"/>
+            </StackPanel>
+        </StackPanel>
+        
+
         <ListBox SelectedValue="{Binding SelectedGraphAssemble}" 
-                 Grid.Row="4" 
+                 Grid.Row="5" 
                  Grid.ColumnSpan="2" 
                  ItemsSource="{Binding GraphAssembles}" 
                  x:Name="algoListBox" 
@@ -101,7 +112,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Command ="{Binding ConfirmCreateGraphCommand}" Margin="5" Content="OK"></Button>
             <Button Command="{Binding CancelCreateGraphCommand}" Margin="5" Content="Cancel"></Button>
         </StackPanel>

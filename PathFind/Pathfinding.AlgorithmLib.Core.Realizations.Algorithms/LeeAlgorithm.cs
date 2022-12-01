@@ -7,7 +7,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
     internal sealed class LeeAlgorithm : BreadthFirstAlgorithm<Queue<IVertex>>
     {
-        public LeeAlgorithm(IPathfindingRange pathfindingRange)
+        public LeeAlgorithm(IEnumerable<IVertex> pathfindingRange)
             : base(pathfindingRange)
         {
 

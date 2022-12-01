@@ -14,13 +14,13 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
     {
         protected readonly IStepRule stepRule;
 
-        public DijkstraAlgorithm(IPathfindingRange pathfindingRange)
+        public DijkstraAlgorithm(IEnumerable<IVertex> pathfindingRange)
             : this(pathfindingRange, new DefaultStepRule())
         {
 
         }
 
-        public DijkstraAlgorithm(IPathfindingRange pathfindingRange, IStepRule stepRule)
+        public DijkstraAlgorithm(IEnumerable<IVertex> pathfindingRange, IStepRule stepRule)
             : base(pathfindingRange)
         {
             this.stepRule = stepRule;

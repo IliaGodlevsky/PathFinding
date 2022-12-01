@@ -1,15 +1,13 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.Visualization.Extensions;
-using Pathfinding.VisualizationLib.Core.Interface;
 
 namespace Pathfinding.App.Console.Model
 {
     internal sealed class ConsoleVertexReverseModule
     {
-        private readonly IPathfindingRange range;
+        private readonly IPathfindingRange<Vertex> range;
 
-        public ConsoleVertexReverseModule(IPathfindingRange range)
+        public ConsoleVertexReverseModule(IPathfindingRange<Vertex> range)
         {
             this.range = range;
         }

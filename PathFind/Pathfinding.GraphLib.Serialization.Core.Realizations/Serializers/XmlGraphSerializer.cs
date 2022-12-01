@@ -13,9 +13,9 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
         internal const string Dimensions = "dimensions";
         internal const string Vertices = "vertices";
         internal const string Vertex = "vertex";
+        internal const string Range = "range";
         internal const string Value = "value-{0}";
         internal const string Obstacle = "obstacle";
-        internal const string Range = "range";
         internal const string Neighbours = "neighbours";
         internal const string Coordinate = "coordinate";
         internal const string Graph = "graph";

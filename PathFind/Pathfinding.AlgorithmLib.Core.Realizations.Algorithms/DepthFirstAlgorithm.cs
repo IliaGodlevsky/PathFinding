@@ -2,6 +2,8 @@
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
 using Pathfinding.GraphLib.Core.Interface;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
@@ -9,13 +11,13 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
     {
         private readonly IHeuristic heuristic;
 
-        public DepthFirstAlgorithm(IPathfindingRange pathfindingRange, IHeuristic heuristic)
+        public DepthFirstAlgorithm(IEnumerable<IVertex> pathfindingRange, IHeuristic heuristic)
             : base(pathfindingRange)
         {
             this.heuristic = heuristic;
         }
 
-        public DepthFirstAlgorithm(IPathfindingRange pathfindingRange)
+        public DepthFirstAlgorithm(IEnumerable<IVertex> pathfindingRange)
             : this(pathfindingRange, new ManhattanDistance())
         {
 

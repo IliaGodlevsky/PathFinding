@@ -4,8 +4,8 @@ using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.App.WPF._2D.Messages.DataMessages;
 using Pathfinding.App.WPF._2D.Model;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Pathfinding.GraphLib.Core.Realizations.Range;
 using Pathfinding.Visualization.Extensions;
 using System.Windows.Input;
 using WPFVersion.DependencyInjection;
@@ -15,7 +15,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
     internal class ClearColorsViewModel
     {
         private readonly IMessenger messenger;
-        private readonly PathfindingRange<Vertex> range;
+        private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
 
         private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
@@ -26,7 +26,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
         public ClearColorsViewModel()
         {
             messenger = DI.Container.Resolve<IMessenger>();
-            range = DI.Container.Resolve<PathfindingRange<Vertex>>();
+            rangeBuilder = DI.Container.Resolve<IPathfindingRangeBuilder<Vertex>>();
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAllAlgorithmFinishedPathfinding);
             ClearColorsCommand = new RelayCommand(ExecuteClearColorsCommand, CanExecuteClearColorsCommand);
@@ -35,13 +35,13 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
         private void ExecuteClearColorsCommand(object param)
         {
             Graph.RestoreVerticesVisualState();
-            range.RestoreVerticesVisualState();
+            rangeBuilder.Range.RestoreVerticesVisualState();
         }
 
         private bool CanExecuteClearColorsCommand(object param)
         {
             return Graph != Graph2D<Vertex>.Empty 
-                && range.HasSourceAndTargetSet() 
+                && rangeBuilder.Range.HasSourceAndTargetSet() 
                 && IsAllAlgorithmFinishedPathfinding;
         }
 

@@ -7,6 +7,6 @@ namespace Pathfinding.AlgorithmLib.Factory.Interface
     public interface IAlgorithmFactory<out TAlgorithm>
         where TAlgorithm : IAlgorithm<IEnumerable<ICoordinate>>
     {
-        TAlgorithm Create(IPathfindingRange pathfindingRange);
+        TAlgorithm Create(IEnumerable<IVertex> pathfindingRange);
     }
 }

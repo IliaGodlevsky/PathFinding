@@ -18,7 +18,7 @@ namespace Pathfinding.App.Console
 
         static Constants()
         {
-            VerticesCostRange = new InclusiveValueRange<int>(99, 1);
+            VerticesCostRange = new InclusiveValueRange<int>(999, -999);
             GraphWidthValueRange = new InclusiveValueRange<int>(75, 1);
             GraphLengthValueRange = new InclusiveValueRange<int>(45, 1);
             ObstaclesPercentValueRange = new InclusiveValueRange<int>(99);
