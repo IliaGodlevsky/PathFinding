@@ -6,15 +6,12 @@ using Pathfinding.App.Console.Model.Menu.Exceptions;
 using Pathfinding.Logging.Interface;
 using Shared.Extensions;
 using Shared.Primitives.ValueRange;
-using System;
 
 namespace Pathfinding.App.Console.Views
 {
-    internal sealed class View<TViewModel> : IView<TViewModel>, IRequireIntInput, IDisposable
+    internal sealed class View<TViewModel> : IRequireIntInput, IDisplayable
         where TViewModel : IViewModel
     {
-        public event Action NewMenuCycleStarted;
-
         private readonly IMenuCommands menuCommands;
         private readonly IDisplayable menuList;
         private readonly InclusiveValueRange<int> menuRange;
@@ -38,7 +35,7 @@ namespace Pathfinding.App.Console.Views
             model.ViewClosed += OnClosed;
         }
 
-        void IDisplayable.Display()
+        public void Display()
         {
             IMenuCommand command;
             while (!IsClosureRequested)
@@ -46,7 +43,6 @@ namespace Pathfinding.App.Console.Views
                 Screen.SetCursorPositionUnderMenu(1);
                 try
                 {
-                    NewMenuCycleStarted?.Invoke();
                     using (Cursor.CleanUpAfter())
                     {
                         command = menuCommands.Commands[MenuItemIndex];
@@ -63,11 +59,6 @@ namespace Pathfinding.App.Console.Views
         private int GetMenuColumnsNumber(IViewModel viewModel)
         {
             return viewModel.GetAttributeOrDefault<MenuColumnsNumberAttribute>().MenuColumns;
-        }
-
-        public void Dispose()
-        {
-            NewMenuCycleStarted = null;
         }
 
         private void OnClosed()

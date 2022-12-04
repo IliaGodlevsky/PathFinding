@@ -27,10 +27,6 @@ namespace Pathfinding.App.Console.ViewModel
 
         private IDisplayable MenuList { get; }
 
-        private string InputMessage { get; }
-
-        private int QuitIndex { get; }
-
         public ReadOnlyList<AlgorithmFactory> Factories { get; }
 
         public PathfindingProcessChooseViewModel(IEnumerable<AlgorithmFactory> factories, IMessenger messenger)
@@ -42,20 +38,19 @@ namespace Pathfinding.App.Console.ViewModel
             MenuList = Factories.Select(item => item.ToString())
                 .Append("Quit")
                 .CreateMenuList(columnsNumber: 1);
-            InputMessage = MenuList + "\n" + MessagesTexts.AlgorithmChoiceMsg;
-            QuitIndex = Factories.Count;
             this.messenger = messenger;
         }
 
         [MenuItem(MenuItemsNames.ChooseAlgorithm, 0)]
         private void ChoosePathfindingAlgorithm()
         {
-            int index = GetAlgorithmIndex(InputMessage);
-            while (index != QuitIndex)
+            string message = MenuList + "\n" + MessagesTexts.AlgorithmChoiceMsg;
+            int index = GetAlgorithmIndex(message);
+            while (index != Factories.Count)
             {
                 var factory = Factories[index];
                 messenger.Send(new PathfindingAlgorithmChosenMessage(factory));
-                index = GetAlgorithmIndex(InputMessage);
+                index = GetAlgorithmIndex(message);
             }
         }
 

@@ -73,7 +73,6 @@
     <Compile Include="Interface\IRequireIntInput.cs" />
     <Compile Include="Interface\IRequireStringInput.cs" />
     <Compile Include="Interface\IRequireTimeSpanInput.cs" />
-    <Compile Include="Interface\IView.cs" />
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="MenuItemsNames.cs" />
     <Compile Include="Messages\AlgorithmFinishedMessage.cs" />

@@ -43,12 +43,12 @@ namespace Pathfinding.App.Console.ViewModel
 
         private TimeSpan AnimationDelay { get; set; } = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
 
-        public PathfindingVisualizationViewModel(ICache<Graph2D<Vertex>> graphCache, 
-            ConsoleKeystrokesHook keyStrokeHook, IMessenger messenger)
+        public PathfindingVisualizationViewModel(ICache<Graph2D<Vertex>> graphCache, ConsoleKeystrokesHook keyStrokeHook, 
+            IMessenger messenger)
         {
-            this.keyStrokeHook = keyStrokeHook;
-            this.messenger = messenger;
             Graph = graphCache.Cached;
+            this.keyStrokeHook = keyStrokeHook;
+            this.messenger = messenger;           
             this.messenger.Register<SubscribeOnVisualizationMessage>(this, OnPathfindingPrepare);
         }
 

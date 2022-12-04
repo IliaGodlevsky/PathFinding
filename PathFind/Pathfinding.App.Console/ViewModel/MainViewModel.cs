@@ -37,12 +37,11 @@ namespace Pathfinding.App.Console.ViewModel
         public MainViewModel(FieldFactory fieldFactory, IMessenger messenger, IUndo undo, ILog log)
             : base(log)
         {
-            Cached = Graph2D<Vertex>.Empty;
             this.undo = undo;
             this.messenger = messenger;
-            this.messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainViewModel, SetGraph);
-            this.messenger.Register<ClearGraphMessage>(this, ClearGraph);
             this.fieldFactory = fieldFactory;
+            this.messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainViewModel, SetGraph);
+            this.messenger.Register<ClearGraphMessage>(this, ClearGraph);           
         }
 
         [ExecuteSafe(nameof(ExecuteSafe))]

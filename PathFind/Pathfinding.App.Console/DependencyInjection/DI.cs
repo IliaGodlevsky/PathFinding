@@ -84,7 +84,7 @@ namespace Pathfinding.App.Console.DependencyInjection
                 .Except<MainViewModel>().AsSelf().PropertiesAutowired();
             builder.RegisterAssemblyTypes(Assemblies).AssignableTo<IViewModel>().Where(type => type.IsInstancePerLifetimeScope())
                 .Except<PathfindingVisualizationViewModel>().AsSelf().PropertiesAutowired().InstancePerLifetimeScope();
-            builder.RegisterGeneric(typeof(View<>)).As(typeof(IView<>)).PropertiesAutowired().InstancePerDependency();
+            builder.RegisterGeneric(typeof(View<>)).AsSelf().PropertiesAutowired().InstancePerDependency();
             builder.RegisterType<SpeedUpAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.UpArrow).SingleInstance();
             builder.RegisterType<SlowDownAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.DownArrow).SingleInstance();
             builder.RegisterType<ResumeAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Enter).SingleInstance();
