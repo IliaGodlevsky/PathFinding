@@ -43,6 +43,7 @@ using Pathfinding.GraphLib.Core.Modules.Commands;
 using Pathfinding.GraphLib.Core.Modules;
 using Pathfinding.App.Console.Views;
 using Pathfinding.App.Console.Model.InProcessActions;
+using Pathfinding.App.Console.Model.PathfindingActions;
 
 namespace Pathfinding.App.Console.DependencyInjection
 {
@@ -77,17 +78,19 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<ConsoleKeystrokesHook>().AsSelf().SingleInstance().PropertiesAutowired();
 
             builder.RegisterType<MainViewModel>().AsSelf().PropertiesAutowired().As<ICache<Graph2D<Vertex>>>().SingleInstance();
-            builder.RegisterType<PathfindingProcessViewModel>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired()
-                .OnActivated(OnPathfindingProcessViewModelActivated);
+            builder.RegisterType<PathfindingVisualizationViewModel>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired()
+                .OnActivated(OnVisualizationViewModelActivated);
             builder.RegisterAssemblyTypes(Assemblies).AssignableTo<IViewModel>().Where(type => !type.IsInstancePerLifetimeScope())
                 .Except<MainViewModel>().AsSelf().PropertiesAutowired();
             builder.RegisterAssemblyTypes(Assemblies).AssignableTo<IViewModel>().Where(type => type.IsInstancePerLifetimeScope())
-                .Except<PathfindingProcessViewModel>().AsSelf().PropertiesAutowired().InstancePerLifetimeScope();
-            builder.RegisterGeneric(typeof(View<>)).As(typeof(IView<>)).PropertiesAutowired();
+                .Except<PathfindingVisualizationViewModel>().AsSelf().PropertiesAutowired().InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(View<>)).As(typeof(IView<>)).PropertiesAutowired().InstancePerDependency();
+            builder.RegisterType<SpeedUpAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.UpArrow).SingleInstance();
+            builder.RegisterType<SlowDownAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.DownArrow).SingleInstance();
             builder.RegisterType<ResumeAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Enter).SingleInstance();
             builder.RegisterType<PauseAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.P).SingleInstance();
-            //builder.RegisterType<InterruptAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Escape).SingleInstance();
-            //builder.RegisterType<PathfindingStepByStep>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.W).SingleInstance();
+            builder.RegisterType<InterruptAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Escape).SingleInstance();
+            builder.RegisterType<PathfindingStepByStep>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.W).SingleInstance();
 
             builder.RegisterType<ConsoleVertexReverseModule>().AsSelf().SingleInstance();
             builder.RegisterType<ConsoleVertexChangeCostModule>().AsSelf().PropertiesAutowired();
@@ -139,24 +142,30 @@ namespace Pathfinding.App.Console.DependencyInjection
             return builder.Build();
         }
 
-        private static void OnPathfindingProcessViewModelActivated(IActivatedEventArgs<PathfindingProcessViewModel> args)
+        private static void OnVisualizationViewModelActivated(IActivatedEventArgs<PathfindingVisualizationViewModel> args)
         {
-            args.Instance.PathfindingActions = args.Context.Resolve<IEnumerable<Meta<IPathfindingAction>>>()
-                .ToDictionary(action => (ConsoleKey)action.Metadata[Key], action => action.Value)
-                .ToReadOnly();
+            args.Instance.PathfindingActions = args.Context.ResolveWithMetadata<IPathfindingAction>();
+            args.Instance.AnimationActions = args.Context.ResolveWithMetadata<IAnimationSpeedAction>();
         }
 
         private static void OnPathfindingRangeBuilderActivated(IActivatedEventArgs<PathfindingRangeBuilder<Vertex>> args)
         {
-            args.Instance.IncludeCommands = ResolveKeyed(args.Context, CommandType.Include);
-            args.Instance.ExcludeCommands = ResolveKeyed(args.Context, CommandType.Exclude);
+            args.Instance.IncludeCommands = args.Context.ResolveKeyed(CommandType.Include);
+            args.Instance.ExcludeCommands = args.Context.ResolveKeyed(CommandType.Exclude);
         }
 
-        private static Commands ResolveKeyed(IComponentContext context, CommandType key)
+        private static Commands ResolveKeyed(this IComponentContext context, CommandType key)
         {
             return context.ResolveKeyed<IEnumerable<Meta<Command>>>(key)
                 .OrderBy(x => x.Metadata[Order])
                 .Select(x => x.Value)
+                .ToReadOnly();
+        }
+
+        private static IReadOnlyDictionary<ConsoleKey, TValue> ResolveWithMetadata<TValue>(this IComponentContext context)
+        {
+            return context.Resolve<IEnumerable<Meta<TValue>>>()
+                .ToDictionary(action => (ConsoleKey)action.Metadata[Key], action => action.Value)
                 .ToReadOnly();
         }
     }

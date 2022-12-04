@@ -9,18 +9,15 @@ using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.App.Console.Attributes;
 using Pathfinding.App.Console.DependencyInjection;
-using Pathfinding.App.Console.EventArguments;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.App.Console.Model.InProcessActions;
 using Pathfinding.App.Console.Model.Menu.Attributes;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Extensions;
-using Shared.Extensions;
 using Shared.Primitives;
 using System;
 using System.Collections.Generic;
@@ -37,7 +34,6 @@ namespace Pathfinding.App.Console.ViewModel
         private static readonly TimeSpan StepDelay = TimeSpan.FromMilliseconds(0.5);
 
         private readonly IMessenger messenger;
-        private readonly ConsoleKeystrokesHook keystrokesHook;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         private readonly Stopwatch timer;
         private readonly ILifetimeScope lifetimeScope;
@@ -50,22 +46,18 @@ namespace Pathfinding.App.Console.ViewModel
 
         public IInput<ConsoleKey> KeyInput { get; set; }
 
-        public IReadOnlyDictionary<ConsoleKey, IPathfindingAction> PathfindingActions { get; set; }
-
         private string Statistics => path.ToStatistics(timer, visitedVerticesCount, algorithm);
         
         public PathfindingProcessViewModel(IPathfindingRangeBuilder<Vertex> rangeBuilder, 
-            ConsoleKeystrokesHook hook, ICache<Graph2D<Vertex>> graph, IMessenger messenger, ILog log)
+            ICache<Graph2D<Vertex>> graph, IMessenger messenger, ILog log)
             : base(log)
         {
             this.factories = new Queue<AlgorithmFactory>();
             this.lifetimeScope = DI.Container.BeginLifetimeScope();
             this.messenger = messenger;
-            this.keystrokesHook = hook;
             this.graph = graph.Cached;
             this.rangeBuilder = rangeBuilder;
             this.timer = new Stopwatch();
-            keystrokesHook.KeyPressed += OnConsoleKeyPressed;
             messenger.Register<PathfindingAlgorithmChosenMessage>(this, OnAlgorithmChosen);
         }
 
@@ -73,7 +65,6 @@ namespace Pathfinding.App.Console.ViewModel
         {
             base.Dispose();
             lifetimeScope.Dispose();
-            keystrokesHook.KeyPressed -= OnConsoleKeyPressed;
             messenger.Unregister(this);
         }
 
@@ -142,11 +133,6 @@ namespace Pathfinding.App.Console.ViewModel
             factories.Enqueue(message.Algorithm);
         }
 
-        private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
-        {
-            PathfindingActions.GetOrDefault(e.PressedKey, NullPathfindingAction.Interface).Do(algorithm);
-        }
-
         private void SummarizeResults()
         {
             var statistics = path.Count > 0 ? Statistics : MessagesTexts.CouldntFindPathMsg;
@@ -172,8 +158,6 @@ namespace Pathfinding.App.Console.ViewModel
             algorithm.Interrupted += (s, e) => timer.Stop();
             algorithm.Paused += (s, e) => timer.Stop();
             algorithm.Resumed += (s, e) => timer.Start();
-            algorithm.Started += keystrokesHook.StartAsync;
-            algorithm.Finished += (s, e) => keystrokesHook.Interrupt();
         }
     }
 }

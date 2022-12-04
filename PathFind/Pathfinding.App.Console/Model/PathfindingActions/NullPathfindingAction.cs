@@ -2,7 +2,7 @@
 using Pathfinding.App.Console.Interface;
 using Shared.Primitives.Single;
 
-namespace Pathfinding.App.Console.Model.InProcessActions
+namespace Pathfinding.App.Console.Model.PathfindingActions
 {
     internal sealed class NullPathfindingAction : Singleton<NullPathfindingAction, IPathfindingAction>, IPathfindingAction
     {
@@ -13,7 +13,7 @@ namespace Pathfinding.App.Console.Model.InProcessActions
 
         public void Do(PathfindingProcess algorithm)
         {
-            
+
         }
     }
 }

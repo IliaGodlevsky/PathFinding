@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.App.Console.Attributes;
 using Pathfinding.App.Console.EventArguments;
@@ -7,11 +8,14 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
+using Pathfinding.App.Console.Model.PathfindingActions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Extensions;
-using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
+using Shared.Process.EventArguments;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.ViewModel
 {
@@ -19,20 +23,23 @@ namespace Pathfinding.App.Console.ViewModel
     [InstancePerLifetimeScope]
     internal sealed class PathfindingVisualizationViewModel : ViewModel, IRequireAnswerInput, IRequireTimeSpanInput
     {
-        private static readonly TimeSpan Millisecond = TimeSpan.FromMilliseconds(1);
-
         private readonly IMessenger messenger;
         private readonly ConsoleKeystrokesHook keyStrokeHook;
 
-        private bool isVisualizationApplied;
+        private bool isVisualizationApplied = false;
+        private PathfindingProcess algorithm = PathfindingProcess.Null;
 
-        private InclusiveValueRange<TimeSpan> DelayRange => Constants.AlgorithmDelayTimeValueRange;
+        public IReadOnlyDictionary<ConsoleKey, IPathfindingAction> PathfindingActions { get; set; }
 
-        private Graph2D<Vertex> Graph { get; }
+        public IReadOnlyDictionary<ConsoleKey, IAnimationSpeedAction> AnimationActions { get; set; }
 
         public IInput<TimeSpan> TimeSpanInput { get; set; }
 
         public IInput<Answer> AnswerInput { get; set; }
+
+        private Graph2D<Vertex> Graph { get; }
+
+        private InclusiveValueRange<TimeSpan> DelayRange => Constants.AlgorithmDelayTimeValueRange;        
 
         private TimeSpan AnimationDelay { get; set; } = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
 
@@ -42,7 +49,6 @@ namespace Pathfinding.App.Console.ViewModel
             this.keyStrokeHook = keyStrokeHook;
             this.messenger = messenger;
             Graph = graphCache.Cached;
-            this.keyStrokeHook.KeyPressed += OnConsoleKeyPressed;
             this.messenger.Register<SubscribeOnVisualizationMessage>(this, OnPathfindingPrepare);
         }
 
@@ -74,6 +80,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
         {
+            AnimationDelay.Wait();
             Graph.Get(e.Current).VisualizeAsVisited();
         }
 
@@ -82,13 +89,28 @@ namespace Pathfinding.App.Console.ViewModel
             Graph.Get(e.Current).VisualizeAsEnqueued();
         }
 
+        private void OnAlgorithmStarted(object sender, ProcessEventArgs e)
+        {
+            keyStrokeHook.KeyPressed += OnConsoleKeyPressed;
+            Task.Run(keyStrokeHook.Start);
+        }
+
+        private void OnAlgorithmFinished(object sender, ProcessEventArgs e)
+        {
+            keyStrokeHook.Interrupt();
+            keyStrokeHook.KeyPressed -= OnConsoleKeyPressed;
+            algorithm = PathfindingProcess.Null;
+        }
+
         private void OnPathfindingPrepare(SubscribeOnVisualizationMessage message)
         {
             if (IsVisualizationApplied())
             {
-                message.Algorithm.VertexVisited += (s, e) => AnimationDelay.Wait();
-                message.Algorithm.VertexVisited += OnVertexVisited;
-                message.Algorithm.VertexEnqueued += OnVertexEnqueued;
+                algorithm = message.Algorithm;
+                algorithm.VertexVisited += OnVertexVisited;
+                algorithm.VertexEnqueued += OnVertexEnqueued;
+                algorithm.Started += OnAlgorithmStarted;
+                algorithm.Finished += OnAlgorithmFinished;
             }
         }
 
@@ -97,15 +119,13 @@ namespace Pathfinding.App.Console.ViewModel
 
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
         {
-            switch (e.PressedKey)
-            {
-                case ConsoleKey.DownArrow:
-                    AnimationDelay = DelayRange.ReturnInRange(AnimationDelay - Millisecond);
-                    break;
-                case ConsoleKey.UpArrow:
-                    AnimationDelay = DelayRange.ReturnInRange(AnimationDelay + Millisecond);
-                    break;
-            }
+            PathfindingActions
+                .GetOrDefault(e.PressedKey, NullPathfindingAction.Interface)
+                .Do(algorithm);
+
+            AnimationDelay = AnimationActions
+                .GetOrDefault(e.PressedKey, NullAnimationAction.Instance)
+                .Do(AnimationDelay);
         }
     }
 }

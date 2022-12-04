@@ -55,11 +55,11 @@
     <Compile Include="DependencyInjection\DI.cs" />
     <Compile Include="EventArguments\ConsoleKeyPressedEventArgs.cs" />
     <Compile Include="EventHandlers\ConsoleKeyPressedEventHandler.cs" />
-    <Compile Include="Extensions\ConsoleKeystrokesHookExtensions.cs" />
     <Compile Include="Extensions\ILifetimeScopeExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IGraphPathExtensions.cs" />
     <Compile Include="Extensions\IInputExtensions.cs" />
+    <Compile Include="Interface\IAnimationSpeedAction.cs" />
     <Compile Include="Interface\IPathfindingAction.cs" />
     <Compile Include="Interface\ICache.cs" />
     <Compile Include="Interface\IDisplayable.cs" />
@@ -104,6 +104,9 @@
     <Compile Include="Model\ConsoleVertexChangeCostModule.cs" />
     <Compile Include="Model\GraphField.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
+    <Compile Include="Model\PathfindingActions\NullAnimationAction.cs" />
+    <Compile Include="Model\PathfindingActions\SpeedUpAnimation.cs" />
+    <Compile Include="Model\PathfindingActions\SlowDownAnimation.cs" />
     <Compile Include="Model\PathfindingActions\InterruptAlgorithm.cs" />
     <Compile Include="Model\PathfindingActions\NullPathfindingAction.cs" />
     <Compile Include="Model\PathfindingActions\PauseAlgorithm.cs" />
