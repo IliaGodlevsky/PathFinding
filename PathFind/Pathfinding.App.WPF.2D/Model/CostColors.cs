@@ -55,7 +55,7 @@ namespace Pathfinding.App.WPF._2D.Model
 
         private IReadOnlyDictionary<int, Brush> FormCostColors()
         {
-            var costValues = CostRange.EnumerateValues().ToReadOnly();
+            var costValues = CostRange.Enumerate().ToReadOnly();
             var colors = new Dictionary<int, Brush>();
             double step = byte.MaxValue / costValues.Count;
             for (int i = 0; i < costValues.Count; i++)

@@ -6,13 +6,11 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
-using Pathfinding.App.Console.Views;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Executable;
-using Shared.Primitives.ValueRange;
 using System;
 
 namespace Pathfinding.App.Console.ViewModel
@@ -50,30 +48,30 @@ namespace Pathfinding.App.Console.ViewModel
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.FindPath, 1)]
-        private void FindPath() => DI.Container.Display<PathfindingView>();
+        private void FindPath() => DI.Container.Display<PathfindingViewModel>();
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [MenuItem(MenuItemsNames.CreateNewGraph, 0)]
-        private void CreateNewGraph() => DI.Container.Display<GraphCreateView>();
+        private void CreateNewGraph() => DI.Container.Display<GraphCreatingViewModel>();
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.SmoothGraph, 2)]
-        private void SmoothGraph() => DI.Container.Display<GraphSmoothView>();
+        private void SmoothGraph() => DI.Container.Display<GraphSmoothViewModel>();
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.ChangedVertexState, 3)]
-        private void ChangeVertexState() => DI.Container.Display<VertexStateView>();
+        private void ChangeVertexState() => DI.Container.Display<VertexStateViewModel>();
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.SaveGraph, 4)]
-        private void SaveGraph() => DI.Container.Display<GraphSaveView>();
+        private void SaveGraph() => DI.Container.Display<GraphSaveViewModel>();
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [MenuItem(MenuItemsNames.LoadGraph, 5)]
-        private void LoadGraph() => DI.Container.Display<GraphLoadView>();
+        private void LoadGraph() => DI.Container.Display<GraphLoadViewModel>();
 
         protected override void RaiseViewClosed()
         {

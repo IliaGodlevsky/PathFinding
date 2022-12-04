@@ -1,11 +1,9 @@
-﻿using Pathfinding.AlgorithmLib.Core.Interface;
-using Pathfinding.AlgorithmLib.History.Interface;
+﻿using Pathfinding.AlgorithmLib.History.Interface;
 using Pathfinding.GraphLib.Core.Interface;
 using Shared.Collections;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Pathfinding.AlgorithmLib.History
 {

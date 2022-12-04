@@ -23,7 +23,7 @@ namespace Pathfinding.App.WPF._3D.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return Rotators.GetOrDefault(value, () => NullAnimatedAxisRotatorFactory.Interface);
+            return Rotators.GetOrDefault(value, NullAnimatedAxisRotatorFactory.Interface);
         }
 
         public object ConvertBack(object value, Type targetTypes, object parameter, CultureInfo culture)

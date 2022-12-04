@@ -15,19 +15,17 @@ namespace Pathfinding.App.Console.Model
         private const ConsoleColor TargetVertexColor = ConsoleColor.Red;
         private const ConsoleColor AlreadyPathVertexColor = ConsoleColor.DarkRed;
         private const ConsoleColor VisitedVertexColor = ConsoleColor.White;
-        private const ConsoleColor IntermediateVertexColor = ConsoleColor.Green;
+        private const ConsoleColor TransitVertexColor = ConsoleColor.Green;
         private const ConsoleColor ToReplaceMarkColor = ConsoleColor.DarkMagenta;
 
         public bool IsVisualizedAsPath(Vertex vertex)
         {
-            return vertex.Color.IsOneOf(PathVertexColor, AlreadyPathVertexColor, 
-                IntermediateVertexColor);
+            return vertex.Color.IsOneOf(PathVertexColor, AlreadyPathVertexColor, TransitVertexColor);
         }
 
         public bool IsVisualizedAsPathfindingRange(Vertex vertex)
         {
-            return vertex.Color.IsOneOf(SourceVertexColor, TargetVertexColor,
-                IntermediateVertexColor, ToReplaceMarkColor);
+            return vertex.Color.IsOneOf(SourceVertexColor, TargetVertexColor, TransitVertexColor, ToReplaceMarkColor);
         }
 
         public void VisualizeAsTarget(Vertex vertex)
@@ -45,9 +43,9 @@ namespace Pathfinding.App.Console.Model
             Mark(vertex, SourceVertexColor);
         }
 
-        public void VisualizeAsIntermediate(Vertex vertex)
+        public void VisualizeAsTransit(Vertex vertex)
         {
-            Mark(vertex, IntermediateVertexColor);
+            Mark(vertex, TransitVertexColor);
         }
 
         public void VisualizeAsRegular(Vertex vertex)
@@ -88,7 +86,7 @@ namespace Pathfinding.App.Console.Model
 
         public void VisualizeAsMarkedToReplaceIntermediate(Vertex vertex)
         {
-            if (vertex.Color == IntermediateVertexColor)
+            if (vertex.Color == TransitVertexColor)
             {
                 Mark(vertex, ToReplaceMarkColor);
             }

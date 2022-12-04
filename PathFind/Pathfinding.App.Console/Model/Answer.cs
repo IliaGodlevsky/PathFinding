@@ -4,7 +4,7 @@ using System;
 
 namespace Pathfinding.App.Console.Model
 {
-    internal sealed class Answer : IComparable, IComparable<Answer>, IEquatable<Answer>
+    internal sealed class Answer : IComparable<Answer>, IEquatable<Answer>
     {
         private const StringComparison IgnoreCase = StringComparison.OrdinalIgnoreCase;
 
@@ -29,13 +29,6 @@ namespace Pathfinding.App.Console.Model
         public int CompareTo(Answer other)
         {
             return value.CompareTo(other.value);
-        }
-
-        public int CompareTo(object obj)
-        {
-            return obj is Answer answer
-                ? CompareTo(answer)
-                : throw new ArgumentException("Wrong argument", nameof(obj));
         }
 
         public bool Equals(Answer other)

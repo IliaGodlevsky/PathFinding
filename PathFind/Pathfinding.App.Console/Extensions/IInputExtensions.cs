@@ -22,13 +22,13 @@ namespace Pathfinding.App.Console.Extensions
         }
 
         public static T Input<T>(this IInput<T> self, string msg, T upper, T lower = default)
-            where T : IComparable, IComparable<T>
+            where T : IComparable<T>
         {
             return self.Input(msg, new InclusiveValueRange<T>(upper, lower));
         }
 
         public static T Input<T>(this IInput<T> self, string msg, InclusiveValueRange<T> range)
-            where T : IComparable, IComparable<T>
+            where T : IComparable<T>
         {
             var input = self.Input(msg);
             while (!range.Contains(input))
@@ -39,7 +39,7 @@ namespace Pathfinding.App.Console.Extensions
         }
 
         public static InclusiveValueRange<T> InputRange<T>(this IInput<T> self, InclusiveValueRange<T> range)
-            where T : IComparable, IComparable<T>
+            where T : IComparable<T>
         {
             T upperValueOfRange = self.Input(MessagesTexts.RangeUpperValueInputMsg, range);
             T lowerValueOfRange = self.Input(MessagesTexts.RangeLowerValueInputMsg, range);

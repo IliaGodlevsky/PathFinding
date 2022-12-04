@@ -37,7 +37,7 @@ namespace Pathfinding.App.WPF._3D.Model
             Dispatcher.Invoke(() => vertex.Brush = TargetVertexBrush);
         }
 
-        public void VisualizeAsIntermediate(Vertex3D vertex)
+        public void VisualizeAsTransit(Vertex3D vertex)
         {
             Dispatcher.Invoke(() => vertex.Brush = IntermediateVertexBrush);
         }

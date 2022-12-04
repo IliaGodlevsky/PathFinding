@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Shared.Collections
 {
+    [DebuggerDisplay("Count = {Count}")]
     public sealed class ReadOnlyDictionary<TKey, TValue> : IReadOnlyDictionary<TKey, TValue>
     {
         public static ReadOnlyDictionary<TKey, TValue> Empty

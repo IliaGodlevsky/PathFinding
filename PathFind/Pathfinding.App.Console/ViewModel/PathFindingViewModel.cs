@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using Autofac.Core.Lifetime;
+using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.DependencyInjection;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Messages;
@@ -29,14 +30,17 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.FindPath, 0)]
         private void FindPath()
         {
-            DI.Container.DisplayScoped<PathfindingProcessView>();
+            using (var scope = DI.Container.BeginLifetimeScope())
+            {
+                scope.Display<PathfindingProcessViewModel>();
+            }
         }
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [MenuItem(MenuItemsNames.ChoosePathfindingRange, 1)]
         private void ChooseExtremeVertex()
         {
-            DI.Container.Display<PathfindingRangeView>();
+            DI.Container.Display<PathfindingRangeViewModel>();
         }
 
         [MenuItem(MenuItemsNames.ClearGraph, 2)]

@@ -28,7 +28,7 @@ namespace Pathfinding.Visualization.Extensions
             var target = range.LastOrDefault();
             var intermediates = range.Except(new[] { source, target }).ToArray();
             source?.VisualizeAsSource();
-            intermediates.ForEach(item => item.VisualizeAsIntermediate());
+            intermediates.ForEach(item => item.VisualizeAsTransit());
             target?.VisualizeAsTarget();
         }
 

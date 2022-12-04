@@ -7,7 +7,7 @@ using System;
 namespace Pathfinding.App.Console.ValueInput.RandomInput
 {
     internal abstract class RandomInput<T, TRange> : IInput<T>
-        where TRange : IComparable, IComparable<TRange>
+        where TRange : IComparable<TRange>
     {
         protected virtual TimeSpan Delay { get; }
 

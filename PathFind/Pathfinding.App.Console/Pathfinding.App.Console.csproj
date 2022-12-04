@@ -60,6 +60,7 @@
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IGraphPathExtensions.cs" />
     <Compile Include="Extensions\IInputExtensions.cs" />
+    <Compile Include="Interface\IPathfindingAction.cs" />
     <Compile Include="Interface\ICache.cs" />
     <Compile Include="Interface\IDisplayable.cs" />
     <Compile Include="Interface\IFramedAxis.cs" />
@@ -103,6 +104,11 @@
     <Compile Include="Model\ConsoleVertexChangeCostModule.cs" />
     <Compile Include="Model\GraphField.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
+    <Compile Include="Model\PathfindingActions\InterruptAlgorithm.cs" />
+    <Compile Include="Model\PathfindingActions\NullPathfindingAction.cs" />
+    <Compile Include="Model\PathfindingActions\PauseAlgorithm.cs" />
+    <Compile Include="Model\PathfindingActions\ResumeAlgorithm.cs" />
+    <Compile Include="Model\PathfindingActions\PathfindingStepByStep.cs" />
     <Compile Include="Model\MenuList.cs" />
     <Compile Include="Model\Menu\Attributes\ConditionAttribute.cs" />
     <Compile Include="Model\Menu\Attributes\ExecuteSafeAttribute.cs" />
@@ -167,18 +173,6 @@
     <Compile Include="ViewModel\SafeViewModel.cs" />
     <Compile Include="ViewModel\VertexStateViewModel.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
-    <Compile Include="Views\PathfindingHistoryView.cs" />
-    <Compile Include="Views\PathfindingProcessChooseView.cs" />
-    <Compile Include="Views\PathfindingProcessView.cs" />
-    <Compile Include="Views\PathfindingRangeView.cs" />
-    <Compile Include="Views\GraphCreateView.cs" />
-    <Compile Include="Views\GraphLoadView.cs" />
-    <Compile Include="Views\GraphSaveView.cs" />
-    <Compile Include="Views\GraphSmoothView.cs" />
-    <Compile Include="Views\MainView.cs" />
-    <Compile Include="Views\PathfindingVisualizationView.cs" />
-    <Compile Include="Views\PathfindingView.cs" />
-    <Compile Include="Views\VertexStateView.cs" />
     <Compile Include="Views\View.cs" />
   </ItemGroup>
   <ItemGroup>

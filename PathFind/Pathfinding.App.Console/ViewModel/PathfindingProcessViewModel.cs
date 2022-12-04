@@ -14,12 +14,13 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.InProcessActions;
 using Pathfinding.App.Console.Model.Menu.Attributes;
-using Pathfinding.App.Console.Views;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Extensions;
+using Shared.Extensions;
 using Shared.Primitives;
 using System;
 using System.Collections.Generic;
@@ -49,6 +50,8 @@ namespace Pathfinding.App.Console.ViewModel
 
         public IInput<ConsoleKey> KeyInput { get; set; }
 
+        public IReadOnlyDictionary<ConsoleKey, IPathfindingAction> PathfindingActions { get; set; }
+
         private string Statistics => path.ToStatistics(timer, visitedVerticesCount, algorithm);
         
         public PathfindingProcessViewModel(IPathfindingRangeBuilder<Vertex> rangeBuilder, 
@@ -75,7 +78,7 @@ namespace Pathfinding.App.Console.ViewModel
         }
 
         [MenuItem(MenuItemsNames.ChooseAlgorithm, 0)]
-        private void ChooseAlgorithm() => DI.Container.Display<PathfindingProcessChooseView>();
+        private void ChooseAlgorithm() => DI.Container.Display<PathfindingProcessChooseViewModel>();
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(CanStartPathfinding))]
@@ -97,10 +100,10 @@ namespace Pathfinding.App.Console.ViewModel
         }
 
         [MenuItem(MenuItemsNames.CustomizeVisualization, 2)]
-        private void CustomizeVisualization() => lifetimeScope.Display<PathfindingVisualizationView>();
+        private void CustomizeVisualization() => lifetimeScope.Display<PathfindingVisualizationViewModel>();
 
         [MenuItem(MenuItemsNames.History, 3)]
-        private void PathfindingHistory() => lifetimeScope.Display<PathfindingHistoryView>();
+        private void PathfindingHistory() => lifetimeScope.Display<PathfindingHistoryViewModel>();
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
         {
@@ -141,18 +144,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
         {
-            switch (e.PressedKey)
-            {
-                case ConsoleKey.Escape:
-                    algorithm.Interrupt();
-                    break;
-                case ConsoleKey.P:
-                    algorithm.Pause();
-                    break;
-                case ConsoleKey.Enter:
-                    algorithm.Resume();
-                    break;
-            }
+            PathfindingActions.GetOrDefault(e.PressedKey, NullPathfindingAction.Interface).Do(algorithm);
         }
 
         private void SummarizeResults()

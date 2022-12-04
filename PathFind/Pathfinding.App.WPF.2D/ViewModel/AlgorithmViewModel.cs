@@ -7,7 +7,6 @@ using Pathfinding.App.WPF._2D.Messages.ActionMessages;
 using Pathfinding.App.WPF._2D.Messages.DataMessages;
 using Pathfinding.App.WPF._2D.ViewModel.BaseViewModels;
 using Shared.Primitives.Extensions;
-using Shared.Primitives.ValueRange.Enums;
 using System;
 using System.Windows.Input;
 using WPFVersion.DependencyInjection;
@@ -63,7 +62,9 @@ namespace Pathfinding.App.WPF._2D.ViewModel
             get => delayTime;
             set
             {
-                Set(ref delayTime, Constants.AlgorithmDelayTimeValueRange.ReturnInRange(value, ReturnOptions.Cycle));
+                var range = Constants.AlgorithmDelayTimeValueRange;
+                var time = range.ReturnInRange(value, ReturnOptions.Cycle);
+                Set(ref delayTime, time);
                 messenger.SendParallel(new DelayTimeChangedMessage(delayTime, Id));
             }
         }

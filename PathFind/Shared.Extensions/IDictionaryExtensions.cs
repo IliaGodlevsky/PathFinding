@@ -11,6 +11,11 @@ namespace Shared.Extensions
             return self.TryGetValue(key, out var value) ? value : defaultValue();
         }
 
+        public static TValue GetOrDefault<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> self, TKey key, TValue defaultValue)
+        {
+            return self.TryGetValue(key, out var value) ? value : defaultValue;
+        }
+
         public static TValue GetOrEmpty<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> self, TKey key)
             where TValue : IEnumerable, new()
         {

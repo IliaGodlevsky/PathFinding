@@ -51,7 +51,7 @@ namespace Pathfinding.App.WPF._2D.Model
             Dispatcher.Invoke(() => vertex.VertexColor = TargetVertexColor);
         }
 
-        public void VisualizeAsIntermediate(Vertex vertex)
+        public void VisualizeAsTransit(Vertex vertex)
         {
             Dispatcher.Invoke(() => vertex.VertexColor = IntermediateVertexColor);
         }

@@ -18,11 +18,11 @@ namespace Pathfinding.App.Console
 
         static Constants()
         {
-            VerticesCostRange = new InclusiveValueRange<int>(999, -999);
+            VerticesCostRange = new InclusiveValueRange<int>(99, 1);
             GraphWidthValueRange = new InclusiveValueRange<int>(75, 1);
             GraphLengthValueRange = new InclusiveValueRange<int>(45, 1);
             ObstaclesPercentValueRange = new InclusiveValueRange<int>(99);
-            AlgorithmDelayTimeValueRange = new InclusiveValueRange<TimeSpan>(TimeSpan.FromMilliseconds(35), TimeSpan.FromMilliseconds(0));
+            AlgorithmDelayTimeValueRange = new InclusiveValueRange<TimeSpan>(TimeSpan.FromMilliseconds(50), TimeSpan.FromMilliseconds(1));
         }
     }
 }

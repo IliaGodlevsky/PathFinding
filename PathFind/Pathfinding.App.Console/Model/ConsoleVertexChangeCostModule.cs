@@ -22,10 +22,9 @@ namespace Pathfinding.App.Console.Model
                     var range = vertex.Cost.CostRange;
                     var cost = IntInput.Input(MessagesTexts.VertexCostInputMsg, range);
                     vertex.Cost = vertex.Cost.SetCost(cost);
-
+                    vertex.Display();
                 }
             }
-            vertex.Display();
         }
     }
 }

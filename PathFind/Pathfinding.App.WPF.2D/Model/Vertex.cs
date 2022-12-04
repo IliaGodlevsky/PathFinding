@@ -156,9 +156,9 @@ namespace Pathfinding.App.WPF._2D.Model
             visualization.VisualizeAsEnqueued(this);
         }
 
-        public void VisualizeAsIntermediate()
+        public void VisualizeAsTransit()
         {
-            visualization.VisualizeAsIntermediate(this);
+            visualization.VisualizeAsTransit(this);
         }
 
         public void VisualizeAsMarkedToReplaceIntermediate()

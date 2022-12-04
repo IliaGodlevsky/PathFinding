@@ -21,12 +21,6 @@ namespace Pathfinding.App.Console.ViewModel
 
         public IReadOnlyList<ISmoothLevel> SmoothLevels => ConsoleSmoothLevels.Levels;
 
-        public string ChooseSmoothLevelMsg { private get; set; } = string.Empty;
-
-        private int SmoothLevelIndex => IntInput.Input(ChooseSmoothLevelMsg, SmoothLevels.Count, 1) - 1;
-
-        private ISmoothLevel SmoothLevel => SmoothLevels[SmoothLevelIndex];
-
         public GraphSmoothViewModel(IMeanCost meanAlgorithm, ICache<Graph2D<Vertex>> graph)
         {
             this.meanAlgorithm = meanAlgorithm;
@@ -36,9 +30,11 @@ namespace Pathfinding.App.Console.ViewModel
         [MenuItem(MenuItemsNames.SmoothGraph, 0)]
         private void SmoothGraph()
         {
+            var menuList = SmoothLevels.CreateMenuList();
+            var message = menuList + "\nChoose smooth level: ";
             using (Cursor.CleanUpAfter())
             {
-                int index = IntInput.Input(ChooseSmoothLevelMsg, SmoothLevels.Count, 1) - 1;
+                int index = IntInput.Input(message, SmoothLevels.Count, 1) - 1;
                 var level = SmoothLevels[index];
                 graph.Smooth(meanAlgorithm, level.Level);
             }

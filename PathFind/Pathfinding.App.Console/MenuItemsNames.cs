@@ -12,7 +12,7 @@
         public const string CustomizeVisualization = "Visualization";
         public const string ReverseVertex = "Reverse vertex";
         public const string ChangedVertexState = "Change vertex state";
-        public const string ChangeCostRange = "Change cost range";
+        public const string InputCostRange = "Input cost range";
         public const string ChangeVertexCost = "Change vertex cost";
         public const string SaveGraph = "Save graph";
         public const string LoadGraph = "Load graph";

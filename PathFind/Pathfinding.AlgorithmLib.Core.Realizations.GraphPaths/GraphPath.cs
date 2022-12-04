@@ -75,7 +75,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths
 
         private IVertex GetParentOrNullVertex(IVertex vertex)
         {
-            return traces.GetOrDefault(vertex.Position, () => NullVertex.Instance);
+            return traces.GetOrDefault(vertex.Position, NullVertex.Instance);
         }
 
         private static bool AreNeighbours(IVertex self, IVertex candidate)
@@ -85,7 +85,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths
 
         public IEnumerator<ICoordinate> GetEnumerator()
         {
-            for (int i = 0; i < Path.Count; i++)
+            for (int i = 0; i < Path.Count - 1; i++)
             {
                 yield return Path[i].Position;
             }

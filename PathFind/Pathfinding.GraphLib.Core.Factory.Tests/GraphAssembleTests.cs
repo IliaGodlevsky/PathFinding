@@ -17,7 +17,7 @@ namespace Pathfinding.GraphLib.Core.Factory.Tests
     public class GraphAssembleTests
     {
         [TestCase(new[] { 20, 25 }, 5, 1, Description = "Test of assembling logic of GraphAssemble class")]
-        public void AssembleGraph_TestRealizations_ReturnsValidGraph(int[] dimensions,
+        public void AssembleGraphMethod_TestRealizations_ReturnsValidGraph(int[] dimensions,
             int upperValueOfCostRange, int lowerValueOfCostRange)
         {
             var range = new InclusiveValueRange<int>(upperValueOfCostRange, lowerValueOfCostRange);

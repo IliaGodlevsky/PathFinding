@@ -14,8 +14,6 @@ using System.Linq;
 using Pathfinding.Visualization.Extensions;
 using Pathfinding.AlgorithmLib.History.Interface;
 using Pathfinding.AlgorithmLib.History;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.Interface;
 
 namespace Pathfinding.App.Console.ViewModel
 {
@@ -23,8 +21,6 @@ namespace Pathfinding.App.Console.ViewModel
     [InstancePerLifetimeScope]
     internal sealed class PathfindingHistoryViewModel : SafeViewModel, IRequireAnswerInput, IRequireIntInput
     {
-        private const int MenuOffset = 8;
-
         private readonly Graph2D<Vertex> graph;
         private readonly Dictionary<Guid, string> startedAlgorithms;
         private readonly IMessenger messenger;
@@ -36,20 +32,19 @@ namespace Pathfinding.App.Console.ViewModel
 
         public IInput<Answer> AnswerInput { get; set; }
 
-        private int QuitIndex => startedAlgorithms.Count;
-
         private IDisplayable MenuList => startedAlgorithms.Values.Append("Quit").CreateMenuList(columnsNumber: 1);
 
-        private string InputMessage => string.Concat(MenuList, "\n", MessagesTexts.AlgorithmChoiceMsg);
-
-        public PathfindingHistoryViewModel(ICache<Graph2D<Vertex>> graphCache, IMessenger messenger, ILog log) 
+        public PathfindingHistoryViewModel(ICache<Graph2D<Vertex>> graphCache, IMessenger messenger, ILog log)
             : base(log)
         {
             this.history = new History<PathfindingHistoryVolume>();
             this.graph = graphCache.Cached;
             this.startedAlgorithms = new Dictionary<Guid, string>();
             this.messenger = messenger;
-            this.messenger.Register<IHistoryMessage>(this, true, OnHistoryMessageRecieved);
+            this.messenger.Register<AlgorithmFinishedMessage>(this, OnAlgorithmFinished);
+            this.messenger.Register<PathfindingRangeChosenMessage>(this, OnRangeChosen);
+            this.messenger.Register<PathFoundMessage>(this, OnPathFound);
+            this.messenger.Register<SubscribeOnHistoryMessage>(this, OnSubscribeOnHistory);
         }
 
         public override void Dispose()
@@ -57,28 +52,6 @@ namespace Pathfinding.App.Console.ViewModel
             base.Dispose();
             ClearHistory();
             messenger.Unregister(this);
-        }
-
-        private void OnHistoryMessageRecieved(IHistoryMessage message)
-        {
-            if (IsHistoryApplied())
-            {
-                switch (message)
-                {
-                    case AlgorithmFinishedMessage msg:
-                        startedAlgorithms[message.Algorithm.Id] = msg.Statistics;
-                        break;
-                    case PathfindingRangeChosenMessage msg:
-                        history.AddPathfindingRange(msg.Algorithm.Id, msg.Range.AsEnumerable());
-                        break;
-                    case PathFoundMessage msg:
-                        history.AddPath(msg.Algorithm.Id, msg.Path);
-                        break;
-                    case SubscribeOnHistoryMessage msg:
-                        msg.Algorithm.VertexVisited += OnVertexVisited;
-                        break;
-                }
-            }
         }
 
         [MenuItem(MenuItemsNames.ApplyHistoryRecording, 0)]
@@ -90,15 +63,15 @@ namespace Pathfinding.App.Console.ViewModel
             }
         }
 
-        [ExecuteSafe(nameof(ExecuteSafe))]        
+        [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(CanShowHistory), 1)]
         [Condition(nameof(IsHistoryApplied))]
         [MenuItem(MenuItemsNames.ShowHistory, 1)]
         private void ShowHistory()
         {
-            string inputMessage = InputMessage;
+            string inputMessage = string.Concat(MenuList, "\n", MessagesTexts.AlgorithmChoiceMsg);
             int index = GetAlgorithmIndex(inputMessage);
-            while (index != QuitIndex)
+            while (index != startedAlgorithms.Count)
             {
                 var page = startedAlgorithms.ElementAt(index);
                 using (Cursor.UseCurrentPosition())
@@ -142,5 +115,33 @@ namespace Pathfinding.App.Console.ViewModel
 
         [FailMessage(MessagesTexts.HistoryWasNotApplied)]
         private bool IsHistoryApplied() => isHistoryApplied;
+
+        private void OnMessageRecieved(Action action) 
+        {
+            if (IsHistoryApplied())
+            {
+                action();
+            }
+        }
+
+        private void OnAlgorithmFinished(AlgorithmFinishedMessage msg)
+        {
+            OnMessageRecieved(() => startedAlgorithms[msg.Algorithm.Id] = msg.Statistics);
+        }
+
+        private void OnRangeChosen(PathfindingRangeChosenMessage msg)
+        {
+            OnMessageRecieved(() => history.AddPathfindingRange(msg.Algorithm.Id, msg.Range));
+        }
+
+        private void OnPathFound(PathFoundMessage msg)
+        {
+            OnMessageRecieved(() => history.AddPath(msg.Algorithm.Id, msg.Path));
+        }
+
+        private void OnSubscribeOnHistory(SubscribeOnHistoryMessage msg)
+        {
+            OnMessageRecieved(() => msg.Algorithm.VertexVisited += OnVertexVisited);
+        }
     }
 }

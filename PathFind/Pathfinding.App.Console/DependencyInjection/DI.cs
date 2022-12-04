@@ -1,9 +1,4 @@
 ﻿using Autofac;
-#if DEBUG
-#elif !DEBUG
-using Pathfinding.App.Console.ValueInput.ProgrammedInput;
-using Pathfinding.App.Console.ValueInput.RandomInput;
-#endif
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Serialization.Serializers.Decorators;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
@@ -46,6 +41,8 @@ using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Modules.Commands;
 using Pathfinding.GraphLib.Core.Modules;
+using Pathfinding.App.Console.Views;
+using Pathfinding.App.Console.Model.InProcessActions;
 
 namespace Pathfinding.App.Console.DependencyInjection
 {
@@ -56,6 +53,7 @@ namespace Pathfinding.App.Console.DependencyInjection
 
     internal static class DI
     {
+        private const string Key = "Key";
         private const string Order = "Order";
 
         private enum CommandType { Include, Exclude }
@@ -69,30 +67,31 @@ namespace Pathfinding.App.Console.DependencyInjection
         private static IContainer Configure()
         {
             var builder = new ContainerBuilder();
-#if !DEBUG
-            builder.RegisterType<ConsoleProgrammedAnswerInput>().As<IInput<Answer>>().SingleInstance();
-            builder.RegisterType<ConsoleProgrammedIntInput>().As<IInput<int>>().SingleInstance();
-            builder.RegisterType<ConsoleProgrammedStringInput>().As<IInput<string>>().SingleInstance();
-            builder.RegisterType<RandomKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
-            builder.RegisterType<RandomTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
-#elif DEBUG
+
             builder.RegisterType<ConsoleUserAnswerInput>().As<IInput<Answer>>().SingleInstance();
             builder.RegisterType<ConsoleUserIntInput>().As<IInput<int>>().SingleInstance();
             builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance();
             builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
             builder.RegisterType<ConsoleUserTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
-#endif
+
             builder.RegisterType<ConsoleKeystrokesHook>().AsSelf().SingleInstance().PropertiesAutowired();
 
-            builder.RegisterType<MainViewModel>().AsSelf().PropertiesAutowired().AsImplementedInterfaces().SingleInstance();
-            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IViewModel>())
-                .Where(type => !type.IsInstancePerLifetimeScope()).Except<MainViewModel>().AsSelf().AsImplementedInterfaces().PropertiesAutowired();
-            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IViewModel>())
-                .Where(type => type.IsInstancePerLifetimeScope()).AsSelf().AsImplementedInterfaces().PropertiesAutowired().InstancePerLifetimeScope();
-            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IView>()).AsSelf().PropertiesAutowired();
+            builder.RegisterType<MainViewModel>().AsSelf().PropertiesAutowired().As<ICache<Graph2D<Vertex>>>().SingleInstance();
+            builder.RegisterType<PathfindingProcessViewModel>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired()
+                .OnActivated(OnPathfindingProcessViewModelActivated);
+            builder.RegisterAssemblyTypes(Assemblies).AssignableTo<IViewModel>().Where(type => !type.IsInstancePerLifetimeScope())
+                .Except<MainViewModel>().AsSelf().PropertiesAutowired();
+            builder.RegisterAssemblyTypes(Assemblies).AssignableTo<IViewModel>().Where(type => type.IsInstancePerLifetimeScope())
+                .Except<PathfindingProcessViewModel>().AsSelf().PropertiesAutowired().InstancePerLifetimeScope();
+            builder.RegisterGeneric(typeof(View<>)).As(typeof(IView<>)).PropertiesAutowired();
+            builder.RegisterType<ResumeAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Enter).SingleInstance();
+            builder.RegisterType<PauseAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.P).SingleInstance();
+            //builder.RegisterType<InterruptAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Escape).SingleInstance();
+            //builder.RegisterType<PathfindingStepByStep>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.W).SingleInstance();
 
             builder.RegisterType<ConsoleVertexReverseModule>().AsSelf().SingleInstance();
             builder.RegisterType<ConsoleVertexChangeCostModule>().AsSelf().PropertiesAutowired();
+
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<ColorConsoleLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
@@ -102,7 +101,7 @@ namespace Pathfinding.App.Console.DependencyInjection
 
             builder.RegisterType<VisualPathfindingRange<Vertex>>().As<IPathfindingRange<Vertex>>().SingleInstance();
             builder.RegisterType<PathfindingRangeBuilder<Vertex>>().As<IPathfindingRangeBuilder<Vertex>>()
-                .SingleInstance().OnActivated(OnPathfindingRangeActivated);
+                .SingleInstance().OnActivated(OnPathfindingRangeBuilderActivated);
             builder.RegisterType<IncludeTargetVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 2).SingleInstance();
             builder.RegisterType<IncludeTransitVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 3).SingleInstance();
             builder.RegisterType<IncludeSourceVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 1).SingleInstance();
@@ -134,13 +133,20 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory<Vertex>>().SingleInstance();
 
             builder.RegisterAssemblyTypes(typeof(IAlgorithmFactory<>).Assembly)
-                .Where(type => type.Implements<AlgorithmFactory>()).As<AlgorithmFactory>().SingleInstance();
+                .AssignableTo<AlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
 
             return builder.Build();
         }
 
-        private static void OnPathfindingRangeActivated(IActivatedEventArgs<PathfindingRangeBuilder<Vertex>> args)
+        private static void OnPathfindingProcessViewModelActivated(IActivatedEventArgs<PathfindingProcessViewModel> args)
+        {
+            args.Instance.PathfindingActions = args.Context.Resolve<IEnumerable<Meta<IPathfindingAction>>>()
+                .ToDictionary(action => (ConsoleKey)action.Metadata[Key], action => action.Value)
+                .ToReadOnly();
+        }
+
+        private static void OnPathfindingRangeBuilderActivated(IActivatedEventArgs<PathfindingRangeBuilder<Vertex>> args)
         {
             args.Instance.IncludeCommands = ResolveKeyed(args.Context, CommandType.Include);
             args.Instance.ExcludeCommands = ResolveKeyed(args.Context, CommandType.Exclude);

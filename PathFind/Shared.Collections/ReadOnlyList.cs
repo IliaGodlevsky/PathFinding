@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Shared.Collections
 {
+    [DebuggerDisplay("Count = {Count}")]
     public sealed class ReadOnlyList<T> : IReadOnlyList<T>
     {
         public static readonly ReadOnlyList<T> Empty

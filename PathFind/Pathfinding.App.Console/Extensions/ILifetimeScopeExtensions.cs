@@ -1,24 +1,15 @@
 ﻿using Autofac;
-using Pathfinding.App.Console.Views;
+using Pathfinding.App.Console.Interface;
 
 namespace Pathfinding.App.Console.Extensions
 {
     internal static class ILifetimeScopeExtensions
     {
-        public static void Display<TView>(this ILifetimeScope lifetimeScope)
-            where TView : View
+        public static void Display<TViewModel>(this ILifetimeScope lifetimeScope)
+            where TViewModel : IViewModel
         {
-            var view = lifetimeScope.Resolve<TView>();
+            var view = lifetimeScope.Resolve<IView<TViewModel>>();
             view.Display();
-        }
-
-        public static void DisplayScoped<TView>(this ILifetimeScope lifetimeScope)
-            where TView : View
-        {
-            using(var scope = lifetimeScope.BeginLifetimeScope())
-            {
-                scope.Display<TView>();
-            }
         }
     }
 }

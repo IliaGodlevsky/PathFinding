@@ -49,9 +49,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Single\Exceptions\SingletonException.cs" />
     <Compile Include="Single\Singleton.cs" />
-    <Compile Include="ValueRange\Enums\ReturnOptions.cs" />
     <Compile Include="ValueRange\InclusiveValueRange.cs" />
-    <Compile Include="ValueRange\ValueRanges.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">

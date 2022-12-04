@@ -9,8 +9,6 @@ using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations.Layers;
 using Pathfinding.Logging.Interface;
-using Shared.Collections;
-using Shared.Extensions;
 using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 using Shared.Random;
@@ -30,20 +28,16 @@ namespace Pathfinding.App.Console.ViewModel
         private readonly IVertexCostFactory costFactory;
         private readonly INeighborhoodFactory neighborhoodFactory;
 
+        private int width;
+        private int length;
+        private int obstaclePercent;
+        private GraphAssemble selectedGraphAssemble;
+        private InclusiveValueRange<int> costRange = new InclusiveValueRange<int>(9, 1);
+
         public IReadOnlyList<GraphAssemble> GraphAssembles { get; set; }
 
-        private int Width { get; set; }
-
-        private int Length { get; set; }
-
-        private InclusiveValueRange<int> CostRange { get; set; } = new InclusiveValueRange<int>(9, 1);
-
-        private int ObstaclePercent { get; set; }
-
-        private GraphAssemble SelectedGraphAssemble { get; set; }       
-
         public IInput<int> IntInput { get; set; }
-
+      
         public GraphCreatingViewModel(IMessenger messenger, IRandom random, IVertexCostFactory costFactory,
             INeighborhoodFactory neighborhoodFactory, ILog log)
             : base(log)
@@ -61,10 +55,10 @@ namespace Pathfinding.App.Console.ViewModel
         private void CreateGraph()
         {
             var layers = CreateLayers();
-            var graph = SelectedGraphAssemble.AssembleGraph(layers, Width, Length);
-            messenger.Send(new CostRangeChangedMessage(CostRange));
+            var graph = selectedGraphAssemble.AssembleGraph(layers, width, length);
+            messenger.Send(new CostRangeChangedMessage(costRange));
             messenger.Send(new GraphCreatedMessage(graph), MessageTokens.Screen);
-            messenger.Send(new GraphCreatedMessage(graph), MessageTokens.MainViewModel);           
+            messenger.Send(new GraphCreatedMessage(graph), MessageTokens.MainViewModel);
         }
 
         [MenuItem(MenuItemsNames.ChooseGraphAssemble, 1)]
@@ -77,7 +71,7 @@ namespace Pathfinding.App.Console.ViewModel
             {
                 menuList.Display();
                 int index = IntInput.Input(message, range) - 1;
-                SelectedGraphAssemble = GraphAssembles[index];
+                selectedGraphAssemble = GraphAssembles[index];
             }
         }
 
@@ -86,18 +80,18 @@ namespace Pathfinding.App.Console.ViewModel
         {
             using (Cursor.CleanUpAfter())
             {
-                Width = IntInput.Input(MessagesTexts.GraphWidthInputMsg, Constants.GraphWidthValueRange);
-                Length = IntInput.Input(MessagesTexts.GraphHeightInputMsg, Constants.GraphLengthValueRange);
+                width = IntInput.Input(MessagesTexts.GraphWidthInputMsg, Constants.GraphWidthValueRange);
+                length = IntInput.Input(MessagesTexts.GraphHeightInputMsg, Constants.GraphLengthValueRange);
             }
         }
 
-        [MenuItem("Vertices cost range", 3)]
+        [MenuItem(MenuItemsNames.InputCostRange, 3)]
         private void InputVertexCostRange()
         {
             using (Cursor.CleanUpAfter())
             {
-                CostRange = IntInput.InputRange(Constants.VerticesCostRange);
-            }           
+                costRange = IntInput.InputRange(Constants.VerticesCostRange);
+            }
         }
 
         [MenuItem(MenuItemsNames.InputObstaclePercent, 4)]
@@ -105,7 +99,7 @@ namespace Pathfinding.App.Console.ViewModel
         {
             using (Cursor.CleanUpAfter())
             {
-                ObstaclePercent = IntInput.Input(MessagesTexts.ObstaclePercentInputMsg, Constants.ObstaclesPercentValueRange);
+                obstaclePercent = IntInput.Input(MessagesTexts.ObstaclePercentInputMsg, Constants.ObstaclesPercentValueRange);
             }
         }
 
@@ -113,23 +107,23 @@ namespace Pathfinding.App.Console.ViewModel
         {
             return new ILayer<Graph2D<Vertex>, Vertex>[]
             {
-                new ObstacleLayer<Graph2D<Vertex>, Vertex>(random, ObstaclePercent),
+                new ObstacleLayer<Graph2D<Vertex>, Vertex>(random, obstaclePercent),
                 new NeighborhoodLayer<Graph2D<Vertex>, Vertex>(neighborhoodFactory),
-                new VertexCostLayer<Graph2D<Vertex>, Vertex>(costFactory, CostRange, random)
+                new VertexCostLayer<Graph2D<Vertex>, Vertex>(costFactory, costRange, random)
             };
         }
 
         [FailMessage(MessagesTexts.AssebleIsNotChosenMsg)]
         private bool IsAssembleChosen()
         {
-            return SelectedGraphAssemble != null;
+            return selectedGraphAssemble != null;
         }
 
         [FailMessage(MessagesTexts.GraphSizeIsNotSetMsg)]
         private bool IsGraphSizeSet()
         {
-            return Constants.GraphWidthValueRange.Contains(Width)
-                && Constants.GraphLengthValueRange.Contains(Length);
+            return Constants.GraphWidthValueRange.Contains(width)
+                && Constants.GraphLengthValueRange.Contains(length);
         }
     }
 }

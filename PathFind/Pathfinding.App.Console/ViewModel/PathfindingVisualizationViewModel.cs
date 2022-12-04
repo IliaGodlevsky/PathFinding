@@ -8,12 +8,10 @@ using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Shared.Collections;
 using Shared.Extensions;
 using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
-using System.Linq;
 
 namespace Pathfinding.App.Console.ViewModel
 {
@@ -23,7 +21,6 @@ namespace Pathfinding.App.Console.ViewModel
     {
         private static readonly TimeSpan Millisecond = TimeSpan.FromMilliseconds(1);
 
-        private readonly ICache<Graph2D<Vertex>> graphCache;
         private readonly IMessenger messenger;
         private readonly ConsoleKeystrokesHook keyStrokeHook;
 
@@ -31,23 +28,22 @@ namespace Pathfinding.App.Console.ViewModel
 
         private InclusiveValueRange<TimeSpan> DelayRange => Constants.AlgorithmDelayTimeValueRange;
 
-        private Graph2D<Vertex> Graph => graphCache.Cached;
+        private Graph2D<Vertex> Graph { get; }
 
         public IInput<TimeSpan> TimeSpanInput { get; set; }
 
         public IInput<Answer> AnswerInput { get; set; }
 
-        private TimeSpan AnimationDelay { get; set; }
+        private TimeSpan AnimationDelay { get; set; } = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
 
         public PathfindingVisualizationViewModel(ICache<Graph2D<Vertex>> graphCache, 
             ConsoleKeystrokesHook keyStrokeHook, IMessenger messenger)
         {
-            AnimationDelay = DelayRange.LowerValueOfRange;
             this.keyStrokeHook = keyStrokeHook;
             this.messenger = messenger;
-            this.graphCache = graphCache;
-            keyStrokeHook.KeyPressed += OnConsoleKeyPressed;
-            messenger.Register<SubscribeOnVisualizationMessage>(this, OnPathfindingPrepare);
+            Graph = graphCache.Cached;
+            this.keyStrokeHook.KeyPressed += OnConsoleKeyPressed;
+            this.messenger.Register<SubscribeOnVisualizationMessage>(this, OnPathfindingPrepare);
         }
 
         [MenuItem(MenuItemsNames.ApplyVisualization, 0)]
@@ -78,7 +74,6 @@ namespace Pathfinding.App.Console.ViewModel
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
         {
-            AnimationDelay.Wait();
             Graph.Get(e.Current).VisualizeAsVisited();
         }
 
@@ -91,6 +86,7 @@ namespace Pathfinding.App.Console.ViewModel
         {
             if (IsVisualizationApplied())
             {
+                message.Algorithm.VertexVisited += (s, e) => AnimationDelay.Wait();
                 message.Algorithm.VertexVisited += OnVertexVisited;
                 message.Algorithm.VertexEnqueued += OnVertexEnqueued;
             }

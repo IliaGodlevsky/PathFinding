@@ -126,9 +126,9 @@ namespace Pathfinding.App.WPF._3D.Model
             visualization.VisualizeAsSource(this);
         }
 
-        public void VisualizeAsIntermediate()
+        public void VisualizeAsTransit()
         {
-            visualization.VisualizeAsIntermediate(this);
+            visualization.VisualizeAsTransit(this);
         }
 
         public void VisualizeAsMarkedToReplaceIntermediate()

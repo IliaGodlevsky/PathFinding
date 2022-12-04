@@ -25,17 +25,6 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
             public override void Resume() { }
 
-            public override void Dispose()
-            {
-                Started = null;
-                Finished = null;
-                VertexEnqueued = null;
-                VertexVisited = null;
-                Interrupted = null;
-                Paused = null;
-                Resumed = null;
-            }
-
             protected override void DropState() { }
         }
 

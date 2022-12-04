@@ -10,7 +10,8 @@ using System;
 
 namespace Pathfinding.App.Console.Views
 {
-    internal abstract class View : IView, IRequireIntInput, IDisplayable, IDisposable
+    internal sealed class View<TViewModel> : IView<TViewModel>, IRequireIntInput, IDisposable
+        where TViewModel : IViewModel
     {
         public event Action NewMenuCycleStarted;
 
@@ -27,7 +28,7 @@ namespace Pathfinding.App.Console.Views
 
         private bool IsClosureRequested { get; set; }
 
-        protected View(IViewModel model, ILog log)
+        public View(TViewModel model, ILog log)
         {
             this.log = log;
             menuCommands = new MenuCommands(model);
@@ -37,14 +38,14 @@ namespace Pathfinding.App.Console.Views
             model.ViewClosed += OnClosed;
         }
 
-        public virtual void Display()
+        void IDisplayable.Display()
         {
             IMenuCommand command;
             while (!IsClosureRequested)
             {
                 Screen.SetCursorPositionUnderMenu(1);
                 try
-                {                   
+                {
                     NewMenuCycleStarted?.Invoke();
                     using (Cursor.CleanUpAfter())
                     {

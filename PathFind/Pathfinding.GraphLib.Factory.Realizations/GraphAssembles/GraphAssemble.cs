@@ -41,12 +41,13 @@ namespace Pathfinding.GraphLib.Factory.Realizations.GraphAssembles
         private static IReadOnlyList<int> ToCoordinates(IReadOnlyList<int> dimensionSizes, int index)
         {
             var range = new InclusiveValueRange<int>(dimensionSizes.Count - 1);
-            return range.EnumerateValues().Select(i =>
+            int Coordinate(int i)
             {
                 var coordinate = index % dimensionSizes[i];
                 index /= dimensionSizes[i];
                 return coordinate;
-            }).ToReadOnly();
+            }
+            return range.Enumerate().Select(Coordinate).ToReadOnly();
         }
 
         public override string ToString()

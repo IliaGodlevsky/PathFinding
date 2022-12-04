@@ -9,7 +9,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
 
         public void Execute(TVertex vertex)
         {
-            vertex.VisualizeAsIntermediate();
+            vertex.VisualizeAsTransit();
         }
 
         public  bool CanExecute(IPathfindingRange<TVertex> range, TVertex vertex)

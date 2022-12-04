@@ -12,7 +12,7 @@ namespace Shared.Primitives.ValueRange
     /// will represent the range</typeparam>
     [DebuggerDisplay("[{LowerValueOfRange}...{UpperValueOfRange}]")]
     public readonly struct InclusiveValueRange<T> : IEquatable<InclusiveValueRange<T>>
-        where T : IComparable, IComparable<T>
+        where T : IComparable<T>
     {
         public T UpperValueOfRange { get; }
 

@@ -13,7 +13,7 @@
 
         void VisualizeAsSource(T visualizable);
 
-        void VisualizeAsIntermediate(T visualizable);
+        void VisualizeAsTransit(T visualizable);
 
         void VisualizeAsRegular(T visualizable);
 

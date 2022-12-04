@@ -20,7 +20,7 @@
 
         void VisualizeAsEnqueued();
 
-        void VisualizeAsIntermediate();
+        void VisualizeAsTransit();
 
         void VisualizeAsMarkedToReplaceIntermediate();
     }

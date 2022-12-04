@@ -50,7 +50,7 @@ namespace Pathfinding.Visualization.Core.Abstractions
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    ((TVertex)e.NewItems[0]).VisualizeAsIntermediate();
+                    ((TVertex)e.NewItems[0]).VisualizeAsTransit();
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     ((TVertex)e.OldItems[0]).VisualizeAsRegular();

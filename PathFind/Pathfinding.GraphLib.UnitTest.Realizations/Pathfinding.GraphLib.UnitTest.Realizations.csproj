@@ -46,7 +46,6 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestFactories\IGraphAssembleExtensions.cs" />
     <Compile Include="TestFactories\Layers\Graph2DLayer.cs" />
     <Compile Include="TestFactories\Layers\CostLayer.cs" />
     <Compile Include="TestFactories\Layers\NeighborhoodLayer.cs" />
