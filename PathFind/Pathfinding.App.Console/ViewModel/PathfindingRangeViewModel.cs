@@ -1,5 +1,7 @@
-﻿using Pathfinding.App.Console.Extensions;
+﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
@@ -18,19 +20,27 @@ namespace Pathfinding.App.Console.ViewModel
     {
         private const int RequiredVerticesForRange = 2;
 
+        private readonly IMessenger messenger;
         private readonly ReplaceTransitVerticesModule<Vertex> module;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
-        private readonly Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
+        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
         private int numberOfIntermediates;
 
         public IInput<int> IntInput { get; set; }
 
-        public PathfindingRangeViewModel(IPathfindingRangeBuilder<Vertex> rangeBuilder, ReplaceTransitVerticesModule<Vertex> module, ICache<Graph2D<Vertex>> graph)
+        public PathfindingRangeViewModel(IPathfindingRangeBuilder<Vertex> rangeBuilder, 
+            ReplaceTransitVerticesModule<Vertex> module, IMessenger messenger)
         {
             this.rangeBuilder = rangeBuilder;
-            this.graph = graph.Cached;
             this.module = module;
+            this.messenger = messenger;
+            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
+        }
+
+        private void OnGraphCreated(GraphCreatedMessage message)
+        {
+            graph = message.Graph;
         }
 
         [Condition(nameof(HasAvailableVerticesToIncludeInRange))]

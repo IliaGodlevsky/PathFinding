@@ -21,7 +21,6 @@ namespace Pathfinding.App.Console.ViewModel
     [InstancePerLifetimeScope]
     internal sealed class PathfindingHistoryViewModel : SafeViewModel, IRequireAnswerInput, IRequireIntInput
     {
-        private readonly Graph2D<Vertex> graph;
         private readonly Dictionary<Guid, string> startedAlgorithms;
         private readonly IMessenger messenger;
         private readonly History<PathfindingHistoryVolume> history;
@@ -34,17 +33,24 @@ namespace Pathfinding.App.Console.ViewModel
 
         private IDisplayable MenuList => startedAlgorithms.Values.Append("Quit").CreateMenuList(columnsNumber: 1);
 
-        public PathfindingHistoryViewModel(ICache<Graph2D<Vertex>> graphCache, IMessenger messenger, ILog log)
+        private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
+
+        public PathfindingHistoryViewModel(IMessenger messenger, ILog log)
             : base(log)
         {
             this.history = new History<PathfindingHistoryVolume>();
-            this.graph = graphCache.Cached;
             this.startedAlgorithms = new Dictionary<Guid, string>();
             this.messenger = messenger;
             this.messenger.Register<AlgorithmFinishedMessage>(this, OnAlgorithmFinished);
             this.messenger.Register<PathfindingRangeChosenMessage>(this, OnRangeChosen);
             this.messenger.Register<PathFoundMessage>(this, OnPathFound);
             this.messenger.Register<SubscribeOnHistoryMessage>(this, OnSubscribeOnHistory);
+            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
+        }
+
+        private void OnGraphCreated(GraphCreatedMessage message)
+        {
+            Graph = message.Graph;
         }
 
         public override void Dispose()
@@ -78,8 +84,8 @@ namespace Pathfinding.App.Console.ViewModel
                 {
                     using (Cursor.HideCursor())
                     {
-                        graph.RestoreVerticesVisualState();
-                        history.VisualizeHistory(page.Key, graph);
+                        Graph.RestoreVerticesVisualState();
+                        history.VisualizeHistory(page.Key, Graph);
                         messenger.Send(new PathfindingStatisticsMessage(page.Value));
                     }
                 }

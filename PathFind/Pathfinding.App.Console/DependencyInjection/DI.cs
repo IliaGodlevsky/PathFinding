@@ -31,7 +31,6 @@ using Shared.Random.Realizations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.ValueInput.UserInput;
 using Shared.Executable;
 using Autofac.Core;
@@ -59,6 +58,8 @@ namespace Pathfinding.App.Console.DependencyInjection
 
         private enum CommandType { Include, Exclude }
 
+        private enum ParentModel { Main, Pathfinding, Process }
+
         private static readonly Lazy<IContainer> container = new Lazy<IContainer>(Configure);
 
         public static IContainer Container => container.Value;
@@ -77,14 +78,23 @@ namespace Pathfinding.App.Console.DependencyInjection
 
             builder.RegisterType<ConsoleKeystrokesHook>().AsSelf().SingleInstance().PropertiesAutowired();
 
-            builder.RegisterType<MainViewModel>().AsSelf().PropertiesAutowired().As<ICache<Graph2D<Vertex>>>().SingleInstance();
-            builder.RegisterType<PathfindingVisualizationViewModel>().AsSelf().InstancePerLifetimeScope().PropertiesAutowired()
-                .OnActivated(OnVisualizationViewModelActivated);
-            builder.RegisterAssemblyTypes(Assemblies).AssignableTo<IViewModel>().Where(type => !type.IsInstancePerLifetimeScope())
-                .Except<MainViewModel>().AsSelf().PropertiesAutowired();
-            builder.RegisterAssemblyTypes(Assemblies).AssignableTo<IViewModel>().Where(type => type.IsInstancePerLifetimeScope())
-                .Except<PathfindingVisualizationViewModel>().AsSelf().PropertiesAutowired().InstancePerLifetimeScope();
-            builder.RegisterGeneric(typeof(View<>)).AsSelf().PropertiesAutowired().InstancePerDependency();
+            builder.RegisterType<MainViewModel>().AsSelf().PropertiesAutowired().SingleInstance().AutoActivate().OnActivated(OnMainViewModelActivated);
+            builder.RegisterType<PathfindingViewModel>().Keyed<IViewModel>(ParentModel.Main).PropertiesAutowired().AutoActivate().SingleInstance().OnActivated(OnPathfindingModelActivated);
+            builder.RegisterType<PathfindingProcessViewModel>().Keyed<IViewModel>(ParentModel.Pathfinding).AutoActivate().PropertiesAutowired().SingleInstance().OnActivated(OnProcessViewModelActivated);
+            builder.RegisterType<GraphCreatingViewModel>().Keyed<IViewModel>(ParentModel.Main).PropertiesAutowired().SingleInstance().AutoActivate();
+            builder.RegisterType<GraphLoadViewModel>().Keyed<IViewModel>(ParentModel.Main).PropertiesAutowired().SingleInstance().AutoActivate();
+            builder.RegisterType<GraphSaveViewModel>().Keyed<IViewModel>(ParentModel.Main).PropertiesAutowired().SingleInstance().AutoActivate();
+            builder.RegisterType<GraphSmoothViewModel>().Keyed<IViewModel>(ParentModel.Main).PropertiesAutowired().SingleInstance().AutoActivate();
+            builder.RegisterType<PathfindingHistoryViewModel>().Keyed<IViewModel>(ParentModel.Process).PropertiesAutowired().SingleInstance().AutoActivate();
+            builder.RegisterType<PathfindingProcessChooseViewModel>().Keyed<IViewModel>(ParentModel.Process).AutoActivate().PropertiesAutowired().SingleInstance();
+            builder.RegisterType<PathfindingRangeViewModel>().Keyed<IViewModel>(ParentModel.Pathfinding).AutoActivate().SingleInstance().PropertiesAutowired();
+            builder.RegisterType<PathfindingVisualizationViewModel>().Keyed<IViewModel>(ParentModel.Process).AutoActivate().SingleInstance().PropertiesAutowired();
+            builder.RegisterType<VertexStateViewModel>().Keyed<IViewModel>(ParentModel.Main).AutoActivate().SingleInstance().PropertiesAutowired();
+
+            builder.RegisterType<View>().AsSelf().PropertiesAutowired().InstancePerDependency();
+
+            builder.RegisterType<PathfindingVisualizationViewModel>().As<IViewModel>().InstancePerLifetimeScope().PropertiesAutowired()
+                .OnActivated(OnVisualizationViewModelActivated);           
             builder.RegisterType<SpeedUpAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.UpArrow).SingleInstance();
             builder.RegisterType<SlowDownAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.DownArrow).SingleInstance();
             builder.RegisterType<ResumeAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Enter).SingleInstance();
@@ -142,6 +152,21 @@ namespace Pathfinding.App.Console.DependencyInjection
             return builder.Build();
         }
 
+        private static void OnProcessViewModelActivated(IActivatedEventArgs<PathfindingProcessViewModel> args)
+        {
+            args.Instance.Children = args.Context.ResolveKeyed(ParentModel.Process);
+        }
+
+        private static void OnPathfindingModelActivated(IActivatedEventArgs<PathfindingViewModel> args)
+        {
+            args.Instance.Children = args.Context.ResolveKeyed(ParentModel.Pathfinding);
+        }
+
+        private static void OnMainViewModelActivated(IActivatedEventArgs<MainViewModel> args)
+        {
+            args.Instance.Children = args.Context.ResolveKeyed(ParentModel.Main);
+        }
+
         private static void OnVisualizationViewModelActivated(IActivatedEventArgs<PathfindingVisualizationViewModel> args)
         {
             args.Instance.PathfindingActions = args.Context.ResolveWithMetadata<IPathfindingAction>();
@@ -167,6 +192,11 @@ namespace Pathfinding.App.Console.DependencyInjection
             return context.Resolve<IEnumerable<Meta<TValue>>>()
                 .ToDictionary(action => (ConsoleKey)action.Metadata[Key], action => action.Value)
                 .ToReadOnly();
+        }
+
+        private static IReadOnlyCollection<IViewModel> ResolveKeyed(this IComponentContext context, ParentModel key)
+        {
+            return context.ResolveKeyed<IEnumerable<IViewModel>>(key).ToReadOnly();
         }
     }
 }

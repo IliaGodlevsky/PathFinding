@@ -2,6 +2,7 @@
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model.Menu;
 using Pathfinding.App.Console.Model.Menu.Attributes;
+using Pathfinding.App.Console.Model.Menu.Delegates;
 using Pathfinding.App.Console.Model.Menu.Exceptions;
 using Pathfinding.Logging.Interface;
 using Shared.Extensions;
@@ -9,8 +10,7 @@ using Shared.Primitives.ValueRange;
 
 namespace Pathfinding.App.Console.Views
 {
-    internal sealed class View<TViewModel> : IRequireIntInput, IDisplayable
-        where TViewModel : IViewModel
+    internal sealed class View: IRequireIntInput, IDisplayable
     {
         private readonly IMenuCommands menuCommands;
         private readonly IDisplayable menuList;
@@ -25,7 +25,7 @@ namespace Pathfinding.App.Console.Views
 
         private bool IsClosureRequested { get; set; }
 
-        public View(TViewModel model, ILog log)
+        public View(IViewModel model, ILog log)
         {
             this.log = log;
             menuCommands = new MenuCommands(model);
@@ -37,16 +37,12 @@ namespace Pathfinding.App.Console.Views
 
         public void Display()
         {
-            IMenuCommand command;
             while (!IsClosureRequested)
             {
                 Screen.SetCursorPositionUnderMenu(1);
                 try
                 {
-                    using (Cursor.CleanUpAfter())
-                    {
-                        command = menuCommands.Commands[MenuItemIndex];
-                    }
+                    var command = menuCommands.Commands[InputItemIndex()];
                     command.Execute();
                 }
                 catch (ConditionFailedException ex)
@@ -59,6 +55,14 @@ namespace Pathfinding.App.Console.Views
         private int GetMenuColumnsNumber(IViewModel viewModel)
         {
             return viewModel.GetAttributeOrDefault<MenuColumnsNumberAttribute>().MenuColumns;
+        }
+
+        private int InputItemIndex()
+        {
+            using (Cursor.CleanUpAfter())
+            {
+                return MenuItemIndex;
+            }
         }
 
         private void OnClosed()

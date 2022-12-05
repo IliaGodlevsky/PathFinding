@@ -37,19 +37,23 @@ namespace Pathfinding.App.Console.ViewModel
 
         public IInput<Answer> AnswerInput { get; set; }
 
-        private Graph2D<Vertex> Graph { get; }
+        private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
         private InclusiveValueRange<TimeSpan> DelayRange => Constants.AlgorithmDelayTimeValueRange;        
 
         private TimeSpan AnimationDelay { get; set; } = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
 
-        public PathfindingVisualizationViewModel(ICache<Graph2D<Vertex>> graphCache, ConsoleKeystrokesHook keyStrokeHook, 
-            IMessenger messenger)
+        public PathfindingVisualizationViewModel(ConsoleKeystrokesHook keyStrokeHook, IMessenger messenger)
         {
-            Graph = graphCache.Cached;
             this.keyStrokeHook = keyStrokeHook;
             this.messenger = messenger;           
             this.messenger.Register<SubscribeOnVisualizationMessage>(this, OnPathfindingPrepare);
+            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
+        }
+
+        private void OnGraphCreated(GraphCreatedMessage message)
+        {
+            Graph = message.Graph;
         }
 
         [MenuItem(MenuItemsNames.ApplyVisualization, 0)]

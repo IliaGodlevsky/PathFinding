@@ -1,4 +1,5 @@
-﻿using Pathfinding.App.Console.Interface;
+﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
 using Pathfinding.GraphLib.Core.Interface;
@@ -11,16 +12,18 @@ namespace Pathfinding.App.Console.ViewModel
     [MenuColumnsNumber(1)]
     internal sealed class GraphSaveViewModel : SafeViewModel
     {
+        private readonly IMessenger messenger;
         private readonly IGraphSerializationModule<Graph2D<Vertex>, Vertex> module;
 
-        private IGraph<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
+        private IGraph<Vertex> Graph { get; set; }
 
         public GraphSaveViewModel(IGraphSerializationModule<Graph2D<Vertex>, Vertex> module, 
-            ICache<Graph2D<Vertex>> graph, ILog log)
+            IMessenger messenger, ILog log)
             : base(log)
         {
+            this.messenger = messenger;
             this.module = module;
-            Graph = graph.Cached;
+            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
         [ExecuteSafe(nameof(ExecuteSafe))]
@@ -31,6 +34,11 @@ namespace Pathfinding.App.Console.ViewModel
             {
                 module.SaveGraph(Graph);
             }
+        }
+
+        private void OnGraphCreated(GraphCreatedMessage message)
+        {
+            Graph = message.Graph;
         }
     }
 }

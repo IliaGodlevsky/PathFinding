@@ -1,5 +1,4 @@
-﻿using Autofac;
-using GalaSoft.MvvmLight.Messaging;
+﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Core.Exceptions;
@@ -8,12 +7,12 @@ using Pathfinding.AlgorithmLib.Core.Interface.Extensions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.App.Console.Attributes;
-using Pathfinding.App.Console.DependencyInjection;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
+using Pathfinding.App.Console.Views;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
@@ -29,16 +28,15 @@ namespace Pathfinding.App.Console.ViewModel
 
     [MenuColumnsNumber(2)]
     [InstancePerLifetimeScope]
-    internal sealed class PathfindingProcessViewModel : SafeViewModel, IRequireConsoleKeyInput
+    internal sealed class PathfindingProcessViewModel : SafeViewModel, IParentViewModel, IRequireConsoleKeyInput
     {
         private static readonly TimeSpan StepDelay = TimeSpan.FromMilliseconds(0.5);
 
         private readonly IMessenger messenger;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         private readonly Stopwatch timer;
-        private readonly ILifetimeScope lifetimeScope;
         private readonly Queue<AlgorithmFactory> factories;
-        private readonly Graph2D<Vertex> graph;
+        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         private int visitedVerticesCount = 0;
         private IGraphPath path = NullGraphPath.Instance;
@@ -46,30 +44,31 @@ namespace Pathfinding.App.Console.ViewModel
 
         public IInput<ConsoleKey> KeyInput { get; set; }
 
+        public View View { get; set; }
+
+        public IReadOnlyCollection<IViewModel> Children { get; set; }
+
         private string Statistics => path.ToStatistics(timer, visitedVerticesCount, algorithm);
         
-        public PathfindingProcessViewModel(IPathfindingRangeBuilder<Vertex> rangeBuilder, 
-            ICache<Graph2D<Vertex>> graph, IMessenger messenger, ILog log)
+        public PathfindingProcessViewModel(IPathfindingRangeBuilder<Vertex> rangeBuilder, IMessenger messenger, ILog log)
             : base(log)
         {
             this.factories = new Queue<AlgorithmFactory>();
-            this.lifetimeScope = DI.Container.BeginLifetimeScope();
             this.messenger = messenger;
-            this.graph = graph.Cached;
             this.rangeBuilder = rangeBuilder;
             this.timer = new Stopwatch();
             messenger.Register<PathfindingAlgorithmChosenMessage>(this, OnAlgorithmChosen);
+            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
         public override void Dispose()
         {
             base.Dispose();
-            lifetimeScope.Dispose();
             messenger.Unregister(this);
         }
 
         [MenuItem(MenuItemsNames.ChooseAlgorithm, 0)]
-        private void ChooseAlgorithm() => DI.Container.Display<PathfindingProcessChooseViewModel>();
+        private void ChooseAlgorithm() => View.Display(Children.Get<PathfindingProcessChooseViewModel>());
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(CanStartPathfinding))]
@@ -91,10 +90,10 @@ namespace Pathfinding.App.Console.ViewModel
         }
 
         [MenuItem(MenuItemsNames.CustomizeVisualization, 2)]
-        private void CustomizeVisualization() => lifetimeScope.Display<PathfindingVisualizationViewModel>();
+        private void CustomizeVisualization() => View.Display(Children.Get<PathfindingVisualizationViewModel>());
 
         [MenuItem(MenuItemsNames.History, 3)]
-        private void PathfindingHistory() => lifetimeScope.Display<PathfindingHistoryViewModel>();
+        private void PathfindingHistory() => View.Display(Children.Get<PathfindingHistoryViewModel>());
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
         {
@@ -131,6 +130,11 @@ namespace Pathfinding.App.Console.ViewModel
         private void OnAlgorithmChosen(PathfindingAlgorithmChosenMessage message)
         {
             factories.Enqueue(message.Algorithm);
+        }
+
+        private void OnGraphCreated(GraphCreatedMessage message)
+        {
+            graph = message.Graph;
         }
 
         private void SummarizeResults()

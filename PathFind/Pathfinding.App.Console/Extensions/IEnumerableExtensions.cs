@@ -1,5 +1,7 @@
 ﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Views;
+using Pathfinding.Logging.Interface;
 using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,12 @@ namespace Pathfinding.App.Console.Extensions
         public static void Display(this IEnumerable<IDisplayable> displayables)
         {
             displayables.ForEach(displayable => displayable.Display());
+        }
+
+        public static IViewModel Get<TViewModel>(this IEnumerable<IViewModel> models)
+            where TViewModel : IViewModel
+        {
+            return models.OfType<TViewModel>().SingleOrDefault();
         }
     }
 }

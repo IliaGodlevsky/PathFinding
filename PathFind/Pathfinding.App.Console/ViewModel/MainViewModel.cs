@@ -1,24 +1,24 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.App.Console.ConvertedProperties;
-using Pathfinding.App.Console.DependencyInjection;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
+using Pathfinding.App.Console.Views;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Executable;
 using System;
+using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.ViewModel
 {
     using FieldFactory = IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField>;
 
     [MenuColumnsNumber(3)]
-    internal sealed class MainViewModel : SafeViewModel, ICache<Graph2D<Vertex>>, IRequireAnswerInput, IRequireIntInput
+    internal sealed class MainViewModel : SafeViewModel, IParentViewModel, IRequireAnswerInput, IRequireIntInput
     {
         private readonly IMessenger messenger;
         private readonly FieldFactory fieldFactory;
@@ -26,13 +26,13 @@ namespace Pathfinding.App.Console.ViewModel
 
         private GraphField GraphField { get; set; } = GraphField.Empty;
 
-        private IProperty<string> GraphParamters { get; set; }
-
         public IInput<int> IntInput { get; set; }
 
         public IInput<Answer> AnswerInput { get; set; }
 
-        public Graph2D<Vertex> Cached { get; private set; } = Graph2D<Vertex>.Empty;
+        public IReadOnlyCollection<IViewModel> Children { get; set; }
+
+        private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
         public MainViewModel(FieldFactory fieldFactory, IMessenger messenger, IUndo undo, ILog log)
             : base(log)
@@ -47,30 +47,30 @@ namespace Pathfinding.App.Console.ViewModel
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.FindPath, 1)]
-        private void FindPath() => DI.Container.Display<PathfindingViewModel>();
+        private void FindPath() => new View(Children.Get<PathfindingViewModel>(), log).Display();
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [MenuItem(MenuItemsNames.CreateNewGraph, 0)]
-        private void CreateNewGraph() => DI.Container.Display<GraphCreatingViewModel>();
+        private void CreateNewGraph() => new View(Children.Get<GraphCreatingViewModel>(), log).Display();
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.SmoothGraph, 2)]
-        private void SmoothGraph() => DI.Container.Display<GraphSmoothViewModel>();
+        private void SmoothGraph() => new View(Children.Get<GraphSmoothViewModel>(), log).Display();
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.ChangedVertexState, 3)]
-        private void ChangeVertexState() => DI.Container.Display<VertexStateViewModel>();
+        private void ChangeVertexState() => new View(Children.Get<VertexStateViewModel>(), log).Display();
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(IsGraphValid))]
         [MenuItem(MenuItemsNames.SaveGraph, 4)]
-        private void SaveGraph() => DI.Container.Display<GraphSaveViewModel>();
+        private void SaveGraph() => new View(Children.Get<GraphSaveViewModel>(), log).Display();
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [MenuItem(MenuItemsNames.LoadGraph, 5)]
-        private void LoadGraph() => DI.Container.Display<GraphLoadViewModel>();
+        private void LoadGraph() => new View(Children.Get<GraphLoadViewModel>(), log).Display();
 
         protected override void RaiseViewClosed()
         {
@@ -85,7 +85,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         private void ClearGraph(ClearGraphMessage message)
         {
-            Cached.RestoreVerticesVisualState();
+            Graph.RestoreVerticesVisualState();
             undo.Undo();
             messenger.Send(PathfindingStatisticsMessage.Empty);
         }
@@ -96,7 +96,7 @@ namespace Pathfinding.App.Console.ViewModel
             {
                 System.Console.Clear();
                 System.Console.ForegroundColor = ConsoleColor.White;
-                System.Console.WriteLine(GraphParamters);
+                System.Console.WriteLine(Graph.ToString());
                 GraphField.Display();
             }
             catch (ArgumentOutOfRangeException ex)
@@ -112,14 +112,13 @@ namespace Pathfinding.App.Console.ViewModel
         private void SetGraph(GraphCreatedMessage message)
         {
             undo.Undo();
-            Cached = message.Graph;
-            GraphField = fieldFactory.CreateGraphField(Cached);
-            GraphParamters = GraphParamsProperty.Assign(Cached);
+            Graph = message.Graph;
+            GraphField = fieldFactory.CreateGraphField(Graph);
             DisplayGraph();
         }
 
         [FailMessage(MessagesTexts.GraphIsNotCreatedMsg)]
-        private bool IsGraphValid() => Cached != Graph2D<Vertex>.Empty;
+        private bool IsGraphValid() => Graph != Graph2D<Vertex>.Empty;
 
         public override void Dispose()
         {

@@ -1,11 +1,10 @@
-﻿using Pathfinding.App.Console.Extensions;
+﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
-using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Pathfinding.GraphLib.Factory.Interface;
-using Shared.Primitives.ValueRange;
 using System;
 
 namespace Pathfinding.App.Console.ViewModel
@@ -14,13 +13,14 @@ namespace Pathfinding.App.Console.ViewModel
     internal sealed class VertexStateViewModel : ViewModel, IRequireIntInput, IDisposable
     {
         private readonly ConsoleVertexReverseModule reverseModule;
+        private readonly IMessenger messenger;
         private readonly ConsoleVertexChangeCostModule costModule;
 
         private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
         public IInput<int> IntInput { get; set; }
 
-        private Vertex GetInputVertex()
+        private Vertex InputVertex()
         {
             using (Cursor.CleanUpAfter())
             {
@@ -28,18 +28,23 @@ namespace Pathfinding.App.Console.ViewModel
             }
         }
 
-        public VertexStateViewModel(ICache<Graph2D<Vertex>> cache,
-            ConsoleVertexChangeCostModule costModule, ConsoleVertexReverseModule reverseModule)
+        public VertexStateViewModel(ConsoleVertexChangeCostModule costModule, 
+            ConsoleVertexReverseModule reverseModule, IMessenger messenger)
         {
-            Graph = cache.Cached;
             this.costModule = costModule;
             this.reverseModule = reverseModule;
+            this.messenger = messenger;
         }
 
         [MenuItem(MenuItemsNames.ReverseVertex, 0)]
-        public void ReverseVertex() => reverseModule.ReverseVertex(GetInputVertex());
+        public void ReverseVertex() => reverseModule.ReverseVertex(InputVertex());
 
         [MenuItem(MenuItemsNames.ChangeVertexCost, 1)]
-        public void ChangeVertexCost() => costModule.ChangeVertexCost(GetInputVertex());
+        public void ChangeVertexCost() => costModule.ChangeVertexCost(InputVertex());
+
+        private void OnGraphCreated(GraphCreatedMessage message)
+        {
+            Graph = message.Graph;
+        }
     }
 }

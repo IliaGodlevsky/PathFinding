@@ -1,5 +1,7 @@
-﻿using Pathfinding.App.Console.Extensions;
+﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
@@ -14,17 +16,19 @@ namespace Pathfinding.App.Console.ViewModel
     internal sealed class GraphSmoothViewModel : ViewModel, IRequireIntInput, IDisposable
     {
         private readonly IMeanCost meanAlgorithm;
+        private readonly IMessenger messenger;
 
-        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
+        private Graph2D<Vertex> Graph { get; set; }
 
         public IInput<int> IntInput { get; set; }
 
         public IReadOnlyList<ISmoothLevel> SmoothLevels => ConsoleSmoothLevels.Levels;
 
-        public GraphSmoothViewModel(IMeanCost meanAlgorithm, ICache<Graph2D<Vertex>> graph)
+        public GraphSmoothViewModel(IMeanCost meanAlgorithm, IMessenger messenger)
         {
             this.meanAlgorithm = meanAlgorithm;
-            this.graph = graph.Cached;
+            this.messenger = messenger;
+            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
         [MenuItem(MenuItemsNames.SmoothGraph, 0)]
@@ -36,9 +40,14 @@ namespace Pathfinding.App.Console.ViewModel
             {
                 int index = IntInput.Input(message, SmoothLevels.Count, 1) - 1;
                 var level = SmoothLevels[index];
-                graph.Smooth(meanAlgorithm, level.Level);
+                Graph.Smooth(meanAlgorithm, level.Level);
             }
-            graph.Display();
+            Graph.Display();
+        }
+
+        private void OnGraphCreated(GraphCreatedMessage message)
+        {
+            Graph = message.Graph;
         }
     }
 }
