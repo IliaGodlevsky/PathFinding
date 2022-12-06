@@ -35,6 +35,7 @@ namespace Pathfinding.App.Console.ViewModel
             }
             var range = graph.First().Cost.CostRange;
             messenger.Send(new CostRangeChangedMessage(range));
+            messenger.Send(new GraphCreatedMessage(graph));
             messenger.Send(new GraphCreatedMessage(graph), MessageTokens.Screen);
             messenger.Send(new GraphCreatedMessage(graph), MessageTokens.MainViewModel);
         }

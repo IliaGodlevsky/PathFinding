@@ -1,6 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Events;
-using Pathfinding.App.Console.Attributes;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
@@ -18,7 +17,6 @@ using Pathfinding.AlgorithmLib.History;
 namespace Pathfinding.App.Console.ViewModel
 {
     [MenuColumnsNumber(1)]
-    [InstancePerLifetimeScope]
     internal sealed class PathfindingHistoryViewModel : SafeViewModel, IRequireAnswerInput, IRequireIntInput
     {
         private readonly Dictionary<Guid, string> startedAlgorithms;

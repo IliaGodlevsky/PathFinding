@@ -77,7 +77,7 @@ namespace Pathfinding.App.Console.ViewModel
             }
         }
 
-        [MenuItem(MenuItemsNames.ClearEndPoints, 5)]
+        [MenuItem(MenuItemsNames.ClearPathfindingRange, 5)]
         private void ClearPathfindingRange()
         {
             rangeBuilder.Undo();
@@ -85,7 +85,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         [Condition(nameof(CanReplaceTransitVertices), 0)]
         [Condition(nameof(HasTransitVerticesToReplace), 1)]
-        [MenuItem(MenuItemsNames.ReplaceIntermediate, 4)]
+        //[MenuItem(MenuItemsNames.ReplaceIntermediate, 4)]
         private void ReplaceIntermediates()
         {
             using (Cursor.CleanUpAfter())
@@ -100,7 +100,7 @@ namespace Pathfinding.App.Console.ViewModel
         }
 
         [Condition(nameof(HasSourceAndTargetSet))]
-        [MenuItem(MenuItemsNames.ChooseTransit, 1)]
+        //[MenuItem(MenuItemsNames.ChooseTransit, 1)]
         private void ChooseTransitVertices()
         {
             using (Cursor.CleanUpAfter())

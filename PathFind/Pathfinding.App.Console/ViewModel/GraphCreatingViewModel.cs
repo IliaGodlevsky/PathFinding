@@ -57,6 +57,7 @@ namespace Pathfinding.App.Console.ViewModel
             var layers = CreateLayers();
             var graph = selectedGraphAssemble.AssembleGraph(layers, width, length);
             messenger.Send(new CostRangeChangedMessage(costRange));
+            messenger.Send(new GraphCreatedMessage(graph));
             messenger.Send(new GraphCreatedMessage(graph), MessageTokens.Screen);
             messenger.Send(new GraphCreatedMessage(graph), MessageTokens.MainViewModel);
         }

@@ -40,7 +40,6 @@ using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Modules.Commands;
 using Pathfinding.GraphLib.Core.Modules;
-using Pathfinding.App.Console.Views;
 using Pathfinding.App.Console.Model.InProcessActions;
 using Pathfinding.App.Console.Model.PathfindingActions;
 
@@ -82,25 +81,23 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<PathfindingViewModel>().Keyed<IViewModel>(ParentModel.Main).PropertiesAutowired().AutoActivate().SingleInstance().OnActivated(OnPathfindingModelActivated);
             builder.RegisterType<PathfindingProcessViewModel>().Keyed<IViewModel>(ParentModel.Pathfinding).AutoActivate().PropertiesAutowired().SingleInstance().OnActivated(OnProcessViewModelActivated);
             builder.RegisterType<GraphCreatingViewModel>().Keyed<IViewModel>(ParentModel.Main).PropertiesAutowired().SingleInstance().AutoActivate();
-            builder.RegisterType<GraphLoadViewModel>().Keyed<IViewModel>(ParentModel.Main).PropertiesAutowired().SingleInstance().AutoActivate();
-            builder.RegisterType<GraphSaveViewModel>().Keyed<IViewModel>(ParentModel.Main).PropertiesAutowired().SingleInstance().AutoActivate();
+            //builder.RegisterType<GraphLoadViewModel>().Keyed<IViewModel>(ParentModel.Main).PropertiesAutowired().SingleInstance().AutoActivate();
+            //builder.RegisterType<GraphSaveViewModel>().Keyed<IViewModel>(ParentModel.Main).PropertiesAutowired().SingleInstance().AutoActivate();
             builder.RegisterType<GraphSmoothViewModel>().Keyed<IViewModel>(ParentModel.Main).PropertiesAutowired().SingleInstance().AutoActivate();
-            builder.RegisterType<PathfindingHistoryViewModel>().Keyed<IViewModel>(ParentModel.Process).PropertiesAutowired().SingleInstance().AutoActivate();
+            //builder.RegisterType<PathfindingHistoryViewModel>().Keyed<IViewModel>(ParentModel.Process).PropertiesAutowired().SingleInstance().AutoActivate();
             builder.RegisterType<PathfindingProcessChooseViewModel>().Keyed<IViewModel>(ParentModel.Process).AutoActivate().PropertiesAutowired().SingleInstance();
             builder.RegisterType<PathfindingRangeViewModel>().Keyed<IViewModel>(ParentModel.Pathfinding).AutoActivate().SingleInstance().PropertiesAutowired();
-            builder.RegisterType<PathfindingVisualizationViewModel>().Keyed<IViewModel>(ParentModel.Process).AutoActivate().SingleInstance().PropertiesAutowired();
-            builder.RegisterType<VertexStateViewModel>().Keyed<IViewModel>(ParentModel.Main).AutoActivate().SingleInstance().PropertiesAutowired();
+            //builder.RegisterType<PathfindingVisualizationViewModel>().Keyed<IViewModel>(ParentModel.Process).AutoActivate().SingleInstance().PropertiesAutowired().OnActivated(OnVisualizationViewModelActivated);
+            //builder.RegisterType<VertexStateViewModel>().Keyed<IViewModel>(ParentModel.Main).AutoActivate().SingleInstance().PropertiesAutowired();
 
-            builder.RegisterType<View>().AsSelf().PropertiesAutowired().InstancePerDependency();
+            builder.RegisterType<ViewFactory>().As<IViewFactory>().SingleInstance();
 
-            builder.RegisterType<PathfindingVisualizationViewModel>().As<IViewModel>().InstancePerLifetimeScope().PropertiesAutowired()
-                .OnActivated(OnVisualizationViewModelActivated);           
-            builder.RegisterType<SpeedUpAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.UpArrow).SingleInstance();
-            builder.RegisterType<SlowDownAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.DownArrow).SingleInstance();
-            builder.RegisterType<ResumeAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Enter).SingleInstance();
-            builder.RegisterType<PauseAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.P).SingleInstance();
-            builder.RegisterType<InterruptAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Escape).SingleInstance();
-            builder.RegisterType<PathfindingStepByStep>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.W).SingleInstance();
+            //builder.RegisterType<SpeedUpAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.UpArrow).SingleInstance();
+            //builder.RegisterType<SlowDownAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.DownArrow).SingleInstance();
+            //builder.RegisterType<ResumeAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Enter).SingleInstance();
+            //builder.RegisterType<PauseAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.P).SingleInstance();
+            //builder.RegisterType<InterruptAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Escape).SingleInstance();
+            //builder.RegisterType<PathfindingStepByStep>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.W).SingleInstance();
 
             builder.RegisterType<ConsoleVertexReverseModule>().AsSelf().SingleInstance();
             builder.RegisterType<ConsoleVertexChangeCostModule>().AsSelf().PropertiesAutowired();
@@ -116,7 +113,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<PathfindingRangeBuilder<Vertex>>().As<IPathfindingRangeBuilder<Vertex>>()
                 .SingleInstance().OnActivated(OnPathfindingRangeBuilderActivated);
             builder.RegisterType<IncludeTargetVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 2).SingleInstance();
-            builder.RegisterType<IncludeTransitVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 3).SingleInstance();
+            //builder.RegisterType<IncludeTransitVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 3).SingleInstance();
             builder.RegisterType<IncludeSourceVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 1).SingleInstance();
             builder.RegisterType<ExcludeTargetVertex<Vertex>>().Keyed<Command>(CommandType.Exclude).WithMetadata(Order, 2).SingleInstance();
             builder.RegisterType<ExcludeSourceVertex<Vertex>>().Keyed<Command>(CommandType.Exclude).WithMetadata(Order, 1).SingleInstance();
@@ -132,6 +129,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField>>().SingleInstance();
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph2DFactory<Vertex>>().As<IGraphFactory<Graph2D<Vertex>, Vertex>>().SingleInstance();
+            builder.RegisterDecorator<Graph2dWrapFactory, IGraphFactory<Graph2D<Vertex>, Vertex>>();
             builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
 

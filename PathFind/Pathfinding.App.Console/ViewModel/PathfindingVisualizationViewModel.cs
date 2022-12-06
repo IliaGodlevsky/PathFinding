@@ -1,7 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
-using Pathfinding.App.Console.Attributes;
 using Pathfinding.App.Console.EventArguments;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
@@ -20,7 +19,6 @@ using System.Threading.Tasks;
 namespace Pathfinding.App.Console.ViewModel
 {
     [MenuColumnsNumber(1)]
-    [InstancePerLifetimeScope]
     internal sealed class PathfindingVisualizationViewModel : ViewModel, IRequireAnswerInput, IRequireTimeSpanInput
     {
         private readonly IMessenger messenger;

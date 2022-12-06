@@ -6,13 +6,11 @@ using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Interface.Extensions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.AlgorithmLib.Factory.Interface;
-using Pathfinding.App.Console.Attributes;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Menu.Attributes;
-using Pathfinding.App.Console.Views;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
@@ -27,11 +25,8 @@ namespace Pathfinding.App.Console.ViewModel
     using AlgorithmFactory = IAlgorithmFactory<PathfindingProcess>;
 
     [MenuColumnsNumber(2)]
-    [InstancePerLifetimeScope]
-    internal sealed class PathfindingProcessViewModel : SafeViewModel, IParentViewModel, IRequireConsoleKeyInput
+    internal sealed class PathfindingProcessViewModel : SafeParentViewModel, IRequireConsoleKeyInput
     {
-        private static readonly TimeSpan StepDelay = TimeSpan.FromMilliseconds(0.5);
-
         private readonly IMessenger messenger;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         private readonly Stopwatch timer;
@@ -44,13 +39,10 @@ namespace Pathfinding.App.Console.ViewModel
 
         public IInput<ConsoleKey> KeyInput { get; set; }
 
-        public View View { get; set; }
-
-        public IReadOnlyCollection<IViewModel> Children { get; set; }
-
         private string Statistics => path.ToStatistics(timer, visitedVerticesCount, algorithm);
         
-        public PathfindingProcessViewModel(IPathfindingRangeBuilder<Vertex> rangeBuilder, IMessenger messenger, ILog log)
+        public PathfindingProcessViewModel(IPathfindingRangeBuilder<Vertex> rangeBuilder, 
+            IMessenger messenger, ILog log)
             : base(log)
         {
             this.factories = new Queue<AlgorithmFactory>();
@@ -68,7 +60,7 @@ namespace Pathfinding.App.Console.ViewModel
         }
 
         [MenuItem(MenuItemsNames.ChooseAlgorithm, 0)]
-        private void ChooseAlgorithm() => View.Display(Children.Get<PathfindingProcessChooseViewModel>());
+        private void ChooseAlgorithm() => Display<PathfindingProcessChooseViewModel>();
 
         [ExecuteSafe(nameof(ExecuteSafe))]
         [Condition(nameof(CanStartPathfinding))]
@@ -89,11 +81,15 @@ namespace Pathfinding.App.Console.ViewModel
             rangeBuilder.Range.RestoreVerticesVisualState();
         }
 
+        [ExecuteSafe(nameof(ExecuteSafe))]
+        [Condition(nameof(IsVisualizationSupported))]
         [MenuItem(MenuItemsNames.CustomizeVisualization, 2)]
-        private void CustomizeVisualization() => View.Display(Children.Get<PathfindingVisualizationViewModel>());
+        private void CustomizeVisualization() => Display<PathfindingVisualizationViewModel>();
 
+        [ExecuteSafe(nameof(ExecuteSafe))]
+        [Condition(nameof(IsHistorySupported))]
         [MenuItem(MenuItemsNames.History, 3)]
-        private void PathfindingHistory() => View.Display(Children.Get<PathfindingHistoryViewModel>());
+        private void PathfindingHistory() => Display<PathfindingHistoryViewModel>();
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
         {
@@ -150,6 +146,12 @@ namespace Pathfinding.App.Console.ViewModel
 
         [FailMessage(MessagesTexts.NoAlgorithmChosenMsg)]
         private bool CanStartPathfinding() => factories.Count > 0;
+
+        [FailMessage(MessagesTexts.OperationIsNotSupported)]
+        private bool IsHistorySupported() => IsOperationSuppoted<PathfindingHistoryViewModel>();
+
+        [FailMessage(MessagesTexts.OperationIsNotSupported)]
+        private bool IsVisualizationSupported() => IsOperationSuppoted<PathfindingVisualizationViewModel>();
 
         private void PrepareForPathfinding(PathfindingProcess algorithm)
         {

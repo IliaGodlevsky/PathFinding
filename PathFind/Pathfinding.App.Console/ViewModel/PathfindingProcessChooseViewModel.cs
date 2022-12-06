@@ -19,8 +19,6 @@ namespace Pathfinding.App.Console.ViewModel
     [MenuColumnsNumber(1)]
     internal sealed class PathfindingProcessChooseViewModel : ViewModel, IRequireIntInput
     {
-        private const int MenuOffset = 6;
-
         private readonly IMessenger messenger;
 
         public IInput<int> IntInput { get; set; }
