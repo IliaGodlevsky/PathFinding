@@ -1,48 +1,20 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.App.Console.Model.VertexActions;
+using Pathfinding.GraphLib.Core.Modules.Interface;
+using System;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    internal sealed class ReverseVertexMenuItem : IMenuItem
+    internal sealed class ReverseVertexMenuItem : SwitchVerticesMenuItem
     {
-        private readonly IMessenger messenger;
-        private readonly ConsoleVertexReverseModule reverseModule;
-        private readonly IInput<int> input;
+        public override int Order => 10;
 
-        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
-
-        public ReverseVertexMenuItem(IMessenger messenger, ConsoleVertexReverseModule reverseModule, IInput<int> input)
+        public ReverseVertexMenuItem(IMessenger messenger, IPathfindingRangeBuilder<Vertex> rangeBuilder, 
+            IInput<ConsoleKey> keyInput) : base(messenger, keyInput)
         {
-            this.messenger = messenger;
-            this.reverseModule = reverseModule;
-            this.input = input;
-            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
-        }
-
-        public int Order => 10;
-
-        public bool CanBeExecuted() => graph != Graph2D<Vertex>.Empty;
-
-        public void Execute()
-        {
-            reverseModule.ReverseVertex(InputVertex());
-        }
-
-        private Vertex InputVertex()
-        {
-            using (Cursor.CleanUpAfter())
-            {
-                return input.InputVertex(graph);
-            }
-        }
-
-        private void OnGraphCreated(GraphCreatedMessage message)
-        {
-            graph = message.Graph;
+            Actions.Add(ConsoleKey.Enter, new ReverseVertexAction(rangeBuilder.Range));
         }
 
         public override string ToString()

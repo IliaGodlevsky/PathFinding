@@ -1,18 +1,19 @@
-﻿using Pathfinding.GraphLib.Core.Interface;
+﻿using Pathfinding.App.Console.Interface;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 
-namespace Pathfinding.App.Console.Model
+namespace Pathfinding.App.Console.Model.VertexActions
 {
-    internal sealed class ConsoleVertexReverseModule
+    internal sealed class ReverseVertexAction : IVertexAction
     {
         private readonly IPathfindingRange<Vertex> range;
 
-        public ConsoleVertexReverseModule(IPathfindingRange<Vertex> range)
+        public ReverseVertexAction(IPathfindingRange<Vertex> range)
         {
             this.range = range;
         }
 
-        public void ReverseVertex(Vertex vertex)
+        public void Do(Vertex vertex)
         {
             if (vertex.IsObstacle)
             {

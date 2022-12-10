@@ -20,10 +20,13 @@ namespace Pathfinding.App.Console.MenuItems
 
         public void Execute()
         {
-            bool isExit = input.Input(MessagesTexts.ExitAppMsg, Answer.Range);
-            if (isExit)
+            using (Cursor.CleanUpAfter())
             {
-                throw new ExitRequiredException();
+                bool isExit = input.Input(MessagesTexts.ExitAppMsg, Answer.Range);
+                if (isExit)
+                {
+                    throw new ExitRequiredException();
+                }
             }
         }
 

@@ -8,24 +8,22 @@ namespace Pathfinding.App.WPF._2D.Model
     internal sealed class ReplaceTransitVerticesSubscribtion : IGraphSubscription<Vertex>
     {
         private readonly ReplaceTransitVerticesModule<Vertex> module;
-        private readonly IPathfindingRangeBuilder<Vertex> builder;
 
-        public ReplaceTransitVerticesSubscribtion(ReplaceTransitVerticesModule<Vertex> module, IPathfindingRangeBuilder<Vertex> rangeBuilder)
+        public ReplaceTransitVerticesSubscribtion(ReplaceTransitVerticesModule<Vertex> module)
         {
             this.module = module;
-            this.builder = rangeBuilder;
         }
 
         private void MarkVertex(object sender, MouseButtonEventArgs e)
         {
-            module.MarkTransitVertex(builder.Range, (Vertex)e.Source);
+            module.MarkTransitVertex((Vertex)e.Source);
         }
 
         private void ReplaceVertex(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Middle)
             {
-                module.ReplaceTransitWith(builder.Range, (Vertex)e.Source);
+                module.ReplaceTransitWith((Vertex)e.Source);
             }
         }
 

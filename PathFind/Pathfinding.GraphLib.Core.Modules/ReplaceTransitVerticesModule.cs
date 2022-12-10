@@ -15,14 +15,16 @@ namespace Pathfinding.GraphLib.Core.Modules
         private readonly IEnumerable<IReplaceTransitCommand<TVertex>> markCommands;
         private readonly IEnumerable<IUndo> undoCommands;
         private readonly IPathfindingRangeCommand<TVertex> replaceCommand;
+        private readonly IPathfindingRange<TVertex> range;
 
         internal IList<TVertex> TransitVerticesToReplace { get; } = new List<TVertex>();
 
-        public ReplaceTransitVerticesModule()
+        public ReplaceTransitVerticesModule(IPathfindingRange<TVertex> range)
         {
+            this.range = range;
             markCommands = GetMarkCommands().ToReadOnly();
             undoCommands = markCommands.OfType<IUndo>().ToReadOnly();
-            replaceCommand = new ReplaceTransitVertex<TVertex>(this);
+            replaceCommand = new ReplaceTransitVertex<TVertex>(this);           
         }
 
         public void Undo()
@@ -30,7 +32,7 @@ namespace Pathfinding.GraphLib.Core.Modules
             undoCommands.Undo();
         }
 
-        public void ReplaceTransitWith(IPathfindingRange<TVertex> range, TVertex vertex)
+        public void ReplaceTransitWith(TVertex vertex)
         {
             if (replaceCommand.CanExecute(range, vertex))
             {
@@ -38,7 +40,7 @@ namespace Pathfinding.GraphLib.Core.Modules
             }
         }
 
-        public void MarkTransitVertex(IPathfindingRange<TVertex> range, TVertex vertex)
+        public void MarkTransitVertex(TVertex vertex)
         {
             markCommands.FirstOrDefault(command => command.CanExecute(range, vertex))?.Execute(vertex);
         }

@@ -52,6 +52,7 @@ using Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems;
 using Autofac.Features.AttributeFilters;
 using Pathfinding.App.Console.MenuItems;
 using Pathfinding.AlgorithmLib.Factory;
+using Pathfinding.App.Console.Model.VertexActions;
 
 namespace Pathfinding.App.Console.DependencyInjection
 {
@@ -94,21 +95,21 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<GraphCreateMenuItem>().Keyed<IMenuItem>(typeof(MainUnit)).SingleInstance().AutoActivate();
             builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IMenuItem>(typeof(MainUnit)).SingleInstance().AutoActivate();
             builder.RegisterType<PathfindingRangeMenuItem>().Keyed<IMenuItem>(typeof(PathfindingProcessUnit)).SingleInstance().AutoActivate();
-            builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(typeof(PathfindingProcessUnit)).SingleInstance().AutoActivate();
-            builder.RegisterType<VisualizationMenuItem>().Keyed<IMenuItem>(typeof(PathfindingProcessUnit)).SingleInstance().AutoActivate();
-            builder.RegisterType<HistoryMenuItem>().Keyed<IMenuItem>(typeof(PathfindingProcessUnit)).SingleInstance().AutoActivate();
+            //builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(typeof(PathfindingProcessUnit)).SingleInstance().AutoActivate();
+            //builder.RegisterType<VisualizationMenuItem>().Keyed<IMenuItem>(typeof(PathfindingProcessUnit)).SingleInstance().AutoActivate();
+            //builder.RegisterType<HistoryMenuItem>().Keyed<IMenuItem>(typeof(PathfindingProcessUnit)).SingleInstance().AutoActivate();
 
-            builder.RegisterType<ChangeCostMenuItem>().Keyed<IMenuItem>(typeof(GraphCreatingUnit)).SingleInstance().AutoActivate();
+            //builder.RegisterType<ChangeCostMenuItem>().Keyed<IMenuItem>(typeof(GraphCreatingUnit)).SingleInstance().AutoActivate();
             builder.RegisterType<AssembleGraphMenuItem>().Keyed<IMenuItem>(typeof(GraphCreatingUnit)).SingleInstance().AutoActivate();
-            builder.RegisterType<ResizeGraphMenuItem>().Keyed<IMenuItem>(typeof(GraphCreatingUnit)).SingleInstance().AutoActivate();
+            //builder.RegisterType<ResizeGraphMenuItem>().Keyed<IMenuItem>(typeof(GraphCreatingUnit)).SingleInstance().AutoActivate();
             builder.RegisterType<EnterCostRangeMenuItem>().Keyed<IMenuItem>(typeof(GraphCreatingUnit)).SingleInstance().AutoActivate();
             builder.RegisterType<EnterGraphAssembleMenuItem>().Keyed<IMenuItem>(typeof(GraphCreatingUnit)).SingleInstance().AutoActivate();
             builder.RegisterType<EnterGraphParametresMenuItem>().Keyed<IMenuItem>(typeof(GraphCreatingUnit)).SingleInstance().AutoActivate();
             builder.RegisterType<EnterObstaclePercentMenuItem>().Keyed<IMenuItem>(typeof(GraphCreatingUnit)).SingleInstance().AutoActivate();
-            builder.RegisterType<LoadGraphMenuItem>().Keyed<IMenuItem>(typeof(GraphCreatingUnit)).SingleInstance().AutoActivate();
-            builder.RegisterType<SaveGraphMenuItem>().Keyed<IMenuItem>(typeof(GraphCreatingUnit)).SingleInstance().AutoActivate();
-            builder.RegisterType<ReverseVertexMenuItem>().Keyed<IMenuItem>(typeof(GraphCreatingUnit)).SingleInstance().AutoActivate();
-            builder.RegisterType<SmoothGraphMenuItem>().Keyed<IMenuItem>(typeof(GraphCreatingUnit)).SingleInstance().AutoActivate();
+            //builder.RegisterType<LoadGraphMenuItem>().Keyed<IMenuItem>(typeof(GraphCreatingUnit)).SingleInstance().AutoActivate();
+            //builder.RegisterType<SaveGraphMenuItem>().Keyed<IMenuItem>(typeof(GraphCreatingUnit)).SingleInstance().AutoActivate();
+            //builder.RegisterType<ReverseVertexMenuItem>().Keyed<IMenuItem>(typeof(GraphCreatingUnit)).SingleInstance().AutoActivate();
+            //builder.RegisterType<SmoothGraphMenuItem>().Keyed<IMenuItem>(typeof(GraphCreatingUnit)).SingleInstance().AutoActivate();
 
             builder.RegisterType<ApplyHistoryMenuItem>().Keyed<IMenuItem>(typeof(PathfindingHistoryUnit)).SingleInstance().AutoActivate();
             builder.RegisterType<ClearHistoryMenuItem>().Keyed<IMenuItem>(typeof(PathfindingHistoryUnit)).SingleInstance().AutoActivate();
@@ -118,11 +119,9 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<ClearColorsMenuItem>().Keyed<IMenuItem>(typeof(PathfindingProcessUnit)).SingleInstance().AutoActivate();
             builder.RegisterType<ClearGraphMenuItem>().Keyed<IMenuItem>(typeof(PathfindingProcessUnit)).SingleInstance().AutoActivate();
             builder.RegisterType<ClearPathfindingRangeMenuItem>().Keyed<IMenuItem>(typeof(PathfindingRangeUnit)).SingleInstance().AutoActivate();
-            builder.RegisterType<EnterRequiredPathfindingRangeMenuItem>().Keyed<IMenuItem>(typeof(PathfindingRangeUnit)).SingleInstance().AutoActivate();
-            builder.RegisterType<EnterTransitVerticesMenuItem>().Keyed<IMenuItem>(typeof(PathfindingRangeUnit)).SingleInstance().AutoActivate();
-            builder.RegisterType<ReplaceSourceVertexMenuItem>().Keyed<IMenuItem>(typeof(PathfindingRangeUnit)).SingleInstance().AutoActivate();
-            builder.RegisterType<ReplaceTargetVertexMenuItem>().Keyed<IMenuItem>(typeof(PathfindingRangeUnit)).SingleInstance().AutoActivate();
-            builder.RegisterType<ReplaceTransitVerticesMenuItem>().Keyed<IMenuItem>(typeof(PathfindingRangeUnit)).SingleInstance().AutoActivate();
+            builder.RegisterType<EnterPathfindingRangeMenuItem>().Keyed<IMenuItem>(typeof(PathfindingRangeUnit)).SingleInstance().AutoActivate().OnActivated(OnEnterPathfindingRangeActivated);
+            //builder.RegisterType<MarkTransitToReplaceAction>().As<IVertexAction>().SingleInstance().WithMetadata(Key, ConsoleKey.R);
+            //builder.RegisterType<ReplaceTransitVertexAction>().As<IVertexAction>().SingleInstance().WithMetadata(Key, ConsoleKey.P);
 
             builder.RegisterType<ApplyStatisticsMenuItem>().Keyed<IMenuItem>(typeof(PathfindingStatisticsUnit)).SingleInstance().AutoActivate();
 
@@ -131,16 +130,13 @@ namespace Pathfinding.App.Console.DependencyInjection
 
             builder.RegisterType<ViewFactory>().As<IViewFactory>().SingleInstance();
 
-            builder.RegisterType<SpeedUpAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.UpArrow).SingleInstance();
-            builder.RegisterType<SlowDownAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.DownArrow).SingleInstance();
+            //builder.RegisterType<SpeedUpAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.UpArrow).SingleInstance();
+            //builder.RegisterType<SlowDownAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.DownArrow).SingleInstance();
 
             builder.RegisterType<ResumeAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Enter).SingleInstance();
             builder.RegisterType<PauseAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.P).SingleInstance();
             builder.RegisterType<InterruptAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Escape).SingleInstance();
-            builder.RegisterType<PathfindingStepByStep>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.W).SingleInstance();
-
-            builder.RegisterType<ConsoleVertexReverseModule>().AsSelf().SingleInstance();
-            builder.RegisterType<ConsoleVertexChangeCostModule>().AsSelf().PropertiesAutowired();
+            //builder.RegisterType<PathfindingStepByStep>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.W).SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<ColorConsoleLog>().As<ILog>().SingleInstance();
@@ -152,12 +148,16 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<VisualPathfindingRange<Vertex>>().As<IPathfindingRange<Vertex>>().SingleInstance();
             builder.RegisterType<PathfindingRangeBuilder<Vertex>>().As<IPathfindingRangeBuilder<Vertex>>().As<IUndo>()
                 .SingleInstance().OnActivated(OnPathfindingRangeBuilderActivated);
-            builder.RegisterType<IncludeTargetVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 2).SingleInstance();
-            builder.RegisterType<IncludeTransitVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 3).SingleInstance();
-            builder.RegisterType<IncludeSourceVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 1).SingleInstance();
-            builder.RegisterType<ExcludeTargetVertex<Vertex>>().Keyed<Command>(CommandType.Exclude).WithMetadata(Order, 2).SingleInstance();
+            builder.RegisterType<IncludeSourceVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 2).SingleInstance();
+            builder.RegisterType<IncludeTargetVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 4).SingleInstance();
+            //builder.RegisterType<IncludeTransitVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 6).SingleInstance();
+            builder.RegisterType<ReplaceTransitIsolatedVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 1).SingleInstance();
+            builder.RegisterType<ReplaceIsolatedSourceVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 3).SingleInstance();
+            builder.RegisterType<ReplaceIsolatedTargetVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 5).SingleInstance();
+            builder.RegisterType<ExcludeTransitVertex<Vertex>>().Keyed<Command>(CommandType.Exclude).WithMetadata(Order, 3).SingleInstance();
             builder.RegisterType<ExcludeSourceVertex<Vertex>>().Keyed<Command>(CommandType.Exclude).WithMetadata(Order, 1).SingleInstance();
-            builder.RegisterType<ReplaceTransitVerticesModule<Vertex>>().AsSelf().As<IUndo>().SingleInstance();
+            builder.RegisterType<ExcludeTargetVertex<Vertex>>().Keyed<Command>(CommandType.Exclude).WithMetadata(Order, 2).SingleInstance();
+            //builder.RegisterType<ReplaceTransitVerticesModule<Vertex>>().AsSelf().As<IUndo>().SingleInstance();
 
             builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
 
@@ -184,14 +184,14 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory<Vertex>>().SingleInstance();
 
             builder.RegisterType<DijkstraAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
-            builder.RegisterType<AStarAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
-            builder.RegisterType<IDAStarAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
+            //builder.RegisterType<AStarAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
+            //builder.RegisterType<IDAStarAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
             builder.RegisterType<LeeAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
-            builder.RegisterType<AStarLeeAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
-            builder.RegisterType<CostGreedyAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
-            builder.RegisterType<DistanceFirstAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
-            builder.RegisterType<DepthFirstAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
-            builder.RegisterType<HeuristicCostGreedyAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
+            //builder.RegisterType<AStarLeeAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
+            //builder.RegisterType<CostGreedyAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
+            //builder.RegisterType<DistanceFirstAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
+            //builder.RegisterType<DepthFirstAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
+            //builder.RegisterType<HeuristicCostGreedyAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
 
             return builder.Build();
@@ -201,6 +201,12 @@ namespace Pathfinding.App.Console.DependencyInjection
         {
             args.Instance.PathfindingActions = args.Context.ResolveWithMetadata<IPathfindingAction>();
             args.Instance.AnimationActions = args.Context.ResolveWithMetadata<IAnimationSpeedAction>();
+        }
+
+        private static void OnEnterPathfindingRangeActivated(IActivatedEventArgs<EnterPathfindingRangeMenuItem> args)
+        {
+            var actions = args.Context.ResolveWithMetadata<IVertexAction>();
+            args.Instance.Actions.AddRange(actions);
         }
 
         private static void OnPathfindingRangeBuilderActivated(IActivatedEventArgs<PathfindingRangeBuilder<Vertex>> args)

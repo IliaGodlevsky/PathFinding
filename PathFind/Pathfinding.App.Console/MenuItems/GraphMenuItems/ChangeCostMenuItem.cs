@@ -1,49 +1,19 @@
-﻿using Autofac.Features.AttributeFilters;
-using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.App.Console.Extensions;
+﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Messages;
-using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.App.Console.Model.VertexActions;
+using System;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    internal sealed class ChangeCostMenuItem : IMenuItem
+    internal sealed class ChangeCostMenuItem : SwitchVerticesMenuItem
     {
-        private readonly IMessenger messenger;
-        private readonly ConsoleVertexChangeCostModule costModule;
-        private readonly IInput<int> input;
+        public override int Order => 9;
 
-        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
-
-        public ChangeCostMenuItem(IMessenger messenger, ConsoleVertexChangeCostModule costModule, IInput<int> input)
+        public ChangeCostMenuItem(IMessenger messenger, IInput<ConsoleKey> keyInput)
+            : base(messenger, keyInput)
         {
-            this.messenger = messenger;
-            this.costModule = costModule;
-            this.input = input;
-            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
-        }
-
-        public int Order => 9;
-
-        public bool CanBeExecuted() => graph != Graph2D<Vertex>.Empty;
-
-        public void Execute()
-        {
-            costModule.ChangeVertexCost(InputVertex());
-        }
-
-        private Vertex InputVertex()
-        {
-            using (Cursor.CleanUpAfter())
-            {
-                return input.InputVertex(graph);
-            }
-        }
-
-        private void OnGraphCreated(GraphCreatedMessage message)
-        {
-            graph = message.Graph;
+            Actions.Add(ConsoleKey.UpArrow, new IncreaseCostAction());
+            Actions.Add(ConsoleKey.DownArrow, new DecreaseCostAction());
         }
 
         public override string ToString()
