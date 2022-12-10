@@ -54,7 +54,7 @@ namespace Pathfinding.Visualization.Models
             this.log = log;
             Algorithms = factories
                 .GroupBy(item => item.GetAttributeOrDefault<GroupAttribute>())
-                .SelectMany(item => item.OrderByOrderAttribute<AlgorithmFactory, OrderAttribute>())
+                .SelectMany(item => item.OrderByOrderAttribute())
                 .ToList();
             timer = new Stopwatch();
             Path = NullGraphPath.Interface;

@@ -24,6 +24,12 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
             return graph.GetObstacles().Select(vertex => vertex.Position);
         }
 
+        public static IEnumerable<ICoordinate> GetNotObstaclesCoordinates<TVertex>(this IGraph<TVertex> graph)
+            where TVertex : IVertex
+        {
+            return graph.Where(vertex => !vertex.IsObstacle).Select(vertex => vertex.Position);
+        }
+
         public static int GetObstaclesCount<TVertex>(this IGraph<TVertex> self)
             where TVertex : IVertex
         {

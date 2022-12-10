@@ -23,7 +23,18 @@ namespace Pathfinding.App.Console.Model
         public bool IsObstacle
         {
             get => isObstacle;
-            set { isObstacle = value; if (isObstacle) VisualizeAsObstacle(); }
+            set 
+            { 
+                isObstacle = value;
+                if (isObstacle)
+                {
+                    VisualizeAsObstacle();
+                }
+                else
+                {
+                    VisualizeAsRegular();
+                }
+            }
         }
 
         public IVertexCost Cost { get; set; } = NullCost.Interface;

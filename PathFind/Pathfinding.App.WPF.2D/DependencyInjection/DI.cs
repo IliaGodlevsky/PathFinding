@@ -85,7 +85,7 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterType<ReplaceIsolatedTargetVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 5).SingleInstance();
             builder.RegisterType<ExcludeTransitVertex<Vertex>>().Keyed<Command>(CommandType.Exclude).WithMetadata(Order, 3).SingleInstance();
             builder.RegisterType<ExcludeSourceVertex<Vertex>>().Keyed<Command>(CommandType.Exclude).WithMetadata(Order, 1).SingleInstance();
-            builder.RegisterType<ExcludeTargetVertex<Vertex>>().Keyed<Command>(CommandType.Exclude).WithMetadata(Order, 2).SingleInstance();            
+            builder.RegisterType<ExcludeTargetVertex<Vertex>>().Keyed<Command>(CommandType.Exclude).WithMetadata(Order, 2).SingleInstance();
             builder.RegisterType<ReplaceTransitVerticesModule<Vertex>>().AsSelf().As<IUndo>().SingleInstance();
             // Graph subscriptions registrations
             builder.RegisterType<PathfindingRangeBuilderSubscription>().As<IGraphSubscription<Vertex>>().SingleInstance();

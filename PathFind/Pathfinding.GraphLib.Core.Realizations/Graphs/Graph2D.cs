@@ -1,12 +1,13 @@
 ﻿using Pathfinding.GraphLib.Core.Abstractions;
 using Pathfinding.GraphLib.Core.Interface;
 using Shared.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.GraphLib.Core.Realizations.Graphs
 {
-    public class Graph2D<TVertex> : Graph<TVertex>
+    public class Graph2D<TVertex> : Graph<TVertex>, ICloneable
         where TVertex : IVertex
     {
         public static readonly Graph2D<TVertex> Empty
@@ -21,6 +22,11 @@ namespace Pathfinding.GraphLib.Core.Realizations.Graphs
         {
             Width = DimensionsSizes.FirstOrDefault();
             Length = DimensionsSizes.LastOrDefault();
+        }
+
+        public virtual object Clone()
+        {
+            return new Graph2D<TVertex>(vertices.Values.ToArray(), DimensionsSizes.ToArray());
         }
     }
 }

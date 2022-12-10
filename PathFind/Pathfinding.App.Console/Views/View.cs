@@ -1,73 +1,59 @@
-﻿using Pathfinding.App.Console.Extensions;
+﻿using Pathfinding.App.Console.Exceptions;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Model.Menu;
-using Pathfinding.App.Console.Model.Menu.Attributes;
-using Pathfinding.App.Console.Model.Menu.Delegates;
-using Pathfinding.App.Console.Model.Menu.Exceptions;
-using Pathfinding.Logging.Interface;
 using Shared.Extensions;
 using Shared.Primitives.ValueRange;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.App.Console.Views
 {
-    internal sealed class View: IRequireIntInput, IDisplayable
+    internal sealed class View : IDisplayable
     {
-        private readonly IMenuCommands menuCommands;
-        private readonly IDisplayable menuList;
-        private readonly InclusiveValueRange<int> menuRange;
-        private readonly ILog log;
+        private readonly IUnit unit;
+        private IInput<int> intInput;
 
-        public IInput<int> IntInput { get; set; }
-
-        private string OptionsMsg => menuList + "\n" + MessagesTexts.MenuOptionChoiceMsg;
-
-        private int MenuItemIndex => IntInput.Input(OptionsMsg, menuRange) - 1;
-
-        private bool IsClosureRequested { get; set; }
-
-        public View(IViewModel model, ILog log)
+        public View(IUnit model, IInput<int> input)
         {
-            this.log = log;
-            menuCommands = new MenuCommands(model);
-            var columns = GetMenuColumnsNumber(model);
-            menuList = menuCommands.Commands.CreateMenuList(columns);
-            menuRange = new InclusiveValueRange<int>(menuCommands.Commands.Count, 1);
-            model.ViewClosed += OnClosed;
+            this.intInput = input;
+            this.unit = model;
         }
 
         public void Display()
         {
-            while (!IsClosureRequested)
+            bool isClosureRequested = false;
+            while (!isClosureRequested)
             {
+                var options = GetMenuOptions();
                 Screen.SetCursorPositionUnderMenu(1);
                 try
                 {
-                    var command = menuCommands.Commands[InputItemIndex()];
+                    int index = InputItemIndex(options.Message, options.MenuRange);
+                    var command = options.Items[index];
                     command.Execute();
                 }
-                catch (ConditionFailedException ex)
+                catch (ExitRequiredException)
                 {
-                    log.Warn(ex.Message);
+                    isClosureRequested = true;
                 }
             }
         }
 
-        private int GetMenuColumnsNumber(IViewModel viewModel)
+        private (string Message, IReadOnlyList<IMenuItem> Items, InclusiveValueRange<int> MenuRange) GetMenuOptions()
         {
-            return viewModel.GetAttributeOrDefault<MenuColumnsNumberAttribute>().MenuColumns;
+            var menuItems = unit.MenuItems.Where(item => item.CanBeExecuted()).ToReadOnly();
+            var menuList = menuItems.CreateMenuList(unit.MenuItemColumns);
+            var menuRange = new InclusiveValueRange<int>(menuItems.Count, 1);
+            var message = menuList + "\n" + MessagesTexts.MenuOptionChoiceMsg;
+            return (message, menuItems, menuRange);
         }
 
-        private int InputItemIndex()
+        private int InputItemIndex(string message, InclusiveValueRange<int> menuRange)
         {
             using (Cursor.CleanUpAfter())
             {
-                return MenuItemIndex;
+                return intInput.Input(message, menuRange) - 1;
             }
-        }
-
-        private void OnClosed()
-        {
-            IsClosureRequested = true;
         }
     }
 }

@@ -1,8 +1,15 @@
 ﻿using Autofac;
 using Pathfinding.App.Console.DependencyInjection;
-using Pathfinding.App.Console.ViewModel;
-using Pathfinding.App.Console.Views;
+using Pathfinding.App.Console.MenuItems;
 
-var model = DI.Container.Resolve<MainViewModel>();
-var view = DI.Container.Resolve<View>();
-view.Display(model);
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        using (var scope = DI.Container.BeginLifetimeScope())
+        {
+            var item = scope.Resolve<MainUnitMenuItem>();
+            item.Execute();
+        }
+    }
+}

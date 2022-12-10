@@ -19,11 +19,5 @@ namespace Pathfinding.App.Console.Extensions
         {
             displayables.ForEach(displayable => displayable.Display());
         }
-
-        public static IViewModel Get<TViewModel>(this IEnumerable<IViewModel> models)
-            where TViewModel : IViewModel
-        {
-            return models.OfType<TViewModel>().SingleOrDefault();
-        }
     }
 }

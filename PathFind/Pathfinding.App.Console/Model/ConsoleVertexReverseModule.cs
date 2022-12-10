@@ -17,7 +17,6 @@ namespace Pathfinding.App.Console.Model
             if (vertex.IsObstacle)
             {
                 vertex.IsObstacle = false;
-                vertex.VisualizeAsRegular();
             }
             else
             {

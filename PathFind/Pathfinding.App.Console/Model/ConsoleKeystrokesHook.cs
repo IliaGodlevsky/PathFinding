@@ -8,16 +8,21 @@ using System;
 
 namespace Pathfinding.App.Console.Model
 {
-    internal sealed class ConsoleKeystrokesHook : IInterruptable, IProcess, IRequireConsoleKeyInput
+    internal sealed class ConsoleKeystrokesHook : IInterruptable, IProcess
     {
         public event ConsoleKeyPressedEventHandler KeyPressed;
         public event ProcessEventHandler Interrupted;
         public event ProcessEventHandler Started;
         public event ProcessEventHandler Finished;
 
+        private readonly IInput<ConsoleKey> input;
+
         public bool IsInProcess { get; private set; }
 
-        public IInput<ConsoleKey> KeyInput { get; set; }
+        public ConsoleKeystrokesHook(IInput<ConsoleKey> input)
+        {
+            this.input = input;
+        }
 
         public void Interrupt()
         {
@@ -32,7 +37,7 @@ namespace Pathfinding.App.Console.Model
             IsInProcess = true;
             while (IsInProcess)
             {
-                var key = KeyInput.Input();
+                var key = input.Input();
                 KeyPressed?.Invoke(this, new ConsoleKeyPressedEventArgs(key));
             }
         }

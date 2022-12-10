@@ -10,7 +10,7 @@ namespace Pathfinding.AlgorithmLib.History
     public sealed class History<TVolume> 
         where TVolume : IHistoryVolume<ICoordinate>, new()
     {
-        private const int VolumesCount = 4;
+        private const int VolumesCount = 5;
 
         private readonly ReadOnlyList<TVolume> volumes;
 
@@ -21,6 +21,8 @@ namespace Pathfinding.AlgorithmLib.History
         private TVolume VisitedHistory => volumes[2];
 
         private TVolume ObstaclesHistory => volumes[3];
+
+        private TVolume RegularHistory => volumes[4];
 
         public History()
         {
@@ -40,6 +42,11 @@ namespace Pathfinding.AlgorithmLib.History
         public IEnumerable<ICoordinate> GetPath(Guid key)
         {
             return PathHistory.Get(key);
+        }
+
+        public IEnumerable<ICoordinate> GetRegulars(Guid key)
+        {
+            return RegularHistory.Get(key);
         }
 
         public IEnumerable<ICoordinate> GetVisitedVertices(Guid key)
@@ -65,6 +72,11 @@ namespace Pathfinding.AlgorithmLib.History
         public void AddObstacles(Guid key, IEnumerable<ICoordinate> obstacles)
         {
             obstacles.ForEach(item => ObstaclesHistory.Add(key, item));
+        }
+
+        public void AddRegulars(Guid key, IEnumerable<ICoordinate> regulars)
+        {
+            regulars.ForEach(item => RegularHistory.Add(key, item));
         }
 
         public void Remove(Guid key)

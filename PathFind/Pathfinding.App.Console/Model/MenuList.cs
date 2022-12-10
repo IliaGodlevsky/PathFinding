@@ -1,4 +1,5 @@
-﻿using Pathfinding.App.Console.Interface;
+﻿using Pathfinding.App.Console.Extensions;
+using Pathfinding.App.Console.Interface;
 using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
@@ -25,12 +26,12 @@ namespace Pathfinding.App.Console.Model
         public MenuList(IEnumerable<string> menuItemsNames, int columns = 2)
         {
             this.menuItemsNames = menuItemsNames.ToArray();
-            menuItemsCount = this.menuItemsNames.Length;
-            menuItemNumberPad = menuItemsCount.ToString().Length;
+            this.menuItemsCount = this.menuItemsNames.Length;
+            this.menuItemNumberPad = menuItemsCount.GetDigitsNumber();
             var columnsRange = new InclusiveValueRange<int>(menuItemsCount, 1);
             this.columns = columnsRange.ReturnInRange(columns);
-            longestNameLength = new Lazy<int>(GetLongestNameLength);
-            menuList = new Lazy<string>(CreateMenu);
+            this.longestNameLength = new (GetLongestNameLength);
+            this.menuList = new (CreateMenu);
         }
 
         public void Display()
