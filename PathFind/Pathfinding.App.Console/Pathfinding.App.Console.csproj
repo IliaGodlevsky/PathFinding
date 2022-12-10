@@ -118,7 +118,6 @@
     <Compile Include="Messages\ApplyStatisticsMessage.cs" />
     <Compile Include="Messages\ApplyVisualizationMessage.cs" />
     <Compile Include="Messages\ChooseGraphAssembleMessage.cs" />
-    <Compile Include="Messages\ClearGraphMessage.cs" />
     <Compile Include="Messages\ClearHistoryMessage.cs" />
     <Compile Include="Messages\CostRangeChangedMessage.cs" />
     <Compile Include="Messages\CostRangeMessage.cs" />

@@ -4,6 +4,6 @@ namespace Pathfinding.App.Console.Interface
 {
     internal interface IViewFactory
     {
-        View CreateView(IViewModel viewModel);
+        View CreateView(IUnit unit);
     }
 }
