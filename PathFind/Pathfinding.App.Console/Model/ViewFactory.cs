@@ -1,5 +1,6 @@
 ﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Views;
+using Pathfinding.Logging.Interface;
 
 namespace Pathfinding.App.Console.Model
 {

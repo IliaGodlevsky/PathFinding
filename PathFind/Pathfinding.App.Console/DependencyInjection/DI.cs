@@ -138,6 +138,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<PauseAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.P).SingleInstance();
             builder.RegisterType<InterruptAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Escape).SingleInstance();
             builder.RegisterType<PathfindingStepByStep>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.W).SingleInstance();
+            builder.RegisterType<PathfindingStepByStep>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.W).SingleInstance();
 
             builder.RegisterType<ConsoleVertexReverseModule>().AsSelf().SingleInstance();
             builder.RegisterType<ConsoleVertexChangeCostModule>().AsSelf().PropertiesAutowired();

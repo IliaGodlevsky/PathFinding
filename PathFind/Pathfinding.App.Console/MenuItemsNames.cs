@@ -28,7 +28,7 @@
         public const string InputObstaclePercent = "Input obstacle percent";
         public const string InputGraphParametres = "Input graph parametres";
         public const string ChooseTransit = "Choose transit vertices";
-        public const string ClearEndPoints = "Clear pathfinding range";
+        public const string ClearPathfindingRange = "Clear pathfinding range";
         public const string ApplyHistoryRecording = "Apply history recording";
         public const string ShowHistory = "Show history";
         public const string ClearHistory = "Clear history";

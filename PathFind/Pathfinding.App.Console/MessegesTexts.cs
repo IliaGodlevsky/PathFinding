@@ -40,6 +40,7 @@ namespace Pathfinding.App.Console
         public const string InputPathMsg = "Input path: ";
         public const string Quit = "Quit";
 
+        public const string OperationIsNotSupported = "Operation is not supported";
         public const string AssebleIsNotChosenMsg = "Choose assemble for graph";
         public const string GraphSizeIsNotSetMsg = "Set graph size";
         public const string GraphIsNotCreatedMsg = "Graph is not created";
