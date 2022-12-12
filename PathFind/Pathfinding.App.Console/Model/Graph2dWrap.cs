@@ -29,7 +29,7 @@ namespace Pathfinding.App.Console.Model
             return string.Join(LargeSpace, joined, graphParams);
         }
 
-        public override object Clone()
+        public override Graph2D<Vertex> Clone()
         {
             var graph = new Graph2D<Vertex>(vertices.Values.ToArray(), DimensionsSizes.ToArray());
             return new Graph2dWrap(graph);

@@ -19,7 +19,7 @@ namespace Pathfinding.App.Console.ViewModel
     internal sealed class PathfindingVisualizationUnit : Unit
     {
         private readonly IMessenger messenger;
-        private readonly ConsoleKeystrokesHook keyStrokeHook;
+        private readonly ConsoleKeystrokesHook keyStrokeHook = new();
 
         private PathfindingProcess algorithm = PathfindingProcess.Null;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
@@ -31,10 +31,9 @@ namespace Pathfinding.App.Console.ViewModel
         public IReadOnlyDictionary<ConsoleKey, IAnimationSpeedAction> AnimationActions { get; set; }
 
         public PathfindingVisualizationUnit([KeyFilter(typeof(PathfindingVisualizationUnit))]IReadOnlyCollection<IMenuItem> menuItems, 
-            ConsoleKeystrokesHook hook, IMessenger messenger) : base(menuItems)
+            IMessenger messenger) : base(menuItems)
         {
             this.messenger = messenger;
-            this.keyStrokeHook = hook;
             this.messenger.Register<AnimationDelayMessage>(this, OnAnimationDelay);
             this.messenger.Register<ApplyVisualizationMessage>(this, OnVisualizationApplied);
             this.messenger.Register<SubscribeOnVisualizationMessage>(this, OnPathfindingPrepare);

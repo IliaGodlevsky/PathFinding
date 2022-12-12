@@ -1,7 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
 using Shared.Random;
@@ -38,8 +37,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected override IReadOnlyCollection<ILayer<Graph2D<Vertex>, Vertex>> CreateLayers()
         {
             return base.CreateLayers()
-                .Append(new GraphLayer((Graph2D<Vertex>)graph.Clone()))
-                .ToArray();           
+                .Append(new GraphLayer(graph.Clone()))
+                .ToArray();
         }
 
         public override string ToString()

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Pathfinding.GraphLib.Core.Realizations.Graphs
 {
-    public class Graph2D<TVertex> : Graph<TVertex>, ICloneable
+    public class Graph2D<TVertex> : Graph<TVertex>
         where TVertex : IVertex
     {
         public static readonly Graph2D<TVertex> Empty
@@ -24,7 +24,7 @@ namespace Pathfinding.GraphLib.Core.Realizations.Graphs
             Length = DimensionsSizes.LastOrDefault();
         }
 
-        public virtual object Clone()
+        public virtual Graph2D<TVertex> Clone()
         {
             return new Graph2D<TVertex>(vertices.Values.ToArray(), DimensionsSizes.ToArray());
         }

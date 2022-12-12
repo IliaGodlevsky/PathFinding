@@ -204,7 +204,7 @@
     <Compile Include="Units\PathfindingHistoryUnit.cs" />
     <Compile Include="Units\PathfindingProcessUnit.cs" />
     <Compile Include="Units\PathfindingRangeUnit.cs" />
-    <Compile Include="Units\GraphCreatingUnit.cs" />
+    <Compile Include="Units\GraphUnit.cs" />
     <Compile Include="Units\MainUnit.cs" />
     <Compile Include="Units\PathfindingStatisticsUnit.cs" />
     <Compile Include="Units\PathfindingVisualizationUnit.cs" />

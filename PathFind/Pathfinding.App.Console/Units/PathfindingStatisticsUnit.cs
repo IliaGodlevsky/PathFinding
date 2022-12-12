@@ -45,7 +45,7 @@ namespace Pathfinding.App.Console.ViewModel
             }
             else
             {
-                message.Algorithm.VertexVisited += OnVertexVisitedUnappled;
+                message.Algorithm.Started += OnVertexVisitedUnappled;
             }
         }
 
@@ -63,17 +63,17 @@ namespace Pathfinding.App.Console.ViewModel
 
         private void OnPathFound(PathFoundMessage message)
         {
-            string statistics = GetStatisticsUnApplied(message.Algorithm);
+            string stats = message.Algorithm.ToString();
             if (isStatisticsApplied)
             {
-                statistics = message.Path.Count > 0
+                stats = message.Path.Count > 0
                     ? GetStatistics(message.Path, message.Algorithm)
                     : GetStatistics(message.Algorithm);
                 visited = 0;
+                messenger.Send(new PathfindingStatisticsMessage(stats));
             }
-            this.statistics[message.Algorithm.Id] = statistics;
-            messenger.Send(new PathfindingStatisticsMessage(statistics));
-            messenger.Send(new AlgorithmFinishedMessage(message.Algorithm, statistics));
+            statistics[message.Algorithm.Id] = stats;
+            messenger.Send(new AlgorithmFinishedMessage(message.Algorithm, stats));
         }
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
@@ -83,9 +83,9 @@ namespace Pathfinding.App.Console.ViewModel
             messenger.Send(new PathfindingStatisticsMessage(statistics));
         }
 
-        private void OnVertexVisitedUnappled(object sender, PathfindingEventArgs e)
+        private void OnVertexVisitedUnappled(object sender, EventArgs e)
         {
-            string statistics = GetStatisticsUnApplied((PathfindingProcess)sender);
+            string statistics = ((PathfindingProcess)sender).ToString();
             messenger.Send(new PathfindingStatisticsMessage(statistics));
         }
 
@@ -95,8 +95,6 @@ namespace Pathfinding.App.Console.ViewModel
             string pathfindingInfo = string.Format(MessagesTexts.InProcessStatisticsFormat, visited);
             return string.Join("\t", algorithm, time, pathfindingInfo);
         }
-
-        public string GetStatisticsUnApplied(PathfindingProcess algorithm) => algorithm.ToString();
 
         public string GetStatistics(IGraphPath path, PathfindingProcess algorithm)
         {

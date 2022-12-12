@@ -1,10 +1,8 @@
 ﻿using Pathfinding.App.Console.EventArguments;
 using Pathfinding.App.Console.EventHandlers;
-using Pathfinding.App.Console.Interface;
 using Shared.Process.EventArguments;
 using Shared.Process.EventHandlers;
 using Shared.Process.Interface;
-using System;
 
 namespace Pathfinding.App.Console.Model
 {
@@ -15,14 +13,7 @@ namespace Pathfinding.App.Console.Model
         public event ProcessEventHandler Started;
         public event ProcessEventHandler Finished;
 
-        private readonly IInput<ConsoleKey> input;
-
         public bool IsInProcess { get; private set; }
-
-        public ConsoleKeystrokesHook(IInput<ConsoleKey> input)
-        {
-            this.input = input;
-        }
 
         public void Interrupt()
         {
@@ -37,7 +28,7 @@ namespace Pathfinding.App.Console.Model
             IsInProcess = true;
             while (IsInProcess)
             {
-                var key = input.Input();
+                var key = System.Console.ReadKey(true).Key;
                 KeyPressed?.Invoke(this, new ConsoleKeyPressedEventArgs(key));
             }
         }

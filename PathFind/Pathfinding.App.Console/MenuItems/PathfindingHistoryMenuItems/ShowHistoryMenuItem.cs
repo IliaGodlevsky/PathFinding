@@ -26,7 +26,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             this.messenger = messenger;           
             this.messenger.Register<ApplyHistoryMessage>(this, OnHistoryApplied);
             this.messenger.Register<AlgorithmFinishedMessage>(this, OnAlgorithmFinished);
-            this.messenger.Register<ClearHistoryMessage>(this, ClearHistory);
+            this.messenger.Register<ClearHistoryMessage>(this, _ => ClearHistory());
+            this.messenger.Register<GraphCreatedMessage>(this, _ => ClearHistory());
         }
 
         public bool CanBeExecuted() => isHistoryApplied && pages.Count > 0;
@@ -50,7 +51,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             }
         }
 
-        private void ClearHistory(ClearHistoryMessage msg)
+        private void ClearHistory()
         {
             pages.Clear();
         }

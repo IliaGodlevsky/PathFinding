@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.ViewModel
 {
-    internal sealed class GraphCreatingUnit : Unit
+    internal sealed class GraphUnit : Unit
     {
-        public GraphCreatingUnit([KeyFilter(typeof(GraphCreatingUnit))]IReadOnlyCollection<IMenuItem> menuItems)
+        public GraphUnit([KeyFilter(typeof(GraphUnit))]IReadOnlyCollection<IMenuItem> menuItems)
             : base(menuItems)
         {
 

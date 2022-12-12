@@ -1,5 +1,4 @@
-﻿using Pathfinding.GraphLib.Core.Abstractions;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+﻿using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
 using System.Linq;
 
@@ -19,11 +18,12 @@ namespace Pathfinding.App.Console.Model
             var coordinates = layer.Select(vertex => vertex.Position)
                 .Intersect(graph.Select(vertex => vertex.Position))
                 .ToArray();
-            foreach(var coordinate in coordinates)
+            foreach (var coordinate in coordinates)
             {
                 var vertex = graph.Get(coordinate);
                 var layerVertex = layer.Get(coordinate);
-                vertex.Cost = vertex.Cost.SetCost(layerVertex.Cost.CurrentCost);
+                int cost = layerVertex.Cost.CurrentCost;
+                vertex.Cost = vertex.Cost.SetCost(cost);
                 vertex.IsObstacle = layerVertex.IsObstacle;
             }
         }

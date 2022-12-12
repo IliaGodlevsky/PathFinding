@@ -2,7 +2,6 @@
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.GraphLib.Core.Realizations.Coordinates;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Extensions;
@@ -23,7 +22,7 @@ namespace Pathfinding.App.Console.MenuItems
 
         public abstract int Order { get; }
 
-        public SwitchVerticesMenuItem(IMessenger messenger, IInput<ConsoleKey> keyInput)
+        protected SwitchVerticesMenuItem(IMessenger messenger, IInput<ConsoleKey> keyInput)
         {
             this.messenger = messenger;
             this.keyInput = keyInput;
@@ -34,8 +33,8 @@ namespace Pathfinding.App.Console.MenuItems
 
         public void Execute()
         {
-            var yRange = new InclusiveValueRange<int>(graph.Length - 1);
             var xRange = new InclusiveValueRange<int>(graph.Width - 1);
+            var yRange = new InclusiveValueRange<int>(graph.Length - 1);
             int x = 0, y = 0;
             var key = default(ConsoleKey);
             do
@@ -46,23 +45,18 @@ namespace Pathfinding.App.Console.MenuItems
                 key = keyInput.Input();
                 switch (key)
                 {
-                    case ConsoleKey.W: 
-                        y = yRange.ReturnInRange(y - 1, ReturnOptions.Cycle); 
-                        break;
-                    case ConsoleKey.S: 
-                        y = yRange.ReturnInRange(y + 1, ReturnOptions.Cycle); 
-                        break;
-                    case ConsoleKey.D:
-                        x = xRange.ReturnInRange(x + 1, ReturnOptions.Cycle); 
-                        break;
-                    case ConsoleKey.A: 
-                        x = xRange.ReturnInRange(x - 1, ReturnOptions.Cycle); 
-                        break;
-                    default: 
-                        Actions.GetOrDefault(key, NullVertexAction.Instance).Do(vertex);
-                        break;
+                    case ConsoleKey.W: y = ReturnInRange(y - 1, yRange); break;
+                    case ConsoleKey.S: y = ReturnInRange(y + 1, yRange); break;
+                    case ConsoleKey.D: x = ReturnInRange(x + 1, xRange); break;
+                    case ConsoleKey.A: x = ReturnInRange(x - 1, xRange); break;
+                    default: Actions.GetOrDefault(key)?.Do(vertex); break;
                 }
             } while (key != ConsoleKey.Escape);
+        }
+
+        private int ReturnInRange(int coordinate, InclusiveValueRange<int> range)
+        {
+            return range.ReturnInRange(coordinate, ReturnOptions.Cycle);
         }
 
         private void OnGraphCreated(GraphCreatedMessage message)
