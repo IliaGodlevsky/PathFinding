@@ -1,12 +1,11 @@
 ﻿using Autofac;
-using Autofac.Core;
-using Autofac.Features.Metadata;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Serialization.Serializers.Decorators;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.AlgorithmLib.Factory.Interface;
+using Pathfinding.App.WPF._2D.DependencyInjection;
 using Pathfinding.App.WPF._2D.Extensions;
 using Pathfinding.App.WPF._2D.Interface;
 using Pathfinding.App.WPF._2D.Model;
@@ -38,24 +37,20 @@ using Shared.Extensions;
 using Shared.Random;
 using Shared.Random.Realizations;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+
+using static Pathfinding.App.WPF._2D.DependencyInjection.RegistrationConstants;
 
 namespace WPFVersion.DependencyInjection
 {
     using Graph = Graph2D<Vertex>;
     using Command = IPathfindingRangeCommand<Vertex>;
-    using Commands = IReadOnlyCollection<IPathfindingRangeCommand<Vertex>>;
     using AlgorithmFactory = IAlgorithmFactory<PathfindingProcess>;
     using GraphSerializer = IGraphSerializer<Graph2D<Vertex>, Vertex>;
 
     internal static class DI
     {
-        private const string Order = "Order";
-
-        private enum CommandType { Include, Exclude }
-
         private static readonly Lazy<IContainer> container = new(Configure);
 
         private static Assembly[] Assemblies => AppDomain.CurrentDomain.GetAssemblies();
@@ -76,16 +71,16 @@ namespace WPFVersion.DependencyInjection
             // Pathfinding range registrations
             builder.RegisterType<VisualPathfindingRange<Vertex>>().As<IPathfindingRange<Vertex>>().SingleInstance();
             builder.RegisterType<PathfindingRangeBuilder<Vertex>>().As<IPathfindingRangeBuilder<Vertex>>().As<IUndo>()
-                .SingleInstance().OnActivated(OnPathfindingRangeActivated);
-            builder.RegisterType<IncludeSourceVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 2).SingleInstance();
-            builder.RegisterType<IncludeTargetVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 4).SingleInstance();
-            builder.RegisterType<IncludeTransitVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 6).SingleInstance();
-            builder.RegisterType<ReplaceTransitIsolatedVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 1).SingleInstance();
-            builder.RegisterType<ReplaceIsolatedSourceVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 3).SingleInstance();
-            builder.RegisterType<ReplaceIsolatedTargetVertex<Vertex>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 5).SingleInstance();
-            builder.RegisterType<ExcludeTransitVertex<Vertex>>().Keyed<Command>(CommandType.Exclude).WithMetadata(Order, 3).SingleInstance();
-            builder.RegisterType<ExcludeSourceVertex<Vertex>>().Keyed<Command>(CommandType.Exclude).WithMetadata(Order, 1).SingleInstance();
-            builder.RegisterType<ExcludeTargetVertex<Vertex>>().Keyed<Command>(CommandType.Exclude).WithMetadata(Order, 2).SingleInstance();
+                .SingleInstance().ConfigurePipeline(p => p.Use(new RangeBuilderConfigurationMiddlewear()));
+            builder.RegisterType<IncludeSourceVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 2).SingleInstance();
+            builder.RegisterType<IncludeTargetVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 4).SingleInstance();
+            builder.RegisterType<IncludeTransitVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 6).SingleInstance();
+            builder.RegisterType<ReplaceTransitIsolatedVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 1).SingleInstance();
+            builder.RegisterType<ReplaceIsolatedSourceVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 3).SingleInstance();
+            builder.RegisterType<ReplaceIsolatedTargetVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 5).SingleInstance();
+            builder.RegisterType<ExcludeTransitVertex<Vertex>>().Keyed<Command>(ExcludeCommand).WithMetadata(Order, 3).SingleInstance();
+            builder.RegisterType<ExcludeSourceVertex<Vertex>>().Keyed<Command>(ExcludeCommand).WithMetadata(Order, 1).SingleInstance();
+            builder.RegisterType<ExcludeTargetVertex<Vertex>>().Keyed<Command>(ExcludeCommand).WithMetadata(Order, 2).SingleInstance();
             builder.RegisterType<ReplaceTransitVerticesModule<Vertex>>().AsSelf().As<IUndo>().SingleInstance();
             // Graph subscriptions registrations
             builder.RegisterType<PathfindingRangeBuilderSubscription>().As<IGraphSubscription<Vertex>>().SingleInstance();
@@ -127,20 +122,6 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterDecorator<CardinalStepRule, IStepRule>();
 
             return builder.Build();
-        }
-
-        private static void OnPathfindingRangeActivated(IActivatedEventArgs<PathfindingRangeBuilder<Vertex>> args)
-        {
-            args.Instance.IncludeCommands = ResolveKeyed(args.Context, CommandType.Include);
-            args.Instance.ExcludeCommands = ResolveKeyed(args.Context, CommandType.Exclude);
-        }
-
-        private static Commands ResolveKeyed(IComponentContext context, CommandType key)
-        {
-            return context.ResolveKeyed<IEnumerable<Meta<Command>>>(key)
-                .OrderBy(x => x.Metadata[Order])
-                .Select(x => x.Value)
-                .ToReadOnly();
         }
     }
 }

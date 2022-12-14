@@ -32,26 +32,21 @@ using Shared.Executable;
 using Pathfinding.Visualization.Core.Abstractions;
 using System.Data;
 using System.Collections.Generic;
-using Autofac.Core;
-using Autofac.Features.Metadata;
 using System.Linq;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Modules;
 using Pathfinding.GraphLib.Core.Modules.Commands;
 using Pathfinding.GraphLib.Factory.Realizations;
 
+using static Pathfinding.App.WPF._3D.DependencyInjection.RegistrationConstants;
+
 namespace Pathfinding.App.WPF._3D.DependencyInjection
 {
     using Command = IPathfindingRangeCommand<Vertex3D>;
-    using Commands = IReadOnlyCollection<IPathfindingRangeCommand<Vertex3D>>;
     using AlgorithmFactory = IAlgorithmFactory<PathfindingProcess>;
 
     internal static class DI
     {
-        private const string Order = "Order";
-
-        private enum CommandType { Include, Exclude }
-
         private static readonly Lazy<IContainer> container = new Lazy<IContainer>(Configure);
 
         public static IContainer Container => container.Value;
@@ -69,14 +64,14 @@ namespace Pathfinding.App.WPF._3D.DependencyInjection
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
 
             builder.RegisterType<VisualPathfindingRange<Vertex3D>>().As<IPathfindingRange<Vertex3D>>().SingleInstance();
-            builder.RegisterType<PathfindingRangeBuilder<Vertex3D>>().As<IPathfindingRangeBuilder<Vertex3D>>()
-                .SingleInstance().OnActivated(OnPathfindingRangeActivated);
-            builder.RegisterType<IncludeSourceVertex<Vertex3D>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 1).SingleInstance();
-            builder.RegisterType<IncludeTargetVertex<Vertex3D>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 3).SingleInstance();            
-            builder.RegisterType<ReplaceIsolatedSourceVertex<Vertex3D>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 2).SingleInstance();
-            builder.RegisterType<ReplaceIsolatedTargetVertex<Vertex3D>>().Keyed<Command>(CommandType.Include).WithMetadata(Order, 4).SingleInstance();
-            builder.RegisterType<ExcludeSourceVertex<Vertex3D>>().Keyed<Command>(CommandType.Exclude).WithMetadata(Order, 1).SingleInstance();
-            builder.RegisterType<ExcludeTargetVertex<Vertex3D>>().Keyed<Command>(CommandType.Exclude).WithMetadata(Order, 2).SingleInstance();           
+            builder.RegisterType<PathfindingRangeBuilder<Vertex3D>>().As<IPathfindingRangeBuilder<Vertex3D>>().As<IUndo>()
+                .SingleInstance().ConfigurePipeline(p => p.Use(new RangeBuilderConfigurationMiddlewear()));
+            builder.RegisterType<IncludeSourceVertex<Vertex3D>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 1).SingleInstance();
+            builder.RegisterType<IncludeTargetVertex<Vertex3D>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 3).SingleInstance();            
+            builder.RegisterType<ReplaceIsolatedSourceVertex<Vertex3D>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 2).SingleInstance();
+            builder.RegisterType<ReplaceIsolatedTargetVertex<Vertex3D>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 4).SingleInstance();
+            builder.RegisterType<ExcludeSourceVertex<Vertex3D>>().Keyed<Command>(ExcludeCommand).WithMetadata(Order, 1).SingleInstance();
+            builder.RegisterType<ExcludeTargetVertex<Vertex3D>>().Keyed<Command>(ExcludeCommand).WithMetadata(Order, 2).SingleInstance();           
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
@@ -112,20 +107,6 @@ namespace Pathfinding.App.WPF._3D.DependencyInjection
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<AlgorithmFactory>()).As<AlgorithmFactory>().SingleInstance();
 
             return builder.Build();
-        }
-
-        private static void OnPathfindingRangeActivated(IActivatedEventArgs<PathfindingRangeBuilder<Vertex3D>> args)
-        {
-            args.Instance.IncludeCommands = ResolveKeyed(args.Context, CommandType.Include);
-            args.Instance.ExcludeCommands = ResolveKeyed(args.Context, CommandType.Exclude);
-        }
-
-        private static Commands ResolveKeyed(IComponentContext context, CommandType key)
-        {
-            return context.ResolveKeyed<IEnumerable<Meta<Command>>>(key)
-                .OrderBy(x => x.Metadata[Order])
-                .Select(x => x.Value)
-                .ToReadOnly();
         }
     }
 }

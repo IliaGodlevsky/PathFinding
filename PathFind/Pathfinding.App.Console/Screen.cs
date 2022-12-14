@@ -37,7 +37,7 @@ namespace Pathfinding.App.Console
 
         static Screen()
         {
-            messenger = DI.Container.Resolve<IMessenger>();
+            messenger = Registry.Container.Resolve<IMessenger>();
             messenger.Register<CostRangeChangedMessage>(recipient, OnCostRangeChanged);
             messenger.Register<PathfindingStatisticsMessage>(recipient, OnStatisticsUpdated);
             messenger.Register<GraphCreatedMessage>(recipient, MessageTokens.Screen, OnNewGraphCreated);

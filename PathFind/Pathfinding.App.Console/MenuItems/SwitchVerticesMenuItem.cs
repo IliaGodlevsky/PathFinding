@@ -18,7 +18,7 @@ namespace Pathfinding.App.Console.MenuItems
         protected readonly IInput<ConsoleKey> keyInput;
         protected Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        public Dictionary<ConsoleKey, IVertexAction> Actions { get; } = new();
+        protected Dictionary<ConsoleKey, IVertexAction> Actions { get; } = new();
 
         public abstract int Order { get; }
 
@@ -47,8 +47,8 @@ namespace Pathfinding.App.Console.MenuItems
                 {
                     case ConsoleKey.W: y = ReturnInRange(y - 1, yRange); break;
                     case ConsoleKey.S: y = ReturnInRange(y + 1, yRange); break;
-                    case ConsoleKey.D: x = ReturnInRange(x + 1, xRange); break;
                     case ConsoleKey.A: x = ReturnInRange(x - 1, xRange); break;
+                    case ConsoleKey.D: x = ReturnInRange(x + 1, xRange); break;
                     default: Actions.GetOrDefault(key)?.Do(vertex); break;
                 }
             } while (key != ConsoleKey.Escape);

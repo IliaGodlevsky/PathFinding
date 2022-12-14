@@ -3,6 +3,7 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Shared.Extensions;
 using Shared.Primitives.ValueRange;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,12 +25,13 @@ namespace Pathfinding.App.Console.Views
             bool isClosureRequested = false;
             while (!isClosureRequested)
             {
-                var options = GetMenuOptions();
+                var menuItems = GetExecutableMenuItems();
+                var options = GetMenuOptions(menuItems);
                 Screen.SetCursorPositionUnderMenu(1);
                 try
                 {
-                    int index = InputItemIndex(options.Message, options.MenuRange);
-                    var command = options.Items[index];
+                    int index = InputItemIndex(options);
+                    var command = menuItems[index];
                     command.Execute();
                 }
                 catch (ExitRequiredException)
@@ -39,20 +41,24 @@ namespace Pathfinding.App.Console.Views
             }
         }
 
-        private (string Message, IReadOnlyList<IMenuItem> Items, InclusiveValueRange<int> MenuRange) GetMenuOptions()
+        private (string Message, InclusiveValueRange<int> MenuRange) GetMenuOptions(IReadOnlyCollection<IMenuItem> menuItems)
         {
-            var menuItems = unit.MenuItems.Where(item => item.CanBeExecuted()).ToReadOnly();
-            var menuList = menuItems.CreateMenuList(unit.MenuItemColumns);
+            var menuList = menuItems.CreateMenuList((int)Math.Ceiling(menuItems.Count / 4.0));
             var menuRange = new InclusiveValueRange<int>(menuItems.Count, 1);
-            var message = menuList + "\n" + MessagesTexts.MenuOptionChoiceMsg;
-            return (message, menuItems, menuRange);
+            var message = string.Concat(menuList, "\n", MessagesTexts.MenuOptionChoiceMsg);
+            return (message, menuRange);
         }
 
-        private int InputItemIndex(string message, InclusiveValueRange<int> menuRange)
+        private IReadOnlyList<IMenuItem> GetExecutableMenuItems()
+        {
+            return unit.MenuItems.Where(item => item.CanBeExecuted()).ToReadOnly();
+        }
+
+        private int InputItemIndex((string Message, InclusiveValueRange<int> MenuRange) options)
         {
             using (Cursor.CleanUpAfter())
             {
-                return intInput.Input(message, menuRange) - 1;
+                return intInput.Input(options.Message, options.MenuRange) - 1;
             }
         }
     }

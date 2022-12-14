@@ -13,8 +13,6 @@ namespace Pathfinding.App.Console.ViewModel
 
         public IReadOnlyCollection<IMenuItem> MenuItems => menuItems.Value;
 
-        public virtual int MenuItemColumns => MenuItems.Count / 4;
-
         protected Unit(IReadOnlyCollection<IMenuItem> menuItems)
         {
             this.menuItems = new(() => SetItems(menuItems));

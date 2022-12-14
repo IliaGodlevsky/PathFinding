@@ -27,7 +27,7 @@ namespace Pathfinding.App.Console.Model
             private const int MaxSmoothLevel = 100;
             private const string LevelMsg = "Input level of smoothing: ";
 
-            private IInput<int> IntInput { get; } = DI.Container.Resolve<IInput<int>>();
+            private IInput<int> IntInput { get; } = Registry.Container.Resolve<IInput<int>>();
 
             public int Level => IntInput.Input(LevelMsg, MaxSmoothLevel, 1);
 

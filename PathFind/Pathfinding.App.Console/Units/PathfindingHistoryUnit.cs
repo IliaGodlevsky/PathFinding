@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using Pathfinding.AlgorithmLib.History.Interface;
 using Pathfinding.AlgorithmLib.History;
 using Pathfinding.Visualization.Extensions;
-using Autofac.Features.AttributeFilters;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 
 namespace Pathfinding.App.Console.ViewModel
@@ -22,7 +21,7 @@ namespace Pathfinding.App.Console.ViewModel
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
         private bool isHistoryApplied = false;
 
-        public PathfindingHistoryUnit([KeyFilter(typeof(PathfindingHistoryUnit))] IReadOnlyCollection<IMenuItem> menuItems, IMessenger messenger)
+        public PathfindingHistoryUnit(IReadOnlyCollection<IMenuItem> menuItems, IMessenger messenger)
             : base(menuItems)
         {
             this.messenger = messenger;

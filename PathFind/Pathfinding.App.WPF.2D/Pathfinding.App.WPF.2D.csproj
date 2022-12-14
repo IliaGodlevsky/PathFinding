@@ -57,6 +57,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DependencyInjection\RangeBuilderConfigurationMiddlewear.cs" />
+    <Compile Include="DependencyInjection\RegistrationConstants.cs" />
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="Messages\DataMessages\CostRangeChangedMessage.cs" />
     <Compile Include="MessageTokens.cs" />

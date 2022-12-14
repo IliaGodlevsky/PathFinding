@@ -1,5 +1,4 @@
-﻿using Autofac.Features.AttributeFilters;
-using GalaSoft.MvvmLight.Messaging;
+﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Exceptions;
 using Pathfinding.AlgorithmLib.Core.Interface;
@@ -26,8 +25,8 @@ namespace Pathfinding.App.Console.ViewModel
         private readonly ILog log;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        public PathfindingProcessUnit([KeyFilter(typeof(PathfindingProcessUnit))] IReadOnlyCollection<IMenuItem> menuItems, 
-            IPathfindingRangeBuilder<Vertex> rangeBuilder, IInput<ConsoleKey> input, IMessenger messenger, ILog log)
+        public PathfindingProcessUnit(IReadOnlyCollection<IMenuItem> menuItems, IPathfindingRangeBuilder<Vertex> rangeBuilder, 
+            IInput<ConsoleKey> input, IMessenger messenger, ILog log)
             : base(menuItems)
         {
             this.messenger = messenger;

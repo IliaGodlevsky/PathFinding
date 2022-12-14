@@ -103,6 +103,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="DependencyInjection\RangeBuilderConfigurationMiddlewear.cs" />
+    <Compile Include="DependencyInjection\RegistrationConstants.cs" />
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="Model\MessageBoxLog.cs" />
     <Compile Include="Model\PathfindingHistoryVolume.cs" />

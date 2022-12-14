@@ -1,6 +1,4 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
 using Shared.Random;
 

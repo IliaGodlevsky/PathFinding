@@ -45,11 +45,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DependencyInjection\AutofacExtensions.cs" />
+    <Compile Include="DependencyInjection\ConfigurationMiddlewears\EnterRangeConfigurationMiddlewear.cs" />
+    <Compile Include="DependencyInjection\ConfigurationMiddlewears\RangeBuilderConfigurationMiddlewear.cs" />
+    <Compile Include="DependencyInjection\ConfigurationMiddlewears\UnitConfigurationMiddlewear.cs" />
+    <Compile Include="DependencyInjection\RegistrationConstants.cs" />
     <Compile Include="Exceptions\ExitRequiredException.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Cursor.cs" />
-    <Compile Include="DependencyInjection\DI.cs" />
+    <Compile Include="DependencyInjection\Registry.cs" />
     <Compile Include="EventArguments\ConsoleKeyPressedEventArgs.cs" />
     <Compile Include="EventHandlers\ConsoleKeyPressedEventHandler.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
@@ -60,8 +65,6 @@
     <Compile Include="Interface\IDisplayable.cs" />
     <Compile Include="Interface\IFramedAxis.cs" />
     <Compile Include="Interface\IInput.cs" />
-    <Compile Include="Interface\IMenuCommand.cs" />
-    <Compile Include="Interface\IMenuCommands.cs" />
     <Compile Include="Interface\IProperty.cs" />
     <Compile Include="Interface\IRequireAnswerInput.cs" />
     <Compile Include="Interface\IRequireConsoleKeyInput.cs" />

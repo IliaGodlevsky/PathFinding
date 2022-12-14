@@ -2,7 +2,6 @@
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Shared.Executable;
 using Shared.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,20 +10,22 @@ namespace Pathfinding.GraphLib.Core.Modules
     public sealed class PathfindingRangeBuilder<TVertex> : IPathfindingRangeBuilder<TVertex>, IUndo
         where TVertex : IVertex
     {
-        private readonly Lazy<IReadOnlyCollection<IUndoCommand<TVertex>>> undoCommands;
+        private IReadOnlyCollection<IUndoCommand<TVertex>> UndoCommands { get; }
 
-        private IReadOnlyCollection<IUndoCommand<TVertex>> UndoCommands => undoCommands.Value;
+        private IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> IncludeCommands { get; }
 
-        public IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> IncludeCommands { get; set; }
-
-        public IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> ExcludeCommands { get; set; }
+        private IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> ExcludeCommands { get; }
 
         public IPathfindingRange<TVertex> Range { get; }
 
-        public PathfindingRangeBuilder(IPathfindingRange<TVertex> range)
+        public PathfindingRangeBuilder(IPathfindingRange<TVertex> range, 
+            IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> includeCommands,
+            IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> excludeCommands)
         {
             Range = range;
-            undoCommands = new Lazy<IReadOnlyCollection<IUndoCommand<TVertex>>>(GetUndoCommands);
+            IncludeCommands = includeCommands;
+            ExcludeCommands = excludeCommands;
+            UndoCommands = GetUndoCommands();
         }
 
         public void Include(TVertex vertex)

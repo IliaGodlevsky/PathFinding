@@ -1,5 +1,4 @@
-﻿using Autofac.Features.AttributeFilters;
-using GalaSoft.MvvmLight.Messaging;
+﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.App.Console.EventArguments;
@@ -20,19 +19,21 @@ namespace Pathfinding.App.Console.ViewModel
     {
         private readonly IMessenger messenger;
         private readonly ConsoleKeystrokesHook keyStrokeHook = new();
+        private readonly IReadOnlyDictionary<ConsoleKey, IPathfindingAction> pathfindingActions;
+        public readonly IReadOnlyDictionary<ConsoleKey, IAnimationSpeedAction> animationActions;
 
         private PathfindingProcess algorithm = PathfindingProcess.Null;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
         private bool isVisualizationApplied = false;
         private TimeSpan animationDelay = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
 
-        public IReadOnlyDictionary<ConsoleKey, IPathfindingAction> PathfindingActions { get; set; }
-
-        public IReadOnlyDictionary<ConsoleKey, IAnimationSpeedAction> AnimationActions { get; set; }
-
-        public PathfindingVisualizationUnit([KeyFilter(typeof(PathfindingVisualizationUnit))]IReadOnlyCollection<IMenuItem> menuItems, 
-            IMessenger messenger) : base(menuItems)
+        public PathfindingVisualizationUnit(IReadOnlyCollection<IMenuItem> menuItems, IMessenger messenger, 
+            IReadOnlyDictionary<ConsoleKey, IPathfindingAction> pathfindingActions,
+            IReadOnlyDictionary<ConsoleKey, IAnimationSpeedAction> animationActions) 
+            : base(menuItems)
         {
+            this.pathfindingActions = pathfindingActions;
+            this.animationActions = animationActions;
             this.messenger = messenger;
             this.messenger.Register<AnimationDelayMessage>(this, OnAnimationDelay);
             this.messenger.Register<ApplyVisualizationMessage>(this, OnVisualizationApplied);
@@ -93,8 +94,8 @@ namespace Pathfinding.App.Console.ViewModel
 
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
         {
-            PathfindingActions.GetOrDefault(e.PressedKey, NullPathfindingAction.Interface).Do(algorithm);
-            animationDelay = AnimationActions.GetOrDefault(e.PressedKey, NullAnimationAction.Instance).Do(animationDelay);
+            pathfindingActions.GetOrDefault(e.PressedKey, NullPathfindingAction.Interface).Do(algorithm);
+            animationDelay = animationActions.GetOrDefault(e.PressedKey, NullAnimationAction.Instance).Do(animationDelay);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Autofac.Features.AttributeFilters;
-using GalaSoft.MvvmLight.Messaging;
+﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Core.Interface;
@@ -20,8 +19,8 @@ namespace Pathfinding.App.Console.ViewModel
         private bool isStatisticsApplied = false;
         private int visited = 0;
 
-        public PathfindingStatisticsUnit([KeyFilter(typeof(PathfindingStatisticsUnit))]IReadOnlyCollection<IMenuItem> menuItems, 
-            IMessenger messenger) : base(menuItems)
+        public PathfindingStatisticsUnit(IReadOnlyCollection<IMenuItem> menuItems, IMessenger messenger) 
+            : base(menuItems)
         {
             this.messenger = messenger;
             this.messenger.Register<SubscribeOnStatisticsMessage>(this, OnSusbcribe);
@@ -34,18 +33,19 @@ namespace Pathfinding.App.Console.ViewModel
 
         private void OnSusbcribe(SubscribeOnStatisticsMessage message)
         {
+            var algorithm = message.Algorithm;
             if (isStatisticsApplied)
             {
-                message.Algorithm.VertexVisited += OnVertexVisited;
-                message.Algorithm.Finished += (s, e) => timer.Stop();
-                message.Algorithm.Started += (s, e) => timer.Restart();
-                message.Algorithm.Interrupted += (s, e) => timer.Stop();
-                message.Algorithm.Paused += (s, e) => timer.Stop();
-                message.Algorithm.Resumed += (s, e) => timer.Start();
+                algorithm.VertexVisited += OnVertexVisited;
+                algorithm.Finished += (s, e) => timer.Stop();
+                algorithm.Started += (s, e) => timer.Restart();
+                algorithm.Interrupted += (s, e) => timer.Stop();
+                algorithm.Paused += (s, e) => timer.Stop();
+                algorithm.Resumed += (s, e) => timer.Start();
             }
             else
             {
-                message.Algorithm.Started += OnVertexVisitedUnappled;
+                messenger.Send(new PathfindingStatisticsMessage(algorithm.ToString()));
             }
         }
 
@@ -80,12 +80,6 @@ namespace Pathfinding.App.Console.ViewModel
         {
             visited++;
             var statistics = GetStatistics((PathfindingProcess)sender);
-            messenger.Send(new PathfindingStatisticsMessage(statistics));
-        }
-
-        private void OnVertexVisitedUnappled(object sender, EventArgs e)
-        {
-            string statistics = ((PathfindingProcess)sender).ToString();
             messenger.Send(new PathfindingStatisticsMessage(statistics));
         }
 

@@ -7,6 +7,11 @@ namespace Pathfinding.App.WPF._3D.Model.RotatorFactories
     internal sealed class NullAnimatedAxisRotatorFactory
         : Singleton<NullAnimatedAxisRotatorFactory, IAnimatedAxisRotatorFactory>, IAnimatedAxisRotatorFactory
     {
+        private NullAnimatedAxisRotatorFactory()
+        {
+
+        }
+
         public IAnimatedAxisRotator Create(IAnimationSpeed speed) => NullAnimatedAxisRotator.Interface;
     }
 }

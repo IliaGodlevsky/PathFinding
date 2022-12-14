@@ -1,5 +1,4 @@
-﻿using Autofac.Features.AttributeFilters;
-using GalaSoft.MvvmLight.Messaging;
+﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.MenuItems;
 using Pathfinding.App.Console.Messages;
@@ -27,8 +26,8 @@ namespace Pathfinding.App.Console.ViewModel
 
         private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
-        public MainUnit([KeyFilter(typeof(MainUnit))]IReadOnlyCollection<IMenuItem> menuItems, 
-            FieldFactory fieldFactory, IMessenger messenger, IInput<Answer> input, IUndo undo, ILog log)
+        public MainUnit(IReadOnlyCollection<IMenuItem> menuItems, FieldFactory fieldFactory, IMessenger messenger, 
+            IInput<Answer> input, IUndo undo, ILog log)
             : base(menuItems)
         {
             this.undo = undo;
@@ -36,7 +35,7 @@ namespace Pathfinding.App.Console.ViewModel
             this.messenger = messenger;
             this.input = input;
             this.fieldFactory = fieldFactory;
-            this.messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainViewModel, SetGraph);          
+            this.messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainViewModel, SetGraph);
         }
 
         private void DisplayGraph()

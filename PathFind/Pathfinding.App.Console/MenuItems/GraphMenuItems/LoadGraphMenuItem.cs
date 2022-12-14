@@ -18,7 +18,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public int Order => 6;
 
-        public LoadGraphMenuItem(IMessenger messenger, IGraphSerializationModule<Graph2D<Vertex>, Vertex> module, ILog log)
+        public LoadGraphMenuItem(IMessenger messenger, 
+            IGraphSerializationModule<Graph2D<Vertex>, Vertex> module, ILog log)
         {
             this.messenger = messenger;
             this.module = module;
