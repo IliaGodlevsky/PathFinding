@@ -131,6 +131,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
             builder.RegisterType<PseudoRandom>().As<IRandom>().SingleInstance();
+            builder.RegisterType<RootMeanSquareCost>().As<IMeanCost>().SingleInstance();
 
             builder.RegisterType<VisualPathfindingRange<Vertex>>().As<IPathfindingRange<Vertex>>().SingleInstance();
             builder.RegisterType<PathfindingRangeBuilder<Vertex>>().As<IPathfindingRangeBuilder<Vertex>>().As<IUndo>()
@@ -155,8 +156,6 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterDecorator<Graph2dWrapFactory, IGraphFactory<Graph2D<Vertex>, Vertex>>();
             builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
-
-            builder.RegisterType<RootMeanSquareCost>().As<IMeanCost>().SingleInstance();
 
             builder.RegisterType<InFileSerializationModule<Graph2D<Vertex>, Vertex>>()
                 .As<IGraphSerializationModule<Graph2D<Vertex>, Vertex>>().SingleInstance();
