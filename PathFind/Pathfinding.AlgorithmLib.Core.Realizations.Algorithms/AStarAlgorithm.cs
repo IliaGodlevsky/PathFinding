@@ -1,4 +1,5 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Interface;
+using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms.Localization;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.GraphLib.Core.Interface;
@@ -64,7 +65,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 
         public override string ToString()
         {
-            return "A * algorithm";
+            return Languages.AStartAlgorithm;
         }
     }
 }

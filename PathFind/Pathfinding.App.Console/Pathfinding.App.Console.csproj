@@ -74,6 +74,16 @@
     <Compile Include="Interface\IVertexAction.cs" />
     <Compile Include="Interface\IVIewFactory.cs" />
     <Compile Include="Interface\IUnit.cs" />
+    <Compile Include="Localization\Languages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Languages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\Languages.ru-RU.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Languages.ru-RU.resx</DependentUpon>
+    </Compile>
     <Compile Include="MenuItemsNames.cs" />
     <Compile Include="MenuItems\ExitMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\GraphCreatingMenuItem.cs" />
@@ -376,6 +386,15 @@
       <Version>5.4.1.1</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\Languages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Languages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\Languages.ru-RU.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Languages.ru-RU.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

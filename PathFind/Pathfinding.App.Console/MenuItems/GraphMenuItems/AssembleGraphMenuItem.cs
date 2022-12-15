@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.GraphLib.Factory.Interface;
 using Shared.Random;
 
@@ -17,7 +18,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public override string ToString()
         {
-            return "Assemble graph";
+            return MenuItemsNames.AssembleGraph;
         }
     }
 }

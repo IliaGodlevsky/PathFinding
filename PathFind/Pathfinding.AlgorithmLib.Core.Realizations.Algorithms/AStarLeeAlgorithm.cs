@@ -1,5 +1,6 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Interface;
+using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms.Localization;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
 using Pathfinding.AlgorithmLib.Extensions;
 using Pathfinding.GraphLib.Core.Interface;
@@ -71,7 +72,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 
         public override string ToString()
         {
-            return "A* lee algorithm";
+            return Languages.AStartLeeAlgorithm;
         }
     }
 }

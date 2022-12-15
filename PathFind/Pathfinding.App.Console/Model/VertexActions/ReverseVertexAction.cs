@@ -19,12 +19,9 @@ namespace Pathfinding.App.Console.Model.VertexActions
             {
                 vertex.IsObstacle = false;
             }
-            else
+            else if (!range.IsInRange(vertex))
             {
-                if (!range.IsInRange(vertex))
-                {
-                    vertex.IsObstacle = true;
-                }
+                vertex.IsObstacle = true;
             }
         }
     }

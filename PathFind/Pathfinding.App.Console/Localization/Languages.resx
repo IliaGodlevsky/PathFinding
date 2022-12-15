@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AlgorithmChoiceMsg" xml:space="preserve">
+    <value>Choose algorithm: </value>
+  </data>
+  <data name="ApplyHistoryMsg" xml:space="preserve">
+    <value>Apply history recording {0}?: </value>
+  </data>
+  <data name="ApplyStatisticsMsg" xml:space="preserve">
+    <value>Apply statistics {0}?: </value>
+  </data>
+  <data name="ApplyVisualizationMsg" xml:space="preserve">
+    <value>Apply visualization {0}?: </value>
+  </data>
+  <data name="AssembleGraph" xml:space="preserve">
+    <value>Assemble graph</value>
+  </data>
+  <data name="BadInputMsg" xml:space="preserve">
+    <value>Bad value input. Try again: </value>
+  </data>
+  <data name="ChangeCost" xml:space="preserve">
+    <value>Change cost</value>
+  </data>
+  <data name="ChooseGraphAssemble" xml:space="preserve">
+    <value>Choose graph assemble</value>
+  </data>
+  <data name="DelayTimeInputMsg" xml:space="preserve">
+    <value>Input animation speed delay time (milliseconds): </value>
+  </data>
+  <data name="ExitMsg" xml:space="preserve">
+    <value>Do you want to exit {0}?: </value>
+  </data>
+  <data name="GraphAssembleChoiceMsg" xml:space="preserve">
+    <value>Choose graph assemble: </value>
+  </data>
+  <data name="GraphHeightInputMsg" xml:space="preserve">
+    <value>Input height of graph: </value>
+  </data>
+  <data name="GraphWidthInputMsg" xml:space="preserve">
+    <value>Input width of graph: </value>
+  </data>
+  <data name="InProcessStatisticsFormat" xml:space="preserve">
+    <value>Visited: {0}</value>
+  </data>
+  <data name="InputCostRange" xml:space="preserve">
+    <value>Input cost range</value>
+  </data>
+  <data name="InputGraphParametres" xml:space="preserve">
+    <value>Input graph parametres</value>
+  </data>
+  <data name="InputObstaclePercent" xml:space="preserve">
+    <value>Input obstacle percent</value>
+  </data>
+  <data name="InputPathMsg" xml:space="preserve">
+    <value>Input path: </value>
+  </data>
+  <data name="LoadGraph" xml:space="preserve">
+    <value>Load graph</value>
+  </data>
+  <data name="MenuOptionChoiceMsg" xml:space="preserve">
+    <value>Choose menu option: </value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="ObstaclePercentInputMsg" xml:space="preserve">
+    <value>Input percent of obstacles: </value>
+  </data>
+  <data name="OutOfRangeMsg" xml:space="preserve">
+    <value>Value is out of range. Try again: </value>
+  </data>
+  <data name="PathfindingStatisticsFormat" xml:space="preserve">
+    <value>Steps: {0}  Path cost: {1}  Visited: {2}</value>
+  </data>
+  <data name="RangeLowerValueInputMsg" xml:space="preserve">
+    <value>Input lower value of range: </value>
+  </data>
+  <data name="RangeUpperValueInputMsg" xml:space="preserve">
+    <value>Input upper value of range: </value>
+  </data>
+  <data name="ResizeGraph" xml:space="preserve">
+    <value>Resize graph</value>
+  </data>
+  <data name="ReverseVertices" xml:space="preserve">
+    <value>Reverse vertices</value>
+  </data>
+  <data name="SaveGraph" xml:space="preserve">
+    <value>Save graph</value>
+  </data>
+  <data name="SmoothGraph" xml:space="preserve">
+    <value>Smooth graph</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+</root>

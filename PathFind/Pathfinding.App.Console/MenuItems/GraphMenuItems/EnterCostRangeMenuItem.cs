@@ -2,6 +2,7 @@
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
+using System.Resources;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {

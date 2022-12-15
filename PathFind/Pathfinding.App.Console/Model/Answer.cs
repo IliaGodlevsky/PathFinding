@@ -1,4 +1,5 @@
-﻿using Shared.Collections;
+﻿using Pathfinding.App.Console.Localization;
+using Shared.Collections;
 using Shared.Primitives.ValueRange;
 using System;
 
@@ -8,8 +9,8 @@ namespace Pathfinding.App.Console.Model
     {
         private const StringComparison IgnoreCase = StringComparison.OrdinalIgnoreCase;
 
-        public static readonly Answer Yes = new Answer(1, nameof(Yes));
-        public static readonly Answer No = new Answer(0, nameof(No));
+        public static readonly Answer Yes = new Answer(1, Languages.Yes);
+        public static readonly Answer No = new Answer(0, Languages.No);
         private static readonly Answer Default = new Answer(-1, string.Empty);
 
         public static readonly InclusiveValueRange<Answer> Range = new InclusiveValueRange<Answer>(Yes, No);

@@ -50,6 +50,11 @@
     <Compile Include="HeuristicCostGreedyAlgorithm.cs" />
     <Compile Include="IDAStarAlgorithm.cs" />
     <Compile Include="LeeAlgorithm.cs" />
+    <Compile Include="Localization\Languages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Languages.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +103,13 @@
     <PackageReference Include="OptimizedPriorityQueue">
       <Version>5.1.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\Languages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Languages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\Languages.ru-RU.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
