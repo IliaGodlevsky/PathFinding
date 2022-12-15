@@ -1,5 +1,6 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Interface;
+using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms.Localization;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
 using Pathfinding.GraphLib.Core.Interface;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 
         public override string ToString()
         {
-            return "Distance first algorithm";
+            return Languages.DistanceFirstAlgorithm;
         }
     }
 }

@@ -3,6 +3,7 @@ using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
 using System;
 using System.Collections.Generic;
@@ -86,14 +87,14 @@ namespace Pathfinding.App.Console.ViewModel
         public string GetStatistics(PathfindingProcess algorithm)
         {
             var time = timer.Elapsed.ToString(@"mm\:ss\.fff");
-            string pathfindingInfo = string.Format(MessagesTexts.InProcessStatisticsFormat, visited);
+            string pathfindingInfo = string.Format(Languages.InProcessStatisticsFormat, visited);
             return string.Join("\t", algorithm, time, pathfindingInfo);
         }
 
         public string GetStatistics(IGraphPath path, PathfindingProcess algorithm)
         {
             var time = timer.Elapsed.ToString(@"mm\:ss\.fff");
-            string pathfindingInfo = string.Format(MessagesTexts.PathfindingStatisticsFormat, 
+            string pathfindingInfo = string.Format(Languages.PathfindingStatisticsFormat, 
                 path.Count, path.Cost, visited);
             return string.Join("\t", algorithm, time, pathfindingInfo);
         }

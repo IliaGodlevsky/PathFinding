@@ -1,5 +1,6 @@
 ﻿using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 
 namespace Pathfinding.App.Console.Model
@@ -10,12 +11,12 @@ namespace Pathfinding.App.Console.Model
 
         public string InputLoadPath()
         {
-            return StringInput.Input(MessagesTexts.InputPathMsg);
+            return StringInput.Input(Languages.InputPathMsg);
         }
 
         public string InputSavePath()
         {
-            return StringInput.Input(MessagesTexts.InputPathMsg);
+            return StringInput.Input(Languages.InputPathMsg);
         }
     }
 }

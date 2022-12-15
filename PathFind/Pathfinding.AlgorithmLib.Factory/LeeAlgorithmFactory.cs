@@ -1,5 +1,6 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms;
+using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms.Localization;
 using Pathfinding.AlgorithmLib.Factory.Attrbiutes;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.GraphLib.Core.Interface;
@@ -20,7 +21,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 
         public override string ToString()
         {
-            return "Lee algorithm";
+            return Languages.LeeAlgorithm;
         }
     }
 }

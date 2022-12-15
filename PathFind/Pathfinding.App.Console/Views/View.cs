@@ -1,6 +1,7 @@
 ﻿using Pathfinding.App.Console.Exceptions;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Shared.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
@@ -45,7 +46,7 @@ namespace Pathfinding.App.Console.Views
         {
             var menuList = menuItems.CreateMenuList((int)Math.Ceiling(menuItems.Count / 4.0));
             var menuRange = new InclusiveValueRange<int>(menuItems.Count, 1);
-            var message = string.Concat(menuList, "\n", MessagesTexts.MenuOptionChoiceMsg);
+            var message = string.Concat(menuList, "\n", Languages.MenuOptionChoiceMsg);
             return (message, menuRange);
         }
 

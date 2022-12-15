@@ -1,5 +1,5 @@
 ﻿using Pathfinding.App.Console.Interface;
-
+using Pathfinding.App.Console.Localization;
 
 namespace Pathfinding.App.Console.ValueInput.UserInput
 {
@@ -11,7 +11,7 @@ namespace Pathfinding.App.Console.ValueInput.UserInput
             string userInput = System.Console.ReadLine();
             while (!IsValidInput(userInput, out result))
             {
-                System.Console.Write(MessagesTexts.BadInputMsg);
+                System.Console.Write(Languages.BadInputMsg);
                 userInput = System.Console.ReadLine();
             }
             return Convert(result);

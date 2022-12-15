@@ -1,6 +1,7 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms;
+using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms.Localization;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.AlgorithmLib.Factory.Attrbiutes;
@@ -50,7 +51,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 
         public override string ToString()
         {
-            return "IDA* algorithm";
+            return Languages.IDAStarAlgorithm;
         }
     }
 }

@@ -3,6 +3,7 @@ using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
@@ -24,8 +25,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         private readonly IInput<int> input;
 
-        private IDisplayable MenuList { get; }
-
         public int Order => 1;
 
         public PathfindingAlgorithmMenuItem(IEnumerable<AlgorithmFactory> factories, 
@@ -38,9 +37,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
                 .GroupBy(item => item.GetAttributeOrDefault<GroupAttribute>())
                 .SelectMany(item => item.OrderByOrderAttribute())
                 .ToReadOnly();
-            MenuList = this.factories.Select(item => item.ToString())
-                .Append("Quit")
-                .CreateMenuList();
         }
 
         public bool CanBeExecuted()
@@ -51,7 +47,10 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 
         public void Execute()
         {
-            string message = MenuList + "\n" + MessagesTexts.AlgorithmChoiceMsg;
+            var menuList = factories.Select(item => item.ToString())
+                .Append(Languages.Quit)
+                .CreateMenuList();
+            string message = menuList + "\n" + Languages.AlgorithmChoiceMsg;
             int index = GetAlgorithmIndex(message);
             while (index != factories.Count)
             {               
@@ -70,6 +69,9 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
             }
         }
 
-        public override string ToString() => "Find path";
+        public override string ToString()
+        {
+            return Languages.FindPath;
+        }
     }
 }

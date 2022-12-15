@@ -7,6 +7,7 @@ using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Smoothing.Interface;
 using System.Collections.Generic;
 using Pathfinding.GraphLib.Smoothing;
+using Pathfinding.App.Console.Localization;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
@@ -52,7 +53,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public override string ToString()
         {
-            return MenuItemsNames.SmoothGraph;
+            return Languages.SmoothGraph;
         }
     }
 }

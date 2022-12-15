@@ -18,7 +18,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public override string ToString()
         {
-            return MenuItemsNames.AssembleGraph;
+            return Languages.AssembleGraph;
         }
     }
 }

@@ -70,6 +70,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply history.
+        /// </summary>
+        public static string ApplyHistory {
+            get {
+                return ResourceManager.GetString("ApplyHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apply history recording {0}?: .
         /// </summary>
         public static string ApplyHistoryMsg {
@@ -79,11 +88,29 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply pathfinding statistics.
+        /// </summary>
+        public static string ApplyStatistics {
+            get {
+                return ResourceManager.GetString("ApplyStatistics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apply statistics {0}?: .
         /// </summary>
         public static string ApplyStatisticsMsg {
             get {
                 return ResourceManager.GetString("ApplyStatisticsMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply pathfinding visualization.
+        /// </summary>
+        public static string ApplyVisualization {
+            get {
+                return ResourceManager.GetString("ApplyVisualization", resourceCulture);
             }
         }
         
@@ -133,11 +160,74 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear vertices colors.
+        /// </summary>
+        public static string ClearColors {
+            get {
+                return ResourceManager.GetString("ClearColors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear graph.
+        /// </summary>
+        public static string ClearGraph {
+            get {
+                return ResourceManager.GetString("ClearGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear history.
+        /// </summary>
+        public static string ClearHistory {
+            get {
+                return ResourceManager.GetString("ClearHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear pathfinding range.
+        /// </summary>
+        public static string ClearPathfindingRange {
+            get {
+                return ResourceManager.GetString("ClearPathfindingRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input animation speed delay time (milliseconds): .
         /// </summary>
         public static string DelayTimeInputMsg {
             get {
                 return ResourceManager.GetString("DelayTimeInputMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter animation delay.
+        /// </summary>
+        public static string EnterAnimationDelay {
+            get {
+                return ResourceManager.GetString("EnterAnimationDelay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter pathfinding range.
+        /// </summary>
+        public static string EnterPathfindingRange {
+            get {
+                return ResourceManager.GetString("EnterPathfindingRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit.
+        /// </summary>
+        public static string Exit {
+            get {
+                return ResourceManager.GetString("Exit", resourceCulture);
             }
         }
         
@@ -151,11 +241,38 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Find path.
+        /// </summary>
+        public static string FindPath {
+            get {
+                return ResourceManager.GetString("FindPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Graph.
+        /// </summary>
+        public static string Graph {
+            get {
+                return ResourceManager.GetString("Graph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose graph assemble: .
         /// </summary>
         public static string GraphAssembleChoiceMsg {
             get {
                 return ResourceManager.GetString("GraphAssembleChoiceMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Obstacle percent: {0} ({1}/{2});.
+        /// </summary>
+        public static string GraphFormat {
+            get {
+                return ResourceManager.GetString("GraphFormat", resourceCulture);
             }
         }
         
@@ -174,6 +291,15 @@ namespace Pathfinding.App.Console.Localization {
         public static string GraphWidthInputMsg {
             get {
                 return ResourceManager.GetString("GraphWidthInputMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pathfinding history.
+        /// </summary>
+        public static string History {
+            get {
+                return ResourceManager.GetString("History", resourceCulture);
             }
         }
         
@@ -223,6 +349,33 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string Language {
+            get {
+                return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input language: .
+        /// </summary>
+        public static string LanguageMsg {
+            get {
+                return ResourceManager.GetString("LanguageMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Length.
+        /// </summary>
+        public static string LengthDimensionName {
+            get {
+                return ResourceManager.GetString("LengthDimensionName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Load graph.
         /// </summary>
         public static string LoadGraph {
@@ -268,11 +421,38 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pathfinding.
+        /// </summary>
+        public static string Pathfinding {
+            get {
+                return ResourceManager.GetString("Pathfinding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pathfinding range.
+        /// </summary>
+        public static string PathfindingRange {
+            get {
+                return ResourceManager.GetString("PathfindingRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Steps: {0}  Path cost: {1}  Visited: {2}.
         /// </summary>
         public static string PathfindingStatisticsFormat {
             get {
                 return ResourceManager.GetString("PathfindingStatisticsFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quit.
+        /// </summary>
+        public static string Quit {
+            get {
+                return ResourceManager.GetString("Quit", resourceCulture);
             }
         }
         
@@ -322,11 +502,47 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show history.
+        /// </summary>
+        public static string ShowHistory {
+            get {
+                return ResourceManager.GetString("ShowHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Smooth graph.
         /// </summary>
         public static string SmoothGraph {
             get {
                 return ResourceManager.GetString("SmoothGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pathfinding statistics.
+        /// </summary>
+        public static string Statistics {
+            get {
+                return ResourceManager.GetString("Statistics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pathfinding visualization.
+        /// </summary>
+        public static string Visual {
+            get {
+                return ResourceManager.GetString("Visual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Width.
+        /// </summary>
+        public static string WidthDimensionName {
+            get {
+                return ResourceManager.GetString("WidthDimensionName", resourceCulture);
             }
         }
         

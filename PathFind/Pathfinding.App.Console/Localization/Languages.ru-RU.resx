@@ -120,11 +120,20 @@
   <data name="AlgorithmChoiceMsg" xml:space="preserve">
     <value>Выберите алгоритм: </value>
   </data>
+  <data name="ApplyHistory" xml:space="preserve">
+    <value>Применить запись истории</value>
+  </data>
   <data name="ApplyHistoryMsg" xml:space="preserve">
     <value>Применить запись истории {0}?: </value>
   </data>
+  <data name="ApplyStatistics" xml:space="preserve">
+    <value>Применить статистику поиска пути</value>
+  </data>
   <data name="ApplyStatisticsMsg" xml:space="preserve">
     <value>Применить запись статистики {0}?: </value>
+  </data>
+  <data name="ApplyVisualization" xml:space="preserve">
+    <value>Применить визацлизацию поиска пути</value>
   </data>
   <data name="ApplyVisualizationMsg" xml:space="preserve">
     <value>Применить визацлизацию {0}?: </value>
@@ -141,20 +150,53 @@
   <data name="ChooseGraphAssemble" xml:space="preserve">
     <value>Выбор сборки графа</value>
   </data>
+  <data name="ClearColors" xml:space="preserve">
+    <value>Очистить цвета вершин графа</value>
+  </data>
+  <data name="ClearGraph" xml:space="preserve">
+    <value>Очистить граф</value>
+  </data>
+  <data name="ClearHistory" xml:space="preserve">
+    <value>Очистить историю</value>
+  </data>
+  <data name="ClearPathfindingRange" xml:space="preserve">
+    <value>Очистить диапазон поиска пути</value>
+  </data>
   <data name="DelayTimeInputMsg" xml:space="preserve">
-    <value>Введите скорость анимации (миллисекунды): </value>
+    <value>Введите задержку анимации (миллисекунды): </value>
+  </data>
+  <data name="EnterAnimationDelay" xml:space="preserve">
+    <value>Ввести задержку анимацию</value>
+  </data>
+  <data name="EnterPathfindingRange" xml:space="preserve">
+    <value>Ввести диапазон поиска пути</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Выход</value>
   </data>
   <data name="ExitMsg" xml:space="preserve">
     <value>Хотите выйти {0}?: </value>
   </data>
+  <data name="FindPath" xml:space="preserve">
+    <value>Найти путь</value>
+  </data>
+  <data name="Graph" xml:space="preserve">
+    <value>Граф</value>
+  </data>
   <data name="GraphAssembleChoiceMsg" xml:space="preserve">
     <value>Выберите сборку графа: </value>
+  </data>
+  <data name="GraphFormat" xml:space="preserve">
+    <value>Процент препятствий: {0} ({1}/{2});</value>
   </data>
   <data name="GraphHeightInputMsg" xml:space="preserve">
     <value>Введите высоту графа: </value>
   </data>
   <data name="GraphWidthInputMsg" xml:space="preserve">
     <value>Введите ширину графа: </value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>История поиска пути</value>
   </data>
   <data name="InProcessStatisticsFormat" xml:space="preserve">
     <value>Посещенные: {0}</value>
@@ -171,6 +213,15 @@
   <data name="InputPathMsg" xml:space="preserve">
     <value>Веедите путь: </value>
   </data>
+  <data name="Language" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="LanguageMsg" xml:space="preserve">
+    <value>Выберите язык: </value>
+  </data>
+  <data name="LengthDimensionName" xml:space="preserve">
+    <value>Длина</value>
+  </data>
   <data name="LoadGraph" xml:space="preserve">
     <value>Загрузить граф</value>
   </data>
@@ -186,8 +237,17 @@
   <data name="OutOfRangeMsg" xml:space="preserve">
     <value>Значение вне диапазона. Попробуйте снова: </value>
   </data>
+  <data name="Pathfinding" xml:space="preserve">
+    <value>Поиск пути</value>
+  </data>
+  <data name="PathfindingRange" xml:space="preserve">
+    <value>Диапазон поиска пути</value>
+  </data>
   <data name="PathfindingStatisticsFormat" xml:space="preserve">
-    <value>Шаги: {0}  Стоимость: {1}  Посещенные: {2}</value>
+    <value>Длина: {0}  Стоимость: {1}  Посещенные: {2}</value>
+  </data>
+  <data name="Quit" xml:space="preserve">
+    <value>Выйти</value>
   </data>
   <data name="RangeLowerValueInputMsg" xml:space="preserve">
     <value>Введите нижнее значение даипазона: </value>
@@ -204,8 +264,20 @@
   <data name="SaveGraph" xml:space="preserve">
     <value>Сохранить граф</value>
   </data>
+  <data name="ShowHistory" xml:space="preserve">
+    <value>Показать историю</value>
+  </data>
   <data name="SmoothGraph" xml:space="preserve">
-    <value>Выровнять граф</value>
+    <value>Сгладить граф</value>
+  </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Статистика поиска пути</value>
+  </data>
+  <data name="Visual" xml:space="preserve">
+    <value>Визуализация поиска пути</value>
+  </data>
+  <data name="WidthDimensionName" xml:space="preserve">
+    <value>Ширина</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Да</value>

@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
@@ -19,15 +20,15 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             using (Cursor.CleanUpAfter())
             {
-                int width = input.Input(MessagesTexts.GraphWidthInputMsg, Constants.GraphWidthValueRange);
-                int length = input.Input(MessagesTexts.GraphHeightInputMsg, Constants.GraphLengthValueRange);
+                int width = input.Input(Languages.GraphWidthInputMsg, Constants.GraphWidthValueRange);
+                int length = input.Input(Languages.GraphHeightInputMsg, Constants.GraphLengthValueRange);
                 messenger.Send(new GraphParametresMessage(width, length));
             }
         }
 
         public override string ToString()
         {
-            return MenuItemsNames.InputGraphParametres;
+            return Languages.InputGraphParametres;
         }
     }
 }

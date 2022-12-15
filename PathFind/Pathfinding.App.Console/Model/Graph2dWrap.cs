@@ -1,4 +1,5 @@
-﻿using Pathfinding.GraphLib.Core.Interface.Extensions;
+﻿using Pathfinding.App.Console.Localization;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
@@ -8,8 +9,6 @@ namespace Pathfinding.App.Console.Model
     internal sealed class Graph2dWrap : Graph2D<Vertex>
     {
         private const string LargeSpace = "   ";
-        private const string Format = "Obstacle percent: {0} ({1}/{2})";
-        private static readonly string[] DimsNames = new[] { "Width", "Length" };
 
         private int ObstaclesPercent => this.GetObstaclePercent();
 
@@ -23,9 +22,10 @@ namespace Pathfinding.App.Console.Model
 
         public override string ToString()
         {
-            var zipped = DimsNames.Zip(DimensionsSizes, (n, s) => $"{n}: {s}");
+            var dimnsNames = new[] { Languages.WidthDimensionName, Languages.LengthDimensionName };
+            var zipped = dimnsNames.Zip(DimensionsSizes, (n, s) => $"{n}: {s}");
             string joined = string.Join(LargeSpace, zipped);
-            string graphParams = string.Format(Format, ObstaclesPercent, Obstacles, Count);
+            string graphParams = string.Format(Languages.GraphFormat, ObstaclesPercent, Obstacles, Count);
             return string.Join(LargeSpace, joined, graphParams);
         }
 

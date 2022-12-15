@@ -1,6 +1,7 @@
 ﻿using Pathfinding.App.Console.Exceptions;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Model;
 
 namespace Pathfinding.App.Console.MenuItems
@@ -32,7 +33,7 @@ namespace Pathfinding.App.Console.MenuItems
 
         public override string ToString()
         {
-            return "Exit";
+            return Languages.Exit;
         }
     }
 }

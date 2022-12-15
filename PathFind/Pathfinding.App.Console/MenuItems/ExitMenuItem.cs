@@ -1,5 +1,6 @@
 ﻿using Pathfinding.App.Console.Exceptions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 
 namespace Pathfinding.App.Console.MenuItems
 {
@@ -14,6 +15,9 @@ namespace Pathfinding.App.Console.MenuItems
 
         bool IMenuItem.CanBeExecuted() => true;
 
-        public override string ToString() => "Exit";
+        public override string ToString()
+        {
+            return Languages.Exit;
+        }
     }
 }

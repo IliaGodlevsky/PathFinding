@@ -1,4 +1,5 @@
 ﻿using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
@@ -25,7 +26,7 @@ namespace Pathfinding.App.Console.Extensions
             var input = self.Input(msg);
             while (!range.Contains(input))
             {
-                input = self.Input(MessagesTexts.OutOfRangeMsg);
+                input = self.Input(Languages.OutOfRangeMsg);
             }
             return input;
         }
@@ -33,8 +34,8 @@ namespace Pathfinding.App.Console.Extensions
         public static InclusiveValueRange<T> InputRange<T>(this IInput<T> self, InclusiveValueRange<T> range)
             where T : IComparable<T>
         {
-            T upperValueOfRange = self.Input(MessagesTexts.RangeUpperValueInputMsg, range);
-            T lowerValueOfRange = self.Input(MessagesTexts.RangeLowerValueInputMsg, range);
+            T upperValueOfRange = self.Input(Languages.RangeUpperValueInputMsg, range);
+            T lowerValueOfRange = self.Input(Languages.RangeLowerValueInputMsg, range);
 
             return new InclusiveValueRange<T>(upperValueOfRange, lowerValueOfRange);
         }

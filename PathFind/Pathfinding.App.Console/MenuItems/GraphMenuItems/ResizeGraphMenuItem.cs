@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
@@ -34,7 +35,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 && graph != Graph2D<Vertex>.Empty;
         }
 
-        protected override IReadOnlyCollection<ILayer<Graph2D<Vertex>, Vertex>> CreateLayers()
+        protected override ILayer<Graph2D<Vertex>, Vertex>[] CreateLayers()
         {
             return base.CreateLayers()
                 .Append(new GraphLayer(graph.Clone()))
@@ -43,7 +44,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public override string ToString()
         {
-            return "Resize graph";
+            return Languages.ResizeGraph;
         }
     }
 }

@@ -124,7 +124,7 @@
     <value>Эвристический алгоритм поиска в ширину</value>
   </data>
   <data name="CostGreedyAlgorithm" xml:space="preserve">
-    <value>Cost greedy algorithm</value>
+    <value>Жадный на стоимости алгоритм</value>
   </data>
   <data name="DepthFirstAlgorithm" xml:space="preserve">
     <value>Алгоритм поиска в глубину</value>
@@ -133,13 +133,13 @@
     <value>Алгоритм Дейкстры</value>
   </data>
   <data name="DistanceFirstAlgorithm" xml:space="preserve">
-    <value>Distance first algorithm</value>
+    <value>Жадный до расстояния алгоритм</value>
   </data>
   <data name="HeuristicCostGreedyAlgorithm" xml:space="preserve">
-    <value>Heuristic cost greedy algorithm</value>
+    <value>Эвристический жадный до стоимости алгоритм</value>
   </data>
   <data name="IDAStarAlgorithm" xml:space="preserve">
-    <value>IDA* algorithm</value>
+    <value>Алгоритм IDA*</value>
   </data>
   <data name="LeeAlgorithm" xml:space="preserve">
     <value>Алгоритм поиска в ширину</value>

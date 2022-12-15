@@ -19,7 +19,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public override string ToString()
         {
-            return MenuItemsNames.ChangeCost;
+            return Languages.ChangeCost;
         }
     }
 }

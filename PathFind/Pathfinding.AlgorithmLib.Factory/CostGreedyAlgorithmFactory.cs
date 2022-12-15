@@ -1,6 +1,7 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms;
+using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms.Localization;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.AlgorithmLib.Factory.Attrbiutes;
 using Pathfinding.AlgorithmLib.Factory.Interface;
@@ -33,7 +34,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 
         public override string ToString()
         {
-            return "Cost greedy algorithm";
+            return Languages.CostGreedyAlgorithm;
         }
     }
 }

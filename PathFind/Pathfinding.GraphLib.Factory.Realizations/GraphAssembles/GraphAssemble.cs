@@ -1,5 +1,6 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Factory.Interface;
+using Pathfinding.GraphLib.Factory.Realizations.Localizations;
 using Shared.Extensions;
 using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
@@ -52,7 +53,7 @@ namespace Pathfinding.GraphLib.Factory.Realizations.GraphAssembles
 
         public override string ToString()
         {
-            return "Random cost graph assemble";
+            return Languages.RandomGraphAssemble;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.ViewModel;
 using Pathfinding.Logging.Interface;
 
@@ -12,11 +13,12 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
             GraphUnit viewModel, ILog log) 
             : base(viewFactory, viewModel, log)
         {
+
         }
 
         public override string ToString()
         {
-            return "Graph";
+            return Languages.Graph;
         }
     }
 }

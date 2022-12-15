@@ -69,7 +69,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public virtual bool CanBeExecuted() => selected != null && IsGraphSizeSet();
 
-        protected virtual IReadOnlyCollection<ILayer<Graph2D<Vertex>, Vertex>> CreateLayers()
+        protected virtual ILayer<Graph2D<Vertex>, Vertex>[] CreateLayers()
         {
             return new ILayer<Graph2D<Vertex>, Vertex>[]
             {

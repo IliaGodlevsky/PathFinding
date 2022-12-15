@@ -1,4 +1,5 @@
 ﻿using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.ViewModel;
 using Pathfinding.Logging.Interface;
 
@@ -15,7 +16,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 
         public override string ToString()
         {
-            return "History";
+            return Languages.History;
         }
     }
 }

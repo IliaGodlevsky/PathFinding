@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
@@ -29,7 +30,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             var menuList = assembles.CreateMenuList(columnsNumber: 1);
             var range = new InclusiveValueRange<int>(assembles.Count, 1);
-            string message = MessagesTexts.GraphAssembleChoiceMsg;
+            string message = Languages.GraphAssembleChoiceMsg;
             using (Cursor.CleanUpAfter())
             {
                 menuList.Display();
@@ -40,7 +41,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public override string ToString()
         {
-            return MenuItemsNames.ChooseGraphAssemble;
+            return Languages.ChooseGraphAssemble;
         }
     }
 }

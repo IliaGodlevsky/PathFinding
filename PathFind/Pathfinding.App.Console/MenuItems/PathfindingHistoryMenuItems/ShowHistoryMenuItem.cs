@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         private bool isHistoryApplied = false;
 
-        private IDisplayable MenuList => pages.Values.Append("Quit").CreateMenuList(columnsNumber: 1);
+        private IDisplayable MenuList => pages.Values.Append(Languages.Quit).CreateMenuList(columnsNumber: 1);
 
         public int Order => 2;
 
@@ -34,7 +35,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void Execute()
         {
-            string inputMessage = string.Concat(MenuList, "\n", MessagesTexts.AlgorithmChoiceMsg);
+            string inputMessage = string.Concat(MenuList, "\n", Languages.AlgorithmChoiceMsg);
             int index = GetAlgorithmIndex(inputMessage);
             while (index != pages.Count)
             {
@@ -79,7 +80,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public override string ToString()
         {
-            return "Show history";
+            return Languages.ShowHistory;
         }
     }
 }

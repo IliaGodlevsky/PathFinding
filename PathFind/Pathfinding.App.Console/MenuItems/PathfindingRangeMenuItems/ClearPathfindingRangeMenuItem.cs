@@ -1,4 +1,5 @@
 ﻿using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 
@@ -24,7 +25,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
 
         public override string ToString()
         {
-            return "Clear pathfinding range";
+            return Languages.ClearPathfindingRange;
         }
     }
 }

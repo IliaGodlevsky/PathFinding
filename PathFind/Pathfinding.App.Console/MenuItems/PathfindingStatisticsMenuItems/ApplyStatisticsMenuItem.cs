@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 
@@ -32,6 +33,9 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingStatisticsMenuItems
             }
         }
 
-        public override string ToString() => "Apply statistics";
+        public override string ToString()
+        {
+            return Languages.ApplyStatistics;
+        }
     }
 }

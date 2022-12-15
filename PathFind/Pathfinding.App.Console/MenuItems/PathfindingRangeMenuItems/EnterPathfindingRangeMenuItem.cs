@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
@@ -30,7 +31,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
 
         public override string ToString()
         {
-            return "Enter pathfinding range";
+            return Languages.EnterPathfindingRange;
         }
     }
 }

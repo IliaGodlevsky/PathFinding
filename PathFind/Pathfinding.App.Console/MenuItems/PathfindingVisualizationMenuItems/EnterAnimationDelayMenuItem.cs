@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
 using Shared.Primitives.ValueRange;
 using System;
@@ -9,8 +10,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
 {
     internal sealed class EnterAnimationDelayMenuItem : IMenuItem
     {
-        private static readonly string Message = MessagesTexts.DelayTimeInputMsg;
-
         private readonly IInput<TimeSpan> spanInput;
         private readonly IMessenger messenger;
 
@@ -32,7 +31,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
         {
             using (Cursor.CleanUpAfter())
             {
-                var delay = spanInput.Input(Message, DelayRange);
+                var delay = spanInput.Input(Languages.DelayTimeInputMsg, DelayRange);
                 messenger.Send(new AnimationDelayMessage(delay));
             }
         }
@@ -44,6 +43,9 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
             IsVisualizationApplied = message.IsApplied;
         }
 
-        public override string ToString() => "Animation delay";
+        public override string ToString()
+        {
+            return Languages.EnterAnimationDelay;
+        }
     }
 }

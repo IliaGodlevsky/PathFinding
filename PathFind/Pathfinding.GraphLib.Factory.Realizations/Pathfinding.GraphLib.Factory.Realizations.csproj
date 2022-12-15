@@ -50,6 +50,11 @@
     <Compile Include="Layers\NeighborhoodLayer.cs" />
     <Compile Include="Layers\ObstacleLayer.cs" />
     <Compile Include="Layers\VertexCostLayer.cs" />
+    <Compile Include="Localizations\Languages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Languages.resx</DependentUpon>
+    </Compile>
     <Compile Include="NeighborhoodFactories\MooreNeighborhoodFactory.cs" />
     <Compile Include="NeighborhoodFactories\VonNeumannNeighborhoodFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,6 +104,13 @@
       <Project>{8B3BA6E5-2FAD-492E-A51D-8B213A74C5B8}</Project>
       <Name>Shared.Random</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Localizations\Languages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Languages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localizations\Languages.ru-RU.resx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

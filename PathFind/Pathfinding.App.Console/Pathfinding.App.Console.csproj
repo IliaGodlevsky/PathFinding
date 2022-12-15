@@ -84,7 +84,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Languages.ru-RU.resx</DependentUpon>
     </Compile>
-    <Compile Include="MenuItemsNames.cs" />
     <Compile Include="MenuItems\ExitMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\GraphCreatingMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\ResizeGraphMenuItem.cs" />
@@ -100,6 +99,7 @@
     <Compile Include="MenuItems\GraphMenuItems\SaveGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\SmoothGraphMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\GraphCreateMenuItem.cs" />
+    <Compile Include="MenuItems\MainMenuItems\LanguageMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\MainMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\PathfindingProcessMenuItem.cs" />
     <Compile Include="MenuItems\AnswerExitMenuItem.cs" />
