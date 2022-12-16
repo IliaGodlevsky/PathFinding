@@ -5,7 +5,7 @@ using Pathfinding.App.Console.MenuItems;
 internal class Program
 {
     private static void Main(string[] args)
-    {       
+    {
         using (var scope = Registry.Container.BeginLifetimeScope())
         {
             var item = scope.Resolve<MainUnitMenuItem>();

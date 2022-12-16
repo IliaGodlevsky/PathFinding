@@ -8,15 +8,14 @@ namespace Pathfinding.App.Console.Model
     internal sealed class Answer : IComparable<Answer>, IEquatable<Answer>
     {
         private const StringComparison IgnoreCase = StringComparison.OrdinalIgnoreCase;
-
+        
+        public static readonly Answer Yes = new Answer(1, Languages.Yes);
+        public static readonly Answer No = new Answer(0, Languages.No);
         private static readonly Answer Default = new Answer(-1, string.Empty);
+
         public static readonly InclusiveValueRange<Answer> Range = new InclusiveValueRange<Answer>(Yes, No);
 
-        public static Answer Yes => new Answer(1, Languages.Yes);
-
-        public static Answer No => new Answer(0, Languages.No);
-
-        public static ReadOnlyList<Answer> Answers => new ReadOnlyList<Answer>(Yes, No);
+        public static readonly ReadOnlyList<Answer> Answers = new ReadOnlyList<Answer>(Yes, No);
 
         private readonly int value;
         private readonly string display;

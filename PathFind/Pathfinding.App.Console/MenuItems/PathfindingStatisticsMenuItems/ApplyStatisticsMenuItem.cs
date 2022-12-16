@@ -9,8 +9,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingStatisticsMenuItems
 {
     internal sealed class ApplyStatisticsMenuItem : IMenuItem
     {
-        private static readonly string Message = MessagesTexts.ApplyStatisticsMsg;
-
         private readonly IMessenger messenger;
         private readonly IInput<Answer> answerInput;
 
@@ -28,7 +26,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingStatisticsMenuItems
         {
             using (Cursor.CleanUpAfter())
             {
-                bool isApplied = answerInput.Input(Message, Answer.Range);
+                string message = MessagesTexts.ApplyStatisticsMsg;
+                bool isApplied = answerInput.Input(message, Answer.Range);
                 messenger.Send(new ApplyStatisticsMessage(isApplied));
             }
         }

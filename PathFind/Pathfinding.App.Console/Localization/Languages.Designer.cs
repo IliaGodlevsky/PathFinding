@@ -198,9 +198,9 @@ namespace Pathfinding.App.Console.Localization {
         /// <summary>
         ///   Looks up a localized string similar to Custom.
         /// </summary>
-        public static string CustomSmothLevel {
+        public static string CustomSmoothLevel {
             get {
-                return ResourceManager.GetString("CustomSmothLevel", resourceCulture);
+                return ResourceManager.GetString("CustomSmoothLevel", resourceCulture);
             }
         }
         

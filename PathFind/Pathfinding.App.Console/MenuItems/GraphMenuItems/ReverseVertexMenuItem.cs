@@ -15,7 +15,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         public ReverseVertexMenuItem(IMessenger messenger, IPathfindingRangeBuilder<Vertex> rangeBuilder, 
             IInput<ConsoleKey> keyInput) : base(messenger, keyInput)
         {
-            Actions.Add(ConsoleKey.Enter, new ReverseVertexAction(rangeBuilder.Range, messenger));
+            actions.Add(ConsoleKey.Enter, new ReverseVertexAction(rangeBuilder.Range, messenger));
         }
 
         public override string ToString()

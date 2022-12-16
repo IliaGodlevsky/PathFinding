@@ -6,6 +6,7 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.GraphLib.Smoothing.Interface;
 using Pathfinding.GraphLib.Smoothing.Realizations;
 using Shared.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,7 +14,14 @@ namespace Pathfinding.App.Console.Model
 {
     internal static class ConsoleSmoothLevels
     {
-        public static IReadOnlyList<ISmoothLevel> Levels => GetSmoothLevels().ToReadOnly();
+        private static readonly Lazy<IReadOnlyList<ISmoothLevel>> levels;
+
+        public static IReadOnlyList<ISmoothLevel> Levels => levels.Value;
+
+        static ConsoleSmoothLevels()
+        {
+            levels = new Lazy<IReadOnlyList<ISmoothLevel>>(GetSmoothLevels);
+        }
 
         private sealed class CustomSmoothLevel : ISmoothLevel
         {
@@ -23,12 +31,12 @@ namespace Pathfinding.App.Console.Model
 
             public int Level => IntInput.Input(Languages.InputSmoothLevelMsg, MaxSmoothLevel, 1);
 
-            public override string ToString() => Languages.CustomSmothLevel;
+            public override string ToString() => Languages.CustomSmoothLevel;
         }
 
-        private static IEnumerable<ISmoothLevel> GetSmoothLevels()
+        private static IReadOnlyList<ISmoothLevel> GetSmoothLevels()
         {
-            return SmoothLevels.Levels.Append(new CustomSmoothLevel());
+            return SmoothLevels.Levels.Append(new CustomSmoothLevel()).ToReadOnly();
         }
     }
 }

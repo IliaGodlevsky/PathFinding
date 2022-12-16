@@ -9,8 +9,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
 {
     internal sealed class ApplyVisualizationMenuItem : IMenuItem
     {
-        private static readonly string Message = MessagesTexts.ApplyVisualizationMsg;
-
         private readonly IInput<Answer> answerInput;
         private readonly IMessenger messenger;
 
@@ -26,7 +24,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
         {
             using (Cursor.CleanUpAfter())
             {
-                bool isApplied = answerInput.Input(Message, Answer.Range);
+                string message = MessagesTexts.ApplyVisualizationMsg;
+                bool isApplied = answerInput.Input(message, Answer.Range);
                 messenger.Send(new ApplyVisualizationMessage(isApplied));
             }
         }

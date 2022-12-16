@@ -162,7 +162,7 @@
   <data name="ClearPathfindingRange" xml:space="preserve">
     <value>Clear pathfinding range</value>
   </data>
-  <data name="CustomSmothLevel" xml:space="preserve">
+  <data name="CustomSmoothLevel" xml:space="preserve">
     <value>Custom</value>
   </data>
   <data name="DelayTimeInputMsg" xml:space="preserve">

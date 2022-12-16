@@ -48,6 +48,7 @@ using Shared.Random;
 using Shared.Random.Realizations;
 using System;
 using System.Globalization;
+
 using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
 
 namespace Pathfinding.App.Console.DependencyInjection
@@ -78,14 +79,10 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<MainUnitMenuItem>().AsSelf().InstancePerDependency();
             builder.RegisterType<GraphCreateMenuItem>().Keyed<IMenuItem>(Main).SingleInstance().AutoActivate();
             builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IMenuItem>(Main).SingleInstance().AutoActivate();
-            builder.RegisterType<LanguageMenuItem>().Keyed<IMenuItem>(Main).SingleInstance().AutoActivate();
             builder.RegisterType<PathfindingRangeMenuItem>().Keyed<IMenuItem>(Process).SingleInstance().AutoActivate();
             builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(Process).SingleInstance().AutoActivate();
             builder.RegisterType<VisualizationMenuItem>().Keyed<IMenuItem>(Process).SingleInstance().AutoActivate();
             builder.RegisterType<HistoryMenuItem>().Keyed<IMenuItem>(Process).SingleInstance().AutoActivate();
-
-            builder.Register(_ => new CultureInfo("en-US")).AsSelf().SingleInstance();
-            builder.Register(_ => new CultureInfo("ru-RU")).AsSelf().SingleInstance();
 
             builder.RegisterType<ChangeCostMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
             builder.RegisterType<AssembleGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();

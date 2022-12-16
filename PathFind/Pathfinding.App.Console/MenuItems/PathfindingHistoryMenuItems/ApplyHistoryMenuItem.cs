@@ -9,8 +9,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 {
     internal sealed class ApplyHistoryMenuItem : IMenuItem
     {
-        private static readonly string Message = MessagesTexts.ApplyHistoryMsg;
-
         private readonly IMessenger messenger;
         private readonly IInput<Answer> answerInput;
 
@@ -31,7 +29,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         {
             using (Cursor.CleanUpAfter())
             {
-                bool isApplied = answerInput.Input(Message, Answer.Range);
+                string message = MessagesTexts.ApplyHistoryMsg;
+                bool isApplied = answerInput.Input(message, Answer.Range);
                 messenger.Send(new ApplyHistoryMessage(isApplied));
             }
         }

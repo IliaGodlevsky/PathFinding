@@ -1,13 +1,21 @@
 ﻿using Pathfinding.GraphLib.Smoothing.Interface;
 using Pathfinding.GraphLib.Smoothing.Localization;
 using Shared.Extensions;
+using System;
 using System.Collections.Generic;
 
 namespace Pathfinding.GraphLib.Smoothing.Realizations
 {
     public static class SmoothLevels
     {
-        public static IReadOnlyList<ISmoothLevel> Levels => GetSmoothLevels().ToReadOnly();
+        private static readonly Lazy<IEnumerable<ISmoothLevel>> levels;
+
+        public static IReadOnlyList<ISmoothLevel> Levels => levels.Value.ToReadOnly();
+
+        static SmoothLevels()
+        {
+            levels = new Lazy<IEnumerable<ISmoothLevel>>(GetSmoothLevels);
+        }
 
         private sealed class SmoothLevel : ISmoothLevel
         {
