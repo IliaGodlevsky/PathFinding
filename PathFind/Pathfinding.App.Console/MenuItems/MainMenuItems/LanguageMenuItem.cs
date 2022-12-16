@@ -1,6 +1,8 @@
-﻿using Pathfinding.App.Console.Extensions;
+﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
+using Pathfinding.App.Console.Messages;
 using Shared.Primitives.ValueRange;
 using System.Collections.Generic;
 using System.Globalization;
@@ -11,14 +13,16 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
     internal sealed class LanguageMenuItem : IMenuItem
     {
         private readonly IInput<int> intInput;
+        private readonly IMessenger messenger;
         private readonly IReadOnlyList<CultureInfo> languages;
 
         public int Order => 3;
 
         public LanguageMenuItem(IReadOnlyList<CultureInfo> languages, 
-            IInput<int> intInput)
+            IInput<int> intInput, IMessenger messenger)
         {
             this.intInput = intInput;
+            this.messenger = messenger;
             this.languages = languages;
         }
 
@@ -37,6 +41,7 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
                 var language = languages[index];
                 CultureInfo.CurrentCulture = language;
                 CultureInfo.CurrentUICulture = language;
+                messenger.Send(new GraphChangedMessage());
             }
         }
 

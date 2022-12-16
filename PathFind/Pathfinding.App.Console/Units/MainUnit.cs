@@ -3,6 +3,7 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.MenuItems;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Realizations.Coordinates;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
 using Pathfinding.VisualizationLib.Core.Interface;
@@ -36,6 +37,7 @@ namespace Pathfinding.App.Console.ViewModel
             this.input = input;
             this.fieldFactory = fieldFactory;
             this.messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainViewModel, SetGraph);
+            this.messenger.Register<GraphChangedMessage>(this, OnGraphChanged);
         }
 
         private void DisplayGraph()
@@ -63,6 +65,15 @@ namespace Pathfinding.App.Console.ViewModel
             Graph = message.Graph;
             GraphField = fieldFactory.CreateGraphField(Graph);
             DisplayGraph();
+        }
+
+        private void OnGraphChanged(GraphChangedMessage msg)
+        {
+            using (Cursor.UseCurrentPosition())
+            {
+                Cursor.SetPosition(new Coordinate2D(0, 0));
+                System.Console.WriteLine(Graph);
+            }
         }
 
         protected override IMenuItem GetExitMenuItem()

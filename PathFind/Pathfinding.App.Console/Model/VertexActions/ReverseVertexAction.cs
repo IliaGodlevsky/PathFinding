@@ -1,4 +1,6 @@
-﻿using Pathfinding.App.Console.Interface;
+﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Messages;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 
@@ -7,10 +9,13 @@ namespace Pathfinding.App.Console.Model.VertexActions
     internal sealed class ReverseVertexAction : IVertexAction
     {
         private readonly IPathfindingRange<Vertex> range;
+        private readonly IMessenger messenger;
 
-        public ReverseVertexAction(IPathfindingRange<Vertex> range)
+        public ReverseVertexAction(IPathfindingRange<Vertex> range, 
+            IMessenger messenger)
         {
             this.range = range;
+            this.messenger = messenger;
         }
 
         public void Do(Vertex vertex)
@@ -23,6 +28,7 @@ namespace Pathfinding.App.Console.Model.VertexActions
             {
                 vertex.IsObstacle = true;
             }
+            messenger.Send(new GraphChangedMessage());
         }
     }
 }
