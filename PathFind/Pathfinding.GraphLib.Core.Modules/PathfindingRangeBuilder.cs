@@ -45,7 +45,10 @@ namespace Pathfinding.GraphLib.Core.Modules
 
         private IReadOnlyCollection<IUndoCommand<TVertex>> GetUndoCommands()
         {
-            return IncludeCommands.Concat(ExcludeCommands).OfType<IUndoCommand<TVertex>>().ToReadOnly();
+            return IncludeCommands
+                .Concat(ExcludeCommands)
+                .OfType<IUndoCommand<TVertex>>()
+                .ToReadOnly();
         }
 
         public void Undo()

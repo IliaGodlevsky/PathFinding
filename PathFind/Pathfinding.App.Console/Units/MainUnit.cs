@@ -69,10 +69,16 @@ namespace Pathfinding.App.Console.ViewModel
 
         private void OnGraphChanged(GraphChangedMessage msg)
         {
-            using (Cursor.UseCurrentPosition())
+            if (Graph != Graph2D<Vertex>.Empty)
             {
-                Cursor.SetPosition(new Coordinate2D(0, 0));
-                System.Console.WriteLine(Graph);
+                using (Cursor.UseCurrentPosition())
+                {
+                    var position = new Coordinate2D(0, 0);
+                    Cursor.SetPosition(position);
+                    System.Console.Write(new string(' ', System.Console.BufferWidth));
+                    Cursor.SetPosition(position);
+                    System.Console.WriteLine(Graph);
+                }
             }
         }
 

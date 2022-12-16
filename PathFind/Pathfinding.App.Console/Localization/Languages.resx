@@ -162,6 +162,9 @@
   <data name="ClearPathfindingRange" xml:space="preserve">
     <value>Clear pathfinding range</value>
   </data>
+  <data name="CustomSmothLevel" xml:space="preserve">
+    <value>Custom</value>
+  </data>
   <data name="DelayTimeInputMsg" xml:space="preserve">
     <value>Input animation speed delay time (milliseconds): </value>
   </data>
@@ -187,7 +190,7 @@
     <value>Choose graph assemble: </value>
   </data>
   <data name="GraphFormat" xml:space="preserve">
-    <value>Obstacle percent: {0} ({1}/{2});</value>
+    <value>Obstacle percent: {0} ({1}/{2})</value>
   </data>
   <data name="GraphHeightInputMsg" xml:space="preserve">
     <value>Input height of graph: </value>
@@ -212,6 +215,9 @@
   </data>
   <data name="InputPathMsg" xml:space="preserve">
     <value>Input path: </value>
+  </data>
+  <data name="InputSmoothLevelMsg" xml:space="preserve">
+    <value>Input level of smoothing: </value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
@@ -269,6 +275,9 @@
   </data>
   <data name="SmoothGraph" xml:space="preserve">
     <value>Smooth graph</value>
+  </data>
+  <data name="SmoothLevelMsg" xml:space="preserve">
+    <value>Choose smooth level: </value>
   </data>
   <data name="Statistics" xml:space="preserve">
     <value>Pathfinding statistics</value>

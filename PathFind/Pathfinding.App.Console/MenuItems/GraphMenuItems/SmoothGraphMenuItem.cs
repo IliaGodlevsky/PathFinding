@@ -36,7 +36,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         public void Execute()
         {
             var menuList = SmoothLevels.CreateMenuList();
-            var message = menuList + "\nChoose smooth level: ";
+            var message = menuList + "\n" + Languages.SmoothLevelMsg;
             using (Cursor.CleanUpAfter())
             {
                 int index = input.Input(message, SmoothLevels.Count, 1) - 1;

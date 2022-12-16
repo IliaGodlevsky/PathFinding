@@ -41,8 +41,8 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
                 var language = languages[index];
                 CultureInfo.CurrentCulture = language;
                 CultureInfo.CurrentUICulture = language;
-                messenger.Send(new GraphChangedMessage());
             }
+            messenger.Send(new GraphChangedMessage());
         }
 
         public override string ToString()

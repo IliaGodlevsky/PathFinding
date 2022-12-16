@@ -1,20 +1,13 @@
 ﻿using Pathfinding.GraphLib.Smoothing.Interface;
+using Pathfinding.GraphLib.Smoothing.Localization;
 using Shared.Extensions;
-using System;
 using System.Collections.Generic;
 
 namespace Pathfinding.GraphLib.Smoothing.Realizations
 {
     public static class SmoothLevels
     {
-        private static readonly Lazy<IReadOnlyList<ISmoothLevel>> levels;
-
-        public static IReadOnlyList<ISmoothLevel> Levels => levels.Value;
-
-        static SmoothLevels()
-        {
-            levels = new Lazy<IReadOnlyList<ISmoothLevel>>(GetSmoothLevels().ToReadOnly);
-        }
+        public static IReadOnlyList<ISmoothLevel> Levels => GetSmoothLevels().ToReadOnly();
 
         private sealed class SmoothLevel : ISmoothLevel
         {
@@ -33,10 +26,10 @@ namespace Pathfinding.GraphLib.Smoothing.Realizations
 
         private static IEnumerable<ISmoothLevel> GetSmoothLevels()
         {
-            yield return new SmoothLevel(1, "Low");
-            yield return new SmoothLevel(2, "Medium");
-            yield return new SmoothLevel(3, "High");
-            yield return new SmoothLevel(25, "Flat");
+            yield return new SmoothLevel(1, Languages.Low);
+            yield return new SmoothLevel(2, Languages.Medium);
+            yield return new SmoothLevel(3, Languages.High);
+            yield return new SmoothLevel(25, Languages.Flat);
         }
     }
 }

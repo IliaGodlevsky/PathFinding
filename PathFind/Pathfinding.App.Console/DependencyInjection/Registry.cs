@@ -84,7 +84,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<VisualizationMenuItem>().Keyed<IMenuItem>(Process).SingleInstance().AutoActivate();
             builder.RegisterType<HistoryMenuItem>().Keyed<IMenuItem>(Process).SingleInstance().AutoActivate();
 
-            builder.Register(_ => new CultureInfo("en-US")).AsSelf().SingleInstance(); 
+            builder.Register(_ => new CultureInfo("en-US")).AsSelf().SingleInstance();
             builder.Register(_ => new CultureInfo("ru-RU")).AsSelf().SingleInstance();
 
             builder.RegisterType<ChangeCostMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
@@ -182,6 +182,6 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<ManhattanDistance>().As<IHeuristic>().SingleInstance();
 
             return builder.Build();
-        }      
+        }
     }
 }

@@ -162,6 +162,9 @@
   <data name="ClearPathfindingRange" xml:space="preserve">
     <value>Очистить диапазон поиска пути</value>
   </data>
+  <data name="CustomSmothLevel" xml:space="preserve">
+    <value>Пользовательский</value>
+  </data>
   <data name="DelayTimeInputMsg" xml:space="preserve">
     <value>Введите задержку анимации (миллисекунды): </value>
   </data>
@@ -187,7 +190,7 @@
     <value>Выберите сборку графа: </value>
   </data>
   <data name="GraphFormat" xml:space="preserve">
-    <value>Процент препятствий: {0} ({1}/{2});</value>
+    <value>Процент препятствий: {0} ({1}/{2})</value>
   </data>
   <data name="GraphHeightInputMsg" xml:space="preserve">
     <value>Введите высоту графа: </value>
@@ -212,6 +215,9 @@
   </data>
   <data name="InputPathMsg" xml:space="preserve">
     <value>Веедите путь: </value>
+  </data>
+  <data name="InputSmoothLevelMsg" xml:space="preserve">
+    <value>Введите степень сглаживания: </value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Язык</value>
@@ -269,6 +275,9 @@
   </data>
   <data name="SmoothGraph" xml:space="preserve">
     <value>Сгладить граф</value>
+  </data>
+  <data name="SmoothLevelMsg" xml:space="preserve">
+    <value>Выберите степень сглаживания: </value>
   </data>
   <data name="Statistics" xml:space="preserve">
     <value>Статистика поиска пути</value>

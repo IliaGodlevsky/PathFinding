@@ -196,6 +196,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom.
+        /// </summary>
+        public static string CustomSmothLevel {
+            get {
+                return ResourceManager.GetString("CustomSmothLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input animation speed delay time (milliseconds): .
         /// </summary>
         public static string DelayTimeInputMsg {
@@ -268,7 +277,7 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Obstacle percent: {0} ({1}/{2});.
+        ///   Looks up a localized string similar to Obstacle percent: {0} ({1}/{2}).
         /// </summary>
         public static string GraphFormat {
             get {
@@ -345,6 +354,15 @@ namespace Pathfinding.App.Console.Localization {
         public static string InputPathMsg {
             get {
                 return ResourceManager.GetString("InputPathMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input level of smoothing: .
+        /// </summary>
+        public static string InputSmoothLevelMsg {
+            get {
+                return ResourceManager.GetString("InputSmoothLevelMsg", resourceCulture);
             }
         }
         
@@ -516,6 +534,15 @@ namespace Pathfinding.App.Console.Localization {
         public static string SmoothGraph {
             get {
                 return ResourceManager.GetString("SmoothGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose smooth level: .
+        /// </summary>
+        public static string SmoothLevelMsg {
+            get {
+                return ResourceManager.GetString("SmoothLevelMsg", resourceCulture);
             }
         }
         
