@@ -19,7 +19,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public override void Execute()
         {
-            using (Cursor.CleanUpAfter())
+            using (Cursor.UseCurrentPositionWithClean())
             {
                 int obstaclePercent = input.Input(Languages.ObstaclePercentInputMsg, Constants.ObstaclesPercentValueRange);
                 messenger.Send(new ObstaclePercentMessage(obstaclePercent));

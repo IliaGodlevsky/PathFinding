@@ -15,10 +15,11 @@ namespace Pathfinding.App.Console.MenuItems
     internal abstract class SwitchVerticesMenuItem : IMenuItem
     {
         protected readonly IMessenger messenger;
-        protected readonly IInput<ConsoleKey> keyInput;
-        protected readonly Dictionary<ConsoleKey, IVertexAction> actions = new();
+        protected readonly IInput<ConsoleKey> keyInput;     
 
         protected Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
+
+        protected Dictionary<ConsoleKey, IVertexAction> Actions { get; } = new();
 
         public abstract int Order { get; }
 
@@ -29,7 +30,10 @@ namespace Pathfinding.App.Console.MenuItems
             this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
-        public virtual bool CanBeExecuted() => graph != Graph2D<Vertex>.Empty;
+        public virtual bool CanBeExecuted()
+        {
+            return graph != Graph2D<Vertex>.Empty;
+        }
 
         public void Execute()
         {
@@ -49,7 +53,7 @@ namespace Pathfinding.App.Console.MenuItems
                     case ConsoleKey.S: y = ReturnInRange(y + 1, yRange); break;
                     case ConsoleKey.A: x = ReturnInRange(x - 1, xRange); break;
                     case ConsoleKey.D: x = ReturnInRange(x + 1, xRange); break;
-                    default: actions.GetOrDefault(key)?.Do(vertex); break;
+                    default: Actions.GetOrDefault(key)?.Do(vertex); break;
                 }
             } while (key != ConsoleKey.Escape);
         }

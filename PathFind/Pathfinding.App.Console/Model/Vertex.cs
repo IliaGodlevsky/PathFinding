@@ -3,8 +3,6 @@ using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.NullObjects;
 using Pathfinding.GraphLib.Core.Realizations.Coordinates;
-using Pathfinding.GraphLib.Serialization.Core.Interface;
-using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using System;
@@ -51,14 +49,7 @@ namespace Pathfinding.App.Console.Model
         {
             this.visualization = visualization;
             Position = coordinate;
-            this.InitializeComponents();
             this.Initialize();
-        }
-
-        public Vertex(VertexSerializationInfo info, IVisualization<Vertex> visualization)
-            : this(info.Position, visualization)
-        {
-            this.Initialize(info);
         }
 
         public void Display()

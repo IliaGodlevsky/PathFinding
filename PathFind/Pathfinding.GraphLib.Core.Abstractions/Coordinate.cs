@@ -2,6 +2,7 @@
 using Shared.Extensions;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace Pathfinding.GraphLib.Core.Abstractions
 {
@@ -23,16 +24,19 @@ namespace Pathfinding.GraphLib.Core.Abstractions
             hashCode = CoordinatesValues.ToHashCode();
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Equals(ICoordinate other)
         {
             return other.GetHashCode().Equals(GetHashCode());
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override bool Equals(object pos)
         {
             return pos is ICoordinate coord ? Equals(coord) : false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override int GetHashCode() => hashCode;
 
         public override string ToString() => toString;

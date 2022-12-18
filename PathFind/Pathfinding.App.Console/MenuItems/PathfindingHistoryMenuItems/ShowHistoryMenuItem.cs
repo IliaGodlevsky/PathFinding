@@ -59,7 +59,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         private int GetAlgorithmIndex(string message)
         {
-            using (Cursor.CleanUpAfter())
+            using (Cursor.UseCurrentPositionWithClean())
             {
                 return input.Input(message, pages.Count + 1, 1) - 1;
             }

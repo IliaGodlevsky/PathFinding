@@ -22,7 +22,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
 
         public void Execute()
         {
-            using (Cursor.CleanUpAfter())
+            using (Cursor.UseCurrentPositionWithClean())
             {
                 string message = MessagesTexts.ApplyVisualizationMsg;
                 bool isApplied = answerInput.Input(message, Answer.Range);

@@ -31,7 +31,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             var menuList = assembles.CreateMenuList(columnsNumber: 1);
             var range = new InclusiveValueRange<int>(assembles.Count, 1);
             string message = Languages.GraphAssembleChoiceMsg;
-            using (Cursor.CleanUpAfter())
+            using (Cursor.UseCurrentPositionWithClean())
             {
                 menuList.Display();
                 int index = input.Input(message, range) - 1;

@@ -29,7 +29,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
 
         public void Execute()
         {
-            using (Cursor.CleanUpAfter())
+            using (Cursor.UseCurrentPositionWithClean())
             {
                 var delay = spanInput.Input(Languages.DelayTimeInputMsg, DelayRange);
                 messenger.Send(new AnimationDelayMessage(delay));

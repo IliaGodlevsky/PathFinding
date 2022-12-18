@@ -7,7 +7,11 @@ namespace Pathfinding.GraphLib.UnitTest.Realizations.TestFactories
     {
         public TestVertex CreateFrom(VertexSerializationInfo info)
         {
-            return new TestVertex(info);
+            return new TestVertex(info.Position)
+            {
+                IsObstacle = info.IsObstacle,
+                Cost = info.Cost
+            };
         }
     }
 }

@@ -74,12 +74,6 @@ namespace Pathfinding.App.WPF._3D.Model
             this.Initialize();
         }
 
-        public Vertex3D(VertexSerializationInfo info, IModel3DFactory modelFactory, IVisualization<Vertex3D> visualization)
-            : this(info.Position, modelFactory, visualization)
-        {
-            this.Initialize(info);
-        }
-
         static Vertex3D()
         {
             SizeProperty = RegisterProperty(nameof(Size), typeof(double), SizePropertyChanged);

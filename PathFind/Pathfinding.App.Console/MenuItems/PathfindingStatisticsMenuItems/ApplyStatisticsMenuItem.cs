@@ -24,7 +24,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingStatisticsMenuItems
 
         public void Execute()
         {
-            using (Cursor.CleanUpAfter())
+            using (Cursor.UseCurrentPositionWithClean())
             {
                 string message = MessagesTexts.ApplyStatisticsMsg;
                 bool isApplied = answerInput.Input(message, Answer.Range);

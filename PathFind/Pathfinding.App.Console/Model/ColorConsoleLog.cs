@@ -52,7 +52,7 @@ namespace Pathfinding.App.Console.Model
 
         private void ShowMessage(string message, ConsoleColor color)
         {          
-            using (Cursor.CleanUpAfter())
+            using (Cursor.UseCurrentPositionWithClean())
             {
                 using (Cursor.UseColor(color))
                 {

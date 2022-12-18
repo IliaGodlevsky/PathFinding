@@ -25,7 +25,6 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
         public static void InitializeComponents(this IVertex self)
         {
             self.Cost = NullCost.Interface;
-            self.IsObstacle = false;            
             self.Neighbours = ReadOnlyList<IVertex>.Empty;
         }
 

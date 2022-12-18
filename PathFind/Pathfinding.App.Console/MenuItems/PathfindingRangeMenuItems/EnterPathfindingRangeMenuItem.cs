@@ -16,14 +16,14 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
         public override int Order => 1;
 
         public EnterPathfindingRangeMenuItem(IMessenger messenger, 
-            IPathfindingRangeBuilder<Vertex> rangeBuilder, 
-            IInput<ConsoleKey> keyInput,
-            IReadOnlyDictionary<ConsoleKey, IVertexAction> actions) 
+            IPathfindingRangeBuilder<Vertex> rangeBuilder,
+            IReadOnlyDictionary<ConsoleKey, IVertexAction> actions,
+            IInput<ConsoleKey> keyInput) 
             : base(messenger, keyInput)
         {
-            base.actions.AddRange(actions);
-            base.actions.Add(ConsoleKey.Enter, new IncludeInRangeAction(rangeBuilder));
-            base.actions.Add(ConsoleKey.X, new ExcludeFromRangeAction(rangeBuilder));
+            Actions.AddRange(actions);
+            Actions.Add(ConsoleKey.Enter, new IncludeInRangeAction(rangeBuilder));
+            Actions.Add(ConsoleKey.X, new ExcludeFromRangeAction(rangeBuilder));
         }
 
         public override bool CanBeExecuted()

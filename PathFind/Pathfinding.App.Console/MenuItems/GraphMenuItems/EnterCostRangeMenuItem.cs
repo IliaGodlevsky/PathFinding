@@ -18,7 +18,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public override void Execute()
         {
-            using (Cursor.CleanUpAfter())
+            using (Cursor.UseCurrentPositionWithClean())
             {
                 var costRange = input.InputRange(Constants.VerticesCostRange);
                 messenger.Send(new CostRangeMessage(costRange));

@@ -21,12 +21,12 @@ namespace Pathfinding.App.Console.Model
         private ReadOnlyList<IDisplayable> Displayables { get; }
 
         public GraphField(Graph2D<Vertex> graph)
-            : this(graph, new FramedOverAbscissa(graph), 
-                          new FramedUnderAbscissa(graph), 
+            : this(graph, new FramedOverAbscissa(graph),
+                          new FramedUnderAbscissa(graph),
                           new FramedToRightOrdinate(graph),
                           new FramedToLeftOrdinate(graph))
         {
-            
+
         }
 
         private GraphField(Graph2D<Vertex> graph, params FramedAxis[] axes)

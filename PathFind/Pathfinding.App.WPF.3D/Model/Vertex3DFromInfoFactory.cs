@@ -26,7 +26,14 @@ namespace Pathfinding.App.WPF._3D.Model
 
         public Vertex3D CreateFrom(VertexSerializationInfo info)
         {
-            return Dispatcher.Invoke(() => new Vertex3D(info, model3DFactory, visualization));
+            return Dispatcher.Invoke(() => 
+            {
+                return new Vertex3D(info.Position, model3DFactory, visualization)
+                {
+                    IsObstacle = info.IsObstacle,
+                    Cost = info.Cost
+                };
+            });
         }
     }
 }

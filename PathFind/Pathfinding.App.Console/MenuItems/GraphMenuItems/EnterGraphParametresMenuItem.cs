@@ -18,7 +18,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public override void Execute()
         {
-            using (Cursor.CleanUpAfter())
+            using (Cursor.UseCurrentPositionWithClean())
             {
                 int width = input.Input(Languages.GraphWidthInputMsg, Constants.GraphWidthValueRange);
                 int length = input.Input(Languages.GraphHeightInputMsg, Constants.GraphLengthValueRange);

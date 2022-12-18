@@ -15,7 +15,14 @@ namespace Pathfinding.App.WPF._2D.Model
 
         public Vertex CreateFrom(VertexSerializationInfo info)
         {
-            return Application.Current.Dispatcher.Invoke(() => new Vertex(info, visualization));
+            return Application.Current.Dispatcher.Invoke(() =>
+            {
+                return new Vertex(info.Position, visualization)
+                {
+                    IsObstacle = info.IsObstacle,
+                    Cost = info.Cost
+                };
+            });
         }
     }
 }

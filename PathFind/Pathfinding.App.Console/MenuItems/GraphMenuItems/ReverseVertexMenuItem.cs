@@ -12,10 +12,12 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     {
         public override int Order => 10;
 
-        public ReverseVertexMenuItem(IMessenger messenger, IPathfindingRangeBuilder<Vertex> rangeBuilder, 
-            IInput<ConsoleKey> keyInput) : base(messenger, keyInput)
+        public ReverseVertexMenuItem(IMessenger messenger, 
+            IPathfindingRangeBuilder<Vertex> rangeBuilder, 
+            IInput<ConsoleKey> keyInput) 
+            : base(messenger, keyInput)
         {
-            actions.Add(ConsoleKey.Enter, new ReverseVertexAction(rangeBuilder.Range, messenger));
+            Actions.Add(ConsoleKey.Enter, new ReverseVertexAction(rangeBuilder.Range, messenger));
         }
 
         public override string ToString()

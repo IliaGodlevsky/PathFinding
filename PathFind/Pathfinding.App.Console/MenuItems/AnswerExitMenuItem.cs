@@ -21,7 +21,7 @@ namespace Pathfinding.App.Console.MenuItems
 
         public void Execute()
         {
-            using (Cursor.CleanUpAfter())
+            using (Cursor.UseCurrentPositionWithClean())
             {
                 bool isExit = input.Input(MessagesTexts.ExitAppMsg, Answer.Range);
                 if (isExit)

@@ -17,12 +17,6 @@ namespace Pathfinding.GraphLib.UnitTest.Realizations.TestObjects
             Position = coordinate;
         }
 
-        public TestVertex(VertexSerializationInfo info)
-            : this(info.Position)
-        {
-            this.Initialize(info);
-        }
-
         public bool IsObstacle { get; set; }
 
         public IVertexCost Cost { get; set; }

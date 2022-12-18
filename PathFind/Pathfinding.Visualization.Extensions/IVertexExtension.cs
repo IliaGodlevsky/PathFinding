@@ -22,7 +22,7 @@ namespace Pathfinding.Visualization.Extensions
         public static void Initialize<TVertex>(this TVertex self)
             where TVertex : IVertex, IVisualizable
         {
-            (self as IVertex).InitializeComponents();
+            self.InitializeComponents();
             self.RestoreDefaultVisualState();
         }
     }

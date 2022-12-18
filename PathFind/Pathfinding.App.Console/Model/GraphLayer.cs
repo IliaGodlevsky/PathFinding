@@ -1,5 +1,6 @@
 ﻿using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
+using Shared.Extensions;
 using System.Linq;
 
 namespace Pathfinding.App.Console.Model
@@ -15,17 +16,16 @@ namespace Pathfinding.App.Console.Model
 
         public void Overlay(Graph2D<Vertex> graph)
         {
-            var coordinates = layer.Select(vertex => vertex.Position)
+            layer.Select(vertex => vertex.Position)
                 .Intersect(graph.Select(vertex => vertex.Position))
-                .ToArray();
-            foreach (var coordinate in coordinates)
-            {
-                var vertex = graph.Get(coordinate);
-                var layerVertex = layer.Get(coordinate);
-                int cost = layerVertex.Cost.CurrentCost;
-                vertex.Cost = vertex.Cost.SetCost(cost);
-                vertex.IsObstacle = layerVertex.IsObstacle;
-            }
+                .ForEach(coordinate =>
+                {
+                    var vertex = graph.Get(coordinate);
+                    var layerVertex = layer.Get(coordinate);
+                    int cost = layerVertex.Cost.CurrentCost;
+                    vertex.Cost = vertex.Cost.SetCost(cost);
+                    vertex.IsObstacle = layerVertex.IsObstacle;
+                });
         }
     }
 }

@@ -60,7 +60,7 @@ namespace Pathfinding.App.Console.Views
 
         private int InputItemIndex((string Message, InclusiveValueRange<int> MenuRange) options)
         {
-            using (Cursor.CleanUpAfter())
+            using (Cursor.UseCurrentPositionWithClean())
             {
                 return intInput.Input(options.Message, options.MenuRange) - 1;
             }

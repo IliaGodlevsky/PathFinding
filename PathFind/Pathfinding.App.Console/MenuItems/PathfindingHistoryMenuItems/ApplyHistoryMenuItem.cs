@@ -27,7 +27,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void Execute()
         {
-            using (Cursor.CleanUpAfter())
+            using (Cursor.UseCurrentPositionWithClean())
             {
                 string message = MessagesTexts.ApplyHistoryMsg;
                 bool isApplied = answerInput.Input(message, Answer.Range);

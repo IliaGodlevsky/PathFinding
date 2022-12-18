@@ -104,12 +104,6 @@ namespace Pathfinding.App.WPF._2D.Model
             this.Initialize();
         }
 
-        public Vertex(VertexSerializationInfo info, IVisualization<Vertex> visualization)
-            : this(info.Position, visualization)
-        {
-            this.Initialize(info);
-        }
-
         static Vertex()
         {
             EnqueuedEvent = RegisterRoutedEvent(nameof(Enqueued));

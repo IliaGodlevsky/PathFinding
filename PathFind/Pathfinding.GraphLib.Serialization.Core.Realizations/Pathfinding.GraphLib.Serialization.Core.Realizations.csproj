@@ -47,7 +47,6 @@
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
     <Compile Include="Extensions\IGraphSerializationModuleExtensions.cs" />
     <Compile Include="Extensions\IGraphSerializerExtensions.cs" />
-    <Compile Include="Extensions\IVertexExtension.cs" />
     <Compile Include="Extensions\XDocumentExtensions.cs" />
     <Compile Include="Extensions\XmlDocumentExtensions.cs" />
     <Compile Include="GraphSerializationInfo.cs" />

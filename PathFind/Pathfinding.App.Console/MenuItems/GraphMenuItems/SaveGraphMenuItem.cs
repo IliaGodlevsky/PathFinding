@@ -33,7 +33,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             try
             {
-                using (Cursor.CleanUpAfter())
+                using (Cursor.UseCurrentPositionWithClean())
                 {
                     module.SaveGraph(graph);
                 }

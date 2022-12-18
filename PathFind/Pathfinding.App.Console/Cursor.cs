@@ -4,6 +4,9 @@ using System;
 
 namespace Pathfinding.App.Console
 {
+    /// <summary>
+    /// Class, that represents a console cursor
+    /// </summary>
     internal sealed class Cursor
     {
         private static string BufferLengthString => new string(' ', System.Console.BufferWidth);
@@ -20,29 +23,56 @@ namespace Pathfinding.App.Console
             cursorRight = right;
         }
 
+        /// <summary>
+        /// Hides cursor
+        /// </summary>
+        /// <returns>An object, disposing of 
+        /// which shows cursor</returns>
         public static IDisposable HideCursor()
         {
             System.Console.CursorVisible = false;
             return Disposable.Use(ShowCursor);
         }
 
+        /// <summary>
+        /// Remembers the current position of the cursor
+        /// </summary>
+        /// <returns>An object, disposing which returns
+        /// the cursor to the remembered position</returns>
         public static IDisposable UseCurrentPosition()
         {
             var cursorLeft = System.Console.CursorLeft;
             var cursorRight = System.Console.CursorTop;
             var cursor = new Cursor(cursorLeft, cursorRight);
-            return Disposable.Use(cursor.RestoreCursorPosition);
+            return Disposable.Use(cursor.RestorePosition);
         }
 
+        /// <summary>
+        /// Uses <paramref name="color"/> as 
+        /// foreground color of console
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns>An object, disposing which returns 
+        /// previous foreground console color</returns>
         public static IDisposable UseColor(ConsoleColor color)
         {
             var currentColor = System.Console.ForegroundColor;
-            void Restore() => System.Console.ForegroundColor = currentColor;
+            void RestoreColor()
+            {
+                System.Console.ForegroundColor = currentColor;
+            }
             System.Console.ForegroundColor = color;
-            return Disposable.Use(Restore);
+            return Disposable.Use(RestoreColor);
         }
 
-        public static IDisposable CleanUpAfter()
+        /// <summary>
+        /// Remembers the current position of the cursor
+        /// </summary>
+        /// <returns>An object, disposing which 
+        /// returns the cursor to the remembered 
+        /// position and cleans all the input that has been
+        /// perfromed after remembering the position </returns>
+        public static IDisposable UseCurrentPositionWithClean()
         {
             var left = System.Console.CursorLeft;
             var top = System.Console.CursorTop;
@@ -69,7 +99,7 @@ namespace Pathfinding.App.Console
             System.Console.SetCursorPosition(point.X, point.Y);
         }
 
-        private void RestoreCursorPosition()
+        private void RestorePosition()
         {
             System.Console.SetCursorPosition(cursorLeft, cursorRight);
         }

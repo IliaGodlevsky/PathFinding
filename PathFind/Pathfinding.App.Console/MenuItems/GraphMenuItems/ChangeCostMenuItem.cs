@@ -13,8 +13,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         public ChangeCostMenuItem(IMessenger messenger, IInput<ConsoleKey> keyInput)
             : base(messenger, keyInput)
         {
-            actions.Add(ConsoleKey.UpArrow, new IncreaseCostAction());
-            actions.Add(ConsoleKey.DownArrow, new DecreaseCostAction());
+            Actions.Add(ConsoleKey.UpArrow, new IncreaseCostAction());
+            Actions.Add(ConsoleKey.DownArrow, new DecreaseCostAction());
         }
 
         public override string ToString()

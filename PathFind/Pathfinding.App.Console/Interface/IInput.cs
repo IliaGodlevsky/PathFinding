@@ -1,6 +1,6 @@
 ﻿namespace Pathfinding.App.Console.Interface
 {
-    internal interface IInput<T>
+    internal interface IInput<out T>
     {
         T Input();
     }
