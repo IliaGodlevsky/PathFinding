@@ -35,9 +35,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 && graph != Graph2D<Vertex>.Empty;
         }
 
-        protected override ILayer<Graph2D<Vertex>, Vertex>[] CreateLayers()
+        protected override ILayer<Graph2D<Vertex>, Vertex>[] GetLayers()
         {
-            return base.CreateLayers()
+            return base.GetLayers()
                 .Append(new GraphLayer(graph.Clone()))
                 .ToArray();
         }

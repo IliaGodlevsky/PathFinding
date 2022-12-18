@@ -11,7 +11,7 @@ using Pathfinding.AlgorithmLib.History;
 using Pathfinding.Visualization.Extensions;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 
-namespace Pathfinding.App.Console.ViewModel
+namespace Pathfinding.App.Console.Units
 {
     internal sealed class PathfindingHistoryUnit : Unit
     {
@@ -64,7 +64,7 @@ namespace Pathfinding.App.Console.ViewModel
             }
         }
 
-        private void OnMessageRecieved(Action action) 
+        private void OnMessageRecieved(Action action)
         {
             if (isHistoryApplied)
             {
@@ -84,11 +84,11 @@ namespace Pathfinding.App.Console.ViewModel
 
         private void OnSubscribeOnHistory(SubscribeOnHistoryMessage msg)
         {
-            OnMessageRecieved(() => 
+            OnMessageRecieved(() =>
             {
                 history.AddRegulars(msg.Algorithm.Id, graph.GetNotObstaclesCoordinates());
                 history.AddObstacles(msg.Algorithm.Id, graph.GetObstaclesCoordinates());
-                msg.Algorithm.VertexVisited += OnVertexVisited; 
+                msg.Algorithm.VertexVisited += OnVertexVisited;
             });
         }
     }

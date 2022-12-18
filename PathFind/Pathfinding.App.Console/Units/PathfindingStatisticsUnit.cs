@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Pathfinding.App.Console.ViewModel
+namespace Pathfinding.App.Console.Units
 {
     internal sealed class PathfindingStatisticsUnit : Unit
     {
@@ -20,7 +20,7 @@ namespace Pathfinding.App.Console.ViewModel
         private bool isStatisticsApplied = false;
         private int visited = 0;
 
-        public PathfindingStatisticsUnit(IReadOnlyCollection<IMenuItem> menuItems, IMessenger messenger) 
+        public PathfindingStatisticsUnit(IReadOnlyCollection<IMenuItem> menuItems, IMessenger messenger)
             : base(menuItems)
         {
             this.messenger = messenger;
@@ -94,7 +94,7 @@ namespace Pathfinding.App.Console.ViewModel
         public string GetStatistics(IGraphPath path, PathfindingProcess algorithm)
         {
             var time = timer.Elapsed.ToString(@"mm\:ss\.fff");
-            string pathfindingInfo = string.Format(Languages.PathfindingStatisticsFormat, 
+            string pathfindingInfo = string.Format(Languages.PathfindingStatisticsFormat,
                 path.Count, path.Cost, visited);
             return string.Join("\t", algorithm, time, pathfindingInfo);
         }

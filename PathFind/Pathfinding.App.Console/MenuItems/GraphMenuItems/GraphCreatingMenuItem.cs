@@ -10,7 +10,6 @@ using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 using Shared.Random;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
@@ -59,7 +58,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public void Execute()
         {
-            var layers = CreateLayers();
+            var layers = GetLayers();
             var graph = selected.AssembleGraph(layers, width, length);
             messenger.Send(new CostRangeChangedMessage(costRange));
             messenger.Send(new GraphCreatedMessage(graph), MessageTokens.Screen);
@@ -69,7 +68,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public virtual bool CanBeExecuted() => selected != null && IsGraphSizeSet();
 
-        protected virtual ILayer<Graph2D<Vertex>, Vertex>[] CreateLayers()
+        protected virtual ILayer<Graph2D<Vertex>, Vertex>[] GetLayers()
         {
             return new ILayer<Graph2D<Vertex>, Vertex>[]
             {

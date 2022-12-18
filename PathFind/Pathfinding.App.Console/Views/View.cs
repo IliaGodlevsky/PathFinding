@@ -32,8 +32,8 @@ namespace Pathfinding.App.Console.Views
                 try
                 {
                     int index = InputItemIndex(options);
-                    var command = menuItems[index];
-                    command.Execute();
+                    var menuItem = menuItems[index];
+                    menuItem.Execute();
                 }
                 catch (ExitRequiredException)
                 {
@@ -44,7 +44,8 @@ namespace Pathfinding.App.Console.Views
 
         private (string Message, InclusiveValueRange<int> MenuRange) GetMenuOptions(IReadOnlyCollection<IMenuItem> menuItems)
         {
-            var menuList = menuItems.CreateMenuList((int)Math.Ceiling(menuItems.Count / 4.0));
+            int columnsNumber = (int)Math.Ceiling(menuItems.Count / 4.0);
+            var menuList = menuItems.CreateMenuList(columnsNumber);
             var menuRange = new InclusiveValueRange<int>(menuItems.Count, 1);
             var message = string.Concat(menuList, "\n", Languages.MenuOptionChoiceMsg);
             return (message, menuRange);
@@ -52,7 +53,9 @@ namespace Pathfinding.App.Console.Views
 
         private IReadOnlyList<IMenuItem> GetExecutableMenuItems()
         {
-            return unit.MenuItems.Where(item => item.CanBeExecuted()).ToReadOnly();
+            return unit.MenuItems
+                .Where(item => item.CanBeExecuted())
+                .ToReadOnly();
         }
 
         private int InputItemIndex((string Message, InclusiveValueRange<int> MenuRange) options)

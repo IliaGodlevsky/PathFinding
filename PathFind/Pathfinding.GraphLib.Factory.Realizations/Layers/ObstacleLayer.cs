@@ -27,8 +27,8 @@ namespace Pathfinding.GraphLib.Factory.Realizations.Layers
             int regularsCount = graph.Count - obstaclesCount;
             var obstacles = Enumerable.Repeat(true, obstaclesCount);
             var regulars = Enumerable.Repeat(false, regularsCount);
-            var layer = obstacles.Concat(regulars).Shuffle(Random.NextInt) .ToReadOnly();
-            graph.Zip(layer, CreateLayerItem).ToList().ForEach(SetObstacle);
+            var layer = obstacles.Concat(regulars).Shuffle(Random.NextInt).ToReadOnly();
+            graph.Zip(layer, CreateLayerItem).ForEach(SetObstacle);
         }
 
         private static (TVertex Vertex, bool Obstacle) CreateLayerItem(TVertex vertex, bool obstacle)

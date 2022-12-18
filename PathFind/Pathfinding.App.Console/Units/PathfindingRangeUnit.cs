@@ -1,11 +1,11 @@
 ﻿using Pathfinding.App.Console.Interface;
 using System.Collections.Generic;
 
-namespace Pathfinding.App.Console.ViewModel
+namespace Pathfinding.App.Console.Units
 {
     internal sealed class PathfindingRangeUnit : Unit
     {
-        public PathfindingRangeUnit(IReadOnlyCollection<IMenuItem> menuItems) 
+        public PathfindingRangeUnit(IReadOnlyCollection<IMenuItem> menuItems)
             : base(menuItems)
         {
 

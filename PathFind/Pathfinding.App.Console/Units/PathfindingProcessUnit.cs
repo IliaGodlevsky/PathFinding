@@ -15,17 +15,17 @@ using Shared.Primitives;
 using System;
 using System.Collections.Generic;
 
-namespace Pathfinding.App.Console.ViewModel
+namespace Pathfinding.App.Console.Units
 {
     internal sealed class PathfindingProcessUnit : Unit
     {
-        private readonly IMessenger messenger;       
+        private readonly IMessenger messenger;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         private readonly IInput<ConsoleKey> input;
         private readonly ILog log;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        public PathfindingProcessUnit(IReadOnlyCollection<IMenuItem> menuItems, IPathfindingRangeBuilder<Vertex> rangeBuilder, 
+        public PathfindingProcessUnit(IReadOnlyCollection<IMenuItem> menuItems, IPathfindingRangeBuilder<Vertex> rangeBuilder,
             IInput<ConsoleKey> input, IMessenger messenger, ILog log)
             : base(menuItems)
         {
@@ -43,7 +43,7 @@ namespace Pathfinding.App.Console.ViewModel
             using (var algorithm = factory.Create(rangeBuilder.Range))
             {
                 using (Cursor.HideCursor())
-                {                    
+                {
                     FindPath(algorithm);
                 }
             }

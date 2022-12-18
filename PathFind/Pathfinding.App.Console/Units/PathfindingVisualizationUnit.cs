@@ -13,23 +13,23 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Pathfinding.App.Console.ViewModel
+namespace Pathfinding.App.Console.Units
 {
     internal sealed class PathfindingVisualizationUnit : Unit
     {
         private readonly IMessenger messenger;
         private readonly ConsoleKeystrokesHook keyStrokeHook = new();
         private readonly IReadOnlyDictionary<ConsoleKey, IPathfindingAction> pathfindingActions;
-        public readonly IReadOnlyDictionary<ConsoleKey, IAnimationSpeedAction> animationActions;
+        private readonly IReadOnlyDictionary<ConsoleKey, IAnimationSpeedAction> animationActions;
 
         private PathfindingProcess algorithm = PathfindingProcess.Null;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
         private bool isVisualizationApplied = false;
         private TimeSpan animationDelay = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
 
-        public PathfindingVisualizationUnit(IReadOnlyCollection<IMenuItem> menuItems, IMessenger messenger, 
+        public PathfindingVisualizationUnit(IReadOnlyCollection<IMenuItem> menuItems, IMessenger messenger,
             IReadOnlyDictionary<ConsoleKey, IPathfindingAction> pathfindingActions,
-            IReadOnlyDictionary<ConsoleKey, IAnimationSpeedAction> animationActions) 
+            IReadOnlyDictionary<ConsoleKey, IAnimationSpeedAction> animationActions)
             : base(menuItems)
         {
             this.pathfindingActions = pathfindingActions;
@@ -94,8 +94,13 @@ namespace Pathfinding.App.Console.ViewModel
 
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
         {
-            pathfindingActions.GetOrDefault(e.PressedKey, NullPathfindingAction.Interface).Do(algorithm);
-            animationDelay = animationActions.GetOrDefault(e.PressedKey, NullAnimationAction.Instance).Do(animationDelay);
+            pathfindingActions
+                .GetOrDefault(e.PressedKey, NullPathfindingAction.Interface)
+                .Do(algorithm);
+
+            animationDelay = animationActions
+                .GetOrDefault(e.PressedKey, NullAnimationAction.Instance)
+                .Do(animationDelay);
         }
     }
 }

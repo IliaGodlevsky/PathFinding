@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Pathfinding.App.Console.ViewModel
+namespace Pathfinding.App.Console.Units
 {
     internal abstract class Unit : IUnit
     {
@@ -26,6 +26,9 @@ namespace Pathfinding.App.Console.ViewModel
                 .ToReadOnly();
         }
 
-        protected virtual IMenuItem GetExitMenuItem() => new ExitMenuItem();
+        protected virtual IMenuItem GetExitMenuItem()
+        {
+            return new ExitMenuItem();
+        }
     }
 }

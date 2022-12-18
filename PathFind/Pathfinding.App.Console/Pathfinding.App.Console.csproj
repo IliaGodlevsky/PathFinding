@@ -94,7 +94,6 @@
     <Compile Include="MenuItems\GraphMenuItems\SaveGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\SmoothGraphMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\GraphCreateMenuItem.cs" />
-    <Compile Include="MenuItems\MainMenuItems\LanguageMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\MainMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\PathfindingProcessMenuItem.cs" />
     <Compile Include="MenuItems\AnswerExitMenuItem.cs" />

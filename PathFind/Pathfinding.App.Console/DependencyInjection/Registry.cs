@@ -47,7 +47,6 @@ using Shared.Executable;
 using Shared.Random;
 using Shared.Random.Realizations;
 using System;
-using System.Globalization;
 
 using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
 
@@ -73,7 +72,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
             builder.RegisterType<ConsoleUserTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
 
-            builder.RegisterTypes(Units).SingleInstance().WithMetadata(UnitTypeKey, type => type)
+            builder.RegisterTypes(RegistrationConstants.Units).SingleInstance().WithMetadata(UnitTypeKey, type => type)
                 .AsSelf().AutoActivate().ConfigurePipeline(p => p.Use(new UnitConfigurationMiddlewear()));
 
             builder.RegisterType<MainUnitMenuItem>().AsSelf().InstancePerDependency();

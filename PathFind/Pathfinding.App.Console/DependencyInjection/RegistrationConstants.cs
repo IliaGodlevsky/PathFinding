@@ -1,4 +1,4 @@
-﻿using Pathfinding.App.Console.ViewModel;
+﻿using Pathfinding.App.Console.Units;
 using System;
 
 namespace Pathfinding.App.Console.DependencyInjection

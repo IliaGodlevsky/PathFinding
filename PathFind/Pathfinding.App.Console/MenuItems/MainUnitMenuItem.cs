@@ -1,5 +1,5 @@
 ﻿using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.ViewModel;
+using Pathfinding.App.Console.Units;
 using Pathfinding.Logging.Interface;
 
 namespace Pathfinding.App.Console.MenuItems

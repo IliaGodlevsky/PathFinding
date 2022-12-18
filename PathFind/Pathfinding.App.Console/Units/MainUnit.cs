@@ -11,7 +11,7 @@ using Shared.Executable;
 using System;
 using System.Collections.Generic;
 
-namespace Pathfinding.App.Console.ViewModel
+namespace Pathfinding.App.Console.Units
 {
     using FieldFactory = IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField>;
 
@@ -27,7 +27,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
-        public MainUnit(IReadOnlyCollection<IMenuItem> menuItems, FieldFactory fieldFactory, IMessenger messenger, 
+        public MainUnit(IReadOnlyCollection<IMenuItem> menuItems, FieldFactory fieldFactory, IMessenger messenger,
             IInput<Answer> input, IUndo undo, ILog log)
             : base(menuItems)
         {
@@ -75,7 +75,8 @@ namespace Pathfinding.App.Console.ViewModel
                 {
                     var position = new Coordinate2D(0, 0);
                     Cursor.SetPosition(position);
-                    System.Console.Write(new string(' ', System.Console.BufferWidth));
+                    System.Console.Write(new string(' ',
+                        System.Console.BufferWidth));
                     Cursor.SetPosition(position);
                     System.Console.WriteLine(Graph);
                 }
