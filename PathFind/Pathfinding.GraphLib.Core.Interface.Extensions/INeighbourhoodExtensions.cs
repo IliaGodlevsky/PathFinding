@@ -20,7 +20,10 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
             {
                 return neighbour.Juxtapose(graph.DimensionsSizes, IsWithin);
             }
-            return self.Where(IsWithinGraph).Select(graph.Get).OfType<IVertex>().ToReadOnly();
+            return self.Where(IsWithinGraph)
+                .Select(graph.Get)
+                .OfType<IVertex>()
+                .ToReadOnly();
         }
     }
 }

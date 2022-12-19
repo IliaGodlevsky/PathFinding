@@ -15,7 +15,7 @@ namespace Shared.Random.Extensions
         /// <returns>A random int within <paramref name="range"/></returns>
         public static int NextInt(this IRandom random, InclusiveValueRange<int> range)
         {
-            return (int)(random.NextUint() % (range.Amplitude() + 1)) + range.LowerValueOfRange;
+            return (int)(random.NextUInt() % (range.Amplitude() + 1)) + range.LowerValueOfRange;
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Shared.Random.Extensions
         /// the <paramref name="range"/></returns>
         public static double NextDouble(this IRandom random, InclusiveValueRange<double> range)
         {
-            return range.Amplitude() * ((double)random.NextUint() / uint.MaxValue) + range.LowerValueOfRange;
+            return range.Amplitude() * ((double)random.NextUInt() / uint.MaxValue) + range.LowerValueOfRange;
         }
 
         public static TimeSpan NextTimeSpan(this IRandom random, InclusiveValueRange<TimeSpan> range)

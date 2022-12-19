@@ -3,12 +3,14 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
+using Shared.Primitives.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 {
+    [Order(2)]
     internal sealed class ShowHistoryMenuItem : IMenuItem
     {
         private readonly IMessenger messenger;
@@ -18,8 +20,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         private bool isHistoryApplied = false;
 
         private IDisplayable MenuList => pages.Values.Append(Languages.Quit).CreateMenuList(columnsNumber: 1);
-
-        public int Order => 2;
 
         public ShowHistoryMenuItem(IMessenger messenger, IInput<int> input)
         {

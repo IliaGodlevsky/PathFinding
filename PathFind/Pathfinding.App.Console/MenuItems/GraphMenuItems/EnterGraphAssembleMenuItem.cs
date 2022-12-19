@@ -6,6 +6,7 @@ using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
+using Shared.Primitives.Attributes;
 using Shared.Primitives.ValueRange;
 using System.Collections.Generic;
 
@@ -13,11 +14,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     using GraphAssemble = IGraphAssemble<Graph2D<Vertex>, Vertex>;
 
+    [Order(2)]
     internal sealed class EnterGraphAssembleMenuItem : GraphMenuItem
     {
         private readonly IReadOnlyList<GraphAssemble> assembles;
-
-        public override int Order => 2;
 
         public EnterGraphAssembleMenuItem(IReadOnlyList<GraphAssemble> assembles, 
             IMessenger messenger, IInput<int> input)

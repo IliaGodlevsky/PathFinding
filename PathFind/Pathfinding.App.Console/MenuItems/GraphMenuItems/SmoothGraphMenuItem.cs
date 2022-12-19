@@ -8,9 +8,11 @@ using Pathfinding.GraphLib.Smoothing.Interface;
 using System.Collections.Generic;
 using Pathfinding.GraphLib.Smoothing;
 using Pathfinding.App.Console.Localization;
+using Shared.Primitives.Attributes;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
+    [Order(8)]
     internal sealed class SmoothGraphMenuItem : IMenuItem
     {
         private readonly IMeanCost meanAlgorithm;
@@ -20,8 +22,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private Graph2D<Vertex> graph  = Graph2D<Vertex>.Empty;
 
         private IReadOnlyList<ISmoothLevel> SmoothLevels => ConsoleSmoothLevels.Levels;
-
-        public int Order => 8;
 
         public SmoothGraphMenuItem(IMeanCost meanAlgorithm, IMessenger messenger, IInput<int> input)
         {

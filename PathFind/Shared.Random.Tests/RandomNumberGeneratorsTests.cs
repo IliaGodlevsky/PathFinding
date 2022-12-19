@@ -17,7 +17,7 @@ namespace Shared.Random.Tests
 
             while (iterations-- > 0)
             {
-                array[iterations] = random.NextUint();
+                array[iterations] = random.NextUInt();
             }
             var uniqueValues = array.Distinct().ToArray();
 

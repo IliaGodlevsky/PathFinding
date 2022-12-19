@@ -11,8 +11,6 @@ namespace Pathfinding.App.Console.MenuItems
         private readonly TUnit unit;
         private readonly ILog log;
 
-        public abstract int Order { get; }
-
         protected UnitDisplayMenuItem(IViewFactory viewFactory,
             TUnit unit, ILog log)
         {

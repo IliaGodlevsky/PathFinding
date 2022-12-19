@@ -18,12 +18,6 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
             return !vertex.IsIsolated() && !range.IsInRange(vertex);
         }
 
-        public static bool IsTransit<TVertex>(this IPathfindingRange<TVertex> range, TVertex vertex)
-            where TVertex : IVertex
-        {
-            return range.Transit.Contains(vertex);
-        }
-
         public static bool HasSourceAndTargetSet<TVertex>(this IPathfindingRange<TVertex> range)
             where TVertex : IVertex
         {

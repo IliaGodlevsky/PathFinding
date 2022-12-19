@@ -4,15 +4,15 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
+using Shared.Primitives.Attributes;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingStatisticsMenuItems
 {
+    [Order(1)]
     internal sealed class ApplyStatisticsMenuItem : IMenuItem
     {
         private readonly IMessenger messenger;
         private readonly IInput<Answer> answerInput;
-
-        public int Order => 1;
 
         public ApplyStatisticsMenuItem(IMessenger messenger, IInput<Answer> answerInput) 
         {

@@ -21,8 +21,6 @@ namespace Pathfinding.App.Console.MenuItems
 
         protected Dictionary<ConsoleKey, IVertexAction> Actions { get; } = new();
 
-        public abstract int Order { get; }
-
         protected SwitchVerticesMenuItem(IMessenger messenger, IInput<ConsoleKey> keyInput)
         {
             this.messenger = messenger;

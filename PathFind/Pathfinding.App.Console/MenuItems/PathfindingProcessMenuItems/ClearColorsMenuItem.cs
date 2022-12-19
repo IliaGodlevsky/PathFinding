@@ -6,16 +6,16 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Visualization.Extensions;
+using Shared.Primitives.Attributes;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
+    [Order(5)]
     internal sealed class ClearColorsMenuItem : IMenuItem
     {
         private readonly IMessenger messenger;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
-
-        public int Order => 5;
 
         public ClearColorsMenuItem(IMessenger messenger, IPathfindingRangeBuilder<Vertex> rangeBuilder)
         {

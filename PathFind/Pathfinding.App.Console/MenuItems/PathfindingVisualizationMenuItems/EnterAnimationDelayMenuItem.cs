@@ -3,11 +3,13 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
+using Shared.Primitives.Attributes;
 using Shared.Primitives.ValueRange;
 using System;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
 {
+    [Order(2)]
     internal sealed class EnterAnimationDelayMenuItem : IMenuItem
     {
         private readonly IInput<TimeSpan> spanInput;
@@ -16,8 +18,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
         private InclusiveValueRange<TimeSpan> DelayRange { get; }
 
         private bool IsVisualizationApplied { get; set; }
-
-        public int Order => 2;
 
         public EnterAnimationDelayMenuItem(IInput<TimeSpan> spanInput, IMessenger messenger)
         {

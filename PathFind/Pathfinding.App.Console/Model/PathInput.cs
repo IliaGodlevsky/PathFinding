@@ -5,18 +5,23 @@ using Pathfinding.GraphLib.Serialization.Core.Interface;
 
 namespace Pathfinding.App.Console.Model
 {
-    internal sealed class PathInput : IPathInput, IRequireStringInput
+    internal sealed class PathInput : IPathInput
     {
-        public IInput<string> StringInput { get; set; }
+        private readonly IInput<string> input;
+
+        public PathInput(IInput<string> input)
+        {
+            this.input = input;
+        }
 
         public string InputLoadPath()
         {
-            return StringInput.Input(Languages.InputPathMsg);
+            return input.Input(Languages.InputPathMsg);
         }
 
         public string InputSavePath()
         {
-            return StringInput.Input(Languages.InputPathMsg);
+            return input.Input(Languages.InputPathMsg);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Shared.Random.Realizations
             indexRange = new InclusiveValueRange<int>(ArrayLength - 1, 1);
         }
 
-        public uint NextUint()
+        public uint NextUInt()
         {
             inext = indexRange.ReturnInRange(++inext, ReturnOptions.Cycle);
             inextp = indexRange.ReturnInRange(++inextp, ReturnOptions.Cycle);

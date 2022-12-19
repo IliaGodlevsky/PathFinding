@@ -65,12 +65,6 @@
     <Compile Include="Interface\IDisplayable.cs" />
     <Compile Include="Interface\IFramedAxis.cs" />
     <Compile Include="Interface\IInput.cs" />
-    <Compile Include="Interface\IProperty.cs" />
-    <Compile Include="Interface\IRequireAnswerInput.cs" />
-    <Compile Include="Interface\IRequireConsoleKeyInput.cs" />
-    <Compile Include="Interface\IRequireIntInput.cs" />
-    <Compile Include="Interface\IRequireStringInput.cs" />
-    <Compile Include="Interface\IRequireTimeSpanInput.cs" />
     <Compile Include="Interface\IVertexAction.cs" />
     <Compile Include="Interface\IVIewFactory.cs" />
     <Compile Include="Interface\IUnit.cs" />

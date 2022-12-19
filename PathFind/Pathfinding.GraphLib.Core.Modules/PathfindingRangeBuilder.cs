@@ -40,7 +40,8 @@ namespace Pathfinding.GraphLib.Core.Modules
 
         private void ExecuteFirst(IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> commands, TVertex vertex)
         {
-            commands.FirstOrDefault(command => command.CanExecute(Range, vertex))?.Execute(Range, vertex);
+            commands.FirstOrDefault(command => command.CanExecute(Range, vertex))
+                ?.Execute(Range, vertex);
         }
 
         private IReadOnlyCollection<IUndoCommand<TVertex>> GetUndoCommands()

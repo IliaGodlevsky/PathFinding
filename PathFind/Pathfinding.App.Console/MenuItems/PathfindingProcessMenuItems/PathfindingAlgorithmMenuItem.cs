@@ -18,14 +18,13 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
     using AlgorithmFactory = IAlgorithmFactory<PathfindingProcess>;
 
+    [Order(1)]
     internal sealed class PathfindingAlgorithmMenuItem : IMenuItem
     {
         private readonly IReadOnlyList<AlgorithmFactory> factories;
         private readonly IMessenger messenger;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         private readonly IInput<int> input;
-
-        public int Order => 1;
 
         public PathfindingAlgorithmMenuItem(IEnumerable<AlgorithmFactory> factories, 
             IMessenger messenger, IPathfindingRangeBuilder<Vertex> rangeBuilder, IInput<int> input)

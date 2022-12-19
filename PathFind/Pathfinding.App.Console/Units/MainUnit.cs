@@ -27,7 +27,8 @@ namespace Pathfinding.App.Console.Units
 
         private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
-        public MainUnit(IReadOnlyCollection<IMenuItem> menuItems, FieldFactory fieldFactory, IMessenger messenger,
+        public MainUnit(IReadOnlyCollection<IMenuItem> menuItems, 
+            FieldFactory fieldFactory, IMessenger messenger,
             IInput<Answer> input, IUndo undo, ILog log)
             : base(menuItems)
         {

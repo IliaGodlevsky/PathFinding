@@ -18,9 +18,10 @@ namespace Pathfinding.Visualization.Extensions
                 new RestoreTargetVisual<TVertex>()
             };
 
-            foreach (TVertex vertex in range)
+            foreach (var vertex in range)
             {
-                commands.FirstOrDefault(command => command.CanExecute(range, vertex))?.Execute(vertex);
+                commands.FirstOrDefault(command => command.CanExecute(range, vertex))
+                    ?.Execute(vertex);
             }
         }
     }

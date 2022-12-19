@@ -4,14 +4,14 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
+using Shared.Primitives.Attributes;
 using System;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
+    [Order(10)]
     internal sealed class ReverseVertexMenuItem : SwitchVerticesMenuItem
     {
-        public override int Order => 10;
-
         public ReverseVertexMenuItem(IMessenger messenger, 
             IPathfindingRangeBuilder<Vertex> rangeBuilder, 
             IInput<ConsoleKey> keyInput) 

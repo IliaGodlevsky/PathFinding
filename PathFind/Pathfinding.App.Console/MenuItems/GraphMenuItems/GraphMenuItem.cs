@@ -1,10 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
@@ -12,8 +7,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     {
         protected readonly IMessenger messenger;
         protected readonly IInput<int> input;
-
-        public abstract int Order { get; }
 
         protected GraphMenuItem(IMessenger messenger, IInput<int> input)
         {

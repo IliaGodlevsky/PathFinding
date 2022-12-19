@@ -10,8 +10,6 @@ namespace Pathfinding.App.Console.MenuItems
     {
         private readonly IInput<Answer> input;
 
-        public int Order => int.MaxValue;
-
         public AnswerExitMenuItem(IInput<Answer> input)
         {
             this.input = input;

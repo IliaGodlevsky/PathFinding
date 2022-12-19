@@ -71,7 +71,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel
 
         private void AddPathfindingRange(PathfindingRangeChosenMessage message)
         {
-            history.AddPathfindingRange(message.Id, message.PathfindingRange.AsEnumerable());
+            history.AddPathfindingRange(message.Id, message.PathfindingRange);
         }
 
         private void PathFound(PathFoundMessage message)

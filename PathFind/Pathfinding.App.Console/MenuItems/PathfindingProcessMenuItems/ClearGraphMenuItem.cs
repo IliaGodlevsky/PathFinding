@@ -6,16 +6,16 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Visualization.Extensions;
 using Shared.Executable;
+using Shared.Primitives.Attributes;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
+    [Order(6)]
     internal sealed class ClearGraphMenuItem : IMenuItem
     {
         private readonly IMessenger messenger;
         private readonly IUndo undo;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
-
-        public int Order => 6;
 
         public ClearGraphMenuItem(IMessenger messenger, IUndo undo)
         {

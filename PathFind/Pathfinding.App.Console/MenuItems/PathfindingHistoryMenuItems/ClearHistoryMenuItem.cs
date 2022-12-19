@@ -2,9 +2,11 @@
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
+using Shared.Primitives.Attributes;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 {
+    [Order(3)]
     internal sealed class ClearHistoryMenuItem : IMenuItem
     {
         private readonly IMessenger messenger;
@@ -16,8 +18,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             this.messenger = messenger;
             this.messenger.Register<ApplyHistoryMessage>(this, OnHistoryApplied);
         }
-
-        public int Order => 3;
 
         public bool CanBeExecuted() => isHistoryApplied;
 

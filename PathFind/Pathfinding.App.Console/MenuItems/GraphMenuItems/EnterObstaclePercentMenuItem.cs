@@ -3,13 +3,13 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
+using Shared.Primitives.Attributes;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
+    [Order(4)]
     internal sealed class EnterObstaclePercentMenuItem : GraphMenuItem
     {
-        public override int Order => 4;
-
         public EnterObstaclePercentMenuItem(IMessenger messenger, IInput<int> input) 
             : base(messenger, input)
         {

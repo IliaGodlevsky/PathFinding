@@ -14,7 +14,7 @@ namespace Shared.Executable
 
         public void Undo()
         {
-            commands.ForEach(command=>command.Undo());
+            commands.ForEach(command => command.Undo());
         }
     }
 }

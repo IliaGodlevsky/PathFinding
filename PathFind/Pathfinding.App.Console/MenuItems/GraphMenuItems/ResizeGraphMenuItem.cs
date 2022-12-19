@@ -4,17 +4,17 @@ using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
+using Shared.Primitives.Attributes;
 using Shared.Random;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
+    [Order(2)]
     internal sealed class ResizeGraphMenuItem : GraphCreatingMenuItem
     {
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
-
-        public override int Order => 2;
 
         public ResizeGraphMenuItem(IMessenger messenger, IRandom random, 
             IVertexCostFactory costFactory, INeighborhoodFactory neighborhoodFactory)

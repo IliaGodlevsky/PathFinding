@@ -29,8 +29,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected int length = 0;
         protected int obstaclePercent = 0;
 
-        public abstract int Order { get; }
-
         protected GraphCreatingMenuItem(IMessenger messenger, IRandom random,
             IVertexCostFactory costFactory, INeighborhoodFactory neighborhoodFactory)
         {

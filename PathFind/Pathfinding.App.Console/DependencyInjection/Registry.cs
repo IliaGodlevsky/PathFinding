@@ -58,7 +58,7 @@ namespace Pathfinding.App.Console.DependencyInjection
 
     internal static class Registry
     {
-        private static readonly Lazy<IContainer> container = new Lazy<IContainer>(Configure);
+        private static readonly Lazy<IContainer> container = new(Configure);
 
         public static IContainer Container => container.Value;
 
@@ -159,7 +159,7 @@ namespace Pathfinding.App.Console.DependencyInjection
 
             builder.RegisterType<InFileSerializationModule<Graph2D<Vertex>, Vertex>>()
                 .As<IGraphSerializationModule<Graph2D<Vertex>, Vertex>>().SingleInstance();
-            builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance().PropertiesAutowired();
+            builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>().As<GraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer<Graph2D<Vertex>, Vertex>, GraphSerializer>();
             builder.RegisterDecorator<CryptoGraphSerializer<Graph2D<Vertex>, Vertex>, GraphSerializer>();

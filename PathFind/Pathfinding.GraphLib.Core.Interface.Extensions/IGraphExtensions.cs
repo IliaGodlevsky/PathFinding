@@ -36,15 +36,6 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
             return self.GetObstacles().Count();
         }
 
-        public static int GetAvailableTransitVerticesNumber<TVertex>(this IGraph<TVertex> graph)
-            where TVertex : IVertex
-        {
-            const int NumberOfRequiredEndPoints = 2;
-            int isolatedCount = graph.Where(vertex => vertex.IsIsolated()).Count();
-            int number = graph.Count - (isolatedCount + NumberOfRequiredEndPoints);
-            return number > 0 ? number : 0;
-        }
-
         public static int GetNumberOfNotIsolatedVertices<TVertex>(this IGraph<TVertex> graph)
             where TVertex : IVertex
         {

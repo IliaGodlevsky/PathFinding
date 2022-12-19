@@ -43,11 +43,5 @@ namespace Pathfinding.Visualization.Extensions
         {
             await Task.Run(() => path.VisualizeAsPath()).ConfigureAwait(false);
         }
-
-        public static void Refresh<T>(this IGraph<T> graph)
-            where T : IVertex, IVisualizable
-        {
-            graph.ForEach(vertex => vertex.RestoreDefaultVisualState());
-        }
     }
 }

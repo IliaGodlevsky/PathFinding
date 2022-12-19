@@ -22,7 +22,7 @@ namespace Shared.Random.Realizations
 
         }
 
-        public uint NextUint()
+        public uint NextUInt()
         {
             return state = state * Multiplier + Increment;
         }

@@ -25,7 +25,7 @@ namespace Shared.Random.Realizations
             generator.GetBytes(buffer);
         }
 
-        public uint NextUint()
+        public uint NextUInt()
         {
             uint number = BitConverter.ToUInt32(buffer, currentBufferPosition);
             currentBufferPosition += PositionIncrement;

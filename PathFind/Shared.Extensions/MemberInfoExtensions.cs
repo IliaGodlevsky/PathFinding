@@ -20,6 +20,8 @@ namespace Shared.Extensions
         /// <exception cref="NotSupportedException"></exception>
         /// <exception cref="AmbiguousMatchException"></exception>
         /// <exception cref="TypeLoadException"></exception>
+        /// <exception cref="FieldAccessException"></exception>
+        /// <exception cref="TargetException"></exception>
         /// <remarks>A public static field is considered as a default value of an attribute</remarks>
         public static TAttribute GetAttributeOrDefault<TAttribute>(this MemberInfo self, 
             bool inherit = false, string defaultFieldName = "Default")
@@ -36,34 +38,6 @@ namespace Shared.Extensions
             return field == null 
                 ? default(TAttribute) 
                 : (TAttribute)field.GetValue(null);
-        }
-
-        /// <summary>
-        /// Attemps to create a delegate from information about method
-        /// </summary>
-        /// <typeparam name="TDelegate"></typeparam>
-        /// <param name="self">an information about method from which delegate should be created</param>
-        /// <param name="target">an object, from which method the information was taken</param>
-        /// <param name="action">an output parametre, which contains a result of 
-        /// operation or null if delegate can't be created</param>
-        /// <returns>true if delegate was created, otherwise - false </returns>
-        public static bool TryCreateDelegate<TDelegate>(this MethodInfo self, object target,
-            out TDelegate action) where TDelegate : Delegate
-        {
-            try
-            {
-                if (self == null)
-                {
-                    throw new ArgumentNullException(nameof(self));
-                }
-                action = (TDelegate)self.CreateDelegate(typeof(TDelegate), target);
-                return true;
-            }
-            catch
-            {
-                action = null;
-                return false;
-            }
         }
     }
 }

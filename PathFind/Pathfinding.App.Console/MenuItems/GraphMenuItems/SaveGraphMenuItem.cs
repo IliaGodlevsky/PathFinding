@@ -6,18 +6,18 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
+using Shared.Primitives.Attributes;
 using System;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
+    [Order(7)]
     internal sealed class SaveGraphMenuItem : IMenuItem
     {
         private readonly IMessenger messenger;
         private readonly IGraphSerializationModule<Graph2D<Vertex>, Vertex> module;
         private readonly ILog log;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
-
-        public int Order => 7;
 
         public SaveGraphMenuItem(IMessenger messenger, IGraphSerializationModule<Graph2D<Vertex>, Vertex> module, ILog log)
         {

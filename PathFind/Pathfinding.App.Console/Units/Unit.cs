@@ -1,6 +1,7 @@
 ﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.MenuItems;
 using Shared.Extensions;
+using Shared.Primitives.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace Pathfinding.App.Console.Units
         {
             return menuItems
                 .Append(GetExitMenuItem())
-                .OrderBy(item => item.Order)
+                .OrderByOrderAttribute()
                 .ToReadOnly();
         }
 

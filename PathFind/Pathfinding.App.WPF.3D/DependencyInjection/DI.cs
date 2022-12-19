@@ -58,7 +58,7 @@ namespace Pathfinding.App.WPF._3D.DependencyInjection
             var builder = new ContainerBuilder();
 
             builder.RegisterType<MainWindowViewModel>().AsSelf().AsImplementedInterfaces().SingleInstance();
-            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IViewModel>()).AsSelf().InstancePerDependency().PropertiesAutowired();
+            builder.RegisterAssemblyTypes(Assemblies).AssignableTo<IViewModel>().AsSelf().InstancePerDependency().PropertiesAutowired();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
@@ -104,7 +104,7 @@ namespace Pathfinding.App.WPF._3D.DependencyInjection
             builder.RegisterDecorator<CryptoGraphSerializer<Graph3D<Vertex3D>, Vertex3D>, IGraphSerializer<Graph3D<Vertex3D>, Vertex3D>>();
             builder.RegisterType<Vertex3DFromInfoFactory>().As<IVertexFromInfoFactory<Vertex3D>>().SingleInstance();
 
-            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<AlgorithmFactory>()).As<AlgorithmFactory>().SingleInstance();
+            builder.RegisterAssemblyTypes(Assemblies).AssignableTo<AlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
 
             return builder.Build();
         }

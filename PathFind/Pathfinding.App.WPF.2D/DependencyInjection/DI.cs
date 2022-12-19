@@ -62,7 +62,7 @@ namespace WPFVersion.DependencyInjection
             var builder = new ContainerBuilder();
             //View and view models registration
             builder.RegisterType<MainWindowViewModel>().As<ICache<Graph2D<Vertex>>>().AsSelf().SingleInstance();
-            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<IViewModel>()).AsSelf().InstancePerDependency().PropertiesAutowired();
+            builder.RegisterAssemblyTypes(Assemblies).AssignableTo<IViewModel>().AsSelf().InstancePerDependency().PropertiesAutowired();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
             // Common
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
@@ -116,7 +116,7 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterDecorator<ThreadSafeGraphSerializer<Graph, Vertex>, GraphSerializer>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory<Vertex>>().SingleInstance();
             // Algorithms registrations
-            builder.RegisterAssemblyTypes(Assemblies).Where(type => type.Implements<AlgorithmFactory>())
+            builder.RegisterAssemblyTypes(Assemblies).AssignableTo<AlgorithmFactory>()
                 .As<AlgorithmFactory>().SingleInstance();
             builder.RegisterType<DefaultStepRule>().As<IStepRule>().SingleInstance();
             builder.RegisterDecorator<CardinalStepRule, IStepRule>();

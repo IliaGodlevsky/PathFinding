@@ -12,6 +12,6 @@
         /// </summary>
         /// <returns>An integer between <see cref="uint.MinValue"/> 
         /// and <see cref="uint.MaxValue"/></returns>
-        uint NextUint();
+        uint NextUInt();
     }
 }

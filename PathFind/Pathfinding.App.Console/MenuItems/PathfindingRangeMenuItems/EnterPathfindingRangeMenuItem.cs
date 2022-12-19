@@ -6,15 +6,15 @@ using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Shared.Extensions;
+using Shared.Primitives.Attributes;
 using System;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
 {
+    [Order(1)]
     internal sealed class EnterPathfindingRangeMenuItem : SwitchVerticesMenuItem
     {
-        public override int Order => 1;
-
         public EnterPathfindingRangeMenuItem(IMessenger messenger, 
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
             IReadOnlyDictionary<ConsoleKey, IVertexAction> actions,

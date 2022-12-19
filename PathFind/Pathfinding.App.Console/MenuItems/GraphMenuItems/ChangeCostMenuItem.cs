@@ -2,14 +2,14 @@
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Model.VertexActions;
+using Shared.Primitives.Attributes;
 using System;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
+    [Order(9)]
     internal sealed class ChangeCostMenuItem : SwitchVerticesMenuItem
     {
-        public override int Order => 9;
-
         public ChangeCostMenuItem(IMessenger messenger, IInput<ConsoleKey> keyInput)
             : base(messenger, keyInput)
         {

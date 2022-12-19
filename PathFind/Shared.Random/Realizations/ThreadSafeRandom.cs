@@ -15,11 +15,11 @@
             syncRoot = new object();
         }
 
-        public uint NextUint()
+        public uint NextUInt()
         {
             lock (syncRoot)
             {
-                return random.NextUint();
+                return random.NextUInt();
             }
         }
     }
