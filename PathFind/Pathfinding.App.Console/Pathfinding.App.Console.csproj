@@ -66,7 +66,7 @@
     <Compile Include="Interface\IFramedAxis.cs" />
     <Compile Include="Interface\IInput.cs" />
     <Compile Include="Interface\IVertexAction.cs" />
-    <Compile Include="Interface\IVIewFactory.cs" />
+    <Compile Include="Interface\IViewFactory.cs" />
     <Compile Include="Interface\IUnit.cs" />
     <Compile Include="Localization\Languages.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -167,7 +167,6 @@
     <Compile Include="Model\VertexActions\IncludeInRangeAction.cs" />
     <Compile Include="Model\VertexActions\IncreaseCostAction.cs" />
     <Compile Include="Model\VertexActions\MarkTransitToReplaceAction.cs" />
-    <Compile Include="Model\VertexActions\NullVertexAction.cs" />
     <Compile Include="Model\VertexActions\ReplaceTransitVertexAction.cs" />
     <Compile Include="Model\VertexActions\ReverseVertexAction.cs" />
     <Compile Include="Model\VertexFactory.cs" />

@@ -82,7 +82,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         protected virtual IGraphPath GetSubPath()
         {
-            var traces = new Dictionary<ICoordinate, IVertex>(this.traces);
+            var traces = this.traces.ToDictionary().ToReadOnly();
             return new GraphPath(traces, CurrentRange.Target);
         }
 

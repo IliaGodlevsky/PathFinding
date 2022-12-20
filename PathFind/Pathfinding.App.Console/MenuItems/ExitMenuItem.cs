@@ -1,7 +1,6 @@
 ﻿using Pathfinding.App.Console.Exceptions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
-using Shared.Primitives.Attributes;
 
 namespace Pathfinding.App.Console.MenuItems
 {

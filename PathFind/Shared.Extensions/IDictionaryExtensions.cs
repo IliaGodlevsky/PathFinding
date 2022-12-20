@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Shared.Extensions
 {
@@ -13,7 +14,7 @@ namespace Shared.Extensions
 
         public static TValue GetOrDefault<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> self, TKey key, TValue defaultValue = default)
         {
-            return self.TryGetValue(key, out var value) ? value : defaultValue;
+            return self.GetOrDefault(key, () => defaultValue);
         }
 
         public static TValue GetOrEmpty<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> self, TKey key)
@@ -33,6 +34,11 @@ namespace Shared.Extensions
             value = new TValue();
             self.Add(key, value);
             return value;
+        }
+
+        public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dictionary)
+        {
+            return dictionary.ToDictionary(item => item.Key, item => item.Value);
         }
     }
 }

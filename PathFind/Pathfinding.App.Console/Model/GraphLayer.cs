@@ -1,4 +1,5 @@
-﻿using Pathfinding.GraphLib.Core.Realizations.Graphs;
+﻿using Pathfinding.GraphLib.Core.Interface.Comparers;
+using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
 using Shared.Extensions;
 using System.Linq;
@@ -16,8 +17,9 @@ namespace Pathfinding.App.Console.Model
 
         public void Overlay(Graph2D<Vertex> graph)
         {
+            var comparer = new CoordinateEqualityComparer();
             layer.Select(vertex => vertex.Position)
-                .Intersect(graph.Select(vertex => vertex.Position))
+                .Intersect(graph.Select(vertex => vertex.Position), comparer)
                 .ForEach(coordinate =>
                 {
                     var vertex = graph.Get(coordinate);
