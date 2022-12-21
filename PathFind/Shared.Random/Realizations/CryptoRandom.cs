@@ -9,37 +9,35 @@ namespace Shared.Random.Realizations
     /// </summary>
     public sealed class CryptoRandom : IRandom, IDisposable
     {
-        private const int PositionIncrement = 4;
-        private const int MaxBufferSize = 512;
-
+        private readonly int increment = 4;
+        private readonly int maxBufferSize = 2048;
         private readonly byte[] buffer;
-        private readonly RandomNumberGenerator generator;
+        private readonly RandomNumberGenerator rng;
 
-        private int currentBufferPosition;
+        private int currentPosition;
 
         public CryptoRandom()
         {
-            generator = RandomNumberGenerator.Create();
-            buffer = new byte[MaxBufferSize];
-            currentBufferPosition = 0;
-            generator.GetBytes(buffer);
+            rng = RandomNumberGenerator.Create();
+            buffer = new byte[maxBufferSize];
+            currentPosition = -increment;
+            rng.GetBytes(buffer);
         }
 
         public uint NextUInt()
         {
-            uint number = BitConverter.ToUInt32(buffer, currentBufferPosition);
-            currentBufferPosition += PositionIncrement;
-            if (currentBufferPosition >= MaxBufferSize)
+            currentPosition += increment;
+            if (currentPosition >= maxBufferSize)
             {
-                currentBufferPosition = 0;
-                generator.GetBytes(buffer);
+                currentPosition = 0;
+                rng.GetBytes(buffer);
             }
-            return number;
+            return BitConverter.ToUInt32(buffer, currentPosition);
         }
 
         public void Dispose()
         {
-            generator.Dispose();
+            rng.Dispose();
         }
     }
 }

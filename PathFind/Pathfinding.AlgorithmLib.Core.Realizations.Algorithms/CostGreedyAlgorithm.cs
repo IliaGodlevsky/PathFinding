@@ -18,6 +18,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
         {
 
         }
+
         public CostGreedyAlgorithm(IEnumerable<IVertex> pathfindingRange, IStepRule stepRule)
             : base(pathfindingRange)
         {

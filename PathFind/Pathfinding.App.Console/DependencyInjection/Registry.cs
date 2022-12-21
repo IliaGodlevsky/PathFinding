@@ -130,7 +130,7 @@ namespace Pathfinding.App.Console.DependencyInjection
 
             builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
-            builder.RegisterType<PseudoRandom>().As<IRandom>().SingleInstance();
+            builder.RegisterType<CryptoRandom>().As<IRandom>().SingleInstance();
             builder.RegisterType<RootMeanSquareCost>().As<IMeanCost>().SingleInstance();
 
             builder.RegisterType<VisualPathfindingRange<Vertex>>().As<IPathfindingRange<Vertex>>().SingleInstance();

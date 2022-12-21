@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="CompositeUndo.cs" />
     <Compile Include="IExecutable.cs" />
-    <Compile Include="IExecutionCheck.cs" />
     <Compile Include="IUndo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

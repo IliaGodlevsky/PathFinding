@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>Latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>Latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -90,6 +92,10 @@
       <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.NullObjects\Pathfinding.GraphLib.Core.NullObjects.csproj">
+      <Project>{67CCD24F-A5C1-41F9-9FE8-FC8C4C818646}</Project>
+      <Name>Pathfinding.GraphLib.Core.NullObjects</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Shared.Collections\Shared.Collections.csproj">
       <Project>{4debd450-feae-49e3-9961-06169d59dc03}</Project>
       <Name>Shared.Collections</Name>
@@ -97,6 +103,10 @@
     <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
       <Project>{cd11d46e-4675-4090-b50b-a85ffa3d1d2c}</Project>
       <Name>Shared.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Primitives\Shared.Primitives.csproj">
+      <Project>{30973320-9F61-45FB-8C75-3256ADB1BFB1}</Project>
+      <Name>Shared.Primitives</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
