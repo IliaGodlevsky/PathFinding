@@ -1,4 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Shared.Extensions;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,10 +16,8 @@ namespace Pathfinding.GraphLib.Serialization.Core.Interface
             public int Count => coordinates.Count;
 
             public Neighborhood(IReadOnlyCollection<IVertex> vertices)
+                : this(vertices.GetCoordinates().ToArray())
             {
-                this.coordinates = vertices
-                    .Select(vertex => vertex.Position)
-                    .ToReadOnly();
             }
 
             public Neighborhood(IReadOnlyCollection<ICoordinate> coordinates)
@@ -46,13 +45,18 @@ namespace Pathfinding.GraphLib.Serialization.Core.Interface
         public INeighborhood Neighbourhood { get; }
 
         public VertexSerializationInfo(IVertex vertex)
-            : this(vertex.IsObstacle, vertex.Cost, vertex.Position, new Neighborhood(vertex.Neighbours))
+            : this(vertex.IsObstacle, 
+                  vertex.Cost, 
+                  vertex.Position, 
+                  new Neighborhood(vertex.Neighbours))
         {
 
         }
 
-        public VertexSerializationInfo(bool isObstacle, IVertexCost cost,
-            ICoordinate position, IReadOnlyCollection<ICoordinate> neighborhood)
+        public VertexSerializationInfo(bool isObstacle, 
+            IVertexCost cost,
+            ICoordinate position, 
+            IReadOnlyCollection<ICoordinate> neighborhood)
         {
             IsObstacle = isObstacle;
             Cost = cost;

@@ -122,6 +122,7 @@
     <Compile Include="DependencyInjection\RegistrationConstants.cs" />
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="Model\MessageBoxLog.cs" />
+    <Compile Include="Model\ModelType.cs" />
     <Compile Include="Model\PathfindingHistoryVolume.cs" />
     <Compile Include="Model\PathfindingRangeBuilderSubscription.cs" />
     <Compile Include="Model\VertexReverseModuleSubscription.cs" />
@@ -210,7 +211,6 @@
     <Compile Include="Converters\RotationStateConverter.cs" />
     <Compile Include="Converters\TimeSpanMillisecondsConverter.cs" />
     <Compile Include="DependencyInjection\DI.cs" />
-    <Compile Include="Extensions\AlgorithmViewModelExtensions.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />

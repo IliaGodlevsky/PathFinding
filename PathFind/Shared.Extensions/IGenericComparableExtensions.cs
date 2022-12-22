@@ -31,7 +31,8 @@ namespace Shared.Extensions
         public static bool IsBetween<T>(this T value, T upper, T lower)
             where T : IComparable<T>
         {
-            return value.IsLessOrEqual(upper) && value.IsGreaterOrEqual(lower);
+            return value.IsLessOrEqual(upper) 
+                && value.IsGreaterOrEqual(lower);
         }
 
         public static bool IsEqual<T>(this T first, T second)

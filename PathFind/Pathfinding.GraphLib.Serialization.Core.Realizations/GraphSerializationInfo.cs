@@ -12,7 +12,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations
 
         public IReadOnlyCollection<VertexSerializationInfo> VerticesInfo { get; }
 
-        public GraphSerializationInfo(IGraph<IVertex> graph)
+        internal GraphSerializationInfo(IGraph<IVertex> graph)
         {
             DimensionsSizes = graph.DimensionsSizes;
             VerticesInfo = graph

@@ -18,6 +18,12 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
             return graph.Where(vertex => vertex.IsObstacle);
         }
 
+        public static IEnumerable<ICoordinate> GetCoordinates<TVertex>(this IReadOnlyCollection<TVertex> graph)
+            where TVertex : IVertex
+        {
+            return graph.Select(vertex => vertex.Position);
+        }
+
         public static IEnumerable<ICoordinate> GetObstaclesCoordinates<TVertex>(this IGraph<TVertex> graph)
             where TVertex : IVertex
         {

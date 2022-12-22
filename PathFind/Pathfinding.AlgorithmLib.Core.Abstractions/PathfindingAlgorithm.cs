@@ -1,5 +1,6 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Core.Interface;
+using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Comparers;
@@ -25,10 +26,10 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
     {
         protected record SubRange(IVertex Source, IVertex Target);
 
-        protected readonly ICollection<IVertex> visited;
         protected readonly IEnumerable<IVertex> pathfindingRange;
-        protected readonly TStorage storage;
-        protected readonly Traces traces;
+        protected readonly HashSet<IVertex> visited = new(new VertexEqualityComparer());
+        protected readonly Traces traces = new(new CoordinateEqualityComparer());
+        protected readonly TStorage storage = new();
 
         protected SubRange CurrentRange { get; set; }
 
@@ -38,10 +39,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         protected PathfindingAlgorithm(IEnumerable<IVertex> pathfindingRange)
         {
-            this.storage = new TStorage();
             this.pathfindingRange = pathfindingRange;
-            this.visited = new HashSet<IVertex>(new VertexEqualityComparer());
-            this.traces = new Traces(new CoordinateEqualityComparer());
         }
 
         public sealed override IGraphPath FindPath()
@@ -50,9 +48,9 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             using (Disposable.Use(CompletePathfinding))
             {
                 PrepareForPathfinding();
-                foreach (var subRange in GetSubRanges())
+                foreach (var range in GetSubRanges())
                 {
-                    PrepareForSubPathfinding(subRange);
+                    PrepareForSubPathfinding(range);
                     while (!IsDestination)
                     {
                         ThrowIfInterrupted();
@@ -65,7 +63,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
                     DropState();
                 }
             }
-            return new CompositeGraphPath(paths);
+            return GenerateResult(paths);
         }
 
         protected abstract IVertex GetNextVertex();
@@ -119,6 +117,16 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
                     }
                 }
             }
+        }
+
+        private static IGraphPath GenerateResult(IReadOnlyCollection<IGraphPath> paths)
+        {
+            return paths.Count switch
+            {
+                1 => paths.First(),
+                > 1 => new CompositeGraphPath(paths),
+                _ => NullGraphPath.Interface
+            };
         }
     }
 }

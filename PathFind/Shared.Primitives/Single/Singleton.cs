@@ -36,7 +36,7 @@ namespace Shared.Primitives.Single
 
         static Singleton()
         {
-            instance = new Lazy<TInstance>(CreateInstance, true);
+            instance = new(CreateInstance, true);
         }
 
         private static TInstance CreateInstance()
@@ -44,7 +44,7 @@ namespace Shared.Primitives.Single
             var instanceType = typeof(TInstance);
             var ctor = instanceType
                 .GetConstructors(NonPublic | BindingFlags.Instance)
-                .FirstOrDefault(c => !c.GetParameters().Any());
+                .SingleOrDefault(c => !c.GetParameters().Any());
             return ctor != null
                 ? (TInstance)ctor.Invoke(Array.Empty<object>())
                 : throw new SingletonException(instanceType);
