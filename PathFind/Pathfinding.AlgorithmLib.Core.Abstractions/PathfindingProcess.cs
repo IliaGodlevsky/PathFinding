@@ -3,6 +3,7 @@ using Pathfinding.AlgorithmLib.Core.Exceptions;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.AlgorithmLib.History.Interface;
+using Pathfinding.GraphLib.Core.Interface;
 using Shared.Process.EventArguments;
 using Shared.Process.EventHandlers;
 using Shared.Process.Interface;
@@ -113,14 +114,14 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             }
         }
 
-        protected void RaiseVertexVisited(PathfindingEventArgs e)
+        protected void RaiseVertexVisited(IVertex vertex)
         {
-            VertexVisited?.Invoke(this, e);
+            VertexVisited?.Invoke(this, new PathfindingEventArgs(vertex));
         }
 
-        protected void RaiseVertexEnqueued(PathfindingEventArgs e)
+        protected void RaiseVertexEnqueued(IVertex vertex)
         {
-            VertexEnqueued?.Invoke(this, e);
+            VertexEnqueued?.Invoke(this, new PathfindingEventArgs(vertex));
         }
 
         protected virtual void PrepareForPathfinding()

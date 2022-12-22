@@ -1,5 +1,6 @@
 ﻿using Pathfinding.GraphLib.Core.Abstractions;
 using Pathfinding.GraphLib.Core.Interface;
+using Shared.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace Pathfinding.GraphLib.Core.Realizations.Neighborhoods
             }
         }
 
-        private static readonly int[] OffsetMatrix = new[] { -1, 0, 1 };
+        private readonly int[] OffsetMatrix = new[] { -1, 0, 1 };
 
         private readonly ICoordinate selfCoordinate;
         private readonly int limitDepth;
@@ -41,9 +42,9 @@ namespace Pathfinding.GraphLib.Core.Realizations.Neighborhoods
             neighbourhood = new Lazy<IReadOnlyCollection<ICoordinate>>(GetNeighborhood);
         }
 
-        private List<ICoordinate> CollectNeighbors(int depth = 0)
+        private HashSet<ICoordinate> CollectNeighbors(int depth = 0)
         {
-            var neighborhood = new List<ICoordinate>();
+            var neighborhood = new HashSet<ICoordinate>();
             foreach (int offset in lateralOffsetMatrix)
             {
                 resultCoordinatesValues[depth] = selfCoordinate[depth] + offset;
@@ -59,7 +60,7 @@ namespace Pathfinding.GraphLib.Core.Realizations.Neighborhoods
         {
             var coordinates = CollectNeighbors();
             coordinates.Remove(selfCoordinate);
-            return coordinates.AsReadOnly();
+            return coordinates;
         }
 
         public IEnumerator<ICoordinate> GetEnumerator()

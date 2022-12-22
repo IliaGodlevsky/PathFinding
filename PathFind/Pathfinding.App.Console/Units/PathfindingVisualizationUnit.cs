@@ -95,8 +95,8 @@ namespace Pathfinding.App.Console.Units
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
         {
             pathfindingActions
-                .GetOrDefault(e.PressedKey)
-                ?.Do(algorithm);
+                .GetOrDefault(e.PressedKey, NullPathfindingAction.Interface)
+                .Do(algorithm);
 
             animationDelay = animationActions
                 .GetOrDefault(e.PressedKey, NullAnimationAction.Instance)

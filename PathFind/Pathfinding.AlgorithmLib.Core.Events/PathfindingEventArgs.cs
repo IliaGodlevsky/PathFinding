@@ -5,11 +5,13 @@ namespace Pathfinding.AlgorithmLib.Core.Events
 {
     public class PathfindingEventArgs : EventArgs
     {
-        public ICoordinate Current { get; }
+        public ICoordinate Current => Vertex.Position;
+
+        public IVertex Vertex { get; }
 
         public PathfindingEventArgs(IVertex current)
         {
-            Current = current.Position;
+            Vertex = current;
         }
     }
 }

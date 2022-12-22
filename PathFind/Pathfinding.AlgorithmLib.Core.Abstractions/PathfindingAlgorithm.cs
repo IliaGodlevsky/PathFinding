@@ -86,7 +86,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         protected virtual void Enqueued(IVertex vertex)
         {
-            RaiseVertexEnqueued(new PathfindingEventArgs(vertex));
+            RaiseVertexEnqueued(vertex);
         }
 
         protected override void DropState()

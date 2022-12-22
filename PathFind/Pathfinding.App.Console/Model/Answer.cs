@@ -6,9 +6,7 @@ using System;
 namespace Pathfinding.App.Console.Model
 {
     internal sealed class Answer : IComparable<Answer>, IEquatable<Answer>
-    {
-        private const StringComparison IgnoreCase = StringComparison.OrdinalIgnoreCase;
-        
+    {        
         public static readonly Answer Yes = new Answer(1, Languages.Yes);
         public static readonly Answer No = new Answer(0, Languages.No);
         private static readonly Answer Default = new Answer(-1, string.Empty);
@@ -55,13 +53,14 @@ namespace Pathfinding.App.Console.Model
 
         public static bool TryParse(string input, out Answer result)
         {
+            var ignoreCase = StringComparison.OrdinalIgnoreCase;
             if (int.TryParse(input, out int value))
             {
                 result = value;
                 return !result.Equals(Default);
             }
-            result = input.Equals(Yes, IgnoreCase) 
-                ? Yes : input.Equals(No, IgnoreCase) ? No : Default;
+            result = input.Equals(Yes, ignoreCase) 
+                ? Yes : input.Equals(No, ignoreCase) ? No : Default;
             return !result.Equals(Default);
         }
 

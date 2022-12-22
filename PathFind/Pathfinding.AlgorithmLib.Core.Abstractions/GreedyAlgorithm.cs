@@ -38,7 +38,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         private void VisitVertex(IVertex vertex)
         {
             visited.Add(vertex);
-            RaiseVertexVisited(new PathfindingEventArgs(vertex));
+            RaiseVertexVisited(vertex);
             storage.Push(vertex);
         }
 

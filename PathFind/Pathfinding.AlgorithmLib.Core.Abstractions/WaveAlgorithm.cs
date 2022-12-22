@@ -24,7 +24,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         protected override void VisitCurrentVertex()
         {
             visited.Add(CurrentVertex);
-            RaiseVertexVisited(new PathfindingEventArgs(CurrentVertex));
+            RaiseVertexVisited(CurrentVertex);
         }
 
         protected virtual void RelaxNeighbours(IReadOnlyCollection<IVertex> vertices)
