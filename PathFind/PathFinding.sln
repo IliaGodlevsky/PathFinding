@@ -111,9 +111,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.GraphLib.UnitTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pathfinding.GraphLib.Core.Factory.Tests", "Pathfinding.GraphLib.Core.Factory.Tests\Pathfinding.GraphLib.Core.Factory.Tests.csproj", "{56E67BCD-9A55-4FDC-8924-15786E6A22C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Random.Tests", "Shared.Random.Tests\Shared.Random.Tests.csproj", "{4EE23DE3-1028-4743-B9A0-826512017CDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Random.Tests", "Shared.Random.Tests\Shared.Random.Tests.csproj", "{4EE23DE3-1028-4743-B9A0-826512017CDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.AlgorithmLib.Core.Realizations.Tests", "Pathfinding.AlgorithmLib.Core.Realizations.Tests\Pathfinding.AlgorithmLib.Core.Realizations.Tests.csproj", "{DCD7B678-1FDF-495E-863F-ED60E63F7725}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pathfinding.AlgorithmLib.Core.Realizations.Tests", "Pathfinding.AlgorithmLib.Core.Realizations.Tests\Pathfinding.AlgorithmLib.Core.Realizations.Tests.csproj", "{DCD7B678-1FDF-495E-863F-ED60E63F7725}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

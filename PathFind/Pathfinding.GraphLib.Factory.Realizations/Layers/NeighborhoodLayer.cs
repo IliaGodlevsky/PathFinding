@@ -8,18 +8,18 @@ namespace Pathfinding.GraphLib.Factory.Realizations.Layers
         where TGraph: IGraph<TVertex>
         where TVertex : IVertex
     {
-        private INeighborhoodFactory NeighborhoodFactory { get; }
+        private readonly INeighborhoodFactory factory;
 
         public NeighborhoodLayer(INeighborhoodFactory factory)
         {
-            this.NeighborhoodFactory = factory;
+            this.factory = factory;
         }
 
         public void Overlay(TGraph graph)
         {
             foreach (var vertex in graph)
             {
-                var neighborhood = NeighborhoodFactory.CreateNeighborhood(vertex.Position);
+                var neighborhood = factory.CreateNeighborhood(vertex.Position);
                 vertex.Neighbours = neighborhood.GetNeighboursWithinGraph(graph);
             }
         }

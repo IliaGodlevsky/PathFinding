@@ -122,7 +122,6 @@
     <Compile Include="DependencyInjection\RegistrationConstants.cs" />
     <Compile Include="Interface\IViewModel.cs" />
     <Compile Include="Model\MessageBoxLog.cs" />
-    <Compile Include="Model\ModelType.cs" />
     <Compile Include="Model\PathfindingHistoryVolume.cs" />
     <Compile Include="Model\PathfindingRangeBuilderSubscription.cs" />
     <Compile Include="Model\VertexReverseModuleSubscription.cs" />

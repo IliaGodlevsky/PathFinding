@@ -11,23 +11,22 @@ namespace Pathfinding.GraphLib.Factory.Realizations.Layers
         where TGraph : IGraph<TVertex>
         where TVertex : IVertex
     {
-        private int ObstaclePercent { get; }
-
-        private IRandom Random { get; }
-
+        private readonly IRandom random;
+        private readonly int obstaclePercent;
+        
         public ObstacleLayer(IRandom random, int obstaclePercent)
         {
-            ObstaclePercent = obstaclePercent;
-            Random = random;
+            this.random = random;
+            this.obstaclePercent = obstaclePercent;
         }
 
         public void Overlay(TGraph graph)
         {
-            int obstaclesCount = graph.Count * ObstaclePercent / 100;
+            int obstaclesCount = graph.Count * obstaclePercent / 100;
             int regularsCount = graph.Count - obstaclesCount;
             var obstacles = Enumerable.Repeat(true, obstaclesCount);
             var regulars = Enumerable.Repeat(false, regularsCount);
-            var layer = obstacles.Concat(regulars).Shuffle(Random.NextInt).ToReadOnly();
+            var layer = obstacles.Concat(regulars).Shuffle(random.NextInt);
             graph.Zip(layer, CreateLayerItem).ForEach(SetObstacle);
         }
 
