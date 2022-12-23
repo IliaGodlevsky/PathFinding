@@ -9,7 +9,7 @@ namespace Shared.Random.Realizations
     /// </summary>
     public sealed class CryptoRandom : IRandom, IDisposable
     {
-        private readonly int increment = 4;
+        private const int increment = 4;
         private readonly int maxBufferSize = 2048;
         private readonly byte[] buffer;
         private readonly RandomNumberGenerator rng;
