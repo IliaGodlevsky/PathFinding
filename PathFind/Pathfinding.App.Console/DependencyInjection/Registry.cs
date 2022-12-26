@@ -94,6 +94,8 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<SaveGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
             builder.RegisterType<ReverseVertexMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
             builder.RegisterType<SmoothGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
+            builder.RegisterType<ServerPipeMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
+            builder.RegisterType<ClientPipeMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
 
             builder.RegisterType<ApplyHistoryMenuItem>().Keyed<IMenuItem>(History).SingleInstance().AutoActivate();
             builder.RegisterType<ClearHistoryMenuItem>().Keyed<IMenuItem>(History).SingleInstance().AutoActivate();
