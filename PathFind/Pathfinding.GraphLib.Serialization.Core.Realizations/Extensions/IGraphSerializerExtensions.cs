@@ -1,6 +1,7 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using System.IO;
+using System.IO.Pipes;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
 {
@@ -24,6 +25,28 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {
                 return self.LoadGraph(fileStream);
+            }
+        }
+
+        public static void SendGraphToPipe<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, IGraph<IVertex> graph, string pipeName)
+            where TGraph : IGraph<TVertex>
+            where TVertex : IVertex
+        {
+            using (var clientStream = new NamedPipeClientStream(pipeName))
+            {
+                clientStream.Connect();
+                self.SaveGraph(graph, clientStream);
+            }
+        }
+
+        public static TGraph RecieveGraphFromPipe<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, string pipeName)
+            where TGraph : IGraph<TVertex>
+            where TVertex : IVertex
+        {
+            using (var serverStream = new NamedPipeServerStream(pipeName))
+            {
+                serverStream.WaitForConnection();
+                return self.LoadGraph(serverStream);
             }
         }
     }
