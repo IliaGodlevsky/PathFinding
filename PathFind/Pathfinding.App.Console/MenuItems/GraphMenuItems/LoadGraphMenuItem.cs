@@ -33,15 +33,12 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             try
             {
-                using (Cursor.UseCurrentPositionWithClean())
-                {
-                    var graph = module.LoadGraph();
-                    var range = graph.First().Cost.CostRange;
-                    messenger.Send(new CostRangeChangedMessage(range));                   
-                    messenger.Send(new GraphCreatedMessage(graph), MessageTokens.Screen);
-                    messenger.Send(new GraphCreatedMessage(graph), MessageTokens.MainViewModel);
-                    messenger.Send(new GraphCreatedMessage(graph));
-                }
+                var graph = module.LoadGraph();
+                var range = graph.First().Cost.CostRange;
+                messenger.Send(new CostRangeChangedMessage(range));
+                messenger.Send(new GraphCreatedMessage(graph), MessageTokens.Screen);
+                messenger.Send(new GraphCreatedMessage(graph), MessageTokens.MainUnit);
+                messenger.Send(new GraphCreatedMessage(graph));
             }
             catch (Exception ex)
             {

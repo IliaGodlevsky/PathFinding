@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Interface
 {
-    public interface IGraphSerializer<out TGraph, TVertex>
+    public interface IGraphSerializer<out TGraph, in TVertex>
         where TVertex : IVertex
         where TGraph : IGraph<TVertex>
     {

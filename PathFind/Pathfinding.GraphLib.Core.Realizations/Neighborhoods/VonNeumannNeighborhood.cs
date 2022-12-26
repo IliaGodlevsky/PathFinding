@@ -22,7 +22,7 @@ namespace Pathfinding.GraphLib.Core.Realizations.Neighborhoods
 
         public VonNeumannNeighborhood(ICoordinate coordinate)
         {
-            neighbourhood = new Lazy<IReadOnlyCollection<ICoordinate>>(DetectNeighborhood);
+            neighbourhood = new(DetectNeighborhood, true);
             selfCoordinate = coordinate;
             neighbours = new MooreNeighborhood(coordinate);
         }

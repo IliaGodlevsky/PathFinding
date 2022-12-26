@@ -37,7 +37,7 @@ namespace Pathfinding.App.Console.Units
             this.messenger = messenger;
             this.input = input;
             this.fieldFactory = fieldFactory;
-            this.messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainViewModel, SetGraph);
+            this.messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainUnit, SetGraph);
             this.messenger.Register<GraphChangedMessage>(this, OnGraphChanged);
         }
 

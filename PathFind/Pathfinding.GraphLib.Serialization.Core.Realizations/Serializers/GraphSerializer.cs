@@ -19,12 +19,12 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
         private readonly IVertexCostFactory costFactory;
         private readonly ICoordinateFactory coordinateFactory;
 
-        public GraphSerializer(IVertexFromInfoFactory<TVertex> converter,
+        public GraphSerializer(IVertexFromInfoFactory<TVertex> factory,
             IGraphFactory<TGraph, TVertex> graphFactory,
             IVertexCostFactory costFactory,
             ICoordinateFactory coordinateFactory)
         {
-            vertexFactory = converter;
+            this.vertexFactory = factory;
             this.graphFactory = graphFactory;
             this.costFactory = costFactory;
             this.coordinateFactory = coordinateFactory;
@@ -37,8 +37,9 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
                 var graphInfo = LoadGraphInternal(stream, costFactory, coordinateFactory);
                 var vertices = graphInfo.VerticesInfo.Select(vertexFactory.CreateFrom).ToReadOnly();
                 var graph = graphFactory.CreateGraph(vertices, graphInfo.DimensionsSizes);
-                graphInfo.VerticesInfo.Zip(graph, (info, vertex) => (Vertex: vertex, Info: info))
-                    .ForEach(item => SetNeighbourhood(item, (IGraph<IVertex>)graph));
+                graphInfo.VerticesInfo
+                    .Zip(graph, (info, vertex) => (Vertex: vertex, Info: info))
+                    .ForEach(item => SetNeighbourhood(item, graph));
                 return graph;
             }
             catch (Exception ex)
@@ -64,9 +65,11 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
 
         protected abstract void SaveGraphInternal(IGraph<IVertex> graph, Stream stream);
 
-        private void SetNeighbourhood((TVertex Vertex, VertexSerializationInfo Info) info, IGraph<IVertex> graph)
+        private void SetNeighbourhood((TVertex Vertex, VertexSerializationInfo Info) info, TGraph graph)
         {
-            info.Vertex.Neighbours = info.Info.Neighbourhood.GetNeighboursWithinGraph(graph);
+            info.Vertex.Neighbours = info.Info.Neighbourhood
+                .Select(coordinate => (IVertex)graph.Get(coordinate))
+                .ToReadOnly();
         }
     }
 }

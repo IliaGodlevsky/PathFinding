@@ -16,12 +16,25 @@ namespace Pathfinding.App.Console.Model
 
         public string InputLoadPath()
         {
-            return input.Input(Languages.InputPathMsg);
+            return Input();
         }
 
         public string InputSavePath()
         {
-            return input.Input(Languages.InputPathMsg);
+            return Input();
+        }
+
+        private string Input()
+        {
+            using (Cursor.UseCurrentPositionWithClean())
+            {
+                string path = input.Input(Languages.InputPathMsg);
+                while (string.IsNullOrEmpty(path))
+                {
+                    path = input.Input(Languages.InputPathMsg);
+                }
+                return path;
+            }
         }
     }
 }

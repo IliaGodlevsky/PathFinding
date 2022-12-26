@@ -1,12 +1,22 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
 {
     public static class IGraphSerializerExtensions
     {
-        public static void SaveGraphToFile<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, IGraph<IVertex> graph, string filePath)
+        public static async ValueTask SaveGraphToFileAsync<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, 
+            IGraph<IVertex> graph, string filePath)
+            where TGraph : IGraph<TVertex>
+            where TVertex : IVertex
+        {
+            await Task.Run(() => self.SaveGraphToFile(graph, filePath));
+        }
+
+        public static void SaveGraphToFile<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self,
+            IGraph<IVertex> graph, string filePath)
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex
         {
