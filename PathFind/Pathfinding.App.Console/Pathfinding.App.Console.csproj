@@ -74,7 +74,7 @@
       <DependentUpon>Languages.resx</DependentUpon>
     </Compile>
     <Compile Include="MenuItems\ExitMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\ClientPipeMenuItem.cs" />
+    <Compile Include="MenuItems\GraphMenuItems\SendGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\GraphCreatingMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\ResizeGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\ChangeCostMenuItem.cs" />
@@ -87,7 +87,7 @@
     <Compile Include="MenuItems\GraphMenuItems\GraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\ReverseVertexMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\SaveGraphMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\ServerPipeMenuItem.cs" />
+    <Compile Include="MenuItems\GraphMenuItems\RecieveGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\SmoothGraphMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\GraphCreateMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\MainMenuItem.cs" />

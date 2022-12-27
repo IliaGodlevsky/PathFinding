@@ -261,6 +261,9 @@
   <data name="RangeUpperValueInputMsg" xml:space="preserve">
     <value>Input upper value of range: </value>
   </data>
+  <data name="RecieveGraph" xml:space="preserve">
+    <value>Recieve graph</value>
+  </data>
   <data name="ResizeGraph" xml:space="preserve">
     <value>Resize graph</value>
   </data>
@@ -269,6 +272,9 @@
   </data>
   <data name="SaveGraph" xml:space="preserve">
     <value>Save graph</value>
+  </data>
+  <data name="SendGraph" xml:space="preserve">
+    <value>Send graph</value>
   </data>
   <data name="ShowHistory" xml:space="preserve">
     <value>Show history</value>

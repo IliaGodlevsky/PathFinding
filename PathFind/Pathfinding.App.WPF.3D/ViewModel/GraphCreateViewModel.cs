@@ -97,7 +97,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel
                 new ObstacleLayer<Graph3D<Vertex3D>, Vertex3D>(random, ObstaclePercent),
                 new NeighborhoodLayer<Graph3D<Vertex3D>, Vertex3D>(neighborhoodFactory),
                 new VertexCostLayer<Graph3D<Vertex3D>, Vertex3D>(costFactory, CostRange, random)
-            };       
+            };
         }
 
         private bool CanExecuteCreateGraphCommand(object sender)

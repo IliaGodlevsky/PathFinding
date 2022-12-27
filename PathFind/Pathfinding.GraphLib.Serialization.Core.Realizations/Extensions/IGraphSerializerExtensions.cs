@@ -1,6 +1,7 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using System.IO;
+using System.IO.Pipes;
 using System.Threading.Tasks;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
@@ -37,7 +38,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             }
         }
 
-        public static void SendGraphToPipe<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, IGraph<IVertex> graph, string pipeName)
+        public static void SaveGraphToPipe<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, IGraph<IVertex> graph, string pipeName)
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex
         {
@@ -48,7 +49,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             }
         }
 
-        public static TGraph RecieveGraphFromPipe<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, string pipeName)
+        public static TGraph LoadGraphFromPipe<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, string pipeName)
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex
         {
@@ -57,6 +58,13 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
                 serverStream.WaitForConnection();
                 return self.LoadGraph(serverStream);
             }
+        }
+
+        public static async ValueTask SaveGraphToPipeAsync<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, IGraph<IVertex> graph, string pipeName)
+            where TGraph : IGraph<TVertex>
+            where TVertex : IVertex
+        {
+            await Task.Run(() => self.SaveGraphToPipe(graph, pipeName));
         }
     }
 }

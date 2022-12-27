@@ -493,6 +493,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recieve graph.
+        /// </summary>
+        public static string RecieveGraph {
+            get {
+                return ResourceManager.GetString("RecieveGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resize graph.
         /// </summary>
         public static string ResizeGraph {
@@ -516,6 +525,15 @@ namespace Pathfinding.App.Console.Localization {
         public static string SaveGraph {
             get {
                 return ResourceManager.GetString("SaveGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send graph.
+        /// </summary>
+        public static string SendGraph {
+            get {
+                return ResourceManager.GetString("SendGraph", resourceCulture);
             }
         }
         

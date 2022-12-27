@@ -1,23 +1,27 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
+using Shared.Primitives.Attributes;
 using System;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    internal sealed class ClientPipeMenuItem : IMenuItem
+    [Order(11)]
+    internal sealed class SendGraphMenuItem : IMenuItem
     {
         private readonly IGraphSerializer<Graph2D<Vertex>, Vertex> graphSerializer;
         private readonly IMessenger messenger;
         private readonly ILog log;
+
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        public ClientPipeMenuItem(IGraphSerializer<Graph2D<Vertex>, Vertex> graphSerializer, 
+        public SendGraphMenuItem(IGraphSerializer<Graph2D<Vertex>, Vertex> graphSerializer, 
             IMessenger messenger, ILog log)
         {
             this.graphSerializer = graphSerializer;
@@ -36,11 +40,11 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             graph = message.Graph;
         }
 
-        public void Execute()
+        public async void Execute()
         {
             try
             {
-                graphSerializer.SendGraphToPipe(graph, Constants.PipeName);
+                await graphSerializer.SaveGraphToPipeAsync(graph, Constants.PipeName);
             }
             catch (Exception ex)
             {
@@ -50,7 +54,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public override string ToString()
         {
-            return "Send";
+            return Languages.SendGraph;
         }
     }
 }

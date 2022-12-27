@@ -5,7 +5,7 @@ namespace Pathfinding.App.Console
 {
     internal static class Constants
     {
-        public const string PipeName = "Pathfinding.Console";
+        public const string PipeName = "Pathfinding.App.Console";
 
         public static InclusiveValueRange<int> GraphWidthValueRange { get; }
 
