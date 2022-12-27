@@ -15,16 +15,16 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     [Order(11)]
     internal sealed class SendGraphMenuItem : IMenuItem
     {
-        private readonly IGraphSerializer<Graph2D<Vertex>, Vertex> graphSerializer;
+        private readonly IGraphSerializer<Graph2D<Vertex>, Vertex> serializer;
         private readonly IMessenger messenger;
         private readonly ILog log;
 
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        public SendGraphMenuItem(IGraphSerializer<Graph2D<Vertex>, Vertex> graphSerializer, 
+        public SendGraphMenuItem(IGraphSerializer<Graph2D<Vertex>, Vertex> serializer, 
             IMessenger messenger, ILog log)
         {
-            this.graphSerializer = graphSerializer;
+            this.serializer = serializer;
             this.messenger = messenger;
             this.log = log;
             this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
@@ -44,7 +44,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             try
             {
-                await graphSerializer.SaveGraphToPipeAsync(graph, Constants.PipeName);
+                await serializer.SaveGraphToPipeAsync(graph, Constants.PipeName);
             }
             catch (Exception ex)
             {
