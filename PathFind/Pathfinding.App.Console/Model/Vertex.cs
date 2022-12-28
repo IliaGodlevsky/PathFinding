@@ -2,12 +2,12 @@
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.NullObjects;
-using Pathfinding.GraphLib.Core.Realizations.Coordinates;
 using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace Pathfinding.App.Console.Model
 {
@@ -41,7 +41,7 @@ namespace Pathfinding.App.Console.Model
 
         public ICoordinate Position { get; } = NullCoordinate.Interface;
 
-        public Coordinate2D ConsolePosition { get; set; } = Coordinate2D.Empty;
+        public Point ConsolePosition { get; set; } = Point.Empty;
 
         public ConsoleColor Color { get; set; }
 

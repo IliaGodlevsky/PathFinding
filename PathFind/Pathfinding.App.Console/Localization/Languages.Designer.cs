@@ -358,6 +358,24 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Input pipe name: .
+        /// </summary>
+        public static string InputPipeMsg {
+            get {
+                return ResourceManager.GetString("InputPipeMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input server name: .
+        /// </summary>
+        public static string InputServerNameMsg {
+            get {
+                return ResourceManager.GetString("InputServerNameMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input level of smoothing: .
         /// </summary>
         public static string InputSmoothLevelMsg {
@@ -579,6 +597,15 @@ namespace Pathfinding.App.Console.Localization {
         public static string Visual {
             get {
                 return ResourceManager.GetString("Visual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting for connection....
+        /// </summary>
+        public static string WaitingForConnection {
+            get {
+                return ResourceManager.GetString("WaitingForConnection", resourceCulture);
             }
         }
         

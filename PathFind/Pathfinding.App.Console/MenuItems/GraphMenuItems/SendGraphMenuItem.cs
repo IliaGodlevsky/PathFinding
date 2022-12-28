@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
@@ -17,15 +18,17 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     {
         private readonly IGraphSerializer<Graph2D<Vertex>, Vertex> serializer;
         private readonly IMessenger messenger;
+        private readonly IInput<string> input;
         private readonly ILog log;
 
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         public SendGraphMenuItem(IGraphSerializer<Graph2D<Vertex>, Vertex> serializer, 
-            IMessenger messenger, ILog log)
+            IMessenger messenger, IInput<string> input, ILog log)
         {
             this.serializer = serializer;
             this.messenger = messenger;
+            this.input = input;
             this.log = log;
             this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
@@ -44,7 +47,14 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             try
             {
-                await serializer.SaveGraphToPipeAsync(graph, Constants.PipeName);
+                string pipeName = string.Empty;
+                string serverName = string.Empty;
+                using (Cursor.UseCurrentPositionWithClean())
+                {
+                    pipeName = input.Input(Languages.InputPipeMsg);
+                    serverName = input.Input(Languages.InputServerNameMsg);
+                }
+                await serializer.SaveGraphToPipeAsync(graph, pipeName, serverName);
             }
             catch (Exception ex)
             {

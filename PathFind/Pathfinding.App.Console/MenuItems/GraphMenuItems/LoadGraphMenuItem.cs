@@ -5,6 +5,7 @@ using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
+using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
 using Shared.Primitives.Attributes;
 using System;
@@ -16,14 +17,17 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     internal sealed class LoadGraphMenuItem : IMenuItem
     {
         private readonly IMessenger messenger;
-        private readonly IGraphSerializationModule<Graph2D<Vertex>, Vertex> module;
+        private readonly IPathInput input;
+        private readonly IGraphSerializer<Graph2D<Vertex>, Vertex> serializer;
         private readonly ILog log;
 
         public LoadGraphMenuItem(IMessenger messenger, 
-            IGraphSerializationModule<Graph2D<Vertex>, Vertex> module, ILog log)
+            IPathInput input,
+            IGraphSerializer<Graph2D<Vertex>, Vertex> serializer, ILog log)
         {
+            this.serializer = serializer;
             this.messenger = messenger;
-            this.module = module;
+            this.input = input;
             this.log = log;
         }
 
@@ -33,7 +37,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             try
             {
-                var graph = module.LoadGraph();
+                string path = input.InputLoadPath();
+                var graph = serializer.LoadGraphFromFile(path);
                 var range = graph.First().Cost.CostRange;
                 messenger.Send(new CostRangeChangedMessage(range));
                 messenger.Send(new GraphCreatedMessage(graph), MessageTokens.Screen);

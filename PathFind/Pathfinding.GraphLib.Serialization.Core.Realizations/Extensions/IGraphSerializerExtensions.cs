@@ -38,11 +38,11 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             }
         }
 
-        public static void SaveGraphToPipe<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, IGraph<IVertex> graph, string pipeName)
+        public static void SaveGraphToPipe<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, IGraph<IVertex> graph, string pipeName, string serverName = ".")
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex
         {
-            using (var clientStream = new NamedPipeClientStream(pipeName))
+            using (var clientStream = new NamedPipeClientStream(serverName, pipeName))
             {
                 clientStream.Connect();
                 self.SaveGraph(graph, clientStream);
@@ -60,11 +60,12 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             }
         }
 
-        public static async ValueTask SaveGraphToPipeAsync<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, IGraph<IVertex> graph, string pipeName)
+        public static async ValueTask SaveGraphToPipeAsync<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self,
+            IGraph<IVertex> graph, string pipeName, string serverName = ".")
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex
         {
-            await Task.Run(() => self.SaveGraphToPipe(graph, pipeName));
+            await Task.Run(() => self.SaveGraphToPipe(graph, pipeName, serverName));
         }
     }
 }

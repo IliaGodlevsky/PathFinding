@@ -10,6 +10,7 @@ using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Executable;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Pathfinding.App.Console.Units
 {
@@ -74,7 +75,7 @@ namespace Pathfinding.App.Console.Units
             {
                 using (Cursor.UseCurrentPosition())
                 {
-                    var position = new Coordinate2D(0, 0);
+                    var position = new Point(0, 0);
                     Cursor.SetPosition(position);
                     System.Console.Write(new string(' ',
                         System.Console.BufferWidth));

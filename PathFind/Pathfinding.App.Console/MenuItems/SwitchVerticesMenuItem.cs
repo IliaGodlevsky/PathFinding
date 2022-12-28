@@ -15,7 +15,7 @@ namespace Pathfinding.App.Console.MenuItems
     internal abstract class SwitchVerticesMenuItem : IMenuItem
     {
         protected readonly IMessenger messenger;
-        protected readonly IInput<ConsoleKey> keyInput;     
+        protected readonly IInput<ConsoleKey> keyInput;
 
         protected Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 

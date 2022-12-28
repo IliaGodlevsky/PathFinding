@@ -8,6 +8,7 @@ using Pathfinding.GraphLib.Core.Realizations.Coordinates;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Extensions;
 using System;
+using System.Drawing;
 
 namespace Pathfinding.App.Console
 {
@@ -29,9 +30,9 @@ namespace Pathfinding.App.Console
 
         public static int LateralDistanceBetweenVertices { get; private set; }
 
-        public static Coordinate2D GraphFieldPosition { get; }
+        public static Point GraphFieldPosition { get; }
 
-        public static Coordinate2D StatisticsPosition { get; private set; } = Coordinate2D.Empty;
+        public static Point StatisticsPosition { get; private set; } = Point.Empty;
 
         static Screen()
         {
@@ -41,7 +42,7 @@ namespace Pathfinding.App.Console
             messenger.Register<GraphCreatedMessage>(recipient, MessageTokens.Screen, OnNewGraphCreated);
             int x = WidthOfOrdinateView;
             int y = HeightOfAbscissaView + HeightOfGraphParametresView;
-            GraphFieldPosition = new Coordinate2D(x, y);
+            GraphFieldPosition = new Point(x, y);
         }
 
         public static void SetCursorPositionUnderMenu(int menuOffset = 0)
@@ -53,7 +54,7 @@ namespace Pathfinding.App.Console
         {
             Graph = message.Graph;
             int pathFindingStatisticsOffset = message.Graph.Length + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
-            StatisticsPosition = new Coordinate2D(0, pathFindingStatisticsOffset);
+            StatisticsPosition = new Point(0, pathFindingStatisticsOffset);
             RecalculateVerticesConsolePosition();
         }
 
@@ -83,7 +84,7 @@ namespace Pathfinding.App.Console
             var point = (Coordinate2D)vertex.Position;
             int left = GraphFieldPosition.X + point.X * LateralDistanceBetweenVertices;
             int top = GraphFieldPosition.Y + point.Y;
-            vertex.ConsolePosition = new Coordinate2D(left, top);
+            vertex.ConsolePosition = new Point(left, top);
         }
 
         private static int CalculateLateralDistanceBetweenVertices()

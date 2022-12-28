@@ -1,6 +1,7 @@
 ﻿using Pathfinding.GraphLib.Core.Realizations.Coordinates;
 using Shared.Primitives;
 using System;
+using System.Drawing;
 
 namespace Pathfinding.App.Console
 {
@@ -9,13 +10,14 @@ namespace Pathfinding.App.Console
     /// </summary>
     internal sealed class Cursor
     {
-        private static string BufferLengthString => new string(' ', System.Console.BufferWidth);
+        private static string BufferLengthString 
+            => new string(' ', System.Console.BufferWidth);
 
         private readonly int cursorLeft;
         private readonly int cursorRight;
 
-        public static Coordinate2D CurrentPosition 
-            => new Coordinate2D(System.Console.CursorLeft, System.Console.CursorTop);
+        public static Point CurrentPosition
+            => new Point(System.Console.CursorLeft, System.Console.CursorTop);
 
         private Cursor(int left, int right)
         {
@@ -42,8 +44,8 @@ namespace Pathfinding.App.Console
         public static IDisposable UseCurrentPosition()
         {
             var cursorLeft = System.Console.CursorLeft;
-            var cursorRight = System.Console.CursorTop;
-            var cursor = new Cursor(cursorLeft, cursorRight);
+            var cursorTop = System.Console.CursorTop;
+            var cursor = new Cursor(cursorLeft, cursorTop);
             return Disposable.Use(cursor.RestorePosition);
         }
 
@@ -76,11 +78,11 @@ namespace Pathfinding.App.Console
         {
             var left = System.Console.CursorLeft;
             var top = System.Console.CursorTop;
-            var position = new Coordinate2D(left, top);
+            var position = new Point(left, top);
             return Disposable.Use(() => CleanUpTo(position));
         }
 
-        private static void CleanUpTo(Coordinate2D offset)
+        private static void CleanUpTo(Point offset)
         {
             int limit = Cursor.CurrentPosition.Y - offset.Y;
             SetPosition(offset);
@@ -94,7 +96,7 @@ namespace Pathfinding.App.Console
             }
         }
 
-        public static void SetPosition(Coordinate2D point)
+        public static void SetPosition(Point point)
         {
             System.Console.SetCursorPosition(point.X, point.Y);
         }

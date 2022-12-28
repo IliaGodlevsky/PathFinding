@@ -216,6 +216,12 @@
   <data name="InputPathMsg" xml:space="preserve">
     <value>Input path: </value>
   </data>
+  <data name="InputPipeMsg" xml:space="preserve">
+    <value>Input pipe name: </value>
+  </data>
+  <data name="InputServerNameMsg" xml:space="preserve">
+    <value>Input server name: </value>
+  </data>
   <data name="InputSmoothLevelMsg" xml:space="preserve">
     <value>Input level of smoothing: </value>
   </data>
@@ -290,6 +296,9 @@
   </data>
   <data name="Visual" xml:space="preserve">
     <value>Pathfinding visualization</value>
+  </data>
+  <data name="WaitingForConnection" xml:space="preserve">
+    <value>Waiting for connection...</value>
   </data>
   <data name="WidthDimensionName" xml:space="preserve">
     <value>Width</value>
