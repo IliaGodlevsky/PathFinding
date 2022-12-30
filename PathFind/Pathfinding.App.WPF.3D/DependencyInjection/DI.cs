@@ -1,49 +1,46 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using Autofac;
+using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Serialization.Serializers.Decorators;
-using Pathfinding.Logging.Interface;
-using System;
-using System.Reflection;
-using Pathfinding.Logging.Loggers;
-using Pathfinding.App.WPF._3D.Model;
-using Pathfinding.App.WPF._3D.ViewModel;
-using Pathfinding.GraphLib.Subscriptions;
-using Pathfinding.GraphLib.Core.Interface;
-using Autofac;
-using Pathfinding.App.WPF._3D.Extensions;
-using Shared.Extensions;
-using Pathfinding.App.WPF._3D.Interface;
-using Shared.Random.Realizations;
-using Shared.Random;
-using Pathfinding.GraphLib.Factory.Interface;
-using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
-using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
-using Pathfinding.VisualizationLib.Core.Interface;
-using Pathfinding.App.WPF._3D.Model3DFactories;
-using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
-using Pathfinding.GraphLib.Serialization.Core.Realizations.Modules;
-using Pathfinding.GraphLib.Serialization.Core.Interface;
-using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers;
-using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decorators;
-using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Shared.Executable;
-using Pathfinding.Visualization.Core.Abstractions;
-using System.Data;
-using System.Collections.Generic;
-using System.Linq;
-using Pathfinding.GraphLib.Core.Modules.Interface;
+using Pathfinding.AlgorithmLib.Factory.Interface;
+using Pathfinding.App.WPF._3D.Extensions;
+using Pathfinding.App.WPF._3D.Interface;
+using Pathfinding.App.WPF._3D.Model;
+using Pathfinding.App.WPF._3D.Model3DFactories;
+using Pathfinding.App.WPF._3D.ViewModel;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Modules;
 using Pathfinding.GraphLib.Core.Modules.Commands;
+using Pathfinding.GraphLib.Core.Modules.Interface;
+using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations;
-
+using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
+using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
+using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
+using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
+using Pathfinding.GraphLib.Serialization.Core.Interface;
+using Pathfinding.GraphLib.Serialization.Core.Realizations.Modules;
+using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers;
+using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decorators;
+using Pathfinding.GraphLib.Subscriptions;
+using Pathfinding.Logging.Interface;
+using Pathfinding.Logging.Loggers;
+using Pathfinding.Visualization.Core.Abstractions;
+using Pathfinding.VisualizationLib.Core.Interface;
+using Shared.Executable;
+using Shared.Random;
+using Shared.Random.Realizations;
+using System;
+using System.Data;
+using System.Linq;
+using System.Reflection;
 using static Pathfinding.App.WPF._3D.DependencyInjection.RegistrationConstants;
 
 namespace Pathfinding.App.WPF._3D.DependencyInjection
 {
-    using Command = IPathfindingRangeCommand<Vertex3D>;
     using AlgorithmFactory = IAlgorithmFactory<PathfindingProcess>;
+    using Command = IPathfindingRangeCommand<Vertex3D>;
 
     internal static class DI
     {
@@ -67,11 +64,11 @@ namespace Pathfinding.App.WPF._3D.DependencyInjection
             builder.RegisterType<PathfindingRangeBuilder<Vertex3D>>().As<IPathfindingRangeBuilder<Vertex3D>>().As<IUndo>()
                 .SingleInstance().ConfigurePipeline(p => p.Use(new RangeBuilderConfigurationMiddlewear()));
             builder.RegisterType<IncludeSourceVertex<Vertex3D>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 1).SingleInstance();
-            builder.RegisterType<IncludeTargetVertex<Vertex3D>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 3).SingleInstance();            
+            builder.RegisterType<IncludeTargetVertex<Vertex3D>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 3).SingleInstance();
             builder.RegisterType<ReplaceIsolatedSourceVertex<Vertex3D>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 2).SingleInstance();
             builder.RegisterType<ReplaceIsolatedTargetVertex<Vertex3D>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 4).SingleInstance();
             builder.RegisterType<ExcludeSourceVertex<Vertex3D>>().Keyed<Command>(ExcludeCommand).WithMetadata(Order, 1).SingleInstance();
-            builder.RegisterType<ExcludeTargetVertex<Vertex3D>>().Keyed<Command>(ExcludeCommand).WithMetadata(Order, 2).SingleInstance();           
+            builder.RegisterType<ExcludeTargetVertex<Vertex3D>>().Keyed<Command>(ExcludeCommand).WithMetadata(Order, 2).SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
@@ -94,7 +91,7 @@ namespace Pathfinding.App.WPF._3D.DependencyInjection
             builder.RegisterType<GraphField3DFactory>().As<IGraphFieldFactory<Graph3D<Vertex3D>, Vertex3D, GraphField3D>>().SingleInstance();
             builder.RegisterType<VonNeumannNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<CubicModel3DFactory>().As<IModel3DFactory>().SingleInstance();
-            builder.RegisterType<GraphAssemble<Graph3D<Vertex3D>, Vertex3D>>().As<IGraphAssemble<Graph3D<Vertex3D>, Vertex3D>>().SingleInstance();           
+            builder.RegisterType<GraphAssemble<Graph3D<Vertex3D>, Vertex3D>>().As<IGraphAssemble<Graph3D<Vertex3D>, Vertex3D>>().SingleInstance();
             builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex3D>>().SingleInstance();
 
             builder.RegisterType<InFileSerializationModule<Graph3D<Vertex3D>, Vertex3D>>().As<IGraphSerializationModule<Graph3D<Vertex3D>, Vertex3D>>().SingleInstance();

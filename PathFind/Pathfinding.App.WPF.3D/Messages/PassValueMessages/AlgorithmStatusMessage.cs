@@ -22,7 +22,7 @@ namespace Pathfinding.App.WPF._3D.Messages.PassValueMessages
 
         public string Status { get; }
 
-        public Guid Id{ get; }
+        public Guid Id { get; }
 
         public AlgorithmStatusMessage(string statuses, Guid id)
         {

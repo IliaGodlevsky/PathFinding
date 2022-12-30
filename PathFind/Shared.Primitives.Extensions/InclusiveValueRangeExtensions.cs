@@ -32,7 +32,7 @@ namespace Shared.Primitives.Extensions
         }
 
         public static bool Contains<T>(this InclusiveValueRange<T> self, T value)
-            where T :  IComparable<T>
+            where T : IComparable<T>
         {
             return value.IsBetween(self.UpperValueOfRange, self.LowerValueOfRange);
         }

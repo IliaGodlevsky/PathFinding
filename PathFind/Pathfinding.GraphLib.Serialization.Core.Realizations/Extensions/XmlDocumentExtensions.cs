@@ -23,7 +23,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
         {
             yield return document.CreateElement(Dimensions)
                 .WithAttributes(info.DimensionsSizes.AsEnumerable());
-            yield return document.CreateNode(info.VerticesInfo);            
+            yield return document.CreateNode(info.VerticesInfo);
         }
 
         private static XmlNode CreateNode(this XmlDocument document, IReadOnlyCollection<VertexSerializationInfo> infos)

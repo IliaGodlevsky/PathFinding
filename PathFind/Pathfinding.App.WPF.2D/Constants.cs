@@ -1,5 +1,4 @@
-﻿using Pathfinding.GraphLib.Core.Realizations;
-using Shared.Primitives.ValueRange;
+﻿using Shared.Primitives.ValueRange;
 using System;
 
 namespace Pathfinding.App.WPF._2D

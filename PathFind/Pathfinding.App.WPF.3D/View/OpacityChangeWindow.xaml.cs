@@ -13,7 +13,7 @@ namespace Pathfinding.App.WPF._3D.View
     /// </summary>
     public partial class OpacityChangeWindow : ViewModelWindow
     {
-        public OpacityChangeWindow(OpacityChangeViewModel viewModel) 
+        public OpacityChangeWindow(OpacityChangeViewModel viewModel)
             : base(viewModel)
         {
             InitializeComponent();

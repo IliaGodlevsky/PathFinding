@@ -25,7 +25,7 @@ namespace Pathfinding.Visualization.Core.Abstractions
             }
         }
 
-        public TVertex Target 
+        public TVertex Target
         {
             get => target;
             set

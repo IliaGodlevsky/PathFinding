@@ -1,14 +1,14 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Pathfinding.GraphLib.Smoothing.Interface;
-using System.Collections.Generic;
 using Pathfinding.GraphLib.Smoothing;
-using Pathfinding.App.Console.Localization;
+using Pathfinding.GraphLib.Smoothing.Interface;
 using Shared.Primitives.Attributes;
+using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
@@ -19,7 +19,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private readonly IMessenger messenger;
         private readonly IInput<int> input;
 
-        private Graph2D<Vertex> graph  = Graph2D<Vertex>.Empty;
+        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         private IReadOnlyList<ISmoothLevel> SmoothLevels => ConsoleSmoothLevels.Levels;
 

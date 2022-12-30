@@ -8,7 +8,7 @@ namespace Shared.Random.Tests
 {
     [TestFixture]
     public class RandomNumberGeneratorsTests
-    {        
+    {
         [TestCaseSource(typeof(NextUintMethodTestCaseData), nameof(NextUintMethodTestCaseData.Data))]
         public void NextUint_ReturnUniqueNumbers(IRandom random, int iterations, int tolerance)
         {

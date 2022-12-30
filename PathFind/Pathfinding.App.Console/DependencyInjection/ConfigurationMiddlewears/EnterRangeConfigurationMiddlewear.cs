@@ -13,7 +13,7 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
         public PipelinePhase Phase => PipelinePhase.ParameterSelection;
 
         public void Execute(ResolveRequestContext context, Action<ResolveRequestContext> next)
-        {           
+        {
             var actions = context.ResolveWithMetadata<ConsoleKey, IVertexAction>(Key);
             var actionsParameter = new TypedParameter(typeof(IReadOnlyDictionary<ConsoleKey, IVertexAction>), actions);
             context.ChangeParameters(new[] { actionsParameter });

@@ -6,7 +6,6 @@ using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
 using Shared.Primitives.Attributes;
 using Shared.Random;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
@@ -16,9 +15,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     {
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        public ResizeGraphMenuItem(IMessenger messenger, IRandom random, 
+        public ResizeGraphMenuItem(IMessenger messenger, IRandom random,
             IVertexCostFactory costFactory, INeighborhoodFactory neighborhoodFactory)
-            : base(messenger, random, costFactory,neighborhoodFactory)
+            : base(messenger, random, costFactory, neighborhoodFactory)
         {
             this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
@@ -26,7 +25,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private void OnGraphCreated(GraphCreatedMessage msg)
         {
             graph = msg.Graph;
-        }     
+        }
 
         public override bool CanBeExecuted()
         {

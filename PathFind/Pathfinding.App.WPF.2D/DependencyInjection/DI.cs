@@ -33,7 +33,6 @@ using Pathfinding.Logging.Loggers;
 using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Executable;
-using Shared.Extensions;
 using Shared.Random;
 using Shared.Random.Realizations;
 using System;
@@ -44,9 +43,9 @@ using static Pathfinding.App.WPF._2D.DependencyInjection.RegistrationConstants;
 
 namespace WPFVersion.DependencyInjection
 {
-    using Graph = Graph2D<Vertex>;
-    using Command = IPathfindingRangeCommand<Vertex>;
     using AlgorithmFactory = IAlgorithmFactory<PathfindingProcess>;
+    using Command = IPathfindingRangeCommand<Vertex>;
+    using Graph = Graph2D<Vertex>;
     using GraphSerializer = IGraphSerializer<Graph2D<Vertex>, Vertex>;
 
     internal static class DI
@@ -87,7 +86,7 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterType<ReplaceTransitVerticesSubscribtion>().As<IGraphSubscription<Vertex>>().SingleInstance();
             builder.RegisterType<VertexChangeCostSubscription>().As<IGraphSubscription<Vertex>>().SingleInstance();
             builder.RegisterType<VertexReverseModuleSubscription>().As<IGraphSubscription<Vertex>>().SingleInstance();
-            builder.RegisterComposite<GraphSubscriptions<Vertex>, IGraphSubscription<Vertex>>().SingleInstance();           
+            builder.RegisterComposite<GraphSubscriptions<Vertex>, IGraphSubscription<Vertex>>().SingleInstance();
             // Logging registration
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();

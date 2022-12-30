@@ -9,8 +9,8 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
     [Order(1)]
     internal sealed class GraphCreateMenuItem : UnitDisplayMenuItem<GraphUnit>
     {
-        public GraphCreateMenuItem(IViewFactory viewFactory, 
-            GraphUnit viewModel, ILog log) 
+        public GraphCreateMenuItem(IViewFactory viewFactory,
+            GraphUnit viewModel, ILog log)
             : base(viewFactory, viewModel, log)
         {
 

@@ -13,7 +13,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel
 {
     internal class ColorizeGraphViewModel
     {
-        private readonly IMessenger messenger;       
+        private readonly IMessenger messenger;
         private CostColors colors;
 
         private bool IsAllAlgorithmsFinished { get; set; }

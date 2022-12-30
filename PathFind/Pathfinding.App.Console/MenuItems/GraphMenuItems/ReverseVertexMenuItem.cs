@@ -12,9 +12,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     [Order(10)]
     internal sealed class ReverseVertexMenuItem : SwitchVerticesMenuItem
     {
-        public ReverseVertexMenuItem(IMessenger messenger, 
-            IPathfindingRangeBuilder<Vertex> rangeBuilder, 
-            IInput<ConsoleKey> keyInput) 
+        public ReverseVertexMenuItem(IMessenger messenger,
+            IPathfindingRangeBuilder<Vertex> rangeBuilder,
+            IInput<ConsoleKey> keyInput)
             : base(messenger, keyInput)
         {
             Actions.Add(ConsoleKey.Enter, new ReverseVertexAction(rangeBuilder.Range, messenger));

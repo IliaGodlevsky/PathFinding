@@ -21,8 +21,8 @@ namespace Pathfinding.App.Console.Model
         public bool IsObstacle
         {
             get => isObstacle;
-            set 
-            { 
+            set
+            {
                 isObstacle = value;
                 if (isObstacle)
                 {

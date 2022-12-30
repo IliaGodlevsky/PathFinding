@@ -12,7 +12,7 @@ namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRa
             vertex.VisualizeAsTransit();
         }
 
-        public  bool CanExecute(IPathfindingRange<TVertex> range, TVertex vertex)
+        public bool CanExecute(IPathfindingRange<TVertex> range, TVertex vertex)
         {
             return range.Transit.Contains(vertex);
         }

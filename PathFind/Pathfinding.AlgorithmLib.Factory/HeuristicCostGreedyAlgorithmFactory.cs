@@ -7,7 +7,6 @@ using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.AlgorithmLib.Factory.Attrbiutes;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.GraphLib.Core.Interface;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Factory

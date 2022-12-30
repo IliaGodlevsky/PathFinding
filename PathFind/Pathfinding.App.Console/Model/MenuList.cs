@@ -30,8 +30,8 @@ namespace Pathfinding.App.Console.Model
             this.menuItemNumberPad = menuItemsCount.GetDigitsNumber();
             var columnsRange = new InclusiveValueRange<int>(menuItemsCount, 1);
             this.columns = columnsRange.ReturnInRange(columns);
-            this.longestNameLength = new (GetLongestNameLength);
-            this.menuList = new (CreateMenu);
+            this.longestNameLength = new(GetLongestNameLength);
+            this.menuList = new(CreateMenu);
         }
 
         public void Display()

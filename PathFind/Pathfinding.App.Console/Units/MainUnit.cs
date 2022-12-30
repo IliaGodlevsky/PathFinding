@@ -3,7 +3,6 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.MenuItems;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Realizations.Coordinates;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
 using Pathfinding.VisualizationLib.Core.Interface;
@@ -28,7 +27,7 @@ namespace Pathfinding.App.Console.Units
 
         private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
-        public MainUnit(IReadOnlyCollection<IMenuItem> menuItems, 
+        public MainUnit(IReadOnlyCollection<IMenuItem> menuItems,
             FieldFactory fieldFactory, IMessenger messenger,
             IInput<Answer> input, IUndo undo, ILog log)
             : base(menuItems)

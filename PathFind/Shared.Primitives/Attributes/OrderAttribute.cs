@@ -5,7 +5,7 @@ namespace Shared.Primitives.Attributes
     [AttributeUsage(AttributeTargets.All)]
     public class OrderAttribute : Attribute
     {
-        public static readonly OrderAttribute Default 
+        public static readonly OrderAttribute Default
             = new OrderAttribute(int.MaxValue);
 
         public int Order { get; }

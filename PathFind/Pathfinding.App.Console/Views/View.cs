@@ -26,7 +26,7 @@ namespace Pathfinding.App.Console.Views
             bool isClosureRequested = false;
             while (!isClosureRequested)
             {
-                var menuItems = GetExecutableMenuItems();
+                var menuItems = unit.MenuItems;
                 var options = GetMenuOptions(menuItems);
                 Screen.SetCursorPositionUnderMenu(1);
                 try
@@ -42,20 +42,13 @@ namespace Pathfinding.App.Console.Views
             }
         }
 
-        private (string Message, InclusiveValueRange<int> MenuRange) GetMenuOptions(IReadOnlyCollection<IMenuItem> menuItems)
+        private (string Message, InclusiveValueRange<int> MenuRange) GetMenuOptions(IReadOnlyCollection<IAction> menuItems)
         {
             int columnsNumber = (int)Math.Ceiling(menuItems.Count / 4.0);
             var menuList = menuItems.CreateMenuList(columnsNumber);
             var menuRange = new InclusiveValueRange<int>(menuItems.Count, 1);
             var message = string.Concat(menuList, "\n", Languages.MenuOptionChoiceMsg);
             return (message, menuRange);
-        }
-
-        private IReadOnlyList<IMenuItem> GetExecutableMenuItems()
-        {
-            return unit.MenuItems
-                .Where(item => item.CanBeExecuted())
-                .ToReadOnly();
         }
 
         private int InputItemIndex((string Message, InclusiveValueRange<int> MenuRange) options)

@@ -15,10 +15,10 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
     [Order(1)]
     internal sealed class EnterPathfindingRangeMenuItem : SwitchVerticesMenuItem
     {
-        public EnterPathfindingRangeMenuItem(IMessenger messenger, 
+        public EnterPathfindingRangeMenuItem(IMessenger messenger,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
             IReadOnlyDictionary<ConsoleKey, IVertexAction> actions,
-            IInput<ConsoleKey> keyInput) 
+            IInput<ConsoleKey> keyInput)
             : base(messenger, keyInput)
         {
             Actions.AddRange(actions);

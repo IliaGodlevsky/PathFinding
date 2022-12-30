@@ -4,6 +4,6 @@ namespace Pathfinding.App.Console.Interface
 {
     internal interface IUnit
     {
-        IReadOnlyCollection<IMenuItem> MenuItems { get; }
+        IReadOnlyList<IAction> MenuItems { get; }
     }
 }

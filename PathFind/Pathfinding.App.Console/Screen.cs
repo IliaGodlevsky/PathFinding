@@ -17,7 +17,7 @@ namespace Pathfinding.App.Console
         public const int HeightOfAbscissaView = 2;
         public const int HeightOfGraphParametresView = 1;
 
-        public static readonly int WidthOfOrdinateView 
+        public static readonly int WidthOfOrdinateView
             = (Constants.GraphLengthValueRange.UpperValueOfRange - 1).GetDigitsNumber() + 1;
         public static readonly int YCoordinatePadding = WidthOfOrdinateView - 1;
 

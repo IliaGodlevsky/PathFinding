@@ -1,9 +1,7 @@
 ﻿namespace Pathfinding.App.Console.Interface
 {
-    internal interface IMenuItem
+    internal interface IMenuItem : IAction
     {
-        void Execute();
-
         bool CanBeExecuted();
     }
 }

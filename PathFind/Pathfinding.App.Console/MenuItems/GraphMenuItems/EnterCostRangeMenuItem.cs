@@ -4,14 +4,13 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
 using Shared.Primitives.Attributes;
-using System.Resources;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     [Order(5)]
     internal sealed class EnterCostRangeMenuItem : GraphMenuItem
     {
-        public EnterCostRangeMenuItem(IMessenger messenger, IInput<int> input) 
+        public EnterCostRangeMenuItem(IMessenger messenger, IInput<int> input)
             : base(messenger, input)
         {
         }

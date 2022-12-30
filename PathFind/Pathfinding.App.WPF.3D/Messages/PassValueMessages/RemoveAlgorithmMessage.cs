@@ -1,5 +1,4 @@
-﻿using Pathfinding.App.WPF._3D.ViewModel;
-using System;
+﻿using System;
 
 namespace Pathfinding.App.WPF._3D.Messages.PassValueMessages
 {

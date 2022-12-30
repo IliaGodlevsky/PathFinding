@@ -23,7 +23,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        public SendGraphMenuItem(IGraphSerializer<Graph2D<Vertex>, Vertex> serializer, 
+        public SendGraphMenuItem(IGraphSerializer<Graph2D<Vertex>, Vertex> serializer,
             IMessenger messenger, IInput<string> input, ILog log)
         {
             this.serializer = serializer;

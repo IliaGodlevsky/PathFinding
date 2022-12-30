@@ -1,5 +1,4 @@
-﻿using Pathfinding.App.Console;
-using Pathfinding.App.Console.Extensions;
+﻿using Pathfinding.App.Console.Extensions;
 using System;
 using System.Text;
 

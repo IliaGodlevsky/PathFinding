@@ -56,7 +56,7 @@ namespace Pathfinding.App.Console.MenuItems
             } while (key != ConsoleKey.Escape);
         }
 
-        private int ReturnInRange(int coordinate, InclusiveValueRange<int> range)
+        private static int ReturnInRange(int coordinate, InclusiveValueRange<int> range)
         {
             return range.ReturnInRange(coordinate, ReturnOptions.Cycle);
         }

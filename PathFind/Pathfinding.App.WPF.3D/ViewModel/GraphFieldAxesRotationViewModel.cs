@@ -5,7 +5,6 @@ using Pathfinding.App.WPF._3D.Infrastructure.Commands;
 using Pathfinding.App.WPF._3D.Messages.PassValueMessages;
 using Shared.Extensions;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace Pathfinding.App.WPF._3D.ViewModel

@@ -24,7 +24,7 @@ namespace Pathfinding.GraphLib.Core.Modules
             this.range = range;
             markCommands = GetMarkCommands().ToReadOnly();
             undoCommands = markCommands.OfType<IUndo>().ToReadOnly();
-            replaceCommand = new ReplaceTransitVertex<TVertex>(this);           
+            replaceCommand = new ReplaceTransitVertex<TVertex>(this);
         }
 
         public void Undo()

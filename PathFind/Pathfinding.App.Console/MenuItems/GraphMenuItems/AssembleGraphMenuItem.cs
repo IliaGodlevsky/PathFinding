@@ -9,13 +9,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     [Order(1)]
     internal sealed class AssembleGraphMenuItem : GraphCreatingMenuItem
     {
-        public AssembleGraphMenuItem(IMessenger messenger, 
-            IRandom random, 
-            IVertexCostFactory costFactory, 
+        public AssembleGraphMenuItem(IMessenger messenger,
+            IRandom random,
+            IVertexCostFactory costFactory,
             INeighborhoodFactory neighborhoodFactory)
             : base(messenger, random, costFactory, neighborhoodFactory)
         {
-            
+
         }
 
         public override string ToString()

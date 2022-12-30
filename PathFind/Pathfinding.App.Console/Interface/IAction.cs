@@ -1,7 +1,7 @@
 ﻿namespace Pathfinding.App.Console.Interface
 {
-    internal interface IInput<out T>
+    internal interface IAction
     {
-        T Input();
+        void Execute();
     }
 }

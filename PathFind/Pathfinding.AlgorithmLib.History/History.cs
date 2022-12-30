@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.History
 {
-    public sealed class History<TVolume> 
+    public sealed class History<TVolume>
         where TVolume : IHistoryVolume<ICoordinate>, new()
     {
         private const int VolumesCount = 5;

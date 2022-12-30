@@ -1,6 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Modules;
-using Pathfinding.GraphLib.Core.Modules.Interface;
 using System.Windows.Input;
 
 namespace Pathfinding.App.WPF._2D.Model

@@ -21,8 +21,6 @@ using System.Linq;
 
 namespace Pathfinding.Visualization.Models
 {
-    using AlgorithmFactory = IAlgorithmFactory<PathfindingProcess>;
-
     public abstract class PathFindingModel<TVertex>
         where TVertex : IVertex, IVisualizable
     {

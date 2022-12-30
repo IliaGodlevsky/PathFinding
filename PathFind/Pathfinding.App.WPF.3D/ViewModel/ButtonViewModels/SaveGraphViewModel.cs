@@ -1,15 +1,15 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using Autofac;
+using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.WPF._3D.DependencyInjection;
+using Pathfinding.App.WPF._3D.Infrastructure.Commands;
+using Pathfinding.App.WPF._3D.Messages.PassValueMessages;
+using Pathfinding.App.WPF._3D.Model;
+using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Serialization.Core.Interface;
+using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
 using System;
 using System.Windows.Input;
-using Pathfinding.App.WPF._3D.Messages.PassValueMessages;
-using Pathfinding.GraphLib.Serialization.Core.Interface;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Pathfinding.App.WPF._3D.Model;
-using Pathfinding.App.WPF._3D.Infrastructure.Commands;
-using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
-using Pathfinding.App.WPF._3D.DependencyInjection;
-using Autofac;
 
 namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
 {

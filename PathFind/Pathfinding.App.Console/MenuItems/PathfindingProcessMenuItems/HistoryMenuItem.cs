@@ -9,7 +9,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     [Order(3)]
     internal sealed class HistoryMenuItem : UnitDisplayMenuItem<PathfindingHistoryUnit>
     {
-        public HistoryMenuItem(IViewFactory viewFactory, PathfindingHistoryUnit viewModel, ILog log) 
+        public HistoryMenuItem(IViewFactory viewFactory, PathfindingHistoryUnit viewModel, ILog log)
             : base(viewFactory, viewModel, log)
         {
         }

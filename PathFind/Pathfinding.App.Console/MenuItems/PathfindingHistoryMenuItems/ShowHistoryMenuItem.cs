@@ -24,7 +24,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         public ShowHistoryMenuItem(IMessenger messenger, IInput<int> input)
         {
             this.input = input;
-            this.messenger = messenger;           
+            this.messenger = messenger;
             this.messenger.Register<ApplyHistoryMessage>(this, OnHistoryApplied);
             this.messenger.Register<AlgorithmFinishedMessage>(this, OnAlgorithmFinished);
             this.messenger.Register<ClearHistoryMessage>(this, _ => ClearHistory());

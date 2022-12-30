@@ -4,7 +4,7 @@ using System;
 
 namespace Pathfinding.App.Console.Model.PathfindingActions
 {
-    internal sealed class NullAnimationAction 
+    internal sealed class NullAnimationAction
         : Singleton<NullAnimationAction, IAnimationSpeedAction>, IAnimationSpeedAction
     {
         private NullAnimationAction()

@@ -1,6 +1,6 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Factory.Interface;
 using System.Collections.Generic;
 
 namespace Pathfinding.GraphLib.Factory.Realizations.GraphFactories

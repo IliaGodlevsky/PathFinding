@@ -13,7 +13,7 @@ namespace Pathfinding.GraphLib.Factory.Realizations.Layers
     {
         private readonly IRandom random;
         private readonly int obstaclePercent;
-        
+
         public ObstacleLayer(IRandom random, int obstaclePercent)
         {
             this.random = random;

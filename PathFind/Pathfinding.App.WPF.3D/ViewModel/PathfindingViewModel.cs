@@ -1,24 +1,24 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using Autofac;
+using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.AlgorithmLib.Core.Abstractions;
+using Pathfinding.AlgorithmLib.Core.Events;
+using Pathfinding.AlgorithmLib.Factory.Interface;
+using Pathfinding.App.WPF._3D.DependencyInjection;
+using Pathfinding.App.WPF._3D.Extensions;
+using Pathfinding.App.WPF._3D.Infrastructure.Commands;
+using Pathfinding.App.WPF._3D.Interface;
+using Pathfinding.App.WPF._3D.Messages.PassValueMessages;
+using Pathfinding.App.WPF._3D.Model;
+using Pathfinding.GraphLib.Core.Modules.Interface;
+using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
+using Pathfinding.Visualization.Models;
+using Shared.Extensions;
+using Shared.Process.EventArguments;
 using System;
 using System.Collections.Generic;
-using System.Windows.Input;
-using Pathfinding.App.WPF._3D.Messages.PassValueMessages;
-using Pathfinding.Visualization.Models;
-using Pathfinding.App.WPF._3D.Model;
-using Pathfinding.AlgorithmLib.Factory.Interface;
-using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.App.WPF._3D.Interface;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Pathfinding.App.WPF._3D.Infrastructure.Commands;
-using Shared.Process.EventArguments;
-using Pathfinding.AlgorithmLib.Core.Events;
-using Shared.Extensions;
-using Pathfinding.App.WPF._3D.Extensions;
 using System.Threading.Tasks;
-using Pathfinding.App.WPF._3D.DependencyInjection;
-using Autofac;
-using Pathfinding.GraphLib.Core.Modules.Interface;
+using System.Windows.Input;
 
 namespace Pathfinding.App.WPF._3D.ViewModel
 {
@@ -34,8 +34,8 @@ namespace Pathfinding.App.WPF._3D.ViewModel
 
         private Guid Id { get; set; }
 
-        public PathFindingViewModel(IPathfindingRangeBuilder<Vertex3D> rangeBuilder, 
-            IEnumerable<IAlgorithmFactory<PathfindingProcess>> algorithmFactories,  ILog log, ICache<Graph3D<Vertex3D>> graphCache) 
+        public PathFindingViewModel(IPathfindingRangeBuilder<Vertex3D> rangeBuilder,
+            IEnumerable<IAlgorithmFactory<PathfindingProcess>> algorithmFactories, ILog log, ICache<Graph3D<Vertex3D>> graphCache)
             : base(rangeBuilder.Range, algorithmFactories, graphCache.Cache, log)
         {
             messenger = DI.Container.Resolve<IMessenger>();

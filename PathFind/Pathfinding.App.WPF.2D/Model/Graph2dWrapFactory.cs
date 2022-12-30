@@ -8,7 +8,7 @@ namespace Pathfinding.App.WPF._2D.Model
     {
         private readonly IGraphFactory<Graph2D<Vertex>, Vertex> factory;
 
-        public Graph2dWrapFactory(IGraphFactory<Graph2D<Vertex>, Vertex> factory) 
+        public Graph2dWrapFactory(IGraphFactory<Graph2D<Vertex>, Vertex> factory)
         {
             this.factory = factory;
         }

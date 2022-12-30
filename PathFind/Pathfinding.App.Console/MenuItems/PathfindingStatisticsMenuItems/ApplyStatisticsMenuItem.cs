@@ -14,7 +14,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingStatisticsMenuItems
         private readonly IMessenger messenger;
         private readonly IInput<Answer> answerInput;
 
-        public ApplyStatisticsMenuItem(IMessenger messenger, IInput<Answer> answerInput) 
+        public ApplyStatisticsMenuItem(IMessenger messenger, IInput<Answer> answerInput)
         {
             this.messenger = messenger;
             this.answerInput = answerInput;

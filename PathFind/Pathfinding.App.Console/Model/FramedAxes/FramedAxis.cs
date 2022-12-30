@@ -1,5 +1,4 @@
 ﻿using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Views;
 
 namespace Pathfinding.App.Console.Model.FramedAxes
 {

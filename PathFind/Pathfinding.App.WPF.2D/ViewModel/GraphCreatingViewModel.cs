@@ -47,7 +47,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel
 
         public IGraphAssemble<Graph2D<Vertex>, Vertex> SelectedGraphAssemble { get; set; }
 
-        public GraphCreatingViewModel(ILog log, IRandom random, INeighborhoodFactory neighborhoodFactory, 
+        public GraphCreatingViewModel(ILog log, IRandom random, INeighborhoodFactory neighborhoodFactory,
             IVertexCostFactory costFactory)
         {
             this.log = log;

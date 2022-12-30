@@ -12,7 +12,10 @@ namespace Pathfinding.App.Console.Units
     {
         private readonly Lazy<IReadOnlyCollection<IMenuItem>> menuItems;
 
-        public IReadOnlyCollection<IMenuItem> MenuItems => menuItems.Value;
+        private IReadOnlyCollection<IMenuItem> Items => menuItems.Value;
+
+        public IReadOnlyList<IAction> MenuItems 
+            => Items.Where(item => item.CanBeExecuted()).ToReadOnly();
 
         protected Unit(IReadOnlyCollection<IMenuItem> menuItems)
         {

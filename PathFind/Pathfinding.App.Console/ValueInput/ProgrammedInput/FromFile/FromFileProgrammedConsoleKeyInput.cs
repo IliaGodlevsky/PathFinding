@@ -5,7 +5,7 @@ namespace Pathfinding.App.Console.ValueInput.ProgrammedInput.FromFile
 {
     internal sealed class FromFileProgrammedConsoleKeyInput : FromFileProgrammedInput<ConsoleKey>
     {
-        public FromFileProgrammedConsoleKeyInput() 
+        public FromFileProgrammedConsoleKeyInput()
             : base("Script_ConsoleKey.txt")
         {
         }

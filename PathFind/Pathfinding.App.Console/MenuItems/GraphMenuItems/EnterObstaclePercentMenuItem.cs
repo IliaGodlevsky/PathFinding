@@ -10,7 +10,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     [Order(4)]
     internal sealed class EnterObstaclePercentMenuItem : GraphMenuItem
     {
-        public EnterObstaclePercentMenuItem(IMessenger messenger, IInput<int> input) 
+        public EnterObstaclePercentMenuItem(IMessenger messenger, IInput<int> input)
             : base(messenger, input)
         {
         }

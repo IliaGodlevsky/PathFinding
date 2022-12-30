@@ -10,7 +10,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     [Order(3)]
     internal sealed class EnterGraphParametresMenuItem : GraphMenuItem
     {
-        public EnterGraphParametresMenuItem(IMessenger messenger, IInput<int> input) 
+        public EnterGraphParametresMenuItem(IMessenger messenger, IInput<int> input)
             : base(messenger, input)
         {
 

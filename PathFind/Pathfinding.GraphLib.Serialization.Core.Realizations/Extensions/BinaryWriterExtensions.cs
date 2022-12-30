@@ -9,7 +9,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
 {
     internal static class BinaryWriterExtensions
     {
-        public static void WriteGraph(this BinaryWriter writer, 
+        public static void WriteGraph(this BinaryWriter writer,
             IGraph<IVertex> graph)
         {
             var info = new GraphSerializationInfo(graph);
@@ -17,28 +17,28 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             writer.WriteVertices(info.VerticesInfo);
         }
 
-        private static void WriteIntArray(this BinaryWriter writer, 
+        private static void WriteIntArray(this BinaryWriter writer,
             IReadOnlyCollection<int> array)
         {
             writer.Write(array.Count);
             array.ForEach(writer.Write);
         }
 
-        private static void WriterNeighborhood(this BinaryWriter writer, 
+        private static void WriterNeighborhood(this BinaryWriter writer,
             IReadOnlyCollection<ICoordinate> neighbourhood)
         {
             writer.Write(neighbourhood.Count);
             neighbourhood.ForEach(writer.WriteIntArray);
         }
 
-        private static void WriteRange(this BinaryWriter writer, 
+        private static void WriteRange(this BinaryWriter writer,
             InclusiveValueRange<int> range)
         {
             writer.Write(range.UpperValueOfRange);
             writer.Write(range.LowerValueOfRange);
         }
 
-        private static void WriteVertices(this BinaryWriter writer, 
+        private static void WriteVertices(this BinaryWriter writer,
             IReadOnlyCollection<VertexSerializationInfo> vertices)
         {
             writer.Write(vertices.Count);

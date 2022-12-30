@@ -1,7 +1,6 @@
 ﻿using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Extensions;
 using System;
-using System.Drawing;
 
 namespace Pathfinding.App.Console.Model
 {

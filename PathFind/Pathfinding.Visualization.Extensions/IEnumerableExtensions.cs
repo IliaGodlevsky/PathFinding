@@ -1,5 +1,4 @@
-﻿using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.VisualizationLib.Core.Interface;
+﻿using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;

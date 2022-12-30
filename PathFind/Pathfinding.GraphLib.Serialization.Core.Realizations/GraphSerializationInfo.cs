@@ -20,7 +20,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations
                 .ToReadOnly();
         }
 
-        internal GraphSerializationInfo(int[] dimensionsSizes, 
+        internal GraphSerializationInfo(int[] dimensionsSizes,
             IReadOnlyCollection<VertexSerializationInfo> info)
         {
             DimensionsSizes = dimensionsSizes;

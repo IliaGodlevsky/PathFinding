@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Pathfinding.App.WPF._2D.DependencyInjection
+﻿namespace Pathfinding.App.WPF._2D.DependencyInjection
 {
     internal static class RegistrationConstants
     {

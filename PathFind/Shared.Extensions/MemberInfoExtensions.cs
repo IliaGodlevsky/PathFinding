@@ -23,7 +23,7 @@ namespace Shared.Extensions
         /// <exception cref="FieldAccessException"></exception>
         /// <exception cref="TargetException"></exception>
         /// <remarks>A public static field is considered as a default value of an attribute</remarks>
-        public static TAttribute GetAttributeOrDefault<TAttribute>(this MemberInfo self, 
+        public static TAttribute GetAttributeOrDefault<TAttribute>(this MemberInfo self,
             bool inherit = false, string defaultFieldName = "Default")
             where TAttribute : Attribute
         {
@@ -32,11 +32,11 @@ namespace Shared.Extensions
             {
                 return (TAttribute)Attribute.GetCustomAttribute(self, attributeType, inherit);
             }
-            var flags = BindingFlags.Static | BindingFlags.Public 
+            var flags = BindingFlags.Static | BindingFlags.Public
                 | BindingFlags.FlattenHierarchy | BindingFlags.Instance;
             var field = attributeType.GetField(defaultFieldName, flags);
-            return field == null 
-                ? default(TAttribute) 
+            return field == null
+                ? default(TAttribute)
                 : (TAttribute)field.GetValue(null);
         }
     }

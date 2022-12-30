@@ -6,7 +6,7 @@ using System;
 namespace Pathfinding.App.Console.Model
 {
     internal sealed class Answer : IComparable<Answer>, IEquatable<Answer>
-    {        
+    {
         public static readonly Answer Yes = new Answer(1, Languages.Yes);
         public static readonly Answer No = new Answer(0, Languages.No);
         private static readonly Answer Default = new Answer(-1, string.Empty);
@@ -59,7 +59,7 @@ namespace Pathfinding.App.Console.Model
                 result = value;
                 return !result.Equals(Default);
             }
-            result = input.Equals(Yes, ignoreCase) 
+            result = input.Equals(Yes, ignoreCase)
                 ? Yes : input.Equals(No, ignoreCase) ? No : Default;
             return !result.Equals(Default);
         }

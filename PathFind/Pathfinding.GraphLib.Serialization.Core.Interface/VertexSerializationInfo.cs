@@ -1,6 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Shared.Extensions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,17 +44,17 @@ namespace Pathfinding.GraphLib.Serialization.Core.Interface
         public INeighborhood Neighbourhood { get; }
 
         public VertexSerializationInfo(IVertex vertex)
-            : this(vertex.IsObstacle, 
-                  vertex.Cost, 
-                  vertex.Position, 
+            : this(vertex.IsObstacle,
+                  vertex.Cost,
+                  vertex.Position,
                   new Neighborhood(vertex.Neighbours))
         {
 
         }
 
-        public VertexSerializationInfo(bool isObstacle, 
+        public VertexSerializationInfo(bool isObstacle,
             IVertexCost cost,
-            ICoordinate position, 
+            ICoordinate position,
             IReadOnlyCollection<ICoordinate> neighborhood)
         {
             IsObstacle = isObstacle;

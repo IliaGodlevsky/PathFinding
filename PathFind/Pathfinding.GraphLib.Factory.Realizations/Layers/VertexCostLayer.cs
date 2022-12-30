@@ -16,7 +16,7 @@ namespace Pathfinding.GraphLib.Factory.Realizations.Layers
 
         private IRandom Random { get; }
 
-        public VertexCostLayer(IVertexCostFactory costFactory, 
+        public VertexCostLayer(IVertexCostFactory costFactory,
             InclusiveValueRange<int> costRange, IRandom random)
         {
             this.CostFactory = costFactory;

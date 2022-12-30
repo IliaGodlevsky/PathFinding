@@ -12,7 +12,7 @@ namespace Pathfinding.GraphLib.Factory.Realizations.GraphAssembles
     public sealed class GraphAssemble<TGraph, TVertex> : IGraphAssemble<TGraph, TVertex>
         where TVertex : IVertex
         where TGraph : IGraph<TVertex>
-    {        
+    {
         private readonly ICoordinateFactory coordinateFactory;
         private readonly IVertexFactory<TVertex> vertexFactory;
         private readonly IGraphFactory<TGraph, TVertex> graphFactory;

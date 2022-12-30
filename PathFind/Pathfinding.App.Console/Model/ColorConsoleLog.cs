@@ -7,7 +7,7 @@ namespace Pathfinding.App.Console.Model
     {
         public void Debug(string message)
         {
-            
+
         }
 
         public void Error(Exception ex, string message = null)
@@ -32,12 +32,12 @@ namespace Pathfinding.App.Console.Model
 
         public void Info(string message)
         {
-            
+
         }
 
         public void Trace(string message)
         {
-            
+
         }
 
         public void Warn(Exception ex, string message = null)
@@ -51,7 +51,7 @@ namespace Pathfinding.App.Console.Model
         }
 
         private void ShowMessage(string message, ConsoleColor color)
-        {          
+        {
             using (Cursor.UseCurrentPositionWithClean())
             {
                 using (Cursor.UseColor(color))

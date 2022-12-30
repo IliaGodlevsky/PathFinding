@@ -40,8 +40,8 @@ namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
 
         private bool CanExecuteClearColorsCommand(object param)
         {
-            return Graph != Graph3D<Vertex3D>.Empty 
-                && rangeBuilder.Range.HasSourceAndTargetSet() 
+            return Graph != Graph3D<Vertex3D>.Empty
+                && rangeBuilder.Range.HasSourceAndTargetSet()
                 && IsAllAlgorithmFinishedPathfinding;
         }
 

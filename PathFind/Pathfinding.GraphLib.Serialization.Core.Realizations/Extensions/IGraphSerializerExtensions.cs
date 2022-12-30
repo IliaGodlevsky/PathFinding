@@ -8,7 +8,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
 {
     public static class IGraphSerializerExtensions
     {
-        public static async ValueTask SaveGraphToFileAsync<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, 
+        public static async ValueTask SaveGraphToFileAsync<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self,
             IGraph<IVertex> graph, string filePath)
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex

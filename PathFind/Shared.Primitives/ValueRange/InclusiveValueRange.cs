@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Shared.Extensions;
+using System;
 using System.Diagnostics;
-using Shared.Extensions;
 
 namespace Shared.Primitives.ValueRange
 {

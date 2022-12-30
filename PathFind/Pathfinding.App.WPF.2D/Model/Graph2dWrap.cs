@@ -14,7 +14,7 @@ namespace Pathfinding.App.WPF._2D.Model
 
         private int Obstacles => this.GetObstaclesCount();
 
-        public Graph2dWrap(Graph2D<Vertex> graph) 
+        public Graph2dWrap(Graph2D<Vertex> graph)
             : base(graph, graph.DimensionsSizes)
         {
 

@@ -20,9 +20,9 @@ namespace Pathfinding.App.Console.DependencyInjection
         public static readonly Type Visual = typeof(PathfindingVisualizationUnit);
         public static readonly Type Range = typeof(PathfindingRangeUnit);
 
-        public static readonly Type[] Units = new[] 
-        { 
-            Main, Graph, History, Process, Statistics, Visual, Range 
+        public static readonly Type[] Units = new[]
+        {
+            Main, Graph, History, Process, Statistics, Visual, Range
         };
     }
 }

@@ -15,7 +15,7 @@ namespace Pathfinding.Visualization.Extensions
             where TVolume : IHistoryVolume<ICoordinate>, new()
         {
             history.GetRegulars(key).Select(graph.Get).ForEach(vertex => vertex.VisualizeAsRegular());
-            history.GetObstacles(key).Select(graph.Get).VisualizeAsObstacles();           
+            history.GetObstacles(key).Select(graph.Get).VisualizeAsObstacles();
             history.GetVisitedVertices(key).Select(graph.Get).VisualizeAsVisited();
             history.GetPathfindingRange(key).Select(graph.Get).VisualizeAsRange();
             history.GetPath(key).Select(graph.Get).VisualizeAsPath();

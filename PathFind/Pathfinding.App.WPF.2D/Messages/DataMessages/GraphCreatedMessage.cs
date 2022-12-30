@@ -1,6 +1,5 @@
 ﻿using Pathfinding.App.WPF._2D.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Shared.Primitives.ValueRange;
 
 namespace Pathfinding.App.WPF._2D.Messages.DataMessages
 {

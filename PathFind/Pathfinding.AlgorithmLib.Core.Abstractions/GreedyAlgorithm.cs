@@ -1,5 +1,4 @@
-﻿using Pathfinding.AlgorithmLib.Core.Events;
-using Pathfinding.AlgorithmLib.Extensions;
+﻿using Pathfinding.AlgorithmLib.Extensions;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.NullObjects;

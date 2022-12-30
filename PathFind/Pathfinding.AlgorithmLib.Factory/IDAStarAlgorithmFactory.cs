@@ -8,7 +8,6 @@ using Pathfinding.AlgorithmLib.Factory.Attrbiutes;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.GraphLib.Core.Interface;
 using Shared.Primitives.Attributes;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Factory

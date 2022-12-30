@@ -9,7 +9,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     [Order(2)]
     internal class PathfindingRangeMenuItem : UnitDisplayMenuItem<PathfindingRangeUnit>
     {
-        public PathfindingRangeMenuItem(IViewFactory viewFactory, PathfindingRangeUnit viewModel, ILog log) 
+        public PathfindingRangeMenuItem(IViewFactory viewFactory, PathfindingRangeUnit viewModel, ILog log)
             : base(viewFactory, viewModel, log)
         {
 

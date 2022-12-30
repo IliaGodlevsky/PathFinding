@@ -1,15 +1,15 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Events;
+using Pathfinding.AlgorithmLib.History;
+using Pathfinding.AlgorithmLib.History.Interface;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.Visualization.Extensions;
 using System;
 using System.Collections.Generic;
-using Pathfinding.AlgorithmLib.History.Interface;
-using Pathfinding.AlgorithmLib.History;
-using Pathfinding.Visualization.Extensions;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
 
 namespace Pathfinding.App.Console.Units
 {

@@ -5,7 +5,7 @@ using Pathfinding.GraphLib.Factory.Interface;
 namespace Pathfinding.GraphLib.Factory.Realizations.Layers
 {
     public sealed class NeighborhoodLayer<TGraph, TVertex> : ILayer<TGraph, TVertex>
-        where TGraph: IGraph<TVertex>
+        where TGraph : IGraph<TVertex>
         where TVertex : IVertex
     {
         private readonly INeighborhoodFactory factory;

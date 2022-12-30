@@ -8,7 +8,6 @@ using Pathfinding.App.WPF._3D.Model;
 using Pathfinding.App.WPF._3D.View;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Pathfinding.Visualization.Core.Abstractions;
 using Shared.Executable;
 using System.Windows.Input;
 

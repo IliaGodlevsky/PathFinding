@@ -10,8 +10,8 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
     [Order(2)]
     internal sealed class PathfindingProcessMenuItem : MainMenuItem<PathfindingProcessUnit>
     {
-        public PathfindingProcessMenuItem(IViewFactory viewFactory, PathfindingProcessUnit viewModel, 
-            IMessenger messenger, ILog log) 
+        public PathfindingProcessMenuItem(IViewFactory viewFactory, PathfindingProcessUnit viewModel,
+            IMessenger messenger, ILog log)
             : base(viewFactory, viewModel, messenger, log)
         {
 

@@ -1,5 +1,4 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.UnitTest.Realizations.TestObjects;
 
 namespace Pathfinding.GraphLib.UnitTest.Realizations.TestFactories.Layers

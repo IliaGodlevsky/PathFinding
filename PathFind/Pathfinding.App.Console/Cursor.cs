@@ -1,5 +1,4 @@
-﻿using Pathfinding.GraphLib.Core.Realizations.Coordinates;
-using Shared.Primitives;
+﻿using Shared.Primitives;
 using System;
 using System.Drawing;
 
@@ -10,7 +9,7 @@ namespace Pathfinding.App.Console
     /// </summary>
     internal sealed class Cursor
     {
-        private static string BufferLengthString 
+        private static string BufferLengthString
             => new string(' ', System.Console.BufferWidth);
 
         private readonly int cursorLeft;

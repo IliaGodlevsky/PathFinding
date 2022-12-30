@@ -11,7 +11,7 @@ namespace Pathfinding.App.Console.Model.VertexActions
         private readonly IPathfindingRange<Vertex> range;
         private readonly IMessenger messenger;
 
-        public ReverseVertexAction(IPathfindingRange<Vertex> range, 
+        public ReverseVertexAction(IPathfindingRange<Vertex> range,
             IMessenger messenger)
         {
             this.range = range;

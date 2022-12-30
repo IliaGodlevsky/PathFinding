@@ -26,7 +26,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         private readonly IInput<int> input;
 
-        public PathfindingAlgorithmMenuItem(IEnumerable<AlgorithmFactory> factories, 
+        public PathfindingAlgorithmMenuItem(IEnumerable<AlgorithmFactory> factories,
             IMessenger messenger, IPathfindingRangeBuilder<Vertex> rangeBuilder, IInput<int> input)
         {
             this.messenger = messenger;
@@ -52,9 +52,9 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
             string message = menuList + "\n" + Languages.AlgorithmChoiceMsg;
             int index = GetAlgorithmIndex(message);
             while (index != factories.Count)
-            {               
+            {
                 var factory = factories[index];
-                messenger.Send(new PathfindingAlgorithmChosenMessage(factory));          
+                messenger.Send(new PathfindingAlgorithmChosenMessage(factory));
                 index = GetAlgorithmIndex(message);
             }
         }

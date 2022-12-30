@@ -21,7 +21,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private readonly IGraphSerializer<Graph2D<Vertex>, Vertex> serializer;
         private readonly ILog log;
 
-        public LoadGraphMenuItem(IMessenger messenger, 
+        public LoadGraphMenuItem(IMessenger messenger,
             IPathInput input,
             IGraphSerializer<Graph2D<Vertex>, Vertex> serializer, ILog log)
         {

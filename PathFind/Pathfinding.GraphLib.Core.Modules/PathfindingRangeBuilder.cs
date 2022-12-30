@@ -10,32 +10,30 @@ namespace Pathfinding.GraphLib.Core.Modules
     public sealed class PathfindingRangeBuilder<TVertex> : IPathfindingRangeBuilder<TVertex>, IUndo
         where TVertex : IVertex
     {
-        private IReadOnlyCollection<IUndoCommand<TVertex>> UndoCommands { get; }
-
-        private IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> IncludeCommands { get; }
-
-        private IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> ExcludeCommands { get; }
+        private IReadOnlyCollection<IUndoCommand<TVertex>> undoCommands;
+        private IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> includeCommands;
+        private IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> excludeCommands;
 
         public IPathfindingRange<TVertex> Range { get; }
 
-        public PathfindingRangeBuilder(IPathfindingRange<TVertex> range, 
+        public PathfindingRangeBuilder(IPathfindingRange<TVertex> range,
             IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> includeCommands,
             IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> excludeCommands)
         {
             Range = range;
-            IncludeCommands = includeCommands;
-            ExcludeCommands = excludeCommands;
-            UndoCommands = GetUndoCommands();
+            this.includeCommands = includeCommands;
+            this.excludeCommands = excludeCommands;
+            undoCommands = GetUndoCommands();
         }
 
         public void Include(TVertex vertex)
         {
-            ExecuteFirst(IncludeCommands, vertex);
+            ExecuteFirst(includeCommands, vertex);
         }
 
         public void Exclude(TVertex vertex)
         {
-            ExecuteFirst(ExcludeCommands, vertex);
+            ExecuteFirst(excludeCommands, vertex);
         }
 
         private void ExecuteFirst(IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> commands, TVertex vertex)
@@ -46,15 +44,15 @@ namespace Pathfinding.GraphLib.Core.Modules
 
         private IReadOnlyCollection<IUndoCommand<TVertex>> GetUndoCommands()
         {
-            return IncludeCommands
-                .Concat(ExcludeCommands)
+            return includeCommands
+                .Concat(excludeCommands)
                 .OfType<IUndoCommand<TVertex>>()
                 .ToReadOnly();
         }
 
         public void Undo()
         {
-            UndoCommands.ForEach(command => command.Undo(Range));
+            undoCommands.ForEach(command => command.Undo(Range));
         }
     }
 }

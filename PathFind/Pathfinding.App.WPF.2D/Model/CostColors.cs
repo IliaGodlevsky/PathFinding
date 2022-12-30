@@ -1,6 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Realizations;
+﻿using Pathfinding.GraphLib.Core.Interface;
 using Shared.Collections;
 using Shared.Extensions;
 using Shared.Primitives;

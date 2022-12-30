@@ -19,7 +19,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     {
         private readonly IReadOnlyList<GraphAssemble> assembles;
 
-        public EnterGraphAssembleMenuItem(IReadOnlyList<GraphAssemble> assembles, 
+        public EnterGraphAssembleMenuItem(IReadOnlyList<GraphAssemble> assembles,
             IMessenger messenger, IInput<int> input)
             : base(messenger, input)
         {
