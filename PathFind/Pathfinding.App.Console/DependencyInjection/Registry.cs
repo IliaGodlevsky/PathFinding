@@ -73,10 +73,10 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
             builder.RegisterType<ConsoleUserTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
 
-            builder.RegisterTypes(RegistrationConstants.Units).SingleInstance().WithMetadata(UnitTypeKey, type => type)
+            builder.RegisterTypes(AllUnits).SingleInstance().WithMetadata(UnitTypeKey, type => type)
                 .AsSelf().AutoActivate().ConfigurePipeline(p => p.Use(new UnitConfigurationMiddlewear()));
 
-            builder.RegisterType<ExitMenuItem>().AsSelf().InstancePerDependency();
+            builder.RegisterType<ExitMenuItem>().Keyed(typeof(IMenuItem), AllUnits.Except(Main)).SingleInstance();
 
             builder.RegisterType<MainUnitMenuItem>().AsSelf().InstancePerDependency();
             builder.RegisterType<AnswerExitMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();

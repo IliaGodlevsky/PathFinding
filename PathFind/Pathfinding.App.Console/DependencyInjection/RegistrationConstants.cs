@@ -13,7 +13,7 @@ namespace Pathfinding.App.Console.DependencyInjection
         public const string Order = "Order";
         public const string Key = "Key";
 
-        public static readonly Type[] Units;
+        public static readonly Type[] AllUnits;
 
         public static readonly Type Main = typeof(MainUnit);
         public static readonly Type Graph = typeof(GraphUnit);
@@ -25,7 +25,7 @@ namespace Pathfinding.App.Console.DependencyInjection
 
         static RegistrationConstants()
         {
-            Units = typeof(RegistrationConstants).GetFields()
+            AllUnits = typeof(RegistrationConstants).GetFields()
                 .Where(field => field.FieldType == typeof(Type))
                 .Select(field => (Type)field.GetValue(null))
                 .ToArray();
