@@ -2,7 +2,6 @@
 using Pathfinding.App.Console.MenuItems;
 using Shared.Extensions;
 using Shared.Primitives.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,29 +9,27 @@ namespace Pathfinding.App.Console.Units
 {
     internal abstract class Unit : IUnit
     {
-        private readonly Lazy<IReadOnlyCollection<IMenuItem>> menuItems;
+        private IReadOnlyCollection<IMenuItem> MenuItems { get; }
 
-        private IReadOnlyCollection<IMenuItem> Items => menuItems.Value;
+        private IReadOnlyCollection<IConditionedMenuItem> ConditionedMenuItems { get; }
 
-        public IReadOnlyList<IAction> MenuItems 
-            => Items.Where(item => item.CanBeExecuted()).ToReadOnly();
+        protected virtual ExitMenuItem ExitMenuItem { get; } = new ExitMenuItem();
 
-        protected Unit(IReadOnlyCollection<IMenuItem> menuItems)
+        protected Unit(IReadOnlyCollection<IMenuItem> menuItems,
+            IReadOnlyCollection<IConditionedMenuItem> conditioned)
         {
-            this.menuItems = new(() => SetItems(menuItems));
+            MenuItems = menuItems;
+            ConditionedMenuItems = conditioned;
         }
 
-        protected IReadOnlyCollection<IMenuItem> SetItems(IReadOnlyCollection<IMenuItem> menuItems)
+        public IReadOnlyList<IMenuItem> GetMenuItems()
         {
-            return menuItems
-                .Append(GetExitMenuItem())
+            return ConditionedMenuItems
+                .Where(item => item.CanBeExecuted())
+                .Concat(MenuItems)
+                .Append(ExitMenuItem)
                 .OrderByOrderAttribute()
                 .ToReadOnly();
-        }
-
-        protected virtual IMenuItem GetExitMenuItem()
-        {
-            return new ExitMenuItem();
         }
     }
 }

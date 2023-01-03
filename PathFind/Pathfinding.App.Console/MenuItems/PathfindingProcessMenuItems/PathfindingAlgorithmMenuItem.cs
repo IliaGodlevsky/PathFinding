@@ -19,7 +19,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     using AlgorithmFactory = IAlgorithmFactory<PathfindingProcess>;
 
     [Order(1)]
-    internal sealed class PathfindingAlgorithmMenuItem : IMenuItem
+    internal sealed class PathfindingAlgorithmMenuItem : IConditionedMenuItem
     {
         private readonly IReadOnlyList<AlgorithmFactory> factories;
         private readonly IMessenger messenger;

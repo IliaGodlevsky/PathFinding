@@ -31,7 +31,5 @@ namespace Pathfinding.App.Console.MenuItems
                 log.Error(ex);
             }
         }
-
-        public virtual bool CanBeExecuted() => true;
     }
 }

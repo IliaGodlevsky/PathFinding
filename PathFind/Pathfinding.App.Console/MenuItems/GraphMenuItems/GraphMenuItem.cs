@@ -14,8 +14,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             this.input = input;
         }
 
-        public virtual bool CanBeExecuted() => true;
-
         public abstract void Execute();
     }
 }

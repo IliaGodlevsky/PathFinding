@@ -77,35 +77,35 @@ namespace Pathfinding.App.Console.DependencyInjection
 
             builder.RegisterType<MainUnitMenuItem>().AsSelf().InstancePerDependency();
             builder.RegisterType<GraphCreateMenuItem>().Keyed<IMenuItem>(Main).SingleInstance().AutoActivate();
-            builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IMenuItem>(Main).SingleInstance().AutoActivate();
+            builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IConditionedMenuItem>(Main).SingleInstance().AutoActivate();
             builder.RegisterType<PathfindingRangeMenuItem>().Keyed<IMenuItem>(Process).SingleInstance().AutoActivate();
             builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(Process).SingleInstance().AutoActivate();
             builder.RegisterType<VisualizationMenuItem>().Keyed<IMenuItem>(Process).SingleInstance().AutoActivate();
             builder.RegisterType<HistoryMenuItem>().Keyed<IMenuItem>(Process).SingleInstance().AutoActivate();
 
-            builder.RegisterType<ChangeCostMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
-            builder.RegisterType<AssembleGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
-            builder.RegisterType<ResizeGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
+            builder.RegisterType<ChangeCostMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance().AutoActivate();
+            builder.RegisterType<AssembleGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance().AutoActivate();
+            builder.RegisterType<ResizeGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance().AutoActivate();
             builder.RegisterType<EnterCostRangeMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
             builder.RegisterType<EnterGraphAssembleMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
             builder.RegisterType<EnterGraphParametresMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
             builder.RegisterType<EnterObstaclePercentMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
             builder.RegisterType<LoadGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
-            builder.RegisterType<SaveGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
-            builder.RegisterType<ReverseVertexMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
-            builder.RegisterType<SmoothGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
+            builder.RegisterType<SaveGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance().AutoActivate();
+            builder.RegisterType<ReverseVertexMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance().AutoActivate();
+            builder.RegisterType<SmoothGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance().AutoActivate();
             builder.RegisterType<RecieveGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
-            builder.RegisterType<SendGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance().AutoActivate();
+            builder.RegisterType<SendGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance().AutoActivate();
 
             builder.RegisterType<ApplyHistoryMenuItem>().Keyed<IMenuItem>(History).SingleInstance().AutoActivate();
-            builder.RegisterType<ClearHistoryMenuItem>().Keyed<IMenuItem>(History).SingleInstance().AutoActivate();
-            builder.RegisterType<ShowHistoryMenuItem>().Keyed<IMenuItem>(History).SingleInstance().AutoActivate();
+            builder.RegisterType<ClearHistoryMenuItem>().Keyed<IConditionedMenuItem>(History).SingleInstance().AutoActivate();
+            builder.RegisterType<ShowHistoryMenuItem>().Keyed<IConditionedMenuItem>(History).SingleInstance().AutoActivate();
 
-            builder.RegisterType<PathfindingAlgorithmMenuItem>().Keyed<IMenuItem>(Process).SingleInstance().AutoActivate();
-            builder.RegisterType<ClearColorsMenuItem>().Keyed<IMenuItem>(Process).SingleInstance().AutoActivate();
-            builder.RegisterType<ClearGraphMenuItem>().Keyed<IMenuItem>(Process).SingleInstance().AutoActivate();
+            builder.RegisterType<PathfindingAlgorithmMenuItem>().Keyed<IConditionedMenuItem>(Process).SingleInstance().AutoActivate();
+            builder.RegisterType<ClearColorsMenuItem>().Keyed<IConditionedMenuItem>(Process).SingleInstance().AutoActivate();
+            builder.RegisterType<ClearGraphMenuItem>().Keyed<IConditionedMenuItem>(Process).SingleInstance().AutoActivate();
             builder.RegisterType<ClearPathfindingRangeMenuItem>().Keyed<IMenuItem>(Range).SingleInstance().AutoActivate();
-            builder.RegisterType<EnterPathfindingRangeMenuItem>().Keyed<IMenuItem>(Range).SingleInstance().AutoActivate()
+            builder.RegisterType<EnterPathfindingRangeMenuItem>().Keyed<IConditionedMenuItem>(Range).SingleInstance().AutoActivate()
                 .ConfigurePipeline(p => p.Use(new EnterRangeConfigurationMiddlewear()));
             builder.RegisterType<MarkTransitToReplaceAction>().As<IVertexAction>().SingleInstance().WithMetadata(Key, ConsoleKey.R);
             builder.RegisterType<ReplaceTransitVertexAction>().As<IVertexAction>().SingleInstance().WithMetadata(Key, ConsoleKey.P);
@@ -113,7 +113,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<ApplyStatisticsMenuItem>().Keyed<IMenuItem>(Statistics).SingleInstance().AutoActivate();
 
             builder.RegisterType<ApplyVisualizationMenuItem>().Keyed<IMenuItem>(Visual).SingleInstance().AutoActivate();
-            builder.RegisterType<EnterAnimationDelayMenuItem>().Keyed<IMenuItem>(Visual).SingleInstance().AutoActivate();
+            builder.RegisterType<EnterAnimationDelayMenuItem>().Keyed<IConditionedMenuItem>(Visual).SingleInstance().AutoActivate();
 
             builder.RegisterType<ViewFactory>().As<IViewFactory>().SingleInstance();
 

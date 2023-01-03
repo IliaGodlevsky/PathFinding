@@ -29,14 +29,14 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Heuristics
             return Math.Round(Radians * Math.Acos(cosValue), digits: 3);
         }
 
-        private static IReadOnlyList<int> Substract(IReadOnlyList<int> self, IReadOnlyList<int> coordinate)
+        private static int[] Substract(IReadOnlyList<int> self, IReadOnlyList<int> coordinate)
         {
             var substractions = new int[self.Count];
             for (int i = 0; i < self.Count; i++)
             {
                 substractions[i] = self[i] - coordinate[i];
             }
-            return new ReadOnlyList<int>(substractions);
+            return substractions;
         }
 
         private static double GetScalarProduct(IReadOnlyList<int> self, IReadOnlyList<int> coordinate)

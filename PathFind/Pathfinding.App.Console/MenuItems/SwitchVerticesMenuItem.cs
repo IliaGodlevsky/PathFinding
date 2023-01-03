@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.MenuItems
 {
-    internal abstract class SwitchVerticesMenuItem : IMenuItem
+    internal abstract class SwitchVerticesMenuItem : IConditionedMenuItem
     {
         protected readonly IMessenger messenger;
         protected readonly IInput<ConsoleKey> keyInput;

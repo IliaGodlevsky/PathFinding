@@ -29,7 +29,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decor
                 }
                 catch (Exception ex)
                 {
-                    throw new CantSerializeGraphException(ex.Message, ex);
+                    throw new GraphSerializationException(ex.Message, ex);
                 }
             }
         }
@@ -44,7 +44,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decor
                 }
                 catch (Exception ex)
                 {
-                    throw new CantSerializeGraphException(ex.Message, ex);
+                    throw new GraphSerializationException(ex.Message, ex);
                 }
             }
         }

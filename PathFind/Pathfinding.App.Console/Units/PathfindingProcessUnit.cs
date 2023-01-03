@@ -25,9 +25,11 @@ namespace Pathfinding.App.Console.Units
         private readonly ILog log;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        public PathfindingProcessUnit(IReadOnlyCollection<IMenuItem> menuItems, IPathfindingRangeBuilder<Vertex> rangeBuilder,
+        public PathfindingProcessUnit(IReadOnlyCollection<IMenuItem> menuItems, 
+            IReadOnlyCollection<IConditionedMenuItem> conditioned,
+            IPathfindingRangeBuilder<Vertex> rangeBuilder,
             IInput<ConsoleKey> input, IMessenger messenger, ILog log)
-            : base(menuItems)
+            : base(menuItems, conditioned)
         {
             this.messenger = messenger;
             this.log = log;

@@ -26,7 +26,7 @@ namespace Pathfinding.GraphLib.Factory.Extensions
             return self.AssembleGraph(layers, (IReadOnlyList<int>)dimensionSizes);
         }
 
-        public static async Task<TGraph> AssembleGraphAsync<TGraph, TVertex>(this IGraphAssemble<TGraph, TVertex> self,
+        public static async ValueTask<TGraph> AssembleGraphAsync<TGraph, TVertex>(this IGraphAssemble<TGraph, TVertex> self,
             IReadOnlyCollection<ILayer<TGraph, TVertex>> layers, params int[] dimensionSizes)
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex
@@ -34,7 +34,7 @@ namespace Pathfinding.GraphLib.Factory.Extensions
             return await self.AssembleGraphAsync(layers, (IReadOnlyList<int>)dimensionSizes);
         }
 
-        public static async Task<TGraph> AssembleGraphAsync<TGraph, TVertex>(this IGraphAssemble<TGraph, TVertex> self,
+        public static async ValueTask<TGraph> AssembleGraphAsync<TGraph, TVertex>(this IGraphAssemble<TGraph, TVertex> self,
             IReadOnlyCollection<ILayer<TGraph, TVertex>> layers, IReadOnlyList<int> dimensionSizes)
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex

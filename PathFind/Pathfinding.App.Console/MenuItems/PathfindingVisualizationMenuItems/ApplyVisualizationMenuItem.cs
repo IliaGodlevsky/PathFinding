@@ -30,8 +30,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
             }
         }
 
-        public bool CanBeExecuted() => true;
-
         public override string ToString()
         {
             return Languages.ApplyVisualization;

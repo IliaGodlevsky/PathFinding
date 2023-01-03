@@ -11,7 +11,7 @@ using Shared.Primitives.Attributes;
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
     [Order(5)]
-    internal sealed class ClearColorsMenuItem : IMenuItem
+    internal sealed class ClearColorsMenuItem : IConditionedMenuItem
     {
         private readonly IMessenger messenger;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;

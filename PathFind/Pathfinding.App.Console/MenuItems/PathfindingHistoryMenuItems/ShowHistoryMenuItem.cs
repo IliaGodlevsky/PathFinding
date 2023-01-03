@@ -11,7 +11,7 @@ using System.Linq;
 namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 {
     [Order(2)]
-    internal sealed class ShowHistoryMenuItem : IMenuItem
+    internal sealed class ShowHistoryMenuItem : IConditionedMenuItem
     {
         private readonly IMessenger messenger;
         private readonly IInput<int> input;

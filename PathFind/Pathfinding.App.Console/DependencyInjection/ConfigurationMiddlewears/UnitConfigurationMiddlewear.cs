@@ -32,7 +32,9 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
             }
             var menuItems = context.ResolveKeyed<IReadOnlyCollection<IMenuItem>>(key);
             var menuItemsParam = new TypedParameter(typeof(IReadOnlyCollection<IMenuItem>), menuItems);
-            parametres.Add(menuItemsParam);
+            var conditioned = context.ResolveKeyed<IReadOnlyCollection<IConditionedMenuItem>>(key);
+            var conditionedParams = new TypedParameter(typeof(IReadOnlyCollection<IConditionedMenuItem>), conditioned);
+            parametres.AddRange(menuItemsParam, conditionedParams);
             context.ChangeParameters(parametres);
             next(context);
         }

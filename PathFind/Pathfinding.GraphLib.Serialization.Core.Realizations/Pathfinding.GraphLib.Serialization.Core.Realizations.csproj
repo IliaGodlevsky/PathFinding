@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AesCrypto.cs" />
-    <Compile Include="Exceptions\CantSerializeGraphException.cs" />
+    <Compile Include="Exceptions\GraphSerializationException.cs" />
     <Compile Include="Extensions\BinaryReaderExtensions.cs" />
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
     <Compile Include="Extensions\IGraphSerializationModuleExtensions.cs" />

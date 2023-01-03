@@ -13,7 +13,7 @@ using System;
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     [Order(7)]
-    internal sealed class SaveGraphMenuItem : IMenuItem
+    internal sealed class SaveGraphMenuItem : IConditionedMenuItem
     {
         private readonly IMessenger messenger;
         private readonly IPathInput input;

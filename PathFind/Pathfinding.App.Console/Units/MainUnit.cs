@@ -18,7 +18,6 @@ namespace Pathfinding.App.Console.Units
     internal sealed class MainUnit : Unit
     {
         private readonly IMessenger messenger;
-        private readonly IInput<Answer> input;
         private readonly FieldFactory fieldFactory;
         private readonly IUndo undo;
         private readonly ILog log;
@@ -27,16 +26,22 @@ namespace Pathfinding.App.Console.Units
 
         private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
+        protected override ExitMenuItem ExitMenuItem { get; }
+
         public MainUnit(IReadOnlyCollection<IMenuItem> menuItems,
-            FieldFactory fieldFactory, IMessenger messenger,
-            IInput<Answer> input, IUndo undo, ILog log)
-            : base(menuItems)
+            IReadOnlyCollection<IConditionedMenuItem> conditioned,
+            FieldFactory fieldFactory, 
+            IMessenger messenger,
+            IInput<Answer> input, 
+            IUndo undo, 
+            ILog log)
+            : base(menuItems, conditioned)
         {
             this.undo = undo;
             this.log = log;
             this.messenger = messenger;
-            this.input = input;
             this.fieldFactory = fieldFactory;
+            ExitMenuItem = new AnswerExitMenuItem(input);
             this.messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainUnit, SetGraph);
             this.messenger.Register<GraphChangedMessage>(this, OnGraphChanged);
         }
@@ -82,11 +87,6 @@ namespace Pathfinding.App.Console.Units
                     System.Console.WriteLine(Graph);
                 }
             }
-        }
-
-        protected override IMenuItem GetExitMenuItem()
-        {
-            return new AnswerExitMenuItem(input);
         }
     }
 }

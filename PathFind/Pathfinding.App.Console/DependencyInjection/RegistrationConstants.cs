@@ -1,5 +1,6 @@
 ﻿using Pathfinding.App.Console.Units;
 using System;
+using System.Linq;
 
 namespace Pathfinding.App.Console.DependencyInjection
 {
@@ -12,6 +13,8 @@ namespace Pathfinding.App.Console.DependencyInjection
         public const string Order = "Order";
         public const string Key = "Key";
 
+        public static readonly Type[] Units;
+
         public static readonly Type Main = typeof(MainUnit);
         public static readonly Type Graph = typeof(GraphUnit);
         public static readonly Type History = typeof(PathfindingHistoryUnit);
@@ -20,9 +23,12 @@ namespace Pathfinding.App.Console.DependencyInjection
         public static readonly Type Visual = typeof(PathfindingVisualizationUnit);
         public static readonly Type Range = typeof(PathfindingRangeUnit);
 
-        public static readonly Type[] Units = new[]
+        static RegistrationConstants()
         {
-            Main, Graph, History, Process, Statistics, Visual, Range
-        };
+            Units = typeof(RegistrationConstants).GetFields()
+                .Where(field => field.FieldType == typeof(Type))
+                .Select(field => (Type)field.GetValue(null))
+                .ToArray();
+        }
     }
 }

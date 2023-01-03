@@ -1,12 +1,10 @@
-﻿using Pathfinding.App.Console.Exceptions;
-using Pathfinding.App.Console.Extensions;
+﻿using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Model;
 
 namespace Pathfinding.App.Console.MenuItems
 {
-    internal sealed class AnswerExitMenuItem : IMenuItem
+    internal sealed class AnswerExitMenuItem : ExitMenuItem
     {
         private readonly IInput<Answer> input;
 
@@ -15,23 +13,16 @@ namespace Pathfinding.App.Console.MenuItems
             this.input = input;
         }
 
-        bool IMenuItem.CanBeExecuted() => true;
-
-        public void Execute()
+        public override void Execute()
         {
             using (Cursor.UseCurrentPositionWithClean())
             {
                 bool isExit = input.Input(MessagesTexts.ExitAppMsg, Answer.Range);
                 if (isExit)
                 {
-                    throw new ExitRequiredException();
+                    base.Execute();
                 }
             }
-        }
-
-        public override string ToString()
-        {
-            return Languages.Exit;
         }
     }
 }

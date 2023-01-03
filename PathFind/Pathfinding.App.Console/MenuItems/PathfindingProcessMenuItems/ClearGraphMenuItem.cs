@@ -11,7 +11,7 @@ using Shared.Primitives.Attributes;
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
     [Order(6)]
-    internal sealed class ClearGraphMenuItem : IMenuItem
+    internal sealed class ClearGraphMenuItem : IConditionedMenuItem
     {
         private readonly IMessenger messenger;
         private readonly IUndo undo;

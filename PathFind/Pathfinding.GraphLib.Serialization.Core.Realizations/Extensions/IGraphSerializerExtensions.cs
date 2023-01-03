@@ -42,10 +42,10 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex
         {
-            using (var clientStream = new NamedPipeClientStream(serverName, pipeName))
+            using (var stream = new NamedPipeClientStream(serverName, pipeName))
             {
-                clientStream.Connect();
-                self.SaveGraph(graph, clientStream);
+                stream.Connect();
+                self.SaveGraph(graph, stream);
             }
         }
 
@@ -53,10 +53,10 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex
         {
-            using (var serverStream = new NamedPipeServerStream(pipeName))
+            using (var stream = new NamedPipeServerStream(pipeName))
             {
-                serverStream.WaitForConnection();
-                return self.LoadGraph(serverStream);
+                stream.WaitForConnection();
+                return self.LoadGraph(stream);
             }
         }
 

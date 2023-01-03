@@ -16,7 +16,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     using GraphAssemble = IGraphAssemble<Graph2D<Vertex>, Vertex>;
 
-    internal abstract class GraphCreatingMenuItem : IMenuItem
+    internal abstract class GraphCreatingMenuItem : IConditionedMenuItem
     {
         protected readonly IMessenger messenger;
         private readonly IRandom random;
@@ -64,7 +64,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             messenger.Send(new GraphCreatedMessage(graph));
         }
 
-        public virtual bool CanBeExecuted() => selected != null && IsGraphSizeSet();
+        public virtual bool CanBeExecuted()
+        {
+            return selected != null && IsGraphSizeSet();
+        }
 
         protected virtual ILayer<Graph2D<Vertex>, Vertex>[] GetLayers()
         {

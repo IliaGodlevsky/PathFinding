@@ -14,7 +14,7 @@ using System;
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     [Order(11)]
-    internal sealed class SendGraphMenuItem : IMenuItem
+    internal sealed class SendGraphMenuItem : IConditionedMenuItem
     {
         private readonly IGraphSerializer<Graph2D<Vertex>, Vertex> serializer;
         private readonly IMessenger messenger;
@@ -47,14 +47,12 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             try
             {
-                string pipeName = string.Empty;
-                string serverName = string.Empty;
                 using (Cursor.UseCurrentPositionWithClean())
                 {
-                    pipeName = input.Input(Languages.InputPipeMsg);
-                    serverName = input.Input(Languages.InputServerNameMsg);
+                    string pipeName = input.Input(Languages.InputPipeMsg);
+                    string serverName = input.Input(Languages.InputServerNameMsg);
+                    await serializer.SaveGraphToPipeAsync(graph, pipeName, serverName);
                 }
-                await serializer.SaveGraphToPipeAsync(graph, pipeName, serverName);
             }
             catch (Exception ex)
             {

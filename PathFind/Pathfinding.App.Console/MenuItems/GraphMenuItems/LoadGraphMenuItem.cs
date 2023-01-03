@@ -31,8 +31,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             this.log = log;
         }
 
-        public bool CanBeExecuted() => true;
-
         public void Execute()
         {
             try

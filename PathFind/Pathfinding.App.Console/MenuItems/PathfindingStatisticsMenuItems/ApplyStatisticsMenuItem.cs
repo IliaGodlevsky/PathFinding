@@ -20,8 +20,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingStatisticsMenuItems
             this.answerInput = answerInput;
         }
 
-        public bool CanBeExecuted() => true;
-
         public void Execute()
         {
             using (Cursor.UseCurrentPositionWithClean())

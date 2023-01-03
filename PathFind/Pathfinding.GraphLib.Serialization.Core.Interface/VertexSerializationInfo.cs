@@ -47,7 +47,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Interface
             : this(vertex.IsObstacle,
                   vertex.Cost,
                   vertex.Position,
-                  new Neighborhood(vertex.Neighbours))
+                  vertex.Neighbours.GetCoordinates().ToArray())
         {
 
         }

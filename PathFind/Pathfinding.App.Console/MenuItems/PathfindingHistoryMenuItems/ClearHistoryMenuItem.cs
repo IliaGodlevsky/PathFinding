@@ -7,7 +7,7 @@ using Shared.Primitives.Attributes;
 namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 {
     [Order(3)]
-    internal sealed class ClearHistoryMenuItem : IMenuItem
+    internal sealed class ClearHistoryMenuItem : IConditionedMenuItem
     {
         private readonly IMessenger messenger;
 

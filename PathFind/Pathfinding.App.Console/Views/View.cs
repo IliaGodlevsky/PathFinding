@@ -26,7 +26,7 @@ namespace Pathfinding.App.Console.Views
             bool isClosureRequested = false;
             while (!isClosureRequested)
             {
-                var menuItems = unit.MenuItems;
+                var menuItems = unit.GetMenuItems();
                 var options = GetMenuOptions(menuItems);
                 Screen.SetCursorPositionUnderMenu(1);
                 try
@@ -42,7 +42,8 @@ namespace Pathfinding.App.Console.Views
             }
         }
 
-        private (string Message, InclusiveValueRange<int> MenuRange) GetMenuOptions(IReadOnlyCollection<IAction> menuItems)
+        private (string Message, InclusiveValueRange<int> MenuRange) 
+            GetMenuOptions(IReadOnlyCollection<IMenuItem> menuItems)
         {
             int columnsNumber = (int)Math.Ceiling(menuItems.Count / 4.0);
             var menuList = menuItems.CreateMenuList(columnsNumber);

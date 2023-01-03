@@ -10,7 +10,7 @@ using System;
 namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
 {
     [Order(2)]
-    internal sealed class EnterAnimationDelayMenuItem : IMenuItem
+    internal sealed class EnterAnimationDelayMenuItem : IConditionedMenuItem
     {
         private readonly IInput<TimeSpan> spanInput;
         private readonly IMessenger messenger;

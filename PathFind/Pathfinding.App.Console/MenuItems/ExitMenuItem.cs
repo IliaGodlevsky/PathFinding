@@ -4,14 +4,12 @@ using Pathfinding.App.Console.Localization;
 
 namespace Pathfinding.App.Console.MenuItems
 {
-    internal sealed class ExitMenuItem : IMenuItem
+    internal class ExitMenuItem : IMenuItem
     {
-        public void Execute()
+        public virtual void Execute()
         {
             throw new ExitRequiredException();
         }
-
-        bool IMenuItem.CanBeExecuted() => true;
 
         public override string ToString()
         {

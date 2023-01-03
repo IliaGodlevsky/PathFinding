@@ -44,7 +44,7 @@ namespace GraphLib.Serialization.Serializers.Decorators
             }
             catch (Exception ex)
             {
-                throw new CantSerializeGraphException(ex.Message, ex);
+                throw new GraphSerializationException(ex.Message, ex);
             }
         }
 
@@ -63,7 +63,7 @@ namespace GraphLib.Serialization.Serializers.Decorators
             }
             catch (Exception ex)
             {
-                throw new CantSerializeGraphException(ex.Message, ex);
+                throw new GraphSerializationException(ex.Message, ex);
             }
         }
 

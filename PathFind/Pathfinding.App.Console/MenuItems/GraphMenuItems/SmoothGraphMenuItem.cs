@@ -13,7 +13,7 @@ using System.Collections.Generic;
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     [Order(8)]
-    internal sealed class SmoothGraphMenuItem : IMenuItem
+    internal sealed class SmoothGraphMenuItem : IConditionedMenuItem
     {
         private readonly IMeanCost meanAlgorithm;
         private readonly IMessenger messenger;

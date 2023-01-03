@@ -20,8 +20,10 @@ namespace Pathfinding.App.Console.Units
         private bool isStatisticsApplied = false;
         private int visited = 0;
 
-        public PathfindingStatisticsUnit(IReadOnlyCollection<IMenuItem> menuItems, IMessenger messenger)
-            : base(menuItems)
+        public PathfindingStatisticsUnit(IReadOnlyCollection<IMenuItem> menuItems, 
+            IReadOnlyCollection<IConditionedMenuItem> conditioned,
+            IMessenger messenger)
+            : base(menuItems, conditioned)
         {
             this.messenger = messenger;
             this.messenger.Register<SubscribeOnStatisticsMessage>(this, OnSusbcribe);

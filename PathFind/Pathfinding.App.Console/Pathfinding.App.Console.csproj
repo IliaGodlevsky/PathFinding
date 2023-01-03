@@ -60,8 +60,8 @@
     <Compile Include="EventHandlers\ConsoleKeyPressedEventHandler.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IInputExtensions.cs" />
-    <Compile Include="Interface\IAction.cs" />
     <Compile Include="Interface\IAnimationSpeedAction.cs" />
+    <Compile Include="Interface\IConditionedMenuItem.cs" />
     <Compile Include="Interface\IMenuItem.cs" />
     <Compile Include="Interface\IPathfindingAction.cs" />
     <Compile Include="Interface\IDisplayable.cs" />

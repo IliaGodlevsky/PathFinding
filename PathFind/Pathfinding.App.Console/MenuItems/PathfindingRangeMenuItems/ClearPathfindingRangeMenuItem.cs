@@ -16,8 +16,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
             this.rangeBuilder = rangeBuilder;
         }
 
-        public bool CanBeExecuted() => true;
-
         public void Execute()
         {
             rangeBuilder.Undo();
