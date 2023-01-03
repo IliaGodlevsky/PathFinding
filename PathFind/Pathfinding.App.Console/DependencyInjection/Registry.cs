@@ -44,10 +44,11 @@ using Pathfinding.Logging.Loggers;
 using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Executable;
+using Shared.Extensions;
 using Shared.Random;
 using Shared.Random.Realizations;
 using System;
-
+using System.Linq;
 using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
 
 namespace Pathfinding.App.Console.DependencyInjection
@@ -75,8 +76,12 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterTypes(RegistrationConstants.Units).SingleInstance().WithMetadata(UnitTypeKey, type => type)
                 .AsSelf().AutoActivate().ConfigurePipeline(p => p.Use(new UnitConfigurationMiddlewear()));
 
+            builder.RegisterType<ExitMenuItem>().AsSelf().InstancePerDependency();
+
             builder.RegisterType<MainUnitMenuItem>().AsSelf().InstancePerDependency();
+            builder.RegisterType<AnswerExitMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
             builder.RegisterType<GraphCreateMenuItem>().Keyed<IMenuItem>(Main).SingleInstance().AutoActivate();
+
             builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IConditionedMenuItem>(Main).SingleInstance().AutoActivate();
             builder.RegisterType<PathfindingRangeMenuItem>().Keyed<IMenuItem>(Process).SingleInstance().AutoActivate();
             builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(Process).SingleInstance().AutoActivate();

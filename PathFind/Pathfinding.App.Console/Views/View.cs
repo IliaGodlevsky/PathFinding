@@ -2,11 +2,9 @@
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
-using Shared.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Pathfinding.App.Console.Views
 {
@@ -42,7 +40,7 @@ namespace Pathfinding.App.Console.Views
             }
         }
 
-        private (string Message, InclusiveValueRange<int> MenuRange) 
+        private (string Message, InclusiveValueRange<int> MenuRange)
             GetMenuOptions(IReadOnlyCollection<IMenuItem> menuItems)
         {
             int columnsNumber = (int)Math.Ceiling(menuItems.Count / 4.0);

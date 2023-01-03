@@ -21,7 +21,7 @@ namespace Pathfinding.App.Console.Units
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
         private bool isHistoryApplied = false;
 
-        public PathfindingHistoryUnit(IReadOnlyCollection<IMenuItem> menuItems, 
+        public PathfindingHistoryUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
             IMessenger messenger)
             : base(menuItems, conditioned)

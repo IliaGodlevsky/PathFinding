@@ -1,6 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.MenuItems;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
@@ -26,14 +25,11 @@ namespace Pathfinding.App.Console.Units
 
         private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
-        protected override ExitMenuItem ExitMenuItem { get; }
-
         public MainUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
-            FieldFactory fieldFactory, 
+            FieldFactory fieldFactory,
             IMessenger messenger,
-            IInput<Answer> input, 
-            IUndo undo, 
+            IUndo undo,
             ILog log)
             : base(menuItems, conditioned)
         {
@@ -41,7 +37,6 @@ namespace Pathfinding.App.Console.Units
             this.log = log;
             this.messenger = messenger;
             this.fieldFactory = fieldFactory;
-            ExitMenuItem = new AnswerExitMenuItem(input);
             this.messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainUnit, SetGraph);
             this.messenger.Register<GraphChangedMessage>(this, OnGraphChanged);
         }

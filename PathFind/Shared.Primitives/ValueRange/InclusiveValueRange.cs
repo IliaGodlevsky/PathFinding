@@ -6,7 +6,7 @@ namespace Shared.Primitives.ValueRange
 {
     /// <summary>
     /// Representa an inclusive value range, value of which should 
-    /// implement <see cref="IComparable{T}"/>
+    /// implement <see cref="IComparable"/> and <see cref="IComparable{T}"/>
     /// </summary>
     /// <typeparam name="T">The type of values, that 
     /// will represent the range</typeparam>

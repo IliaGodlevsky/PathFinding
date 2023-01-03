@@ -27,7 +27,7 @@ namespace Pathfinding.App.Console.Units
         private bool isVisualizationApplied = false;
         private TimeSpan animationDelay = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
 
-        public PathfindingVisualizationUnit(IReadOnlyCollection<IMenuItem> menuItems, 
+        public PathfindingVisualizationUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
             IMessenger messenger,
             IReadOnlyDictionary<ConsoleKey, IPathfindingAction> pathfindingActions,

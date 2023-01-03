@@ -67,6 +67,11 @@ namespace Shared.Extensions
             }
         }
 
+        public static IEnumerable<T> Except<T>(this IEnumerable<T> collection, params T[] items)
+        {
+            return collection.Except(items.AsEnumerable());
+        }
+
         public static IOrderedEnumerable<T> Shuffle<T>(this IEnumerable<T> collection, Func<int> selector)
         {
             return collection.OrderBy(_ => selector());
