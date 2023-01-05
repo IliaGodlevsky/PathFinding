@@ -79,10 +79,11 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<ExitMenuItem>().Keyed(typeof(IMenuItem), AllUnits.Except(Main)).SingleInstance();
 
             builder.RegisterType<MainUnitMenuItem>().AsSelf().InstancePerDependency();
+
             builder.RegisterType<AnswerExitMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
             builder.RegisterType<GraphCreateMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
-
             builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IConditionedMenuItem>(Main).SingleInstance();
+
             builder.RegisterType<PathfindingRangeMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
             builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
             builder.RegisterType<VisualizationMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
