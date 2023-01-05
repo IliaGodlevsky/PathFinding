@@ -5,7 +5,6 @@ using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -15,7 +14,6 @@ namespace Pathfinding.App.Console.Units
     {
         private readonly IMessenger messenger;
         private readonly Stopwatch timer = new();
-        private readonly Dictionary<Guid, string> statistics = new();
 
         private bool isStatisticsApplied = false;
         private int visited = 0;
@@ -29,9 +27,6 @@ namespace Pathfinding.App.Console.Units
             this.messenger.Register<SubscribeOnStatisticsMessage>(this, OnSusbcribe);
             this.messenger.Register<PathFoundMessage>(this, OnPathFound);
             this.messenger.Register<ApplyStatisticsMessage>(this, ApplyStatistics);
-            this.messenger.Register<ClearHistoryMessage>(this, ClearHistory);
-            this.messenger.Register<HistoryPageMessage>(this, ShowStatistics);
-            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
         private void OnSusbcribe(SubscribeOnStatisticsMessage message)
@@ -52,16 +47,9 @@ namespace Pathfinding.App.Console.Units
             }
         }
 
-        private void ClearHistory(ClearHistoryMessage msg) => statistics.Clear();
-
-        private void OnGraphCreated(GraphCreatedMessage msg) => statistics.Clear();
-
-        private void ApplyStatistics(ApplyStatisticsMessage message) => isStatisticsApplied = message.IsApplied;
-
-        private void ShowStatistics(HistoryPageMessage msg)
+        private void ApplyStatistics(ApplyStatisticsMessage message)
         {
-            var stats = statistics[msg.PageKey];
-            messenger.Send(new PathfindingStatisticsMessage(stats));
+            isStatisticsApplied = message.IsApplied;
         }
 
         private void OnPathFound(PathFoundMessage message)
@@ -75,7 +63,6 @@ namespace Pathfinding.App.Console.Units
                 visited = 0;
                 messenger.Send(new PathfindingStatisticsMessage(stats));
             }
-            statistics[message.Algorithm.Id] = stats;
             messenger.Send(new AlgorithmFinishedMessage(message.Algorithm, stats));
         }
 
@@ -86,18 +73,20 @@ namespace Pathfinding.App.Console.Units
             messenger.Send(new PathfindingStatisticsMessage(statistics));
         }
 
-        public string GetStatistics(PathfindingProcess algorithm)
+        private string GetStatistics(PathfindingProcess algorithm)
         {
-            var time = timer.Elapsed.ToString(@"mm\:ss\.fff");
-            string pathfindingInfo = string.Format(Languages.InProcessStatisticsFormat, visited);
-            return string.Join("\t", algorithm, time, pathfindingInfo);
+            return GetStatistics(Languages.InProcessStatisticsFormat, algorithm, visited);
         }
 
-        public string GetStatistics(IGraphPath path, PathfindingProcess algorithm)
+        private string GetStatistics(IGraphPath path, PathfindingProcess algorithm)
+        {
+            return GetStatistics(Languages.PathfindingStatisticsFormat, algorithm, path.Count, path.Cost, visited);
+        }
+
+        private string GetStatistics(string format, PathfindingProcess algorithm, params object[] values)
         {
             var time = timer.Elapsed.ToString(@"mm\:ss\.fff");
-            string pathfindingInfo = string.Format(Languages.PathfindingStatisticsFormat,
-                path.Count, path.Cost, visited);
+            string pathfindingInfo = string.Format(format, values);
             return string.Join("\t", algorithm, time, pathfindingInfo);
         }
     }
