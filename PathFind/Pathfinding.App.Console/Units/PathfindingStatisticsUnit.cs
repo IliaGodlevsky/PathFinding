@@ -30,7 +30,6 @@ namespace Pathfinding.App.Console.Units
             this.messenger.Register<PathFoundMessage>(this, OnPathFound);
             this.messenger.Register<ApplyStatisticsMessage>(this, ApplyStatistics);
             this.messenger.Register<ClearHistoryMessage>(this, ClearHistory);
-            this.messenger.Register<HistoryPageMessage>(this, ShowStatistics);
             this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
@@ -58,12 +57,6 @@ namespace Pathfinding.App.Console.Units
 
         private void ApplyStatistics(ApplyStatisticsMessage message) => isStatisticsApplied = message.IsApplied;
 
-        private void ShowStatistics(HistoryPageMessage msg)
-        {
-            var stats = statistics[msg.PageKey];
-            messenger.Send(new PathfindingStatisticsMessage(stats));
-        }
-
         private void OnPathFound(PathFoundMessage message)
         {
             string stats = message.Algorithm.ToString();
@@ -86,18 +79,20 @@ namespace Pathfinding.App.Console.Units
             messenger.Send(new PathfindingStatisticsMessage(statistics));
         }
 
-        public string GetStatistics(PathfindingProcess algorithm)
+        private string GetStatistics(PathfindingProcess algorithm)
         {
-            var time = timer.Elapsed.ToString(@"mm\:ss\.fff");
-            string pathfindingInfo = string.Format(Languages.InProcessStatisticsFormat, visited);
-            return string.Join("\t", algorithm, time, pathfindingInfo);
+            return GetStatistics(Languages.InProcessStatisticsFormat, algorithm, visited);
         }
 
-        public string GetStatistics(IGraphPath path, PathfindingProcess algorithm)
+        private string GetStatistics(IGraphPath path, PathfindingProcess algorithm)
+        {
+            return GetStatistics(Languages.PathfindingStatisticsFormat, algorithm, path.Count, path.Cost, visited);
+        }
+
+        private string GetStatistics(string format, PathfindingProcess algorithm, params object[] values)
         {
             var time = timer.Elapsed.ToString(@"mm\:ss\.fff");
-            string pathfindingInfo = string.Format(Languages.PathfindingStatisticsFormat,
-                path.Count, path.Cost, visited);
+            string pathfindingInfo = string.Format(format, values);
             return string.Join("\t", algorithm, time, pathfindingInfo);
         }
     }
