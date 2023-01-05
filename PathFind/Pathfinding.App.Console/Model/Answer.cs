@@ -23,7 +23,7 @@ namespace Pathfinding.App.Console.Model
         {
             this.display = display;
             this.value = value;
-            hash = HashCode.Combine(value, display);
+            this.hash = HashCode.Combine(value, display);
         }
 
         public int CompareTo(Answer other)

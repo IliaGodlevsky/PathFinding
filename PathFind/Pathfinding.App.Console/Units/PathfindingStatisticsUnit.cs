@@ -5,7 +5,6 @@ using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -15,7 +14,6 @@ namespace Pathfinding.App.Console.Units
     {
         private readonly IMessenger messenger;
         private readonly Stopwatch timer = new();
-        private readonly Dictionary<Guid, string> statistics = new();
 
         private bool isStatisticsApplied = false;
         private int visited = 0;
@@ -29,8 +27,6 @@ namespace Pathfinding.App.Console.Units
             this.messenger.Register<SubscribeOnStatisticsMessage>(this, OnSusbcribe);
             this.messenger.Register<PathFoundMessage>(this, OnPathFound);
             this.messenger.Register<ApplyStatisticsMessage>(this, ApplyStatistics);
-            this.messenger.Register<ClearHistoryMessage>(this, ClearHistory);
-            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
         private void OnSusbcribe(SubscribeOnStatisticsMessage message)
@@ -51,11 +47,10 @@ namespace Pathfinding.App.Console.Units
             }
         }
 
-        private void ClearHistory(ClearHistoryMessage msg) => statistics.Clear();
-
-        private void OnGraphCreated(GraphCreatedMessage msg) => statistics.Clear();
-
-        private void ApplyStatistics(ApplyStatisticsMessage message) => isStatisticsApplied = message.IsApplied;
+        private void ApplyStatistics(ApplyStatisticsMessage message)
+        {
+            isStatisticsApplied = message.IsApplied;
+        }
 
         private void OnPathFound(PathFoundMessage message)
         {
@@ -68,7 +63,6 @@ namespace Pathfinding.App.Console.Units
                 visited = 0;
                 messenger.Send(new PathfindingStatisticsMessage(stats));
             }
-            statistics[message.Algorithm.Id] = stats;
             messenger.Send(new AlgorithmFinishedMessage(message.Algorithm, stats));
         }
 
