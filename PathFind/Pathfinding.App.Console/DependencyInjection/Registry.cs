@@ -48,8 +48,8 @@ using Shared.Extensions;
 using Shared.Random;
 using Shared.Random.Realizations;
 using System;
-using System.Linq;
 using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
+using static Pathfinding.App.Console.DependencyInjection.PathfindingUnits;
 
 namespace Pathfinding.App.Console.DependencyInjection
 {

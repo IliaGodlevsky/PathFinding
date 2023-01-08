@@ -1,37 +1,34 @@
 ﻿using Autofac;
-using Autofac.Core;
 using Autofac.Core.Resolving.Pipeline;
-using Pathfinding.App.Console.Interface;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
 
 namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 {
     internal sealed class UnitConfigurationMiddlewear : IResolveMiddleware
     {
+        private readonly IReadOnlyDictionary<Type, UnitMiddlewear> middlewares;
+
         public PipelinePhase Phase => PipelinePhase.ParameterSelection;
+
+        public UnitConfigurationMiddlewear()
+        {
+            var all = PathfindingUnits.AllUnits.Except(PathfindingUnits.Visual)
+                .ToDictionary(unit => unit, unit => new UnitMiddlewear());
+            middlewares = new Dictionary<Type, UnitMiddlewear>(all)
+            {
+                { PathfindingUnits.Visual, new PathfindingVisualizationUnitMiddlewear() }
+            };
+        }
 
         public void Execute(ResolveRequestContext context, Action<ResolveRequestContext> next)
         {
-            var parametres = new List<Parameter>();
-            var metadata = context.Registration.Metadata;
-            var key = metadata[UnitTypeKey];
-            if (key.Equals(Visual))
-            {
-                var pathfindingActions = context.ResolveWithMetadata<ConsoleKey, IPathfindingAction>(Key).ToReadOnly();
-                var animationActions = context.ResolveWithMetadata<ConsoleKey, IAnimationSpeedAction>(Key).ToReadOnly();
-                var pathfindingParam = new TypedParameter(typeof(IReadOnlyDictionary<ConsoleKey, IPathfindingAction>), pathfindingActions);
-                var animationParam = new TypedParameter(typeof(IReadOnlyDictionary<ConsoleKey, IAnimationSpeedAction>), animationActions);
-                parametres.AddRange(pathfindingParam, animationParam);
-            }
-            var menuItems = context.ResolveKeyed<IReadOnlyCollection<IMenuItem>>(key).ToReadOnly();
-            var menuItemsParam = new TypedParameter(typeof(IReadOnlyCollection<IMenuItem>), menuItems);
-            var conditioned = context.ResolveKeyed<IReadOnlyCollection<IConditionedMenuItem>>(key).ToReadOnly();
-            var conditionedParams = new TypedParameter(typeof(IReadOnlyCollection<IConditionedMenuItem>), conditioned);
-            parametres.AddRange(menuItemsParam, conditionedParams);
-            context.ChangeParameters(parametres);
+            var key = (Type)context.Registration.Metadata[UnitTypeKey];
+            var middleware = middlewares[key];
+            middleware.Execute(context, next, key);
             next(context);
         }
     }
