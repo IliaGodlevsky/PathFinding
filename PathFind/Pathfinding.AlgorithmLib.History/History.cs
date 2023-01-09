@@ -10,8 +10,7 @@ namespace Pathfinding.AlgorithmLib.History
     public sealed class History<TVolume>
         where TVolume : IHistoryVolume<ICoordinate>, new()
     {
-        private const int VolumesCount = 5;
-
+        private readonly int volumesCount = 5;
         private readonly ReadOnlyList<TVolume> volumes;
 
         private TVolume RangeHistory => volumes[0];
@@ -26,7 +25,7 @@ namespace Pathfinding.AlgorithmLib.History
 
         public History()
         {
-            volumes = VolumesCount.Times<TVolume>().ToReadOnly();
+            volumes = volumesCount.Times<TVolume>().ToReadOnly();
         }
 
         public IEnumerable<ICoordinate> GetObstacles(Guid key)
