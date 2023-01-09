@@ -2,11 +2,11 @@
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
+using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
-using Shared.Primitives.Attributes;
 using Shared.Primitives.ValueRange;
 using System.Collections.Generic;
 
@@ -14,7 +14,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     using GraphAssemble = IGraphAssemble<Graph2D<Vertex>, Vertex>;
 
-    [Order(2)]
+    [HighPriority]
     internal sealed class EnterGraphAssembleMenuItem : GraphMenuItem
     {
         private readonly IReadOnlyList<GraphAssemble> assembles;

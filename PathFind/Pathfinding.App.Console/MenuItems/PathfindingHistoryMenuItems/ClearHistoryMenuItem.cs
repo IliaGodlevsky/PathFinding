@@ -1,12 +1,12 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
+using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
-using Shared.Primitives.Attributes;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 {
-    [Order(3)]
+    [MediumPriority]
     internal sealed class ClearHistoryMenuItem : IConditionedMenuItem
     {
         private readonly IMessenger messenger;

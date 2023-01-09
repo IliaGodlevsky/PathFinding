@@ -98,6 +98,11 @@
     <Compile Include="MenuItems\MainMenuItems\PathfindingProcessMenuItem.cs" />
     <Compile Include="MenuItems\AnswerExitMenuItem.cs" />
     <Compile Include="MenuItems\MainUnitMenuItem.cs" />
+    <Compile Include="MenuItems\MenuItemPriority\HighestPriorityAttribute.cs" />
+    <Compile Include="MenuItems\MenuItemPriority\HighPriorityAttribute.cs" />
+    <Compile Include="MenuItems\MenuItemPriority\LowestPriorityAttribute.cs" />
+    <Compile Include="MenuItems\MenuItemPriority\LowPriorityAttribute.cs" />
+    <Compile Include="MenuItems\MenuItemPriority\MediumPriorityAttribute.cs" />
     <Compile Include="MenuItems\PathfindingHistoryMenuItems\ApplyHistoryMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingHistoryMenuItems\ClearHistoryMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingHistoryMenuItems\ShowHistoryMenuItem.cs" />

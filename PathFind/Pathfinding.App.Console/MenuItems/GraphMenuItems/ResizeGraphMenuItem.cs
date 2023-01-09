@@ -1,16 +1,16 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Localization;
+using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
-using Shared.Primitives.Attributes;
 using Shared.Random;
 using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    [Order(2)]
+    [LowPriority]
     internal sealed class ResizeGraphMenuItem : GraphCreatingMenuItem
     {
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;

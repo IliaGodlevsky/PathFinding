@@ -1,12 +1,12 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Localization;
+using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.GraphLib.Factory.Interface;
-using Shared.Primitives.Attributes;
 using Shared.Random;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    [Order(1)]
+    [HighestPriority]
     internal sealed class AssembleGraphMenuItem : GraphCreatingMenuItem
     {
         public AssembleGraphMenuItem(IMessenger messenger,

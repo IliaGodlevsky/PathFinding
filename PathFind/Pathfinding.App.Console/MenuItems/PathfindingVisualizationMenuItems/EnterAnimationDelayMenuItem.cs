@@ -2,14 +2,14 @@
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
+using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
-using Shared.Primitives.Attributes;
 using Shared.Primitives.ValueRange;
 using System;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
 {
-    [Order(2)]
+    [HighPriority]
     internal sealed class EnterAnimationDelayMenuItem : IConditionedMenuItem
     {
         private readonly IInput<TimeSpan> spanInput;

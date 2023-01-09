@@ -1,13 +1,13 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
+using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model.VertexActions;
-using Shared.Primitives.Attributes;
 using System;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    [Order(9)]
+    [MediumPriority]
     internal sealed class ChangeCostMenuItem : SwitchVerticesMenuItem
     {
         public ChangeCostMenuItem(IMessenger messenger, IInput<ConsoleKey> keyInput)

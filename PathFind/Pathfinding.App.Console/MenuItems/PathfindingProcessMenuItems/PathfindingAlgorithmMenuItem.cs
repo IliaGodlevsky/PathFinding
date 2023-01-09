@@ -4,6 +4,7 @@ using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
+using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
@@ -18,7 +19,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
     using AlgorithmFactory = IAlgorithmFactory<PathfindingProcess>;
 
-    [Order(1)]
+    [HighestPriority]
     internal sealed class PathfindingAlgorithmMenuItem : IConditionedMenuItem
     {
         private readonly IReadOnlyList<AlgorithmFactory> factories;

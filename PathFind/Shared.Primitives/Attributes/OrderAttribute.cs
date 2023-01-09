@@ -8,7 +8,7 @@ namespace Shared.Primitives.Attributes
         public static readonly OrderAttribute Default
             = new OrderAttribute(int.MaxValue);
 
-        public int Order { get; }
+        public virtual int Order { get; }
 
         public OrderAttribute(int order)
         {

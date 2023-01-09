@@ -2,15 +2,15 @@
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
+using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
-using Shared.Primitives.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 {
-    [Order(2)]
+    [HighPriority]
     internal sealed class ShowHistoryMenuItem : IConditionedMenuItem
     {
         private readonly IMessenger messenger;

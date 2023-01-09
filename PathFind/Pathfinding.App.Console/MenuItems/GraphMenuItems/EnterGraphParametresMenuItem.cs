@@ -2,12 +2,12 @@
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
+using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
-using Shared.Primitives.Attributes;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    [Order(3)]
+    [HighPriority]
     internal sealed class EnterGraphParametresMenuItem : GraphMenuItem
     {
         public EnterGraphParametresMenuItem(IMessenger messenger, IInput<int> input)
