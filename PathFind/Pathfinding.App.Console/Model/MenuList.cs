@@ -11,9 +11,9 @@ namespace Pathfinding.App.Console.Model
 {
     internal sealed class MenuList : IDisplayable
     {
-        private const string NewLine = "\n";
-        private const string Space = " ";
-        private const string MenuFormat = "{0}. {1}";
+        private readonly string NewLine = "\n";
+        private readonly string Space = " ";
+        private readonly string MenuFormat = "{0}. {1}";
 
         private readonly int menuItemsCount;
         private readonly int columns;
