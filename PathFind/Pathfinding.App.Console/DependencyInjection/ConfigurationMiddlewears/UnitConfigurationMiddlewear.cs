@@ -5,30 +5,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
+using static Pathfinding.App.Console.DependencyInjection.PathfindingUnits;
 
 namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 {
-    internal sealed class UnitConfigurationMiddlewear : IResolveMiddleware
+    internal sealed class UnitConfigurationMiddleware : IResolveMiddleware
     {
-        private readonly IReadOnlyDictionary<Type, UnitMiddlewear> middlewares;
+        private readonly IReadOnlyDictionary<Type, IUnitMiddleware> middlewares;
 
         public PipelinePhase Phase => PipelinePhase.ParameterSelection;
 
-        public UnitConfigurationMiddlewear()
+        public UnitConfigurationMiddleware()
         {
-            var all = PathfindingUnits.AllUnits.Except(PathfindingUnits.Visual)
-                .ToDictionary(unit => unit, unit => new UnitMiddlewear());
-            middlewares = new Dictionary<Type, UnitMiddlewear>(all)
-            {
-                { PathfindingUnits.Visual, new PathfindingVisualizationUnitMiddlewear() }
-            };
+            middlewares = AllUnits.Except(Visual)
+                .ToDictionary(unit => unit, unit => (IUnitMiddleware)new UnitMiddleware())
+                .Append(new (Visual, new PathfindingVisualizationUnitMiddleware(new UnitMiddleware())))
+                .ToReadOnly();
         }
 
         public void Execute(ResolveRequestContext context, Action<ResolveRequestContext> next)
         {
             var key = (Type)context.Registration.Metadata[UnitTypeKey];
-            var middleware = middlewares[key];
-            middleware.Execute(context, next, key);
+            var parametres = middlewares[key].GetParameters(context, key);
+            context.ChangeParameters(parametres);
             next(context);
         }
     }
