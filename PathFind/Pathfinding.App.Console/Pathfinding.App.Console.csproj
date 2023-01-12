@@ -51,7 +51,8 @@
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\PathfindingVisualizationUnitMiddlewear.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\RangeBuilderConfigurationMiddlewear.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\UnitConfigurationMiddlewear.cs" />
-    <Compile Include="DependencyInjection\ConfigurationMiddlewears\UnitMiddlewear.cs" />
+    <Compile Include="DependencyInjection\ConfigurationMiddlewears\UnitMiddleware.cs" />
+    <Compile Include="DependencyInjection\ConfigurationMiddlewears\IUnitMiddleware.cs" />
     <Compile Include="DependencyInjection\RegistrationConstants.cs" />
     <Compile Include="Exceptions\ExitRequiredException.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />

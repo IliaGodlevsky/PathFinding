@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Autofac.Core;
 using Autofac.Core.Resolving.Pipeline;
 using Autofac.Features.Metadata;
 using Pathfinding.App.Console.Model;
@@ -19,22 +18,28 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 
         public void Execute(ResolveRequestContext context, Action<ResolveRequestContext> next)
         {
-            var parametres = new List<Parameter>();
-            var include = ResolveKeyed(context, IncludeCommand);
-            var exclude = ResolveKeyed(context, ExcludeCommand);
-            var includeParametre = new NamedParameter("includeCommands", include);
-            var excludeParametre = new NamedParameter("excludeCommands", exclude);
-            parametres.AddRange(includeParametre, excludeParametre);
-            context.ChangeParameters(parametres);
+            context.ChangeParameters(GetParameters(context));
             next(context);
         }
 
-        private IReadOnlyCollection<IPathfindingRangeCommand<Vertex>> ResolveKeyed(IComponentContext context, int key)
+        private static IReadOnlyCollection<IPathfindingRangeCommand<Vertex>> 
+            ResolveKeyed(IComponentContext context, int key)
         {
             return context.ResolveKeyed<IEnumerable<Meta<IPathfindingRangeCommand<Vertex>>>>(key)
                 .OrderBy(x => x.Metadata[Order])
                 .Select(x => x.Value)
                 .ToReadOnly();
+        }
+
+        private static NamedParameter GetParameter(string name, object value)
+        {
+            return new NamedParameter(name, value);
+        }
+
+        private static IEnumerable<NamedParameter> GetParameters(IComponentContext context)
+        {
+            yield return GetParameter("includeCommands", ResolveKeyed(context, IncludeCommand));
+            yield return GetParameter("excludeCommands", ResolveKeyed(context, ExcludeCommand));
         }
     }
 }
