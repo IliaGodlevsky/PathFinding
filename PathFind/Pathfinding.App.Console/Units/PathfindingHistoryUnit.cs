@@ -33,7 +33,7 @@ namespace Pathfinding.App.Console.Units
             this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             this.messenger.Register<ApplyHistoryMessage>(this, OnHistoryApplied);
             this.messenger.Register<HistoryPageMessage>(this, OnHistoryPage);
-            this.messenger.Register<ClearHistoryMessage>(this, ClearHistory);
+            this.messenger.Register<ClearHistoryMessage>(this, _ => history.Clear());
         }
 
         private void OnHistoryPage(HistoryPageMessage message)
@@ -50,11 +50,6 @@ namespace Pathfinding.App.Console.Units
         private void OnGraphCreated(GraphCreatedMessage message)
         {
             graph = message.Graph;
-            history.Clear();
-        }
-
-        private void ClearHistory(ClearHistoryMessage message)
-        {
             history.Clear();
         }
 

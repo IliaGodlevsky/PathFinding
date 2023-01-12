@@ -31,7 +31,10 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             this.messenger.Register<GraphCreatedMessage>(this, _ => ClearHistory());
         }
 
-        public bool CanBeExecuted() => isHistoryApplied && pages.Count > 0;
+        public bool CanBeExecuted()
+        {
+            return isHistoryApplied && pages.Count > 0;
+        }
 
         public void Execute()
         {
