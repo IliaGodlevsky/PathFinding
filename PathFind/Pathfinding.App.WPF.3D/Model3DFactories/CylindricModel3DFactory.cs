@@ -28,7 +28,7 @@ namespace Pathfinding.App.WPF._3D.Model3DFactories
             return cylinder;
         }
 
-        private IEnumerable<Model3D> GetTriangleModels(Point3D[,] points, Material material)
+        private IEnumerable<GeometryModel3D> GetTriangleModels(Point3D[,] points, Material material)
         {
             for (int i = 0; i < Segments - 1; i++)
             {
@@ -41,14 +41,14 @@ namespace Pathfinding.App.WPF._3D.Model3DFactories
                 var p6 = points[i + 1, 2];
                 var p7 = points[i + 1, 3];
 
-                yield return (p0, p4, p3).CreateTriangleModel(material);
-                yield return (p4, p7, p3).CreateTriangleModel(material);
-                yield return (p1, p5, p2).CreateTriangleModel(material);
-                yield return (p5, p6, p2).CreateTriangleModel(material);
-                yield return (p0, p1, p4).CreateTriangleModel(material);
-                yield return (p1, p5, p4).CreateTriangleModel(material);
-                yield return (p2, p7, p6).CreateTriangleModel(material);
-                yield return (p2, p3, p7).CreateTriangleModel(material);
+                yield return (p0, p4, p3).CreateTriangleGeometry(material);
+                yield return (p4, p7, p3).CreateTriangleGeometry(material);
+                yield return (p1, p5, p2).CreateTriangleGeometry(material);
+                yield return (p5, p6, p2).CreateTriangleGeometry(material);
+                yield return (p0, p1, p4).CreateTriangleGeometry(material);
+                yield return (p1, p5, p4).CreateTriangleGeometry(material);
+                yield return (p2, p7, p6).CreateTriangleGeometry(material);
+                yield return (p2, p3, p7).CreateTriangleGeometry(material);
             }
         }
 

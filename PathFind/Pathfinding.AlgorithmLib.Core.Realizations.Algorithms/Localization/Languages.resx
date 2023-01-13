@@ -136,7 +136,7 @@
     <value>Distance first algorithm</value>
   </data>
   <data name="HeuristicCostGreedyAlgorithm" xml:space="preserve">
-    <value>Heuristic cost greedy algorithm</value>
+    <value>Cost greedy (heuristic)</value>
   </data>
   <data name="IDAStarAlgorithm" xml:space="preserve">
     <value>IDA* algorithm</value>

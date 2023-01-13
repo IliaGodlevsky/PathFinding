@@ -115,7 +115,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Heuristic cost greedy algorithm.
+        ///   Looks up a localized string similar to Cost greedy (heuristic).
         /// </summary>
         public static string HeuristicCostGreedyAlgorithm {
             get {

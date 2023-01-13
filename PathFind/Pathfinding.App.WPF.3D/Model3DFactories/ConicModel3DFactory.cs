@@ -42,7 +42,7 @@ namespace Pathfinding.App.WPF._3D.Model3DFactories
             return points;
         }
 
-        private IEnumerable<Model3D> GetTriangleModels(Point3D[,] points, Material material)
+        private IEnumerable<GeometryModel3D> GetTriangleModels(Point3D[,] points, Material material)
         {
             for (int i = 0; i < Segments; i++)
             {
@@ -53,10 +53,10 @@ namespace Pathfinding.App.WPF._3D.Model3DFactories
                 var p4 = points[i + 1, 0];
                 var p5 = points[i + 1, 1];
 
-                yield return (p0, p4, p3).CreateTriangleModel(material);
-                yield return (p1, p5, p2).CreateTriangleModel(material);
-                yield return (p0, p1, p5).CreateTriangleModel(material);
-                yield return (p0, p5, p4).CreateTriangleModel(material);
+                yield return (p0, p4, p3).CreateTriangleGeometry(material);
+                yield return (p1, p5, p2).CreateTriangleGeometry(material);
+                yield return (p0, p1, p5).CreateTriangleGeometry(material);
+                yield return (p0, p5, p4).CreateTriangleGeometry(material);
             }
         }
 

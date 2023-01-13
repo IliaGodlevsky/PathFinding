@@ -56,7 +56,7 @@ namespace Pathfinding.App.WPF._3D.Model3DFactories
             return points;
         }
 
-        private IEnumerable<Model3D> GetRectangleModels(Point3D[,] points, Material material)
+        private IEnumerable<GeometryModel3D> GetRectangleModels(Point3D[,] points, Material material)
         {
             for (int latitude = 0; latitude < Latitudes - 1; latitude++)
             {
@@ -66,7 +66,7 @@ namespace Pathfinding.App.WPF._3D.Model3DFactories
                     var p1 = points[latitude + 1, meridian];
                     var p2 = points[latitude + 1, meridian + 1];
                     var p3 = points[latitude, meridian + 1];
-                    yield return (p0, p1, p2, p3).CreateRectangleModel(material);
+                    yield return (p0, p1, p2, p3).CreateRectangleGeometry(material);
                 }
             }
         }

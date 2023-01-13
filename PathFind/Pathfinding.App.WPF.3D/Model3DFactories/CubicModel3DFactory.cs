@@ -31,16 +31,16 @@ namespace Pathfinding.App.WPF._3D.Model3DFactories
             };
         }
 
-        private Model3D[] GetRectangleModels3D(Point3D[] points, Material material)
+        private GeometryModel3D[] GetRectangleModels3D(Point3D[] points, Material material)
         {
-            return new Model3D[]
+            return new GeometryModel3D[]
             {
-                (points[4], points[3], points[2], points[5]).CreateRectangleModel(material),
-                (points[5], points[2], points[1], points[6]).CreateRectangleModel(material),
-                (points[7], points[6], points[1], points[0]).CreateRectangleModel(material),
-                (points[7], points[0], points[3], points[4]).CreateRectangleModel(material),
-                (points[7], points[4], points[5], points[6]).CreateRectangleModel(material),
-                (points[0], points[1], points[2], points[3]).CreateRectangleModel(material)
+                (points[4], points[3], points[2], points[5]).CreateRectangleGeometry(material),
+                (points[5], points[2], points[1], points[6]).CreateRectangleGeometry(material),
+                (points[7], points[6], points[1], points[0]).CreateRectangleGeometry(material),
+                (points[7], points[0], points[3], points[4]).CreateRectangleGeometry(material),
+                (points[7], points[4], points[5], points[6]).CreateRectangleGeometry(material),
+                (points[0], points[1], points[2], points[3]).CreateRectangleGeometry(material)
             };
         }
     }
