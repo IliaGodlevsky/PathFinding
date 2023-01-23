@@ -11,29 +11,27 @@ namespace Pathfinding.App.WPF._3D.Model3DFactories
         {
             var points = GetPoints(cubeEdgeSize);
             var rectangles = GetRectangleModels3D(points, material);
-            var cube = new Model3DGroup();
-            cube.Children.AddRange(rectangles);
-            return cube;
+            return new Model3DGroup() { Children = new(rectangles) };
         }
 
         private Point3D[] GetPoints(double edgeSize)
         {
             return new Point3D[]
             {
-                new Point3D(0, 0, 0),
-                new Point3D(edgeSize, 0, 0),
-                new Point3D(edgeSize, 0, edgeSize),
-                new Point3D(0, 0, edgeSize),
-                new Point3D(0, edgeSize, edgeSize),
-                new Point3D(edgeSize, edgeSize, edgeSize),
-                new Point3D(edgeSize, edgeSize, 0),
-                new Point3D(0, edgeSize, 0)
+                new (0, 0, 0),
+                new (edgeSize, 0, 0),
+                new (edgeSize, 0, edgeSize),
+                new (0, 0, edgeSize),
+                new (0, edgeSize, edgeSize),
+                new (edgeSize, edgeSize, edgeSize),
+                new (edgeSize, edgeSize, 0),
+                new (0, edgeSize, 0)
             };
         }
 
         private GeometryModel3D[] GetRectangleModels3D(Point3D[] points, Material material)
         {
-            return new GeometryModel3D[]
+            return new[]
             {
                 (points[4], points[3], points[2], points[5]).CreateRectangleGeometry(material),
                 (points[5], points[2], points[1], points[6]).CreateRectangleGeometry(material),

@@ -13,7 +13,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel.BaseViewModel
     {
         private readonly IMessenger messenger;
 
-        protected GraphField3D graphField;
+        protected GraphField3D graphField = GraphField3D.Empty;
 
         protected abstract IAxis Axis { get; }
 
@@ -27,7 +27,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel.BaseViewModel
 
         public void StretchAlongAxis(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Axis?.LocateVertices(e.NewValue);
+            Axis.LocateVertices(e.NewValue);
         }
 
         public void Dispose()

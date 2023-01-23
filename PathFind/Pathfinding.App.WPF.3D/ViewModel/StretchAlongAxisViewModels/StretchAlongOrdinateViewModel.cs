@@ -5,6 +5,6 @@ namespace Pathfinding.App.WPF._3D.ViewModel.StretchAlongAxisViewModels
 {
     internal sealed class StretchAlongOrdinateViewModel : BaseStretchAlongAxisViewModel
     {
-        protected override IAxis Axis => graphField?.Ordinate;
+        protected override IAxis Axis => graphField.Ordinate;
     }
 }

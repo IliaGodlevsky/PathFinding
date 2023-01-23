@@ -1,5 +1,4 @@
-﻿using Pathfinding.App.WPF._3D.Interface;
-using Pathfinding.App.WPF._3D.Model.Axes;
+﻿using Pathfinding.App.WPF._3D.Model.Axes;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Extensions;
@@ -10,21 +9,24 @@ namespace Pathfinding.App.WPF._3D.Model
 {
     internal sealed class GraphField3D : ModelVisual3D, IGraphField<Vertex3D>
     {
-        public IAxis Abscissa { get; }
+        public static readonly GraphField3D Empty
+            = new GraphField3D(Graph3D<Vertex3D>.Empty);
 
-        public IAxis Ordinate { get; }
+        public Abscissa Abscissa { get; }
 
-        public IAxis Applicate { get; }
+        public Ordinate Ordinate { get; }
+
+        public Applicate Applicate { get; }
 
         public IReadOnlyCollection<Vertex3D> Vertices { get; }
 
         public GraphField3D(Graph3D<Vertex3D> graph)
         {
             Vertices = graph;
-            Children.AddRange(Vertices);
-            Abscissa = new Abscissa(graph);
-            Ordinate = new Ordinate(graph);
-            Applicate = new Applicate(graph);
+            Children.AddRange(graph);
+            Abscissa = new(graph);
+            Ordinate = new(graph);
+            Applicate = new(graph);
         }
     }
 }

@@ -19,9 +19,7 @@ namespace Pathfinding.App.WPF._3D.Model3DFactories
         {
             var points = GetPoints3D(diametre / 2);
             var rectangles = GetRectangleModels(points, material);
-            var sphere = new Model3DGroup();
-            sphere.Children.AddRange(rectangles);
-            return sphere;
+            return new Model3DGroup() { Children = new(rectangles) };
         }
 
         private IEnumerable<GeometryModel3D> GetRectangleModels(Point3D[,] points, Material material)
@@ -67,7 +65,7 @@ namespace Pathfinding.App.WPF._3D.Model3DFactories
             double y = radius * (cnt + 1);
             double z = radius * (1 - snt * snp);
 
-            return new Point3D(x, y, z);
+            return new (x, y, z);
         }
     }
 }
