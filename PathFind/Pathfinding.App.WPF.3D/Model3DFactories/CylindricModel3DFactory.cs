@@ -1,6 +1,5 @@
 ﻿using Pathfinding.App.WPF._3D.Extensions;
 using Pathfinding.App.WPF._3D.Interface;
-using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Windows.Media.Media3D;
@@ -23,9 +22,7 @@ namespace Pathfinding.App.WPF._3D.Model3DFactories
             var center = new Vector3D(radius, radius, radius);
             var points = GetPoints3D(radius, center);
             var rectangles = GetTriangleModels(points, material);
-            var cylinder = new Model3DGroup();
-            cylinder.Children.AddRange(rectangles);
-            return cylinder;
+            return new Model3DGroup() { Children = new(rectangles) };
         }
 
         private IEnumerable<GeometryModel3D> GetTriangleModels(Point3D[,] points, Material material)

@@ -20,7 +20,7 @@ namespace Pathfinding.App.Console.Model
 
         static ConsoleSmoothLevels()
         {
-            levels = new Lazy<IReadOnlyList<ISmoothLevel>>(GetSmoothLevels);
+            levels = new(GetSmoothLevels);
         }
 
         private sealed class CustomSmoothLevel : ISmoothLevel

@@ -14,7 +14,7 @@ namespace Pathfinding.App.Console.Model
 
         public View CreateView(IUnit viewModel)
         {
-            return new View(viewModel, input);
+            return new(viewModel, input);
         }
     }
 }

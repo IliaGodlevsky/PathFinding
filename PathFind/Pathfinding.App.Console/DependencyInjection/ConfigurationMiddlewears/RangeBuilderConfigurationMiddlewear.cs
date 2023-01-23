@@ -22,7 +22,7 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
             next(context);
         }
 
-        private static IReadOnlyCollection<IPathfindingRangeCommand<Vertex>> 
+        private static IReadOnlyCollection<IPathfindingRangeCommand<Vertex>>
             ResolveKeyed(IComponentContext context, int key)
         {
             return context.ResolveKeyed<IEnumerable<Meta<IPathfindingRangeCommand<Vertex>>>>(key)
@@ -31,15 +31,10 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
                 .ToReadOnly();
         }
 
-        private static NamedParameter GetParameter(string name, object value)
-        {
-            return new NamedParameter(name, value);
-        }
-
         private static IEnumerable<NamedParameter> GetParameters(IComponentContext context)
         {
-            yield return GetParameter("includeCommands", ResolveKeyed(context, IncludeCommand));
-            yield return GetParameter("excludeCommands", ResolveKeyed(context, ExcludeCommand));
+            yield return new("includeCommands", ResolveKeyed(context, IncludeCommand));
+            yield return new("excludeCommands", ResolveKeyed(context, ExcludeCommand));
         }
     }
 }

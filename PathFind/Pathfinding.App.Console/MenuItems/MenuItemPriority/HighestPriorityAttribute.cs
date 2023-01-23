@@ -4,7 +4,7 @@ namespace Pathfinding.App.Console.MenuItems.MenuItemPriority
 {
     internal sealed class HighestPriorityAttribute : OrderAttribute
     {
-        public HighestPriorityAttribute() 
+        public HighestPriorityAttribute()
             : base(int.MinValue)
         {
         }

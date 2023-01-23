@@ -18,7 +18,7 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
             return graph.Where(vertex => vertex.IsObstacle);
         }
 
-        public static IEnumerable<ICoordinate> GetCoordinates<TVertex>(this IReadOnlyCollection<TVertex> graph)
+        public static IEnumerable<ICoordinate> GetCoordinates<TVertex>(this IEnumerable<TVertex> graph)
             where TVertex : IVertex
         {
             return graph.Select(vertex => vertex.Position);

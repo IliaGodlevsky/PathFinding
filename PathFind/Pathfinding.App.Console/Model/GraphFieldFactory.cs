@@ -7,7 +7,7 @@ namespace Pathfinding.App.Console.Model
     {
         public GraphField CreateGraphField(Graph2D<Vertex> graph)
         {
-            return new GraphField(graph);
+            return new(graph);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Pathfinding.App.Console.Model
     internal sealed class GraphField : IGraphField<Vertex>, IDisplayable
     {
         public static readonly GraphField Empty =
-            new GraphField(Graph2D<Vertex>.Empty, Array.Empty<FramedAxis>());
+            new(Graph2D<Vertex>.Empty, Array.Empty<FramedAxis>());
 
         public IReadOnlyCollection<Vertex> Vertices { get; }
 

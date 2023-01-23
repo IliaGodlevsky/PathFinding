@@ -1,6 +1,5 @@
 ﻿using Pathfinding.App.WPF._3D.Extensions;
 using Pathfinding.App.WPF._3D.Interface;
-using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Windows.Media.Media3D;
@@ -18,10 +17,8 @@ namespace Pathfinding.App.WPF._3D.Model3DFactories
         public Model3D CreateModel3D(double diametre, Material material)
         {
             var points = GetPoints3D(diametre / 2);
-            var rectangleModels = GetRectangleModels(points, material);
-            var torus = new Model3DGroup();
-            torus.Children.AddRange(rectangleModels);
-            return torus;
+            var rectangles = GetRectangleModels(points, material);
+            return new Model3DGroup() { Children = new(rectangles) };
         }
 
         private Point3D GetPosition(double bigRadius,
@@ -34,9 +31,9 @@ namespace Pathfinding.App.WPF._3D.Model3DFactories
 
             double x = (bigRadius + smallRadius * cnv) * cnu + bigRadius;
             double y = smallRadius * snv + bigRadius;
-            double z = -(bigRadius + smallRadius * cnv) * snu + bigRadius;
+            double z = bigRadius - (bigRadius + smallRadius * cnv) * snu;
 
-            return new Point3D(x, y, z);
+            return new(x, y, z);
         }
 
         private Point3D[,] GetPoints3D(double bigRadius)

@@ -3,7 +3,6 @@ using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
@@ -39,7 +38,7 @@ namespace Pathfinding.App.WPF._3D.Model
 
         public IVertexCost Cost { get; set; }
 
-        public IReadOnlyCollection<IVertex> Neighbours { get; set; }
+        public IList<IVertex> Neighbours { get; set; }
 
         public ICoordinate Position { get; }
 
@@ -47,7 +46,7 @@ namespace Pathfinding.App.WPF._3D.Model
 
         public bool IsVisualizedAsPathfindingRange() => visualization.IsVisualizedAsPathfindingRange(this);
 
-        public DiffuseMaterial Material { get; set; }
+        public DiffuseMaterial Material { get; } = new();
 
         public Brush Brush
         {
@@ -61,12 +60,12 @@ namespace Pathfinding.App.WPF._3D.Model
             set => SetValue(SizeProperty, value);
         }
 
-        public Vertex3D(ICoordinate coordinate, IModel3DFactory modelFactory, IVisualization<Vertex3D> visualization)
+        public Vertex3D(ICoordinate coordinate, IModel3DFactory modelFactory,
+            IVisualization<Vertex3D> visualization)
         {
             this.visualization = visualization;
             this.modelFactory = modelFactory;
             Position = coordinate;
-            Material = new DiffuseMaterial();
             Transform = new TranslateTransform3D();
             Size = Constants.InitialVertexSize;
             this.Initialize();
@@ -74,8 +73,8 @@ namespace Pathfinding.App.WPF._3D.Model
 
         static Vertex3D()
         {
-            SizeProperty = RegisterProperty(nameof(Size), typeof(double), SizePropertyChanged);
-            BrushProperty = RegisterProperty(nameof(Brush), typeof(Brush), BrushPropertyChanged);
+            SizeProperty = RegisterProperty<double>(nameof(Size), SizePropertyChanged);
+            BrushProperty = RegisterProperty<Brush>(nameof(Brush), BrushPropertyChanged);
         }
 
         public bool Equals(IVertex other)
@@ -142,9 +141,9 @@ namespace Pathfinding.App.WPF._3D.Model
             vert.Material.Brush = vert.Brush;
         }
 
-        private static DependencyProperty RegisterProperty(string propertyName, Type propertyType, PropertyChangedCallback callback)
+        private static DependencyProperty RegisterProperty<T>(string propertyName, PropertyChangedCallback callback)
         {
-            return DependencyProperty.Register(propertyName, propertyType, typeof(Vertex3D), new PropertyMetadata(callback));
+            return DependencyProperty.Register(propertyName, typeof(T), typeof(Vertex3D), new(callback));
         }
     }
 }

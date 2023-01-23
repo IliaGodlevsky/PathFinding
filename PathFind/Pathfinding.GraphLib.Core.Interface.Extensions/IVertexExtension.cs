@@ -1,5 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.NullObjects;
-using Shared.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.GraphLib.Core.Interface.Extensions
@@ -25,7 +25,7 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
         public static void InitializeComponents(this IVertex self)
         {
             self.Cost = NullCost.Interface;
-            self.Neighbours = ReadOnlyList<IVertex>.Empty;
+            self.Neighbours = new List<IVertex>();
         }
 
         public static bool IsEqual(this IVertex self, IVertex vertex)

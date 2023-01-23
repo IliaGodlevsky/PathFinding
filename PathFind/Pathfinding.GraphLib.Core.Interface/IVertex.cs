@@ -11,6 +11,6 @@ namespace Pathfinding.GraphLib.Core.Interface
 
         ICoordinate Position { get; }
 
-        IReadOnlyCollection<IVertex> Neighbours { get; set; }
+        IList<IVertex> Neighbours { get; set; }
     }
 }

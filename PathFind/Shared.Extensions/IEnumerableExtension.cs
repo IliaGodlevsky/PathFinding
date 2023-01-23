@@ -5,28 +5,28 @@ using System.Linq;
 
 namespace Shared.Extensions
 {
-    public static class IEnumerableExtension
+    file sealed class MatchComparer<T> : IEqualityComparer<T>
     {
-        private sealed class MatchComparer<T> : IEqualityComparer<T>
+        private readonly Func<T, T, bool> predicate;
+
+        public MatchComparer(Func<T, T, bool> predicate)
         {
-            private readonly Func<T, T, bool> predicate;
-
-            public MatchComparer(Func<T, T, bool> predicate)
-            {
-                this.predicate = predicate;
-            }
-
-            public bool Equals(T x, T y)
-            {
-                return predicate(x, y);
-            }
-
-            public int GetHashCode(T obj)
-            {
-                return obj.GetHashCode();
-            }
+            this.predicate = predicate;
         }
 
+        public bool Equals(T x, T y)
+        {
+            return predicate(x, y);
+        }
+
+        public int GetHashCode(T obj)
+        {
+            return obj.GetHashCode();
+        }
+    }
+
+    public static class IEnumerableExtension
+    {
         public static T AggregateOrDefault<T>(this IEnumerable<T> collection, Func<T, T, T> func)
         {
             return collection.Any() ? collection.Aggregate(func) : default;
@@ -70,11 +70,6 @@ namespace Shared.Extensions
         public static IEnumerable<T> Except<T>(this IEnumerable<T> collection, params T[] items)
         {
             return collection.Except(items.AsEnumerable());
-        }
-
-        public static IOrderedEnumerable<T> Shuffle<T>(this IEnumerable<T> collection, Func<int> selector)
-        {
-            return collection.OrderBy(_ => selector());
         }
 
         public static IEnumerable<T> TakeOrDefault<T>(this IEnumerable<T> collection, int number, T defaultValue = default)

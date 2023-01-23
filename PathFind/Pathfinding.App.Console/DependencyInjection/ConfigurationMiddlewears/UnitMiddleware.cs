@@ -23,7 +23,7 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 
         private static TypedParameter GetParameter<TValue>(object value)
         {
-            return new TypedParameter(typeof(IReadOnlyCollection<TValue>), value);
+            return new(typeof(IReadOnlyCollection<TValue>), value);
         }
     }
 }

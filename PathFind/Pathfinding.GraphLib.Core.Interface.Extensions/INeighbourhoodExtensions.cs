@@ -8,7 +8,7 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
 {
     public static class INeighbourhoodExtensions
     {
-        public static IReadOnlyCollection<IVertex> GetNeighboursWithinGraph<TVertex>(this INeighborhood self, IGraph<TVertex> graph)
+        public static IEnumerable<IVertex> GetNeighboursWithinGraph<TVertex>(this INeighborhood self, IGraph<TVertex> graph)
             where TVertex : IVertex
         {
             bool IsWithin(int coordinate, int graphDimension)
@@ -20,10 +20,7 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
             {
                 return neighbour.Juxtapose(graph.DimensionsSizes, IsWithin);
             }
-            return self.Where(IsWithinGraph)
-                .Select(graph.Get)
-                .OfType<IVertex>()
-                .ToReadOnly();
+            return self.Where(IsWithinGraph).Select(graph.Get).OfType<IVertex>();
         }
     }
 }

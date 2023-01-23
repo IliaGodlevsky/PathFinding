@@ -19,7 +19,7 @@ namespace Pathfinding.GraphLib.UnitTest.Realizations.TestObjects
 
         public IVertexCost Cost { get; set; }
 
-        public IReadOnlyCollection<IVertex> Neighbours { get; set; }
+        public IList<IVertex> Neighbours { get; set; }
 
         public ICoordinate Position { get; }
 

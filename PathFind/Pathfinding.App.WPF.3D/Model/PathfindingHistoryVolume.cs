@@ -9,12 +9,7 @@ namespace Pathfinding.App.WPF._3D.Model
 {
     internal sealed class PathfindingHistoryVolume : IHistoryVolume<ICoordinate>
     {
-        private readonly ConcurrentDictionary<Guid, ConcurrentBag<ICoordinate>> history;
-
-        public PathfindingHistoryVolume()
-        {
-            history = new ConcurrentDictionary<Guid, ConcurrentBag<ICoordinate>>();
-        }
+        private readonly ConcurrentDictionary<Guid, ConcurrentBag<ICoordinate>> history = new();
 
         public void Add(Guid key, ICoordinate item)
         {
