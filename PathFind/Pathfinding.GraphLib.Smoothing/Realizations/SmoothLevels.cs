@@ -8,13 +8,13 @@ namespace Pathfinding.GraphLib.Smoothing.Realizations
 {
     public static class SmoothLevels
     {
-        private static readonly Lazy<IEnumerable<ISmoothLevel>> levels;
+        private static readonly Lazy<IReadOnlyList<ISmoothLevel>> levels;
 
-        public static IReadOnlyList<ISmoothLevel> Levels => levels.Value.ToReadOnly();
+        public static IReadOnlyList<ISmoothLevel> Levels => levels.Value;
 
         static SmoothLevels()
         {
-            levels = new Lazy<IEnumerable<ISmoothLevel>>(GetSmoothLevels);
+            levels = new(() => GetSmoothLevels().ToReadOnly());
         }
 
         private sealed class SmoothLevel : ISmoothLevel

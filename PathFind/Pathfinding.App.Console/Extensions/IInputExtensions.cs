@@ -37,7 +37,7 @@ namespace Pathfinding.App.Console.Extensions
             T upperValueOfRange = self.Input(Languages.RangeUpperValueInputMsg, range);
             T lowerValueOfRange = self.Input(Languages.RangeLowerValueInputMsg, range);
 
-            return new InclusiveValueRange<T>(upperValueOfRange, lowerValueOfRange);
+            return new(upperValueOfRange, lowerValueOfRange);
         }
     }
 }

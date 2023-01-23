@@ -67,7 +67,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
         {
             info.Vertex.Neighbours = info.Info.Neighbourhood
                 .Select(coordinate => (IVertex)graph.Get(coordinate))
-                .ToReadOnly();
+                .ToList();
         }
     }
 }

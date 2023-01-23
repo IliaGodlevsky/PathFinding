@@ -21,7 +21,7 @@ namespace Pathfinding.AlgorithmLib.Core.NullObjects
 
         public ICoordinate Position => throw new DeadendVertexException();
 
-        public IReadOnlyCollection<IVertex> Neighbours
+        public IList<IVertex> Neighbours
         {
             get => throw new DeadendVertexException();
             set => throw new DeadendVertexException();

@@ -1,6 +1,5 @@
 ﻿using Pathfinding.App.WPF._3D.Extensions;
 using Pathfinding.App.WPF._3D.Interface;
-using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Windows.Media.Media3D;
@@ -46,8 +45,7 @@ namespace Pathfinding.App.WPF._3D.Model3DFactories
                 for (int meridian = 0; meridian < Meridians; meridian++)
                 {
                     double phi = meridian * PI2 / (Meridians - 1);
-                    var position = GetPosition(radius, theta, phi);
-                    points[latitude, meridian] = position;
+                    points[latitude, meridian] = GetPosition(radius, theta, phi);
                 }
             }
 
@@ -65,7 +63,7 @@ namespace Pathfinding.App.WPF._3D.Model3DFactories
             double y = radius * (cnt + 1);
             double z = radius * (1 - snt * snp);
 
-            return new (x, y, z);
+            return new(x, y, z);
         }
     }
 }

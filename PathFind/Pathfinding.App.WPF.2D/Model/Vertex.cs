@@ -89,7 +89,7 @@ namespace Pathfinding.App.WPF._2D.Model
             }
         }
 
-        public IReadOnlyCollection<IVertex> Neighbours { get; set; }
+        public IList<IVertex> Neighbours { get; set; }
 
         public Vertex(ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
         {

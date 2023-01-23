@@ -29,18 +29,18 @@ namespace Pathfinding.App.Console.Units
 
         public PathfindingVisualizationUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
-            IMessenger messenger,
             IReadOnlyDictionary<ConsoleKey, IPathfindingAction> pathfindingActions,
-            IReadOnlyDictionary<ConsoleKey, IAnimationSpeedAction> animationActions)
+            IReadOnlyDictionary<ConsoleKey, IAnimationSpeedAction> animationActions,
+            IMessenger messenger)
             : base(menuItems, conditioned)
         {
-            this.pathfindingActions = pathfindingActions;
-            this.animationActions = animationActions;
             this.messenger = messenger;
+            this.animationActions = animationActions;
+            this.pathfindingActions = pathfindingActions;
+            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             this.messenger.Register<AnimationDelayMessage>(this, OnAnimationDelay);
             this.messenger.Register<ApplyVisualizationMessage>(this, OnVisualizationApplied);
             this.messenger.Register<SubscribeOnVisualizationMessage>(this, OnPathfindingPrepare);
-            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
         private void OnAnimationDelay(AnimationDelayMessage message)

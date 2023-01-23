@@ -1,7 +1,5 @@
-﻿using Pathfinding.App.Console.EventArguments;
-using Pathfinding.App.Console.EventHandlers;
+﻿using Pathfinding.App.Console.EventHandlers;
 using Pathfinding.App.Console.ValueInput.UserInput;
-using Shared.Process.EventArguments;
 using Shared.Process.EventHandlers;
 using Shared.Process.Interface;
 
@@ -21,18 +19,18 @@ namespace Pathfinding.App.Console.Model
         public void Interrupt()
         {
             IsInProcess = false;
-            Finished?.Invoke(this, new ProcessEventArgs());
-            Interrupted?.Invoke(this, new ProcessEventArgs());
+            Finished?.Invoke(this, new());
+            Interrupted?.Invoke(this, new());
         }
 
         public void Start()
         {
-            Started?.Invoke(this, new ProcessEventArgs());
+            Started?.Invoke(this, new());
             IsInProcess = true;
             while (IsInProcess)
             {
                 var key = input.Input();
-                KeyPressed?.Invoke(this, new ConsoleKeyPressedEventArgs(key));
+                KeyPressed?.Invoke(this, new(key));
             }
         }
     }

@@ -7,7 +7,7 @@ namespace Pathfinding.App.WPF._3D.Model
     {
         public GraphField3D CreateGraphField(Graph3D<Vertex3D> graph)
         {
-            return new GraphField3D(graph);
+            return new(graph);
         }
     }
 }

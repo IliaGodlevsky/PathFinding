@@ -19,14 +19,16 @@ namespace Shared.Random.Extensions
 
         /// <summary>
         /// Generates a random number that lays within 
-        /// the range between 0 and <see cref="int.MaxValue"/>
+        /// the range between <paramref name="minValue"/>
+        /// and <paramref name="minValue"/>
         /// </summary>
         /// <param name="random"></param>
         /// <returns>A random int within the range 
-        /// between 0 and <see cref="int.MaxValue"/></returns>
-        public static int NextInt(this IRandom random)
+        /// between <paramref name="minValue"/> 
+        /// and <paramref name="maxValue"/></returns>
+        public static int NextInt(this IRandom random, int maxValue = int.MaxValue, int minValue = default)
         {
-            return random.NextInt(new InclusiveValueRange<int>(int.MaxValue));
+            return random.NextInt(new (maxValue, minValue));
         }
 
         /// <summary>

@@ -43,12 +43,22 @@ namespace Pathfinding.GraphLib.Core.Realizations.Neighborhoods
             for (int offset = -1; offset <= 1; offset++)
             {
                 resultCoordinatesValues[depth] = selfCoordinate[depth] + offset;
-                var neighbours = depth < limitDepth - 1
+                var neighbours = IsBottom(depth)
                     ? CollectNeighbors(depth + 1).AsEnumerable()
-                    : new[] { new NeighborhoodCoordinate(resultCoordinatesValues) };
+                    : GetCoordinate();
                 neighborhood.AddRange(neighbours);
             }
             return neighborhood;
+        }
+
+        private bool IsBottom(int depth)
+        {
+            return depth < limitDepth - 1;
+        }
+
+        private IEnumerable<NeighborhoodCoordinate> GetCoordinate()
+        {
+            yield return new(resultCoordinatesValues);
         }
 
         private IReadOnlyCollection<ICoordinate> GetNeighborhood()

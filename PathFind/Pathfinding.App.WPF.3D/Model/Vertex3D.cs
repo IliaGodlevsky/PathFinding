@@ -38,7 +38,7 @@ namespace Pathfinding.App.WPF._3D.Model
 
         public IVertexCost Cost { get; set; }
 
-        public IReadOnlyCollection<IVertex> Neighbours { get; set; }
+        public IList<IVertex> Neighbours { get; set; }
 
         public ICoordinate Position { get; }
 
@@ -60,7 +60,8 @@ namespace Pathfinding.App.WPF._3D.Model
             set => SetValue(SizeProperty, value);
         }
 
-        public Vertex3D(ICoordinate coordinate, IModel3DFactory modelFactory, IVisualization<Vertex3D> visualization)
+        public Vertex3D(ICoordinate coordinate, IModel3DFactory modelFactory,
+            IVisualization<Vertex3D> visualization)
         {
             this.visualization = visualization;
             this.modelFactory = modelFactory;

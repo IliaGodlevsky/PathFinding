@@ -14,7 +14,7 @@ namespace Pathfinding.App.Console.Model
 
         public Vertex CreateFrom(VertexSerializationInfo info)
         {
-            return new Vertex(info.Position, visualization)
+            return new (info.Position, visualization)
             {
                 Cost = info.Cost,
                 IsObstacle = info.IsObstacle

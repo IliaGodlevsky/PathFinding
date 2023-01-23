@@ -1,6 +1,5 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface;
-using Shared.Collections;
 using System;
 using System.Collections.Generic;
 

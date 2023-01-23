@@ -1,6 +1,7 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
+using System.Linq;
 
 namespace Pathfinding.GraphLib.Factory.Realizations.Layers
 {
@@ -20,7 +21,7 @@ namespace Pathfinding.GraphLib.Factory.Realizations.Layers
             foreach (var vertex in graph)
             {
                 var neighborhood = factory.CreateNeighborhood(vertex.Position);
-                vertex.Neighbours = neighborhood.GetNeighboursWithinGraph(graph);
+                vertex.Neighbours = neighborhood.GetNeighboursWithinGraph(graph).ToList();
             }
         }
     }

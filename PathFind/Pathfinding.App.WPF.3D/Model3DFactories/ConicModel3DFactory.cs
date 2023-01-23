@@ -1,6 +1,5 @@
 ﻿using Pathfinding.App.WPF._3D.Extensions;
 using Pathfinding.App.WPF._3D.Interface;
-using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Windows.Media.Media3D;

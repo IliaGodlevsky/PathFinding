@@ -31,7 +31,7 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 
         private static TypedParameter GetParameter<TKey>(object value)
         {
-            return new TypedParameter(typeof(IReadOnlyDictionary<ConsoleKey, TKey>), value);
+            return new(typeof(IReadOnlyDictionary<ConsoleKey, TKey>), value);
         }
 
         private static IEnumerable<TypedParameter> GetParameters(IComponentContext context)

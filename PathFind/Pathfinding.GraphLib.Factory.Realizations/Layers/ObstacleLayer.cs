@@ -5,6 +5,8 @@ using Shared.Random;
 using Shared.Random.Extensions;
 using System.Linq;
 
+using static System.Linq.Enumerable;
+
 namespace Pathfinding.GraphLib.Factory.Realizations.Layers
 {
     public sealed class ObstacleLayer<TGraph, TVertex> : ILayer<TGraph, TVertex>
@@ -24,20 +26,11 @@ namespace Pathfinding.GraphLib.Factory.Realizations.Layers
         {
             int obstaclesCount = graph.Count * obstaclePercent / 100;
             int regularsCount = graph.Count - obstaclesCount;
-            var obstacles = Enumerable.Repeat(true, obstaclesCount);
-            var regulars = Enumerable.Repeat(false, regularsCount);
-            var layer = obstacles.Concat(regulars).Shuffle(random.NextInt);
-            graph.Zip(layer, CreateLayerItem).ForEach(SetObstacle);
-        }
-
-        private static (TVertex Vertex, bool Obstacle) CreateLayerItem(TVertex vertex, bool obstacle)
-        {
-            return (Vertex: vertex, Obstacle: obstacle);
-        }
-
-        private static void SetObstacle((TVertex Vertex, bool Obstacle) layerItem)
-        {
-            layerItem.Vertex.IsObstacle = layerItem.Obstacle;
+            Repeat(true, obstaclesCount)
+               .Concat(Repeat(false, regularsCount))
+               .OrderBy(item => random.NextInt())
+               .Zip(graph, (o, v) => (Vertex: v, Obstacle: o))
+               .ForEach(item => item.Vertex.IsObstacle = item.Obstacle);
         }
     }
 }

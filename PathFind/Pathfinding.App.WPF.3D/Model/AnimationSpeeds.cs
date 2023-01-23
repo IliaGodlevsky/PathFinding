@@ -18,7 +18,7 @@ namespace Pathfinding.App.WPF._3D.Model
 
         static AnimationSpeeds()
         {
-            speeds = new Lazy<IReadOnlyCollection<IAnimationSpeed>>(GetSpeeds().ToReadOnly);
+            speeds = new(() => GetSpeeds().ToReadOnly());
         }
 
         private sealed class AnimationSpeed : IAnimationSpeed

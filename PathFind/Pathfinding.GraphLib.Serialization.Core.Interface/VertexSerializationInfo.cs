@@ -14,7 +14,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Interface
 
             public int Count => coordinates.Count;
 
-            public Neighborhood(IReadOnlyCollection<IVertex> vertices)
+            public Neighborhood(IList<IVertex> vertices)
                 : this(vertices.GetCoordinates().ToArray())
             {
             }

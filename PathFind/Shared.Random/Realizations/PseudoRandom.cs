@@ -25,6 +25,12 @@ namespace Shared.Random.Realizations
             this.state = (uint)seed;
         }
 
+        public PseudoRandom(uint increment, uint multiplier)
+            : this(increment, multiplier, Environment.TickCount)
+        {
+
+        }
+
         public PseudoRandom()
             : this(Environment.TickCount)
         {

@@ -4,8 +4,8 @@ using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
 using static Pathfinding.App.Console.DependencyInjection.PathfindingUnits;
+using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
 
 namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 {
@@ -19,7 +19,7 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
         {
             middlewares = AllUnits.Except(Visual)
                 .ToDictionary(unit => unit, unit => (IUnitMiddleware)new UnitMiddleware())
-                .Append(new (Visual, new PathfindingVisualizationUnitMiddleware(new UnitMiddleware())))
+                .Append(new(Visual, new PathfindingVisualizationUnitMiddleware(new UnitMiddleware())))
                 .ToReadOnly();
         }
 

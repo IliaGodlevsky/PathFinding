@@ -10,7 +10,7 @@ namespace Pathfinding.App.Console.Extensions
     {
         public static MenuList CreateMenuList<T>(this IEnumerable<T> items, int columnsNumber = 2)
         {
-            return new MenuList(items.Select(item => item.ToString()), columnsNumber);
+            return new(items.Select(item => item.ToString()), columnsNumber);
         }
 
         public static void Display(this IEnumerable<IDisplayable> displayables)

@@ -10,7 +10,7 @@ namespace Pathfinding.GraphLib.Core.Realizations.Graphs
         where TVertex : IVertex
     {
         public static readonly Graph2D<TVertex> Empty
-            = new Graph2D<TVertex>(ReadOnlyList<TVertex>.Empty, ReadOnlyList<int>.Empty);
+            = new (ReadOnlyList<TVertex>.Empty, ReadOnlyList<int>.Empty);
 
         public int Width { get; }
 
@@ -25,7 +25,7 @@ namespace Pathfinding.GraphLib.Core.Realizations.Graphs
 
         public virtual Graph2D<TVertex> Clone()
         {
-            return new Graph2D<TVertex>(vertices.Values.ToArray(), DimensionsSizes.ToArray());
+            return new(vertices.Values.ToArray(), DimensionsSizes.ToArray());
         }
     }
 }

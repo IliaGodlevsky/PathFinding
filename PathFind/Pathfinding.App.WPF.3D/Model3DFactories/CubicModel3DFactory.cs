@@ -1,6 +1,6 @@
 ﻿using Pathfinding.App.WPF._3D.Extensions;
 using Pathfinding.App.WPF._3D.Interface;
-using Shared.Extensions;
+using System.Collections.Generic;
 using System.Windows.Media.Media3D;
 
 namespace Pathfinding.App.WPF._3D.Model3DFactories
@@ -29,17 +29,14 @@ namespace Pathfinding.App.WPF._3D.Model3DFactories
             };
         }
 
-        private GeometryModel3D[] GetRectangleModels3D(Point3D[] points, Material material)
+        private IEnumerable<GeometryModel3D> GetRectangleModels3D(Point3D[] points, Material material)
         {
-            return new[]
-            {
-                (points[4], points[3], points[2], points[5]).CreateRectangleGeometry(material),
-                (points[5], points[2], points[1], points[6]).CreateRectangleGeometry(material),
-                (points[7], points[6], points[1], points[0]).CreateRectangleGeometry(material),
-                (points[7], points[0], points[3], points[4]).CreateRectangleGeometry(material),
-                (points[7], points[4], points[5], points[6]).CreateRectangleGeometry(material),
-                (points[0], points[1], points[2], points[3]).CreateRectangleGeometry(material)
-            };
+            yield return (points[4], points[3], points[2], points[5]).CreateRectangleGeometry(material);
+            yield return (points[5], points[2], points[1], points[6]).CreateRectangleGeometry(material);
+            yield return (points[7], points[6], points[1], points[0]).CreateRectangleGeometry(material);
+            yield return (points[7], points[0], points[3], points[4]).CreateRectangleGeometry(material);
+            yield return (points[7], points[4], points[5], points[6]).CreateRectangleGeometry(material);
+            yield return (points[0], points[1], points[2], points[3]).CreateRectangleGeometry(material);
         }
     }
 }

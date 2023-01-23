@@ -10,29 +10,29 @@ namespace Pathfinding.App.WPF._3D.Extensions
         public static GeometryModel3D CreateRectangleGeometry(
             this (Point3D p0, Point3D p1, Point3D p2, Point3D p3) points, Material material)
         {
-            return CreateGeometry(material, RectangleIndices, 
+            return CreateGeometry(material, RectangleIndices,
                 points.p0, points.p1, points.p2, points.p3);
         }
 
         public static GeometryModel3D CreateTriangleGeometry(
             this (Point3D p0, Point3D p1, Point3D p2) points, Material material)
         {
-            return CreateGeometry(material, TriangleIndices, 
+            return CreateGeometry(material, TriangleIndices,
                 points.p0, points.p1, points.p2);
         }
 
-        private static GeometryModel3D CreateGeometry(Material material, 
+        private static GeometryModel3D CreateGeometry(Material material,
             int[] triangleIndices, params Point3D[] points)
         {
-            return new() 
-            { 
+            return new()
+            {
                 Geometry = new MeshGeometry3D()
                 {
-                    Positions = new(points),
                     TriangleIndices = new(triangleIndices),
+                    Positions = new(points)
                 },
                 Material = material,
-                BackMaterial = material 
+                BackMaterial = material
             };
         }
     }
