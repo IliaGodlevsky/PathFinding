@@ -24,9 +24,9 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths
         public CompositeGraphPath(IReadOnlyCollection<IGraphPath> paths)
         {
             this.paths = paths;
-            this.path = new Lazy<IReadOnlyCollection<ICoordinate>>(GetPath);
-            this.count = new Lazy<int>(GetCount);
-            this.cost = new Lazy<double>(GetCost);
+            this.path = new(GetPath);
+            this.count = new(GetCount);
+            this.cost = new(GetCost);
         }
 
         private IReadOnlyCollection<ICoordinate> GetPath()

@@ -24,8 +24,8 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
             : base(pathfindingRange, stepRule)
         {
             heuristic = function;
-            heuristics = new Dictionary<ICoordinate, double>(new CoordinateEqualityComparer());
-            accumulatedCosts = new Dictionary<ICoordinate, double>(new CoordinateEqualityComparer());
+            heuristics = new (new CoordinateEqualityComparer());
+            accumulatedCosts = new (new CoordinateEqualityComparer());
         }
 
         protected override void DropState()

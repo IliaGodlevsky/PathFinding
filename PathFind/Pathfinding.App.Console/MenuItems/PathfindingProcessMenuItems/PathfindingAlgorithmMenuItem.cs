@@ -22,13 +22,15 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     [HighestPriority]
     internal sealed class PathfindingAlgorithmMenuItem : IConditionedMenuItem
     {
-        private readonly IReadOnlyList<AlgorithmFactory> factories;
-        private readonly IMessenger messenger;
+        private readonly IReadOnlyList<AlgorithmFactory> factories;        
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
+        private readonly IMessenger messenger;
         private readonly IInput<int> input;
 
-        public PathfindingAlgorithmMenuItem(IEnumerable<AlgorithmFactory> factories,
-            IMessenger messenger, IPathfindingRangeBuilder<Vertex> rangeBuilder, IInput<int> input)
+        public PathfindingAlgorithmMenuItem(IMessenger messenger,
+            IEnumerable<AlgorithmFactory> factories, 
+            IPathfindingRangeBuilder<Vertex> rangeBuilder, 
+            IInput<int> input)
         {
             this.messenger = messenger;
             this.rangeBuilder = rangeBuilder;

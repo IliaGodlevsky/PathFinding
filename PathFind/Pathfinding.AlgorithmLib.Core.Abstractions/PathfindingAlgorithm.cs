@@ -23,7 +23,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
     internal abstract class PathfindingAlgorithm<TStorage> : PathfindingProcess
         where TStorage : new()
     {
-        protected record SubRange(IVertex Source, IVertex Target);
+        protected sealed record SubRange(IVertex Source, IVertex Target);
 
         protected readonly IEnumerable<IVertex> pathfindingRange;
         protected readonly HashSet<IVertex> visited = new(new VertexEqualityComparer());
@@ -118,13 +118,13 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             }
         }
 
-        private static IGraphPath GenerateResult(IReadOnlyCollection<IGraphPath> paths)
+        private static IGraphPath GenerateResult(IReadOnlyList<IGraphPath> paths)
         {
             return paths.Count switch
             {
-                1 => paths.First(),
+                1 => paths[0],
                 > 1 => new CompositeGraphPath(paths),
-                _ => NullGraphPath.Interface
+                _ => NullGraphPath.Instance
             };
         }
     }
