@@ -2,7 +2,6 @@
 
 namespace Shared.Primitives.Single.Exceptions
 {
-    [Serializable]
     public class SingletonException : Exception
     {
         private static string GetMessage(Type genericType)

@@ -19,7 +19,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
             : base(pathfindingRange)
         {
             heuristic = function;
-            heuristics = new Dictionary<ICoordinate, double>(new CoordinateEqualityComparer());
+            heuristics = new (new CoordinateEqualityComparer());
         }
 
         public AStarLeeAlgorithm(IEnumerable<IVertex> pathfindingRange)

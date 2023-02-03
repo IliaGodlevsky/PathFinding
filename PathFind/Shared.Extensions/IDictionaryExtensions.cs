@@ -20,7 +20,7 @@ namespace Shared.Extensions
         public static TValue GetOrEmpty<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> self, TKey key)
             where TValue : IEnumerable, new()
         {
-            return self.GetOrDefault(key, () => new TValue());
+            return self.GetOrDefault(key, () => new());
         }
 
         public static TValue TryGetOrAddNew<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key)
@@ -31,7 +31,7 @@ namespace Shared.Extensions
                 return value;
             }
 
-            value = new TValue();
+            value = new();
             self.Add(key, value);
             return value;
         }
