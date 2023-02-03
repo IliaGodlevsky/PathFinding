@@ -19,7 +19,7 @@ namespace Pathfinding.App.Console.MenuItems
 
         protected Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        protected Dictionary<ConsoleKey, IVertexAction> Actions { get; } = new();
+        protected abstract IReadOnlyDictionary<ConsoleKey, IVertexAction> Actions { get; }
 
         protected SwitchVerticesMenuItem(IMessenger messenger, IInput<ConsoleKey> keyInput)
         {

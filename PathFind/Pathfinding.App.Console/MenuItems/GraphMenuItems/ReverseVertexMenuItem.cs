@@ -5,19 +5,26 @@ using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
+using Shared.Extensions;
 using System;
+using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     [MediumPriority]
     internal sealed class ReverseVertexMenuItem : SwitchVerticesMenuItem
     {
+        protected override IReadOnlyDictionary<ConsoleKey, IVertexAction> Actions { get; }
+
         public ReverseVertexMenuItem(IMessenger messenger,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
             IInput<ConsoleKey> keyInput)
             : base(messenger, keyInput)
         {
-            Actions.Add(ConsoleKey.Enter, new ReverseVertexAction(rangeBuilder.Range, messenger));
+            Actions = new Dictionary<ConsoleKey, IVertexAction>()
+            {
+                {ConsoleKey.Enter, new ReverseVertexAction(rangeBuilder.Range, messenger) }
+            }.ToReadOnly();
         }
 
         public override string ToString()

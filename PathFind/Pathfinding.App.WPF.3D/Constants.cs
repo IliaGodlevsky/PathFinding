@@ -39,14 +39,14 @@ namespace Pathfinding.App.WPF._3D
 
         static Constants()
         {
-            DistanceBetweenVerticesValueRange = new InclusiveValueRange<double>(DistanceBase * InitialVertexSize, 0);
-            ZoomValueRange = new InclusiveValueRange<double>(ZoomBase * InitialVertexSize, 0);
-            OpacityValueRange = new InclusiveValueRange<double>(1, 0);
-            AngleValueRange = new InclusiveValueRange<double>(360, 0);
-            ObstaclePercentValueRange = new InclusiveValueRange<double>(99, 0);
-            AlgorithmDelayValueRange = new InclusiveValueRange<TimeSpan>(TimeSpan.FromMilliseconds(35), TimeSpan.FromMilliseconds(1));
-            GraphWidthValueRange = new InclusiveValueRange<int>(9, 1);
-            FieldOfViewValueRange = new InclusiveValueRange<double>(360, 0);
+            DistanceBetweenVerticesValueRange = new(DistanceBase * InitialVertexSize, 0);
+            ZoomValueRange = new(ZoomBase * InitialVertexSize, 0);
+            OpacityValueRange = new(1, 0);
+            AngleValueRange = new(360, 0);
+            ObstaclePercentValueRange = new(99, 0);
+            AlgorithmDelayValueRange = new(TimeSpan.FromMilliseconds(35), TimeSpan.FromMilliseconds(1));
+            GraphWidthValueRange = new (9, 1);
+            FieldOfViewValueRange = new(360, 0);
             GraphLengthValueRange = GraphWidthValueRange;
             GraphHeightValueRange = GraphLengthValueRange;
         }

@@ -8,7 +8,6 @@ namespace Shared.Primitives
 
         public static Disposable Use(params Action[] actions)
         {
-            
             return new(actions);
         }
 

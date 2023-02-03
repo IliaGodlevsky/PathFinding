@@ -10,13 +10,13 @@ namespace Pathfinding.App.Console
     internal sealed class Cursor
     {
         private static string BufferLengthString
-            => new string(' ', System.Console.BufferWidth);
+            => new (' ', System.Console.BufferWidth);
 
         private readonly int cursorLeft;
         private readonly int cursorRight;
 
         public static Point CurrentPosition
-            => new Point(System.Console.CursorLeft, System.Console.CursorTop);
+            => new (System.Console.CursorLeft, System.Console.CursorTop);
 
         private Cursor(int left, int right)
         {
