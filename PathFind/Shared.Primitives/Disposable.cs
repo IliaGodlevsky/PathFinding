@@ -6,9 +6,9 @@ namespace Shared.Primitives
     {
         private readonly Action[] actions;
 
-        public static Disposable Use(params Action[] actions)
+        public static IDisposable Use(params Action[] actions)
         {
-            return new(actions);
+            return new Disposable(actions);
         }
 
         private Disposable(Action[] actions)

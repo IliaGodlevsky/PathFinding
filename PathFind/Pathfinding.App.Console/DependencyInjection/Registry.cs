@@ -132,8 +132,9 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<PathfindingStepByStep>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.W).SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
-            builder.RegisterType<ColorConsoleLog>().As<ILog>().SingleInstance();
-            builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<DebugLog>().As<ILog>().SingleInstance();
+
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
             builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();

@@ -3,7 +3,7 @@ using System;
 
 namespace Pathfinding.App.Console.Model
 {
-    internal sealed class ColorConsoleLog : ILog
+    internal sealed class ConsoleLog : ILog
     {
         public void Debug(string message)
         {

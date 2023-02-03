@@ -73,7 +73,6 @@ namespace Pathfinding.App.WPF._3D.DependencyInjection
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
-            builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
             builder.RegisterType<VertexReverseModuleSubscription>().As<IGraphSubscription<Vertex3D>>().SingleInstance();
