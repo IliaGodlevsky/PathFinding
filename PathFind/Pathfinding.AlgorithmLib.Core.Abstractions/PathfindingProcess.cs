@@ -4,7 +4,6 @@ using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.AlgorithmLib.History.Interface;
 using Pathfinding.GraphLib.Core.Interface;
-using Shared.Process.EventArguments;
 using Shared.Process.EventHandlers;
 using Shared.Process.Interface;
 using System;
@@ -39,7 +38,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         public event ProcessEventHandler Paused;
         public event ProcessEventHandler Resumed;
 
-        private readonly EventWaitHandle pauseEvent;
+        private readonly AutoResetEvent pauseEvent;
 
         public virtual Guid Id { get; }
 
@@ -53,8 +52,8 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         protected PathfindingProcess()
         {
-            pauseEvent = new AutoResetEvent(true);
             Id = Guid.NewGuid();
+            pauseEvent = new(true);
         }
 
         public abstract IGraphPath FindPath();
@@ -81,7 +80,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
                 IsPaused = false;
                 IsInProcess = false;
                 IsInterrupted = true;
-                Interrupted?.Invoke(this, new ProcessEventArgs());
+                Interrupted?.Invoke(this, new());
             }
         }
 
@@ -90,7 +89,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             if (!IsPaused && IsInProcess)
             {
                 IsPaused = true;
-                Paused?.Invoke(this, new ProcessEventArgs());
+                Paused?.Invoke(this, new());
             }
         }
 
@@ -100,7 +99,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             {
                 IsPaused = false;
                 pauseEvent.Set();
-                Resumed?.Invoke(this, new ProcessEventArgs());
+                Resumed?.Invoke(this, new());
             }
         }
 
@@ -116,22 +115,26 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         protected void RaiseVertexVisited(IVertex vertex)
         {
-            VertexVisited?.Invoke(this, new PathfindingEventArgs(vertex));
+            VertexVisited?.Invoke(this, new(vertex));
         }
 
         protected void RaiseVertexEnqueued(IVertex vertex)
         {
-            VertexEnqueued?.Invoke(this, new PathfindingEventArgs(vertex));
+            VertexEnqueued?.Invoke(this, new(vertex));
         }
 
-        protected virtual void PrepareForPathfinding()
+        protected void ThrowIfDisposed()
         {
             if (IsAlgorithmDisposed)
             {
                 throw new ObjectDisposedException(GetType().Name);
             }
+        }
+
+        protected virtual void PrepareForPathfinding()
+        {            
             IsInProcess = true;
-            Started?.Invoke(this, new ProcessEventArgs());
+            Started?.Invoke(this, new());
         }
 
         protected void ThrowIfInterrupted()
@@ -145,7 +148,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         protected virtual void CompletePathfinding()
         {
             IsInProcess = false;
-            Finished?.Invoke(this, new ProcessEventArgs());
+            Finished?.Invoke(this, new());
         }
     }
 }

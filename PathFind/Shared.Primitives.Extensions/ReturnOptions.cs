@@ -9,38 +9,49 @@ namespace Shared.Primitives.Extensions
         public static readonly ReturnOptions Limit = new LimitReturnOptions();
         public static readonly ReturnOptions Cycle = new CycleReturnOptions();
 
-        internal abstract T ReturnInRange<T>(T value, InclusiveValueRange<T> range)
+        internal T ReturnInRange<T>(T value, InclusiveValueRange<T> range)
+            where T : IComparable<T>
+        {
+            if (value.IsGreater(range.UpperValueOfRange))
+            {
+                return GetIfGreater(range);
+            }
+            else if (value.IsLess(range.LowerValueOfRange))
+            {
+                return GetIfLess(range);
+            }
+            return value;
+        }
+
+        protected abstract T GetIfGreater<T>(InclusiveValueRange<T> range)
+            where T : IComparable<T>;
+
+        protected abstract T GetIfLess<T>(InclusiveValueRange<T> range)
             where T : IComparable<T>;
 
         private sealed class CycleReturnOptions : ReturnOptions
         {
-            internal override T ReturnInRange<T>(T value, InclusiveValueRange<T> range)
+            protected override T GetIfGreater<T>(InclusiveValueRange<T> range)
             {
-                if (value.IsGreater(range.UpperValueOfRange))
-                {
-                    return range.LowerValueOfRange;
-                }
-                else if (value.IsLess(range.LowerValueOfRange))
-                {
-                    return range.UpperValueOfRange;
-                }
-                return value;
+                return range.LowerValueOfRange;
+            }
+
+            protected override T GetIfLess<T>(InclusiveValueRange<T> range)
+            {
+                return range.UpperValueOfRange;
             }
         }
 
         private sealed class LimitReturnOptions : ReturnOptions
         {
-            internal override T ReturnInRange<T>(T value, InclusiveValueRange<T> range)
+            protected override T GetIfGreater<T>(InclusiveValueRange<T> range)
             {
-                if (value.IsGreater(range.UpperValueOfRange))
-                {
-                    return range.UpperValueOfRange;
-                }
-                else if (value.IsLess(range.LowerValueOfRange))
-                {
-                    return range.LowerValueOfRange;
-                }
-                return value;
+                return range.UpperValueOfRange;
+            }
+
+            protected override T GetIfLess<T>(InclusiveValueRange<T> range)
+            {
+                return range.LowerValueOfRange;
             }
         }
     }

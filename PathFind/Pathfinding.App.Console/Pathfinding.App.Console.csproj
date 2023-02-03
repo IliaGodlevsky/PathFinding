@@ -147,8 +147,9 @@
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
-    <Compile Include="Model\ColorConsoleLog.cs" />
+    <Compile Include="Model\ConsoleLog.cs" />
     <Compile Include="Model\ConsoleSmoothLevels.cs" />
+    <Compile Include="Model\DebugLog.cs" />
     <Compile Include="Model\FramedAxes\FramedAbscissa.cs" />
     <Compile Include="Model\FramedAxes\FramedAxis.cs" />
     <Compile Include="Model\FramedAxes\FramedOrdinate.cs" />

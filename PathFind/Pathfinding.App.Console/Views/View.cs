@@ -30,8 +30,7 @@ namespace Pathfinding.App.Console.Views
                 try
                 {
                     int index = InputItemIndex(options);
-                    var menuItem = menuItems[index];
-                    menuItem.Execute();
+                    menuItems[index].Execute();
                 }
                 catch (ExitRequiredException)
                 {

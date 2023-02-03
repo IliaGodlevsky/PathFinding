@@ -4,8 +4,6 @@ using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
-using static Pathfinding.App.WPF._3D.Constants;
-
 namespace Pathfinding.App.WPF._3D.Model.Axes
 {
     internal abstract class Axis : IAxis
@@ -34,7 +32,7 @@ namespace Pathfinding.App.WPF._3D.Model.Axes
             int coordinate = vertex.Position.ElementAtOrDefault(Order);
             double dimensionSizeCorrection = distanceBetweenVertices == 0 ? 0 : 1;
             double centeredPosition = coordinate + (dimensionSizeCorrection - dimensionSize) / 2.0;
-            Offset(vertex, centeredPosition * (InitialVertexSize + distanceBetweenVertices));
+            Offset(vertex, centeredPosition * (vertex.Size + distanceBetweenVertices));
         }
     }
 }

@@ -34,14 +34,13 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 
         protected override IVertex GetNextVertex()
         {
-            storage.OrderByDescending(v => heuristics[v.Position])
-                .Take(ToStashCount)
-                .Select(vertex => (Vertex: vertex, Priority: storage.GetPriorityOrInfinity(vertex)))
-                .ForEach(item =>
-                {
-                    storage.TryRemove(item.Vertex);
-                    stashedVertices[item.Vertex] = item.Priority;
-                });
+            var items = storage.OrderByDescending(v => heuristics[v.Position]).Take(ToStashCount)
+                .Select(vertex => (Vertex: vertex, Priority: storage.GetPriorityOrInfinity(vertex)));
+            foreach (var item in items)
+            {
+                storage.TryRemove(item.Vertex);
+                stashedVertices[item.Vertex] = item.Priority;
+            }
             var next = storage.TryFirstOrNullVertex();
             if (next.HasNoNeighbours())
             {

@@ -90,7 +90,6 @@ namespace WPFVersion.DependencyInjection
             // Logging registration
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
-            builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
             // Random number generator registrations
             builder.RegisterType<CryptoRandom>().As<IRandom>().SingleInstance();

@@ -14,6 +14,7 @@ using Pathfinding.Visualization.Extensions;
 using Shared.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Pathfinding.App.Console.Units
 {
@@ -63,7 +64,11 @@ namespace Pathfinding.App.Console.Units
             var path = NullGraphPath.Interface;
             try
             {
-                using (Disposable.Use(() => SummarizeResults(algorithm, path)))
+                void Summarize()
+                {
+                    SummarizeResults(algorithm, path);
+                }
+                using (Disposable.Use(Summarize))
                 {
                     PrepareForPathfinding(algorithm);
                     path = algorithm.FindPath();

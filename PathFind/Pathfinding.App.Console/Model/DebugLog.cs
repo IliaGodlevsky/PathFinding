@@ -1,63 +1,60 @@
-﻿using NLog;
-using Pathfinding.Logging.Interface;
+﻿using Pathfinding.Logging.Interface;
 using System;
 
-namespace Pathfinding.Logging.Loggers
-{
-    public sealed class MailLog : ILog
-    {
-        private readonly ILogger mailLogger;
+using Log = System.Diagnostics.Debug;
 
-        public MailLog()
+namespace Pathfinding.App.Console.Model
+{
+    internal sealed class DebugLog : ILog
+    {
+        private void WriteLine(string message)
         {
-            mailLogger = LogManager.GetLogger("Mail");
+            Log.WriteLine(message);
         }
 
         public void Debug(string message)
         {
-            mailLogger.Debug(message);
+            WriteLine(message);
         }
 
         public void Error(Exception ex, string message = null)
         {
-            mailLogger.Error(ex, message);
+            WriteLine(ex.ToString() + message);
         }
 
         public void Error(string message)
         {
-            mailLogger.Error(message);
+            WriteLine(message);
         }
 
         public void Fatal(Exception ex, string message = null)
         {
-            mailLogger.Fatal(ex, message);
+            WriteLine(ex.ToString() + message);
         }
 
         public void Fatal(string message)
         {
-            mailLogger.Fatal(message);
+            WriteLine(message);
         }
 
         public void Info(string message)
         {
-            mailLogger.Info(message);
+            WriteLine(message);
         }
 
         public void Trace(string message)
         {
-            mailLogger.Trace(message);
+            WriteLine(message);
         }
 
         public void Warn(Exception ex, string message = null)
         {
-            mailLogger.Warn(ex, message);
+            WriteLine(ex.ToString() + message);
         }
 
         public void Warn(string message)
         {
-            mailLogger.Warn(message);
+            WriteLine(message);
         }
-
-
     }
 }

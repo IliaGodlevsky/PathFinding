@@ -54,7 +54,7 @@ namespace Pathfinding.App.WPF._3D.Model
             set => SetValue(BrushProperty, value);
         }
 
-        private double Size
+        public double Size
         {
             get => (double)GetValue(SizeProperty);
             set => SetValue(SizeProperty, value);

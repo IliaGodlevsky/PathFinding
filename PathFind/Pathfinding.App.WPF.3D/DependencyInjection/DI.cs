@@ -35,6 +35,7 @@ using System;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Media.Media3D;
 using static Pathfinding.App.WPF._3D.DependencyInjection.RegistrationConstants;
 
 namespace Pathfinding.App.WPF._3D.DependencyInjection
@@ -72,7 +73,6 @@ namespace Pathfinding.App.WPF._3D.DependencyInjection
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<MessageBoxLog>().As<ILog>().SingleInstance();
-            builder.RegisterType<MailLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
             builder.RegisterType<VertexReverseModuleSubscription>().As<IGraphSubscription<Vertex3D>>().SingleInstance();

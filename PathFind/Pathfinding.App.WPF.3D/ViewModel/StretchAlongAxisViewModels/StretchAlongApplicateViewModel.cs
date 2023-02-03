@@ -5,6 +5,6 @@ namespace Pathfinding.App.WPF._3D.ViewModel.StretchAlongAxisViewModels
 {
     internal sealed class StretchAlongApplicateViewModel : BaseStretchAlongAxisViewModel
     {
-        protected override IAxis Axis => graphField?.Applicate;
+        protected override IAxis Axis => graphField.Applicate;
     }
 }
