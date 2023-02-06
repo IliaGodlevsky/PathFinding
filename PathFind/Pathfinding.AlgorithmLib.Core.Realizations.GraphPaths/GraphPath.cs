@@ -38,9 +38,9 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths
             this.traces = traces;
             this.target = target;
             this.stepRule = stepRule;
-            path = new Lazy<IReadOnlyList<IVertex>>(GetPath);
-            cost = new Lazy<double>(GetPathCost);
-            count = new Lazy<int>(GetCount);
+            path = new(GetPath);
+            cost = new(GetPathCost);
+            count = new(GetCount);
         }
 
         private IReadOnlyList<IVertex> GetPath()

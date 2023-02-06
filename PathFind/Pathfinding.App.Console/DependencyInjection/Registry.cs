@@ -59,7 +59,7 @@ namespace Pathfinding.App.Console.DependencyInjection
 
     internal static class Registry
     {
-        private static readonly Lazy<IContainer> container = new(Configure);
+        private static readonly Lazy<IContainer> container = new(Configure, true);
 
         public static IContainer Container => container.Value;
 
@@ -183,6 +183,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<DistanceFirstAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
             builder.RegisterType<DepthFirstAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
             builder.RegisterType<HeuristicCostGreedyAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
+
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
             builder.RegisterType<EuclidianDistance>().As<IHeuristic>().SingleInstance();
 

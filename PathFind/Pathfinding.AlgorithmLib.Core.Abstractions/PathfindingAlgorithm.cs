@@ -125,7 +125,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             {
                 1 => paths[0],
                 > 1 => new CompositeGraphPath(paths),
-                _ => NullGraphPath.Interface
+                _ => NullGraphPath.Instance
             };
         }
     }
