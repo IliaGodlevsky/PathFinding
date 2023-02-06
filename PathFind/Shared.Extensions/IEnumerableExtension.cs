@@ -59,12 +59,12 @@ namespace Shared.Extensions
 
         public static ReadOnlyList<T> ToReadOnly<T>(this IEnumerable<T> collection)
         {
-            switch (collection)
+            return collection switch
             {
-                case ReadOnlyList<T> readOnly: return readOnly;
-                case IList<T> list: return new ReadOnlyList<T>(list);
-                default: return new ReadOnlyList<T>(collection.ToArray());
-            }
+                ReadOnlyList<T> read => read,
+                IList<T> list => new(list),
+                _ => new(collection.ToArray())
+            };
         }
 
         public static IEnumerable<T> Except<T>(this IEnumerable<T> collection, params T[] items)
@@ -93,21 +93,17 @@ namespace Shared.Extensions
 
         public static ReadOnlyDictionary<TKey, TValue> ToReadOnly<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> collection)
         {
-            switch (collection)
+            return collection switch
             {
-                case IDictionary<TKey, TValue> dictionary:
-                    return new ReadOnlyDictionary<TKey, TValue>(dictionary);
-                case ReadOnlyDictionary<TKey, TValue> readOnly:
-                    return readOnly;
-                default:
-                    var dict = collection.ToDictionary(item => item.Key, item => item.Value);
-                    return new ReadOnlyDictionary<TKey, TValue>(dict);
-            }
+                IDictionary<TKey, TValue> dict => new(dict),
+                ReadOnlyDictionary<TKey, TValue> read => read,
+                _ => new(collection.ToDictionary())
+            };
         }
 
         public static Queue<T> ToQueue<T>(this IEnumerable<T> collection)
         {
-            return new Queue<T>(collection);
+            return new (collection);
         }
 
         public static int ToHashCode(this IEnumerable<int> array)

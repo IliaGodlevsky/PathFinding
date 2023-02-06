@@ -36,7 +36,7 @@ namespace Shared.Extensions
             return value;
         }
 
-        public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dictionary)
+        public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> dictionary)
         {
             return dictionary.ToDictionary(item => item.Key, item => item.Value);
         }
