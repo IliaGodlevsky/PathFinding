@@ -23,7 +23,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             Actions = new Dictionary<ConsoleKey, IVertexAction>()
             {
-                {ConsoleKey.Enter, new ReverseVertexAction(rangeBuilder.Range, messenger) }
+                { ConsoleKey.Enter, new ReverseVertexAction(rangeBuilder.Range, messenger) }
             }.ToReadOnly();
         }
 

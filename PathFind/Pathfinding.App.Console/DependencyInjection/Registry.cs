@@ -100,8 +100,8 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<SaveGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
             builder.RegisterType<ReverseVertexMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
             builder.RegisterType<SmoothGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
-            builder.RegisterType<RecieveGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
-            builder.RegisterType<SendGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
+            //builder.RegisterType<RecieveGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
+            //builder.RegisterType<SendGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
 
             builder.RegisterType<ApplyHistoryMenuItem>().Keyed<IMenuItem>(History).SingleInstance();
             builder.RegisterType<ClearHistoryMenuItem>().Keyed<IConditionedMenuItem>(History).SingleInstance();
@@ -115,6 +115,8 @@ namespace Pathfinding.App.Console.DependencyInjection
                 .ConfigurePipeline(p => p.Use(new EnterRangeConfigurationMiddlewear()));
             builder.RegisterType<MarkTransitToReplaceAction>().As<IVertexAction>().SingleInstance().WithMetadata(Key, ConsoleKey.R);
             builder.RegisterType<ReplaceTransitVertexAction>().As<IVertexAction>().SingleInstance().WithMetadata(Key, ConsoleKey.P);
+            builder.RegisterType<IncludeInRangeAction>().As<IVertexAction>().SingleInstance().WithMetadata(Key, ConsoleKey.Enter);
+            builder.RegisterType<ExcludeFromRangeAction>().As<IVertexAction>().SingleInstance().WithMetadata(Key, ConsoleKey.X);
 
             builder.RegisterType<ApplyStatisticsMenuItem>().Keyed<IMenuItem>(Statistics).SingleInstance();
 

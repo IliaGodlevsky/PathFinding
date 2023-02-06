@@ -19,14 +19,11 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
         protected override IReadOnlyDictionary<ConsoleKey, IVertexAction> Actions { get; }
 
         public EnterPathfindingRangeMenuItem(IMessenger messenger,
-            IPathfindingRangeBuilder<Vertex> rangeBuilder,
             IReadOnlyDictionary<ConsoleKey, IVertexAction> actions,
             IInput<ConsoleKey> keyInput)
             : base(messenger, keyInput)
         {
-            Actions = actions.Append(new(ConsoleKey.Enter, new IncludeInRangeAction(rangeBuilder)))
-                .Append(new(ConsoleKey.X, new ExcludeFromRangeAction(rangeBuilder)))
-                .ToReadOnly();
+            Actions = actions.ToReadOnly();
         }
 
         public override bool CanBeExecuted()
