@@ -21,7 +21,7 @@ namespace Pathfinding.GraphLib.Core.Factory.Tests
             get
             {
                 yield return GenerateTestCase(10, 20);
-                yield return GenerateTestCase(10, 15, 20);
+                yield return GenerateTestCase(8, 12, 16);
                 yield return GenerateTestCase(5, 6, 7, 8);
             }
         }
@@ -31,6 +31,8 @@ namespace Pathfinding.GraphLib.Core.Factory.Tests
             get
             {
                 yield return Generate(15, 9, 1, 25, 25);
+                yield return Generate(5, 9, 1, 7, 10, 13);
+                yield return Generate(25, 9, 1, 4, 5, 6, 7);
             }
         }
 
