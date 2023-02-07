@@ -34,8 +34,7 @@ namespace Pathfinding.GraphLib.Serialization.Tests
                 {
                     Assert.IsTrue(graph.Equals(loaded), errorMessage);
                     Assert.IsTrue(graph.Juxtapose(loaded, CompareNeighbors), wrongNeighbors);
-                });
-                
+                });                
             }
         }
 
