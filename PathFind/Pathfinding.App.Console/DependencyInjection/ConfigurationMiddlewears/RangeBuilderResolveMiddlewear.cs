@@ -12,7 +12,7 @@ using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
 
 namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 {
-    internal sealed class RangeBuilderConfigurationMiddlewear : IResolveMiddleware
+    internal sealed class RangeBuilderResolveMiddlewear : IResolveMiddleware
     {
         public PipelinePhase Phase => PipelinePhase.ParameterSelection;
 

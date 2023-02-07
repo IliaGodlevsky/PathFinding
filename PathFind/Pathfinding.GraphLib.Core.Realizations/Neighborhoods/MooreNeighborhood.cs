@@ -13,8 +13,8 @@ namespace Pathfinding.GraphLib.Core.Realizations.Neighborhoods
     {
         private sealed class NeighborhoodCoordinate : Coordinate
         {
-            public NeighborhoodCoordinate(IReadOnlyList<int> coordinates)
-                : base(coordinates.Count, coordinates)
+            public NeighborhoodCoordinate(int[] coordinates)
+                : base(coordinates.Length, coordinates)
             {
 
             }

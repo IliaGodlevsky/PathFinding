@@ -96,15 +96,15 @@ namespace Shared.Extensions
         {
             return collection switch
             {
-                IDictionary<TKey, TValue> dictionary => new(dictionary),
-                ReadOnlyDictionary<TKey, TValue> readOnly => readOnly,
+                IDictionary<TKey, TValue> dict => new(dict),
+                ReadOnlyDictionary<TKey, TValue> read => read,
                 _ => new(collection.ToDictionary())
             };
         }
 
         public static Queue<T> ToQueue<T>(this IEnumerable<T> collection)
         {
-            return new Queue<T>(collection);
+            return new (collection);
         }
 
         public static int ToHashCode(this IEnumerable<int> array)

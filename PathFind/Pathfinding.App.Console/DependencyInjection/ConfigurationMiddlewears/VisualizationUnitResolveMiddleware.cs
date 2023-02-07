@@ -10,11 +10,11 @@ using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
 
 namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 {
-    internal sealed class PathfindingVisualizationUnitMiddleware : IUnitMiddleware
+    internal sealed class VisualizationUnitResolveMiddleware : IUnitMiddleware
     {
         private readonly IUnitMiddleware middleware;
 
-        public PathfindingVisualizationUnitMiddleware(IUnitMiddleware middleware)
+        public VisualizationUnitResolveMiddleware(IUnitMiddleware middleware)
         {
             this.middleware = middleware;
         }

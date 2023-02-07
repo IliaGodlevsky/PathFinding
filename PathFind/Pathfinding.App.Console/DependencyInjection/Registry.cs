@@ -34,7 +34,6 @@ using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
 using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
 using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
-using Pathfinding.GraphLib.Serialization.Core.Realizations.Modules;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decorators;
 using Pathfinding.GraphLib.Smoothing.Interface;
@@ -74,7 +73,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<ConsoleUserTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
 
             builder.RegisterTypes(AllUnits).SingleInstance().WithMetadata(UnitTypeKey, type => type)
-                .AsSelf().AutoActivate().ConfigurePipeline(p => p.Use(new UnitConfigurationMiddleware()));
+                .AsSelf().AutoActivate().ConfigurePipeline(p => p.Use(new UnitResolveMiddleware()));
 
             builder.RegisterType<ExitMenuItem>().Keyed(typeof(IMenuItem), AllUnits.Except(Main)).SingleInstance();
 
@@ -89,7 +88,10 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<VisualizationMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
             builder.RegisterType<HistoryMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
 
-            builder.RegisterType<ChangeCostMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
+            builder.RegisterType<ChangeCostMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance()
+                .ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(ChangeCost)));
+            builder.RegisterType<IncreaseCostAction>().Keyed<IVertexAction>(ChangeCost).WithMetadata(ChangeCost, ConsoleKey.UpArrow);
+            builder.RegisterType<DecreaseCostAction>().Keyed<IVertexAction>(ChangeCost).WithMetadata(ChangeCost, ConsoleKey.DownArrow);
             builder.RegisterType<AssembleGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
             builder.RegisterType<ResizeGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
             builder.RegisterType<EnterCostRangeMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
@@ -98,7 +100,9 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<EnterObstaclePercentMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
             builder.RegisterType<LoadGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
             builder.RegisterType<SaveGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
-            builder.RegisterType<ReverseVertexMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
+            builder.RegisterType<ReverseVertexMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance()
+                .ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(Reverse)));
+            builder.RegisterType<ReverseVertexAction>().Keyed<IVertexAction>(Reverse).WithMetadata(Reverse, ConsoleKey.Enter);
             builder.RegisterType<SmoothGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
             builder.RegisterType<RecieveGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
             builder.RegisterType<SendGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
@@ -112,9 +116,11 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<ClearGraphMenuItem>().Keyed<IConditionedMenuItem>(Process).SingleInstance();
             builder.RegisterType<ClearPathfindingRangeMenuItem>().Keyed<IConditionedMenuItem>(Range).SingleInstance();
             builder.RegisterType<EnterPathfindingRangeMenuItem>().Keyed<IConditionedMenuItem>(Range).SingleInstance()
-                .ConfigurePipeline(p => p.Use(new EnterRangeConfigurationMiddlewear()));
-            builder.RegisterType<MarkTransitToReplaceAction>().As<IVertexAction>().SingleInstance().WithMetadata(Key, ConsoleKey.R);
-            builder.RegisterType<ReplaceTransitVertexAction>().As<IVertexAction>().SingleInstance().WithMetadata(Key, ConsoleKey.P);
+                .ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(PathfindingRange)));
+            builder.RegisterType<MarkTransitToReplaceAction>().Keyed<IVertexAction>(PathfindingRange).WithMetadata(PathfindingRange, ConsoleKey.R);
+            builder.RegisterType<ReplaceTransitVertexAction>().Keyed<IVertexAction>(PathfindingRange).WithMetadata(PathfindingRange, ConsoleKey.P);
+            builder.RegisterType<IncludeInRangeAction>().Keyed<IVertexAction>(PathfindingRange).WithMetadata(PathfindingRange, ConsoleKey.Enter);
+            builder.RegisterType<ExcludeFromRangeAction>().Keyed<IVertexAction>(PathfindingRange).WithMetadata(PathfindingRange, ConsoleKey.X);
 
             builder.RegisterType<ApplyStatisticsMenuItem>().Keyed<IMenuItem>(Statistics).SingleInstance();
 
@@ -123,13 +129,13 @@ namespace Pathfinding.App.Console.DependencyInjection
 
             builder.RegisterType<ViewFactory>().As<IViewFactory>().SingleInstance();
 
-            builder.RegisterType<SpeedUpAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.UpArrow).SingleInstance();
-            builder.RegisterType<SlowDownAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.DownArrow).SingleInstance();
+            builder.RegisterType<SpeedUpAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.UpArrow);
+            builder.RegisterType<SlowDownAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.DownArrow);
 
-            builder.RegisterType<ResumeAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Enter).SingleInstance();
-            builder.RegisterType<PauseAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.P).SingleInstance();
-            builder.RegisterType<InterruptAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Escape).SingleInstance();
-            builder.RegisterType<PathfindingStepByStep>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.W).SingleInstance();
+            builder.RegisterType<ResumeAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Enter);
+            builder.RegisterType<PauseAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.P);
+            builder.RegisterType<InterruptAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Escape);
+            builder.RegisterType<PathfindingStepByStep>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.W);
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
@@ -144,7 +150,7 @@ namespace Pathfinding.App.Console.DependencyInjection
 
             builder.RegisterType<VisualPathfindingRange<Vertex>>().As<IPathfindingRange<Vertex>>().SingleInstance();
             builder.RegisterType<PathfindingRangeBuilder<Vertex>>().As<IPathfindingRangeBuilder<Vertex>>().As<IUndo>()
-                .SingleInstance().ConfigurePipeline(p => p.Use(new RangeBuilderConfigurationMiddlewear()));
+                .SingleInstance().ConfigurePipeline(p => p.Use(new RangeBuilderResolveMiddlewear()));
             builder.RegisterType<IncludeSourceVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 2).SingleInstance();
             builder.RegisterType<IncludeTargetVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 4).SingleInstance();
             builder.RegisterType<IncludeTransitVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 6).SingleInstance();
@@ -166,8 +172,6 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
 
-            builder.RegisterType<InFileSerializationModule<Graph2D<Vertex>, Vertex>>()
-                .As<IGraphSerializationModule<Graph2D<Vertex>, Vertex>>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>().As<GraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressGraphSerializer<Graph2D<Vertex>, Vertex>, GraphSerializer>();

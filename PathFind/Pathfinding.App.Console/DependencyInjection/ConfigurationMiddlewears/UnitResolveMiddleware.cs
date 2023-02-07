@@ -9,17 +9,17 @@ using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
 
 namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 {
-    internal sealed class UnitConfigurationMiddleware : IResolveMiddleware
+    internal sealed class UnitResolveMiddleware : IResolveMiddleware
     {
         private readonly IReadOnlyDictionary<Type, IUnitMiddleware> middlewares;
 
         public PipelinePhase Phase => PipelinePhase.ParameterSelection;
 
-        public UnitConfigurationMiddleware()
+        public UnitResolveMiddleware()
         {
             middlewares = AllUnits.Except(Visual)
                 .ToDictionary(unit => unit, unit => (IUnitMiddleware)new UnitMiddleware())
-                .Append(new(Visual, new PathfindingVisualizationUnitMiddleware(new UnitMiddleware())))
+                .Append(new(Visual, new VisualizationUnitResolveMiddleware(new UnitMiddleware())))
                 .ToReadOnly();
         }
 
