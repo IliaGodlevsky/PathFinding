@@ -2,28 +2,21 @@
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
-using Pathfinding.App.Console.Model;
-using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.Modules.Interface;
-using Shared.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
 {
     [HighestPriority]
     internal sealed class EnterPathfindingRangeMenuItem : SwitchVerticesMenuItem
     {
-        protected override IReadOnlyDictionary<ConsoleKey, IVertexAction> Actions { get; }
-
         public EnterPathfindingRangeMenuItem(IMessenger messenger,
             IReadOnlyDictionary<ConsoleKey, IVertexAction> actions,
             IInput<ConsoleKey> keyInput)
-            : base(messenger, keyInput)
+            : base(messenger, actions, keyInput)
         {
-            Actions = actions.ToReadOnly();
+
         }
 
         public override bool CanBeExecuted()

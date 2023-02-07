@@ -8,5 +8,8 @@
         public const string UnitTypeKey = "UnitType";
         public const string Order = "Order";
         public const string Key = "Key";
+        public const string PathfindingRange = "Range";
+        public const string ChangeCost = "Cost";
+        public const string Reverse = "Reverse";
     }
 }

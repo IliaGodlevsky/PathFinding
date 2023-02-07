@@ -1,11 +1,13 @@
 ﻿using Autofac;
 using Autofac.Builder;
 using Autofac.Features.Metadata;
+using Org.BouncyCastle.Crypto.Tls;
 using Shared.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 
 namespace Pathfinding.App.Console.DependencyInjection
 {
@@ -14,6 +16,13 @@ namespace Pathfinding.App.Console.DependencyInjection
         public static IReadOnlyDictionary<TKey, TValue> ResolveWithMetadata<TKey, TValue>(this IComponentContext context, string key)
         {
             return context.Resolve<IEnumerable<Meta<TValue>>>()
+                .ToDictionary(action => (TKey)action.Metadata[key], action => action.Value)
+                .ToReadOnly();
+        }
+
+        public static IReadOnlyDictionary<TKey, TValue> ResolveWithMetadataKeyed<TKey, TValue>(this IComponentContext context, string key)
+        {
+            return context.ResolveKeyed<IEnumerable<Meta<TValue>>>(key)
                 .ToDictionary(action => (TKey)action.Metadata[key], action => action.Value)
                 .ToReadOnly();
         }

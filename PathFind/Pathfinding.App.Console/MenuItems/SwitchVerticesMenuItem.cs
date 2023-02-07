@@ -16,15 +16,17 @@ namespace Pathfinding.App.Console.MenuItems
     {
         protected readonly IMessenger messenger;
         protected readonly IInput<ConsoleKey> keyInput;
+        protected readonly IReadOnlyDictionary<ConsoleKey, IVertexAction> actions;
 
         protected Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        protected abstract IReadOnlyDictionary<ConsoleKey, IVertexAction> Actions { get; }
-
-        protected SwitchVerticesMenuItem(IMessenger messenger, IInput<ConsoleKey> keyInput)
+        protected SwitchVerticesMenuItem(IMessenger messenger,
+            IReadOnlyDictionary<ConsoleKey, IVertexAction> actions,
+            IInput<ConsoleKey> keyInput)
         {
             this.messenger = messenger;
             this.keyInput = keyInput;
+            this.actions = actions;
             this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
@@ -51,7 +53,7 @@ namespace Pathfinding.App.Console.MenuItems
                     case ConsoleKey.S: y = ReturnInRange(y + 1, yRange); break;
                     case ConsoleKey.A: x = ReturnInRange(x - 1, xRange); break;
                     case ConsoleKey.D: x = ReturnInRange(x + 1, xRange); break;
-                    default: Actions.GetOrDefault(key)?.Do(vertex); break;
+                    default: actions.GetOrDefault(key)?.Do(vertex); break;
                 }
             } while (key != ConsoleKey.Escape);
         }

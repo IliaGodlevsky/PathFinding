@@ -2,73 +2,50 @@ using NUnit.Framework;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
-using Pathfinding.GraphLib.Factory.Realizations.Layers;
-using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
-using Pathfinding.GraphLib.UnitTest.Realizations.TestFactories;
 using Pathfinding.GraphLib.UnitTest.Realizations.TestObjects;
-using Shared.Primitives.ValueRange;
-using Shared.Random.Realizations;
 using System;
 using System.Linq;
 
 namespace Pathfinding.GraphLib.Core.Factory.Tests
 {
+    using Assemble = GraphAssemble<TestGraph, TestVertex>;
+    using Layer = ILayer<TestGraph, TestVertex>;
+
     [TestFixture]
     public class GraphAssembleTests
     {
-        [TestCase(new[] { 20, 25 }, 5, 1, Description = "Test of assembling logic of GraphAssemble class")]
-        public void AssembleGraphMethod_TestRealizations_ReturnsValidGraph(int[] dimensions,
-            int upperValueOfCostRange, int lowerValueOfCostRange)
+        private readonly string dimensionsWrongMessage = "A graph with wrong dimensionSizes was created";
+        private readonly string graphHasWrongSizeMessage = "Graph size is not equal to multiplication of its dimension sizes";
+        private readonly string wrongVerticesCreated = "A wrong vertices were created";
+        private readonly string wrongNeighborsQuantity = "Some of vertices don't have neighbors";
+        private readonly string wrongCostValue = "Wrong cost values detected";
+
+        [TestCaseSource(typeof(AssembleTestCaseData), nameof(AssembleTestCaseData.Data))]
+        public void AssembleGraphMethod_TestRealizations_ReturnsValidGraph(Assemble assemble, int[] dimensions)
         {
-            var range = new InclusiveValueRange<int>(upperValueOfCostRange, lowerValueOfCostRange);
-            var graphFactory = new TestGraphFactory();
-            var coordinateFactory = new TestCoordinateFactory();
-            var vertexFactory = new TestVertexFactory();
-            var assemble = new GraphAssemble<TestGraph, TestVertex>(vertexFactory,
-                coordinateFactory, graphFactory);
             var graph = assemble.AssembleGraph(dimensions);
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(graph.DimensionsSizes.SequenceEqual(dimensions),
-                    "A graph with wrong dimensionSizes was created");
-                Assert.IsTrue(graph.Where(vertex => vertex is TestVertex).Count() == graph.Count,
-                    "Graph contains unitialized vertices");
-                Assert.AreEqual(graph.Count, dimensions.Aggregate((x, y) => x * y),
-                    "Graph size is not equal to multiplication of its dimension sizes");
+                Assert.IsTrue(graph.DimensionsSizes.SequenceEqual(dimensions), dimensionsWrongMessage);
+                Assert.IsTrue(graph.Count(v => v != null) == graph.Count, wrongVerticesCreated);
+                Assert.AreEqual(graph.Count, dimensions.Aggregate((x, y) => x * y), graphHasWrongSizeMessage);
             });
         }
 
-        [TestCase(new[] { 20, 25 }, 5, 1, 25, Description = "Test of assembling logic of GraphAssemble class")]
-        public void AssembleGraphExtensionsMethod_TestRealizations_ReturnValidGraph(int[] dimensions,
-            int upperValueOfCostRange, int lowerValueOfCostRange, int obstaclePercent)
+        [TestCaseSource(typeof(AssembleTestCaseData), nameof(AssembleTestCaseData.LayersData))]
+        public void AssembleGraphExtensionMethod_TestRealizations_ReturnsValidGraph(Assemble assemble,
+            Layer[] layers, int[] dimensions)
         {
-            var range = new InclusiveValueRange<int>(upperValueOfCostRange, lowerValueOfCostRange);
-            var graphFactory = new TestGraphFactory();
-            var coordinateFactory = new TestCoordinateFactory();
-            var vertexFactory = new TestVertexFactory();
-            var costFactory = new TestCostFactory();
-            var neighbourhoodFactory = new VonNeumannNeighborhoodFactory();
-            var random = new PseudoRandom();
-            var layers = new ILayer<TestGraph, TestVertex>[]
-            {
-                new ObstacleLayer<TestGraph, TestVertex>(random, obstaclePercent),
-                new NeighborhoodLayer<TestGraph, TestVertex>(neighbourhoodFactory),
-                new VertexCostLayer<TestGraph, TestVertex>(costFactory, range, random)
-            };
-
-            var assemble = new GraphAssemble<TestGraph, TestVertex>(vertexFactory,
-                coordinateFactory, graphFactory);
             var graph = assemble.AssembleGraph(layers, dimensions);
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(graph.DimensionsSizes.SequenceEqual(dimensions),
-                    "A graph with wrong dimensionSizes was created");
-                Assert.IsTrue(graph.Where(vertex => vertex is TestVertex).Count() == graph.Count,
-                    "Graph contains unitialized vertices");
-                Assert.AreEqual(graph.Count, dimensions.Aggregate((x, y) => x * y),
-                    "Graph size is not equal to multiplication of its dimension sizes");
+                Assert.IsTrue(graph.DimensionsSizes.SequenceEqual(dimensions), dimensionsWrongMessage);
+                Assert.IsTrue(graph.Count(v => v != null) == graph.Count, wrongVerticesCreated);
+                Assert.AreEqual(graph.Count, dimensions.Aggregate((x, y) => x * y), graphHasWrongSizeMessage);
+                Assert.IsTrue(graph.All(v => v.Neighbours.Any()), wrongNeighborsQuantity);
+                Assert.IsTrue(graph.All(v => v.Cost.CurrentCost != 0), wrongCostValue);
             });
         }
     }

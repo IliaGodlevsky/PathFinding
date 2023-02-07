@@ -115,6 +115,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Random.Tests", "Shar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pathfinding.AlgorithmLib.Core.Realizations.Tests", "Pathfinding.AlgorithmLib.Core.Realizations.Tests\Pathfinding.AlgorithmLib.Core.Realizations.Tests.csproj", "{DCD7B678-1FDF-495E-863F-ED60E63F7725}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.GraphLib.Serialization.Tests", "Pathfinding.GraphLib.Serialization.Tests\Pathfinding.GraphLib.Serialization.Tests.csproj", "{BDEBD9AB-CA65-4283-9B50-D0D9B8046629}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -317,6 +319,10 @@ Global
 		{DCD7B678-1FDF-495E-863F-ED60E63F7725}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCD7B678-1FDF-495E-863F-ED60E63F7725}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCD7B678-1FDF-495E-863F-ED60E63F7725}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDEBD9AB-CA65-4283-9B50-D0D9B8046629}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDEBD9AB-CA65-4283-9B50-D0D9B8046629}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDEBD9AB-CA65-4283-9B50-D0D9B8046629}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDEBD9AB-CA65-4283-9B50-D0D9B8046629}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -372,6 +378,7 @@ Global
 		{56E67BCD-9A55-4FDC-8924-15786E6A22C5} = {6E2A7E9E-3537-473E-A8C9-19FA899E0067}
 		{4EE23DE3-1028-4743-B9A0-826512017CDF} = {6E2A7E9E-3537-473E-A8C9-19FA899E0067}
 		{DCD7B678-1FDF-495E-863F-ED60E63F7725} = {6E2A7E9E-3537-473E-A8C9-19FA899E0067}
+		{BDEBD9AB-CA65-4283-9B50-D0D9B8046629} = {6E2A7E9E-3537-473E-A8C9-19FA899E0067}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {97B689F4-F324-4048-A586-6D7150C9C419}
