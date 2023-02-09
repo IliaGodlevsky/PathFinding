@@ -38,37 +38,33 @@ namespace Pathfinding.GraphLib.Serialization.Tests
         }
 
         private static TestCaseData GenerateXmlGraphSerializer(int obstaclePercent, params int[] dimensions)
-        {           
-            var assemble = GetAssemble();
+        {
             var layers = GetLayers(obstaclePercent);
             var serializer = GetSerializer<XmlGraphSerializer<TestGraph, TestVertex>>();
-            return new TestCaseData(serializer, assemble, layers, dimensions);
+            return new TestCaseData(serializer, GetAssemble(), layers, dimensions);
         }
 
         private static TestCaseData GenerateBinaryGraphSerializer(int obstaclePercent, params int[] dimensions)
         {
-            var assemble = GetAssemble();
             var layers = GetLayers(obstaclePercent);
             var serializer = GetSerializer<BinaryGraphSerializer<TestGraph, TestVertex>>();
-            return new TestCaseData(serializer, assemble, layers, dimensions);
+            return new TestCaseData(serializer, GetAssemble(), layers, dimensions);
         }
 
         private static TestCaseData GenerateBinaryCryptoGraphSerializer(int obstaclePercent, params int[] dimensions)
         {
-            var assemble = GetAssemble();
             var layers = GetLayers(obstaclePercent);
             var serializer = GetSerializer<BinaryGraphSerializer<TestGraph, TestVertex>>();
             var decorator = new CryptoGraphSerializer<TestGraph, TestVertex>(serializer);
-            return new TestCaseData(decorator, assemble, layers, dimensions);
+            return new TestCaseData(decorator, GetAssemble(), layers, dimensions);
         }
 
         private static TestCaseData GenerateBinaryCompressGraphSerializer(int obstaclePercent, params int[] dimensions)
         {
-            var assemble = GetAssemble();
             var layers = GetLayers(obstaclePercent);
             var serializer = GetSerializer<BinaryGraphSerializer<TestGraph, TestVertex>>();
             var decorator = new CompressGraphSerializer<TestGraph, TestVertex>(serializer);
-            return new TestCaseData(decorator, assemble, layers, dimensions);
+            return new TestCaseData(decorator, GetAssemble(), layers, dimensions);
         }
 
         private static TSerializer GetSerializer<TSerializer>()
@@ -78,8 +74,8 @@ namespace Pathfinding.GraphLib.Serialization.Tests
             var graphFactory = new TestGraphFactory();
             var costFactory = new TestCostFactory();
             var coordinateFactory = new TestCoordinateFactory();
-            return (TSerializer)Activator.CreateInstance(typeof(TSerializer), vertexFactory, 
-                graphFactory, costFactory, coordinateFactory);
+            return (TSerializer)Activator.CreateInstance(typeof(TSerializer),
+                vertexFactory, graphFactory, costFactory, coordinateFactory);
         }
 
         private static GraphAssemble<TestGraph, TestVertex> GetAssemble()
@@ -98,8 +94,8 @@ namespace Pathfinding.GraphLib.Serialization.Tests
             return new ILayer<TestGraph, TestVertex>[]
             {
                 new NeighborhoodLayer<TestGraph, TestVertex>(new MooreNeighborhoodFactory()),
-                new VertexCostLayer<TestGraph, TestVertex>(new CostFactory(), range, random),
-                new ObstacleLayer<TestGraph, TestVertex>(random, 15)
+                new VertexCostLayer<TestGraph, TestVertex>(new TestCostFactory(), range, random),
+                new ObstacleLayer<TestGraph, TestVertex>(random, obstaclePercent)
             };
         }
     }

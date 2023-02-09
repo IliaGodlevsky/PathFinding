@@ -12,16 +12,18 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.MenuItems
 {
+    using VertexActions = IReadOnlyDictionary<ConsoleKey, IVertexAction>;
+
     internal abstract class SwitchVerticesMenuItem : IConditionedMenuItem
     {
         protected readonly IMessenger messenger;
         protected readonly IInput<ConsoleKey> keyInput;
-        protected readonly IReadOnlyDictionary<ConsoleKey, IVertexAction> actions;
+        protected readonly VertexActions actions;
 
         protected Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         protected SwitchVerticesMenuItem(IMessenger messenger,
-            IReadOnlyDictionary<ConsoleKey, IVertexAction> actions,
+            VertexActions actions,
             IInput<ConsoleKey> keyInput)
         {
             this.messenger = messenger;

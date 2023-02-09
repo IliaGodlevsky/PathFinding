@@ -12,6 +12,8 @@ using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
 
 namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 {
+    using Command = IPathfindingRangeCommand<Vertex>;
+
     internal sealed class RangeBuilderResolveMiddlewear : IResolveMiddleware
     {
         public PipelinePhase Phase => PipelinePhase.ParameterSelection;
@@ -22,16 +24,15 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
             next(context);
         }
 
-        private static IReadOnlyCollection<IPathfindingRangeCommand<Vertex>>
-            ResolveKeyed(IComponentContext context, int key)
+        private IReadOnlyCollection<Command> ResolveKeyed(IComponentContext context, int key)
         {
-            return context.ResolveKeyed<IEnumerable<Meta<IPathfindingRangeCommand<Vertex>>>>(key)
+            return context.ResolveKeyed<IEnumerable<Meta<Command>>>(key)
                 .OrderBy(x => x.Metadata[Order])
                 .Select(x => x.Value)
                 .ToReadOnly();
         }
 
-        private static IEnumerable<NamedParameter> GetParameters(IComponentContext context)
+        private IEnumerable<NamedParameter> GetParameters(IComponentContext context)
         {
             yield return new("includeCommands", ResolveKeyed(context, IncludeCommand));
             yield return new("excludeCommands", ResolveKeyed(context, ExcludeCommand));
