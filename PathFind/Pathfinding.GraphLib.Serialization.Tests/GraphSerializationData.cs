@@ -99,7 +99,7 @@ namespace Pathfinding.GraphLib.Serialization.Tests
             {
                 new NeighborhoodLayer<TestGraph, TestVertex>(new MooreNeighborhoodFactory()),
                 new VertexCostLayer<TestGraph, TestVertex>(new CostFactory(), range, random),
-                new ObstacleLayer<TestGraph, TestVertex>(random, 15)
+                new ObstacleLayer<TestGraph, TestVertex>(random, obstaclePercent)
             };
         }
     }
