@@ -2,6 +2,7 @@
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.GraphLib.Core.Realizations.Coordinates;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Extensions;
@@ -55,7 +56,7 @@ namespace Pathfinding.App.Console.MenuItems
                     case ConsoleKey.S: y = ReturnInRange(y + 1, yRange); break;
                     case ConsoleKey.A: x = ReturnInRange(x - 1, xRange); break;
                     case ConsoleKey.D: x = ReturnInRange(x + 1, xRange); break;
-                    default: actions.GetOrDefault(key)?.Do(vertex); break;
+                    default: actions.GetOrDefault(key, NullVertexAction.Instance).Do(vertex); break;
                 }
             } while (key != ConsoleKey.Escape);
         }

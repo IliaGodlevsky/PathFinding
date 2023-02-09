@@ -180,6 +180,7 @@
     <Compile Include="Model\VertexActions\IncludeInRangeAction.cs" />
     <Compile Include="Model\VertexActions\IncreaseCostAction.cs" />
     <Compile Include="Model\VertexActions\MarkTransitToReplaceAction.cs" />
+    <Compile Include="Model\VertexActions\NullVertexAction.cs" />
     <Compile Include="Model\VertexActions\ReplaceTransitVertexAction.cs" />
     <Compile Include="Model\VertexActions\ReverseVertexAction.cs" />
     <Compile Include="Model\VertexFactory.cs" />
