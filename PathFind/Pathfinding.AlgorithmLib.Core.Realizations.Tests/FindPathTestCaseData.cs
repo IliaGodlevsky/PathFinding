@@ -17,10 +17,10 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests
         {
             get
             {
-                yield return GenerateTestCase(new DijkstraAlgorithmFactory(), new TestPathfindingRange(), DijkstraExpectedPath.Instance);
-                yield return GenerateTestCase(new AStarAlgorithmFactory(), new TestPathfindingRange(), DijkstraExpectedPath.Instance);
-                yield return GenerateTestCase(new IDAStarAlgorithmFactory(), new TestPathfindingRange(), DijkstraExpectedPath.Instance);
-                yield return GenerateTestCase(new LeeAlgorithmFactory(), new TestPathfindingRange(), LeeAlgorithmExpectedPath.Instance);
+                yield return GenerateTestCase(new DijkstraAlgorithmFactory(), TestPathfindingRange.Interface, DijkstraExpectedPath.Interface);
+                yield return GenerateTestCase(new AStarAlgorithmFactory(), TestPathfindingRange.Interface, DijkstraExpectedPath.Interface);
+                yield return GenerateTestCase(new IDAStarAlgorithmFactory(), TestPathfindingRange.Interface, DijkstraExpectedPath.Interface);
+                yield return GenerateTestCase(new LeeAlgorithmFactory(), TestPathfindingRange.Interface, LeeAlgorithmExpectedPath.Interface);
             }
         }
 

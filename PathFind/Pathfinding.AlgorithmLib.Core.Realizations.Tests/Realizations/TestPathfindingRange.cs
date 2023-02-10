@@ -7,6 +7,7 @@ using Pathfinding.GraphLib.UnitTest.Realizations;
 using Pathfinding.GraphLib.UnitTest.Realizations.TestFactories;
 using Pathfinding.GraphLib.UnitTest.Realizations.TestFactories.Layers;
 using Pathfinding.GraphLib.UnitTest.Realizations.TestObjects;
+using Shared.Primitives.Single;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,13 +16,13 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests.Realizations
 {
     using Assemble = GraphAssemble<Graph2D<TestVertex>, TestVertex>;
 
-    internal sealed class TestPathfindingRange : IEnumerable<TestVertex>
+    internal sealed class TestPathfindingRange : Singleton<TestPathfindingRange, IEnumerable<TestVertex>>, IEnumerable<TestVertex>
     {
         private readonly Lazy<Graph2D<TestVertex>> testGraph;
 
         private Graph2D<TestVertex> TestGraph => testGraph.Value;
 
-        public TestPathfindingRange()
+        private TestPathfindingRange()
         {
             testGraph = new Lazy<Graph2D<TestVertex>>(CreateGraph);
         }
@@ -47,7 +48,6 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests.Realizations
 
         private Graph2D<TestVertex> CreateGraph()
         {
-            var dimensions = Constants.DimensionSizes2D;
             var vertexFactory = new TestVertexFactory();
             var coordinateFactory = new TestCoordinateFactory();
             var graphFactory = new Graph2DFactory<TestVertex>();
@@ -58,7 +58,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests.Realizations
                 new CostLayer(),
                 new NeighborhoodLayer()
             };
-            return assemble.AssembleGraph(layers, dimensions);
+            return assemble.AssembleGraph(layers, Constants.DimensionSizes2D);
         }
 
         private TestVertex Get(int x, int y)

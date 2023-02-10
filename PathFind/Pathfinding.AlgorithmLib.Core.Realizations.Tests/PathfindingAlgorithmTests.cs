@@ -13,6 +13,10 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests
     [TestFixture]
     public class PathfindingAlgorithmTests
     {
+        private readonly string wrongPathCostMsg = "The path cost is not equal to expected";
+        private readonly string wrongPathLengthMsg = "The path length is not equal to expected";
+        private readonly string wrongPathSequenceMsg = "Path contains wrong sequence of coordinates";
+
         [TestCaseSource(typeof(FindPathTestCaseData), nameof(FindPathTestCaseData.Data))]
         public void FindPath_ReturnsOptimalPath(AlgorithmFactory factory, Range range, IGraphPath expected)
         {
@@ -22,9 +26,9 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.AreEqual(path.Cost, expected.Cost, "The path cost is not equal to expected");
-                Assert.AreEqual(path.Count, expected.Count, "The path length is not equal to expected");
-                Assert.IsTrue(path.SequenceEqual(expected), "Path contains wrong sequence of coordinates");
+                Assert.AreEqual(path.Cost, expected.Cost, wrongPathCostMsg);
+                Assert.AreEqual(path.Count, expected.Count, wrongPathLengthMsg);
+                Assert.IsTrue(path.SequenceEqual(expected), wrongPathSequenceMsg);
             });
         }
     }
