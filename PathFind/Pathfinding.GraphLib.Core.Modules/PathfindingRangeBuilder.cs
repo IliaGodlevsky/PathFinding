@@ -47,7 +47,7 @@ namespace Pathfinding.GraphLib.Core.Modules
         private IReadOnlyCollection<IUndoCommand<TVertex>> GetUndoCommands()
         {
             return IncludeCommands
-                .Concat(ExcludeCommands)
+                .Union(ExcludeCommands)
                 .OfType<IUndoCommand<TVertex>>()
                 .ToReadOnly();
         }

@@ -63,8 +63,8 @@ namespace Pathfinding.GraphLib.Serialization.Tests
             var graphFactory = new TestGraphFactory();
             var costFactory = new TestCostFactory();
             var coordinateFactory = new TestCoordinateFactory();
-            return (TSerializer)Activator.CreateInstance(typeof(TSerializer), vertexFactory, 
-                graphFactory, costFactory, coordinateFactory);
+            return (TSerializer)Activator.CreateInstance(typeof(TSerializer),
+                vertexFactory, graphFactory, costFactory, coordinateFactory);
         }
     }
 }

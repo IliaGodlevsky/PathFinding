@@ -2,6 +2,7 @@
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.GraphLib.Core.Realizations.Coordinates;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Extensions;
@@ -12,16 +13,18 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.MenuItems
 {
+    using VertexActions = IReadOnlyDictionary<ConsoleKey, IVertexAction>;
+
     internal abstract class SwitchVerticesMenuItem : IConditionedMenuItem
     {
         protected readonly IMessenger messenger;
         protected readonly IInput<ConsoleKey> keyInput;
-        protected readonly IReadOnlyDictionary<ConsoleKey, IVertexAction> actions;
+        protected readonly VertexActions actions;
 
         protected Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         protected SwitchVerticesMenuItem(IMessenger messenger,
-            IReadOnlyDictionary<ConsoleKey, IVertexAction> actions,
+            VertexActions actions,
             IInput<ConsoleKey> keyInput)
         {
             this.messenger = messenger;
@@ -53,7 +56,7 @@ namespace Pathfinding.App.Console.MenuItems
                     case ConsoleKey.S: y = ReturnInRange(y + 1, yRange); break;
                     case ConsoleKey.A: x = ReturnInRange(x - 1, xRange); break;
                     case ConsoleKey.D: x = ReturnInRange(x + 1, xRange); break;
-                    default: actions.GetOrDefault(key)?.Do(vertex); break;
+                    default: actions.GetOrDefault(key, NullVertexAction.Instance).Do(vertex); break;
                 }
             } while (key != ConsoleKey.Escape);
         }
