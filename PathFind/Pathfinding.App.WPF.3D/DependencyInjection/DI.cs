@@ -12,6 +12,7 @@ using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Modules;
 using Pathfinding.GraphLib.Core.Modules.Commands;
 using Pathfinding.GraphLib.Core.Modules.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations;
@@ -61,7 +62,8 @@ namespace Pathfinding.App.WPF._3D.DependencyInjection
 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
 
-            builder.RegisterType<VisualPathfindingRange<Vertex3D>>().As<IPathfindingRange<Vertex3D>>().SingleInstance();
+            builder.RegisterType<PathfindingRange<Vertex3D>>().As<IPathfindingRange<Vertex3D>>().SingleInstance();
+            builder.RegisterDecorator<VisualPathfindingRange<Vertex3D>, IPathfindingRange<Vertex3D>>();
             builder.RegisterType<PathfindingRangeBuilder<Vertex3D>>().As<IPathfindingRangeBuilder<Vertex3D>>().As<IUndo>()
                 .SingleInstance().ConfigurePipeline(p => p.Use(new RangeBuilderConfigurationMiddlewear()));
             builder.RegisterType<IncludeSourceVertex<Vertex3D>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 1).SingleInstance();

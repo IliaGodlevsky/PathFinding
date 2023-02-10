@@ -1,13 +1,12 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Modules.Interface;
-using Shared.Executable;
 using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.GraphLib.Core.Modules
 {
-    public sealed class PathfindingRangeBuilder<TVertex> : IPathfindingRangeBuilder<TVertex>, IUndo
+    public sealed class PathfindingRangeBuilder<TVertex> : IPathfindingRangeBuilder<TVertex>
         where TVertex : IVertex
     {
         private IReadOnlyCollection<IUndoCommand<TVertex>> UndoCommands { get; }
@@ -25,36 +24,30 @@ namespace Pathfinding.GraphLib.Core.Modules
             Range = range;
             IncludeCommands = includeCommands;
             ExcludeCommands = excludeCommands;
-            UndoCommands = GetUndoCommands();
-        }
-
-        public void Include(TVertex vertex)
-        {
-            ExecuteFirst(IncludeCommands, vertex);
-        }
-
-        public void Exclude(TVertex vertex)
-        {
-            ExecuteFirst(ExcludeCommands, vertex);
-        }
-
-        private void ExecuteFirst(IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> commands, TVertex vertex)
-        {
-            commands.FirstOrDefault(command => command.CanExecute(Range, vertex))
-                ?.Execute(Range, vertex);
-        }
-
-        private IReadOnlyCollection<IUndoCommand<TVertex>> GetUndoCommands()
-        {
-            return IncludeCommands
+            UndoCommands = IncludeCommands
                 .Union(ExcludeCommands)
                 .OfType<IUndoCommand<TVertex>>()
                 .ToReadOnly();
         }
 
+        public void Include(TVertex vertex)
+        {
+            Execute(IncludeCommands, vertex);
+        }
+
+        public void Exclude(TVertex vertex)
+        {
+            Execute(ExcludeCommands, vertex);
+        }
+
         public void Undo()
         {
             UndoCommands.ForEach(command => command.Undo(Range));
+        }
+
+        private void Execute(IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> commands, TVertex vertex)
+        {
+            commands.FirstOrDefault(command => command.CanExecute(Range, vertex))?.Execute(Range, vertex);
         }
     }
 }
