@@ -157,8 +157,8 @@
     <Compile Include="Model\FramedAxes\FramedToLeftOrdinate.cs" />
     <Compile Include="Model\FramedAxes\FramedToRightOrdinate.cs" />
     <Compile Include="Model\FramedAxes\FramedUnderAbscissa.cs" />
-    <Compile Include="Model\Graph2dWrap.cs" />
-    <Compile Include="Model\Graph2dWrapFactory.cs" />
+    <Compile Include="Model\Graph2DWrap.cs" />
+    <Compile Include="Model\Graph2DWrapFactory.cs" />
     <Compile Include="Model\GraphField.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
     <Compile Include="Model\GraphLayer.cs" />

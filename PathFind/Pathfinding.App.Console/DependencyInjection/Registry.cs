@@ -144,7 +144,7 @@ namespace Pathfinding.App.Console.DependencyInjection
 
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
-            builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
+            builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance(); 
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
             builder.RegisterType<CryptoRandom>().As<IRandom>().SingleInstance();
             builder.RegisterType<RootMeanSquareCost>().As<IMeanCost>().SingleInstance();
@@ -170,7 +170,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField>>().SingleInstance();
             builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<Graph2DFactory<Vertex>>().As<IGraphFactory<Graph2D<Vertex>, Vertex>>().SingleInstance();
-            builder.RegisterDecorator<Graph2dWrapFactory, IGraphFactory<Graph2D<Vertex>, Vertex>>();
+            builder.RegisterDecorator<Graph2DWrapFactory, IGraphFactory<Graph2D<Vertex>, Vertex>>();
             builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
 

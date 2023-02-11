@@ -55,7 +55,7 @@ namespace Pathfinding.Visualization.Core.Abstractions
                     ((TVertex)e.NewItems[0]).VisualizeAsTransit();
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    range.Transit.Remove((TVertex)e.NewItems[0]);
+                    range.Transit.Remove((TVertex)e.OldItems[0]);
                     ((TVertex)e.OldItems[0]).VisualizeAsRegular();
                     break;
                 case NotifyCollectionChangedAction.Reset:
@@ -81,7 +81,7 @@ namespace Pathfinding.Visualization.Core.Abstractions
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return range.GetEnumerator();
         }
     }
 }

@@ -31,10 +31,7 @@ namespace Pathfinding.GraphLib.Core.Modules.Commands
 
         public void Undo()
         {
-            foreach (var vertex in module.TransitVerticesToReplace.ToArray())
-            {
-                undoCommand.Execute(vertex);
-            }
+            module.TransitVerticesToReplace.ToArray().ForEach(undoCommand.Execute);
         }
     }
 }

@@ -1,8 +1,14 @@
 using NUnit.Framework;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
+using Pathfinding.GraphLib.Factory.Realizations;
 using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
+using Pathfinding.GraphLib.Factory.Realizations.Layers;
+using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
+using Pathfinding.GraphLib.UnitTest.Realizations.TestFactories;
 using Pathfinding.GraphLib.UnitTest.Realizations.TestObjects;
+using Shared.Primitives.ValueRange;
+using Shared.Random.Realizations;
 using System;
 using System.Linq;
 
@@ -21,8 +27,9 @@ namespace Pathfinding.GraphLib.Core.Factory.Tests
         private readonly string wrongCostValue = "Wrong cost values detected";
 
         [TestCaseSource(typeof(AssembleTestCaseData), nameof(AssembleTestCaseData.Data))]
-        public void AssembleGraphMethod_TestRealizations_ReturnsValidGraph(Assemble assemble, int[] dimensions)
+        public void AssembleGraphMethod_TestRealizations_ReturnsValidGraph(int[] dimensions)
         {
+            var assemble = GetAssemble();
             var graph = assemble.AssembleGraph(dimensions);
 
             Assert.Multiple(() =>
@@ -33,10 +40,11 @@ namespace Pathfinding.GraphLib.Core.Factory.Tests
             });
         }
 
-        [TestCaseSource(typeof(AssembleTestCaseData), nameof(AssembleTestCaseData.LayersData))]
-        public void AssembleGraphExtensionMethod_TestRealizations_ReturnsValidGraph(Assemble assemble,
-            Layer[] layers, int[] dimensions)
+        [TestCaseSource(typeof(AssembleTestCaseData), nameof(AssembleTestCaseData.Data))]
+        public void AssembleGraphExtensionMethod_TestRealizations_ReturnsValidGraph(int[] dimensions)
         {
+            var assemble = GetAssemble();
+            var layers = GetLayers();
             var graph = assemble.AssembleGraph(layers, dimensions);
 
             Assert.Multiple(() =>
@@ -47,6 +55,27 @@ namespace Pathfinding.GraphLib.Core.Factory.Tests
                 Assert.IsTrue(graph.All(v => v.Neighbours.Any()), wrongNeighborsQuantity);
                 Assert.IsTrue(graph.All(v => v.Cost.CurrentCost != 0), wrongCostValue);
             });
+        }
+
+        private static Assemble GetAssemble()
+        {
+            var graphFactory = new TestGraphFactory();
+            var coordinateFactory = new TestCoordinateFactory();
+            var vertexFactory = new TestVertexFactory();
+            return new Assemble(vertexFactory, coordinateFactory, graphFactory);
+        }
+
+        private static Layer[] GetLayers()
+        {
+            int obstaclePercent = 14;
+            var random = new PseudoRandom();
+            var range = new InclusiveValueRange<int>(9, 1);
+            return new Layer[]
+            {
+                new NeighborhoodLayer<TestGraph, TestVertex>(new MooreNeighborhoodFactory()),
+                new VertexCostLayer<TestGraph, TestVertex>(new CostFactory(), range, random),
+                new ObstacleLayer<TestGraph, TestVertex>(random, obstaclePercent)
+            };
         }
     }
 }

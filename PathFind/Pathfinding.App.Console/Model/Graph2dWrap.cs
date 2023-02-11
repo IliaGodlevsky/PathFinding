@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.Model
 {
-    internal sealed class Graph2dWrap : Graph2D<Vertex>
+    internal sealed class Graph2DWrap : Graph2D<Vertex>
     {
         private const string LargeSpace = "   ";
 
@@ -13,7 +13,7 @@ namespace Pathfinding.App.Console.Model
 
         private int Obstacles => this.GetObstaclesCount();
 
-        public Graph2dWrap(Graph2D<Vertex> graph)
+        public Graph2DWrap(Graph2D<Vertex> graph)
             : base(graph, graph.DimensionsSizes)
         {
 
@@ -31,7 +31,7 @@ namespace Pathfinding.App.Console.Model
         public override Graph2D<Vertex> Clone()
         {
             var graph = new Graph2D<Vertex>(vertices.Values.ToArray(), DimensionsSizes.ToArray());
-            return new Graph2dWrap(graph);
+            return new Graph2DWrap(graph);
         }
     }
 }
