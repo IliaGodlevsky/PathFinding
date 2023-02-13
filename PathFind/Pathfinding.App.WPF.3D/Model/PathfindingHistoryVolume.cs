@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.WPF._3D.Model
 {
-    internal sealed class PathfindingHistoryVolume : IHistoryVolume<ICoordinate>
+    internal sealed class PathfindingHistoryVolume : IHistory<ICoordinate>
     {
         private readonly ConcurrentDictionary<Guid, ConcurrentBag<ICoordinate>> history = new();
 

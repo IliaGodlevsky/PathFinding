@@ -4,16 +4,18 @@ using Shared.Extensions;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Media;
 
 namespace Pathfinding.App.WPF._2D.Model
 {
-    internal sealed class PathfindingHistoryVolume : IHistoryVolume<ICoordinate>
+    internal sealed class History : IHistory<Brush>
     {
-        private readonly ConcurrentDictionary<Guid, ConcurrentBag<ICoordinate>> history = new();
+        private readonly ConcurrentDictionary<Guid, Dictionary<ICoordinate, Brush>> history = new();
 
-        public void Add(Guid key, ICoordinate item)
+        public void Add(Guid key, ICoordinate coordinate, Brush brush)
         {
-            history.TryGetOrAddNew(key).Add(item);
+            history.TryGetOrAddNew(key)[coordinate] = brush;
         }
 
         public void RemoveAll()
@@ -26,9 +28,9 @@ namespace Pathfinding.App.WPF._2D.Model
             history.TryRemove(key, out _);
         }
 
-        public IEnumerable<ICoordinate> Get(Guid key)
+        public IEnumerable<(ICoordinate, Brush)> Get(Guid key)
         {
-            return history.GetOrEmpty(key);
+            return history.GetOrEmpty(key).Select(pair => (pair.Key, pair.Value));
         }
     }
 }

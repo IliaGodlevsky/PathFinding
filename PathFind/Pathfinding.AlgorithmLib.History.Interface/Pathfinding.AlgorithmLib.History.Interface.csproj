@@ -42,8 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IHistoryPageKey.cs" />
-    <Compile Include="IHistoryVolume.cs" />
+    <Compile Include="IHistory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
+      <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
+      <Name>Pathfinding.GraphLib.Core.Interface</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

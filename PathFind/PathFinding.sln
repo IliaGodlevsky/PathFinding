@@ -97,8 +97,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.App.WPF.2D", "P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.AlgorithmLib.History.Interface", "Pathfinding.AlgorithmLib.History.Interface\Pathfinding.AlgorithmLib.History.Interface.csproj", "{A0750471-F960-42D7-B4B4-0571EA0EAB78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.AlgorithmLib.History", "Pathfinding.AlgorithmLib.History\Pathfinding.AlgorithmLib.History.csproj", "{3CEBE00A-5EC9-4904-A20C-10817B0E5318}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.App.WPF.3D", "Pathfinding.App.WPF.3D\Pathfinding.App.WPF.3D.csproj", "{1B75A156-D350-4C05-9AC0-9CAA93F2C81C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.GraphLib.Core.Modules.Interface", "Pathfinding.GraphLib.Core.Modules.Interface\Pathfinding.GraphLib.Core.Modules.Interface.csproj", "{580F22FB-42C3-45C4-9328-2D968DC63C5E}"
@@ -115,7 +113,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared.Random.Tests", "Shar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pathfinding.AlgorithmLib.Core.Realizations.Tests", "Pathfinding.AlgorithmLib.Core.Realizations.Tests\Pathfinding.AlgorithmLib.Core.Realizations.Tests.csproj", "{DCD7B678-1FDF-495E-863F-ED60E63F7725}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.GraphLib.Serialization.Tests", "Pathfinding.GraphLib.Serialization.Tests\Pathfinding.GraphLib.Serialization.Tests.csproj", "{BDEBD9AB-CA65-4283-9B50-D0D9B8046629}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pathfinding.GraphLib.Serialization.Tests", "Pathfinding.GraphLib.Serialization.Tests\Pathfinding.GraphLib.Serialization.Tests.csproj", "{BDEBD9AB-CA65-4283-9B50-D0D9B8046629}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -287,10 +285,6 @@ Global
 		{A0750471-F960-42D7-B4B4-0571EA0EAB78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0750471-F960-42D7-B4B4-0571EA0EAB78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0750471-F960-42D7-B4B4-0571EA0EAB78}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3CEBE00A-5EC9-4904-A20C-10817B0E5318}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3CEBE00A-5EC9-4904-A20C-10817B0E5318}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3CEBE00A-5EC9-4904-A20C-10817B0E5318}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3CEBE00A-5EC9-4904-A20C-10817B0E5318}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1B75A156-D350-4C05-9AC0-9CAA93F2C81C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1B75A156-D350-4C05-9AC0-9CAA93F2C81C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B75A156-D350-4C05-9AC0-9CAA93F2C81C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -370,7 +364,6 @@ Global
 		{50902851-3081-49AF-ACEC-013E78460547} = {8C2F4077-5F32-44E4-BB76-8F77F2D63CBB}
 		{4743DDA2-FB80-4BD9-B54B-55C315EF625C} = {5E241632-7DA6-44E3-807F-83980E2CEAC6}
 		{A0750471-F960-42D7-B4B4-0571EA0EAB78} = {D159F18B-38B4-4942-9D0C-BB71C4BD9EFD}
-		{3CEBE00A-5EC9-4904-A20C-10817B0E5318} = {D159F18B-38B4-4942-9D0C-BB71C4BD9EFD}
 		{1B75A156-D350-4C05-9AC0-9CAA93F2C81C} = {5E241632-7DA6-44E3-807F-83980E2CEAC6}
 		{580F22FB-42C3-45C4-9328-2D968DC63C5E} = {8C2F4077-5F32-44E4-BB76-8F77F2D63CBB}
 		{4B07371D-1C8E-4EFE-9BF5-97C9E13C25BA} = {8C2F4077-5F32-44E4-BB76-8F77F2D63CBB}

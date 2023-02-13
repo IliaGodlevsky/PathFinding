@@ -6,13 +6,13 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.Model
 {
-    internal sealed class PathfindingHistoryVolume : IHistoryVolume<ICoordinate>
+    internal sealed class History : IHistory<ConsoleColor>
     {
-        private readonly Dictionary<Guid, List<ICoordinate>> history = new();
+        private readonly Dictionary<Guid, List<(ICoordinate, ConsoleColor)>> history = new();
 
-        public void Add(Guid key, ICoordinate item)
+        public void Add(Guid key, ICoordinate coordinate, ConsoleColor color)
         {
-            history.TryGetOrAddNew(key).Add(item);
+            history.TryGetOrAddNew(key).Add((coordinate, color));
         }
 
         public void RemoveAll()
@@ -25,7 +25,7 @@ namespace Pathfinding.App.Console.Model
             history.Remove(key);
         }
 
-        public IEnumerable<ICoordinate> Get(Guid key)
+        public IEnumerable<(ICoordinate, ConsoleColor)> Get(Guid key)
         {
             return history.GetOrEmpty(key);
         }

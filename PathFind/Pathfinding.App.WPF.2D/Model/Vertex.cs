@@ -52,9 +52,9 @@ namespace Pathfinding.App.WPF._2D.Model
             }
         }
 
-        public Brush VertexColor
+        public SolidColorBrush VertexColor
         {
-            get => Background;
+            get => (SolidColorBrush)Background;
             set
             {
                 Background = value;

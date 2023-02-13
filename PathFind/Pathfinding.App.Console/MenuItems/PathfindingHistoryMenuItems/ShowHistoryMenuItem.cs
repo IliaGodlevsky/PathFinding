@@ -4,6 +4,10 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Shared.Extensions;
+using Shared.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +22,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         private readonly Dictionary<Guid, string> pages = new();
 
         private bool isHistoryApplied = false;
+        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         private IDisplayable MenuList => pages.Values.Append(Languages.Quit).CreateMenuList(columnsNumber: 1);
 
@@ -27,8 +32,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             this.messenger = messenger;
             this.messenger.Register<ApplyHistoryMessage>(this, OnHistoryApplied);
             this.messenger.Register<AlgorithmFinishedMessage>(this, OnAlgorithmFinished);
-            this.messenger.Register<ClearHistoryMessage>(this, _ => ClearHistory());
-            this.messenger.Register<GraphCreatedMessage>(this, _ => ClearHistory());
+            this.messenger.Register<ClearHistoryMessage>(this, _ => pages.Clear());
+            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
         public bool CanBeExecuted()
@@ -40,23 +45,44 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         {
             string inputMessage = string.Concat(MenuList, "\n", Languages.AlgorithmChoiceMsg);
             int index = GetAlgorithmIndex(inputMessage);
-            while (index != pages.Count)
+            using (RestoreColors())
             {
-                var page = pages.ElementAt(index);
-                using (Cursor.UseCurrentPosition())
+                while (index != pages.Count)
                 {
-                    using (Cursor.HideCursor())
+                    var page = pages.ElementAt(index);
+                    using (Cursor.UseCurrentPosition())
                     {
-                        messenger.Send(new HistoryPageMessage(page.Key));
-                        messenger.Send(new PathfindingStatisticsMessage(page.Value));
+                        using (Cursor.HideCursor())
+                        {
+                            messenger.Send(new HistoryPageMessage(page.Key));
+                            messenger.Send(new PathfindingStatisticsMessage(page.Value));
+                        }
                     }
+                    index = GetAlgorithmIndex(inputMessage);
                 }
-                index = GetAlgorithmIndex(inputMessage);
             }
+        }
+
+        private IDisposable RestoreColors()
+        {
+            var colors = graph.Select(x => x.Color).ToReadOnly();
+            return Disposable.Use(() =>
+            {
+                graph.Zip(colors, (v, c) => (Vertex: v, Color: c))
+                    .ForEach(item => item.Vertex.Color = item.Color)
+                    .ForEach(item => item.Vertex.Display());
+                messenger.Send(PathfindingStatisticsMessage.Empty);
+            });
         }
 
         private void ClearHistory()
         {
+            pages.Clear();
+        }
+
+        private void OnGraphCreated(GraphCreatedMessage msg)
+        {
+            graph = msg.Graph;
             pages.Clear();
         }
 

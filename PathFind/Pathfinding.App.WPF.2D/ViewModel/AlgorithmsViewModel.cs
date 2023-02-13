@@ -19,6 +19,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
 using WPFVersion.DependencyInjection;
 
@@ -26,7 +27,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel
 {
     internal class AlgorithmsViewModel : IDisposable
     {
-        private readonly History<PathfindingHistoryVolume> history;
+        private readonly History history = new();
         private readonly IMessenger messenger;
 
         public ICommand VisualizeCommand { get; }
@@ -43,7 +44,6 @@ namespace Pathfinding.App.WPF._2D.ViewModel
 
         public AlgorithmsViewModel()
         {
-            history = new History<PathfindingHistoryVolume>();
             messenger = DI.Container.Resolve<IMessenger>();
             Algorithms = new ObservableCollection<AlgorithmViewModel>();
             VisualizeCommand = new RelayCommand(ExecuteVisualizeCommand, CanExecuteVisualizeCommand);
@@ -70,20 +70,38 @@ namespace Pathfinding.App.WPF._2D.ViewModel
 
         private void AddPathfindingRange(PathfindingRangeChosenMessage message)
         {
-            history.AddPathfindingRange(message.Id, message.PathfindingRange);
+            Dispatcher.Invoke(() =>
+            {
+                foreach (var vertex in message.PathfindingRange)
+                {
+                    history.Add(message.Id, vertex.Position, new SolidColorBrush(vertex.VertexColor.Color));
+                }
+            });
         }
 
         private void PathFound(PathFoundMessage message)
         {
-            history.AddPath(message.Id, message.Path);
+            Dispatcher.Invoke(() =>
+            {
+                foreach (var vertex in message.Path.Select(Graph.Get))
+                {
+                    history.Add(message.Id, vertex.Position, new SolidColorBrush(vertex.VertexColor.Color));
+                }
+            });            
         }
 
         private void OnAlgorithmStarted(AlgorithmStartedMessage message)
         {
             message.Algorithm.VertexVisited += OnVertexVisited;
             var viewModel = new AlgorithmViewModel(message);
-            Dispatcher.Invoke(() => Algorithms.Add(viewModel));
-            history.AddObstacles(message.Algorithm.Id, Graph.GetObstaclesCoordinates());
+            Dispatcher.Invoke(() =>
+            {
+                Algorithms.Add(viewModel);
+                foreach (var vertex in Graph)
+                {
+                    history.Add(message.Algorithm.Id, vertex.Position, new SolidColorBrush(vertex.VertexColor.Color));
+                }
+            });           
             messenger.Send(new IsAllAlgorithmsFinishedMessage(IsAllFinished));
         }
 
@@ -106,7 +124,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel
 
         private void NewGraphCreated(GraphCreatedMessage message)
         {
-            history.Clear();
+            history.RemoveAll();
             Algorithms.Clear();
             Graph = message.Graph;
         }
@@ -114,7 +132,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel
         private void OnClearStatistics(ClearStatisticsMessage message)
         {
             Algorithms.Clear();
-            history.Clear();
+            history.RemoveAll();
             messenger.Send(new IsAllAlgorithmsFinishedMessage(IsAllFinished));
         }
 
@@ -128,7 +146,15 @@ namespace Pathfinding.App.WPF._2D.ViewModel
         private void ExecuteVisualizeCommand(object param)
         {
             Graph.ForEach(vertex => vertex.VisualizeAsRegular());
-            history.VisualizeHistory(SelectedAlgorithm.Id, Graph);
+            var page = history.Get(SelectedAlgorithm.Id);
+            foreach (var (position, color) in page)
+            {
+                var vertex = Graph.Get(position);
+                Dispatcher.Invoke(() =>
+                {
+                    vertex.VertexColor = (SolidColorBrush)color;
+                });
+            }
         }
 
         private bool CanExecuteVisualizeCommand(object param)
@@ -149,7 +175,11 @@ namespace Pathfinding.App.WPF._2D.ViewModel
             {
                 if (sender is IHistoryPageKey key)
                 {
-                    history.AddVisited(key.Id, e.Current);
+                    var vertex = Graph.Get(e.Current);
+                    Dispatcher.Invoke(() =>
+                    {
+                        history.Add(key.Id, e.Current, new SolidColorBrush(vertex.VertexColor.Color));
+                    });
                 }
             });
         }
@@ -159,7 +189,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel
             messenger.Unregister(this);
             Algorithms.Clear();
             SelectedAlgorithm = null;
-            history.Clear();
+            history.RemoveAll();
         }
     }
 }

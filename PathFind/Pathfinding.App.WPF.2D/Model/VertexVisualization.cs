@@ -9,16 +9,16 @@ namespace Pathfinding.App.WPF._2D.Model
 {
     internal class VertexVisualization : IVisualization<Vertex>
     {
-        private static readonly Brush VisitedColor = new SolidColorBrush(Colors.CadetBlue);
-        private static readonly Brush PathVertexColor = new SolidColorBrush(Colors.Yellow);
-        private static readonly Brush SourceVertexColor = new SolidColorBrush(Colors.Green);
-        private static readonly Brush TargetVertexColor = new SolidColorBrush(Colors.Red);
-        private static readonly Brush EnqueuedVertexColor = new SolidColorBrush(Colors.Magenta);
-        private static readonly Brush ObstacleVertexColor = new SolidColorBrush(Colors.Black);
-        private static readonly Brush RegularVertexColor = new SolidColorBrush(Colors.White);
-        private static readonly Brush AlreadyPathVertexColor = new SolidColorBrush(Colors.Gold);
-        private static readonly Brush IntermediateVertexColor = new SolidColorBrush(Colors.DarkOrange);
-        private static readonly Brush ToReplaceMarkColor = new SolidColorBrush(Colors.DarkOrange.SetBrightness(72.5));
+        private static readonly SolidColorBrush VisitedColor = new SolidColorBrush(Colors.CadetBlue);
+        private static readonly SolidColorBrush PathVertexColor = new SolidColorBrush(Colors.Yellow);
+        private static readonly SolidColorBrush SourceVertexColor = new SolidColorBrush(Colors.Green);
+        private static readonly SolidColorBrush TargetVertexColor = new SolidColorBrush(Colors.Red);
+        private static readonly SolidColorBrush EnqueuedVertexColor = new SolidColorBrush(Colors.Magenta);
+        private static readonly SolidColorBrush ObstacleVertexColor = new SolidColorBrush(Colors.Black);
+        private static readonly SolidColorBrush RegularVertexColor = new SolidColorBrush(Colors.White);
+        private static readonly SolidColorBrush AlreadyPathVertexColor = new SolidColorBrush(Colors.Gold);
+        private static readonly SolidColorBrush IntermediateVertexColor = new SolidColorBrush(Colors.DarkOrange);
+        private static readonly SolidColorBrush ToReplaceMarkColor = new SolidColorBrush(Colors.DarkOrange.SetBrightness(72.5));
 
         private static Dispatcher Dispatcher => Application.Current.Dispatcher;
 

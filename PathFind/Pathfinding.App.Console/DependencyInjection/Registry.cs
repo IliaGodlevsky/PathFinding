@@ -7,6 +7,7 @@ using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.AlgorithmLib.Factory;
 using Pathfinding.AlgorithmLib.Factory.Interface;
+using Pathfinding.AlgorithmLib.History.Interface;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.MenuItems;
@@ -108,9 +109,9 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<RecieveGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
             builder.RegisterType<SendGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
 
-            builder.RegisterType<ApplyHistoryMenuItem>().Keyed<IMenuItem>(History).SingleInstance();
-            builder.RegisterType<ClearHistoryMenuItem>().Keyed<IConditionedMenuItem>(History).SingleInstance();
-            builder.RegisterType<ShowHistoryMenuItem>().Keyed<IConditionedMenuItem>(History).SingleInstance();
+            builder.RegisterType<ApplyHistoryMenuItem>().Keyed<IMenuItem>(PathfindingUnits.History).SingleInstance();
+            builder.RegisterType<ClearHistoryMenuItem>().Keyed<IConditionedMenuItem>(PathfindingUnits.History).SingleInstance();
+            builder.RegisterType<ShowHistoryMenuItem>().Keyed<IConditionedMenuItem>(PathfindingUnits.History).SingleInstance();
 
             builder.RegisterType<PathfindingAlgorithmMenuItem>().Keyed<IConditionedMenuItem>(Process).SingleInstance();
             builder.RegisterType<ClearColorsMenuItem>().Keyed<IConditionedMenuItem>(Process).SingleInstance();
@@ -148,6 +149,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
             builder.RegisterType<CryptoRandom>().As<IRandom>().SingleInstance();
             builder.RegisterType<RootMeanSquareCost>().As<IMeanCost>().SingleInstance();
+            builder.RegisterType<History>().As<IHistory<ConsoleColor>>().SingleInstance();
 
             builder.RegisterType<PathfindingRange<Vertex>>().As<IPathfindingRange<Vertex>>().SingleInstance();
             builder.RegisterDecorator<VisualPathfindingRange<Vertex>, IPathfindingRange<Vertex>>();
