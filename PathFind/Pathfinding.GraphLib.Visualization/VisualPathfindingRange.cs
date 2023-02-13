@@ -35,15 +35,14 @@ namespace Pathfinding.Visualization.Core.Abstractions
             }
         }
 
-        private ObservableCollection<TVertex> Transit { get; }
-
-        IList<TVertex> IPathfindingRange<TVertex>.Transit => Transit;
+        public IList<TVertex> Transit { get; }
 
         public VisualPathfindingRange(IPathfindingRange<TVertex> range)
         {
             this.range = range;
-            Transit = new ObservableCollection<TVertex>(range.Transit);
-            Transit.CollectionChanged += OnIntermediatesChanged;
+            var transit = new ObservableCollection<TVertex>(range.Transit);
+            transit.CollectionChanged += OnIntermediatesChanged;
+            Transit = transit;
         }
 
         private void OnIntermediatesChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -61,15 +60,6 @@ namespace Pathfinding.Visualization.Core.Abstractions
                 case NotifyCollectionChangedAction.Reset:
                     range.Transit.ForEach(v => v.VisualizeAsRegular());
                     range.Transit.Clear();
-                    break;
-                case NotifyCollectionChangedAction.Replace:
-                    var val = range.Transit[e.OldStartingIndex];
-                    range.Transit[e.NewStartingIndex] = val;
-                    break;
-                case NotifyCollectionChangedAction.Move:
-                    val = range.Transit[e.OldStartingIndex];
-                    range.Transit.RemoveAt(e.OldStartingIndex);
-                    range.Transit.Insert(e.NewStartingIndex, val);
                     break;
             }
         }
