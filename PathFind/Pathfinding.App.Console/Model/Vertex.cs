@@ -86,7 +86,5 @@ namespace Pathfinding.App.Console.Model
         public void VisualizeAsEnqueued() => visualization.VisualizeAsEnqueued(this);
 
         public void VisualizeAsTransit() => visualization.VisualizeAsTransit(this);
-
-        public void VisualizeAsMarkedToReplaceIntermediate() => visualization.VisualizeAsMarkedToReplaceIntermediate(this);
     }
 }

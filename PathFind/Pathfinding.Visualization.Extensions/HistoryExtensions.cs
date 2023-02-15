@@ -14,11 +14,10 @@ namespace Pathfinding.Visualization.Extensions
             where TVertex : IVertex, IVisualizable
             where TVolume : IHistoryVolume<ICoordinate>, new()
         {
-            history.GetRegulars(key).Select(graph.Get).ForEach(vertex => vertex.VisualizeAsRegular());
-            history.GetObstacles(key).Select(graph.Get).VisualizeAsObstacles();
-            history.GetVisitedVertices(key).Select(graph.Get).VisualizeAsVisited();
+            history.GetObstacles(key).Select(graph.Get).ForEach(v => v.VisualizeAsObstacle());
+            history.GetVisitedVertices(key).Select(graph.Get).ForEach(v => v.VisualizeAsVisited());
             history.GetPathfindingRange(key).Select(graph.Get).Reverse().VisualizeAsRange();
-            history.GetPath(key).Select(graph.Get).VisualizeAsPath();
+            history.GetPath(key).Select(graph.Get).ForEach(v => v.IsVisualizedAsPath());
         }
     }
 }

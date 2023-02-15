@@ -21,7 +21,5 @@
         void VisualizeAsEnqueued();
 
         void VisualizeAsTransit();
-
-        void VisualizeAsMarkedToReplaceIntermediate();
     }
 }

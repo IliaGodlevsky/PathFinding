@@ -22,7 +22,5 @@
         void VisualizeAsVisited(T visualizable);
 
         void VisualizeAsEnqueued(T visualizable);
-
-        void VisualizeAsMarkedToReplaceIntermediate(T visualizable);
     }
 }

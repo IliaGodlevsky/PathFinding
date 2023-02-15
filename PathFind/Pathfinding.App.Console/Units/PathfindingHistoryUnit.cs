@@ -71,7 +71,7 @@ namespace Pathfinding.App.Console.Units
 
         private void OnRangeChosen(PathfindingRangeChosenMessage msg)
         {
-            OnMessageRecieved(() => history.AddPathfindingRange(msg.Algorithm.Id, msg.Range));
+            OnMessageRecieved(() => history.AddPathfindingRange(msg.Key, msg.Range));
         }
 
         private void OnPathFound(PathFoundMessage msg)
@@ -83,7 +83,6 @@ namespace Pathfinding.App.Console.Units
         {
             OnMessageRecieved(() =>
             {
-                history.AddRegulars(msg.Algorithm.Id, graph.GetNotObstaclesCoordinates());
                 history.AddObstacles(msg.Algorithm.Id, graph.GetObstaclesCoordinates());
                 msg.Algorithm.VertexVisited += OnVertexVisited;
             });
