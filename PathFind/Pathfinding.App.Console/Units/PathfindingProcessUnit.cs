@@ -11,6 +11,7 @@ using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Extensions;
+using Shared.Extensions;
 using Shared.Primitives;
 using System;
 using System.Collections.Generic;
@@ -72,7 +73,8 @@ namespace Pathfinding.App.Console.Units
                 {
                     PrepareForPathfinding(algorithm);
                     path = algorithm.FindPath();
-                    graph.GetVertices(path).VisualizeAsPath();
+                    graph.GetVertices(path)
+                        .ForEach(v => v.VisualizeAsPath());
                 }
                 input.Input();
                 ClearColors();
@@ -97,7 +99,7 @@ namespace Pathfinding.App.Console.Units
         {
             messenger.Send(new SubscribeOnVisualizationMessage(algorithm));
             messenger.Send(new SubscribeOnHistoryMessage(algorithm));
-            messenger.Send(new PathfindingRangeChosenMessage(rangeBuilder.Range, algorithm));
+            messenger.Send(new PathfindingRangeChosenMessage(rangeBuilder.Range, algorithm.Id));
             messenger.Send(new SubscribeOnStatisticsMessage(algorithm));
         }
     }

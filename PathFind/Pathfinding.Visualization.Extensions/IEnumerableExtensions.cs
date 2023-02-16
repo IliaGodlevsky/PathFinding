@@ -14,12 +14,6 @@ namespace Pathfinding.Visualization.Extensions
             path.ForEach(vertex => vertex.VisualizeAsPath());
         }
 
-        public static void VisualizeAsObstacles<T>(this IEnumerable<T> path)
-            where T : IVisualizable
-        {
-            path.ForEach(vertex => vertex.VisualizeAsObstacle());
-        }
-
         public static void VisualizeAsRange<T>(this IEnumerable<T> range)
             where T : IVisualizable
         {
@@ -29,12 +23,6 @@ namespace Pathfinding.Visualization.Extensions
             source?.VisualizeAsSource();
             intermediates.ForEach(item => item.VisualizeAsTransit());
             target?.VisualizeAsTarget();
-        }
-
-        public static void VisualizeAsVisited<T>(this IEnumerable<T> visited)
-            where T : IVisualizable
-        {
-            visited.ForEach(item => item.VisualizeAsVisited());
         }
 
         public static async Task VisualizeAsPathAsync<T>(this IEnumerable<T> path)

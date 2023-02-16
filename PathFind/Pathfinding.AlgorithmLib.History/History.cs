@@ -73,11 +73,6 @@ namespace Pathfinding.AlgorithmLib.History
             obstacles.ForEach(item => ObstaclesHistory.Add(key, item));
         }
 
-        public void AddRegulars(Guid key, IEnumerable<ICoordinate> regulars)
-        {
-            regulars.ForEach(item => RegularHistory.Add(key, item));
-        }
-
         public void Remove(Guid key)
         {
             volumes.ForEach(volume => volume.Remove(key));

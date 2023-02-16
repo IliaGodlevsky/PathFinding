@@ -2,7 +2,7 @@
 
 namespace Pathfinding.App.Console.Messages
 {
-    internal sealed class SubscribeOnHistoryMessage : IHistoryMessage
+    internal sealed class SubscribeOnHistoryMessage
     {
         public PathfindingProcess Algorithm { get; }
 

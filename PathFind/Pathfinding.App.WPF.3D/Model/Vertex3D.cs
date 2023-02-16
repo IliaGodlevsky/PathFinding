@@ -122,11 +122,6 @@ namespace Pathfinding.App.WPF._3D.Model
             visualization.VisualizeAsTransit(this);
         }
 
-        public void VisualizeAsMarkedToReplaceIntermediate()
-        {
-            visualization.VisualizeAsMarkedToReplaceIntermediate(this);
-        }
-
         protected static void SizePropertyChanged(DependencyObject depObj, DependencyPropertyChangedEventArgs prop)
         {
             Vertex3D vert = (Vertex3D)depObj;

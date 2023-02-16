@@ -1,18 +1,18 @@
-﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.App.Console.Model;
+﻿using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
+using System;
 
 namespace Pathfinding.App.Console.Messages
 {
-    internal sealed class PathfindingRangeChosenMessage : IHistoryMessage
+    internal sealed class PathfindingRangeChosenMessage
     {
-        public PathfindingProcess Algorithm { get; }
+        public Guid Key { get; }
 
         public IPathfindingRange<Vertex> Range { get; }
 
-        public PathfindingRangeChosenMessage(IPathfindingRange<Vertex> range, PathfindingProcess algorithm)
+        public PathfindingRangeChosenMessage(IPathfindingRange<Vertex> range, Guid key)
         {
-            Algorithm = algorithm;
+            Key = key;
             Range = range;
         }
     }
