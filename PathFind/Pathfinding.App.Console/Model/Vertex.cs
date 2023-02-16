@@ -2,7 +2,6 @@
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.NullObjects;
-using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using System;
 using System.Collections.Generic;
@@ -17,6 +16,8 @@ namespace Pathfinding.App.Console.Model
         private readonly IVisualization<Vertex> visualization;
 
         private bool isObstacle;
+        private IVertexCost cost = NullCost.Instance;
+        private ConsoleColor color;
 
         public bool IsObstacle
         {
@@ -35,7 +36,25 @@ namespace Pathfinding.App.Console.Model
             }
         }
 
-        public IVertexCost Cost { get; set; } = NullCost.Interface;
+        public IVertexCost Cost 
+        {
+            get => cost;
+            set
+            {
+                cost = value;
+                Display();
+            }
+        }
+
+        public ConsoleColor Color 
+        {
+            get => color;
+            set
+            {
+                color = value;
+                Display();
+            }
+        }
 
         public IList<IVertex> Neighbours { get; set; } = new List<IVertex>();
 
@@ -43,13 +62,10 @@ namespace Pathfinding.App.Console.Model
 
         public Point ConsolePosition { get; set; } = Point.Empty;
 
-        public ConsoleColor Color { get; set; }
-
         public Vertex(ICoordinate coordinate, IVisualization<Vertex> visualization)
         {
             this.visualization = visualization;
             Position = coordinate;
-            this.Initialize();
         }
 
         public void Display()
@@ -86,7 +102,5 @@ namespace Pathfinding.App.Console.Model
         public void VisualizeAsEnqueued() => visualization.VisualizeAsEnqueued(this);
 
         public void VisualizeAsTransit() => visualization.VisualizeAsTransit(this);
-
-        public void VisualizeAsMarkedToReplaceIntermediate() => visualization.VisualizeAsMarkedToReplaceIntermediate(this);
     }
 }

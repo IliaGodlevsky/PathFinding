@@ -74,7 +74,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<ConsoleUserTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
 
             builder.RegisterTypes(AllUnits).SingleInstance().WithMetadata(UnitTypeKey, type => type)
-                .AsSelf().AutoActivate().ConfigurePipeline(p => p.Use(new UnitResolveMiddleware()));
+                .AsSelf().AutoActivate().ConfigurePipeline(p => p.Use(new UnitResolveMiddleware(UnitTypeKey)));
 
             builder.RegisterType<ExitMenuItem>().Keyed(typeof(IMenuItem), AllUnits.Except(Main)).SingleInstance();
 

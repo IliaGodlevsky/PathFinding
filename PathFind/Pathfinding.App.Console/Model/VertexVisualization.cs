@@ -12,45 +12,29 @@ namespace Pathfinding.App.Console.Model
         private readonly ConsoleColor EnqueuedVertexColor = ConsoleColor.Blue;
         private readonly ConsoleColor SourceVertexColor = ConsoleColor.Magenta;
         private readonly ConsoleColor TargetVertexColor = ConsoleColor.Red;
-        private readonly ConsoleColor AlreadyPathVertexColor = ConsoleColor.DarkRed;
+        private readonly ConsoleColor CrossPathVertexColor = ConsoleColor.DarkRed;
         private readonly ConsoleColor VisitedVertexColor = ConsoleColor.White;
         private readonly ConsoleColor TransitVertexColor = ConsoleColor.Green;
-        private readonly ConsoleColor ToReplaceMarkColor = ConsoleColor.DarkMagenta;
 
         public bool IsVisualizedAsPath(Vertex vertex)
         {
-            return vertex.Color.IsOneOf(PathVertexColor, AlreadyPathVertexColor, TransitVertexColor);
+            return vertex.Color.IsOneOf(PathVertexColor, CrossPathVertexColor);
         }
 
         public bool IsVisualizedAsPathfindingRange(Vertex vertex)
         {
-            return vertex.Color.IsOneOf(SourceVertexColor, TargetVertexColor, TransitVertexColor, ToReplaceMarkColor);
+            return vertex.Color.IsOneOf(SourceVertexColor, TargetVertexColor, TransitVertexColor);
         }
 
-        public void VisualizeAsTarget(Vertex vertex)
-        {
-            Mark(vertex, TargetVertexColor);
-        }
+        public void VisualizeAsTarget(Vertex vertex) => vertex.Color = TargetVertexColor;
 
-        public void VisualizeAsObstacle(Vertex vertex)
-        {
-            Mark(vertex, ObstacleVertexColor);
-        }
+        public void VisualizeAsObstacle(Vertex vertex) => vertex.Color = ObstacleVertexColor;
 
-        public void VisualizeAsSource(Vertex vertex)
-        {
-            Mark(vertex, SourceVertexColor);
-        }
+        public void VisualizeAsSource(Vertex vertex) => vertex.Color = SourceVertexColor;
 
-        public void VisualizeAsTransit(Vertex vertex)
-        {
-            Mark(vertex, TransitVertexColor);
-        }
+        public void VisualizeAsTransit(Vertex vertex) => vertex.Color = TransitVertexColor;
 
-        public void VisualizeAsRegular(Vertex vertex)
-        {
-            Mark(vertex, RegularVertexColor);
-        }
+        public void VisualizeAsRegular(Vertex vertex) => vertex.Color = RegularVertexColor;
 
         public void VisualizeAsPath(Vertex vertex)
         {
@@ -58,11 +42,11 @@ namespace Pathfinding.App.Console.Model
             {
                 if (vertex.IsVisualizedAsPath())
                 {
-                    Mark(vertex, AlreadyPathVertexColor);
+                    vertex.Color = CrossPathVertexColor;
                 }
                 else
                 {
-                    Mark(vertex, PathVertexColor);
+                    vertex.Color = PathVertexColor;
                 }
             }
         }
@@ -71,7 +55,7 @@ namespace Pathfinding.App.Console.Model
         {
             if (!vertex.IsVisualizedAsPath() && !vertex.IsVisualizedAsPathfindingRange())
             {
-                Mark(vertex, VisitedVertexColor);
+                vertex.Color = VisitedVertexColor;
             }
         }
 
@@ -79,22 +63,8 @@ namespace Pathfinding.App.Console.Model
         {
             if (!vertex.IsVisualizedAsPath() && !vertex.IsVisualizedAsPathfindingRange())
             {
-                Mark(vertex, EnqueuedVertexColor);
+                vertex.Color = EnqueuedVertexColor;
             }
-        }
-
-        public void VisualizeAsMarkedToReplaceIntermediate(Vertex vertex)
-        {
-            if (vertex.Color == TransitVertexColor)
-            {
-                Mark(vertex, ToReplaceMarkColor);
-            }
-        }
-
-        private void Mark(Vertex vertex, ConsoleColor color)
-        {
-            vertex.Color = color;
-            vertex.Display();
         }
     }
 }

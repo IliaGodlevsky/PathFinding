@@ -43,7 +43,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 var level = SmoothLevels[index];
                 graph.Smooth(meanAlgorithm, level.Level);
             }
-            graph.Display();
         }
 
         private void OnGraphCreated(GraphCreatedMessage message)
