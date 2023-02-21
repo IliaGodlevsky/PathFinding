@@ -4,7 +4,7 @@ using Pathfinding.VisualizationLib.Core.Interface;
 namespace Pathfinding.GraphLib.Visualization.Commands.Realizations.PathfindingRangeCommands
 {
     internal sealed class RestoreSourceVisual<TVertex> : IVisualCommand<TVertex>
-        where TVertex : IVertex, IVisualizable
+        where TVertex : IVertex, ITotallyVisualizable
     {
         public void Execute(TVertex vertex)
         {

@@ -43,8 +43,16 @@
   <ItemGroup>
     <Compile Include="IGraphField.cs" />
     <Compile Include="IGraphFieldFactory.cs" />
-    <Compile Include="IVisualizable.cs" />
-    <Compile Include="IVisualization.cs" />
+    <Compile Include="IGraphVisualizable.cs" />
+    <Compile Include="IGraphVisualization.cs" />
+    <Compile Include="IPathfindingVisualizable.cs" />
+    <Compile Include="IPathfindingVisualization.cs" />
+    <Compile Include="IPathVisualizable.cs" />
+    <Compile Include="IPathVisualization.cs" />
+    <Compile Include="IRangeVisualizable.cs" />
+    <Compile Include="IRangeVisualization.cs" />
+    <Compile Include="ITotallyVisualizable.cs" />
+    <Compile Include="ITotalVisualization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

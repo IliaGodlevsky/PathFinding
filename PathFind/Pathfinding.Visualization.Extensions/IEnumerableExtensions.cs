@@ -9,13 +9,13 @@ namespace Pathfinding.Visualization.Extensions
     public static class IEnumerableExtensions
     {
         public static void VisualizeAsPath<T>(this IEnumerable<T> path)
-            where T : IVisualizable
+            where T : ITotallyVisualizable
         {
             path.ForEach(vertex => vertex.VisualizeAsPath());
         }
 
         public static void VisualizeAsRange<T>(this IEnumerable<T> range)
-            where T : IVisualizable
+            where T : ITotallyVisualizable
         {
             var source = range.FirstOrDefault();
             var target = range.LastOrDefault();
@@ -26,7 +26,7 @@ namespace Pathfinding.Visualization.Extensions
         }
 
         public static async Task VisualizeAsPathAsync<T>(this IEnumerable<T> path)
-            where T : IVisualizable
+            where T : ITotallyVisualizable
         {
             await Task.Run(() => path.VisualizeAsPath()).ConfigureAwait(false);
         }

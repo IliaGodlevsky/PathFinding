@@ -10,15 +10,15 @@ namespace Pathfinding.App.WPF._3D.Model
     {
         private static readonly Dispatcher Dispatcher = Application.Current.Dispatcher;
 
-        private readonly IVisualization<Vertex3D> visualization;
+        private readonly ITotalVisualization<Vertex3D> visualization;
         private readonly IModel3DFactory model3DFactory;
 
-        public Vertex3DFromInfoFactory(IVisualization<Vertex3D> visualization)
+        public Vertex3DFromInfoFactory(ITotalVisualization<Vertex3D> visualization)
         {
             this.visualization = visualization;
         }
 
-        public Vertex3DFromInfoFactory(IModel3DFactory model3DFactory, IVisualization<Vertex3D> visualization)
+        public Vertex3DFromInfoFactory(IModel3DFactory model3DFactory, ITotalVisualization<Vertex3D> visualization)
         {
             this.model3DFactory = model3DFactory;
             this.visualization = visualization;

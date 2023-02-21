@@ -21,6 +21,7 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.InProcessActions;
 using Pathfinding.App.Console.Model.PathfindingActions;
 using Pathfinding.App.Console.Model.VertexActions;
+using Pathfinding.App.Console.Model.Visualizations;
 using Pathfinding.App.Console.ValueInput.UserInput;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Modules;
@@ -76,7 +77,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterTypes(AllUnits).SingleInstance().WithMetadata(UnitTypeKey, type => type)
                 .AsSelf().AutoActivate().ConfigurePipeline(p => p.Use(new UnitResolveMiddleware(UnitTypeKey)));
 
-            builder.RegisterType<ExitMenuItem>().Keyed(typeof(IMenuItem), AllUnits.Except(Main)).SingleInstance();
+            builder.RegisterType<ExitMenuItem>().Keyed(typeof(IMenuItem), WithoutMain).SingleInstance();
 
             builder.RegisterType<MainUnitMenuItem>().AsSelf().InstancePerDependency();
 
@@ -152,7 +153,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<PathfindingRange<Vertex>>().As<IPathfindingRange<Vertex>>().SingleInstance();
             builder.RegisterDecorator<VisualPathfindingRange<Vertex>, IPathfindingRange<Vertex>>();
             builder.RegisterType<PathfindingRangeBuilder<Vertex>>().As<IPathfindingRangeBuilder<Vertex>>().As<IUndo>()
-                .SingleInstance().ConfigurePipeline(p => p.Use(new RangeBuilderResolveMiddlewear()));
+                .SingleInstance().ConfigurePipeline(p => p.Use(new RangeBuilderResolveMiddlewear(Order)));
             builder.RegisterType<IncludeSourceVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 2).SingleInstance();
             builder.RegisterType<IncludeTargetVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 4).SingleInstance();
             builder.RegisterType<IncludeTransitVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 6).SingleInstance();
@@ -172,7 +173,11 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<Graph2DFactory<Vertex>>().As<IGraphFactory<Graph2D<Vertex>, Vertex>>().SingleInstance();
             builder.RegisterDecorator<Graph2DWrapFactory, IGraphFactory<Graph2D<Vertex>, Vertex>>();
             builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
-            builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
+
+            builder.RegisterType<TotalVertexVisualization>().As<ITotalVisualization<Vertex>>().SingleInstance();
+            builder.RegisterType<PathVisualization>().As<IPathVisualization<Vertex>>().SingleInstance();
+            builder.RegisterType<RangeVisualization>().As<IRangeVisualization<Vertex>>().SingleInstance();
+            builder.RegisterType<PathfindingVisualization>().As<IPathfindingVisualization<Vertex>>().SingleInstance();
 
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>().As<GraphSerializer>().SingleInstance();

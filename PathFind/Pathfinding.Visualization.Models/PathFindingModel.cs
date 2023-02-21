@@ -22,7 +22,7 @@ using System.Linq;
 namespace Pathfinding.Visualization.Models
 {
     public abstract class PathFindingModel<TVertex>
-        where TVertex : IVertex, IVisualizable
+        where TVertex : IVertex, ITotallyVisualizable
     {
         protected readonly IPathfindingRange<TVertex> range;
         protected readonly Stopwatch timer;

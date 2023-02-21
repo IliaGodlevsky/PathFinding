@@ -45,9 +45,10 @@ namespace Pathfinding.GraphLib.Core.Modules
             UndoCommands.ForEach(command => command.Undo(Range));
         }
 
-        private void Execute(IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> commands, TVertex vertex)
+        private void Execute(IEnumerable<IPathfindingRangeCommand<TVertex>> commands, TVertex vertex)
         {
-            commands.FirstOrDefault(command => command.CanExecute(Range, vertex))
+            commands
+                .FirstOrDefault(command => command.CanExecute(Range, vertex))
                 ?.Execute(Range, vertex);
         }
     }

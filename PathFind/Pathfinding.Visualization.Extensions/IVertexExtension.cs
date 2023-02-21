@@ -7,7 +7,7 @@ namespace Pathfinding.Visualization.Extensions
     public static class IVertexExtension
     {
         public static void RestoreDefaultVisualState<TVertex>(this TVertex self)
-            where TVertex : IVertex, IVisualizable
+            where TVertex : IVertex, IGraphVisualizable
         {
             if (self.IsObstacle)
             {
@@ -20,7 +20,7 @@ namespace Pathfinding.Visualization.Extensions
         }
 
         public static void Initialize<TVertex>(this TVertex self)
-            where TVertex : IVertex, IVisualizable
+            where TVertex : IVertex, ITotallyVisualizable
         {
             self.InitializeComponents();
             self.RestoreDefaultVisualState();

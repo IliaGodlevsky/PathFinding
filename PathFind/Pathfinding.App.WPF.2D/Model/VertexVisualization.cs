@@ -7,7 +7,7 @@ using System.Windows.Threading;
 
 namespace Pathfinding.App.WPF._2D.Model
 {
-    internal class VertexVisualization : IVisualization<Vertex>
+    internal class VertexVisualization : ITotalVisualization<Vertex>
     {
         private static readonly Brush VisitedColor = new SolidColorBrush(Colors.CadetBlue);
         private static readonly Brush PathVertexColor = new SolidColorBrush(Colors.Yellow);
@@ -30,7 +30,7 @@ namespace Pathfinding.App.WPF._2D.Model
             });
         }
 
-        public bool IsVisualizedAsPathfindingRange(Vertex vertex)
+        public bool IsVisualizedAsRange(Vertex vertex)
         {
             return Dispatcher.Invoke(() =>
             {
@@ -80,7 +80,7 @@ namespace Pathfinding.App.WPF._2D.Model
             {
                 if (!vertex.IsVisualizedAsPathfindingRange())
                 {
-                    if (vertex.IsVisualizedAsPath())
+                    if (vertex.IsVisualizedAsRange())
                     {
                         vertex.VertexColor = AlreadyPathVertexColor;
                     }
@@ -96,7 +96,7 @@ namespace Pathfinding.App.WPF._2D.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (!vertex.IsVisualizedAsPath() && !vertex.IsVisualizedAsPathfindingRange())
+                if (!vertex.IsVisualizedAsRange() && !vertex.IsVisualizedAsPathfindingRange())
                 {
                     vertex.VertexColor = VisitedColor;
                 }
@@ -107,7 +107,7 @@ namespace Pathfinding.App.WPF._2D.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (!vertex.IsVisualizedAsPath() && !vertex.IsVisualizedAsPathfindingRange())
+                if (!vertex.IsVisualizedAsRange() && !vertex.IsVisualizedAsPathfindingRange())
                 {
                     vertex.VertexColor = EnqueuedVertexColor;
                 }

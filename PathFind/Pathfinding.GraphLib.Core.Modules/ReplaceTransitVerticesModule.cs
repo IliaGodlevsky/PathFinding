@@ -42,7 +42,9 @@ namespace Pathfinding.GraphLib.Core.Modules
 
         public void MarkTransitVertex(TVertex vertex)
         {
-            markCommands.FirstOrDefault(command => command.CanExecute(range, vertex))?.Execute(vertex);
+            markCommands
+                .FirstOrDefault(command => command.CanExecute(range, vertex))
+                ?.Execute(vertex);
         }
 
         private IEnumerable<IReplaceTransitCommand<TVertex>> GetMarkCommands()

@@ -7,7 +7,7 @@ using System.Windows.Threading;
 
 namespace Pathfinding.App.WPF._3D.Model
 {
-    internal sealed class VertexVisualization : IVisualization<Vertex3D>
+    internal sealed class VertexVisualization : ITotalVisualization<Vertex3D>
     {
         private static Dispatcher Dispatcher => Application.Current.Dispatcher;
 
@@ -27,7 +27,7 @@ namespace Pathfinding.App.WPF._3D.Model
             return Dispatcher.Invoke(() => vertex.Brush.IsOneOf(AlreadyPathVertexBrush, PathVertexBrush, IntermediateVertexBrush, ToReplaceMarkBrush));
         }
 
-        public bool IsVisualizedAsPathfindingRange(Vertex3D vertex)
+        public bool IsVisualizedAsRange(Vertex3D vertex)
         {
             return Dispatcher.Invoke(() => vertex.Brush.IsOneOf(SourceVertexBrush, TargetVertexBrush, IntermediateVertexBrush, ToReplaceMarkBrush));
         }
@@ -64,7 +64,7 @@ namespace Pathfinding.App.WPF._3D.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (!vertex.IsVisualizedAsPathfindingRange())
+                if (!vertex.IsVisualizedAsRange())
                 {
                     if (vertex.IsVisualizedAsPath())
                     {
@@ -82,7 +82,7 @@ namespace Pathfinding.App.WPF._3D.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (!vertex.IsVisualizedAsPath() && !vertex.IsVisualizedAsPathfindingRange())
+                if (!vertex.IsVisualizedAsRange() && !vertex.IsVisualizedAsPath())
                 {
                     vertex.Brush = VisitedVertexBrush;
                 }
@@ -93,19 +93,11 @@ namespace Pathfinding.App.WPF._3D.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (!vertex.IsVisualizedAsPath() && !vertex.IsVisualizedAsPathfindingRange())
+                if (!vertex.IsVisualizedAsRange() && !vertex.IsVisualizedAsPath())
                 {
                     vertex.Brush = EnqueuedVertexBrush;
                 }
             });
-        }
-
-        public void VisualizeAsMarkedToReplaceIntermediate(Vertex3D vertex)
-        {
-            if (vertex.Brush == IntermediateVertexBrush)
-            {
-                Dispatcher.Invoke(() => vertex.Brush = ToReplaceMarkBrush);
-            }
         }
     }
 }

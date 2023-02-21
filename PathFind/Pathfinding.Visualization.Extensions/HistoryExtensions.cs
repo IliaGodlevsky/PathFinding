@@ -11,13 +11,13 @@ namespace Pathfinding.Visualization.Extensions
     public static class HistoryExtensions
     {
         public static void VisualizeHistory<TVertex, TVolume>(this History<TVolume> history, Guid key, IGraph<TVertex> graph)
-            where TVertex : IVertex, IVisualizable
+            where TVertex : IVertex, ITotallyVisualizable
             where TVolume : IHistoryVolume<ICoordinate>, new()
         {
             history.GetObstacles(key).Select(graph.Get).ForEach(v => v.VisualizeAsObstacle());
             history.GetVisitedVertices(key).Select(graph.Get).ForEach(v => v.VisualizeAsVisited());
             history.GetPathfindingRange(key).Select(graph.Get).Reverse().VisualizeAsRange();
-            history.GetPath(key).Select(graph.Get).ForEach(v => v.IsVisualizedAsPath());
+            history.GetPath(key).Select(graph.Get).ForEach(v => v.VisualizeAsPath());
         }
     }
 }

@@ -16,7 +16,14 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 
     internal sealed class RangeBuilderResolveMiddlewear : IResolveMiddleware
     {
+        private readonly string metadataKey;
+
         public PipelinePhase Phase => PipelinePhase.ParameterSelection;
+
+        public RangeBuilderResolveMiddlewear(string metadataKey)
+        {
+            this.metadataKey = metadataKey;
+        }
 
         public void Execute(ResolveRequestContext context, Action<ResolveRequestContext> next)
         {
@@ -27,7 +34,7 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
         private IReadOnlyCollection<Command> ResolveKeyed(IComponentContext context, int key)
         {
             return context.ResolveKeyed<IEnumerable<Meta<Command>>>(key)
-                .OrderBy(x => x.Metadata[Order])
+                .OrderBy(x => x.Metadata[metadataKey])
                 .Select(x => x.Value)
                 .ToReadOnly();
         }

@@ -94,7 +94,7 @@ namespace Pathfinding.App.WPF._3D.DependencyInjection
             builder.RegisterType<VonNeumannNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<CubicModel3DFactory>().As<IModel3DFactory>().SingleInstance();
             builder.RegisterType<GraphAssemble<Graph3D<Vertex3D>, Vertex3D>>().As<IGraphAssemble<Graph3D<Vertex3D>, Vertex3D>>().SingleInstance();
-            builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex3D>>().SingleInstance();
+            builder.RegisterType<VertexVisualization>().As<ITotalVisualization<Vertex3D>>().SingleInstance();
 
             builder.RegisterType<InFileSerializationModule<Graph3D<Vertex3D>, Vertex3D>>().As<IGraphSerializationModule<Graph3D<Vertex3D>, Vertex3D>>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();

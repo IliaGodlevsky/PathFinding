@@ -12,13 +12,13 @@ using System.Windows.Media.Media3D;
 namespace Pathfinding.App.WPF._3D.Model
 {
     [DebuggerDisplay("{Position.ToString()}")]
-    public class Vertex3D : UIElement3D, IVertex, IVisualizable
+    public class Vertex3D : UIElement3D, IVertex, ITotallyVisualizable
     {
         public static readonly DependencyProperty SizeProperty;
         public static readonly DependencyProperty BrushProperty;
 
         private readonly IModel3DFactory modelFactory;
-        private readonly IVisualization<Vertex3D> visualization;
+        private readonly ITotalVisualization<Vertex3D> visualization;
         private bool isObstacle;
 
         public bool IsObstacle
@@ -44,7 +44,7 @@ namespace Pathfinding.App.WPF._3D.Model
 
         public bool IsVisualizedAsPath() => visualization.IsVisualizedAsPath(this);
 
-        public bool IsVisualizedAsPathfindingRange() => visualization.IsVisualizedAsPathfindingRange(this);
+        public bool IsVisualizedAsRange() => visualization.IsVisualizedAsRange(this);
 
         public DiffuseMaterial Material { get; } = new();
 
@@ -61,7 +61,7 @@ namespace Pathfinding.App.WPF._3D.Model
         }
 
         public Vertex3D(ICoordinate coordinate, IModel3DFactory modelFactory,
-            IVisualization<Vertex3D> visualization)
+            ITotalVisualization<Vertex3D> visualization)
         {
             this.visualization = visualization;
             this.modelFactory = modelFactory;

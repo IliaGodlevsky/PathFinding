@@ -7,7 +7,7 @@ namespace Pathfinding.Visualization.Extensions
     public static class PathfindingRangeExtensions
     {
         public static void RestoreVerticesVisualState<TVertex>(this IPathfindingRange<TVertex> range)
-            where TVertex : IVertex, IVisualizable
+            where TVertex : IVertex, IRangeVisualizable
         {
             range.Source.VisualizeAsSource();
             range.Target.VisualizeAsTarget();

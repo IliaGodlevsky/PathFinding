@@ -1,4 +1,5 @@
 ﻿using Pathfinding.App.Console.Units;
+using Shared.Extensions;
 using System;
 using System.Linq;
 
@@ -7,6 +8,8 @@ namespace Pathfinding.App.Console.DependencyInjection
     internal static class PathfindingUnits
     {
         public static readonly Type[] AllUnits;
+        public static readonly Type[] WithoutMain;
+        public static readonly Type[] WithoutVisual;
 
         public static readonly Type Main = typeof(MainUnit);
         public static readonly Type Graph = typeof(GraphUnit);
@@ -22,6 +25,8 @@ namespace Pathfinding.App.Console.DependencyInjection
                 .Where(field => field.FieldType == typeof(Type))
                 .Select(field => (Type)field.GetValue(null))
                 .ToArray();
+            WithoutMain = AllUnits.Except(Main).ToArray();
+            WithoutVisual = AllUnits.Except(Visual).ToArray();
         }
     }
 }

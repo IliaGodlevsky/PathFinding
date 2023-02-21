@@ -19,7 +19,7 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
         public UnitResolveMiddleware(string metadataKey)
         {
             this.metadataKey = metadataKey;
-            middlewares = AllUnits.Except(Visual)
+            middlewares = WithoutVisual
                 .ToDictionary(unit => unit, unit => (IUnitMiddleware)new UnitMiddleware())
                 .Append(new(Visual, new VisualizationUnitResolveMiddleware(new UnitMiddleware())))
                 .ToReadOnly();

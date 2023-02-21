@@ -9,7 +9,7 @@ using System.Collections.Specialized;
 namespace Pathfinding.Visualization.Core.Abstractions
 {
     public sealed class VisualPathfindingRange<TVertex> : IPathfindingRange<TVertex>
-        where TVertex : IVertex, IVisualizable
+        where TVertex : IVertex, IRangeVisualizable, IGraphVisualizable
     {
         private readonly IPathfindingRange<TVertex> range;
 

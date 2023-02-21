@@ -6,9 +6,9 @@ namespace Pathfinding.App.WPF._2D.Model
 {
     internal sealed class VertexFromInfoFactory : IVertexFromInfoFactory<Vertex>
     {
-        private readonly IVisualization<Vertex> visualization;
+        private readonly ITotalVisualization<Vertex> visualization;
 
-        public VertexFromInfoFactory(IVisualization<Vertex> visualization)
+        public VertexFromInfoFactory(ITotalVisualization<Vertex> visualization)
         {
             this.visualization = visualization;
         }

@@ -6,9 +6,9 @@ namespace Pathfinding.App.Console.Model
 {
     internal sealed class VertexFactory : IVertexFactory<Vertex>
     {
-        private readonly IVisualization<Vertex> visualization;
+        private readonly ITotalVisualization<Vertex> visualization;
 
-        public VertexFactory(IVisualization<Vertex> visualization)
+        public VertexFactory(ITotalVisualization<Vertex> visualization)
         {
             this.visualization = visualization;
         }

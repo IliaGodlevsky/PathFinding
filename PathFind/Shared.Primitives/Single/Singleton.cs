@@ -19,6 +19,8 @@ namespace Shared.Primitives.Single
     {
         private static readonly Lazy<TInstance> instance;
 
+        private Guid SingletonId { get; } = Guid.NewGuid();
+
         /// <summary>
         /// A property, that contains an instance of type, 
         /// but returns only a main interface of the type
@@ -37,6 +39,17 @@ namespace Shared.Primitives.Single
         static Singleton()
         {
             instance = new(CreateInstance, true);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is TInstance 
+                && obj.GetHashCode() == GetHashCode();
+        }
+
+        public override int GetHashCode()
+        {
+            return SingletonId.GetHashCode();
         }
 
         private static TInstance CreateInstance()

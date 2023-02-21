@@ -1,7 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Exceptions;
-using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Interface.Extensions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.App.Console.Interface;
@@ -15,7 +14,6 @@ using Shared.Extensions;
 using Shared.Primitives;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Pathfinding.App.Console.Units
 {
@@ -39,6 +37,7 @@ namespace Pathfinding.App.Console.Units
             this.input = input;
             messenger.Register<PathfindingAlgorithmChosenMessage>(this, FindPath);
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
+            messenger.Register<ClearColorsMessage>(this, _ => ClearColors());
         }
 
         private void FindPath(PathfindingAlgorithmChosenMessage message)
@@ -54,27 +53,26 @@ namespace Pathfinding.App.Console.Units
         }
 
         private void ClearColors()
-        {
-            messenger.Send(PathfindingStatisticsMessage.Empty);
-            graph.RestoreVerticesVisualState();
+        {           
+            graph.ForEach(v => v.RestoreDefaultVisualState());
             rangeBuilder.Range.RestoreVerticesVisualState();
+            messenger.Send(PathfindingStatisticsMessage.Empty);
         }
 
         private void FindPath(PathfindingProcess algorithm)
-        {
-            var path = NullGraphPath.Interface;
+        {           
             try
             {
+                var path = NullGraphPath.Interface;
                 void Summarize()
                 {
-                    SummarizeResults(algorithm, path);
+                    messenger.Send(new PathFoundMessage(path, algorithm));
                 }
                 using (Disposable.Use(Summarize))
                 {
                     PrepareForPathfinding(algorithm);
                     path = algorithm.FindPath();
-                    graph.GetVertices(path)
-                        .ForEach(v => v.VisualizeAsPath());
+                    graph.GetVertices(path).ForEach(v => v.VisualizeAsPath());
                 }
                 input.Input();
                 ClearColors();
@@ -88,11 +86,6 @@ namespace Pathfinding.App.Console.Units
         private void OnGraphCreated(GraphCreatedMessage message)
         {
             graph = message.Graph;
-        }
-
-        private void SummarizeResults(PathfindingProcess algorithm, IGraphPath path)
-        {
-            messenger.Send(new PathFoundMessage(path, algorithm));
         }
 
         private void PrepareForPathfinding(PathfindingProcess algorithm)

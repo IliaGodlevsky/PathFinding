@@ -7,7 +7,7 @@ namespace Pathfinding.App.WPF._2D.Model
 {
     internal sealed class VertexFactory : IVertexFactory<Vertex>
     {
-        public VertexFactory(IVisualization<Vertex> visualization)
+        public VertexFactory(ITotalVisualization<Vertex> visualization)
         {
             this.visualization = visualization;
         }
@@ -17,6 +17,6 @@ namespace Pathfinding.App.WPF._2D.Model
             return Application.Current.Dispatcher.Invoke(() => new Vertex(coordinate, visualization));
         }
 
-        private readonly IVisualization<Vertex> visualization;
+        private readonly ITotalVisualization<Vertex> visualization;
     }
 }

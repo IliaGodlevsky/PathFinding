@@ -7,7 +7,7 @@ namespace Pathfinding.Visualization.Extensions
     public static class IGraphExtensions
     {
         public static void RestoreVerticesVisualState<TVertex>(this IGraph<TVertex> graph)
-            where TVertex : IVertex, IVisualizable
+            where TVertex : IVertex, ITotallyVisualizable
         {
             graph.ForEach(vertex => vertex.RestoreDefaultVisualState());
         }

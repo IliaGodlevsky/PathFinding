@@ -127,6 +127,7 @@
     <Compile Include="Messages\ApplyStatisticsMessage.cs" />
     <Compile Include="Messages\ApplyVisualizationMessage.cs" />
     <Compile Include="Messages\ChooseGraphAssembleMessage.cs" />
+    <Compile Include="Messages\ClearColorsMessage.cs" />
     <Compile Include="Messages\ClearHistoryMessage.cs" />
     <Compile Include="Messages\CostRangeChangedMessage.cs" />
     <Compile Include="Messages\CostRangeMessage.cs" />
@@ -185,8 +186,11 @@
     <Compile Include="Model\VertexActions\ReverseVertexAction.cs" />
     <Compile Include="Model\VertexFactory.cs" />
     <Compile Include="Model\VertexFromInfoFactory.cs" />
-    <Compile Include="Model\VertexVisualization.cs" />
     <Compile Include="Model\ViewFactory.cs" />
+    <Compile Include="Model\Visualizations\PathfindingVisualization.cs" />
+    <Compile Include="Model\Visualizations\RangeVisualization.cs" />
+    <Compile Include="Model\Visualizations\PathVisualization.cs" />
+    <Compile Include="Model\Visualizations\TotalVertexVisualization.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screen.cs" />

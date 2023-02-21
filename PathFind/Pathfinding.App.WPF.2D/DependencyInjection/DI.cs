@@ -105,7 +105,7 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterDecorator<Graph2dWrapFactory, IGraphFactory<Graph, Vertex>>();
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory<Graph, Vertex, GraphField>>().SingleInstance();
             builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
-            builder.RegisterType<VertexVisualization>().As<IVisualization<Vertex>>().SingleInstance();
+            builder.RegisterType<VertexVisualization>().As<ITotalVisualization<Vertex>>().SingleInstance();
             // Serialization registrations
             builder.RegisterType<InFileSerializationModule<Graph, Vertex>>()
                 .As<IGraphSerializationModule<Graph, Vertex>>().SingleInstance();

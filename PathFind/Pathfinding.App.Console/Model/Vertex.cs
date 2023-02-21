@@ -11,9 +11,9 @@ using System.Drawing;
 namespace Pathfinding.App.Console.Model
 {
     [DebuggerDisplay("{Position.ToString()}")]
-    internal class Vertex : IVertex, IVisualizable, IDisplayable
+    internal class Vertex : IVertex, ITotallyVisualizable, IDisplayable
     {
-        private readonly IVisualization<Vertex> visualization;
+        private readonly ITotalVisualization<Vertex> visualization;
 
         private bool isObstacle;
         private IVertexCost cost = NullCost.Instance;
@@ -62,7 +62,7 @@ namespace Pathfinding.App.Console.Model
 
         public Point ConsolePosition { get; set; } = Point.Empty;
 
-        public Vertex(ICoordinate coordinate, IVisualization<Vertex> visualization)
+        public Vertex(ICoordinate coordinate, ITotalVisualization<Vertex> visualization)
         {
             this.visualization = visualization;
             Position = coordinate;
@@ -85,7 +85,7 @@ namespace Pathfinding.App.Console.Model
 
         public bool IsVisualizedAsPath() => visualization.IsVisualizedAsPath(this);
 
-        public bool IsVisualizedAsPathfindingRange() => visualization.IsVisualizedAsPathfindingRange(this);
+        public bool IsVisualizedAsRange() => visualization.IsVisualizedAsRange(this);
 
         public void VisualizeAsTarget() => visualization.VisualizeAsTarget(this);
 

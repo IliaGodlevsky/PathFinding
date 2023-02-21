@@ -12,7 +12,7 @@ using static Pathfinding.App.WPF._2D.Constants;
 namespace Pathfinding.App.WPF._2D.Model
 {
     [DebuggerDisplay("{Position.ToString()}")]
-    public class Vertex : ContentControl, IVertex, IVisualizable
+    public class Vertex : ContentControl, IVertex, ITotallyVisualizable
     {
         public static readonly RoutedEvent EnqueuedEvent;
         public static readonly RoutedEvent ColoredAsPathEvent;
@@ -35,7 +35,7 @@ namespace Pathfinding.App.WPF._2D.Model
         private bool isObstacle;
         private ICoordinate position;
 
-        public bool IsVisualizedAsPath() => visualization.IsVisualizedAsPath(this);
+        public bool IsVisualizedAsRange() => visualization.IsVisualizedAsPath(this);
 
         public bool IsVisualizedAsPathfindingRange() => visualization.IsVisualizedAsPathfindingRange(this);
 
@@ -91,7 +91,7 @@ namespace Pathfinding.App.WPF._2D.Model
 
         public IList<IVertex> Neighbours { get; set; }
 
-        public Vertex(ICoordinate coordinate, IVisualization<Vertex> visualization) : base()
+        public Vertex(ICoordinate coordinate, ITotalVisualization<Vertex> visualization) : base()
         {
             RenderTransformOrigin = new Point(0.5, 0.5);
             RenderTransform = new ScaleTransform();
