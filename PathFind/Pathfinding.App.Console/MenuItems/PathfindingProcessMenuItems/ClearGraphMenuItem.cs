@@ -11,7 +11,7 @@ using Shared.Executable;
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
     [MediumPriority]
-    internal sealed class ClearGraphMenuItem : IConditionedMenuItem
+    internal sealed class ClearGraphMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         private readonly IMessenger messenger;
         private readonly IUndo undo;
@@ -21,7 +21,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
         {
             this.messenger = messenger;
             this.undo = undo;
-            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
         public bool CanBeExecuted() => graph != Graph2D<Vertex>.Empty;
@@ -41,6 +40,11 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
         public override string ToString()
         {
             return Languages.ClearGraph;
+        }
+
+        public void RegisterHanlders(IMessenger messenger)
+        {
+            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
     }
 }

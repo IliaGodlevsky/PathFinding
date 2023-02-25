@@ -7,7 +7,7 @@ using Pathfinding.Logging.Interface;
 
 namespace Pathfinding.App.Console.MenuItems.MainMenuItems
 {
-    internal abstract class MainMenuItem<TUnit> : UnitDisplayMenuItem<TUnit>, IConditionedMenuItem
+    internal abstract class MainMenuItem<TUnit> : UnitDisplayMenuItem<TUnit>, IConditionedMenuItem, ICanRecieveMessage
         where TUnit : IUnit
     {
         private readonly IMessenger messenger;
@@ -18,12 +18,16 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
             : base(viewFactory, viewModel, log)
         {
             this.messenger = messenger;
-            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
         public bool CanBeExecuted()
         {
             return graph != Graph2D<Vertex>.Empty;
+        }
+
+        public void RegisterHanlders(IMessenger messenger)
+        {
+            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
         private void OnGraphCreated(GraphCreatedMessage msg)

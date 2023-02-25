@@ -15,7 +15,7 @@ namespace Pathfinding.App.Console.MenuItems
 {
     using VertexActions = IReadOnlyDictionary<ConsoleKey, IVertexAction>;
 
-    internal abstract class SwitchVerticesMenuItem : IConditionedMenuItem
+    internal abstract class SwitchVerticesMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         protected readonly IMessenger messenger;
         protected readonly IInput<ConsoleKey> keyInput;
@@ -30,7 +30,6 @@ namespace Pathfinding.App.Console.MenuItems
             this.messenger = messenger;
             this.keyInput = keyInput;
             this.actions = actions;
-            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
         public virtual bool CanBeExecuted()
@@ -69,6 +68,11 @@ namespace Pathfinding.App.Console.MenuItems
         private void OnGraphCreated(GraphCreatedMessage message)
         {
             graph = message.Graph;
+        }
+
+        public void RegisterHanlders(IMessenger messenger)
+        {
+            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
     }
 }

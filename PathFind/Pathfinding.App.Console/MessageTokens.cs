@@ -10,6 +10,11 @@ namespace Pathfinding.App.Console
     {
         public static readonly Guid MainUnit = Guid.NewGuid();
         public static readonly Guid Screen = Guid.NewGuid();
+        public static readonly Guid ColorsChangeItem = Guid.NewGuid();
+        public static readonly Guid PathfindingColors = Guid.NewGuid();
+        public static readonly Guid PathColors = Guid.NewGuid();
+        public static readonly Guid RangeColors = Guid.NewGuid();
+        public static readonly Guid GraphColors = Guid.NewGuid();
 
         public static readonly ReadOnlyList<Guid> All;
 

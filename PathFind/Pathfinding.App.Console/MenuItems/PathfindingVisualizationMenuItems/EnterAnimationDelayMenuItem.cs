@@ -10,7 +10,7 @@ using System;
 namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
 {
     [HighPriority]
-    internal sealed class EnterAnimationDelayMenuItem : IConditionedMenuItem
+    internal sealed class EnterAnimationDelayMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         private readonly IInput<TimeSpan> spanInput;
         private readonly IMessenger messenger;
@@ -24,7 +24,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
             DelayRange = Constants.AlgorithmDelayTimeValueRange;
             this.spanInput = spanInput;
             this.messenger = messenger;
-            this.messenger.Register<ApplyVisualizationMessage>(this, OnVisualizationApplied);
         }
 
         public void Execute()
@@ -46,6 +45,11 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
         public override string ToString()
         {
             return Languages.EnterAnimationDelay;
+        }
+
+        public void RegisterHanlders(IMessenger messenger)
+        {
+            messenger.Register<ApplyVisualizationMessage>(this, OnVisualizationApplied);
         }
     }
 }

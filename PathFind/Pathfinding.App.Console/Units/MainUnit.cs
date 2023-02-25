@@ -14,7 +14,7 @@ namespace Pathfinding.App.Console.Units
 {
     using FieldFactory = IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField>;
 
-    internal sealed class MainUnit : Unit
+    internal sealed class MainUnit : Unit, ICanRecieveMessage
     {
         private readonly IMessenger messenger;
         private readonly FieldFactory fieldFactory;
@@ -37,8 +37,6 @@ namespace Pathfinding.App.Console.Units
             this.log = log;
             this.messenger = messenger;
             this.fieldFactory = fieldFactory;
-            this.messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainUnit, SetGraph);
-            this.messenger.Register<GraphChangedMessage>(this, OnGraphChanged);
         }
 
         private void DisplayGraph()
@@ -82,6 +80,12 @@ namespace Pathfinding.App.Console.Units
                     System.Console.WriteLine(Graph);
                 }
             }
+        }
+
+        public void RegisterHanlders(IMessenger messenger)
+        {
+            messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainUnit, SetGraph);
+            messenger.Register<GraphChangedMessage>(this, OnGraphChanged);
         }
     }
 }

@@ -140,5 +140,14 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms.Localization {
                 return ResourceManager.GetString("LeeAlgorithm", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random algorithm.
+        /// </summary>
+        public static string RandomAlgorithm {
+            get {
+                return ResourceManager.GetString("RandomAlgorithm", resourceCulture);
+            }
+        }
     }
 }

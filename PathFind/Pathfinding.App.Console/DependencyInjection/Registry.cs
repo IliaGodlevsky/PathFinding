@@ -8,6 +8,7 @@ using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.AlgorithmLib.Factory;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.MenuItems;
 using Pathfinding.App.Console.MenuItems.GraphMenuItems;
@@ -45,10 +46,10 @@ using Pathfinding.Logging.Loggers;
 using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Executable;
-using Shared.Extensions;
 using Shared.Random;
 using Shared.Random.Realizations;
 using System;
+using System.Collections.Generic;
 using static Pathfinding.App.Console.DependencyInjection.PathfindingUnits;
 using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
 
@@ -74,8 +75,10 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
             builder.RegisterType<ConsoleUserTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
 
-            builder.RegisterTypes(AllUnits).SingleInstance().WithMetadata(UnitTypeKey, type => type)
-                .AsSelf().AutoActivate().ConfigurePipeline(p => p.Use(new UnitResolveMiddleware(UnitTypeKey)));
+            builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance().RegisterRecievers();
+
+            builder.RegisterTypes(AllUnits).SingleInstance().WithMetadata(UnitTypeKey, type => type).AsSelf()
+                .AsImplementedInterfaces().AutoActivate().ConfigurePipeline(p => p.Use(new UnitResolveMiddleware(UnitTypeKey)));
 
             builder.RegisterType<ExitMenuItem>().Keyed(typeof(IMenuItem), WithoutMain).SingleInstance();
 
@@ -83,7 +86,7 @@ namespace Pathfinding.App.Console.DependencyInjection
 
             builder.RegisterType<AnswerExitMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
             builder.RegisterType<GraphCreateMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
-            builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IConditionedMenuItem>(Main).SingleInstance();
+            builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IConditionedMenuItem>(Main).As<ICanRecieveMessage>().SingleInstance();
 
             builder.RegisterType<PathfindingRangeMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
             builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
@@ -91,33 +94,33 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<HistoryMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
 
             builder.RegisterType<ChangeCostMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance()
-                .ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(ChangeCost)));
+                .As<ICanRecieveMessage>().ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(ChangeCost)));
             builder.RegisterType<IncreaseCostAction>().Keyed<IVertexAction>(ChangeCost).WithMetadata(ChangeCost, ConsoleKey.UpArrow);
             builder.RegisterType<DecreaseCostAction>().Keyed<IVertexAction>(ChangeCost).WithMetadata(ChangeCost, ConsoleKey.DownArrow);
-            builder.RegisterType<AssembleGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
-            builder.RegisterType<ResizeGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
+            builder.RegisterType<AssembleGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
+            builder.RegisterType<ResizeGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
             builder.RegisterType<EnterCostRangeMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
             builder.RegisterType<EnterGraphAssembleMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
             builder.RegisterType<EnterGraphParametresMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
             builder.RegisterType<EnterObstaclePercentMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
             builder.RegisterType<LoadGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
-            builder.RegisterType<SaveGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
-            builder.RegisterType<ReverseVertexMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance()
+            builder.RegisterType<SaveGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
+            builder.RegisterType<ReverseVertexMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance()
                 .ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(Reverse)));
             builder.RegisterType<ReverseVertexAction>().Keyed<IVertexAction>(Reverse).WithMetadata(Reverse, ConsoleKey.Enter);
-            builder.RegisterType<SmoothGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
+            builder.RegisterType<SmoothGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
             builder.RegisterType<RecieveGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
-            builder.RegisterType<SendGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
+            builder.RegisterType<SendGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
 
             builder.RegisterType<ApplyHistoryMenuItem>().Keyed<IMenuItem>(History).SingleInstance();
-            builder.RegisterType<ClearHistoryMenuItem>().Keyed<IConditionedMenuItem>(History).SingleInstance();
-            builder.RegisterType<ShowHistoryMenuItem>().Keyed<IConditionedMenuItem>(History).SingleInstance();
+            builder.RegisterType<ClearHistoryMenuItem>().Keyed<IConditionedMenuItem>(History).As<ICanRecieveMessage>().SingleInstance();
+            builder.RegisterType<ShowHistoryMenuItem>().Keyed<IConditionedMenuItem>(History).As<ICanRecieveMessage>().SingleInstance();
 
             builder.RegisterType<PathfindingAlgorithmMenuItem>().Keyed<IConditionedMenuItem>(Process).SingleInstance();
-            builder.RegisterType<ClearColorsMenuItem>().Keyed<IConditionedMenuItem>(Process).SingleInstance();
-            builder.RegisterType<ClearGraphMenuItem>().Keyed<IConditionedMenuItem>(Process).SingleInstance();
+            builder.RegisterType<ClearColorsMenuItem>().Keyed<IConditionedMenuItem>(Process).As<ICanRecieveMessage>().SingleInstance();
+            builder.RegisterType<ClearGraphMenuItem>().Keyed<IConditionedMenuItem>(Process).As<ICanRecieveMessage>().SingleInstance();
             builder.RegisterType<ClearPathfindingRangeMenuItem>().Keyed<IConditionedMenuItem>(Range).SingleInstance();
-            builder.RegisterType<EnterPathfindingRangeMenuItem>().Keyed<IConditionedMenuItem>(Range).SingleInstance()
+            builder.RegisterType<EnterPathfindingRangeMenuItem>().Keyed<IConditionedMenuItem>(Range).As<ICanRecieveMessage>().SingleInstance()
                 .ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(PathfindingRange)));
             builder.RegisterType<MarkTransitToReplaceAction>().Keyed<IVertexAction>(PathfindingRange).WithMetadata(PathfindingRange, ConsoleKey.R);
             builder.RegisterType<ReplaceTransitVertexAction>().Keyed<IVertexAction>(PathfindingRange).WithMetadata(PathfindingRange, ConsoleKey.P);
@@ -127,7 +130,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<ApplyStatisticsMenuItem>().Keyed<IMenuItem>(Statistics).SingleInstance();
 
             builder.RegisterType<ApplyVisualizationMenuItem>().Keyed<IMenuItem>(Visual).SingleInstance();
-            builder.RegisterType<EnterAnimationDelayMenuItem>().Keyed<IConditionedMenuItem>(Visual).SingleInstance();
+            builder.RegisterType<EnterAnimationDelayMenuItem>().Keyed<IConditionedMenuItem>(Visual).As<ICanRecieveMessage>().SingleInstance();
 
             builder.RegisterType<ViewFactory>().As<IViewFactory>().SingleInstance();
 
@@ -146,7 +149,6 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
             builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance(); 
-            builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance();
             builder.RegisterType<CryptoRandom>().As<IRandom>().SingleInstance();
             builder.RegisterType<RootMeanSquareCost>().As<IMeanCost>().SingleInstance();
 
@@ -194,6 +196,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<DistanceFirstAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
             builder.RegisterType<DepthFirstAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
             builder.RegisterType<HeuristicCostGreedyAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
+            builder.RegisterType<RandomAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
 
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
             builder.RegisterType<EuclidianDistance>().As<IHeuristic>().SingleInstance();

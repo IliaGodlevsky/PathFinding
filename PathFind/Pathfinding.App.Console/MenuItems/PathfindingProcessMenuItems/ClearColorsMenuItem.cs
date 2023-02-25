@@ -11,7 +11,7 @@ using Pathfinding.Visualization.Extensions;
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
     [MediumPriority]
-    internal sealed class ClearColorsMenuItem : IConditionedMenuItem
+    internal sealed class ClearColorsMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         private readonly IMessenger messenger;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
@@ -21,7 +21,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
         {
             this.messenger = messenger;
             this.rangeBuilder = rangeBuilder;
-            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
         public bool CanBeExecuted() => graph != Graph2D<Vertex>.Empty;
@@ -41,6 +40,11 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
         public override string ToString()
         {
             return Languages.ClearColors;
+        }
+
+        public void RegisterHanlders(IMessenger messenger)
+        {
+            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
     }
 }

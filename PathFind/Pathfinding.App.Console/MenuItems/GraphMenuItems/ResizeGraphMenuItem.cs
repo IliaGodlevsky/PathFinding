@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
@@ -19,7 +20,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             IVertexCostFactory costFactory, INeighborhoodFactory neighborhoodFactory)
             : base(messenger, random, costFactory, neighborhoodFactory)
         {
-            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
+            
         }
 
         private void OnGraphCreated(GraphCreatedMessage msg)
@@ -39,6 +40,12 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             return base.GetLayers()
                 .Append(new GraphLayer(graph.Clone()))
                 .ToArray();
+        }
+
+        public override void RegisterHanlders(IMessenger messenger)
+        {
+            base.RegisterHanlders(messenger);
+            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
         public override string ToString()

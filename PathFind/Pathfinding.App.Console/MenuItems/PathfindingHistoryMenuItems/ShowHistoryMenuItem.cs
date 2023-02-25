@@ -14,7 +14,7 @@ using System.Linq;
 namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 {
     [HighPriority]
-    internal sealed class ShowHistoryMenuItem : IConditionedMenuItem
+    internal sealed class ShowHistoryMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         private readonly IMessenger messenger;
         private readonly IInput<int> input;
@@ -27,10 +27,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         {
             this.input = input;
             this.messenger = messenger;
-            this.messenger.Register<ApplyHistoryMessage>(this, OnHistoryApplied);
-            this.messenger.Register<AlgorithmFinishedMessage>(this, OnAlgorithmFinished);
-            this.messenger.Register<ClearHistoryMessage>(this, _ => pages.Clear());
-            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
         public bool CanBeExecuted()
@@ -96,6 +92,14 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         public override string ToString()
         {
             return Languages.ShowHistory;
+        }
+
+        public void RegisterHanlders(IMessenger messenger)
+        {
+            messenger.Register<ApplyHistoryMessage>(this, OnHistoryApplied);
+            messenger.Register<AlgorithmFinishedMessage>(this, OnAlgorithmFinished);
+            messenger.Register<ClearHistoryMessage>(this, _ => pages.Clear());
+            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
     }
 }

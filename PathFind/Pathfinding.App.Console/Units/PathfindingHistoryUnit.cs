@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.Units
 {
-    internal sealed class PathfindingHistoryUnit : Unit
+    internal sealed class PathfindingHistoryUnit : Unit, ICanRecieveMessage
     {
         private readonly IMessenger messenger;
         private readonly History<PathfindingHistoryVolume> history = new();
@@ -27,13 +27,6 @@ namespace Pathfinding.App.Console.Units
             : base(menuItems, conditioned)
         {
             this.messenger = messenger;
-            this.messenger.Register<PathfindingRangeChosenMessage>(this, OnRangeChosen);
-            this.messenger.Register<PathFoundMessage>(this, OnPathFound);
-            this.messenger.Register<SubscribeOnHistoryMessage>(this, OnSubscribeOnHistory);
-            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
-            this.messenger.Register<ApplyHistoryMessage>(this, OnHistoryApplied);
-            this.messenger.Register<HistoryPageMessage>(this, OnHistoryPage);
-            this.messenger.Register<ClearHistoryMessage>(this, _ => history.Clear());
         }
 
         private void OnHistoryPage(HistoryPageMessage message)
@@ -86,6 +79,17 @@ namespace Pathfinding.App.Console.Units
                 history.AddObstacles(msg.Algorithm.Id, graph.GetObstaclesCoordinates());
                 msg.Algorithm.VertexVisited += OnVertexVisited;
             });
+        }
+
+        public void RegisterHanlders(IMessenger messenger)
+        {
+            messenger.Register<PathfindingRangeChosenMessage>(this, OnRangeChosen);
+            messenger.Register<PathFoundMessage>(this, OnPathFound);
+            messenger.Register<SubscribeOnHistoryMessage>(this, OnSubscribeOnHistory);
+            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
+            messenger.Register<ApplyHistoryMessage>(this, OnHistoryApplied);
+            messenger.Register<HistoryPageMessage>(this, OnHistoryPage);
+            messenger.Register<ClearHistoryMessage>(this, _ => history.Clear());
         }
     }
 }

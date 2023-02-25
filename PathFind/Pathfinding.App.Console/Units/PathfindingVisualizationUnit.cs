@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.Units
 {
-    internal sealed class PathfindingVisualizationUnit : Unit
+    internal sealed class PathfindingVisualizationUnit : Unit, ICanRecieveMessage
     {
         private readonly IMessenger messenger;
         private readonly ConsoleKeystrokesHook keyStrokeHook = new();
@@ -37,10 +37,6 @@ namespace Pathfinding.App.Console.Units
             this.messenger = messenger;
             this.animationActions = animationActions;
             this.pathfindingActions = pathfindingActions;
-            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
-            this.messenger.Register<AnimationDelayMessage>(this, OnAnimationDelay);
-            this.messenger.Register<ApplyVisualizationMessage>(this, OnVisualizationApplied);
-            this.messenger.Register<SubscribeOnVisualizationMessage>(this, OnPathfindingPrepare);
         }
 
         private void OnAnimationDelay(AnimationDelayMessage message)
@@ -103,6 +99,14 @@ namespace Pathfinding.App.Console.Units
             animationDelay = animationActions
                 .GetOrDefault(e.PressedKey, NullAnimationAction.Instance)
                 .Do(animationDelay);
+        }
+
+        public void RegisterHanlders(IMessenger messenger)
+        {
+            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
+            messenger.Register<AnimationDelayMessage>(this, OnAnimationDelay);
+            messenger.Register<ApplyVisualizationMessage>(this, OnVisualizationApplied);
+            messenger.Register<SubscribeOnVisualizationMessage>(this, OnPathfindingPrepare);
         }
     }
 }

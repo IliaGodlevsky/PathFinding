@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Factory
 {
-    [Order(5)]
+    [Order(6)]
     [WaveGroup]
     public sealed class AStarLeeAlgorithmFactory : IAlgorithmFactory<PathfindingProcess>
     {

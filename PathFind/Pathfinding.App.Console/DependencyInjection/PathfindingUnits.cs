@@ -18,6 +18,7 @@ namespace Pathfinding.App.Console.DependencyInjection
         public static readonly Type Statistics = typeof(PathfindingStatisticsUnit);
         public static readonly Type Visual = typeof(PathfindingVisualizationUnit);
         public static readonly Type Range = typeof(PathfindingRangeUnit);
+        public static readonly Type Colors = typeof(ColorsUnit);
 
         static PathfindingUnits()
         {

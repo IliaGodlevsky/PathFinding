@@ -16,7 +16,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     using GraphAssemble = IGraphAssemble<Graph2D<Vertex>, Vertex>;
 
-    internal abstract class GraphCreatingMenuItem : IConditionedMenuItem
+    internal abstract class GraphCreatingMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         protected readonly IMessenger messenger;
         private readonly IRandom random;
@@ -36,10 +36,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             this.random = random;
             this.costFactory = costFactory;
             this.neighborhoodFactory = neighborhoodFactory;
-            this.messenger.Register<ObstaclePercentMessage>(this, OnObstaclePercent);
-            this.messenger.Register<GraphParametresMessage>(this, OnGraphParams);
-            this.messenger.Register<CostRangeMessage>(this, OnCostRange);
-            this.messenger.Register<ChooseGraphAssembleMessage>(this, OnAssembleChosen);
         }
 
         private void OnAssembleChosen(ChooseGraphAssembleMessage msg) => selected = msg.Assemble;
@@ -83,6 +79,14 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             return Constants.GraphWidthValueRange.Contains(width)
                 && Constants.GraphLengthValueRange.Contains(length);
+        }
+
+        public virtual void RegisterHanlders(IMessenger messenger)
+        {
+            messenger.Register<ObstaclePercentMessage>(this, OnObstaclePercent);
+            messenger.Register<GraphParametresMessage>(this, OnGraphParams);
+            messenger.Register<CostRangeMessage>(this, OnCostRange);
+            messenger.Register<ChooseGraphAssembleMessage>(this, OnAssembleChosen);
         }
     }
 }

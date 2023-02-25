@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 namespace Pathfinding.App.Console.Units
 {
-    internal sealed class PathfindingStatisticsUnit : Unit
+    internal sealed class PathfindingStatisticsUnit : Unit, ICanRecieveMessage
     {
         private readonly IMessenger messenger;
         private readonly Stopwatch timer = new();
@@ -24,9 +24,13 @@ namespace Pathfinding.App.Console.Units
             : base(menuItems, conditioned)
         {
             this.messenger = messenger;
-            this.messenger.Register<SubscribeOnStatisticsMessage>(this, OnSusbcribe);
-            this.messenger.Register<PathFoundMessage>(this, OnPathFound);
-            this.messenger.Register<ApplyStatisticsMessage>(this, ApplyStatistics);
+        }
+
+        public void RegisterHanlders(IMessenger messenger)
+        {
+            messenger.Register<SubscribeOnStatisticsMessage>(this, OnSusbcribe);
+            messenger.Register<PathFoundMessage>(this, OnPathFound);
+            messenger.Register<ApplyStatisticsMessage>(this, ApplyStatistics);
         }
 
         private void OnSusbcribe(SubscribeOnStatisticsMessage message)
@@ -86,8 +90,9 @@ namespace Pathfinding.App.Console.Units
         private string GetStatistics(string format, PathfindingProcess algorithm, params object[] values)
         {
             var time = timer.Elapsed.ToString(@"mm\:ss\.fff");
+            string algorithmName = algorithm.ToString().PadRight(totalWidth: 20);
             string pathfindingInfo = string.Format(format, values);
-            return string.Join("\t", algorithm, time, pathfindingInfo);
+            return string.Join("\t", algorithmName, time, pathfindingInfo);
         }
     }
 }

@@ -13,7 +13,7 @@ using System.Collections.Generic;
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     [LowPriority]
-    internal sealed class SmoothGraphMenuItem : IConditionedMenuItem
+    internal sealed class SmoothGraphMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         private readonly IMeanCost meanAlgorithm;
         private readonly IMessenger messenger;
@@ -27,7 +27,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             this.meanAlgorithm = meanAlgorithm;
             this.messenger = messenger;
-            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             this.input = input;
         }
 
@@ -53,6 +52,11 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         public override string ToString()
         {
             return Languages.SmoothGraph;
+        }
+
+        public void RegisterHanlders(IMessenger messenger)
+        {
+            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
     }
 }

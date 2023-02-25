@@ -54,6 +54,7 @@
     <Compile Include="Interface\IAlgorithmFactory.cs" />
     <Compile Include="LeeAlgorithmFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomAlgorithmFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Abstractions\Pathfinding.AlgorithmLib.Core.Abstractions.csproj">
@@ -91,6 +92,10 @@
     <ProjectReference Include="..\Shared.Process\Shared.Process.csproj">
       <Project>{78DDAA5D-8ABD-4695-A66B-1EAF2BDE77EB}</Project>
       <Name>Shared.Process</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Random\Shared.Random.csproj">
+      <Project>{8B3BA6E5-2FAD-492E-A51D-8B213A74C5B8}</Project>
+      <Name>Shared.Random</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

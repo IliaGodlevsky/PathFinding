@@ -55,6 +55,7 @@
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\IUnitMiddleware.cs" />
     <Compile Include="DependencyInjection\RegistrationConstants.cs" />
     <Compile Include="Exceptions\ExitRequiredException.cs" />
+    <Compile Include="Extensions\ConsoleColorExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Cursor.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Interface\IDisplayable.cs" />
     <Compile Include="Interface\IFramedAxis.cs" />
     <Compile Include="Interface\IInput.cs" />
+    <Compile Include="Interface\ISendRecieveMessage.cs" />
     <Compile Include="Interface\IVertexAction.cs" />
     <Compile Include="Interface\IViewFactory.cs" />
     <Compile Include="Interface\IUnit.cs" />
@@ -78,6 +80,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Languages.resx</DependentUpon>
     </Compile>
+    <Compile Include="MenuItems\ColorMenuItems\ColorsMenuItem.cs" />
     <Compile Include="MenuItems\ExitMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\SendGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\GraphCreatingMenuItem.cs" />
@@ -126,20 +129,28 @@
     <Compile Include="Messages\ApplyHistoryMessage.cs" />
     <Compile Include="Messages\ApplyStatisticsMessage.cs" />
     <Compile Include="Messages\ApplyVisualizationMessage.cs" />
+    <Compile Include="Messages\AskForGraphColorsMessage.cs" />
+    <Compile Include="Messages\AskForPathColorsMessage.cs" />
+    <Compile Include="Messages\AskForPathfindingColorsMessage.cs" />
+    <Compile Include="Messages\AskForRangeColorsMessage.cs" />
     <Compile Include="Messages\ChooseGraphAssembleMessage.cs" />
     <Compile Include="Messages\ClearColorsMessage.cs" />
     <Compile Include="Messages\ClearHistoryMessage.cs" />
     <Compile Include="Messages\CostRangeChangedMessage.cs" />
     <Compile Include="Messages\CostRangeMessage.cs" />
     <Compile Include="Messages\GraphChangedMessage.cs" />
+    <Compile Include="Messages\GraphColorsMessage.cs" />
     <Compile Include="Messages\GraphCreatedMessage.cs" />
     <Compile Include="Messages\GraphParametresMessage.cs" />
     <Compile Include="Messages\HistoryPageMessage.cs" />
     <Compile Include="Messages\IHistoryMessage.cs" />
     <Compile Include="Messages\ObstaclePercentMessage.cs" />
+    <Compile Include="Messages\PathColorMessage.cs" />
     <Compile Include="Messages\PathfindingAlgorithmChosenMessage.cs" />
+    <Compile Include="Messages\PathfindingColorsMessage.cs" />
     <Compile Include="Messages\PathfindingRangeChosenMessage.cs" />
     <Compile Include="Messages\PathFoundMessage.cs" />
+    <Compile Include="Messages\RangeColorsMessage.cs" />
     <Compile Include="Messages\SubscribeOnHistoryMessage.cs" />
     <Compile Include="Messages\SubscribeOnStatisticsMessage.cs" />
     <Compile Include="Messages\SubscribeOnVisualizationMessage.cs" />
@@ -195,6 +206,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screen.cs" />
     <Compile Include="DependencyInjection\PathfindingUnits.cs" />
+    <Compile Include="Units\ColorsUnit.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedAnswerInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedIntInput.cs" />

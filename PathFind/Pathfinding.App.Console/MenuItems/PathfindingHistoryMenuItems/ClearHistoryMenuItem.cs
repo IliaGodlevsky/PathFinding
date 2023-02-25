@@ -7,7 +7,7 @@ using Pathfinding.App.Console.Messages;
 namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 {
     [MediumPriority]
-    internal sealed class ClearHistoryMenuItem : IConditionedMenuItem
+    internal sealed class ClearHistoryMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         private readonly IMessenger messenger;
 
@@ -16,7 +16,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         public ClearHistoryMenuItem(IMessenger messenger)
         {
             this.messenger = messenger;
-            this.messenger.Register<ApplyHistoryMessage>(this, OnHistoryApplied);
         }
 
         public bool CanBeExecuted() => isHistoryApplied;
@@ -34,6 +33,11 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         public override string ToString()
         {
             return Languages.ClearHistory;
+        }
+
+        public void RegisterHanlders(IMessenger messenger)
+        {
+            messenger.Register<ApplyHistoryMessage>(this, OnHistoryApplied);
         }
     }
 }

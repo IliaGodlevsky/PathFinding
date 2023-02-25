@@ -14,7 +14,7 @@ using System;
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     [LowPriority]
-    internal sealed class SendGraphMenuItem : IConditionedMenuItem
+    internal sealed class SendGraphMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         private readonly IGraphSerializer<Graph2D<Vertex>, Vertex> serializer;
         private readonly IMessenger messenger;
@@ -30,7 +30,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             this.messenger = messenger;
             this.input = input;
             this.log = log;
-            this.messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
 
         public bool CanBeExecuted()
@@ -63,6 +62,11 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         public override string ToString()
         {
             return Languages.SendGraph;
+        }
+
+        public void RegisterHanlders(IMessenger messenger)
+        {
+            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
         }
     }
 }
