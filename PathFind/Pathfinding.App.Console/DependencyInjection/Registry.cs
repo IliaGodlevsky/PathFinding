@@ -8,7 +8,6 @@ using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.AlgorithmLib.Factory;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
-using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.MenuItems;
 using Pathfinding.App.Console.MenuItems.GraphMenuItems;
@@ -49,7 +48,6 @@ using Shared.Executable;
 using Shared.Random;
 using Shared.Random.Realizations;
 using System;
-using System.Collections.Generic;
 using static Pathfinding.App.Console.DependencyInjection.PathfindingUnits;
 using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
 
@@ -190,13 +188,13 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<DijkstraAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
             builder.RegisterType<AStarAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
             builder.RegisterType<IDAStarAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
+            builder.RegisterType<RandomAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
             builder.RegisterType<LeeAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
             builder.RegisterType<AStarLeeAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
             builder.RegisterType<CostGreedyAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
             builder.RegisterType<DistanceFirstAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
             builder.RegisterType<DepthFirstAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
-            builder.RegisterType<HeuristicCostGreedyAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
-            builder.RegisterType<RandomAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
+            builder.RegisterType<HeuristicCostGreedyAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();           
 
             builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
             builder.RegisterType<EuclidianDistance>().As<IHeuristic>().SingleInstance();

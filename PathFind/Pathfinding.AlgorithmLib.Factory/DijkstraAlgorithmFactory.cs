@@ -1,5 +1,4 @@
-﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.AlgorithmLib.Core.Interface;
+﻿using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms;
 using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms.Localization;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
@@ -13,7 +12,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 {
     [Order(1)]
     [WaveGroup]
-    public sealed class DijkstraAlgorithmFactory : IAlgorithmFactory<PathfindingProcess>
+    public sealed class DijkstraAlgorithmFactory : IAlgorithmFactory<DijkstraAlgorithm>
     {
         private readonly IStepRule stepRule;
 
@@ -28,7 +27,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 
         }
 
-        public PathfindingProcess Create(IEnumerable<IVertex> pathfindingRange)
+        public DijkstraAlgorithm Create(IEnumerable<IVertex> pathfindingRange)
         {
             return new DijkstraAlgorithm(pathfindingRange, stepRule);
         }

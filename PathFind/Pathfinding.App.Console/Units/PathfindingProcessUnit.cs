@@ -41,11 +41,19 @@ namespace Pathfinding.App.Console.Units
         {
             var factory = message.Algorithm;
             var range = rangeBuilder.Range;
-            using (var algorithm = factory.Create(range))
+            using var algorithm = factory.Create(range);
+            using (Disposable.Use(ClearColors))
             {
                 using (Cursor.HideCursor())
                 {
-                    FindPath(algorithm);
+                    try
+                    {
+                        FindPath(algorithm);
+                    }
+                    catch (PathfindingException ex)
+                    {
+                        log.Warn(ex.Message);
+                    }
                 }
             }
         }
@@ -58,31 +66,20 @@ namespace Pathfinding.App.Console.Units
         }
 
         private void FindPath(PathfindingProcess algorithm)
-        {           
-            try
+        {
+            var path = NullGraphPath.Interface;
+            void Summarize()
             {
-                var path = NullGraphPath.Interface;
-                void Summarize()
-                {
-                    messenger.Send(new PathFoundMessage(path, algorithm));
-                }
-                using (Disposable.Use(Summarize))
-                {
-                    PrepareForPathfinding(algorithm);
-                    path = algorithm.FindPath();
-                    var vertices = path.Select(graph.Get);
-                    vertices.ForEach(v => v.VisualizeAsPath());
-                }
-                input.Input();
+                messenger.Send(new PathFoundMessage(path, algorithm));
             }
-            catch (PathfindingException ex)
+            using (Disposable.Use(Summarize))
             {
-                log.Warn(ex.Message);
+                PrepareForPathfinding(algorithm);
+                path = algorithm.FindPath();
+                var vertices = path.Select(graph.Get);
+                vertices.ForEach(v => v.VisualizeAsPath());
             }
-            finally
-            {
-                ClearColors();
-            }
+            input.Input();
         }
 
         private void OnGraphCreated(GraphCreatedMessage message)

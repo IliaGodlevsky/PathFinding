@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Pathfinding.AlgorithmLib.Factory
 {
     [GreedyGroup]
-    public sealed class DepthFirstAlgorithmFactory : IAlgorithmFactory<PathfindingProcess>
+    public sealed class DepthFirstAlgorithmFactory : IAlgorithmFactory<DepthFirstAlgorithm>
     {
         private readonly IHeuristic heuristic;
 
@@ -26,7 +26,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 
         }
 
-        public PathfindingProcess Create(IEnumerable<IVertex> pathfindingRange)
+        public DepthFirstAlgorithm Create(IEnumerable<IVertex> pathfindingRange)
         {
             return new DepthFirstAlgorithm(pathfindingRange, heuristic);
         }

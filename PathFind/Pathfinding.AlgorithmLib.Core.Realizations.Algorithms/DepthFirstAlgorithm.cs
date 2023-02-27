@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
-    internal sealed class DepthFirstAlgorithm : GreedyAlgorithm
+    public sealed class DepthFirstAlgorithm : GreedyAlgorithm
     {
         private readonly IHeuristic heuristic;
 

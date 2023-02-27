@@ -1,5 +1,4 @@
-﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms;
+﻿using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms;
 using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms.Localization;
 using Pathfinding.AlgorithmLib.Factory.Attrbiutes;
 using Pathfinding.AlgorithmLib.Factory.Interface;
@@ -11,9 +10,9 @@ namespace Pathfinding.AlgorithmLib.Factory
 {
     [Order(5)]
     [WaveGroup]
-    public sealed class LeeAlgorithmFactory : IAlgorithmFactory<PathfindingProcess>
+    public sealed class LeeAlgorithmFactory : IAlgorithmFactory<LeeAlgorithm>
     {
-        public PathfindingProcess Create(IEnumerable<IVertex> pathfindingRange)
+        public LeeAlgorithm Create(IEnumerable<IVertex> pathfindingRange)
         {
             return new LeeAlgorithm(pathfindingRange);
         }

@@ -20,7 +20,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 {
     using Traces = Dictionary<ICoordinate, IVertex>;
 
-    internal abstract class PathfindingAlgorithm<TStorage> : PathfindingProcess
+    public abstract class PathfindingAlgorithm<TStorage> : PathfindingProcess
         where TStorage : new()
     {
         protected readonly record struct SubRange(IVertex Source, IVertex Target);

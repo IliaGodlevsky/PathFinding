@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
-    internal class DistanceFirstAlgorithm : GreedyAlgorithm
+    public class DistanceFirstAlgorithm : GreedyAlgorithm
     {
         private readonly IHeuristic heuristic;
 

@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Pathfinding.AlgorithmLib.Core.Abstractions
 {
-    internal abstract class GreedyAlgorithm : PathfindingAlgorithm<Stack<IVertex>>
+    public abstract class GreedyAlgorithm : PathfindingAlgorithm<Stack<IVertex>>
     {
         private IVertex PreviousVertex { get; set; } = NullVertex.Instance;
 

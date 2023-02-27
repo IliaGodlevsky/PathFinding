@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
-    internal sealed class RandomAlgorithm : BreadthFirstAlgorithm<List<IVertex>>
+    public sealed class RandomAlgorithm : BreadthFirstAlgorithm<List<IVertex>>
     {
         private readonly IRandom random;
 

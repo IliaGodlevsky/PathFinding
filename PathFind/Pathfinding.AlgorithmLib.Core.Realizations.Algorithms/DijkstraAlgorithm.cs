@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
-    internal class DijkstraAlgorithm : WaveAlgorithm<SimplePriorityQueue<IVertex, double>>
+    public class DijkstraAlgorithm : WaveAlgorithm<SimplePriorityQueue<IVertex, double>>
     {
         protected readonly IStepRule stepRule;
 

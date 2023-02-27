@@ -1,5 +1,4 @@
-﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.AlgorithmLib.Core.Interface;
+﻿using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms;
 using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms.Localization;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
@@ -11,7 +10,7 @@ using System.Collections.Generic;
 namespace Pathfinding.AlgorithmLib.Factory
 {
     [GreedyGroup]
-    public sealed class DistanceFirstAlgorithmFactory : IAlgorithmFactory<PathfindingProcess>
+    public sealed class DistanceFirstAlgorithmFactory : IAlgorithmFactory<DistanceFirstAlgorithm>
     {
         private readonly IHeuristic heuristic;
 
@@ -26,7 +25,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 
         }
 
-        public PathfindingProcess Create(IEnumerable<IVertex> pathfindingRange)
+        public DistanceFirstAlgorithm Create(IEnumerable<IVertex> pathfindingRange)
         {
             return new DistanceFirstAlgorithm(pathfindingRange, heuristic);
         }

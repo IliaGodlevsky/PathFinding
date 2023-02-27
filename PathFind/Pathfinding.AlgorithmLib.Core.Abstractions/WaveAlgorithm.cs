@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Core.Abstractions
 {
-    internal abstract class WaveAlgorithm<TStorage> : PathfindingAlgorithm<TStorage>
+    public abstract class WaveAlgorithm<TStorage> : PathfindingAlgorithm<TStorage>
         where TStorage : new()
     {
         protected WaveAlgorithm(IEnumerable<IVertex> pathfindingRange)

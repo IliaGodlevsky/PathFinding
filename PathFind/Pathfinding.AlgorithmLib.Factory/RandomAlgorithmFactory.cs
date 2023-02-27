@@ -1,5 +1,4 @@
-﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms;
+﻿using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms;
 using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms.Localization;
 using Pathfinding.AlgorithmLib.Factory.Attrbiutes;
 using Pathfinding.AlgorithmLib.Factory.Interface;
@@ -13,7 +12,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 {
     [Order(4)]
     [WaveGroup]
-    public sealed class RandomAlgorithmFactory : IAlgorithmFactory<PathfindingProcess>
+    public sealed class RandomAlgorithmFactory : IAlgorithmFactory<RandomAlgorithm>
     {
         private readonly IRandom random;
 
@@ -28,7 +27,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 
         }
 
-        public PathfindingProcess Create(IEnumerable<IVertex> pathfindingRange)
+        public RandomAlgorithm Create(IEnumerable<IVertex> pathfindingRange)
         {
             return new RandomAlgorithm(pathfindingRange, random);
         }

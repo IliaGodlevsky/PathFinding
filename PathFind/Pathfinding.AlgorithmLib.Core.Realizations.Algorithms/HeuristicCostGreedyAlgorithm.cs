@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
-    internal sealed class HeuristicCostGreedyAlgorithm : GreedyAlgorithm
+    public sealed class HeuristicCostGreedyAlgorithm : GreedyAlgorithm
     {
         private readonly IStepRule stepRule;
         private readonly IHeuristic heuristic;

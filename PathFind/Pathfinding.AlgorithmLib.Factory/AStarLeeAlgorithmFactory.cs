@@ -1,5 +1,4 @@
-﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.AlgorithmLib.Core.Interface;
+﻿using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms;
 using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms.Localization;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
@@ -13,7 +12,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 {
     [Order(6)]
     [WaveGroup]
-    public sealed class AStarLeeAlgorithmFactory : IAlgorithmFactory<PathfindingProcess>
+    public sealed class AStarLeeAlgorithmFactory : IAlgorithmFactory<AStarLeeAlgorithm>
     {
         private readonly IHeuristic heuristic;
 
@@ -28,7 +27,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 
         }
 
-        public PathfindingProcess Create(IEnumerable<IVertex> pathfindingRange)
+        public AStarLeeAlgorithm Create(IEnumerable<IVertex> pathfindingRange)
         {
             return new AStarLeeAlgorithm(pathfindingRange, heuristic);
         }

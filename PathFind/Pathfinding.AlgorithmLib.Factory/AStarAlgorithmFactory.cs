@@ -1,5 +1,4 @@
-﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.AlgorithmLib.Core.Interface;
+﻿using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms;
 using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms.Localization;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
@@ -14,7 +13,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 {
     [Order(2)]
     [WaveGroup]
-    public sealed class AStarAlgorithmFactory : IAlgorithmFactory<PathfindingProcess>
+    public sealed class AStarAlgorithmFactory : IAlgorithmFactory<AStarAlgorithm>
     {
         private readonly IStepRule stepRule;
         private readonly IHeuristic heuristic;
@@ -43,7 +42,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 
         }
 
-        public PathfindingProcess Create(IEnumerable<IVertex> pathfindingRange)
+        public AStarAlgorithm Create(IEnumerable<IVertex> pathfindingRange)
         {
             return new AStarAlgorithm(pathfindingRange, stepRule, heuristic);
         }

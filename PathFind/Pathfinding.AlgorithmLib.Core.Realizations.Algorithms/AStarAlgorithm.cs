@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
-    internal class AStarAlgorithm : DijkstraAlgorithm
+    public class AStarAlgorithm : DijkstraAlgorithm
     {
         private readonly Dictionary<ICoordinate, double> accumulatedCosts;
         protected readonly Dictionary<ICoordinate, double> heuristics;

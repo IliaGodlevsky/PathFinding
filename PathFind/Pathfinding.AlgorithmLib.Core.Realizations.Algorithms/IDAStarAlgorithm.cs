@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
-    internal class IDAStarAlgorithm : AStarAlgorithm
+    public class IDAStarAlgorithm : AStarAlgorithm
     {
         private const int PercentToDelete = 4;
 
