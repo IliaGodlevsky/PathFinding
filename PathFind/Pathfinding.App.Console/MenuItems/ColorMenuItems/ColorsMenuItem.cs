@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Model;
 using Shared.Extensions;
 using System;
@@ -13,7 +14,7 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
 {
     internal abstract class ColorsMenuItem : IMenuItem, ICanRecieveMessage
     {
-        private readonly IMessenger messenger;
+        protected readonly IMessenger messenger;
         private readonly IInput<int> intInput;
         
         private IReadOnlyList<ConsoleColor> AllColors { get; }
@@ -34,10 +35,33 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
         public virtual void Execute()
         {
             SendAskMessage();
-            var colorProps = GetPropertiesInfo<ConsoleColor>();
-            var menuList = colorProps.CreateMenuList(prop => prop.GetAttributeOrDefault<DescriptionAttribute>().Description);
+            var colorProps = GetPropertiesInfo<ConsoleColor>().ToArray();
+            var menuList = colorProps
+                .Select(prop => prop.GetAttributeOrDefault<DescriptionAttribute>().Description)
+                .Append(Languages.Quit)
+                .CreateMenuList(2);
             var colors = GetPropertiesValues<ConsoleColor>(colorProps);
-            menuList.Display();
+            int index;
+            using (Cursor.UseCurrentPositionWithClean())
+            {
+                menuList.Display();
+                index = intInput.Input("Choose color: ", colors.Count + 1, 1) - 1;
+                while (index != colors.Count)
+                {
+                    var color = colors[index];
+                    using (Cursor.UseCurrentPositionWithClean())
+                    {
+                        ColorsMenuList.Display();
+                        int toChangeIndex = intInput.Input("Choose color on what to change:  ", AllColors.Count, 1) - 1;
+                        var colorToChange = AllColors[toChangeIndex];
+                        colorProps[index].SetValue(this, colorToChange);
+                    }
+                    using (Cursor.UseCurrentPositionWithClean())
+                    {
+                        index = intInput.Input("Choose color: ", colors.Count + 1, 1) - 1;
+                    }
+                }
+            }
             SendColorsMessage();
         }
 

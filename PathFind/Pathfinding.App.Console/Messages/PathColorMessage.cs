@@ -6,9 +6,12 @@ namespace Pathfinding.App.Console.Messages
     {
         public ConsoleColor PathColor { get; }
 
-        public PathColorMessage(ConsoleColor pathColor)
+        public ConsoleColor CrossedPathColor { get; }
+
+        public PathColorMessage(ConsoleColor pathColor, ConsoleColor crossedPathColor)
         {
             PathColor = pathColor;
+            CrossedPathColor = crossedPathColor;
         }
     }
 }
