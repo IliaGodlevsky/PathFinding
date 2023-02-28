@@ -10,6 +10,7 @@ using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.MenuItems;
+using Pathfinding.App.Console.MenuItems.ColorMenuItems;
 using Pathfinding.App.Console.MenuItems.GraphMenuItems;
 using Pathfinding.App.Console.MenuItems.MainMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems;
@@ -84,7 +85,12 @@ namespace Pathfinding.App.Console.DependencyInjection
 
             builder.RegisterType<AnswerExitMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
             builder.RegisterType<GraphCreateMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
+            builder.RegisterType<ColorsUnitMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
             builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IConditionedMenuItem>(Main).As<ICanRecieveMessage>().SingleInstance();
+
+            builder.RegisterType<GraphColorsMenuItem>().Keyed<IMenuItem>(Colors).As<ICanRecieveMessage>().SingleInstance();
+            builder.RegisterType<PathColorsMenuItem>().Keyed<IMenuItem>(Colors).As<ICanRecieveMessage>().SingleInstance();
+            //builder.RegisterType<GraphColorsMenuItem>().Keyed<IMenuItem>(Colors).As<ICanRecieveMessage>().SingleInstance();
 
             builder.RegisterType<PathfindingRangeMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
             builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
@@ -174,8 +180,8 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterDecorator<Graph2DWrapFactory, IGraphFactory<Graph2D<Vertex>, Vertex>>();
             builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
 
-            builder.RegisterType<TotalVertexVisualization>().As<ITotalVisualization<Vertex>>().SingleInstance();
-            builder.RegisterType<PathVisualization>().As<IPathVisualization<Vertex>>().SingleInstance();
+            builder.RegisterType<TotalVertexVisualization>().As<ITotalVisualization<Vertex>>().As<ICanRecieveMessage>().SingleInstance();
+            builder.RegisterType<PathVisualization>().As<IPathVisualization<Vertex>>().As<ICanRecieveMessage>().SingleInstance();
             builder.RegisterType<RangeVisualization>().As<IRangeVisualization<Vertex>>().SingleInstance();
             builder.RegisterType<PathfindingVisualization>().As<IPathfindingVisualization<Vertex>>().SingleInstance();
 

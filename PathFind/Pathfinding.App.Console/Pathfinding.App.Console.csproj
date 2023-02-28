@@ -81,6 +81,8 @@
       <DependentUpon>Languages.resx</DependentUpon>
     </Compile>
     <Compile Include="MenuItems\ColorMenuItems\ColorsMenuItem.cs" />
+    <Compile Include="MenuItems\ColorMenuItems\GraphColorsMenuItem.cs" />
+    <Compile Include="MenuItems\ColorMenuItems\PathColorsMenuItem.cs" />
     <Compile Include="MenuItems\ExitMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\SendGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\GraphCreatingMenuItem.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="MenuItems\GraphMenuItems\SaveGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\RecieveGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\SmoothGraphMenuItem.cs" />
+    <Compile Include="MenuItems\MainMenuItems\ColorsUnitMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\GraphCreateMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\MainMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\PathfindingProcessMenuItem.cs" />

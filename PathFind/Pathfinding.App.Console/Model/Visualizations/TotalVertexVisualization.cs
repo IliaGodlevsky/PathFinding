@@ -1,10 +1,14 @@
-﻿using Pathfinding.VisualizationLib.Core.Interface;
+﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Messages;
+using Pathfinding.VisualizationLib.Core.Interface;
 using System;
 
 namespace Pathfinding.App.Console.Model.Visualizations
 {
-    internal sealed class TotalVertexVisualization : ITotalVisualization<Vertex>
+    internal sealed class TotalVertexVisualization : ITotalVisualization<Vertex>, ICanRecieveMessage
     {
+        private readonly IMessenger messenger;
         private readonly IPathfindingVisualization<Vertex> pathfindingVisualization;
         private readonly IRangeVisualization<Vertex> rangeVisualization;
         private readonly IPathVisualization<Vertex> pathVisualization;
@@ -13,10 +17,12 @@ namespace Pathfinding.App.Console.Model.Visualizations
 
         public ConsoleColor ObstacleVertexColor { get; set; } = ConsoleColor.Black;
 
-        public TotalVertexVisualization(IPathfindingVisualization<Vertex> pathfindingVisualization = null, 
+        public TotalVertexVisualization(IMessenger messenger,
+            IPathfindingVisualization<Vertex> pathfindingVisualization = null, 
             IRangeVisualization<Vertex> rangeVisualization = null, 
             IPathVisualization<Vertex> pathVisualization = null)
         {
+            this.messenger = messenger;
             this.pathfindingVisualization = pathfindingVisualization;
             this.rangeVisualization = rangeVisualization;
             this.pathVisualization = pathVisualization;
@@ -41,5 +47,23 @@ namespace Pathfinding.App.Console.Model.Visualizations
         public void VisualizeAsVisited(Vertex vertex) => pathfindingVisualization?.VisualizeAsVisited(vertex);
 
         public void VisualizeAsEnqueued(Vertex vertex) => pathfindingVisualization?.VisualizeAsEnqueued(vertex);
+
+        public void RegisterHanlders(IMessenger messenger)
+        {
+            messenger.Register<AskForGraphColorsMessage>(this, AskForColors);
+            messenger.Register<GraphColorsMessage>(this, MessageTokens.GraphColors, ColorsRecieved);
+        }
+
+        private void AskForColors(AskForGraphColorsMessage msg)
+        {
+            var message = new GraphColorsMessage(RegularVertexColor, ObstacleVertexColor);
+            messenger.Send(message, MessageTokens.GraphColorsChangeItem);
+        }
+
+        private void ColorsRecieved(GraphColorsMessage msg)
+        {
+            RegularVertexColor = msg.RegularColor;
+            ObstacleVertexColor = msg.ObstacleColor;
+        }
     }
 }
