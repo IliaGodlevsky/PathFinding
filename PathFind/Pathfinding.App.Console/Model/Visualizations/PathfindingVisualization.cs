@@ -3,11 +3,13 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.VisualizationLib.Core.Interface;
 using System;
+using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.Model.Visualizations
 {
     internal sealed class PathfindingVisualization : IPathfindingVisualization<Vertex>, ICanRecieveMessage
     {
+        private readonly HashSet<Vertex> vertices = new();
         private readonly IMessenger messenger;
 
         public ConsoleColor EnqueuedVertexColor { get; set; } = ConsoleColor.Blue;

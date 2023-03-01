@@ -90,7 +90,8 @@ namespace Pathfinding.App.Console.DependencyInjection
 
             builder.RegisterType<GraphColorsMenuItem>().Keyed<IMenuItem>(Colors).As<ICanRecieveMessage>().SingleInstance();
             builder.RegisterType<PathColorsMenuItem>().Keyed<IMenuItem>(Colors).As<ICanRecieveMessage>().SingleInstance();
-            //builder.RegisterType<GraphColorsMenuItem>().Keyed<IMenuItem>(Colors).As<ICanRecieveMessage>().SingleInstance();
+            builder.RegisterType<RangeColorsMenuItem>().Keyed<IMenuItem>(Colors).As<ICanRecieveMessage>().SingleInstance();
+            builder.RegisterType<PathfindingColorsMenuItem>().Keyed<IMenuItem>(Colors).As<ICanRecieveMessage>().SingleInstance();
 
             builder.RegisterType<PathfindingRangeMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
             builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();

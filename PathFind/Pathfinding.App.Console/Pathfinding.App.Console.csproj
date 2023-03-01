@@ -55,7 +55,6 @@
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\IUnitMiddleware.cs" />
     <Compile Include="DependencyInjection\RegistrationConstants.cs" />
     <Compile Include="Exceptions\ExitRequiredException.cs" />
-    <Compile Include="Extensions\ConsoleColorExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Cursor.cs" />
@@ -65,6 +64,7 @@
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IInputExtensions.cs" />
     <Compile Include="Interface\IAnimationSpeedAction.cs" />
+    <Compile Include="Interface\IClearable.cs" />
     <Compile Include="Interface\IConditionedMenuItem.cs" />
     <Compile Include="Interface\IMenuItem.cs" />
     <Compile Include="Interface\IPathfindingAction.cs" />
@@ -83,6 +83,8 @@
     <Compile Include="MenuItems\ColorMenuItems\ColorsMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\GraphColorsMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\PathColorsMenuItem.cs" />
+    <Compile Include="MenuItems\ColorMenuItems\PathfindingColorsMenuItem.cs" />
+    <Compile Include="MenuItems\ColorMenuItems\RangeColorsMenuItem.cs" />
     <Compile Include="MenuItems\ExitMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\SendGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\GraphCreatingMenuItem.cs" />
@@ -154,6 +156,7 @@
     <Compile Include="Messages\PathfindingRangeChosenMessage.cs" />
     <Compile Include="Messages\PathFoundMessage.cs" />
     <Compile Include="Messages\RangeColorsMessage.cs" />
+    <Compile Include="Messages\RemoveFromVisualizedMessage.cs" />
     <Compile Include="Messages\SubscribeOnHistoryMessage.cs" />
     <Compile Include="Messages\SubscribeOnStatisticsMessage.cs" />
     <Compile Include="Messages\SubscribeOnVisualizationMessage.cs" />

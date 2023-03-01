@@ -4,6 +4,7 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Model;
 using Shared.Extensions;
+using Shared.Primitives;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,69 +16,52 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
     internal abstract class ColorsMenuItem : IMenuItem, ICanRecieveMessage
     {
         protected readonly IMessenger messenger;
+
         private readonly IInput<int> intInput;
-        
-        private IReadOnlyList<ConsoleColor> AllColors { get; }
+        private readonly IReadOnlyList<ConsoleColor> allColors;
+        private readonly IReadOnlyList<PropertyInfo> properties;
+        private readonly MenuList allColorsMenuList;
+        private readonly MenuList menuItemsColorsMenuList;
 
-        private MenuList ColorsMenuList { get; }
-
-        protected ColorsMenuItem(IMessenger messenger,
-            IInput<int> intInput)
+        protected ColorsMenuItem(IMessenger messenger, IInput<int> intInput)
         {
             this.messenger = messenger;
             this.intInput = intInput;
-            AllColors = Enum.GetValues(typeof(ConsoleColor))
-                .Cast<ConsoleColor>()
-                .ToReadOnly();
-            ColorsMenuList = AllColors.CreateMenuList(color => color.GetName());
+            allColors = Enum.GetValues(typeof(ConsoleColor)).Cast<ConsoleColor>().ToReadOnly();
+            allColorsMenuList = allColors.CreateMenuList(GetName);
+            properties = GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance)
+                .Where(prop => prop.PropertyType == typeof(ConsoleColor)).ToReadOnly();
+            menuItemsColorsMenuList = properties
+                .Select(prop => prop.GetAttributeOrDefault<DescriptionAttribute>().Description)
+                .Append(Languages.Quit).CreateMenuList();
         }
 
-        public virtual void Execute()
+        public void Execute()
         {
-            SendAskMessage();
-            var colorProps = GetPropertiesInfo<ConsoleColor>().ToArray();
-            var menuList = colorProps
-                .Select(prop => prop.GetAttributeOrDefault<DescriptionAttribute>().Description)
-                .Append(Languages.Quit)
-                .CreateMenuList(2);
-            var colors = GetPropertiesValues<ConsoleColor>(colorProps);
-            int index;
+            using var _ = StartColorChanging();
+            int index = GetIndex(menuItemsColorsMenuList, properties.Count + 1, 1);
+            while (index != properties.Count)
+            {
+                int toChangeIndex = GetIndex(allColorsMenuList, allColors.Count, 1);
+                var colorToChange = allColors[toChangeIndex];
+                properties[index].SetValue(this, colorToChange);
+                index = GetIndex(menuItemsColorsMenuList, properties.Count + 1, 1);
+            }
+        }
+
+        private int GetIndex(MenuList menuList, int limit, int bottom)
+        {
             using (Cursor.UseCurrentPositionWithClean())
             {
                 menuList.Display();
-                index = intInput.Input("Choose color: ", colors.Count + 1, 1) - 1;
-                while (index != colors.Count)
-                {
-                    var color = colors[index];
-                    using (Cursor.UseCurrentPositionWithClean())
-                    {
-                        ColorsMenuList.Display();
-                        int toChangeIndex = intInput.Input("Choose color on what to change:  ", AllColors.Count, 1) - 1;
-                        var colorToChange = AllColors[toChangeIndex];
-                        colorProps[index].SetValue(this, colorToChange);
-                    }
-                    using (Cursor.UseCurrentPositionWithClean())
-                    {
-                        index = intInput.Input("Choose color: ", colors.Count + 1, 1) - 1;
-                    }
-                }
+                return intInput.Input(Languages.ChooseColor, limit, bottom) - 1;
             }
-            SendColorsMessage();
         }
 
-        private IEnumerable<PropertyInfo> GetPropertiesInfo<TPropType>()
+        private IDisposable StartColorChanging()
         {
-            return GetType()
-                .GetProperties(BindingFlags.NonPublic | BindingFlags.Instance)
-                .Where(prop => prop.PropertyType == typeof(TPropType));
-        }
-
-        private IReadOnlyList<TPropType> GetPropertiesValues<TPropType>(IEnumerable<PropertyInfo> infos)
-        {
-            return infos
-                .Select(prop => prop.GetValue(this))
-                .OfType<TPropType>()
-                .ToReadOnly();
+            SendAskMessage();
+            return Disposable.Use(SendColorsMessage);
         }
 
         protected abstract void SendAskMessage();
@@ -85,5 +69,29 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
         protected abstract void SendColorsMessage();
 
         public abstract void RegisterHanlders(IMessenger messenger);
+
+        private static string GetName(ConsoleColor color)
+        {
+            return color switch
+            {
+                ConsoleColor.Black => Languages.Black,
+                ConsoleColor.White => Languages.White,
+                ConsoleColor.Red => Languages.Red,
+                ConsoleColor.Green => Languages.Green,
+                ConsoleColor.Blue => Languages.Blue,
+                ConsoleColor.Yellow => Languages.Yellow,
+                ConsoleColor.DarkGreen => Languages.DarkGreen,
+                ConsoleColor.DarkGray => Languages.DarkGray,
+                ConsoleColor.Gray => Languages.Gray,
+                ConsoleColor.DarkCyan => Languages.DarkCyan,
+                ConsoleColor.DarkRed => Languages.DarkRed,
+                ConsoleColor.Cyan => Languages.Cyan,
+                ConsoleColor.Magenta => Languages.Magenta,
+                ConsoleColor.DarkMagenta => Languages.DarkMagenta,
+                ConsoleColor.DarkBlue => Languages.DarkBlue,
+                ConsoleColor.DarkYellow => Languages.DarkYellow,
+                _ => throw new ArgumentOutOfRangeException(nameof(color))
+            };
+        }
     }
 }

@@ -1,15 +1,15 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
-using Org.BouncyCastle.Asn1.Esf;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.VisualizationLib.Core.Interface;
-using Shared.Extensions;
 using System;
+using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.Model.Visualizations
 {
     internal sealed class PathVisualization : IPathVisualization<Vertex>, ICanRecieveMessage
     {
+        private readonly HashSet<Vertex> vertices = new();
         private readonly IMessenger messenger;
 
         public ConsoleColor PathVertexColor { get; set; } = ConsoleColor.DarkYellow;
@@ -23,7 +23,7 @@ namespace Pathfinding.App.Console.Model.Visualizations
 
         public bool IsVisualizedAsPath(Vertex visualizable)
         {
-            return visualizable.Color.IsOneOf(PathVertexColor, CrossedPathVertexColor);
+            return vertices.Contains(visualizable);
         }
 
         private void AskForColors(AskForPathColorsMessage msg)
@@ -50,6 +50,7 @@ namespace Pathfinding.App.Console.Model.Visualizations
                 {
                     visualizable.Color = PathVertexColor;
                 }
+                vertices.Add(visualizable);
             }
         }
 
@@ -57,6 +58,12 @@ namespace Pathfinding.App.Console.Model.Visualizations
         {
             messenger.Register<AskForPathColorsMessage>(this, AskForColors);
             messenger.Register<PathColorMessage>(this, MessageTokens.PathColors, ColorsRecieve);
+            messenger.Register<RemoveFromVisualizedMessage>(this, MessageTokens.PathColors, RemoveVertex);
+        }
+
+        private void RemoveVertex(RemoveFromVisualizedMessage msg)
+        {
+            vertices.Remove(msg.Vertex);
         }
     }
 }

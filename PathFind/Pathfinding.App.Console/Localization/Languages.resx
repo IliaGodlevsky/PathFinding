@@ -144,8 +144,29 @@
   <data name="BadInputMsg" xml:space="preserve">
     <value>Bad value input. Try again: </value>
   </data>
+  <data name="Black" xml:space="preserve">
+    <value>Black</value>
+  </data>
+  <data name="Blue" xml:space="preserve">
+    <value>Blue</value>
+  </data>
   <data name="ChangeCost" xml:space="preserve">
     <value>Change cost</value>
+  </data>
+  <data name="ChangeGraphColors" xml:space="preserve">
+    <value>Change graph colors</value>
+  </data>
+  <data name="ChangePathColors" xml:space="preserve">
+    <value>Change path colors</value>
+  </data>
+  <data name="ChangePathfindingColors" xml:space="preserve">
+    <value>Change pathfinding colors</value>
+  </data>
+  <data name="ChangeRangeColors" xml:space="preserve">
+    <value>Change range colors</value>
+  </data>
+  <data name="ChooseColor" xml:space="preserve">
+    <value>Choose color: </value>
   </data>
   <data name="ChooseGraphAssemble" xml:space="preserve">
     <value>Choose graph assemble</value>
@@ -162,8 +183,35 @@
   <data name="ClearPathfindingRange" xml:space="preserve">
     <value>Clear pathfinding range</value>
   </data>
+  <data name="ColorsUnitMenuItem" xml:space="preserve">
+    <value>Colors</value>
+  </data>
   <data name="CustomSmoothLevel" xml:space="preserve">
     <value>Custom</value>
+  </data>
+  <data name="Cyan" xml:space="preserve">
+    <value>Cyan</value>
+  </data>
+  <data name="DarkBlue" xml:space="preserve">
+    <value>Dark blue</value>
+  </data>
+  <data name="DarkCyan" xml:space="preserve">
+    <value>Dark cyan</value>
+  </data>
+  <data name="DarkGray" xml:space="preserve">
+    <value>Dark gray</value>
+  </data>
+  <data name="DarkGreen" xml:space="preserve">
+    <value>Dark green</value>
+  </data>
+  <data name="DarkMagenta" xml:space="preserve">
+    <value>Dark magenta</value>
+  </data>
+  <data name="DarkRed" xml:space="preserve">
+    <value>Dark red</value>
+  </data>
+  <data name="DarkYellow" xml:space="preserve">
+    <value>Dark yellow</value>
   </data>
   <data name="DelayTimeInputMsg" xml:space="preserve">
     <value>Input animation speed delay time (milliseconds): </value>
@@ -197,6 +245,12 @@
   </data>
   <data name="GraphWidthInputMsg" xml:space="preserve">
     <value>Input width of graph: </value>
+  </data>
+  <data name="Gray" xml:space="preserve">
+    <value>Gray</value>
+  </data>
+  <data name="Green" xml:space="preserve">
+    <value>Green</value>
   </data>
   <data name="History" xml:space="preserve">
     <value>Pathfinding history</value>
@@ -237,6 +291,9 @@
   <data name="LoadGraph" xml:space="preserve">
     <value>Load graph</value>
   </data>
+  <data name="Magenta" xml:space="preserve">
+    <value>Magenta</value>
+  </data>
   <data name="MenuOptionChoiceMsg" xml:space="preserve">
     <value>Choose menu option: </value>
   </data>
@@ -270,6 +327,9 @@
   <data name="RecieveGraph" xml:space="preserve">
     <value>Recieve graph</value>
   </data>
+  <data name="Red" xml:space="preserve">
+    <value>Red</value>
+  </data>
   <data name="ResizeGraph" xml:space="preserve">
     <value>Resize graph</value>
   </data>
@@ -300,8 +360,14 @@
   <data name="WaitingForConnection" xml:space="preserve">
     <value>Waiting for connection...</value>
   </data>
+  <data name="White" xml:space="preserve">
+    <value>White</value>
+  </data>
   <data name="WidthDimensionName" xml:space="preserve">
     <value>Width</value>
+  </data>
+  <data name="Yellow" xml:space="preserve">
+    <value>Yellow</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>

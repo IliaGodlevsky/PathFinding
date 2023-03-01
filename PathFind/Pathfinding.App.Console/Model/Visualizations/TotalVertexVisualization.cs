@@ -28,9 +28,21 @@ namespace Pathfinding.App.Console.Model.Visualizations
             this.pathVisualization = pathVisualization;
         }
 
-        public void VisualizeAsObstacle(Vertex vertex) => vertex.Color = ObstacleVertexColor;
+        public void VisualizeAsObstacle(Vertex vertex)
+        {
+            vertex.Color = ObstacleVertexColor;
+            var message = new RemoveFromVisualizedMessage(vertex);
+            messenger.Send(message, MessageTokens.RangeColors);
+            messenger.Send(message, MessageTokens.PathColors);
+        }
 
-        public void VisualizeAsRegular(Vertex vertex) => vertex.Color = RegularVertexColor;
+        public void VisualizeAsRegular(Vertex vertex)
+        {
+            vertex.Color = RegularVertexColor;
+            var message = new RemoveFromVisualizedMessage(vertex);
+            messenger.Send(message, MessageTokens.RangeColors);
+            messenger.Send(message, MessageTokens.PathColors);
+        }
 
         public bool IsVisualizedAsPath(Vertex vertex) => pathVisualization?.IsVisualizedAsPath(vertex) == true;
 

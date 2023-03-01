@@ -142,11 +142,74 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Black.
+        /// </summary>
+        public static string Black {
+            get {
+                return ResourceManager.GetString("Black", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blue.
+        /// </summary>
+        public static string Blue {
+            get {
+                return ResourceManager.GetString("Blue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change cost.
         /// </summary>
         public static string ChangeCost {
             get {
                 return ResourceManager.GetString("ChangeCost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change graph colors.
+        /// </summary>
+        public static string ChangeGraphColors {
+            get {
+                return ResourceManager.GetString("ChangeGraphColors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change path colors.
+        /// </summary>
+        public static string ChangePathColors {
+            get {
+                return ResourceManager.GetString("ChangePathColors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change pathfinding colors.
+        /// </summary>
+        public static string ChangePathfindingColors {
+            get {
+                return ResourceManager.GetString("ChangePathfindingColors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change range colors.
+        /// </summary>
+        public static string ChangeRangeColors {
+            get {
+                return ResourceManager.GetString("ChangeRangeColors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose color: .
+        /// </summary>
+        public static string ChooseColor {
+            get {
+                return ResourceManager.GetString("ChooseColor", resourceCulture);
             }
         }
         
@@ -196,11 +259,92 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Colors.
+        /// </summary>
+        public static string ColorsUnitMenuItem {
+            get {
+                return ResourceManager.GetString("ColorsUnitMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Custom.
         /// </summary>
         public static string CustomSmoothLevel {
             get {
                 return ResourceManager.GetString("CustomSmoothLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cyan.
+        /// </summary>
+        public static string Cyan {
+            get {
+                return ResourceManager.GetString("Cyan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dark blue.
+        /// </summary>
+        public static string DarkBlue {
+            get {
+                return ResourceManager.GetString("DarkBlue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dark cyan.
+        /// </summary>
+        public static string DarkCyan {
+            get {
+                return ResourceManager.GetString("DarkCyan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dark gray.
+        /// </summary>
+        public static string DarkGray {
+            get {
+                return ResourceManager.GetString("DarkGray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dark green.
+        /// </summary>
+        public static string DarkGreen {
+            get {
+                return ResourceManager.GetString("DarkGreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dark magenta.
+        /// </summary>
+        public static string DarkMagenta {
+            get {
+                return ResourceManager.GetString("DarkMagenta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dark red.
+        /// </summary>
+        public static string DarkRed {
+            get {
+                return ResourceManager.GetString("DarkRed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dark yellow.
+        /// </summary>
+        public static string DarkYellow {
+            get {
+                return ResourceManager.GetString("DarkYellow", resourceCulture);
             }
         }
         
@@ -300,6 +444,24 @@ namespace Pathfinding.App.Console.Localization {
         public static string GraphWidthInputMsg {
             get {
                 return ResourceManager.GetString("GraphWidthInputMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gray.
+        /// </summary>
+        public static string Gray {
+            get {
+                return ResourceManager.GetString("Gray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green.
+        /// </summary>
+        public static string Green {
+            get {
+                return ResourceManager.GetString("Green", resourceCulture);
             }
         }
         
@@ -421,6 +583,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Magenta.
+        /// </summary>
+        public static string Magenta {
+            get {
+                return ResourceManager.GetString("Magenta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose menu option: .
         /// </summary>
         public static string MenuOptionChoiceMsg {
@@ -520,6 +691,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Red.
+        /// </summary>
+        public static string Red {
+            get {
+                return ResourceManager.GetString("Red", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resize graph.
         /// </summary>
         public static string ResizeGraph {
@@ -610,11 +790,29 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to White.
+        /// </summary>
+        public static string White {
+            get {
+                return ResourceManager.GetString("White", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Width.
         /// </summary>
         public static string WidthDimensionName {
             get {
                 return ResourceManager.GetString("WidthDimensionName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yellow.
+        /// </summary>
+        public static string Yellow {
+            get {
+                return ResourceManager.GetString("Yellow", resourceCulture);
             }
         }
         
