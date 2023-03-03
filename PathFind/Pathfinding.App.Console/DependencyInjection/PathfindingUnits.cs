@@ -1,4 +1,5 @@
-﻿using Pathfinding.App.Console.Units;
+﻿using Pathfinding.App.Console.MenuItems.MainMenuItems;
+using Pathfinding.App.Console.Units;
 using Shared.Extensions;
 using System;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace Pathfinding.App.Console.DependencyInjection
         public static readonly Type Visual = typeof(PathfindingVisualizationUnit);
         public static readonly Type Range = typeof(PathfindingRangeUnit);
         public static readonly Type Colors = typeof(ColorsUnit);
+        public static readonly Type Editor = typeof(GraphEditorUnit);
 
         static PathfindingUnits()
         {

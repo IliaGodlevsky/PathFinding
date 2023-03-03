@@ -11,6 +11,7 @@ using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.MenuItems;
 using Pathfinding.App.Console.MenuItems.ColorMenuItems;
+using Pathfinding.App.Console.MenuItems.EditorMenuItems;
 using Pathfinding.App.Console.MenuItems.GraphMenuItems;
 using Pathfinding.App.Console.MenuItems.MainMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems;
@@ -86,6 +87,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<AnswerExitMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
             builder.RegisterType<GraphCreateMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
             builder.RegisterType<ColorsUnitMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
+            builder.RegisterType<EditorUnitMenuItem>().Keyed<IConditionedMenuItem>(Main).As<ICanRecieveMessage>().SingleInstance();
             builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IConditionedMenuItem>(Main).As<ICanRecieveMessage>().SingleInstance();
 
             builder.RegisterType<GraphColorsMenuItem>().Keyed<IMenuItem>(Colors).As<ICanRecieveMessage>().SingleInstance();
@@ -97,11 +99,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
             builder.RegisterType<VisualizationMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
             builder.RegisterType<HistoryMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
-
-            builder.RegisterType<ChangeCostMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance()
-                .As<ICanRecieveMessage>().ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(ChangeCost)));
-            builder.RegisterType<IncreaseCostAction>().Keyed<IVertexAction>(ChangeCost).WithMetadata(ChangeCost, ConsoleKey.UpArrow);
-            builder.RegisterType<DecreaseCostAction>().Keyed<IVertexAction>(ChangeCost).WithMetadata(ChangeCost, ConsoleKey.DownArrow);
+            
             builder.RegisterType<AssembleGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
             builder.RegisterType<ResizeGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
             builder.RegisterType<EnterCostRangeMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
@@ -109,13 +107,18 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<EnterGraphParametresMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
             builder.RegisterType<EnterObstaclePercentMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
             builder.RegisterType<LoadGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
-            builder.RegisterType<SaveGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
-            builder.RegisterType<ReverseVertexMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance()
-                .ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(Reverse)));
-            builder.RegisterType<ReverseVertexAction>().Keyed<IVertexAction>(Reverse).WithMetadata(Reverse, ConsoleKey.Enter);
-            builder.RegisterType<SmoothGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
+            builder.RegisterType<SaveGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();            
             builder.RegisterType<RecieveGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
             builder.RegisterType<SendGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
+
+            builder.RegisterType<ReverseVertexMenuItem>().Keyed<IConditionedMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance()
+                .ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(Reverse)));
+            builder.RegisterType<ReverseVertexAction>().Keyed<IVertexAction>(Reverse).WithMetadata(Reverse, ConsoleKey.Enter);
+            builder.RegisterType<SmoothGraphMenuItem>().Keyed<IConditionedMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
+            builder.RegisterType<ChangeCostMenuItem>().Keyed<IConditionedMenuItem>(Editor).SingleInstance()
+                .As<ICanRecieveMessage>().ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(ChangeCost)));
+            builder.RegisterType<IncreaseCostAction>().Keyed<IVertexAction>(ChangeCost).WithMetadata(ChangeCost, ConsoleKey.UpArrow);
+            builder.RegisterType<DecreaseCostAction>().Keyed<IVertexAction>(ChangeCost).WithMetadata(ChangeCost, ConsoleKey.DownArrow);
 
             builder.RegisterType<ApplyHistoryMenuItem>().Keyed<IMenuItem>(History).SingleInstance();
             builder.RegisterType<ClearHistoryMenuItem>().Keyed<IConditionedMenuItem>(History).As<ICanRecieveMessage>().SingleInstance();
@@ -155,7 +158,7 @@ namespace Pathfinding.App.Console.DependencyInjection
 
             builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance(); 
             builder.RegisterType<CryptoRandom>().As<IRandom>().SingleInstance();
-            builder.RegisterType<RootMeanSquareCost>().As<IMeanCost>().SingleInstance();
+            builder.RegisterType<GeometricMeanCost>().As<IMeanCost>().SingleInstance();
 
             builder.RegisterType<PathfindingRange<Vertex>>().As<IPathfindingRange<Vertex>>().SingleInstance();
             builder.RegisterDecorator<VisualPathfindingRange<Vertex>, IPathfindingRange<Vertex>>();

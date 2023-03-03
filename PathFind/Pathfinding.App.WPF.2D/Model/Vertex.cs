@@ -35,9 +35,9 @@ namespace Pathfinding.App.WPF._2D.Model
         private bool isObstacle;
         private ICoordinate position;
 
-        public bool IsVisualizedAsRange() => visualization.IsVisualizedAsPath(this);
+        public bool IsVisualizedAsRange() => visualization.IsVisualizedAsRange(this);
 
-        public bool IsVisualizedAsPathfindingRange() => visualization.IsVisualizedAsPathfindingRange(this);
+        public bool IsVisualizedAsPath() => visualization.IsVisualizedAsPath(this);
 
         public bool IsObstacle
         {
@@ -60,11 +60,11 @@ namespace Pathfinding.App.WPF._2D.Model
                 Background = value;
                 if (visualization.IsVisualizedAsEnqueued(this))
                 {
-                    RaiseEvent(new RoutedEventArgs(EnqueuedEvent, this));
+                    RaiseEvent(new(EnqueuedEvent, this));
                 }
                 if (visualization.IsVisualizedAsPath(this))
                 {
-                    RaiseEvent(new RoutedEventArgs(ColoredAsPathEvent, this));
+                    RaiseEvent(new (ColoredAsPathEvent, this));
                 }
             }
         }
@@ -151,11 +151,6 @@ namespace Pathfinding.App.WPF._2D.Model
         public void VisualizeAsTransit()
         {
             visualization.VisualizeAsTransit(this);
-        }
-
-        public void VisualizeAsMarkedToReplaceIntermediate()
-        {
-            visualization.VisualizeAsMarkedToReplaceIntermediate(this);
         }
 
         private static RoutedEvent RegisterRoutedEvent(string name)

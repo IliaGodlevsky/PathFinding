@@ -2,7 +2,7 @@
 {
     public interface IPathVisualizable
     {
-        bool IsVisualizedAsRange();
+        bool IsVisualizedAsPath();
 
         void VisualizeAsPath();
     }

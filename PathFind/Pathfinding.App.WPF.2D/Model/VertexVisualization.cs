@@ -78,9 +78,9 @@ namespace Pathfinding.App.WPF._2D.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (!vertex.IsVisualizedAsPathfindingRange())
+                if (!vertex.IsVisualizedAsRange())
                 {
-                    if (vertex.IsVisualizedAsRange())
+                    if (vertex.IsVisualizedAsPath())
                     {
                         vertex.VertexColor = AlreadyPathVertexColor;
                     }
@@ -96,7 +96,7 @@ namespace Pathfinding.App.WPF._2D.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (!vertex.IsVisualizedAsRange() && !vertex.IsVisualizedAsPathfindingRange())
+                if (!vertex.IsVisualizedAsRange() && !vertex.IsVisualizedAsPath())
                 {
                     vertex.VertexColor = VisitedColor;
                 }
@@ -107,19 +107,11 @@ namespace Pathfinding.App.WPF._2D.Model
         {
             Dispatcher.Invoke(() =>
             {
-                if (!vertex.IsVisualizedAsRange() && !vertex.IsVisualizedAsPathfindingRange())
+                if (!vertex.IsVisualizedAsRange() && !vertex.IsVisualizedAsPath())
                 {
                     vertex.VertexColor = EnqueuedVertexColor;
                 }
             });
-        }
-
-        public void VisualizeAsMarkedToReplaceIntermediate(Vertex vertex)
-        {
-            if (vertex.VertexColor == IntermediateVertexColor)
-            {
-                Dispatcher.Invoke(() => vertex.VertexColor = ToReplaceMarkColor);
-            }
         }
     }
 }

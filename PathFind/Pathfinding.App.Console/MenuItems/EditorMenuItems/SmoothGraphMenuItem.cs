@@ -5,10 +5,14 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Smoothing;
 using Pathfinding.GraphLib.Smoothing.Interface;
+using Shared.Extensions;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
@@ -17,36 +21,69 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     {
         private readonly IMeanCost meanAlgorithm;
         private readonly IMessenger messenger;
-        private readonly IInput<int> input;
+        private readonly IInput<ConsoleKey> input;
+        private readonly Stack<IReadOnlyList<int>> costs = new();
+        private readonly Dictionary<ConsoleKey, Action> actions;
 
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        private IReadOnlyList<ISmoothLevel> SmoothLevels => ConsoleSmoothLevels.Levels;
-
-        public SmoothGraphMenuItem(IMeanCost meanAlgorithm, IMessenger messenger, IInput<int> input)
+        public SmoothGraphMenuItem(IMeanCost meanAlgorithm,
+            IMessenger messenger, IInput<ConsoleKey> input)
         {
             this.meanAlgorithm = meanAlgorithm;
             this.messenger = messenger;
             this.input = input;
+            actions = new Dictionary<ConsoleKey, Action>()
+            {
+                { ConsoleKey.W, Smooth },
+                { ConsoleKey.S, Undo },
+                { ConsoleKey.Escape, Cancel }
+            };
         }
 
         public bool CanBeExecuted() => graph != Graph2D<Vertex>.Empty;
 
         public void Execute()
         {
-            var menuList = SmoothLevels.CreateMenuList();
-            var message = menuList + "\n" + Languages.SmoothLevelMsg;
-            using (Cursor.UseCurrentPositionWithClean())
+            using (Cursor.HideCursor())
             {
-                int index = input.Input(message, SmoothLevels.Count, 1) - 1;
-                var level = SmoothLevels[index];
-                graph.Smooth(meanAlgorithm, level.Level);
+                var key = input.Input();
+                while (key != ConsoleKey.Enter)
+                {
+                    actions.GetOrDefault(key)?.Invoke();
+                    key = input.Input();
+                }
+            }
+        }
+
+        private void Smooth()
+        {
+            costs.Push(graph.GetCosts());
+            graph.Smooth(meanAlgorithm);
+        }
+
+        private void Undo()
+        {
+            if (costs.Count > 0)
+            {
+                graph.ApplyCosts(costs.Pop());
+            }
+        }
+
+        private void Cancel()
+        {
+            if (costs.Count > 0)
+            {
+                var initPrices = costs.Last();
+                graph.ApplyCosts(initPrices);
+                costs.Clear();               
             }
         }
 
         private void OnGraphCreated(GraphCreatedMessage message)
         {
             graph = message.Graph;
+            costs.Clear();
         }
 
         public override string ToString()

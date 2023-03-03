@@ -1,5 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Interface.Comparers;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Smoothing.Interface;
 using System;
@@ -23,22 +23,18 @@ namespace Pathfinding.GraphLib.Smoothing
 
         public void Overlay(TGraph graph)
         {
-            var visited = new HashSet<IVertex>(new VertexEqualityComparer());
             int level = smoothLevel;
+            var costs = new List<int>();
             while (level-- > 0)
             {
                 foreach (var vertex in graph)
                 {
-                    visited.Add(vertex);
-                    if (vertex.Neighbours.Any(v => !visited.Contains(v)))
-                    {
-                        double avgCost = vertex.Neighbours
-                            .Where(v => !visited.Contains(v))
-                            .Average(neighbour => meanCost.Calculate(neighbour, vertex));
-                        vertex.Cost = vertex.Cost.SetCost((int)Math.Round(avgCost, 0));
-                    }
+                    double avgCost = vertex.Neighbours
+                        .Average(neighbour => meanCost.Calculate(neighbour, vertex));
+                    costs.Add((int)Math.Round(avgCost, 0));
                 }
-                visited.Clear();
+                graph.ApplyCosts(costs);
+                costs.Clear();
             }
         }
     }

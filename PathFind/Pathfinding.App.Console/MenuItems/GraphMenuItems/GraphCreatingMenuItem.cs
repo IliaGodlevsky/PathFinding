@@ -19,12 +19,12 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     internal abstract class GraphCreatingMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         protected readonly IMessenger messenger;
-        private readonly IRandom random;
-        private readonly IVertexCostFactory costFactory;
-        private readonly INeighborhoodFactory neighborhoodFactory;
+        protected readonly IRandom random;
+        protected readonly IVertexCostFactory costFactory;
+        protected readonly INeighborhoodFactory neighborhoodFactory;
 
         private GraphAssemble selected;
-        private InclusiveValueRange<int> costRange = new InclusiveValueRange<int>(9, 1);
+        protected InclusiveValueRange<int> costRange = new InclusiveValueRange<int>(9, 1);
         protected int width = 0;
         protected int length = 0;
         protected int obstaclePercent = 0;
@@ -38,13 +38,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             this.neighborhoodFactory = neighborhoodFactory;
         }
 
-        private void OnAssembleChosen(ChooseGraphAssembleMessage msg) => selected = msg.Assemble;
+        protected void OnAssembleChosen(ChooseGraphAssembleMessage msg) => selected = msg.Assemble;
 
-        private void OnCostRange(CostRangeMessage msg) => costRange = msg.CostRange;
+        protected void OnCostRange(CostRangeMessage msg) => costRange = msg.CostRange;
 
-        private void OnObstaclePercent(ObstaclePercentMessage msg) => obstaclePercent = msg.ObstaclePercent;
+        protected void OnObstaclePercent(ObstaclePercentMessage msg) => obstaclePercent = msg.ObstaclePercent;
 
-        private void OnGraphParams(GraphParametresMessage msg)
+        protected void OnGraphParams(GraphParametresMessage msg)
         {
             width = msg.Width;
             length = msg.Length;

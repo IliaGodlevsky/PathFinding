@@ -55,6 +55,7 @@
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\IUnitMiddleware.cs" />
     <Compile Include="DependencyInjection\RegistrationConstants.cs" />
     <Compile Include="Exceptions\ExitRequiredException.cs" />
+    <Compile Include="Extensions\GraphExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Cursor.cs" />
@@ -89,7 +90,7 @@
     <Compile Include="MenuItems\GraphMenuItems\SendGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\GraphCreatingMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\ResizeGraphMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\ChangeCostMenuItem.cs" />
+    <Compile Include="MenuItems\EditorMenuItems\ChangeCostMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\AssembleGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\EnterCostRangeMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\EnterGraphAssembleMenuItem.cs" />
@@ -97,12 +98,14 @@
     <Compile Include="MenuItems\GraphMenuItems\EnterObstaclePercentMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\LoadGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\GraphMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\ReverseVertexMenuItem.cs" />
+    <Compile Include="MenuItems\EditorMenuItems\ReverseVertexMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\SaveGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\RecieveGraphMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\SmoothGraphMenuItem.cs" />
+    <Compile Include="MenuItems\EditorMenuItems\SmoothGraphMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\ColorsUnitMenuItem.cs" />
+    <Compile Include="MenuItems\MainMenuItems\EditorUnitMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\GraphCreateMenuItem.cs" />
+    <Compile Include="MenuItems\MainMenuItems\GraphEditorUnit.cs" />
     <Compile Include="MenuItems\MainMenuItems\MainMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\PathfindingProcessMenuItem.cs" />
     <Compile Include="MenuItems\AnswerExitMenuItem.cs" />
@@ -153,6 +156,7 @@
     <Compile Include="Messages\PathColorMessage.cs" />
     <Compile Include="Messages\PathfindingAlgorithmChosenMessage.cs" />
     <Compile Include="Messages\PathfindingColorsMessage.cs" />
+    <Compile Include="Messages\PathfindingHistoryMessage.cs" />
     <Compile Include="Messages\PathfindingRangeChosenMessage.cs" />
     <Compile Include="Messages\PathFoundMessage.cs" />
     <Compile Include="Messages\RangeColorsMessage.cs" />
@@ -166,7 +170,6 @@
     <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
     <Compile Include="Model\ConsoleLog.cs" />
-    <Compile Include="Model\ConsoleSmoothLevels.cs" />
     <Compile Include="Model\DebugLog.cs" />
     <Compile Include="Model\FramedAxes\FramedAbscissa.cs" />
     <Compile Include="Model\FramedAxes\FramedAxis.cs" />

@@ -69,7 +69,7 @@ namespace Pathfinding.App.WPF._2D.Model
         private bool CanBeColored(Vertex vertex)
         {
             return !vertex.IsObstacle
-                && !vertex.IsVisualizedAsPathfindingRange()
+                && !vertex.IsVisualizedAsPath()
                 && !vertex.IsVisualizedAsRange();
         }
     }

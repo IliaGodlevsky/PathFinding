@@ -5,6 +5,7 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Primitives;
 using System;
@@ -38,9 +39,9 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         {
             var menuList = pages.Values.Append(Languages.Quit).CreateMenuList(columnsNumber: 1);
             string inputMessage = string.Concat(menuList, "\n", Languages.AlgorithmChoiceMsg);
-            int index = GetAlgorithmIndex(inputMessage);
-            using (Disposable.Use(RestoreColors))
+            using (RememberGraphState())
             {
+                int index = GetAlgorithmIndex(inputMessage);
                 while (index != pages.Count)
                 {
                     var page = pages.ElementAt(index);
@@ -57,9 +58,11 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             }
         }
 
-        private void RestoreColors()
+        private IDisposable RememberGraphState()
         {
-            messenger.Send(new ClearColorsMessage());
+            var costs = graph.GetCosts();
+            void ReturnCosts() => graph.ApplyCosts(costs);
+            return Disposable.Use(ReturnCosts, () => messenger.Send(new ClearColorsMessage()));
         }
 
         private void OnGraphCreated(GraphCreatedMessage msg)

@@ -12,6 +12,15 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
             return (int)Math.Round(self.Count == 0 ? 0 : self.GetObstaclesCount() * 100.0 / self.Count);
         }
 
+        public static void ApplyCosts<T>(this IGraph<T> graph, IEnumerable<int> costs)
+            where T : IVertex
+        {
+            foreach (var item in graph.Zip(costs, (v, p) => (Vertex: v, Price: p)))
+            {
+                item.Vertex.Cost = item.Vertex.Cost.SetCost(item.Price);
+            }
+        }
+
         public static IEnumerable<TVertex> GetObstacles<TVertex>(this IGraph<TVertex> graph)
             where TVertex : IVertex
         {

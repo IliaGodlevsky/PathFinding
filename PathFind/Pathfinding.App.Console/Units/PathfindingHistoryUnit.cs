@@ -2,6 +2,7 @@
 using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.History;
 using Pathfinding.AlgorithmLib.History.Interface;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
@@ -17,6 +18,7 @@ namespace Pathfinding.App.Console.Units
     {
         private readonly IMessenger messenger;
         private readonly History<PathfindingHistoryVolume> history = new();
+        private readonly Dictionary<Guid, IReadOnlyList<int>> pricesHistory = new();
 
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
         private bool isHistoryApplied = false;
@@ -32,6 +34,7 @@ namespace Pathfinding.App.Console.Units
         private void OnHistoryPage(HistoryPageMessage message)
         {
             graph.RestoreVerticesVisualState();
+            graph.ApplyCosts(pricesHistory[message.PageKey]);
             history.VisualizeHistory(message.PageKey, graph);
         }
 
@@ -43,7 +46,13 @@ namespace Pathfinding.App.Console.Units
         private void OnGraphCreated(GraphCreatedMessage message)
         {
             graph = message.Graph;
+            ClearHistory();
+        }
+
+        private void ClearHistory()
+        {
             history.Clear();
+            pricesHistory.Clear();
         }
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
@@ -77,6 +86,7 @@ namespace Pathfinding.App.Console.Units
             OnMessageRecieved(() =>
             {
                 history.AddObstacles(msg.Algorithm.Id, graph.GetObstaclesCoordinates());
+                pricesHistory.Add(msg.Algorithm.Id, graph.GetCosts());
                 msg.Algorithm.VertexVisited += OnVertexVisited;
             });
         }
@@ -89,7 +99,7 @@ namespace Pathfinding.App.Console.Units
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             messenger.Register<ApplyHistoryMessage>(this, OnHistoryApplied);
             messenger.Register<HistoryPageMessage>(this, OnHistoryPage);
-            messenger.Register<ClearHistoryMessage>(this, _ => history.Clear());
+            messenger.Register<ClearHistoryMessage>(this, _ => ClearHistory());
         }
     }
 }

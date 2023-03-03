@@ -5,21 +5,22 @@ using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using System;
 using System.Collections.Generic;
 
-namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
+namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
 {
     [MediumPriority]
-    internal sealed class ChangeCostMenuItem : SwitchVerticesMenuItem
+    internal sealed class ReverseVertexMenuItem : SwitchVerticesMenuItem
     {
-        public ChangeCostMenuItem(IMessenger messenger,
+        public ReverseVertexMenuItem(IMessenger messenger,
             IReadOnlyDictionary<ConsoleKey, IVertexAction> actions,
             IInput<ConsoleKey> keyInput)
             : base(messenger, actions, keyInput)
         {
+
         }
 
         public override string ToString()
         {
-            return Languages.ChangeCost;
+            return Languages.ReverseVertices;
         }
     }
 }
