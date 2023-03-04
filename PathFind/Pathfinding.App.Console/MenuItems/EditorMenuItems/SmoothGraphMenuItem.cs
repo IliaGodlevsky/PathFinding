@@ -33,7 +33,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             this.meanAlgorithm = meanAlgorithm;
             this.messenger = messenger;
             this.input = input;
-            actions = new Dictionary<ConsoleKey, Action>()
+            actions = new()
             {
                 { ConsoleKey.W, Smooth },
                 { ConsoleKey.S, Undo },
