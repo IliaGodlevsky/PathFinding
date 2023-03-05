@@ -44,6 +44,8 @@ namespace Pathfinding.App.Console.Units
             animationDelay = message.AnimationDelay;
         }
 
+        private bool IsVisualizationApplied() => isVisualizationApplied;
+
         private void OnVisualizationApplied(ApplyVisualizationMessage message)
         {
             isVisualizationApplied = message.IsApplied;
@@ -80,21 +82,16 @@ namespace Pathfinding.App.Console.Units
 
         private void OnPathfindingPrepare(SubscribeOnVisualizationMessage message)
         {
-            if (isVisualizationApplied)
-            {
-                algorithm = message.Algorithm;
-                algorithm.VertexVisited += OnVertexVisited;
-                algorithm.VertexEnqueued += OnVertexEnqueued;
-                algorithm.Started += OnAlgorithmStarted;
-                algorithm.Finished += OnAlgorithmFinished;
-            }
+            algorithm = message.Algorithm;
+            algorithm.VertexVisited += OnVertexVisited;
+            algorithm.VertexEnqueued += OnVertexEnqueued;
+            algorithm.Started += OnAlgorithmStarted;
+            algorithm.Finished += OnAlgorithmFinished;
         }
 
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
         {
-            pathfindingActions
-                .GetOrDefault(e.PressedKey, NullPathfindingAction.Interface)
-                .Do(algorithm);
+            pathfindingActions.GetOrDefault(e.PressedKey)?.Do(algorithm);
 
             animationDelay = animationActions
                 .GetOrDefault(e.PressedKey, NullAnimationAction.Instance)
@@ -103,10 +100,11 @@ namespace Pathfinding.App.Console.Units
 
         public void RegisterHanlders(IMessenger messenger)
         {
+            var token = ConditionToken.Create(IsVisualizationApplied, MessageTokens.VisualizationUnit);
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
-            messenger.Register<AnimationDelayMessage>(this, OnAnimationDelay);
+            messenger.Register<AnimationDelayMessage>(this, token, OnAnimationDelay);
             messenger.Register<ApplyVisualizationMessage>(this, OnVisualizationApplied);
-            messenger.Register<SubscribeOnVisualizationMessage>(this, OnPathfindingPrepare);
+            messenger.Register<SubscribeOnVisualizationMessage>(this, token, OnPathfindingPrepare);
         }
     }
 }

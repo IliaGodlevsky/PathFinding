@@ -31,28 +31,16 @@ namespace Shared.Primitives.Extensions
 
         private sealed class CycleReturnOptions : ReturnOptions
         {
-            protected override T GetIfGreater<T>(InclusiveValueRange<T> range)
-            {
-                return range.LowerValueOfRange;
-            }
+            protected override T GetIfGreater<T>(InclusiveValueRange<T> range) => range.LowerValueOfRange;
 
-            protected override T GetIfLess<T>(InclusiveValueRange<T> range)
-            {
-                return range.UpperValueOfRange;
-            }
+            protected override T GetIfLess<T>(InclusiveValueRange<T> range) => range.UpperValueOfRange;
         }
 
         private sealed class LimitReturnOptions : ReturnOptions
         {
-            protected override T GetIfGreater<T>(InclusiveValueRange<T> range)
-            {
-                return range.UpperValueOfRange;
-            }
+            protected override T GetIfGreater<T>(InclusiveValueRange<T> range) => range.UpperValueOfRange;
 
-            protected override T GetIfLess<T>(InclusiveValueRange<T> range)
-            {
-                return range.LowerValueOfRange;
-            }
+            protected override T GetIfLess<T>(InclusiveValueRange<T> range) => range.LowerValueOfRange;
         }
     }
 }

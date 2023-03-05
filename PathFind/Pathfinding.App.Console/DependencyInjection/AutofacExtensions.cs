@@ -44,9 +44,9 @@ namespace Pathfinding.App.Console.DependencyInjection
             static void Register(IActivatedEventArgs<Messenger> args)
             {
                 var recievers = args.Context.Resolve<ICanRecieveMessage[]>();
-                for (int i = 0; i < recievers.Length; i++)
+                foreach (var reciever in recievers)
                 {
-                    recievers[i].RegisterHanlders(args.Instance);
+                    reciever.RegisterHanlders(args.Instance);
                 }
             }
             return builder.OnActivated(Register);

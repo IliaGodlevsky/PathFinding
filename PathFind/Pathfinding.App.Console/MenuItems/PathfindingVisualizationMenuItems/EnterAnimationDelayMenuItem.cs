@@ -31,7 +31,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
             using (Cursor.UseCurrentPositionWithClean())
             {
                 var delay = spanInput.Input(Languages.DelayTimeInputMsg, DelayRange);
-                messenger.Send(new AnimationDelayMessage(delay));
+                messenger.Send(new AnimationDelayMessage(delay), MessageTokens.VisualizationUnit);
             }
         }
 

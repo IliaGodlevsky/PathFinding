@@ -66,7 +66,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             if (costs.Count > 0)
             {
-                graph.ApplyCosts(costs.Pop());
+                graph.Reverse().ApplyCosts(costs.Pop().Reverse());
             }
         }
 
@@ -74,9 +74,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             if (costs.Count > 0)
             {
-                var initPrices = costs.Last();
-                graph.ApplyCosts(initPrices);
-                costs.Clear();               
+                var initPrices = costs.Last().Reverse();
+                graph.Reverse().ApplyCosts(initPrices);
+                costs.Clear();
             }
         }
 

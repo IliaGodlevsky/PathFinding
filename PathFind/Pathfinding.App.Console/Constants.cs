@@ -18,7 +18,7 @@ namespace Pathfinding.App.Console
         static Constants()
         {
             VerticesCostRange = new (99, 1);
-            GraphWidthValueRange = new (75, 1);
+            GraphWidthValueRange = new (90, 1);
             GraphLengthValueRange = new (45, 1);
             ObstaclesPercentValueRange = new (99);
             AlgorithmDelayTimeValueRange = new (TimeSpan.FromMilliseconds(50), TimeSpan.FromMilliseconds(0));

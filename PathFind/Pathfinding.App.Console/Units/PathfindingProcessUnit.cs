@@ -70,7 +70,8 @@ namespace Pathfinding.App.Console.Units
             var path = NullGraphPath.Interface;
             void Summarize()
             {
-                messenger.Send(new PathFoundMessage(path, algorithm));
+                messenger.Send(new PathFoundMessage(path, algorithm), MessageTokens.HistoryUnit);
+                messenger.Send(new PathFoundMessage(path, algorithm), MessageTokens.StatisticsUnit);
             }
             using (Disposable.Use(Summarize))
             {
@@ -89,10 +90,12 @@ namespace Pathfinding.App.Console.Units
 
         private void PrepareForPathfinding(PathfindingProcess algorithm)
         {
-            messenger.Send(new SubscribeOnVisualizationMessage(algorithm));
-            messenger.Send(new SubscribeOnHistoryMessage(algorithm));
-            messenger.Send(new PathfindingRangeChosenMessage(rangeBuilder.Range, algorithm.Id));
-            messenger.Send(new SubscribeOnStatisticsMessage(algorithm));
+            messenger.Send(new PathfindingStatisticsMessage(algorithm.ToString()));
+            messenger.Send(new SubscribeOnVisualizationMessage(algorithm), MessageTokens.VisualizationUnit);
+            messenger.Send(new SubscribeOnHistoryMessage(algorithm), MessageTokens.HistoryUnit);
+            var msg = new PathfindingRangeChosenMessage(rangeBuilder.Range, algorithm.Id);
+            messenger.Send(msg, MessageTokens.HistoryUnit);
+            messenger.Send(new SubscribeOnStatisticsMessage(algorithm), MessageTokens.StatisticsUnit);
         }
 
         public void RegisterHanlders(IMessenger messenger)

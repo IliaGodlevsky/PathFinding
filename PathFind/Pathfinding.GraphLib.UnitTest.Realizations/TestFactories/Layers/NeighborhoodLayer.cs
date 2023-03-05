@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Pathfinding.GraphLib.UnitTest.Realizations.TestFactories.Layers
 {
-    internal sealed class NeighborhoodLayer : ILayer<Graph2D<TestVertex>, TestVertex>
+    public sealed class NeighborhoodLayer : ILayer<Graph2D<TestVertex>, TestVertex>
     {
         public void Overlay(Graph2D<TestVertex> graph)
         {

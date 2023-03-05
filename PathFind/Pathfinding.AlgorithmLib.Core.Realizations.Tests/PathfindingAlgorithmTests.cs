@@ -31,5 +31,19 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests
                 Assert.IsTrue(path.SequenceEqual(expected), wrongPathSequenceMsg);
             });
         }
+
+        public void FindPath_ResturnsOptimalPath_Stress(AlgorithmFactory factory, Range range, IGraphPath expected)
+        {
+            var algorithm = factory.Create(range);
+
+            var path = algorithm.FindPath();
+
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(path.Cost, expected.Cost, wrongPathCostMsg);
+                Assert.AreEqual(path.Count, expected.Count, wrongPathLengthMsg);
+                Assert.IsTrue(path.SequenceEqual(expected), wrongPathSequenceMsg);
+            });
+        }
     }
 }

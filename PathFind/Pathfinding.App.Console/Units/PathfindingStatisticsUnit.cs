@@ -5,6 +5,7 @@ using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Model;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -28,27 +29,22 @@ namespace Pathfinding.App.Console.Units
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.Register<SubscribeOnStatisticsMessage>(this, OnSusbcribe);
-            messenger.Register<PathFoundMessage>(this, OnPathFound);
+            var token = ConditionToken.Create(IsStatisticsApplied, MessageTokens.StatisticsUnit);
+            messenger.Register<SubscribeOnStatisticsMessage>(this, token, OnSusbcribe);
+            messenger.Register<PathFoundMessage>(this, MessageTokens.StatisticsUnit, OnPathFound);
             messenger.Register<ApplyStatisticsMessage>(this, ApplyStatistics);
         }
 
+        private bool IsStatisticsApplied() => isStatisticsApplied;
+
         private void OnSusbcribe(SubscribeOnStatisticsMessage message)
         {
-            var algorithm = message.Algorithm;
-            if (isStatisticsApplied)
-            {
-                algorithm.VertexVisited += OnVertexVisited;
-                algorithm.Finished += (s, e) => timer.Stop();
-                algorithm.Started += (s, e) => timer.Restart();
-                algorithm.Interrupted += (s, e) => timer.Stop();
-                algorithm.Paused += (s, e) => timer.Stop();
-                algorithm.Resumed += (s, e) => timer.Start();
-            }
-            else
-            {
-                messenger.Send(new PathfindingStatisticsMessage(algorithm.ToString()));
-            }
+            message.Algorithm.VertexVisited += OnVertexVisited;
+            message.Algorithm.Finished += (s, e) => timer.Stop();
+            message.Algorithm.Started += (s, e) => timer.Restart();
+            message.Algorithm.Interrupted += (s, e) => timer.Stop();
+            message.Algorithm.Paused += (s, e) => timer.Stop();
+            message.Algorithm.Resumed += (s, e) => timer.Start();
         }
 
         private void ApplyStatistics(ApplyStatisticsMessage message)

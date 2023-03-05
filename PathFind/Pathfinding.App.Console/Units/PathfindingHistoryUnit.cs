@@ -63,39 +63,31 @@ namespace Pathfinding.App.Console.Units
             }
         }
 
-        private void OnMessageRecieved(Action action)
-        {
-            if (isHistoryApplied)
-            {
-                action();
-            }
-        }
+        private bool IsHistoryApplied() => isHistoryApplied;
 
         private void OnRangeChosen(PathfindingRangeChosenMessage msg)
         {
-            OnMessageRecieved(() => history.AddPathfindingRange(msg.Key, msg.Range));
+            history.AddPathfindingRange(msg.Key, msg.Range);
         }
 
         private void OnPathFound(PathFoundMessage msg)
         {
-            OnMessageRecieved(() => history.AddPath(msg.Algorithm.Id, msg.Path));
+            history.AddPath(msg.Algorithm.Id, msg.Path);
         }
 
         private void OnSubscribeOnHistory(SubscribeOnHistoryMessage msg)
         {
-            OnMessageRecieved(() =>
-            {
-                history.AddObstacles(msg.Algorithm.Id, graph.GetObstaclesCoordinates());
-                pricesHistory.Add(msg.Algorithm.Id, graph.GetCosts());
-                msg.Algorithm.VertexVisited += OnVertexVisited;
-            });
+            history.AddObstacles(msg.Algorithm.Id, graph.GetObstaclesCoordinates());
+            pricesHistory.Add(msg.Algorithm.Id, graph.GetCosts());
+            msg.Algorithm.VertexVisited += OnVertexVisited;
         }
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.Register<PathfindingRangeChosenMessage>(this, OnRangeChosen);
-            messenger.Register<PathFoundMessage>(this, OnPathFound);
-            messenger.Register<SubscribeOnHistoryMessage>(this, OnSubscribeOnHistory);
+            var token = ConditionToken.Create(IsHistoryApplied, MessageTokens.HistoryUnit);
+            messenger.Register<PathfindingRangeChosenMessage>(this, token, OnRangeChosen);
+            messenger.Register<PathFoundMessage>(this, token, OnPathFound);
+            messenger.Register<SubscribeOnHistoryMessage>(this, token, OnSubscribeOnHistory);
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             messenger.Register<ApplyHistoryMessage>(this, OnHistoryApplied);
             messenger.Register<HistoryPageMessage>(this, OnHistoryPage);

@@ -3,7 +3,7 @@ using Pathfinding.GraphLib.UnitTest.Realizations.TestObjects;
 
 namespace Pathfinding.GraphLib.UnitTest.Realizations.TestFactories.Layers
 {
-    internal sealed class CostLayer : Graph2DLayer<int>
+    public sealed class CostLayer : Graph2DLayer<int>
     {
         protected override void Assign(IVertex vertex, int value)
         {

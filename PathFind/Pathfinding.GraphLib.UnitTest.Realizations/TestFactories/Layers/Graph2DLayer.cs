@@ -5,7 +5,7 @@ using Pathfinding.GraphLib.UnitTest.Realizations.TestObjects;
 
 namespace Pathfinding.GraphLib.UnitTest.Realizations.TestFactories.Layers
 {
-    internal abstract class Graph2DLayer<T> : ILayer<Graph2D<TestVertex>, TestVertex>
+    public abstract class Graph2DLayer<T> : ILayer<Graph2D<TestVertex>, TestVertex>
     {
         private readonly T[,] matrix;
 

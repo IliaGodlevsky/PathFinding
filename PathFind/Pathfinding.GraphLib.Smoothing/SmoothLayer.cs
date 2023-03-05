@@ -29,13 +29,18 @@ namespace Pathfinding.GraphLib.Smoothing
             {
                 foreach (var vertex in graph)
                 {
-                    double avgCost = vertex.Neighbours
-                        .Average(neighbour => meanCost.Calculate(neighbour, vertex));
-                    costs.Add((int)Math.Round(avgCost, 0));
+                    int avgCost = GetAverageCost(vertex.Neighbours, vertex);
+                    costs.Add(avgCost);
                 }
                 graph.ApplyCosts(costs);
                 costs.Clear();
             }
+        }
+
+        private int GetAverageCost(IEnumerable<IVertex> vertices, TVertex vertex)
+        {
+            var avg = vertices.Average(neighbour => meanCost.Calculate(neighbour, vertex));
+            return (int)Math.Round(avg, 0);
         }
     }
 }

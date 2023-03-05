@@ -24,6 +24,24 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests
             }
         }
 
+        public static IEnumerable Factories
+        {
+            get
+            {
+                yield return GenerateFactory(new DijkstraAlgorithmFactory());
+                yield return GenerateFactory(new AStarAlgorithmFactory());
+                yield return GenerateFactory(new IDAStarAlgorithmFactory());
+                yield return GenerateFactory(new LeeAlgorithmFactory());
+                yield return GenerateFactory(new RandomAlgorithmFactory());
+                yield return GenerateFactory(new AStarLeeAlgorithmFactory());
+            }
+        }
+
+        private static TestCaseData GenerateFactory(IAlgorithmFactory<IAlgorithm<IGraphPath>> factory)
+        {
+            return new TestCaseData(factory).SetArgDisplayNames(factory.ToString());
+        }
+
         private static TestCaseData GenerateTestCase(IAlgorithmFactory<IAlgorithm<IGraphPath>> factory, IEnumerable<IVertex> range, IGraphPath examplePath)
         {
             string rangeCount = $"Range: {range.Count()} vertices";

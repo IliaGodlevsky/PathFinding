@@ -206,7 +206,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<DepthFirstAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
             builder.RegisterType<HeuristicCostGreedyAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();
 
-            builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
+            builder.RegisterType<DefaultStepRule>().As<IStepRule>().SingleInstance();
             builder.RegisterType<EuclidianDistance>().As<IHeuristic>().SingleInstance();
 
             return builder.Build();

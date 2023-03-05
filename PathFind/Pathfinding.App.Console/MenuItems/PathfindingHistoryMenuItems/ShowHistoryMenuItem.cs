@@ -61,8 +61,14 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         private IDisposable RememberGraphState()
         {
             var costs = graph.GetCosts();
-            void ReturnCosts() => graph.ApplyCosts(costs);
-            return Disposable.Use(ReturnCosts, () => messenger.Send(new ClearColorsMessage()));
+            return Disposable.Use(() =>
+            {
+                using (Cursor.HideCursor())
+                {
+                    graph.ApplyCosts(costs);
+                    messenger.Send(new ClearColorsMessage());
+                }
+            });
         }
 
         private void OnGraphCreated(GraphCreatedMessage msg)
