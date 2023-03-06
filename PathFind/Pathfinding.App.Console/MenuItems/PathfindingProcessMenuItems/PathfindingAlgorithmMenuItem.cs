@@ -28,17 +28,14 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
         private readonly IInput<int> input;
 
         public PathfindingAlgorithmMenuItem(IMessenger messenger,
-            IEnumerable<AlgorithmFactory> factories, 
+            AlgorithmFactory[] factories, 
             IPathfindingRangeBuilder<Vertex> rangeBuilder, 
             IInput<int> input)
         {
             this.messenger = messenger;
             this.rangeBuilder = rangeBuilder;
             this.input = input;
-            this.factories = factories
-                .GroupBy(item => item.GetAttributeOrDefault<GroupAttribute>())
-                .SelectMany(item => item.OrderByOrderAttribute())
-                .ToReadOnly();
+            this.factories = factories;
         }
 
         public bool CanBeExecuted()

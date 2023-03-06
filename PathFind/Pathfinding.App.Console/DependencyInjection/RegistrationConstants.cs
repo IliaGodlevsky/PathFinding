@@ -11,5 +11,10 @@
         public const string PathfindingRange = "Range";
         public const string ChangeCost = "Cost";
         public const string Reverse = "Reverse";
+
+        public const string Group = "Group";
+        public const int GreedGroup = 0;
+        public const int WaveGroup = 1;
+        public const int BreadthGroup = 2;
     }
 }

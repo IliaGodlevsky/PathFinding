@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyInjection\AutofacExtensions.cs" />
+    <Compile Include="DependencyInjection\ConfigurationMiddlewears\PathfindingItemResolveMiddleware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\VertexActionResolveMiddlewear.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\VisualizationUnitResolveMiddleware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\RangeBuilderResolveMiddlewear.cs" />
