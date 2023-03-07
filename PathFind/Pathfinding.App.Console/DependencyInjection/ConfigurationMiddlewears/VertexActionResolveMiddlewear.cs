@@ -8,7 +8,6 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 {
     internal sealed class VertexActionResolveMiddlewear : IResolveMiddleware
     {
-        private readonly Type paramType;
         private readonly string key;
 
         public PipelinePhase Phase => PipelinePhase.ParameterSelection;
@@ -16,11 +15,11 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
         public VertexActionResolveMiddlewear(string key)
         {
             this.key = key;
-            paramType = typeof(IReadOnlyDictionary<ConsoleKey, IVertexAction>);
         }
 
         public void Execute(ResolveRequestContext context, Action<ResolveRequestContext> next)
         {
+            var paramType = typeof(IReadOnlyDictionary<ConsoleKey, IVertexAction>);
             var actions = context.ResolveWithMetadataKeyed<ConsoleKey, IVertexAction>(key);
             var actionsParameter = new TypedParameter(paramType, actions);
             context.ChangeParameters(new[] { actionsParameter });

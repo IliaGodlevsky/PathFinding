@@ -10,10 +10,5 @@ namespace Shared.Extensions
             range.ForEach(collection.Add);
             return collection;
         }
-
-        public static ICollection<T> AddRange<T>(this ICollection<T> collection, params T[] items)
-        {
-            return collection.AddRange(items.AsEnumerable());
-        }
     }
 }

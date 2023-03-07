@@ -42,8 +42,8 @@ namespace Pathfinding.App.Console
         /// the cursor to the remembered position</returns>
         public static IDisposable UseCurrentPosition()
         {
-            var cursorLeft = System.Console.CursorLeft;
-            var cursorTop = System.Console.CursorTop;
+            int cursorLeft = System.Console.CursorLeft;
+            int cursorTop = System.Console.CursorTop;
             var cursor = new Cursor(cursorLeft, cursorTop);
             return Disposable.Use(cursor.RestorePosition);
         }
@@ -75,8 +75,8 @@ namespace Pathfinding.App.Console
         /// perfromed after remembering the position </returns>
         public static IDisposable UseCurrentPositionWithClean()
         {
-            var left = System.Console.CursorLeft;
-            var top = System.Console.CursorTop;
+            int left = System.Console.CursorLeft;
+            int top = System.Console.CursorTop;
             var position = new Point(left, top);
             return Disposable.Use(() => CleanUpTo(position));
         }

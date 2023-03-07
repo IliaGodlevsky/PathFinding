@@ -4,11 +4,10 @@ namespace Pathfinding.App.Console.Model
 {
     internal sealed class ConditionToken
     {
-        public static ConditionToken Create(Func<bool> condition, Guid token)
-            => new ConditionToken(condition, token);
+        public static ConditionToken Create(Func<bool> condition, Guid token) => new (condition, token);
 
-        private readonly Func<bool> condition;
         private readonly Guid token;
+        private readonly Func<bool> condition;
 
         private ConditionToken(Func<bool> condition, Guid token)
         {

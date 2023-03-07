@@ -1,6 +1,4 @@
-﻿using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Model;
-using Shared.Extensions;
+﻿using Pathfinding.App.Console.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +16,6 @@ namespace Pathfinding.App.Console.Extensions
             int columnsNumber = 2)
         {
             return new(items.Select(descriptionSelector), columnsNumber);
-        }
-
-        public static void Display(this IEnumerable<IDisplayable> displayables)
-        {
-            displayables.ForEach(displayable => displayable.Display());
         }
     }
 }

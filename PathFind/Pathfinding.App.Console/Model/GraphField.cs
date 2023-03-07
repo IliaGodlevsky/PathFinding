@@ -3,6 +3,7 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model.FramedAxes;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.VisualizationLib.Core.Interface;
+using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace Pathfinding.App.Console.Model
         {
             using (Cursor.HideCursor())
             {
-                Displayables.Display();
+                Displayables.ForEach(d => d.Display());
             }
         }
     }

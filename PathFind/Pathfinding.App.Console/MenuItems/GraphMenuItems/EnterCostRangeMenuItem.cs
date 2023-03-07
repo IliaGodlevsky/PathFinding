@@ -4,12 +4,14 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
+using Shared.Primitives.ValueRange;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     [LowPriority]
     internal sealed class EnterCostRangeMenuItem : GraphMenuItem
     {
+        
         public EnterCostRangeMenuItem(IMessenger messenger, IInput<int> input)
             : base(messenger, input)
         {
@@ -19,7 +21,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             using (Cursor.UseCurrentPositionWithClean())
             {
-                var costRange = input.InputRange(Constants.VerticesCostRange);
+                var range = Constants.VerticesCostRange;
+                int upperValueOfRange = input.Input(Languages.RangeUpperValueInputMsg, range);
+                int lowerValueOfRange = input.Input(Languages.RangeLowerValueInputMsg, range);
+                var costRange = new InclusiveValueRange<int>(upperValueOfRange, lowerValueOfRange);
                 messenger.Send(new CostRangeMessage(costRange));
             }
         }

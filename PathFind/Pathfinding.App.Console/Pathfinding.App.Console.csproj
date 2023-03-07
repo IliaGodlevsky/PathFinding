@@ -153,7 +153,6 @@
     <Compile Include="Messages\GraphCreatedMessage.cs" />
     <Compile Include="Messages\GraphParametresMessage.cs" />
     <Compile Include="Messages\HistoryPageMessage.cs" />
-    <Compile Include="Messages\IHistoryMessage.cs" />
     <Compile Include="Messages\ObstaclePercentMessage.cs" />
     <Compile Include="Messages\PathColorMessage.cs" />
     <Compile Include="Messages\PathfindingAlgorithmChosenMessage.cs" />

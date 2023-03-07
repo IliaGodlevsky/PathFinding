@@ -10,14 +10,14 @@ namespace Pathfinding.App.Console.ValueInput.RandomInput
 {
     internal sealed class RandomKeyInput : RandomInput<ConsoleKey, int>
     {
-        private IReadOnlyList<ConsoleKey> Keys { get; }
+        private List<ConsoleKey> Keys { get; }
 
         protected override InclusiveValueRange<int> Range { get; }
 
         public RandomKeyInput(IRandom random) : base(random)
         {
-            Keys = new List<ConsoleKey>() { Enter/*, UpArrow, DownArrow*/};
-            Range = new InclusiveValueRange<int>(Keys.Count - 1);
+            Keys = new () { Enter/*, UpArrow, DownArrow*/};
+            Range = new (Keys.Count - 1);
         }
 
         public override ConsoleKey Input()

@@ -2,7 +2,7 @@
 
 namespace Pathfinding.App.Console.Messages
 {
-    internal sealed class AlgorithmFinishedMessage : IHistoryMessage
+    internal sealed class AlgorithmFinishedMessage
     {
         public PathfindingProcess Algorithm { get; }
 

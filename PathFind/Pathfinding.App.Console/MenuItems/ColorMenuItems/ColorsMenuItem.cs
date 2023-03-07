@@ -16,7 +16,6 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
     internal abstract class ColorsMenuItem : IMenuItem, ICanRecieveMessage
     {
         protected readonly IMessenger messenger;
-
         private readonly IInput<int> intInput;
         private readonly IReadOnlyList<ConsoleColor> allColors;
         private readonly IReadOnlyList<PropertyInfo> properties;
@@ -27,13 +26,16 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
         {
             this.messenger = messenger;
             this.intInput = intInput;
-            allColors = Enum.GetValues(typeof(ConsoleColor)).Cast<ConsoleColor>().ToArray();
+            var enumType = typeof(ConsoleColor);
+            allColors = Enum.GetValues(enumType).Cast<ConsoleColor>().ToArray();
             allColorsMenuList = allColors.CreateMenuList(GetName);
             properties = GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance)
-                .Where(prop => prop.PropertyType == typeof(ConsoleColor)).ToArray();
+                .Where(prop => prop.PropertyType == enumType)
+                .ToArray();
             menuItemsColorsMenuList = properties
                 .Select(prop => prop.GetAttributeOrDefault<DescriptionAttribute>().Description)
-                .Append(Languages.Quit).CreateMenuList();
+                .Append(Languages.Quit)
+                .CreateMenuList();
         }
 
         public void Execute()

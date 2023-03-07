@@ -42,18 +42,15 @@ namespace Pathfinding.App.Console.Units
             var factory = message.Algorithm;
             var range = rangeBuilder.Range;
             using var algorithm = factory.Create(range);
-            using (Disposable.Use(ClearColors))
+            using (Cursor.HideCursor())
             {
-                using (Cursor.HideCursor())
+                try
                 {
-                    try
-                    {
-                        FindPath(algorithm);
-                    }
-                    catch (PathfindingException ex)
-                    {
-                        log.Warn(ex.Message);
-                    }
+                    FindPath(algorithm);
+                }
+                catch (PathfindingException ex)
+                {
+                    log.Warn(ex.Message);
                 }
             }
         }

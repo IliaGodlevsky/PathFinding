@@ -3,7 +3,7 @@ using Pathfinding.AlgorithmLib.Core.Interface;
 
 namespace Pathfinding.App.Console.Messages
 {
-    internal sealed class PathFoundMessage : IHistoryMessage
+    internal sealed class PathFoundMessage
     {
         public IGraphPath Path { get; }
 
