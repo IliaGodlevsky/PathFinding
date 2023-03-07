@@ -1,9 +1,9 @@
 ﻿using Pathfinding.AlgorithmLib.History.Interface;
 using Pathfinding.GraphLib.Core.Interface;
-using Shared.Collections;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.AlgorithmLib.History
 {
@@ -11,7 +11,7 @@ namespace Pathfinding.AlgorithmLib.History
         where TVolume : IHistoryVolume<ICoordinate>, new()
     {
         private readonly int volumesCount = 5;
-        private readonly ReadOnlyList<TVolume> volumes;
+        private readonly TVolume[] volumes;
 
         private TVolume RangeHistory => volumes[0];
 
@@ -25,7 +25,7 @@ namespace Pathfinding.AlgorithmLib.History
 
         public History()
         {
-            volumes = volumesCount.Times<TVolume>().ToReadOnly();
+            volumes = volumesCount.Times<TVolume>().ToArray();
         }
 
         public IEnumerable<ICoordinate> GetObstacles(Guid key)

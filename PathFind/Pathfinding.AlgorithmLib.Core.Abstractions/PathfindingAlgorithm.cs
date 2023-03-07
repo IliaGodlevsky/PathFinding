@@ -46,7 +46,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             ThrowIfDisposed();
             var paths = new List<IGraphPath>();
             using (Disposable.Use(CompletePathfinding))
-            {                
+            {
                 PrepareForPathfinding();
                 foreach (var range in GetSubRanges())
                 {
@@ -80,7 +80,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         protected virtual IGraphPath GetSubPath()
         {
-            var traces = this.traces.ToDictionary().ToReadOnly();
+            var traces = this.traces.ToDictionary();
             return new GraphPath(traces, CurrentRange.Target);
         }
 
@@ -99,7 +99,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         {
             return vertex.Neighbours
                 .Where(v => !v.IsObstacle && !visited.Contains(v))
-                .ToReadOnly();
+                .ToArray();
         }
 
         private IEnumerable<SubRange> GetSubRanges()

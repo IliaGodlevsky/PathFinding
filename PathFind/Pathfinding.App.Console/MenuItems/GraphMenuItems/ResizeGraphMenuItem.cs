@@ -1,5 +1,4 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
@@ -20,7 +19,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             IVertexCostFactory costFactory, INeighborhoodFactory neighborhoodFactory)
             : base(messenger, random, costFactory, neighborhoodFactory)
         {
-            
+
         }
 
         private void OnGraphCreated(GraphCreatedMessage msg)

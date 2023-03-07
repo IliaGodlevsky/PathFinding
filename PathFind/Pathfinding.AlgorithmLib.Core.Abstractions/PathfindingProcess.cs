@@ -132,7 +132,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         }
 
         protected virtual void PrepareForPathfinding()
-        {            
+        {
             IsInProcess = true;
             Started?.Invoke(this, new());
         }

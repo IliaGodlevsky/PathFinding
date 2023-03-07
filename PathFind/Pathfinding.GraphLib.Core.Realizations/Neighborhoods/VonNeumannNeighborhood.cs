@@ -1,6 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Shared.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,7 +30,7 @@ namespace Pathfinding.GraphLib.Core.Realizations.Neighborhoods
         {
             return neighbours
                 .Where(neighbour => neighbour.IsCardinal(selfCoordinate))
-                .ToReadOnly();
+                .ToArray();
         }
 
         public IEnumerator<ICoordinate> GetEnumerator()

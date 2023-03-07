@@ -1,6 +1,5 @@
 ﻿using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
-using Shared.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
 using System.Linq;
@@ -20,7 +19,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             var vertices = root.Element(Vertices)
                 .Elements()
                 .Select(element => element.GetVertex(costFactory, coordinateFactory))
-                .ToReadOnly();
+                .ToArray();
 
             return new GraphSerializationInfo(dimensions, vertices);
         }
@@ -46,7 +45,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
                 .Elements()
                 .Select(Attributes<int>)
                 .Select(factory.CreateCoordinate)
-                .ToReadOnly();
+                .ToArray();
 
             return new VertexSerializationInfo(isObstacle, cost, coordinate, neighbours);
         }

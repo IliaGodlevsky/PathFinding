@@ -18,8 +18,8 @@ namespace Pathfinding.App.Console.Model.Visualizations
         public ConsoleColor ObstacleVertexColor { get; set; } = ConsoleColor.Black;
 
         public TotalVertexVisualization(IMessenger messenger,
-            IPathfindingVisualization<Vertex> pathfindingVisualization = null, 
-            IRangeVisualization<Vertex> rangeVisualization = null, 
+            IPathfindingVisualization<Vertex> pathfindingVisualization = null,
+            IRangeVisualization<Vertex> rangeVisualization = null,
             IPathVisualization<Vertex> pathVisualization = null)
         {
             this.messenger = messenger;

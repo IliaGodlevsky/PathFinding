@@ -1,11 +1,11 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
-using Shared.Collections;
 using Shared.Extensions;
 using Shared.Primitives;
 using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Media;
@@ -30,7 +30,7 @@ namespace Pathfinding.App.WPF._2D.Model
 
         public CostColors(IGraph<Vertex> graph)
         {
-            this.graph = graph.ToReadOnly();
+            this.graph = graph.ToArray();
             this.previousColors = new List<Brush>();
             this.costColors = new Lazy<IReadOnlyDictionary<int, Brush>>(FormCostColors);
         }
@@ -53,10 +53,10 @@ namespace Pathfinding.App.WPF._2D.Model
 
         private IReadOnlyDictionary<int, Brush> FormCostColors()
         {
-            var costValues = CostRange.Enumerate().ToReadOnly();
+            var costValues = CostRange.Enumerate().ToArray();
             var colors = new Dictionary<int, Brush>();
-            double step = byte.MaxValue / costValues.Count;
-            for (int i = 0; i < costValues.Count; i++)
+            double step = byte.MaxValue / costValues.Length;
+            for (int i = 0; i < costValues.Length; i++)
             {
                 var color = CostColor;
                 color.A = Convert.ToByte(i * step);

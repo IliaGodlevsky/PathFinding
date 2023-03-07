@@ -1,8 +1,6 @@
 ﻿using Autofac;
 using Autofac.Core;
 using Pathfinding.App.Console.Interface;
-using Shared.Collections;
-using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +22,9 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
             return middleware.GetParameters(context, key).Concat(GetParameters(context));
         }
 
-        private static ReadOnlyDictionary<ConsoleKey, TValue> Resolve<TValue>(IComponentContext context)
+        private static IReadOnlyDictionary<ConsoleKey, TValue> Resolve<TValue>(IComponentContext context)
         {
-            return context.ResolveWithMetadata<ConsoleKey, TValue>(Key).ToReadOnly();
+            return context.ResolveWithMetadata<ConsoleKey, TValue>(Key);
         }
 
         private static TypedParameter GetParameter<TKey>(object value)

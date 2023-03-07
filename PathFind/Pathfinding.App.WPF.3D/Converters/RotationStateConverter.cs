@@ -18,7 +18,7 @@ namespace Pathfinding.App.WPF._3D.Converters
             {
                 {true, new EnabledRotationState() },
                 {false, new DisabledRotationState() }
-            }.ToReadOnly();
+            };
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

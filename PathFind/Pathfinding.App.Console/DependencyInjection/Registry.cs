@@ -99,7 +99,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
             builder.RegisterType<VisualizationMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
             builder.RegisterType<HistoryMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
-            
+
             builder.RegisterType<AssembleGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
             builder.RegisterType<ResizeGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
             builder.RegisterType<EnterCostRangeMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
@@ -157,7 +157,7 @@ namespace Pathfinding.App.Console.DependencyInjection
 
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
-            builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance(); 
+            builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
             builder.RegisterType<CryptoRandom>().As<IRandom>().SingleInstance();
             builder.RegisterType<MeanCost>().As<IMeanCost>().SingleInstance();
 

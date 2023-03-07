@@ -1,6 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
-using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,7 +16,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations
             DimensionsSizes = graph.DimensionsSizes;
             VerticesInfo = graph
                 .Select(vertex => new VertexSerializationInfo(vertex))
-                .ToReadOnly();
+                .ToArray();
         }
 
         internal GraphSerializationInfo(int[] dimensionsSizes,

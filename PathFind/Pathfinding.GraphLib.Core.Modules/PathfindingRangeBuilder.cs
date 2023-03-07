@@ -27,7 +27,7 @@ namespace Pathfinding.GraphLib.Core.Modules
             UndoCommands = IncludeCommands
                 .Union(ExcludeCommands)
                 .OfType<IUndoCommand<TVertex>>()
-                .ToReadOnly();
+                .ToArray();
         }
 
         public void Include(TVertex vertex)

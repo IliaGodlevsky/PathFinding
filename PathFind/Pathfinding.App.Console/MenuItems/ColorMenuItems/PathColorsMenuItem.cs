@@ -17,7 +17,7 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
         [Description("Crossed path color")]
         private ConsoleColor CrossedPathColor { get; set; }
 
-        public PathColorsMenuItem(IMessenger messenger, IInput<int> intInput) 
+        public PathColorsMenuItem(IMessenger messenger, IInput<int> intInput)
             : base(messenger, intInput)
         {
         }

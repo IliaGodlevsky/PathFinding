@@ -64,10 +64,6 @@
       <Project>{67CCD24F-A5C1-41F9-9FE8-FC8C4C818646}</Project>
       <Name>Pathfinding.GraphLib.Core.NullObjects</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Shared.Collections\Shared.Collections.csproj">
-      <Project>{4debd450-feae-49e3-9961-06169d59dc03}</Project>
-      <Name>Shared.Collections</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
       <Project>{cd11d46e-4675-4090-b50b-a85ffa3d1d2c}</Project>
       <Name>Shared.Extensions</Name>

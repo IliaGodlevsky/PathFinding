@@ -21,7 +21,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 
         public RandomAlgorithm(IEnumerable<IVertex> pathfindingRange)
             : this(pathfindingRange, new PseudoRandom())
-        { 
+        {
 
         }
 

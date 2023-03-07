@@ -1,6 +1,5 @@
 ﻿using Pathfinding.GraphLib.Smoothing.Interface;
 using Pathfinding.GraphLib.Smoothing.Realizations;
-using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +31,7 @@ namespace Pathfinding.App.WPF._2D.Model
 
         private static IReadOnlyCollection<ISmoothLevel> GetLevels()
         {
-            return SmoothLevels.Levels.Append(new CustomSmoothLevel(1)).ToReadOnly();
+            return SmoothLevels.Levels.Append(new CustomSmoothLevel(1)).ToArray();
         }
     }
 }

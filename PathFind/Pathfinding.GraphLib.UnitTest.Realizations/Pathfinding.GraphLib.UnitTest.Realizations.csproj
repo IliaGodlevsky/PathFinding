@@ -97,10 +97,6 @@
       <Project>{5b3827e8-4cc0-490d-b15c-4190a2982059}</Project>
       <Name>Pathfinding.GraphLib.Serialization.Core.Realizations</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Shared.Collections\Shared.Collections.csproj">
-      <Project>{4DEBD450-FEAE-49E3-9961-06169D59DC03}</Project>
-      <Name>Shared.Collections</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
       <Project>{CD11D46E-4675-4090-B50B-A85FFA3D1D2C}</Project>
       <Name>Shared.Extensions</Name>

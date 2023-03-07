@@ -29,7 +29,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
         public IDAStarAlgorithm(IEnumerable<IVertex> pathfindingRange, IStepRule stepRule, IHeuristic function)
             : base(pathfindingRange, stepRule, function)
         {
-            stashedVertices = new (new VertexEqualityComparer());
+            stashedVertices = new(new VertexEqualityComparer());
         }
 
         protected override IVertex GetNextVertex()

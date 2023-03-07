@@ -14,7 +14,7 @@ namespace Pathfinding.App.Console.Extensions
             return items.CreateMenuList(item => item.ToString(), columnsNumber);
         }
 
-        public static MenuList CreateMenuList<T>(this IEnumerable<T> items, Func<T, string> descriptionSelector, 
+        public static MenuList CreateMenuList<T>(this IEnumerable<T> items, Func<T, string> descriptionSelector,
             int columnsNumber = 2)
         {
             return new(items.Select(descriptionSelector), columnsNumber);

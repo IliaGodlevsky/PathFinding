@@ -64,7 +64,7 @@ namespace Pathfinding.App.WPF._2D.Model
                 }
                 if (visualization.IsVisualizedAsPath(this))
                 {
-                    RaiseEvent(new (ColoredAsPathEvent, this));
+                    RaiseEvent(new(ColoredAsPathEvent, this));
                 }
             }
         }

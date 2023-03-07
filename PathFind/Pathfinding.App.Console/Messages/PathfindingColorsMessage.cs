@@ -12,6 +12,6 @@ namespace Pathfinding.App.Console.Messages
         {
             VisitColor = visitColor;
             EnqueuColor = enqueuColor;
-        }        
+        }
     }
 }

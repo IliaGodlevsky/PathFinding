@@ -34,7 +34,7 @@ namespace Pathfinding.App.WPF._3D.DependencyInjection
             return context.ResolveKeyed<IEnumerable<Meta<IPathfindingRangeCommand<Vertex3D>>>>(key)
                 .OrderBy(x => x.Metadata[Order])
                 .Select(x => x.Value)
-                .ToReadOnly();
+                .ToArray();
         }
     }
 }

@@ -1,19 +1,19 @@
 ﻿using Pathfinding.App.Console.Localization;
-using Shared.Collections;
 using Shared.Primitives.ValueRange;
 using System;
+using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.Model
 {
     internal sealed class Answer : IComparable<Answer>, IEquatable<Answer>
     {
-        public static readonly Answer Yes = new (1, Languages.Yes);
-        public static readonly Answer No = new (0, Languages.No);
-        private static readonly Answer Default = new (-1, string.Empty);
+        public static readonly Answer Yes = new(1, Languages.Yes);
+        public static readonly Answer No = new(0, Languages.No);
+        private static readonly Answer Default = new(-1, string.Empty);
 
-        public static readonly InclusiveValueRange<Answer> Range = new (Yes, No);
+        public static readonly InclusiveValueRange<Answer> Range = new(Yes, No);
 
-        public static readonly ReadOnlyList<Answer> Answers = new (Yes, No);
+        public static readonly IReadOnlyCollection<Answer> Answers = new[] { Yes, No };
 
         private readonly int value;
         private readonly string display;

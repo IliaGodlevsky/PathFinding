@@ -1,8 +1,8 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Shared.Extensions;
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace Pathfinding.GraphLib.Core.Abstractions
@@ -20,7 +20,9 @@ namespace Pathfinding.GraphLib.Core.Abstractions
 
         protected Coordinate(int numberOfDimensions, IReadOnlyList<int> coordinates)
         {
-            CoordinatesValues = coordinates.TakeOrDefault(numberOfDimensions).ToReadOnly();
+            CoordinatesValues = coordinates
+                .TakeOrDefault(numberOfDimensions)
+                .ToArray();
             toString = $"({string.Join(",", CoordinatesValues)})";
             hashCode = CoordinatesValues.ToHashCode();
         }

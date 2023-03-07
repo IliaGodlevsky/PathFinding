@@ -45,7 +45,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths
 
         private IReadOnlyList<IVertex> GetPath()
         {
-            var vertices = new HashSet<IVertex>();
+            var vertices = new List<IVertex>();
             var vertex = target;
             vertices.Add(vertex);
             var parent = GetParentOrNullVertex(vertex);
@@ -55,7 +55,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths
                 vertex = parent;
                 parent = GetParentOrNullVertex(vertex);
             }
-            return vertices.ToReadOnly();
+            return vertices.AsReadOnly();
         }
 
         private double GetPathCost()

@@ -27,7 +27,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 
         protected override IGraphPath GetSubPath()
         {
-            var traces = this.traces.ToDictionary().ToReadOnly();
+            var traces = this.traces.ToDictionary();
             return new GraphPath(traces, CurrentRange.Target, stepRule);
         }
 

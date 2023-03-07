@@ -1,6 +1,4 @@
-﻿using Shared.Collections;
-using Shared.Extensions;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 
@@ -22,7 +20,7 @@ namespace Pathfinding.App.Console
         public static readonly Guid StatisticsUnit = Guid.NewGuid();
         public static readonly Guid VisualizationUnit = Guid.NewGuid();
 
-        public static readonly ReadOnlyList<Guid> All;
+        public static readonly Guid[] All;
 
         static MessageTokens()
         {
@@ -30,7 +28,7 @@ namespace Pathfinding.App.Console
             All = typeof(MessageTokens).GetFields(flags)
                 .Where(field => field.FieldType == typeof(Guid))
                 .Select(field => (Guid)field.GetValue(null))
-                .ToReadOnly();
+                .ToArray();
         }
     }
 }

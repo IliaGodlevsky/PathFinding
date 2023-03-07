@@ -17,7 +17,7 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
         [Description("Enqueued color")]
         private ConsoleColor EnqueuedColor { get; set; }
 
-        public PathfindingColorsMenuItem(IMessenger messenger, IInput<int> intInput) 
+        public PathfindingColorsMenuItem(IMessenger messenger, IInput<int> intInput)
             : base(messenger, intInput)
         {
         }

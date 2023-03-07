@@ -3,7 +3,6 @@ using Pathfinding.App.WPF._3D.Interface;
 using System;
 using System.Collections.Generic;
 using System.Windows.Media.Media3D;
-using System.Windows.Shapes;
 
 namespace Pathfinding.App.WPF._3D.Model3DFactories
 {

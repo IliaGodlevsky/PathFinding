@@ -18,7 +18,7 @@ namespace Pathfinding.App.Console.Model
 
         public override bool Equals(object obj)
         {
-            return GetHashCode() == obj?.GetHashCode() 
+            return GetHashCode() == obj?.GetHashCode()
                 && condition?.Invoke() == true;
         }
 

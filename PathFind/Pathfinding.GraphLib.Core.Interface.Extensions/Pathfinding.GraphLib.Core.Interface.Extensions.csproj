@@ -61,10 +61,6 @@
       <Project>{8C66CBDB-9899-4D80-846A-F197925D3163}</Project>
       <Name>Pathfinding.GraphLib.Factory.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Shared.Collections\Shared.Collections.csproj">
-      <Project>{4DEBD450-FEAE-49E3-9961-06169D59DC03}</Project>
-      <Name>Shared.Collections</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
       <Project>{cd11d46e-4675-4090-b50b-a85ffa3d1d2c}</Project>
       <Name>Shared.Extensions</Name>

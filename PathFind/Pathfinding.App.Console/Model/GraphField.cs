@@ -3,8 +3,6 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model.FramedAxes;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.VisualizationLib.Core.Interface;
-using Shared.Collections;
-using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +16,7 @@ namespace Pathfinding.App.Console.Model
 
         public IReadOnlyCollection<Vertex> Vertices { get; }
 
-        private ReadOnlyList<IDisplayable> Displayables { get; }
+        private IReadOnlyCollection<IDisplayable> Displayables { get; }
 
         public GraphField(Graph2D<Vertex> graph)
             : this(graph, new FramedOverAbscissa(graph),
@@ -32,7 +30,7 @@ namespace Pathfinding.App.Console.Model
         private GraphField(Graph2D<Vertex> graph, params FramedAxis[] axes)
         {
             Vertices = graph;
-            Displayables = axes.Concat<IDisplayable>(graph).ToReadOnly();
+            Displayables = axes.Concat<IDisplayable>(graph).ToArray();
         }
 
         public void Display()

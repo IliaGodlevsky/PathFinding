@@ -1,12 +1,12 @@
 ﻿using Autofac;
 using Pathfinding.App.WPF._3D.DependencyInjection;
 using Pathfinding.App.WPF._3D.Interface;
-using Shared.Extensions;
 using Shared.Primitives.ValueRange;
 using Shared.Random;
 using Shared.Random.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.App.WPF._3D.Model
 {
@@ -18,7 +18,7 @@ namespace Pathfinding.App.WPF._3D.Model
 
         static AnimationSpeeds()
         {
-            speeds = new(() => GetSpeeds().ToReadOnly());
+            speeds = new(() => GetSpeeds().ToArray());
         }
 
         private sealed class AnimationSpeed : IAnimationSpeed

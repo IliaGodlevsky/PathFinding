@@ -16,9 +16,9 @@ using System.IO;
 
 namespace Pathfinding.GraphLib.Serialization.Tests
 {
-    using Serializer = IGraphSerializer<TestGraph, TestVertex>;
     using Assemble = GraphAssemble<TestGraph, TestVertex>;
     using Layer = ILayer<TestGraph, TestVertex>;
+    using Serializer = IGraphSerializer<TestGraph, TestVertex>;
 
     [TestFixture]
     public class GraphSerializationTests

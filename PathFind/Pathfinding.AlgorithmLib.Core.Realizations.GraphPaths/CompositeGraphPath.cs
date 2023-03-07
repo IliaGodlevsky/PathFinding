@@ -1,6 +1,5 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface;
-using Shared.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,7 +30,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths
 
         private IReadOnlyCollection<ICoordinate> GetPath()
         {
-            return paths.SelectMany(p => p.Reverse()).ToReadOnly();
+            return paths.SelectMany(p => p.Reverse()).ToArray();
         }
 
         private int GetCount()

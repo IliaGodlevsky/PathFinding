@@ -36,7 +36,7 @@ namespace Pathfinding.App.Console.Model
             }
         }
 
-        public IVertexCost Cost 
+        public IVertexCost Cost
         {
             get => cost;
             set
@@ -46,7 +46,7 @@ namespace Pathfinding.App.Console.Model
             }
         }
 
-        public ConsoleColor Color 
+        public ConsoleColor Color
         {
             get => color;
             set

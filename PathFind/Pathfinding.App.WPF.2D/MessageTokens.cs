@@ -1,6 +1,4 @@
-﻿using Shared.Collections;
-using Shared.Extensions;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 
@@ -13,14 +11,14 @@ namespace Pathfinding.App.WPF._2D
         public static readonly Guid CostChangeSubscription = Guid.NewGuid();
         public static readonly Guid CostColors = Guid.NewGuid();
 
-        public static readonly ReadOnlyList<Guid> All;
+        public static readonly Guid[] All;
 
         static MessageTokens()
         {
             All = typeof(MessageTokens).GetFields(Flags)
                 .Where(field => field.FieldType == typeof(Guid))
                 .Select(field => (Guid)field.GetValue(null))
-                .ToReadOnly();
+                .ToArray();
         }
     }
 }

@@ -22,8 +22,8 @@ namespace Pathfinding.AlgorithmLib.Factory
         }
 
         public RandomAlgorithmFactory()
-            : this(new PseudoRandom()) 
-        { 
+            : this(new PseudoRandom())
+        {
 
         }
 

@@ -36,7 +36,6 @@ using System;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using System.Windows.Media.Media3D;
 using static Pathfinding.App.WPF._3D.DependencyInjection.RegistrationConstants;
 
 namespace Pathfinding.App.WPF._3D.DependencyInjection

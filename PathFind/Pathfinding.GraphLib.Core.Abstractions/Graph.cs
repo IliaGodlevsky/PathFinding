@@ -5,6 +5,7 @@ using Shared.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Pathfinding.GraphLib.Core.Abstractions
@@ -21,11 +22,11 @@ namespace Pathfinding.GraphLib.Core.Abstractions
         protected Graph(int requiredNumberOfDimensions, IReadOnlyCollection<TVertex> vertices,
             IReadOnlyList<int> dimensionSizes)
         {
-            DimensionsSizes = dimensionSizes.TakeOrDefault(requiredNumberOfDimensions, 1).ToReadOnly();
+            DimensionsSizes = dimensionSizes.TakeOrDefault(requiredNumberOfDimensions, 1).ToArray();
             Count = DimensionsSizes.AggregateOrDefault((x, y) => x * y);
-            this.vertices = vertices.Take(Count)
-                .ToDictionary(vertex => vertex.Position, new CoordinateEqualityComparer())
-                .ToReadOnly();
+            var result = vertices.Take(Count)
+                .ToDictionary(vertex => vertex.Position, new CoordinateEqualityComparer());
+            this.vertices = new ReadOnlyDictionary<ICoordinate, TVertex>(result);
         }
 
         public TVertex Get(ICoordinate coordinate)

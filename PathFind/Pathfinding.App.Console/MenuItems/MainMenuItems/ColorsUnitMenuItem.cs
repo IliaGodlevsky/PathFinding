@@ -9,7 +9,7 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
     [LowPriority]
     internal sealed class ColorsUnitMenuItem : UnitDisplayMenuItem<ColorsUnit>
     {
-        public ColorsUnitMenuItem(IViewFactory viewFactory, ColorsUnit unit, ILog log) 
+        public ColorsUnitMenuItem(IViewFactory viewFactory, ColorsUnit unit, ILog log)
             : base(viewFactory, unit, log)
         {
         }

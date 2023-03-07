@@ -12,7 +12,7 @@ namespace Pathfinding.App.Console.Model.VertexActions
 
         public void Do(Vertex vertex)
         {
-            
+
         }
     }
 }

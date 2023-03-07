@@ -31,7 +31,7 @@ namespace Pathfinding.GraphLib.Serialization.Tests
         }
 
         private static TestCaseData GenerateXmlGraphSerializer(params int[] dimensions)
-        {           
+        {
             var serializer = GetSerializer<XmlGraphSerializer<TestGraph, TestVertex>>();
             return new TestCaseData(serializer, dimensions);
         }
@@ -39,7 +39,7 @@ namespace Pathfinding.GraphLib.Serialization.Tests
         private static TestCaseData GenerateBinaryGraphSerializer(params int[] dimensions)
         {
             var serializer = GetSerializer<BinaryGraphSerializer<TestGraph, TestVertex>>();
-            return new TestCaseData(serializer,  dimensions);
+            return new TestCaseData(serializer, dimensions);
         }
 
         private static TestCaseData GenerateBinaryCryptoGraphSerializer(params int[] dimensions)

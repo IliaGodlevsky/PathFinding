@@ -45,7 +45,7 @@ namespace Pathfinding.App.WPF._3D
             AngleValueRange = new(360, 0);
             ObstaclePercentValueRange = new(99, 0);
             AlgorithmDelayValueRange = new(TimeSpan.FromMilliseconds(35), TimeSpan.FromMilliseconds(1));
-            GraphWidthValueRange = new (9, 1);
+            GraphWidthValueRange = new(9, 1);
             FieldOfViewValueRange = new(360, 0);
             GraphLengthValueRange = GraphWidthValueRange;
             GraphHeightValueRange = GraphLengthValueRange;

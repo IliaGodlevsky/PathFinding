@@ -28,7 +28,7 @@ namespace Shared.Random.Extensions
         /// and <paramref name="maxValue"/></returns>
         public static int NextInt(this IRandom random, int maxValue = int.MaxValue, int minValue = default)
         {
-            return random.NextInt(new (maxValue, minValue));
+            return random.NextInt(new(maxValue, minValue));
         }
 
         /// <summary>

@@ -17,15 +17,13 @@ namespace Pathfinding.App.Console.DependencyInjection
         public static IReadOnlyDictionary<TKey, TValue> ResolveWithMetadata<TKey, TValue>(this IComponentContext context, string key)
         {
             return context.Resolve<IEnumerable<Meta<TValue>>>()
-                .ToDictionary(action => (TKey)action.Metadata[key], action => action.Value)
-                .ToReadOnly();
+                .ToDictionary(action => (TKey)action.Metadata[key], action => action.Value);
         }
 
         public static IReadOnlyDictionary<TKey, TValue> ResolveWithMetadataKeyed<TKey, TValue>(this IComponentContext context, string key)
         {
             return context.ResolveKeyed<IEnumerable<Meta<TValue>>>(key)
-                .ToDictionary(action => (TKey)action.Metadata[key], action => action.Value)
-                .ToReadOnly();
+                .ToDictionary(action => (TKey)action.Metadata[key], action => action.Value);
         }
 
         public static IRegistrationBuilder<TLimit, TActivatorData, TRegistrationStyle> Keyed<TLimit, TActivatorData, TRegistrationStyle>(

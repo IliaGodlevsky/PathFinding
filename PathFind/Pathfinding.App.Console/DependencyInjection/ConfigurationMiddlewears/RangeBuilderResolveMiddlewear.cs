@@ -3,7 +3,6 @@ using Autofac.Core.Resolving.Pipeline;
 using Autofac.Features.Metadata;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Modules.Interface;
-using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +35,7 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
             return context.ResolveKeyed<IEnumerable<Meta<Command>>>(key)
                 .OrderBy(x => x.Metadata[metadataKey])
                 .Select(x => x.Value)
-                .ToReadOnly();
+                .ToArray();
         }
 
         private IEnumerable<NamedParameter> GetParameters(IComponentContext context)

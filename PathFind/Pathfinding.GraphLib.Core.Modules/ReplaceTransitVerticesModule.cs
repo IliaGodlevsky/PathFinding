@@ -12,8 +12,8 @@ namespace Pathfinding.GraphLib.Core.Modules
     public sealed class ReplaceTransitVerticesModule<TVertex> : IUndo
         where TVertex : IVertex
     {
-        private readonly IEnumerable<IReplaceTransitCommand<TVertex>> markCommands;
-        private readonly IEnumerable<IUndo> undoCommands;
+        private readonly IReplaceTransitCommand<TVertex>[] markCommands;
+        private readonly IUndo[] undoCommands;
         private readonly IPathfindingRangeCommand<TVertex> replaceCommand;
         private readonly IPathfindingRange<TVertex> range;
 
@@ -22,8 +22,8 @@ namespace Pathfinding.GraphLib.Core.Modules
         public ReplaceTransitVerticesModule(IPathfindingRange<TVertex> range)
         {
             this.range = range;
-            markCommands = GetMarkCommands().ToReadOnly();
-            undoCommands = markCommands.OfType<IUndo>().ToReadOnly();
+            markCommands = GetMarkCommands().ToArray();
+            undoCommands = markCommands.OfType<IUndo>().ToArray();
             replaceCommand = new ReplaceTransitVertex<TVertex>(this);
         }
 

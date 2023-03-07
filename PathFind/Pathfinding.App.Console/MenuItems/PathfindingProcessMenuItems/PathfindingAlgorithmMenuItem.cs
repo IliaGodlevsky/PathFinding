@@ -9,9 +9,6 @@ using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
-using Shared.Extensions;
-using Shared.Primitives.Attributes;
-using Shared.Primitives.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,14 +19,14 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     [HighestPriority]
     internal sealed class PathfindingAlgorithmMenuItem : IConditionedMenuItem
     {
-        private readonly IReadOnlyList<AlgorithmFactory> factories;        
+        private readonly IReadOnlyList<AlgorithmFactory> factories;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         private readonly IMessenger messenger;
         private readonly IInput<int> input;
 
         public PathfindingAlgorithmMenuItem(IMessenger messenger,
-            AlgorithmFactory[] factories, 
-            IPathfindingRangeBuilder<Vertex> rangeBuilder, 
+            IReadOnlyList<AlgorithmFactory> factories,
+            IPathfindingRangeBuilder<Vertex> rangeBuilder,
             IInput<int> input)
         {
             this.messenger = messenger;

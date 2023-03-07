@@ -1,8 +1,8 @@
 ﻿using Pathfinding.GraphLib.Smoothing.Interface;
 using Pathfinding.GraphLib.Smoothing.Localization;
-using Shared.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.GraphLib.Smoothing.Realizations
 {
@@ -14,7 +14,7 @@ namespace Pathfinding.GraphLib.Smoothing.Realizations
 
         static SmoothLevels()
         {
-            levels = new(() => GetSmoothLevels().ToReadOnly());
+            levels = new(() => GetSmoothLevels().ToArray());
         }
 
         private sealed class SmoothLevel : ISmoothLevel

@@ -1,7 +1,7 @@
 ﻿using Pathfinding.GraphLib.Core.Realizations.Coordinates;
 using Pathfinding.VisualizationLib.Core.Interface;
-using Shared.Collections;
 using Shared.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 
@@ -19,7 +19,7 @@ namespace Pathfinding.App.WPF._2D.Model
             Vertices.ForEach(vertex => Locate(vertex));
         }
 
-        public GraphField() : this(ReadOnlyList<Vertex>.Empty)
+        public GraphField() : this(Array.Empty<Vertex>())
         {
 
         }

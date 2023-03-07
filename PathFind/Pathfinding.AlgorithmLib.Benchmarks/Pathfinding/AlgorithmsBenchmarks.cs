@@ -8,7 +8,6 @@ using Pathfinding.GraphLib.UnitTest.Realizations.TestFactories;
 using Pathfinding.GraphLib.UnitTest.Realizations.TestObjects;
 using Shared.Primitives.ValueRange;
 using Shared.Random;
-using Shared.Random.Extensions;
 using Shared.Random.Realizations;
 using System.Collections.Generic;
 using System.Linq;

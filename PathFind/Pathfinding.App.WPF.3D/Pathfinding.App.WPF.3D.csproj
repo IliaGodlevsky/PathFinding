@@ -470,10 +470,6 @@
       <Project>{ECC527ED-96BA-44DF-9561-6CD8DE13B550}</Project>
       <Name>Pathfinding.VisualizationLib.Core.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Shared.Collections\Shared.Collections.csproj">
-      <Project>{4debd450-feae-49e3-9961-06169d59dc03}</Project>
-      <Name>Shared.Collections</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Shared.Executable.Extensions\Shared.Executable.Extensions.csproj">
       <Project>{715b890d-caec-46e6-bf18-a556e1ae81a9}</Project>
       <Name>Shared.Executable.Extensions</Name>

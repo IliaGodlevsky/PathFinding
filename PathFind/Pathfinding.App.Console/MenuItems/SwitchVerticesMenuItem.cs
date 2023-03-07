@@ -13,7 +13,7 @@ using System.Collections.Generic;
 namespace Pathfinding.App.Console.MenuItems
 {
     using VertexActions = IReadOnlyDictionary<ConsoleKey, IVertexAction>;
-     
+
     internal abstract class SwitchVerticesMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         protected readonly IMessenger messenger;

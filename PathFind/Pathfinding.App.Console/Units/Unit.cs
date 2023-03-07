@@ -1,5 +1,4 @@
 ﻿using Pathfinding.App.Console.Interface;
-using Shared.Extensions;
 using Shared.Primitives.Extensions;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +24,7 @@ namespace Pathfinding.App.Console.Units
                 .Where(item => item.CanBeExecuted())
                 .Concat(MenuItems)
                 .OrderByOrderAttribute()
-                .ToReadOnly();
+                .ToArray();
         }
     }
 }

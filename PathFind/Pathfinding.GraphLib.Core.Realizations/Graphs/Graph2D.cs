@@ -1,6 +1,6 @@
 ﻿using Pathfinding.GraphLib.Core.Abstractions;
 using Pathfinding.GraphLib.Core.Interface;
-using Shared.Collections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +10,7 @@ namespace Pathfinding.GraphLib.Core.Realizations.Graphs
         where TVertex : IVertex
     {
         public static readonly Graph2D<TVertex> Empty
-            = new (ReadOnlyList<TVertex>.Empty, ReadOnlyList<int>.Empty);
+            = new(Array.Empty<TVertex>(), Array.Empty<int>());
 
         public int Width { get; }
 

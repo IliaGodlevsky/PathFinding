@@ -27,10 +27,10 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
         {
             this.messenger = messenger;
             this.intInput = intInput;
-            allColors = Enum.GetValues(typeof(ConsoleColor)).Cast<ConsoleColor>().ToReadOnly();
+            allColors = Enum.GetValues(typeof(ConsoleColor)).Cast<ConsoleColor>().ToArray();
             allColorsMenuList = allColors.CreateMenuList(GetName);
             properties = GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance)
-                .Where(prop => prop.PropertyType == typeof(ConsoleColor)).ToReadOnly();
+                .Where(prop => prop.PropertyType == typeof(ConsoleColor)).ToArray();
             menuItemsColorsMenuList = properties
                 .Select(prop => prop.GetAttributeOrDefault<DescriptionAttribute>().Description)
                 .Append(Languages.Quit).CreateMenuList();

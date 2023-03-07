@@ -7,7 +7,7 @@ namespace Pathfinding.App.Console.Extensions
     {
         public static void SendMany<TMessage>(this IMessenger messenger, TMessage message, params Guid[] tokens)
         {
-            foreach(var token in tokens)
+            foreach (var token in tokens)
             {
                 messenger.Send(message, token);
             }

@@ -48,7 +48,7 @@ namespace Pathfinding.GraphLib.Factory.Realizations.GraphAssembles
                 index /= dimensionSizes[i];
                 return coordinate;
             }
-            return range.Enumerate().Select(Coordinate).ToReadOnly();
+            return range.Enumerate().Select(Coordinate).ToArray();
         }
 
         public override string ToString()

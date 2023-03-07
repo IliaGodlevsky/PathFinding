@@ -19,13 +19,11 @@ namespace Pathfinding.App.WPF._2D.DependencyInjection
 
         public void Execute(ResolveRequestContext context, Action<ResolveRequestContext> next)
         {
-            var parametres = new List<Parameter>();
             var include = ResolveKeyed(context, IncludeCommand);
             var exclude = ResolveKeyed(context, ExcludeCommand);
             var includeParametre = new NamedParameter("includeCommands", include);
             var excludeParametre = new NamedParameter("excludeCommands", exclude);
-            parametres.AddRange(includeParametre, excludeParametre);
-            context.ChangeParameters(parametres);
+            context.ChangeParameters(new[] { includeParametre, excludeParametre });
             next(context);
         }
 
@@ -34,7 +32,7 @@ namespace Pathfinding.App.WPF._2D.DependencyInjection
             return context.ResolveKeyed<IEnumerable<Meta<IPathfindingRangeCommand<Vertex>>>>(key)
                 .OrderBy(x => x.Metadata[Order])
                 .Select(x => x.Value)
-                .ToReadOnly();
+                .ToArray();
         }
     }
 }

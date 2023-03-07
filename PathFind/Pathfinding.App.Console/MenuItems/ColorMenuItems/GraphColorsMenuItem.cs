@@ -17,7 +17,7 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
         [Description("Obstacle color")]
         private ConsoleColor ObstacleColor { get; set; }
 
-        public GraphColorsMenuItem(IMessenger messenger, IInput<int> intInput) 
+        public GraphColorsMenuItem(IMessenger messenger, IInput<int> intInput)
             : base(messenger, intInput)
         {
 

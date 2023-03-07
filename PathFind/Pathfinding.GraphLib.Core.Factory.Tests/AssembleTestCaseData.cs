@@ -22,6 +22,6 @@ namespace Pathfinding.GraphLib.Core.Factory.Tests
         private static TestCaseData GenerateTestCase(params int[] dimensionSizes)
         {
             return new TestCaseData(dimensionSizes).SetDescription(Description);
-        }       
+        }
     }
 }

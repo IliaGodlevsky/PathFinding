@@ -71,10 +71,6 @@
       <Project>{580F22FB-42C3-45C4-9328-2D968DC63C5E}</Project>
       <Name>Pathfinding.GraphLib.Core.Modules.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Shared.Collections\Shared.Collections.csproj">
-      <Project>{4DEBD450-FEAE-49E3-9961-06169D59DC03}</Project>
-      <Name>Shared.Collections</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Shared.Executable.Extensions\Shared.Executable.Extensions.csproj">
       <Project>{715b890d-caec-46e6-bf18-a556e1ae81a9}</Project>
       <Name>Shared.Executable.Extensions</Name>
