@@ -9,6 +9,7 @@ using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
@@ -34,13 +35,14 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 
         protected override IVertex GetNextVertex()
         {
-            var items = storage.OrderByDescending(v => heuristics[v.Position]).Take(ToStashCount)
-                .Select(vertex => (Vertex: vertex, Priority: storage.GetPriorityOrInfinity(vertex)));
-            foreach (var item in items)
-            {
-                storage.TryRemove(item.Vertex);
-                stashedVertices[item.Vertex] = item.Priority;
-            }
+            storage.OrderByDescending(v => heuristics[v.Position])
+                .Take(ToStashCount)
+                .Select(vertex => (Vertex: vertex, Priority: storage.GetPriorityOrInfinity(vertex)))
+                .ForEach(item =>
+                {
+                    storage.TryRemove(item.Vertex);
+                    stashedVertices[item.Vertex] = item.Priority;
+                });
             var next = storage.TryFirstOrNullVertex();
             if (next.HasNoNeighbours())
             {

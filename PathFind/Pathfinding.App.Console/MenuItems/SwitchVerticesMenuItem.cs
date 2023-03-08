@@ -2,7 +2,6 @@
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Abstractions;
 using Pathfinding.GraphLib.Core.Realizations.Coordinates;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Extensions;
@@ -46,7 +45,6 @@ namespace Pathfinding.App.Console.MenuItems
             {
                 var coordinate = new Coordinate2D(x, y);
                 var vertex = graph.Get(coordinate);
-                DisplayCoordinate(coordinate);
                 Cursor.SetPosition(vertex.ConsolePosition);
                 key = keyInput.Input();
                 switch (key)
@@ -58,20 +56,11 @@ namespace Pathfinding.App.Console.MenuItems
                     default: actions.GetOrDefault(key)?.Do(vertex); break;
                 }
             } while (key != ConsoleKey.Escape);
-            messenger.Send(PathfindingStatisticsMessage.Empty);
         }
 
         private static int ReturnInRange(int coordinate, InclusiveValueRange<int> range)
         {
             return range.ReturnInRange(coordinate, ReturnOptions.Cycle);
-        }
-
-        private void DisplayCoordinate(Coordinate2D coordinate)
-        {
-            using (Cursor.HideCursor())
-            {
-                messenger.Send(new PathfindingStatisticsMessage(coordinate.ToString()));
-            }
         }
 
         private void OnGraphCreated(GraphCreatedMessage message)

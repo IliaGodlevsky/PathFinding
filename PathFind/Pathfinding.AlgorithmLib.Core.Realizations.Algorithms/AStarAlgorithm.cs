@@ -55,7 +55,9 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 
         protected override double GetVertexCurrentCost(IVertex vertex)
         {
-            return accumulatedCosts.TryGetValue(vertex.Position, out double cost) ? cost : double.PositiveInfinity;
+            return accumulatedCosts.TryGetValue(vertex.Position, out double cost) 
+                ? cost 
+                : double.PositiveInfinity;
         }
 
         protected virtual double CalculateHeuristic(IVertex vertex)

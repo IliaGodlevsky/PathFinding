@@ -42,17 +42,20 @@ namespace Pathfinding.App.Console.Units
             var factory = message.Algorithm;
             var range = rangeBuilder.Range;
             using var algorithm = factory.Create(range);
-            using (Cursor.HideCursor())
+            using (Disposable.Use(ClearColors))
             {
-                try
+                using (Cursor.HideCursor())
                 {
-                    FindPath(algorithm);
+                    try
+                    {
+                        FindPath(algorithm);
+                    }
+                    catch (PathfindingException ex)
+                    {
+                        log.Warn(ex.Message);
+                    }
                 }
-                catch (PathfindingException ex)
-                {
-                    log.Warn(ex.Message);
-                }
-            }
+            } 
         }
 
         private void ClearColors()
