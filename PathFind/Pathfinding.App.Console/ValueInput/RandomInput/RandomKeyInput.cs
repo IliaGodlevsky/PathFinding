@@ -16,8 +16,8 @@ namespace Pathfinding.App.Console.ValueInput.RandomInput
 
         public RandomKeyInput(IRandom random) : base(random)
         {
-            Keys = new () { Enter/*, UpArrow, DownArrow*/};
-            Range = new (Keys.Count - 1);
+            Keys = new() { Enter/*, UpArrow, DownArrow*/};
+            Range = new(Keys.Count - 1);
         }
 
         public override ConsoleKey Input()

@@ -1,11 +1,15 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
+using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.History;
 using Pathfinding.AlgorithmLib.History.Interface;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Visualization.Extensions;
@@ -31,21 +35,21 @@ namespace Pathfinding.App.Console.Units
             this.messenger = messenger;
         }
 
-        private void OnHistoryPage(HistoryPageMessage message)
+        private void OnHistoryPage(DataMessage<Guid> msg)
         {
             graph.RestoreVerticesVisualState();
-            graph.ApplyCosts(pricesHistory[message.PageKey]);
-            history.VisualizeHistory(message.PageKey, graph);
+            graph.ApplyCosts(pricesHistory[msg.Value]);
+            history.VisualizeHistory(msg.Value, graph);
         }
 
-        private void OnHistoryApplied(ApplyHistoryMessage message)
+        private void OnHistoryApplied(DataMessage<bool> msg)
         {
-            isHistoryApplied = message.IsApplied;
+            isHistoryApplied = msg.Value;
         }
 
-        private void OnGraphCreated(GraphCreatedMessage message)
+        private void OnGraphCreated(DataMessage<Graph2D<Vertex>> msg)
         {
-            graph = message.Graph;
+            graph = msg.Value;
             ClearHistory();
         }
 
@@ -65,32 +69,32 @@ namespace Pathfinding.App.Console.Units
 
         private bool IsHistoryApplied() => isHistoryApplied;
 
-        private void OnRangeChosen(PathfindingRangeChosenMessage msg)
+        private void OnRangeChosen(AlgorithmMessage<IPathfindingRange<Vertex>> msg)
         {
-            history.AddPathfindingRange(msg.Key, msg.Range);
+            history.AddPathfindingRange(msg.Algorithm.Id, msg.Value);
         }
 
-        private void OnPathFound(PathFoundMessage msg)
+        private void OnPathFound(AlgorithmMessage<IGraphPath> msg)
         {
-            history.AddPath(msg.Algorithm.Id, msg.Path);
+            history.AddPath(msg.Algorithm.Id, msg.Value);
         }
 
-        private void OnSubscribeOnHistory(SubscribeOnHistoryMessage msg)
+        private void OnSubscribeOnHistory(DataMessage<PathfindingProcess> msg)
         {
-            history.AddObstacles(msg.Algorithm.Id, graph.GetObstaclesCoordinates());
-            pricesHistory.Add(msg.Algorithm.Id, graph.GetCosts());
-            msg.Algorithm.VertexVisited += OnVertexVisited;
+            history.AddObstacles(msg.Value.Id, graph.GetObstaclesCoordinates());
+            pricesHistory.Add(msg.Value.Id, graph.GetCosts());
+            msg.Value.VertexVisited += OnVertexVisited;
         }
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            var token = ConditionToken.Create(IsHistoryApplied, MessageTokens.HistoryUnit);
-            messenger.Register<PathfindingRangeChosenMessage>(this, token, OnRangeChosen);
-            messenger.Register<PathFoundMessage>(this, token, OnPathFound);
-            messenger.Register<SubscribeOnHistoryMessage>(this, token, OnSubscribeOnHistory);
-            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
-            messenger.Register<ApplyHistoryMessage>(this, OnHistoryApplied);
-            messenger.Register<HistoryPageMessage>(this, OnHistoryPage);
+            var token = ConditionToken.Create(IsHistoryApplied, Tokens.History);
+            messenger.RegisterAlgorithmData<IPathfindingRange<Vertex>>(this, token, OnRangeChosen);
+            messenger.RegisterAlgorithmData<IGraphPath>(this, token, OnPathFound);
+            messenger.RegisterData<PathfindingProcess>(this, token, OnSubscribeOnHistory);
+            messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
+            messenger.RegisterData<bool>(this, Tokens.History, OnHistoryApplied);
+            messenger.RegisterData<Guid>(this, Tokens.History, OnHistoryPage);
             messenger.Register<ClearHistoryMessage>(this, _ => ClearHistory());
         }
     }

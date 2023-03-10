@@ -17,7 +17,7 @@ namespace Pathfinding.App.Console.Extensions
         public static T Input<T>(this IInput<T> self, string msg, T upper, T lower = default)
             where T : IComparable<T>
         {
-            return self.Input(msg, new (upper, lower));
+            return self.Input(msg, new(upper, lower));
         }
 
         public static T Input<T>(this IInput<T> self, string msg, InclusiveValueRange<T> range)

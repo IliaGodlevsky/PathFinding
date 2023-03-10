@@ -23,7 +23,7 @@ namespace Pathfinding.GraphLib.Smoothing
         public void Overlay(TGraph graph)
         {
             int level = smoothLevel;
-            while (level--> 0)
+            while (level-- > 0)
             {
                 var costs = graph.Select(GetAverageCost);
                 graph.ApplyCosts(costs);

@@ -90,10 +90,10 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<EditorUnitMenuItem>().Keyed<IConditionedMenuItem>(Main).As<ICanRecieveMessage>().SingleInstance();
             builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IConditionedMenuItem>(Main).As<ICanRecieveMessage>().SingleInstance();
 
-            builder.RegisterType<GraphColorsMenuItem>().Keyed<IMenuItem>(Colors).As<ICanRecieveMessage>().SingleInstance();
-            builder.RegisterType<PathColorsMenuItem>().Keyed<IMenuItem>(Colors).As<ICanRecieveMessage>().SingleInstance();
-            builder.RegisterType<RangeColorsMenuItem>().Keyed<IMenuItem>(Colors).As<ICanRecieveMessage>().SingleInstance();
-            builder.RegisterType<PathfindingColorsMenuItem>().Keyed<IMenuItem>(Colors).As<ICanRecieveMessage>().SingleInstance();
+            builder.RegisterType<GraphColorsMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
+            builder.RegisterType<PathColorsMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
+            builder.RegisterType<RangeColorsMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
+            builder.RegisterType<PathfindingColorsMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
 
             builder.RegisterType<PathfindingRangeMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
             builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();

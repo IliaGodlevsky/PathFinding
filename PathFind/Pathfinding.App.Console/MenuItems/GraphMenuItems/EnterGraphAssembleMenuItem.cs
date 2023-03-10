@@ -3,7 +3,6 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
-using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
@@ -35,7 +34,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             {
                 menuList.Display();
                 int index = input.Input(message, range) - 1;
-                messenger.Send(new ChooseGraphAssembleMessage(assembles[index]));
+                messenger.SendData(assembles[index], Tokens.Graph);
             }
         }
 

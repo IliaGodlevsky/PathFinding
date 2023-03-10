@@ -1,9 +1,11 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.VisualizationLib.Core.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.App.Console.Model.Visualizations
 {
@@ -26,16 +28,10 @@ namespace Pathfinding.App.Console.Model.Visualizations
             return vertices.Contains(visualizable);
         }
 
-        private void AskForColors(AskForPathColorsMessage msg)
+        private void ColorsRecieve(DataMessage<ConsoleColor[]> msg)
         {
-            var message = new PathColorMessage(PathVertexColor, CrossedPathVertexColor);
-            messenger.Send(message, MessageTokens.PathColorsChangeItem);
-        }
-
-        private void ColorsRecieve(PathColorMessage msg)
-        {
-            PathVertexColor = msg.PathColor;
-            CrossedPathVertexColor = msg.CrossedPathColor;
+            PathVertexColor = msg.Value.FirstOrDefault();
+            CrossedPathVertexColor = msg.Value.LastOrDefault();
         }
 
         public void VisualizeAsPath(Vertex visualizable)
@@ -56,14 +52,13 @@ namespace Pathfinding.App.Console.Model.Visualizations
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.Register<AskForPathColorsMessage>(this, AskForColors);
-            messenger.Register<PathColorMessage>(this, MessageTokens.PathColors, ColorsRecieve);
-            messenger.Register<RemoveFromVisualizedMessage>(this, MessageTokens.PathColors, RemoveVertex);
+            messenger.RegisterData<ConsoleColor[]>(this, Tokens.Path, ColorsRecieve);
+            messenger.RegisterData<Vertex>(this, Tokens.Path, RemoveVertex);
         }
 
-        private void RemoveVertex(RemoveFromVisualizedMessage msg)
+        private void RemoveVertex(DataMessage<Vertex> msg)
         {
-            vertices.Remove(msg.Vertex);
+            vertices.Remove(msg.Value);
         }
     }
 }

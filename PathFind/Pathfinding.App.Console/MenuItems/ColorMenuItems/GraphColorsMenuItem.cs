@@ -1,8 +1,8 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
-using Pathfinding.App.Console.Messages;
 using System;
 using System.ComponentModel;
 
@@ -23,26 +23,9 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
 
         }
 
-        public override void RegisterHanlders(IMessenger messenger)
-        {
-            messenger.Register<GraphColorsMessage>(this, MessageTokens.GraphColorsChangeItem, ColorsRecieved);
-        }
-
-        protected override void SendAskMessage()
-        {
-            messenger.Send(new AskForGraphColorsMessage());
-        }
-
         protected override void SendColorsMessage()
         {
-            var message = new GraphColorsMessage(RegularColor, ObstacleColor);
-            messenger.Send(message, MessageTokens.GraphColors);
-        }
-
-        private void ColorsRecieved(GraphColorsMessage msg)
-        {
-            RegularColor = msg.RegularColor;
-            ObstacleColor = msg.ObstacleColor;
+            messenger.SendData(new[] { RegularColor, ObstacleColor }, Tokens.Graph);
         }
 
         public override string ToString()

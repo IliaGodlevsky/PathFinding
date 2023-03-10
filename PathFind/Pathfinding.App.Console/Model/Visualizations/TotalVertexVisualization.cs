@@ -1,8 +1,10 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.VisualizationLib.Core.Interface;
 using System;
+using System.Linq;
 
 namespace Pathfinding.App.Console.Model.Visualizations
 {
@@ -31,17 +33,13 @@ namespace Pathfinding.App.Console.Model.Visualizations
         public void VisualizeAsObstacle(Vertex vertex)
         {
             vertex.Color = ObstacleVertexColor;
-            var message = new RemoveFromVisualizedMessage(vertex);
-            messenger.Send(message, MessageTokens.RangeColors);
-            messenger.Send(message, MessageTokens.PathColors);
+            messenger.SendData(vertex, Tokens.Range, Tokens.Path);
         }
 
         public void VisualizeAsRegular(Vertex vertex)
         {
             vertex.Color = RegularVertexColor;
-            var message = new RemoveFromVisualizedMessage(vertex);
-            messenger.Send(message, MessageTokens.RangeColors);
-            messenger.Send(message, MessageTokens.PathColors);
+            messenger.SendData(vertex, Tokens.Range, Tokens.Path);
         }
 
         public bool IsVisualizedAsPath(Vertex vertex) => pathVisualization?.IsVisualizedAsPath(vertex) == true;
@@ -62,20 +60,13 @@ namespace Pathfinding.App.Console.Model.Visualizations
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.Register<AskForGraphColorsMessage>(this, AskForColors);
-            messenger.Register<GraphColorsMessage>(this, MessageTokens.GraphColors, ColorsRecieved);
+            messenger.RegisterData<ConsoleColor[]>(this, Tokens.Graph, ColorsRecieved);
         }
 
-        private void AskForColors(AskForGraphColorsMessage msg)
+        private void ColorsRecieved(DataMessage<ConsoleColor[]> msg)
         {
-            var message = new GraphColorsMessage(RegularVertexColor, ObstacleVertexColor);
-            messenger.Send(message, MessageTokens.GraphColorsChangeItem);
-        }
-
-        private void ColorsRecieved(GraphColorsMessage msg)
-        {
-            RegularVertexColor = msg.RegularColor;
-            ObstacleVertexColor = msg.ObstacleColor;
+            RegularVertexColor = msg.Value.FirstOrDefault();
+            ObstacleVertexColor = msg.Value.LastOrDefault();
         }
     }
 }

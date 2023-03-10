@@ -1,9 +1,11 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.VisualizationLib.Core.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.App.Console.Model.Visualizations
 {
@@ -48,27 +50,20 @@ namespace Pathfinding.App.Console.Model.Visualizations
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.Register<AskForRangeColorsMessage>(this, AskForColors);
-            messenger.Register<RangeColorsMessage>(this, MessageTokens.RangeColors, ColorsRecieved);
-            messenger.Register<RemoveFromVisualizedMessage>(this, MessageTokens.RangeColors, RemoveVertex);
+            messenger.RegisterData<ConsoleColor[]>(this, Tokens.Range, ColorsRecieved);
+            messenger.RegisterData<Vertex>(this, Tokens.Range, RemoveVertex);
         }
 
-        private void AskForColors(AskForRangeColorsMessage msg)
+        private void ColorsRecieved(DataMessage<ConsoleColor[]> msg)
         {
-            var message = new RangeColorsMessage(SourceVertexColor, TargetVertexColor, TransitVertexColor);
-            messenger.Send(message, MessageTokens.RangeColorsChangeItem);
+            SourceVertexColor = msg.Value.FirstOrDefault();
+            TransitVertexColor = msg.Value.ElementAtOrDefault(1);
+            TargetVertexColor = msg.Value.LastOrDefault();
         }
 
-        private void ColorsRecieved(RangeColorsMessage msg)
+        private void RemoveVertex(DataMessage<Vertex> msg)
         {
-            SourceVertexColor = msg.SourceColor;
-            TransitVertexColor = msg.TransitColor;
-            TargetVertexColor = msg.TargetColor;
-        }
-
-        private void RemoveVertex(RemoveFromVisualizedMessage msg)
-        {
-            vertices.Remove(msg.Vertex);
+            vertices.Remove(msg.Value);
         }
     }
 }

@@ -3,7 +3,6 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
-using Pathfinding.App.Console.Messages;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
@@ -22,7 +21,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             {
                 int width = input.Input(Languages.GraphWidthInputMsg, Constants.GraphWidthValueRange);
                 int length = input.Input(Languages.GraphHeightInputMsg, Constants.GraphLengthValueRange);
-                messenger.Send(new GraphParametresMessage(width, length));
+                messenger.SendData(new[] { width, length }, Tokens.Graph);
             }
         }
 

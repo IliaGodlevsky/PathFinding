@@ -4,7 +4,7 @@ namespace Pathfinding.App.Console.Model
 {
     internal sealed class ConditionToken
     {
-        public static ConditionToken Create(Func<bool> condition, Guid token) => new (condition, token);
+        public static ConditionToken Create(Func<bool> condition, Guid token) => new(condition, token);
 
         private readonly Guid token;
         private readonly Func<bool> condition;
@@ -24,6 +24,11 @@ namespace Pathfinding.App.Console.Model
         public override int GetHashCode()
         {
             return token.GetHashCode();
+        }
+
+        public static implicit operator Guid(ConditionToken token)
+        {
+            return token.token;
         }
 
         public override string ToString()

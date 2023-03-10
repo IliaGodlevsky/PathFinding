@@ -1,9 +1,11 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.VisualizationLib.Core.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.App.Console.Model.Visualizations
 {
@@ -37,22 +39,15 @@ namespace Pathfinding.App.Console.Model.Visualizations
             }
         }
 
-        private void AskForColorsMessage(AskForPathfindingColorsMessage msg)
+        private void ColorsChanged(DataMessage<ConsoleColor[]> msg)
         {
-            var message = new PathfindingColorsMessage(EnqueuedVertexColor, VisitedVertexColor);
-            messenger.Send(message, MessageTokens.PathfindingColors);
-        }
-
-        private void ColorsChanged(PathfindingColorsMessage msg)
-        {
-            EnqueuedVertexColor = msg.EnqueuColor;
-            VisitedVertexColor = msg.VisitColor;
+            EnqueuedVertexColor = msg.Value.FirstOrDefault();
+            VisitedVertexColor = msg.Value.LastOrDefault();
         }
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.Register<PathfindingColorsMessage>(this, ColorsChanged);
-            messenger.Register<AskForPathfindingColorsMessage>(this, AskForColorsMessage);
+            messenger.RegisterData<ConsoleColor[]>(this, Tokens.Pathfinding, ColorsChanged);
         }
     }
 }

@@ -2,8 +2,11 @@
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Exceptions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
+using Pathfinding.AlgorithmLib.Factory.Interface;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
@@ -37,9 +40,9 @@ namespace Pathfinding.App.Console.Units
             this.input = input;
         }
 
-        private void FindPath(PathfindingAlgorithmChosenMessage message)
+        private void FindPath(DataMessage<IAlgorithmFactory<PathfindingProcess>> message)
         {
-            var factory = message.Algorithm;
+            var factory = message.Value;
             var range = rangeBuilder.Range;
             using var algorithm = factory.Create(range);
             using (Disposable.Use(ClearColors))
@@ -55,14 +58,14 @@ namespace Pathfinding.App.Console.Units
                         log.Warn(ex.Message);
                     }
                 }
-            } 
+            }
         }
 
         private void ClearColors()
         {
             graph.ForEach(v => v.RestoreDefaultVisualState());
             rangeBuilder.Range.RestoreVerticesVisualState();
-            messenger.Send(PathfindingStatisticsMessage.Empty);
+            messenger.SendData(string.Empty, Tokens.Screen);
         }
 
         private void FindPath(PathfindingProcess algorithm)
@@ -70,8 +73,7 @@ namespace Pathfinding.App.Console.Units
             var path = NullGraphPath.Interface;
             void Summarize()
             {
-                messenger.Send(new PathFoundMessage(path, algorithm), MessageTokens.HistoryUnit);
-                messenger.Send(new PathFoundMessage(path, algorithm), MessageTokens.StatisticsUnit);
+                messenger.SendData(algorithm, path, Tokens.History, Tokens.Statistics);
             }
             using (Disposable.Use(Summarize))
             {
@@ -83,25 +85,22 @@ namespace Pathfinding.App.Console.Units
             input.Input();
         }
 
-        private void OnGraphCreated(GraphCreatedMessage message)
+        private void OnGraphCreated(DataMessage<Graph2D<Vertex>> msg)
         {
-            graph = message.Graph;
+            graph = msg.Value;
         }
 
         private void PrepareForPathfinding(PathfindingProcess algorithm)
         {
-            messenger.Send(new PathfindingStatisticsMessage(algorithm.ToString()));
-            messenger.Send(new SubscribeOnVisualizationMessage(algorithm), MessageTokens.VisualizationUnit);
-            messenger.Send(new SubscribeOnHistoryMessage(algorithm), MessageTokens.HistoryUnit);
-            var msg = new PathfindingRangeChosenMessage(rangeBuilder.Range, algorithm.Id);
-            messenger.Send(msg, MessageTokens.HistoryUnit);
-            messenger.Send(new SubscribeOnStatisticsMessage(algorithm), MessageTokens.StatisticsUnit);
+            messenger.SendData(algorithm.ToString(), Tokens.Screen);
+            messenger.SendData<PathfindingProcess>(algorithm, Tokens.Visualization, Tokens.History, Tokens.Statistics);
+            messenger.SendData(algorithm, rangeBuilder.Range, Tokens.History);
         }
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.Register<PathfindingAlgorithmChosenMessage>(this, FindPath);
-            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
+            messenger.RegisterData<IAlgorithmFactory<PathfindingProcess>>(this, Tokens.Pathfinding, FindPath);
+            messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
             messenger.Register<ClearColorsMessage>(this, _ => ClearColors());
         }
     }

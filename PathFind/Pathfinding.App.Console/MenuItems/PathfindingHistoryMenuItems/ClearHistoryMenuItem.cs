@@ -1,8 +1,10 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Messages.DataMessages;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 {
@@ -25,9 +27,9 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             messenger.Send(new ClearHistoryMessage());
         }
 
-        private void OnHistoryApplied(ApplyHistoryMessage message)
+        private void RecieveApplyInfo(DataMessage<bool> message)
         {
-            isHistoryApplied = message.IsApplied;
+            isHistoryApplied = message.Value;
         }
 
         public override string ToString()
@@ -37,7 +39,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.Register<ApplyHistoryMessage>(this, OnHistoryApplied);
+            messenger.RegisterData<bool>(this, Tokens.History, RecieveApplyInfo);
         }
     }
 }

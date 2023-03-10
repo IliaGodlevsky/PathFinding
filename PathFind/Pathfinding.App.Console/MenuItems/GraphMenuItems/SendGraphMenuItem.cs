@@ -3,7 +3,7 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
-using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
@@ -37,9 +37,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             return graph != Graph2D<Vertex>.Empty;
         }
 
-        private void OnGraphCreated(GraphCreatedMessage message)
+        private void OnGraphCreated(DataMessage<Graph2D<Vertex>> msg)
         {
-            graph = message.Graph;
+            graph = msg.Value;
         }
 
         public async void Execute()
@@ -66,7 +66,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
+            messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
-using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
@@ -22,9 +23,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         }
 
-        private void OnGraphCreated(GraphCreatedMessage msg)
+        private void OnGraphCreated(DataMessage<Graph2D<Vertex>> msg)
         {
-            graph = msg.Graph;
+            graph = msg.Value;
         }
 
         public override bool CanBeExecuted()
@@ -44,7 +45,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         public override void RegisterHanlders(IMessenger messenger)
         {
             base.RegisterHanlders(messenger);
-            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
+            messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
         }
 
         public override string ToString()

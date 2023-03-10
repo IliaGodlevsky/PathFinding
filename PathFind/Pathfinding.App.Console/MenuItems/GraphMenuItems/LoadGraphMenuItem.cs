@@ -1,8 +1,8 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
-using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
@@ -38,10 +38,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 string path = input.InputLoadPath();
                 var graph = serializer.LoadGraphFromFile(path);
                 var range = graph.First().Cost.CostRange;
-                messenger.Send(new CostRangeChangedMessage(range));
-                messenger.Send(new GraphCreatedMessage(graph), MessageTokens.Screen);
-                messenger.Send(new GraphCreatedMessage(graph), MessageTokens.MainUnit);
-                messenger.Send(new GraphCreatedMessage(graph));
+                messenger.SendData(range, Tokens.Screen);
+                messenger.SendData(graph, Tokens.Screen, Tokens.Main, Tokens.Common);
             }
             catch (Exception ex)
             {

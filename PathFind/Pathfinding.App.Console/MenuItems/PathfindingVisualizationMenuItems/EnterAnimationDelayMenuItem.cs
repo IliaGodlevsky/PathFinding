@@ -3,7 +3,7 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
-using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Messages.DataMessages;
 using Shared.Primitives.ValueRange;
 using System;
 
@@ -31,15 +31,15 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
             using (Cursor.UseCurrentPositionWithClean())
             {
                 var delay = spanInput.Input(Languages.DelayTimeInputMsg, DelayRange);
-                messenger.Send(new AnimationDelayMessage(delay), MessageTokens.VisualizationUnit);
+                messenger.SendData(delay, Tokens.Visualization);
             }
         }
 
         public bool CanBeExecuted() => IsVisualizationApplied;
 
-        private void OnVisualizationApplied(ApplyVisualizationMessage message)
+        private void OnVisualizationApplied(DataMessage<bool> msg)
         {
-            IsVisualizationApplied = message.IsApplied;
+            IsVisualizationApplied = msg.Value;
         }
 
         public override string ToString()
@@ -49,7 +49,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.Register<ApplyVisualizationMessage>(this, OnVisualizationApplied);
+            messenger.RegisterData<bool>(this, Tokens.Visualization, OnVisualizationApplied);
         }
     }
 }

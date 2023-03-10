@@ -9,7 +9,6 @@ using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {

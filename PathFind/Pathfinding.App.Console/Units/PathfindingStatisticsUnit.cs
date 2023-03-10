@@ -2,9 +2,10 @@
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Core.Interface;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
-using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,48 +30,48 @@ namespace Pathfinding.App.Console.Units
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            var token = ConditionToken.Create(IsStatisticsApplied, MessageTokens.StatisticsUnit);
-            messenger.Register<SubscribeOnStatisticsMessage>(this, token, OnSusbcribe);
-            messenger.Register<PathFoundMessage>(this, MessageTokens.StatisticsUnit, OnPathFound);
-            messenger.Register<ApplyStatisticsMessage>(this, ApplyStatistics);
+            var token = ConditionToken.Create(IsStatisticsApplied, Tokens.Statistics);
+            messenger.RegisterData<PathfindingProcess>(this, token, OnSusbcribe);
+            messenger.RegisterAlgorithmData<IGraphPath>(this, Tokens.Statistics, OnPathFound);
+            messenger.RegisterData<bool>(this, token, RecieveApplyStatistics);
         }
 
         private bool IsStatisticsApplied() => isStatisticsApplied;
 
-        private void OnSusbcribe(SubscribeOnStatisticsMessage message)
+        private void OnSusbcribe(DataMessage<PathfindingProcess> message)
         {
-            message.Algorithm.VertexVisited += OnVertexVisited;
-            message.Algorithm.Finished += (s, e) => timer.Stop();
-            message.Algorithm.Started += (s, e) => timer.Restart();
-            message.Algorithm.Interrupted += (s, e) => timer.Stop();
-            message.Algorithm.Paused += (s, e) => timer.Stop();
-            message.Algorithm.Resumed += (s, e) => timer.Start();
+            message.Value.VertexVisited += OnVertexVisited;
+            message.Value.Finished += (s, e) => timer.Stop();
+            message.Value.Started += (s, e) => timer.Restart();
+            message.Value.Interrupted += (s, e) => timer.Stop();
+            message.Value.Paused += (s, e) => timer.Stop();
+            message.Value.Resumed += (s, e) => timer.Start();
         }
 
-        private void ApplyStatistics(ApplyStatisticsMessage message)
+        private void RecieveApplyStatistics(DataMessage<bool> msg)
         {
-            isStatisticsApplied = message.IsApplied;
+            isStatisticsApplied = msg.Value;
         }
 
-        private void OnPathFound(PathFoundMessage message)
+        private void OnPathFound(AlgorithmMessage<IGraphPath> msg)
         {
-            string stats = message.Algorithm.ToString();
+            string stats = msg.Algorithm.ToString();
             if (isStatisticsApplied)
             {
-                stats = message.Path.Count > 0
-                    ? GetStatistics(message.Path, message.Algorithm)
-                    : GetStatistics(message.Algorithm);
+                stats = msg.Value.Count > 0
+                    ? GetStatistics(msg.Value, msg.Algorithm)
+                    : GetStatistics(msg.Algorithm);
                 visited = 0;
-                messenger.Send(new PathfindingStatisticsMessage(stats));
+                messenger.SendData(stats, Tokens.Screen);
             }
-            messenger.Send(new AlgorithmFinishedMessage(message.Algorithm, stats));
+            messenger.Send(new AlgorithmMessage<string>(msg.Algorithm, stats), Tokens.History);
         }
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
         {
             visited++;
             var statistics = GetStatistics((PathfindingProcess)sender);
-            messenger.Send(new PathfindingStatisticsMessage(statistics));
+            messenger.SendData(statistics, Tokens.Screen);
         }
 
         private string GetStatistics(PathfindingProcess algorithm)

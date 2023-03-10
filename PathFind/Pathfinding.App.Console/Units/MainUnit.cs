@@ -1,6 +1,8 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
@@ -58,10 +60,10 @@ namespace Pathfinding.App.Console.Units
             }
         }
 
-        private void SetGraph(GraphCreatedMessage message)
+        private void SetGraph(DataMessage<Graph2D<Vertex>> msg)
         {
             undo.Undo();
-            Graph = message.Graph;
+            Graph = msg.Value;
             GraphField = fieldFactory.CreateGraphField(Graph);
             DisplayGraph();
         }
@@ -84,7 +86,7 @@ namespace Pathfinding.App.Console.Units
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.Register<GraphCreatedMessage>(this, MessageTokens.MainUnit, SetGraph);
+            messenger.RegisterGraph(this, Tokens.Main, SetGraph);
             messenger.Register<GraphChangedMessage>(this, OnGraphChanged);
         }
     }

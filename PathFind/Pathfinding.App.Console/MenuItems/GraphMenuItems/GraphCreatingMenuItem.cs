@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Extensions;
@@ -38,26 +39,24 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             this.neighborhoodFactory = neighborhoodFactory;
         }
 
-        protected void OnAssembleChosen(ChooseGraphAssembleMessage msg) => selected = msg.Assemble;
+        protected void OnAssembleChosen(DataMessage<GraphAssemble> msg) => selected = msg.Value;
 
-        protected void OnCostRange(CostRangeMessage msg) => costRange = msg.CostRange;
+        protected void OnCostRange(DataMessage<InclusiveValueRange<int>> msg) => costRange = msg.Value;
 
-        protected void OnObstaclePercent(ObstaclePercentMessage msg) => obstaclePercent = msg.ObstaclePercent;
+        protected void OnObstaclePercent(DataMessage<int> msg) => obstaclePercent = msg.Value;
 
-        protected void OnGraphParams(GraphParametresMessage msg)
+        protected void OnGraphParams(DataMessage<int[]> msg)
         {
-            width = msg.Width;
-            length = msg.Length;
+            width = msg.Value.FirstOrDefault();
+            length = msg.Value.LastOrDefault();
         }
 
         public void Execute()
         {
             var layers = GetLayers();
             var graph = selected.AssembleGraph(layers, width, length);
-            messenger.Send(new CostRangeChangedMessage(costRange));
-            messenger.Send(new GraphCreatedMessage(graph), MessageTokens.Screen);
-            messenger.Send(new GraphCreatedMessage(graph), MessageTokens.MainUnit);
-            messenger.Send(new GraphCreatedMessage(graph));
+            messenger.SendData(costRange, Tokens.Screen);
+            messenger.SendData(graph, Tokens.Screen, Tokens.Main, Tokens.Common);
         }
 
         public virtual bool CanBeExecuted()
@@ -83,10 +82,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public virtual void RegisterHanlders(IMessenger messenger)
         {
-            messenger.Register<ObstaclePercentMessage>(this, OnObstaclePercent);
-            messenger.Register<GraphParametresMessage>(this, OnGraphParams);
-            messenger.Register<CostRangeMessage>(this, OnCostRange);
-            messenger.Register<ChooseGraphAssembleMessage>(this, OnAssembleChosen);
+            messenger.RegisterData<int>(this, Tokens.Graph, OnObstaclePercent);
+            messenger.RegisterData<int[]>(this, Tokens.Graph, OnGraphParams);
+            messenger.RegisterData<InclusiveValueRange<int>>(this, Tokens.Graph, OnCostRange);
+            messenger.RegisterData<GraphAssemble>(this, Tokens.Graph, OnAssembleChosen);
         }
     }
 }

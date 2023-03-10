@@ -2,8 +2,9 @@
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.App.Console.EventArguments;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.PathfindingActions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
@@ -39,21 +40,21 @@ namespace Pathfinding.App.Console.Units
             this.pathfindingActions = pathfindingActions;
         }
 
-        private void OnAnimationDelay(AnimationDelayMessage message)
+        private void RecieveAnimationDelay(DataMessage<TimeSpan> message)
         {
-            animationDelay = message.AnimationDelay;
+            animationDelay = message.Value;
         }
 
         private bool IsVisualizationApplied() => isVisualizationApplied;
 
-        private void OnVisualizationApplied(ApplyVisualizationMessage message)
+        private void RecieveApplyInfo(DataMessage<bool> message)
         {
-            isVisualizationApplied = message.IsApplied;
+            isVisualizationApplied = message.Value;
         }
 
-        private void OnGraphCreated(GraphCreatedMessage message)
+        private void OnGraphCreated(DataMessage<Graph2D<Vertex>> msg)
         {
-            graph = message.Graph;
+            graph = msg.Value;
         }
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
@@ -80,9 +81,9 @@ namespace Pathfinding.App.Console.Units
             algorithm = PathfindingProcess.Null;
         }
 
-        private void OnPathfindingPrepare(SubscribeOnVisualizationMessage message)
+        private void OnPathfindingPrepare(DataMessage<PathfindingProcess> msg)
         {
-            algorithm = message.Algorithm;
+            algorithm = msg.Value;
             algorithm.VertexVisited += OnVertexVisited;
             algorithm.VertexEnqueued += OnVertexEnqueued;
             algorithm.Started += OnAlgorithmStarted;
@@ -100,11 +101,11 @@ namespace Pathfinding.App.Console.Units
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            var token = ConditionToken.Create(IsVisualizationApplied, MessageTokens.VisualizationUnit);
-            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
-            messenger.Register<AnimationDelayMessage>(this, token, OnAnimationDelay);
-            messenger.Register<ApplyVisualizationMessage>(this, OnVisualizationApplied);
-            messenger.Register<SubscribeOnVisualizationMessage>(this, token, OnPathfindingPrepare);
+            var token = ConditionToken.Create(IsVisualizationApplied, Tokens.Visualization);
+            messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
+            messenger.RegisterData<TimeSpan>(this, token, RecieveAnimationDelay);
+            messenger.RegisterData<bool>(this, Tokens.Visualization, RecieveApplyInfo);
+            messenger.RegisterData<PathfindingProcess>(this, token, OnPathfindingPrepare);
         }
     }
 }

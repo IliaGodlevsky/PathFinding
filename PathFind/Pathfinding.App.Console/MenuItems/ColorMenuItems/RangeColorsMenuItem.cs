@@ -1,8 +1,8 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
-using Pathfinding.App.Console.Messages;
 using System;
 using System.ComponentModel;
 
@@ -26,27 +26,9 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
 
         }
 
-        public override void RegisterHanlders(IMessenger messenger)
-        {
-            messenger.Register<RangeColorsMessage>(this, MessageTokens.RangeColorsChangeItem, RecieveColors);
-        }
-
-        protected override void SendAskMessage()
-        {
-            messenger.Send(new AskForRangeColorsMessage());
-        }
-
         protected override void SendColorsMessage()
         {
-            var message = new RangeColorsMessage(SourceColor, TargetColor, TransitColor);
-            messenger.Send(message, MessageTokens.RangeColors);
-        }
-
-        private void RecieveColors(RangeColorsMessage msg)
-        {
-            SourceColor = msg.SourceColor;
-            TargetColor = msg.TargetColor;
-            TransitColor = msg.TransitColor;
+            messenger.SendData(new[] { SourceColor, TargetColor, TransitColor }, Tokens.Range);
         }
 
         public override string ToString()

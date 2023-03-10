@@ -1,10 +1,4 @@
-﻿using BenchmarkDotNet.Attributes;
-using Pathfinding.AlgorithmLib.Core.Interface;
-using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms;
-using Pathfinding.GraphLib.Core.Interface;
-using System.Collections.Generic;
-
-namespace Pathfinding.AlgorithmLib.Benchmarks.Pathfinding
+﻿namespace Pathfinding.AlgorithmLib.Benchmarks.Pathfinding
 {
     [MemoryDiagnoser]
     public class WaveAlgorithmBenchmarks : AlgorithmsBenchmarks

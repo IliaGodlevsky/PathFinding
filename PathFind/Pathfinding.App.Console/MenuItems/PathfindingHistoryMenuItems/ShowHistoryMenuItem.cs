@@ -4,6 +4,7 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
@@ -49,8 +50,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
                     {
                         using (Cursor.HideCursor())
                         {
-                            messenger.Send(new HistoryPageMessage(page.Key));
-                            messenger.Send(new PathfindingStatisticsMessage(page.Value));
+                            messenger.SendData(page.Key, Tokens.History);
+                            messenger.SendData(page.Value, Tokens.Screen);
                         }
                     }
                     index = GetAlgorithmIndex(inputMessage);
@@ -71,9 +72,9 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             });
         }
 
-        private void OnGraphCreated(GraphCreatedMessage msg)
+        private void OnGraphCreated(DataMessage<Graph2D<Vertex>> msg)
         {
-            graph = msg.Graph;
+            graph = msg.Value;
             pages.Clear();
         }
 
@@ -85,17 +86,17 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             }
         }
 
-        private void OnAlgorithmFinished(AlgorithmFinishedMessage msg)
+        private void OnAlgorithmFinished(AlgorithmMessage<string> msg)
         {
             if (isHistoryApplied)
             {
-                pages[msg.Algorithm.Id] = msg.Statistics;
+                pages[msg.Algorithm.Id] = msg.Value;
             }
         }
 
-        private void OnHistoryApplied(ApplyHistoryMessage msg)
+        private void RecieveApplyInfo(DataMessage<bool> msg)
         {
-            isHistoryApplied = msg.IsApplied;
+            isHistoryApplied = msg.Value;
         }
 
         public override string ToString()
@@ -105,10 +106,10 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.Register<ApplyHistoryMessage>(this, OnHistoryApplied);
-            messenger.Register<AlgorithmFinishedMessage>(this, OnAlgorithmFinished);
+            messenger.RegisterData<bool>(this, Tokens.History, RecieveApplyInfo);
+            messenger.Register<AlgorithmMessage<string>>(this, Tokens.History, OnAlgorithmFinished);
             messenger.Register<ClearHistoryMessage>(this, _ => pages.Clear());
-            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
+            messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
         }
     }
 }
