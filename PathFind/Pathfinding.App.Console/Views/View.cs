@@ -11,7 +11,7 @@ namespace Pathfinding.App.Console.Views
     internal sealed class View : IDisplayable
     {
         private readonly IUnit unit;
-        private IInput<int> intInput;
+        private readonly IInput<int> intInput;
 
         public View(IUnit model, IInput<int> input)
         {

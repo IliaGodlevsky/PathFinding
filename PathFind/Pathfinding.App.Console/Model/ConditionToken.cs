@@ -4,12 +4,12 @@ namespace Pathfinding.App.Console.Model
 {
     internal sealed class ConditionToken
     {
-        public static ConditionToken Create(Func<bool> condition, Guid token) => new(condition, token);
+        public static ConditionToken Create(Func<bool> condition, Tokens token) => new(condition, token);
 
-        private readonly Guid token;
+        private readonly Tokens token;
         private readonly Func<bool> condition;
 
-        private ConditionToken(Func<bool> condition, Guid token)
+        private ConditionToken(Func<bool> condition, Tokens token)
         {
             this.condition = condition;
             this.token = token;
@@ -26,7 +26,7 @@ namespace Pathfinding.App.Console.Model
             return token.GetHashCode();
         }
 
-        public static implicit operator Guid(ConditionToken token)
+        public static implicit operator Tokens(ConditionToken token)
         {
             return token.token;
         }

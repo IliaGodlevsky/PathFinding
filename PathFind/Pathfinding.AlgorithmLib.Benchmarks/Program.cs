@@ -1,4 +1,5 @@
-﻿using Pathfinding.AlgorithmLib.Benchmarks.Pathfinding;
+﻿using BenchmarkDotNet.Running;
+using Pathfinding.AlgorithmLib.Benchmarks.Pathfinding;
 
 internal class Program
 {

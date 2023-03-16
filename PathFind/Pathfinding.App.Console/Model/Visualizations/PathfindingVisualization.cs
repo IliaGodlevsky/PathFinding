@@ -23,20 +23,22 @@ namespace Pathfinding.App.Console.Model.Visualizations
             this.messenger = messenger;
         }
 
+        private void VisualizeVertex(Vertex vertex, ConsoleColor color)
+        {
+            if (!vertex.IsVisualizedAsRange() && !vertex.IsVisualizedAsPath())
+            {
+                vertex.Color = color;
+            }
+        }
+
         public void VisualizeAsEnqueued(Vertex visualizable)
         {
-            if (!visualizable.IsVisualizedAsRange() && !visualizable.IsVisualizedAsPath())
-            {
-                visualizable.Color = EnqueuedVertexColor;
-            }
+            VisualizeVertex(visualizable, EnqueuedVertexColor);
         }
 
         public void VisualizeAsVisited(Vertex visualizable)
         {
-            if (!visualizable.IsVisualizedAsRange() && !visualizable.IsVisualizedAsPath())
-            {
-                visualizable.Color = VisitedVertexColor;
-            }
+            VisualizeVertex(visualizable, VisitedVertexColor);
         }
 
         private void ColorsChanged(DataMessage<ConsoleColor[]> msg)

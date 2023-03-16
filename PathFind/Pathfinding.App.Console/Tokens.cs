@@ -1,35 +1,19 @@
-﻿using Shared.Extensions;
+﻿using Shared.Primitives.Attributes;
 using System;
-using System.Linq;
-using System.Reflection;
 
 namespace Pathfinding.App.Console
 {
-    internal static class Tokens
+    [Flags] internal enum Tokens
     {
-#pragma warning disable CS0649
-        public static readonly Guid Main;
-        public static readonly Guid Screen;
-        public static readonly Guid History;
-        public static readonly Guid Statistics;
-        public static readonly Guid Visualization;
-        public static readonly Guid Graph;
-        public static readonly Guid Pathfinding;
-        public static readonly Guid Path;
-        public static readonly Guid Range;
-        public static readonly Guid Common;
-#pragma warning restore CS0649
-
-        public static readonly Guid[] All;
-
-        static Tokens()
-        {
-            var flags = BindingFlags.Public | BindingFlags.Static;
-            All = typeof(Tokens).GetFields(flags)
-                .Where(field => field.FieldType == typeof(Guid))
-                .ForEach(field => field.SetValue(null, Guid.NewGuid()))
-                .Select(field => (Guid)field.GetValue(null))
-                .ToArray();
-        }
+        Screen        = 2 << 0,
+        Main          = 2 << 1,
+        History       = 2 << 2,
+        Statistics    = 2 << 3,
+        Visualization = 2 << 4,
+        Graph         = 2 << 5,
+        Pathfinding   = 2 << 6,
+        Path          = 2 << 7,
+        Range         = 2 << 8,
+        Common        = 2 << 9
     }
 }

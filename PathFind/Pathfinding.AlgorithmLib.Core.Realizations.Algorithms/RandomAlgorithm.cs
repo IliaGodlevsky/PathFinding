@@ -6,6 +6,7 @@ using Shared.Random;
 using Shared.Random.Extensions;
 using Shared.Random.Realizations;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {

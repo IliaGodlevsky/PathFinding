@@ -17,13 +17,15 @@ namespace Pathfinding.App.Console.DependencyInjection
         public static IReadOnlyDictionary<TKey, TValue> ResolveWithMetadata<TKey, TValue>(this IComponentContext context, string key)
         {
             return context.Resolve<IEnumerable<Meta<TValue>>>()
-                .ToDictionary(action => (TKey)action.Metadata[key], action => action.Value);
+                .ToDictionary(action => (TKey)action.Metadata[key], action => action.Value)
+                .AsReadOnly();
         }
 
         public static IReadOnlyDictionary<TKey, TValue> ResolveWithMetadataKeyed<TKey, TValue>(this IComponentContext context, string key)
         {
             return context.ResolveKeyed<IEnumerable<Meta<TValue>>>(key)
-                .ToDictionary(action => (TKey)action.Metadata[key], action => action.Value);
+                .ToDictionary(action => (TKey)action.Metadata[key], action => action.Value)
+                .AsReadOnly();
         }
 
         public static IRegistrationBuilder<TLimit, TActivatorData, TRegistrationStyle> Keyed<TLimit, TActivatorData, TRegistrationStyle>(
@@ -36,10 +38,10 @@ namespace Pathfinding.App.Console.DependencyInjection
             return self;
         }
 
-        public static IRegistrationBuilder<Messenger, ConcreteReflectionActivatorData, SingleRegistrationStyle> RegisterRecievers(
-            this IRegistrationBuilder<Messenger, ConcreteReflectionActivatorData, SingleRegistrationStyle> builder)
+        public static IRegistrationBuilder<IMessenger, ConcreteReflectionActivatorData, SingleRegistrationStyle> RegisterRecievers(
+            this IRegistrationBuilder<IMessenger, ConcreteReflectionActivatorData, SingleRegistrationStyle> builder)
         {
-            static void Register(IActivatedEventArgs<Messenger> args)
+            static void Register(IActivatedEventArgs<IMessenger> args)
             {
                 var recievers = args.Context.Resolve<ICanRecieveMessage[]>();
                 foreach (var reciever in recievers)

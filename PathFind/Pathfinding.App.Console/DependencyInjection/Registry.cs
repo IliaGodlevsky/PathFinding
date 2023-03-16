@@ -68,7 +68,7 @@ namespace Pathfinding.App.Console.DependencyInjection
         private static IContainer Configure()
         {
             var builder = new ContainerBuilder();
-
+            
             builder.RegisterType<ConsoleUserAnswerInput>().As<IInput<Answer>>().SingleInstance();
             builder.RegisterType<ConsoleUserIntInput>().As<IInput<int>>().SingleInstance();
             builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance();

@@ -39,7 +39,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 var graph = serializer.LoadGraphFromFile(path);
                 var range = graph.First().Cost.CostRange;
                 messenger.SendData(range, Tokens.Screen);
-                messenger.SendData(graph, Tokens.Screen, Tokens.Main, Tokens.Common);
+                messenger.SendData(graph, Tokens.Screen | Tokens.Main | Tokens.Common);
             }
             catch (Exception ex)
             {

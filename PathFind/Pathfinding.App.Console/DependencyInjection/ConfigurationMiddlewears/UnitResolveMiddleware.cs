@@ -20,7 +20,8 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
             middlewares = WithoutVisual
                 .ToDictionary(unit => unit, unit => (IUnitMiddleware)new UnitMiddleware())
                 .Append(new(Visual, new VisualizationUnitResolveMiddleware(new UnitMiddleware())))
-                .ToDictionary();
+                .ToDictionary()
+                .AsReadOnly();
         }
 
         public void Execute(ResolveRequestContext context, Action<ResolveRequestContext> next)
