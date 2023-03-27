@@ -1,11 +1,8 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Comparers;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Shared.Extensions;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Pathfinding.GraphLib.Core.Abstractions
@@ -19,13 +16,17 @@ namespace Pathfinding.GraphLib.Core.Abstractions
 
         public IReadOnlyList<int> DimensionsSizes { get; }
 
-        protected Graph(int requiredNumberOfDimensions, IReadOnlyCollection<TVertex> vertices,
+        protected Graph(int requiredNumberOfDimensions, 
+            IReadOnlyCollection<TVertex> vertices,
             IReadOnlyList<int> dimensionSizes)
         {
-            DimensionsSizes = dimensionSizes.TakeOrDefault(requiredNumberOfDimensions, 1).ToArray();
+            DimensionsSizes = dimensionSizes
+                .TakeOrDefault(requiredNumberOfDimensions, 1)
+                .ToArray();
             Count = DimensionsSizes.AggregateOrDefault((x, y) => x * y);
+            var comparer = new CoordinateEqualityComparer();
             this.vertices = vertices.Take(Count)
-                .ToDictionary(vertex => vertex.Position, new CoordinateEqualityComparer())
+                .ToDictionary(vertex => vertex.Position, comparer)
                 .AsReadOnly();
         }
 
@@ -37,25 +38,6 @@ namespace Pathfinding.GraphLib.Core.Abstractions
             }
 
             throw new KeyNotFoundException();
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is IGraph<TVertex> graph)
-            {
-                bool hasEqualDimensionSizes = DimensionsSizes.Juxtapose(graph.DimensionsSizes);
-                bool hasEqualNumberOfObstacles = graph.GetObstaclesCount() == this.GetObstaclesCount();
-                bool hasEqualVertices = graph.Juxtapose(this, (a, b) => a.Equals(b));
-                return hasEqualNumberOfObstacles && hasEqualVertices && hasEqualDimensionSizes;
-            }
-            return false;
-        }
-
-        public override int GetHashCode()
-        {
-            var verticesHashCode = vertices.Values.Select(x => x.GetHashCode()).ToHashCode();
-            var dimensionsHashCode = DimensionsSizes.ToHashCode();
-            return HashCode.Combine(verticesHashCode, dimensionsHashCode);
         }
 
         public IEnumerator<TVertex> GetEnumerator()

@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations;
@@ -41,7 +42,9 @@ namespace Pathfinding.GraphLib.Serialization.Tests
 
                 Assert.Multiple(() =>
                 {
-                    Assert.IsTrue(graph.Equals(loaded), errorMessage);
+                    Assert.IsTrue(loaded.DimensionsSizes.Juxtapose(graph.DimensionsSizes), errorMessage);
+                    Assert.IsTrue(graph.GetObstaclesCount() == loaded.GetObstaclesCount(), errorMessage);
+                    Assert.IsTrue(graph.Juxtapose(loaded, (a, b) => a.Equals(b)), errorMessage);
                     Assert.IsTrue(graph.Juxtapose(loaded, CompareNeighbors), wrongNeighbors);
                 });
             }

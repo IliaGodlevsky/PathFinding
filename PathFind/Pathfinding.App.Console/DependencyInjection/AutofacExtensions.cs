@@ -38,8 +38,8 @@ namespace Pathfinding.App.Console.DependencyInjection
             return self;
         }
 
-        public static IRegistrationBuilder<IMessenger, ConcreteReflectionActivatorData, SingleRegistrationStyle> RegisterRecievers(
-            this IRegistrationBuilder<IMessenger, ConcreteReflectionActivatorData, SingleRegistrationStyle> builder)
+        public static IRegistrationBuilder<IMessenger, TActivatorData, SingleRegistrationStyle> RegisterRecievers<TActivatorData>(
+            this IRegistrationBuilder<IMessenger, TActivatorData, SingleRegistrationStyle> builder)
         {
             static void Register(IActivatedEventArgs<IMessenger> args)
             {

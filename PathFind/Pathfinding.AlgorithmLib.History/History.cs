@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Pathfinding.AlgorithmLib.History
 {
-    public sealed class History<TVolume>
+    public sealed class History<TVolume> : IHistoryRepository<TVolume>
         where TVolume : IHistoryVolume<ICoordinate>, new()
     {
         private readonly int volumesCount = 5;
@@ -48,19 +48,19 @@ namespace Pathfinding.AlgorithmLib.History
             return RegularHistory.Get(key);
         }
 
-        public IEnumerable<ICoordinate> GetVisitedVertices(Guid key)
+        public IEnumerable<ICoordinate> GetVisited(Guid key)
         {
             return VisitedHistory.Get(key);
         }
 
-        public void AddPath(Guid key, IEnumerable<ICoordinate> path)
+        public void AddPath(Guid key, ICoordinate path)
         {
-            path.ForEach(item => PathHistory.Add(key, item));
+            PathHistory.Add(key, path);
         }
 
-        public void AddPathfindingRange(Guid key, IEnumerable<IVertex> range)
+        public void AddPathfindingRange(Guid key, ICoordinate range)
         {
-            range.ForEach(item => RangeHistory.Add(key, item.Position));
+            RangeHistory.Add(key, range);
         }
 
         public void AddVisited(Guid key, ICoordinate visited)
@@ -68,9 +68,9 @@ namespace Pathfinding.AlgorithmLib.History
             VisitedHistory.Add(key, visited);
         }
 
-        public void AddObstacles(Guid key, IEnumerable<ICoordinate> obstacles)
+        public void AddObstacles(Guid key, ICoordinate obstacle)
         {
-            obstacles.ForEach(item => ObstaclesHistory.Add(key, item));
+            ObstaclesHistory.Add(key, obstacle);
         }
 
         public void Remove(Guid key)

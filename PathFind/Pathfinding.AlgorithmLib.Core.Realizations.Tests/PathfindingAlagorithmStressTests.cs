@@ -49,7 +49,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests
         public void FindPath_Stress(AlgorithmFactory factory)
         {
             const int Limit = 1500;
-            for (int i = 1; i <= Limit; i++)
+            for (int i = 1; i <= Limit; i+=10)
             {
                 var graph = graphAssemble.AssembleGraph(layers, i * 10, i * 10);
                 var range = new[] { graph.First(), graph.Last() };

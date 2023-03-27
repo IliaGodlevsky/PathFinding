@@ -21,7 +21,7 @@ namespace Pathfinding.App.Console.Units
     internal sealed class PathfindingHistoryUnit : Unit, ICanRecieveMessage
     {
         private readonly IMessenger messenger;
-        private readonly History<PathfindingHistoryVolume> history = new();
+        private readonly IHistoryRepository<IHistoryVolume<ICoordinate>> repository;
         private readonly Dictionary<Guid, IReadOnlyList<int>> pricesHistory = new();
 
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
@@ -29,17 +29,19 @@ namespace Pathfinding.App.Console.Units
 
         public PathfindingHistoryUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
+            IHistoryRepository<IHistoryVolume<ICoordinate>> repository,
             IMessenger messenger)
             : base(menuItems, conditioned)
         {
             this.messenger = messenger;
+            this.repository = repository;
         }
 
         private void OnHistoryPage(DataMessage<Guid> msg)
         {
             graph.RestoreVerticesVisualState();
             graph.ApplyCosts(pricesHistory[msg.Value]);
-            history.VisualizeHistory(msg.Value, graph);
+            repository.VisualizeHistory(msg.Value, graph);
         }
 
         private void OnHistoryApplied(DataMessage<bool> msg)
@@ -55,7 +57,7 @@ namespace Pathfinding.App.Console.Units
 
         private void ClearHistory()
         {
-            history.Clear();
+            repository.Clear();
             pricesHistory.Clear();
         }
 
@@ -63,7 +65,7 @@ namespace Pathfinding.App.Console.Units
         {
             if (sender is IHistoryPageKey key)
             {
-                history.AddVisited(key.Id, e.Current);
+                repository.AddVisited(key.Id, e.Current);
             }
         }
 
@@ -71,17 +73,17 @@ namespace Pathfinding.App.Console.Units
 
         private void OnRangeChosen(AlgorithmMessage<IPathfindingRange<Vertex>> msg)
         {
-            history.AddPathfindingRange(msg.Algorithm.Id, msg.Value);
+            repository.AddPathfindingRange(msg.Algorithm.Id, msg.Value);
         }
 
         private void OnPathFound(AlgorithmMessage<IGraphPath> msg)
         {
-            history.AddPath(msg.Algorithm.Id, msg.Value);
+            repository.AddPath(msg.Algorithm.Id, msg.Value);
         }
 
         private void OnSubscribeOnHistory(DataMessage<PathfindingProcess> msg)
         {
-            history.AddObstacles(msg.Value.Id, graph.GetObstaclesCoordinates());
+            repository.AddObstacles(msg.Value.Id, graph.GetObstaclesCoordinates());
             pricesHistory.Add(msg.Value.Id, graph.GetCosts());
             msg.Value.VertexVisited += OnVertexVisited;
         }

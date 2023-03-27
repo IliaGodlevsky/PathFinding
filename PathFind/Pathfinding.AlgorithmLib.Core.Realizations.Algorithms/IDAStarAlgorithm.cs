@@ -45,7 +45,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
             var next = storage.TryFirstOrNullVertex();
             if (next.HasNoNeighbours())
             {
-                stashedVertices.ForEach(item => storage.EnqueueOrUpdatePriority(item.Key, item.Value));
+                stashedVertices.ForEach(storage.EnqueueOrUpdatePriority);
                 stashedVertices.Clear();
                 next = storage.TryFirstOrDeadEndVertex();
             }

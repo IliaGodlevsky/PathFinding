@@ -32,9 +32,8 @@ namespace Pathfinding.GraphLib.Smoothing
 
         private int GetAverageCost(TVertex vertex)
         {
-            var avg = vertex.Neighbours
+            return (int)vertex.Neighbours
                 .Average(neighbour => meanCost.Calculate(neighbour, vertex));
-            return (int)Math.Round(avg, 0);
         }
     }
 }
