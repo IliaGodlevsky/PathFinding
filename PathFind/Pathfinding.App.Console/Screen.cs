@@ -1,6 +1,4 @@
-﻿using Autofac;
-using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.App.Console.DependencyInjection;
+﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
@@ -13,7 +11,7 @@ using System.Drawing;
 
 namespace Pathfinding.App.Console
 {
-    internal static class Screen
+    internal sealed class Screen
     {
         public const int HeightOfAbscissaView = 2;
         public const int HeightOfGraphParametresView = 1;
@@ -22,8 +20,7 @@ namespace Pathfinding.App.Console
             = (Constants.GraphLengthValueRange.UpperValueOfRange - 1).GetDigitsNumber() + 1;
         public static readonly int YCoordinatePadding = WidthOfOrdinateView - 1;
 
-        private static readonly object recipient = new object();
-        private static readonly IMessenger messenger;
+        private readonly IMessenger messenger;
 
         private static int CurrentMaxValueOfRange;
 
@@ -37,13 +34,17 @@ namespace Pathfinding.App.Console
 
         static Screen()
         {
-            messenger = Registry.Container.Resolve<IMessenger>();
-            messenger.RegisterData<InclusiveValueRange<int>>(recipient, Tokens.Screen, OnCostRangeChanged);
-            messenger.RegisterData<string>(recipient, Tokens.Screen, OnStatisticsUpdated);
-            messenger.RegisterGraph(recipient, Tokens.Screen, OnNewGraphCreated);
             int x = WidthOfOrdinateView;
             int y = HeightOfAbscissaView + HeightOfGraphParametresView;
             GraphFieldPosition = new(x, y);
+        }
+
+        public Screen(IMessenger messenger)
+        {
+            this.messenger = messenger;
+            messenger.RegisterData<InclusiveValueRange<int>>(this, Tokens.Screen, OnCostRangeChanged);
+            messenger.RegisterData<string>(this, Tokens.Screen, OnStatisticsUpdated);
+            messenger.RegisterGraph(this, Tokens.Screen, OnNewGraphCreated);
         }
 
         public static void SetCursorPositionUnderMenu(int menuOffset = 0)

@@ -140,6 +140,8 @@
     <Compile Include="Messages\DataMessages\DataMessage.cs" />
     <Compile Include="Messages\GraphChangedMessage.cs" />
     <Compile Include="Model\MessengerDebug.cs" />
+    <Compile Include="DependencyInjection\Registrations\IRegistry.cs" />
+    <Compile Include="DependencyInjection\Registrations\Registries.cs" />
     <Compile Include="Tokens.cs" />
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\Answer.cs" />
