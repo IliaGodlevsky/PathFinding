@@ -24,27 +24,13 @@ namespace Pathfinding.App.Console.Extensions
         public static void SendData<TData>(this IMessenger messenger,
             TData data, Tokens token)
         {
-            var msg = new DataMessage<TData>(data);
-            for (int i = 0; i < Tokens.Length; i++)
-            {
-                if (token.ContainsFlag(Tokens[i]))
-                {
-                    messenger.Send(msg, Tokens[i]);
-                }
-            }
+            messenger.SendMessage(new DataMessage<TData>(data), token);
         }
 
         public static void SendData<TData>(this IMessenger messenger, 
             PathfindingProcess algorithm, TData data, Tokens token)
         {
-            var msg = new AlgorithmMessage<TData>(algorithm, data);
-            for (int i = 0; i < Tokens.Length; i++)
-            {
-                if (token.ContainsFlag(Tokens[i]))
-                {
-                    messenger.Send(msg, Tokens[i]);
-                }
-            }
+            messenger.SendMessage(new AlgorithmMessage<TData>(algorithm, data), token);
         }
 
         public static void RegisterData<TData>(this IMessenger messenger, object recipient,
@@ -65,9 +51,15 @@ namespace Pathfinding.App.Console.Extensions
             messenger.Register<AlgorithmMessage<TData>>(recipient, token, action);
         }
 
-        private static bool ContainsFlag(this Tokens flags, Tokens flag)
+        private static void SendMessage<TMessage>(this IMessenger messenger, TMessage msg, Tokens token)
         {
-            return (flags & flag) != 0;
+            for (int i = 0; i < Tokens.Length; i++)
+            {
+                if ((token & Tokens[i]) != 0)
+                {
+                    messenger.Send(msg, Tokens[i]);
+                }
+            }
         }
     }
 }

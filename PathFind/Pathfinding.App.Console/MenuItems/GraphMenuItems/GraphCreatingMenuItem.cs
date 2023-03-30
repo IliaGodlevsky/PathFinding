@@ -25,7 +25,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected readonly INeighborhoodFactory neighborhoodFactory;
 
         private GraphAssemble selected;
-        protected InclusiveValueRange<int> costRange = new InclusiveValueRange<int>(9, 1);
+        protected InclusiveValueRange<int> costRange = new (9, 1);
         protected int width = 0;
         protected int length = 0;
         protected int obstaclePercent = 0;

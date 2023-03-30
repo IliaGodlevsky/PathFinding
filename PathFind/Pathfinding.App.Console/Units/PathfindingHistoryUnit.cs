@@ -73,12 +73,12 @@ namespace Pathfinding.App.Console.Units
 
         private void OnRangeChosen(AlgorithmMessage<IPathfindingRange<Vertex>> msg)
         {
-            repository.AddPathfindingRange(msg.Algorithm.Id, msg.Value);
+            repository.AddPathfindingRange(msg.Id, msg.Value);
         }
 
         private void OnPathFound(AlgorithmMessage<IGraphPath> msg)
         {
-            repository.AddPath(msg.Algorithm.Id, msg.Value);
+            repository.AddPath(msg.Id, msg.Value);
         }
 
         private void OnSubscribeOnHistory(DataMessage<PathfindingProcess> msg)

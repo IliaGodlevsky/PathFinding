@@ -126,6 +126,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<GraphCreateMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
                 builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IConditionedMenuItem>(Main).As<ICanRecieveMessage>().SingleInstance();
 
+                builder.RegisterType<ApplyStatisticsMenuItem>().Keyed<IMenuItem>(Statistics).SingleInstance();
+
                 builder.RegisterType<TotalVertexVisualization>().As<ITotalVisualization<Vertex>>().As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<PathVisualization>().As<IPathVisualization<Vertex>>().As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<RangeVisualization>().As<IRangeVisualization<Vertex>>().SingleInstance();
@@ -235,7 +237,6 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<ReplaceTransitVertexAction>().Keyed<IVertexAction>(PathfindingRange).WithMetadata(PathfindingRange, ConsoleKey.P);
                 builder.RegisterType<ReplaceTransitIsolatedVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 1).SingleInstance();
                 builder.RegisterType<IncludeTransitVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 6).SingleInstance();
-
             }
         }
 
@@ -271,10 +272,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<HistoryMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
 
                 builder.RegisterType<ApplyHistoryMenuItem>().Keyed<IMenuItem>(History).SingleInstance();
-                builder.RegisterType<ClearHistoryMenuItem>().Keyed<IConditionedMenuItem>(History)
-                    .As<ICanRecieveMessage>().SingleInstance();
-                builder.RegisterType<ShowHistoryMenuItem>().Keyed<IConditionedMenuItem>(History)
-                    .As<ICanRecieveMessage>().SingleInstance();
+                builder.RegisterType<ClearHistoryMenuItem>().Keyed<IConditionedMenuItem>(History).As<ICanRecieveMessage>().SingleInstance();
+                builder.RegisterType<ShowHistoryMenuItem>().Keyed<IConditionedMenuItem>(History).As<ICanRecieveMessage>().SingleInstance();
             }
         }
 
@@ -284,7 +283,6 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             {
                 builder.RegisterType<SpeedUpAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.UpArrow);
                 builder.RegisterType<SlowDownAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.DownArrow);
-
                 builder.RegisterType<ResumeAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Enter);
                 builder.RegisterType<PauseAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.P);
                 builder.RegisterType<InterruptAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Escape);

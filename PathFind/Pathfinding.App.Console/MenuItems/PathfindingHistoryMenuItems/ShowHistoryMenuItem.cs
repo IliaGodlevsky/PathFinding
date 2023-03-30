@@ -90,7 +90,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         {
             if (isHistoryApplied)
             {
-                pages[msg.Algorithm.Id] = msg.Value;
+                pages[msg.Id] = msg.Value;
             }
         }
 

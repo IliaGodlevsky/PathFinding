@@ -1,9 +1,8 @@
-﻿using Shared.Primitives.Attributes;
-using System;
+﻿using System;
 
 namespace Pathfinding.App.Console
 {
-    [Flags] internal enum Tokens
+    [Flags] internal enum Tokens : long
     {
         Screen        = 2 << 0,
         Main          = 2 << 1,
