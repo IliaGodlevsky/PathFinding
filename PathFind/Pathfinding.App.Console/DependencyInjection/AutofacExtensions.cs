@@ -51,5 +51,11 @@ namespace Pathfinding.App.Console.DependencyInjection
             }
             return builder.OnActivated(Register);
         }
+
+        public static void Start<TMenuItem>(this ILifetimeScope scope)
+            where TMenuItem : IMenuItem
+        {
+            scope.Resolve<TMenuItem>().Execute();
+        }
     }
 }
