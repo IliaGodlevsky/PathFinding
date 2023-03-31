@@ -8,10 +8,12 @@ Registry.Configure(
     Registries.PathfindingStatistics,
     Registries.TransitVertices,
     Registries.PathfindingHistory,
-    Registries.PathfindingControl,
+    Registries.VisualizationControl,
     Registries.ColorEditor,
     Registries.GraphEditor,
-    Registries.AllAlgorithms,
+    Registries.WaveAlgorithms,
+    Registries.GreedyAlgorithms,
+    Registries.BreadthAlgorithms,
     Registries.PathfindingVisualization,
     Registries.SerializerDecorators)
     .Run<MainUnitMenuItem>();

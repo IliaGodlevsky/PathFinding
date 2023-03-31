@@ -70,10 +70,12 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         public static readonly IRegistry GraphEditor = new GraphEditorRegistration();
         public static readonly IRegistry ColorEditor = new ColorEditorRegistration();
         public static readonly IRegistry TransitVertices = new TransitVerticesRegistration();
-        public static readonly IRegistry AllAlgorithms = new AllAlgorithmsRegistration();
+        public static readonly IRegistry WaveAlgorithms = new WaveAlgorithmsRegistration();
+        public static readonly IRegistry GreedyAlgorithms = new GreedyAlgorithmsRegistration();
+        public static readonly IRegistry BreadthAlgorithms = new BreadthAlgorithmsRegistration();
         public static readonly IRegistry PathfindingVisualization = new PathfindingVisualizationRegistration();
         public static readonly IRegistry PathfindingHistory = new PathfindingHistoryRegistration();
-        public static readonly IRegistry PathfindingControl = new PathfindingControlRegistration();
+        public static readonly IRegistry VisualizationControl = new VisualizationControlRegistration();
         public static readonly IRegistry PathfindingStatistics = new PathfindingStatisticsRegistration();
         public static readonly IRegistry SerializerDecorators = new SerializerDecoratorsRegistration();
 
@@ -160,12 +162,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
                 builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>().As<GraphSerializer>().SingleInstance();
-
                 builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory<Vertex>>().SingleInstance();
-
-                builder.RegisterType<DijkstraAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, WaveGroup).WithMetadata(Order, 1);
-                builder.RegisterType<LeeAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, BreadthGroup).WithMetadata(Order, 1);
-                builder.RegisterType<DistanceFirstAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, GreedGroup).WithMetadata(Order, 1);
 
                 builder.RegisterType<DefaultStepRule>().As<IStepRule>().SingleInstance();
                 builder.RegisterType<EuclidianDistance>().As<IHeuristic>().SingleInstance();
@@ -213,17 +210,34 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        private sealed class AllAlgorithmsRegistration : IRegistry
+        private sealed class BreadthAlgorithmsRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
             {
                 builder.RegisterType<AStarLeeAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, BreadthGroup).WithMetadata(Order, 2);
-                builder.RegisterType<DepthFirstAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, GreedGroup).WithMetadata(Order, 2);
+                builder.RegisterType<LeeAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, BreadthGroup).WithMetadata(Order, 1);
+            }
+        }
+
+        private sealed class WaveAlgorithmsRegistration : IRegistry
+        {
+            public void Configure(ContainerBuilder builder)
+            {
+                builder.RegisterType<DijkstraAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, WaveGroup).WithMetadata(Order, 1);
                 builder.RegisterType<RandomAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, WaveGroup).WithMetadata(Order, 4);
+                builder.RegisterType<AStarAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, BreadthGroup).WithMetadata(Order, 2);
                 builder.RegisterType<IDAStarAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, WaveGroup).WithMetadata(Order, 3);
+            }
+        }
+
+        private sealed class GreedyAlgorithmsRegistration : IRegistry
+        {
+            public void Configure(ContainerBuilder builder)
+            {
+                builder.RegisterType<DistanceFirstAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, GreedGroup).WithMetadata(Order, 1);
+                builder.RegisterType<DepthFirstAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, GreedGroup).WithMetadata(Order, 2);
                 builder.RegisterType<HeuristicCostGreedyAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, GreedGroup).WithMetadata(Order, 3);
                 builder.RegisterType<CostGreedyAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, GreedGroup).WithMetadata(Order, 4);
-                builder.RegisterType<AStarAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, WaveGroup).WithMetadata(Order, 2);
             }
         }
 
@@ -249,7 +263,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        private sealed class PathfindingControlRegistration : IRegistry
+        private sealed class VisualizationControlRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
             {
