@@ -77,33 +77,6 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         public static readonly IRegistry PathfindingStatistics = new PathfindingStatisticsRegistration();
         public static readonly IRegistry SerializerDecorators = new SerializerDecoratorsRegistration();
 
-        public static IEnumerable<IRegistry> FullRegistration
-        {
-            get
-            {
-                yield return Initial;
-                yield return UserInput;
-                yield return PathfindingStatistics;
-                yield return TransitVertices;
-                yield return PathfindingHistory;
-                yield return PathfindingControl;
-                yield return ColorEditor;
-                yield return GraphEditor;
-                yield return AllAlgorithms;
-                yield return PathfindingVisualization;
-                yield return SerializerDecorators;
-            }
-        }
-
-        public static IEnumerable<IRegistry> EnoughRegistration
-        {
-            get
-            {
-                yield return Initial;
-                yield return UserInput;
-            }
-        }
-
         private sealed class InitialRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -270,7 +243,6 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             public void Configure(ContainerBuilder builder)
             {
                 builder.RegisterType<HistoryMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
-
                 builder.RegisterType<ApplyHistoryMenuItem>().Keyed<IMenuItem>(History).SingleInstance();
                 builder.RegisterType<ClearHistoryMenuItem>().Keyed<IConditionedMenuItem>(History).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ShowHistoryMenuItem>().Keyed<IConditionedMenuItem>(History).As<ICanRecieveMessage>().SingleInstance();

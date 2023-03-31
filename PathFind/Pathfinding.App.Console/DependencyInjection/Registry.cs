@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Pathfinding.App.Console.DependencyInjection.Registrations;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.App.Console.DependencyInjection
 {
@@ -16,6 +17,11 @@ namespace Pathfinding.App.Console.DependencyInjection
             }
 
             return builder.Build();
+        }
+
+        public static IContainer Configure(params IRegistry[] registries)
+        {
+            return Configure(registries.AsEnumerable());
         }
     }
 }
