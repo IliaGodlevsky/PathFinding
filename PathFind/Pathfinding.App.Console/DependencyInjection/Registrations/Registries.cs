@@ -77,7 +77,6 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         public static readonly IRegistry PathfindingHistory = new PathfindingHistoryRegistration();
         public static readonly IRegistry VisualizationControl = new VisualizationControlRegistration();
         public static readonly IRegistry PathfindingStatistics = new PathfindingStatisticsRegistration();
-        public static readonly IRegistry SerializerDecorators = new SerializerDecoratorsRegistration();
 
         private sealed class InitialRegistration : IRegistry
         {
@@ -162,6 +161,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
                 builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>().As<GraphSerializer>().SingleInstance();
+                builder.RegisterDecorator<CompressGraphSerializer<Graph2D<Vertex>, Vertex>, GraphSerializer>();
+                builder.RegisterDecorator<CryptoGraphSerializer<Graph2D<Vertex>, Vertex>, GraphSerializer>();
                 builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory<Vertex>>().SingleInstance();
 
                 builder.RegisterType<DefaultStepRule>().As<IStepRule>().SingleInstance();
@@ -225,7 +226,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             {
                 builder.RegisterType<DijkstraAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, WaveGroup).WithMetadata(Order, 1);
                 builder.RegisterType<RandomAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, WaveGroup).WithMetadata(Order, 4);
-                builder.RegisterType<AStarAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, BreadthGroup).WithMetadata(Order, 2);
+                builder.RegisterType<AStarAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, WaveGroup).WithMetadata(Order, 2);
                 builder.RegisterType<IDAStarAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, WaveGroup).WithMetadata(Order, 3);
             }
         }
@@ -294,15 +295,6 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance();
                 builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
                 builder.RegisterType<ConsoleUserTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
-            }
-        }
-
-        private sealed class SerializerDecoratorsRegistration : IRegistry
-        {
-            public void Configure(ContainerBuilder builder)
-            {
-                builder.RegisterDecorator<CompressGraphSerializer<Graph2D<Vertex>, Vertex>, GraphSerializer>();
-                builder.RegisterDecorator<CryptoGraphSerializer<Graph2D<Vertex>, Vertex>, GraphSerializer>();
             }
         }
     }

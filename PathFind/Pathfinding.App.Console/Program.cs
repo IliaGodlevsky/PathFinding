@@ -14,6 +14,5 @@ Registry.Configure(
     Registries.WaveAlgorithms,
     Registries.GreedyAlgorithms,
     Registries.BreadthAlgorithms,
-    Registries.PathfindingVisualization,
-    Registries.SerializerDecorators)
+    Registries.PathfindingVisualization)
     .Run<MainUnitMenuItem>();
