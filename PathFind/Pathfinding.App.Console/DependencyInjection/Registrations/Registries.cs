@@ -52,7 +52,6 @@ using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.App.Console.ValueInput.UserInput;
 using Pathfinding.App.Console.MenuItems.PathfindingStatisticsMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems;
-using System.Collections.Generic;
 
 using static Pathfinding.App.Console.DependencyInjection.PathfindingUnits;
 using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
