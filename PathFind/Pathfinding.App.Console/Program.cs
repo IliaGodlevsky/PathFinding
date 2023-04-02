@@ -6,13 +6,14 @@ Registry.Configure(
     Registries.Initial,
     Registries.UserInput,
     Registries.PathfindingStatistics,
+    Registries.PathfindingVisualization,
     Registries.TransitVertices,
+    Registries.GraphSharing,
     Registries.PathfindingHistory,
     Registries.VisualizationControl,
     Registries.ColorEditor,
     Registries.GraphEditor,
     Registries.WaveAlgorithms,
-    Registries.GreedyAlgorithms,
     Registries.BreadthAlgorithms,
-    Registries.PathfindingVisualization)
+    Registries.GreedyAlgorithms)
     .Run<MainUnitMenuItem>();

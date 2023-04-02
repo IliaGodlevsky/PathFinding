@@ -7,6 +7,7 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
 using Shared.Random;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
@@ -35,11 +36,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 && graph != Graph2D<Vertex>.Empty;
         }
 
-        protected override ILayer<Graph2D<Vertex>, Vertex>[] GetLayers()
+        protected override IEnumerable<ILayer<Graph2D<Vertex>, Vertex>> GetLayers()
         {
-            return base.GetLayers()
-                .Append(new GraphLayer(graph.Clone()))
-                .ToArray();
+            return base.GetLayers().Append(new GraphLayer(graph));
         }
 
         public override void RegisterHanlders(IMessenger messenger)

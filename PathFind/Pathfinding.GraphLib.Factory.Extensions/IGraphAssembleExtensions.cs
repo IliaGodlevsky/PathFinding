@@ -9,7 +9,7 @@ namespace Pathfinding.GraphLib.Factory.Extensions
     public static class IGraphAssembleExtensions
     {
         public static TGraph AssembleGraph<TGraph, TVertex>(this IGraphAssemble<TGraph, TVertex> self,
-            IReadOnlyCollection<ILayer<TGraph, TVertex>> layers, IReadOnlyList<int> dimensionSizes)
+            IEnumerable<ILayer<TGraph, TVertex>> layers, IReadOnlyList<int> dimensionSizes)
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex
         {
@@ -19,7 +19,7 @@ namespace Pathfinding.GraphLib.Factory.Extensions
         }
 
         public static TGraph AssembleGraph<TGraph, TVertex>(this IGraphAssemble<TGraph, TVertex> self,
-            IReadOnlyCollection<ILayer<TGraph, TVertex>> layers, params int[] dimensionSizes)
+            IEnumerable<ILayer<TGraph, TVertex>> layers, params int[] dimensionSizes)
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex
         {
@@ -27,7 +27,7 @@ namespace Pathfinding.GraphLib.Factory.Extensions
         }
 
         public static async ValueTask<TGraph> AssembleGraphAsync<TGraph, TVertex>(this IGraphAssemble<TGraph, TVertex> self,
-            IReadOnlyCollection<ILayer<TGraph, TVertex>> layers, params int[] dimensionSizes)
+            IEnumerable<ILayer<TGraph, TVertex>> layers, params int[] dimensionSizes)
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex
         {
@@ -35,7 +35,7 @@ namespace Pathfinding.GraphLib.Factory.Extensions
         }
 
         public static async ValueTask<TGraph> AssembleGraphAsync<TGraph, TVertex>(this IGraphAssemble<TGraph, TVertex> self,
-            IReadOnlyCollection<ILayer<TGraph, TVertex>> layers, IReadOnlyList<int> dimensionSizes)
+            IEnumerable<ILayer<TGraph, TVertex>> layers, IReadOnlyList<int> dimensionSizes)
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex
         {

@@ -27,11 +27,5 @@ namespace Pathfinding.App.Console.Model
             string graphParams = string.Format(Languages.GraphFormat, ObstaclesPercent, Obstacles, Count);
             return string.Join(LargeSpace, joined, graphParams);
         }
-
-        public override Graph2D<Vertex> Clone()
-        {
-            var graph = new Graph2D<Vertex>(vertices.Values.ToArray(), DimensionsSizes.ToArray());
-            return new Graph2DWrap(graph);
-        }
     }
 }

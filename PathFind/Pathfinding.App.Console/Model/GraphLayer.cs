@@ -4,6 +4,7 @@ using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
 using Shared.Extensions;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.Model
@@ -14,7 +15,7 @@ namespace Pathfinding.App.Console.Model
 
         public GraphLayer(Graph2D<Vertex> graph)
         {
-            this.layer = graph;
+            this.layer = new(graph);
         }
 
         public void Overlay(Graph2D<Vertex> graph)

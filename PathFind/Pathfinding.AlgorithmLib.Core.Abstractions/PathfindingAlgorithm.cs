@@ -44,7 +44,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         public sealed override IGraphPath FindPath()
         {
             ThrowIfDisposed();
-            var paths = new List<IGraphPath>();
+            var subPaths = new List<IGraphPath>();
             using (Disposable.Use(CompletePathfinding))
             {
                 PrepareForPathfinding();
@@ -59,11 +59,11 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
                         CurrentVertex = GetNextVertex();
                         VisitCurrentVertex();
                     }
-                    paths.Add(GetSubPath());
+                    subPaths.Add(GetSubPath());
                     DropState();
                 }
             }
-            return GenerateResult(paths);
+            return GenerateResult(subPaths);
         }
 
         protected abstract IVertex GetNextVertex();
@@ -119,12 +119,12 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             }
         }
 
-        private static IGraphPath GenerateResult(IReadOnlyList<IGraphPath> paths)
+        private static IGraphPath GenerateResult(IReadOnlyList<IGraphPath> subPaths)
         {
-            return paths.Count switch
+            return subPaths.Count switch
             {
-                1 => paths[0],
-                > 1 => new CompositeGraphPath(paths),
+                1 => subPaths[0],
+                > 1 => new CompositeGraphPath(subPaths),
                 _ => NullGraphPath.Instance
             };
         }

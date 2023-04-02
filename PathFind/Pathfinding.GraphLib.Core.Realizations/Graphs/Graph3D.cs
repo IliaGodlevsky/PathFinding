@@ -10,7 +10,7 @@ namespace Pathfinding.GraphLib.Core.Realizations.Graphs
         where TVertex : IVertex
     {
         public static readonly Graph3D<TVertex> Empty
-            = new Graph3D<TVertex>(Array.Empty<TVertex>(), Array.Empty<int>());
+            = new (Array.Empty<TVertex>(), Array.Empty<int>());
 
         public int Width { get; }
 

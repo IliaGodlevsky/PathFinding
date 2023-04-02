@@ -11,6 +11,7 @@ using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 using Shared.Random;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
@@ -64,14 +65,11 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             return selected != null && IsGraphSizeSet();
         }
 
-        protected virtual ILayer<Graph2D<Vertex>, Vertex>[] GetLayers()
+        protected virtual IEnumerable<ILayer<Graph2D<Vertex>, Vertex>> GetLayers()
         {
-            return new ILayer<Graph2D<Vertex>, Vertex>[]
-            {
-                new ObstacleLayer<Graph2D<Vertex>, Vertex>(random, obstaclePercent),
-                new NeighborhoodLayer<Graph2D<Vertex>, Vertex>(neighborhoodFactory),
-                new VertexCostLayer<Graph2D<Vertex>, Vertex>(costFactory, costRange, random)
-            };
+            yield return new ObstacleLayer<Graph2D<Vertex>, Vertex>(random, obstaclePercent);
+            yield return new NeighborhoodLayer<Graph2D<Vertex>, Vertex>(neighborhoodFactory);
+            yield return new VertexCostLayer<Graph2D<Vertex>, Vertex>(costFactory, costRange, random);            
         }
 
         private bool IsGraphSizeSet()

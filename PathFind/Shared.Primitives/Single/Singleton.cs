@@ -43,8 +43,7 @@ namespace Shared.Primitives.Single
 
         public override bool Equals(object obj)
         {
-            return obj is TInstance
-                && obj.GetHashCode() == GetHashCode();
+            return obj.GetHashCode() == GetHashCode();
         }
 
         public override int GetHashCode()

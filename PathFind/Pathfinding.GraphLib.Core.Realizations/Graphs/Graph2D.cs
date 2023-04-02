@@ -23,9 +23,10 @@ namespace Pathfinding.GraphLib.Core.Realizations.Graphs
             Length = DimensionsSizes.LastOrDefault();
         }
 
-        public virtual Graph2D<TVertex> Clone()
+        public Graph2D(Graph2D<TVertex> graph)
+            : this(graph, graph.DimensionsSizes)
         {
-            return new(vertices.Values.ToArray(), DimensionsSizes.ToArray());
+
         }
     }
 }
