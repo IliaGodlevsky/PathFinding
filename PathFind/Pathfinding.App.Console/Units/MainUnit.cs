@@ -41,6 +41,8 @@ namespace Pathfinding.App.Console.Units
             this.fieldFactory = fieldFactory;
         }
 
+        private bool IsGraphCreated() => Graph != Graph2D<Vertex>.Empty;
+
         private void DisplayGraph()
         {
             try
@@ -70,24 +72,22 @@ namespace Pathfinding.App.Console.Units
 
         private void OnGraphChanged(GraphChangedMessage msg)
         {
-            if (Graph != Graph2D<Vertex>.Empty)
+            using (Cursor.UseCurrentPosition())
             {
-                using (Cursor.UseCurrentPosition())
-                {
-                    var position = new Point(0, 0);
-                    Cursor.SetPosition(position);
-                    System.Console.Write(new string(' ',
-                        System.Console.BufferWidth));
-                    Cursor.SetPosition(position);
-                    System.Console.WriteLine(Graph);
-                }
+                var position = new Point(0, 0);
+                Cursor.SetPosition(position);
+                System.Console.Write(new string(' ',
+                    System.Console.BufferWidth));
+                Cursor.SetPosition(position);
+                System.Console.WriteLine(Graph);
             }
         }
 
         public void RegisterHanlders(IMessenger messenger)
         {
+            var token = ConditionToken.Create(IsGraphCreated, Tokens.Main);
             messenger.RegisterGraph(this, Tokens.Main, SetGraph);
-            messenger.Register<GraphChangedMessage>(this, OnGraphChanged);
+            messenger.Register<GraphChangedMessage>(this, token, OnGraphChanged);
         }
     }
 }

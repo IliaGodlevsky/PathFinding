@@ -96,8 +96,8 @@ namespace Pathfinding.App.Console.Units
             messenger.RegisterData<PathfindingProcess>(this, token, OnSubscribeOnHistory);
             messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
             messenger.RegisterData<bool>(this, Tokens.History, OnHistoryApplied);
-            messenger.RegisterData<Guid>(this, Tokens.History, OnHistoryPage);
-            messenger.Register<ClearHistoryMessage>(this, _ => ClearHistory());
+            messenger.RegisterData<Guid>(this, token, OnHistoryPage);
+            messenger.Register<ClearHistoryMessage>(this, token, _ => ClearHistory());
         }
     }
 }

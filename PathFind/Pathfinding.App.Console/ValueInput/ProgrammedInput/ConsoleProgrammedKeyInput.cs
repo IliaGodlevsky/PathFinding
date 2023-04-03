@@ -7,11 +7,10 @@ namespace Pathfinding.App.Console.ValueInput.ProgrammedInput
 {
     internal sealed class ConsoleProgrammedKeyInput : ProgrammedInput<ConsoleKey>
     {
-        private List<ConsoleKey> Keys { get; }
+        private List<ConsoleKey> Keys { get; } = new();
 
         public ConsoleProgrammedKeyInput()
         {
-            Keys = new List<ConsoleKey>();
             Keys.AddRange(Enumerable.Repeat(ConsoleKey.UpArrow, 200));
         }
 
@@ -27,7 +26,7 @@ namespace Pathfinding.App.Console.ValueInput.ProgrammedInput
 
         protected override Queue<ConsoleKey> GenerateCommands()
         {
-            return new Queue<ConsoleKey>(Keys);
+            return new(Keys);
         }
     }
 }

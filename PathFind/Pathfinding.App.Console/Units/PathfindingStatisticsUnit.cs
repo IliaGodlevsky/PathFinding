@@ -64,7 +64,8 @@ namespace Pathfinding.App.Console.Units
                 visited = 0;
                 messenger.SendData(stats, Tokens.Screen);
             }
-            messenger.Send(new AlgorithmMessage<string>(msg.Algorithm, stats), Tokens.History);
+            var message = new AlgorithmMessage<string>(msg.Algorithm, stats);
+            messenger.Send(message, Tokens.History);
         }
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)

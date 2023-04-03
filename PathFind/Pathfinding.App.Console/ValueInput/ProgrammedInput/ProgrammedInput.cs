@@ -15,7 +15,7 @@ namespace Pathfinding.App.Console.ValueInput.ProgrammedInput
 
         protected ProgrammedInput()
         {
-            steps = new Lazy<Queue<T>>(GenerateCommands);
+            steps = new(GenerateCommands);
         }
 
         public virtual T Input()

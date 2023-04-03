@@ -7,12 +7,11 @@ namespace Pathfinding.App.Console.ValueInput.ProgrammedInput
 {
     internal abstract class ConsoleProgrammedInput<T> : ProgrammedInput<T>
     {
-        private const BindingFlags Flags = BindingFlags.NonPublic | BindingFlags.Static;
-
         protected override Queue<T> GenerateCommands()
         {
+            var flags = BindingFlags.NonPublic | BindingFlags.Static;
             return GetType()
-                .GetFields(Flags)
+                .GetFields(flags)
                 .Where(field => field.FieldType == typeof(T))
                 .Select(field => (T)field.GetValue(null))
                 .ToQueue();

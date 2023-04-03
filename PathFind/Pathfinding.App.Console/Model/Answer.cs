@@ -1,6 +1,7 @@
 ﻿using Pathfinding.App.Console.Localization;
 using Shared.Primitives.ValueRange;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.Model

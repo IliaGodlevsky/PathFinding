@@ -9,16 +9,16 @@ namespace Pathfinding.App.Console.ValueInput.UserInput
         {
             TInner result;
             string userInput = System.Console.ReadLine();
-            while (!IsValidInput(userInput, out result))
+            while (!TryParse(userInput, out result))
             {
                 System.Console.Write(Languages.BadInputMsg);
                 userInput = System.Console.ReadLine();
             }
-            return Convert(result);
+            return Interpret(result);
         }
 
-        protected abstract TOutput Convert(TInner inner);
+        protected abstract TOutput Interpret(TInner inner);
 
-        protected abstract bool IsValidInput(string input, out TInner parsed);
+        protected abstract bool TryParse(string input, out TInner parsed);
     }
 }
