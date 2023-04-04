@@ -12,7 +12,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Heuristics
             return Math.Round(Math.Sqrt(result), Precision);
         }
 
-        protected override double ZipMethod(int first, int second)
+        protected override double Zip(int first, int second)
         {
             return Math.Pow(first - second, Power);
         }

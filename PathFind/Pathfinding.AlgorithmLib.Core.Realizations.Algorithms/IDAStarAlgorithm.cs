@@ -14,7 +14,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 {
     public class IDAStarAlgorithm : AStarAlgorithm
     {
-        private const int PercentToDelete = 4;
+        private readonly int PercentToDelete = 4;
 
         private readonly Dictionary<IVertex, double> stashedVertices;
 

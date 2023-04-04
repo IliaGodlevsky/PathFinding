@@ -14,16 +14,16 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Heuristics
             int limit = Math.Min(firstCoordinates.Count, secondCoordinates.Count);
             for (int i = 0; i < limit; i++)
             {
-                double zipped = ZipMethod(firstCoordinates[i], secondCoordinates[i]);
-                result = AggregateMethod(result, zipped);
+                double zipped = Zip(firstCoordinates[i], secondCoordinates[i]);
+                result = Aggregate(result, zipped);
             }
             return ProcessResult(result);
         }
 
         protected virtual double ProcessResult(double result) => result;
 
-        protected virtual double AggregateMethod(double a, double b) => a + b;
+        protected virtual double Aggregate(double a, double b) => a + b;
 
-        protected abstract double ZipMethod(int first, int second);
+        protected abstract double Zip(int first, int second);
     }
 }
