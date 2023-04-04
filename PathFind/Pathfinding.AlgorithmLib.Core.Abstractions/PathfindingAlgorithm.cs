@@ -9,6 +9,7 @@ using Shared.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace System.Runtime.CompilerServices
 {
@@ -63,7 +64,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
                     DropState();
                 }
             }
-            return GenerateResult(subPaths);
+            return CreatePath(subPaths);
         }
 
         protected abstract IVertex GetNextVertex();
@@ -119,7 +120,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             }
         }
 
-        private static IGraphPath GenerateResult(IReadOnlyList<IGraphPath> subPaths)
+        private static IGraphPath CreatePath(IReadOnlyList<IGraphPath> subPaths)
         {
             return subPaths.Count switch
             {
