@@ -20,9 +20,8 @@ namespace Pathfinding.App.Console.Model
 
         public void Overlay(Graph2D<Vertex> graph)
         {
-            var comparer = new CoordinateEqualityComparer();
             layer.GetCoordinates()
-                .Intersect(graph.GetCoordinates(), comparer)
+                .Intersect(graph.GetCoordinates(), CoordinateEqualityComparer.Interface)
                 .ForEach(coordinate => Overlay(coordinate, graph));
         }
 

@@ -1,6 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Factory.Interface;
-using Shared.Extensions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,7 +13,10 @@ namespace Pathfinding.GraphLib.Factory.Extensions
             where TVertex : IVertex
         {
             var graph = self.AssembleGraph(dimensionSizes);
-            layers.ForEach(layer => layer.Overlay(graph));
+            foreach (var layer in layers)
+            {
+                layer.Overlay(graph);
+            }
             return graph;
         }
 

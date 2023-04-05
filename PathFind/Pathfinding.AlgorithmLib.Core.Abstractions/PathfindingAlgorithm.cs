@@ -9,7 +9,6 @@ using Shared.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace System.Runtime.CompilerServices
 {
@@ -27,8 +26,8 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         protected sealed record SubRange(IVertex Source, IVertex Target);
 
         protected readonly IEnumerable<IVertex> pathfindingRange;
-        protected readonly HashSet<IVertex> visited = new(new VertexEqualityComparer());
-        protected readonly Traces traces = new(new CoordinateEqualityComparer());
+        protected readonly HashSet<IVertex> visited = new(VertexEqualityComparer.Interface);
+        protected readonly Traces traces = new(CoordinateEqualityComparer.Interface);
         protected readonly TStorage storage = new();
 
         protected SubRange CurrentRange { get; set; }

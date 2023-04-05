@@ -24,9 +24,8 @@ namespace Pathfinding.GraphLib.Core.Abstractions
                 .TakeOrDefault(requiredNumberOfDimensions, 1)
                 .ToArray();
             Count = DimensionsSizes.AggregateOrDefault((x, y) => x * y);
-            var comparer = new CoordinateEqualityComparer();
             this.vertices = vertices.Take(Count)
-                .ToDictionary(vertex => vertex.Position, comparer)
+                .ToDictionary(vertex => vertex.Position, CoordinateEqualityComparer.Interface)
                 .AsReadOnly();
         }
 

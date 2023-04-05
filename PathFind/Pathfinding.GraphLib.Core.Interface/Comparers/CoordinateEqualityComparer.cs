@@ -1,9 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using Shared.Primitives.Single;
+using System.Collections.Generic;
 
 namespace Pathfinding.GraphLib.Core.Interface.Comparers
 {
-    public sealed class CoordinateEqualityComparer : IEqualityComparer<ICoordinate>
+    public sealed class CoordinateEqualityComparer 
+        : Singleton<CoordinateEqualityComparer, IEqualityComparer<ICoordinate>>, IEqualityComparer<ICoordinate>
     {
+        private CoordinateEqualityComparer()
+        {
+
+        }
+
         public bool Equals(ICoordinate x, ICoordinate y)
         {
             return x.Equals(y);
