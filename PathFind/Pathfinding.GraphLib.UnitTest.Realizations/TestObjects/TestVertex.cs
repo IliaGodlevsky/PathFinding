@@ -1,5 +1,6 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.GraphLib.Core.NullObjects;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,15 +12,14 @@ namespace Pathfinding.GraphLib.UnitTest.Realizations.TestObjects
     {
         public TestVertex(ICoordinate coordinate)
         {
-            this.InitializeComponents();
             Position = coordinate;
         }
 
         public bool IsObstacle { get; set; }
 
-        public IVertexCost Cost { get; set; }
+        public IVertexCost Cost { get; set; } = NullCost.Instance;
 
-        public IList<IVertex> Neighbours { get; set; }
+        public IList<IVertex> Neighbours { get; set; } = new List<IVertex>();
 
         public ICoordinate Position { get; }
 

@@ -46,7 +46,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests.Realizations
             return GetEnumerator();
         }
 
-        private Graph2D<TestVertex> CreateGraph()
+        private static Graph2D<TestVertex> CreateGraph()
         {
             var vertexFactory = new TestVertexFactory();
             var coordinateFactory = new TestCoordinateFactory();
@@ -58,7 +58,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests.Realizations
                 new CostLayer(),
                 new NeighborhoodLayer()
             };
-            return assemble.AssembleGraph(layers, Constants.DimensionSizes2D);
+            return assemble.AssembleGraph(layers, Constants.Width, Constants.Length);
         }
 
         private TestVertex Get(int x, int y)

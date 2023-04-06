@@ -73,6 +73,10 @@
       <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.GraphLib.Core.NullObjects\Pathfinding.GraphLib.Core.NullObjects.csproj">
+      <Project>{67CCD24F-A5C1-41F9-9FE8-FC8C4C818646}</Project>
+      <Name>Pathfinding.GraphLib.Core.NullObjects</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Realizations\Pathfinding.GraphLib.Core.Realizations.csproj">
       <Project>{0C7DB792-B30B-4138-8D37-67450E2F0982}</Project>
       <Name>Pathfinding.GraphLib.Core.Realizations</Name>
