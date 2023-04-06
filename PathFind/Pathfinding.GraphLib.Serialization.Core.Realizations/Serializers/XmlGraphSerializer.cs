@@ -43,7 +43,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
 
         protected override void SaveGraphInternal(IGraph<IVertex> graph, Stream stream)
         {
-            new XmlDocument().Append(new GraphSerializationInfo(graph)).Save(stream);
+            new XmlDocument().Append(new(graph)).Save(stream);
         }
     }
 }

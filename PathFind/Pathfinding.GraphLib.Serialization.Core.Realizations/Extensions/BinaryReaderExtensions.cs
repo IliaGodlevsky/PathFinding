@@ -14,7 +14,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
         {
             var dimensionsSizes = reader.ReadIntArray();
             var verticesInfo = reader.ReadVertices(costFactory, coordinateFactory);
-            return new GraphSerializationInfo(dimensionsSizes, verticesInfo);
+            return new(dimensionsSizes, verticesInfo);
         }
 
         private static VertexSerializationInfo[] ReadVertices(this BinaryReader reader,
@@ -28,7 +28,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
                 var cost = reader.ReadCost(costFactory);
                 var neighbourhood = reader.ReadNeighborhood(coordinateFactory);
                 var position = reader.ReadCoordinate(coordinateFactory);
-                vertices[i] = new VertexSerializationInfo(isObstacle, cost, position, neighbourhood);
+                vertices[i] = new(isObstacle, cost, position, neighbourhood);
             }
             return vertices;
         }
@@ -48,10 +48,11 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
         {
             int upperValueOfCostRange = reader.ReadInt32();
             int lowerValueOfCostRange = reader.ReadInt32();
-            return new InclusiveValueRange<int>(upperValueOfCostRange, lowerValueOfCostRange);
+            return new (upperValueOfCostRange, lowerValueOfCostRange);
         }
 
-        private static IReadOnlyCollection<ICoordinate> ReadNeighborhood(this BinaryReader reader, ICoordinateFactory factory)
+        private static IReadOnlyCollection<ICoordinate> ReadNeighborhood(this BinaryReader reader, 
+            ICoordinateFactory factory)
         {
             int count = reader.ReadInt32();
             var neighborhood = new ICoordinate[count];
@@ -69,7 +70,8 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             return factory.CreateCost(cost, range);
         }
 
-        private static ICoordinate ReadCoordinate(this BinaryReader reader, ICoordinateFactory factory)
+        private static ICoordinate ReadCoordinate(this BinaryReader reader, 
+            ICoordinateFactory factory)
         {
             var coordinates = reader.ReadIntArray();
             return factory.CreateCoordinate(coordinates);

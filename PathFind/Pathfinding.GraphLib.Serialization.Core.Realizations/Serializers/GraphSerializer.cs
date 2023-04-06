@@ -36,7 +36,8 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
                 var graphInfo = LoadGraphInternal(stream, costFactory, coordinateFactory);
                 var vertices = graphInfo.VerticesInfo.Select(vertexFactory.CreateFrom).ToArray();
                 var graph = graphFactory.CreateGraph(vertices, graphInfo.DimensionsSizes);
-                graphInfo.VerticesInfo.Zip(graph, (info, vertex) => (Vertex: vertex, Info: info))
+                graphInfo.VerticesInfo
+                    .Zip(graph, (info, vertex) => (Vertex: vertex, Info: info))
                     .ForEach(item => SetNeighbourhood(item, graph));
                 return graph;
             }

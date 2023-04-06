@@ -21,7 +21,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
                 .Select(element => element.GetVertex(costFactory, coordinateFactory))
                 .ToArray();
 
-            return new GraphSerializationInfo(dimensions, vertices);
+            return new(dimensions, vertices);
         }
 
         private static VertexSerializationInfo GetVertex(this XElement element,
@@ -47,7 +47,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
                 .Select(factory.CreateCoordinate)
                 .ToArray();
 
-            return new VertexSerializationInfo(isObstacle, cost, coordinate, neighbours);
+            return new(isObstacle, cost, coordinate, neighbours);
         }
 
         private static T Attribute<T>(this XElement element, string name)
