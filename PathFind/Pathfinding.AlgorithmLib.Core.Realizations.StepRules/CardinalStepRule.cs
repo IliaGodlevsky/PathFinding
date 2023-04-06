@@ -2,6 +2,7 @@
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using System;
+using System.Runtime.CompilerServices;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.StepRules
 {
@@ -16,6 +17,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.StepRules
             this.stepCostIncreaseFactor = stepCostIncreaseFactor;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public double CalculateStepCost(IVertex neighbour, IVertex current)
         {
             double cost = stepRule.CalculateStepCost(neighbour, current);

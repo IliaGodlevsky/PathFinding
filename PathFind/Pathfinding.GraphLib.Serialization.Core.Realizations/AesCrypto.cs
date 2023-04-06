@@ -20,8 +20,8 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations
 
         public AesCrypto()
         {
-            key = new Lazy<byte[]>(() => CreateCryptoStringBytes(KeyLength));
-            iv = new Lazy<byte[]>(() => CreateCryptoStringBytes(IVLength));
+            key = new(() => CreateCryptoStringBytes(KeyLength));
+            iv = new(() => CreateCryptoStringBytes(IVLength));
         }
 
         private byte[] CreateCryptoStringBytes(int length)
