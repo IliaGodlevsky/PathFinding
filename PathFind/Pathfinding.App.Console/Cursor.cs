@@ -29,7 +29,7 @@ namespace Pathfinding.App.Console
         /// </summary>
         /// <returns>An object, disposing of 
         /// which shows cursor</returns>
-        public static IDisposable HideCursor()
+        public static Disposable HideCursor()
         {
             System.Console.CursorVisible = false;
             return Disposable.Use(ShowCursor);
@@ -40,7 +40,7 @@ namespace Pathfinding.App.Console
         /// </summary>
         /// <returns>An object, disposing which returns
         /// the cursor to the remembered position</returns>
-        public static IDisposable UseCurrentPosition()
+        public static Disposable UseCurrentPosition()
         {
             int cursorLeft = System.Console.CursorLeft;
             int cursorTop = System.Console.CursorTop;
@@ -55,7 +55,7 @@ namespace Pathfinding.App.Console
         /// <param name="color"></param>
         /// <returns>An object, disposing which returns 
         /// previous foreground console color</returns>
-        public static IDisposable UseColor(ConsoleColor color)
+        public static Disposable UseColor(ConsoleColor color)
         {
             var currentColor = System.Console.ForegroundColor;
             void RestoreColor()
@@ -73,7 +73,7 @@ namespace Pathfinding.App.Console
         /// returns the cursor to the remembered 
         /// position and cleans all the input that has been
         /// perfromed after remembering the position </returns>
-        public static IDisposable UseCurrentPositionWithClean()
+        public static Disposable UseCurrentPositionWithClean()
         {
             int left = System.Console.CursorLeft;
             int top = System.Console.CursorTop;

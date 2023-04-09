@@ -16,4 +16,4 @@ Registry.Configure(
     Registries.WaveAlgorithms,
     Registries.BreadthAlgorithms,
     Registries.GreedyAlgorithms)
-    .Run<MainUnitMenuItem>();
+    .Run<MainUnitMenuItem>();ц

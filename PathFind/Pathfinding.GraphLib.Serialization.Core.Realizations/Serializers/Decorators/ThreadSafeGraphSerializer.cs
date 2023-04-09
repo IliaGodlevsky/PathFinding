@@ -10,18 +10,17 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decor
         where TGraph : IGraph<TVertex>
         where TVertex : IVertex
     {
-        private readonly object locker;
+        private readonly object syncRoot = new();
         private readonly IGraphSerializer<TGraph, TVertex> serializer;
 
         public ThreadSafeGraphSerializer(IGraphSerializer<TGraph, TVertex> serializer)
         {
             this.serializer = serializer;
-            locker = new object();
         }
 
         public TGraph LoadGraph(Stream stream)
         {
-            lock (locker)
+            lock (syncRoot)
             {
                 try
                 {
@@ -36,7 +35,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decor
 
         public void SaveGraph(IGraph<IVertex> graph, Stream stream)
         {
-            lock (locker)
+            lock (syncRoot)
             {
                 try
                 {

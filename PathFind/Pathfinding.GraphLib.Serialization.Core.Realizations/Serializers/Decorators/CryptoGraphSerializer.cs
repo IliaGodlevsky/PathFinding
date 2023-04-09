@@ -16,24 +16,30 @@ namespace GraphLib.Serialization.Serializers.Decorators
         private readonly IGraphSerializer<TGraph, TVertex> serializer;
         private readonly SymmetricAlgorithm algorithm;
 
-        public CryptoGraphSerializer(IGraphSerializer<TGraph, TVertex> serializer, SymmetricAlgorithm algorithm, ICrypto crypto)
+        public CryptoGraphSerializer(IGraphSerializer<TGraph, TVertex> serializer, 
+            SymmetricAlgorithm algorithm, 
+            ICrypto crypto)
         {
             this.serializer = serializer;
             this.algorithm = algorithm;
             this.crypto = crypto;
         }
 
-        public CryptoGraphSerializer(IGraphSerializer<TGraph, TVertex> serializer)
-            : this(serializer, new AesCryptoServiceProvider(), new AesCrypto())
+        public CryptoGraphSerializer(IGraphSerializer<TGraph, TVertex> serializer,
+            SymmetricAlgorithm algorithm)
+            : this(serializer, algorithm, new AesCrypto())
         {
+        }
 
+        public CryptoGraphSerializer(IGraphSerializer<TGraph, TVertex> serializer)
+            : this(serializer, Aes.Create(), new AesCrypto())
+        {
         }
 
         public TGraph LoadGraph(Stream stream)
         {
             try
             {
-                algorithm.Padding = PaddingMode.None;
                 using (var decryptor = algorithm.CreateDecryptor(crypto.Key, crypto.IV))
                 {
                     using (var cryptoStream = new CryptoStream(stream, decryptor, CryptoStreamMode.Read, leaveOpen: true))
@@ -52,7 +58,6 @@ namespace GraphLib.Serialization.Serializers.Decorators
         {
             try
             {
-                algorithm.Padding = PaddingMode.PKCS7;
                 using (var encryptor = algorithm.CreateEncryptor(crypto.Key, crypto.IV))
                 {
                     using (var cryptoStream = new CryptoStream(stream, encryptor, CryptoStreamMode.Write, leaveOpen: true))

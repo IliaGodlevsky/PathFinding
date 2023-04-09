@@ -6,15 +6,8 @@ using Shared.Primitives.ValueRange;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows.Media;
-
-namespace System.Runtime.CompilerServices
-{
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    internal record IsExternalInit;
-}
 
 namespace Pathfinding.App.WPF._2D.Model
 {
@@ -31,8 +24,8 @@ namespace Pathfinding.App.WPF._2D.Model
         public CostColors(IGraph<Vertex> graph)
         {
             this.graph = graph.ToArray();
-            this.previousColors = new List<Brush>();
-            this.costColors = new Lazy<IReadOnlyDictionary<int, Brush>>(FormCostColors);
+            this.previousColors = new();
+            this.costColors = new(FormCostColors);
         }
 
         public void ColorizeAccordingToCost()

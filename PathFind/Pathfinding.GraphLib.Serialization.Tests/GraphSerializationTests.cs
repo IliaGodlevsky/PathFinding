@@ -50,7 +50,7 @@ namespace Pathfinding.GraphLib.Serialization.Tests
             }
         }
 
-        private bool CompareNeighbors(TestVertex v1, TestVertex v2)
+        private static bool CompareNeighbors(TestVertex v1, TestVertex v2)
         {
             bool VertexEquals(IVertex first, IVertex second)
             {
@@ -59,7 +59,7 @@ namespace Pathfinding.GraphLib.Serialization.Tests
             return v1.Neighbours.Juxtapose(v2.Neighbours, VertexEquals);
         }
 
-        private Assemble GetAssemble()
+        private static Assemble GetAssemble()
         {
             var graphFactory = new TestGraphFactory();
             var coordinateFactory = new TestCoordinateFactory();
@@ -67,7 +67,7 @@ namespace Pathfinding.GraphLib.Serialization.Tests
             return new Assemble(vertexFactory, coordinateFactory, graphFactory);
         }
 
-        private Layer[] GetLayers()
+        private static Layer[] GetLayers()
         {
             int obstaclePercent = 15;
             var random = new PseudoRandom();

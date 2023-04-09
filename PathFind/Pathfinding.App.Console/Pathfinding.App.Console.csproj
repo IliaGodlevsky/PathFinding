@@ -89,7 +89,6 @@
     <Compile Include="MenuItems\ColorMenuItems\PathfindingColorsMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\RangeColorsMenuItem.cs" />
     <Compile Include="MenuItems\ExitMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\SendGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\GraphCreatingMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\ResizeGraphMenuItem.cs" />
     <Compile Include="MenuItems\EditorMenuItems\ChangeCostMenuItem.cs" />
@@ -102,7 +101,6 @@
     <Compile Include="MenuItems\GraphMenuItems\GraphMenuItem.cs" />
     <Compile Include="MenuItems\EditorMenuItems\ReverseVertexMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\SaveGraphMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\RecieveGraphMenuItem.cs" />
     <Compile Include="MenuItems\EditorMenuItems\SmoothGraphMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\ColorsUnitMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\EditorUnitMenuItem.cs" />

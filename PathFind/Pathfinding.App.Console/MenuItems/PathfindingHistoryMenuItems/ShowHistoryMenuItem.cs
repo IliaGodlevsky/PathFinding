@@ -59,7 +59,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             }
         }
 
-        private IDisposable RememberGraphState()
+        private Disposable RememberGraphState()
         {
             var costs = graph.GetCosts();
             return Disposable.Use(() =>

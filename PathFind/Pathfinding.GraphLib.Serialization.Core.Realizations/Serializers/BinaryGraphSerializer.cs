@@ -20,8 +20,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
 
         }
 
-        protected override GraphSerializationInfo LoadGraphInternal(Stream stream,
-            IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory)
+        protected override GraphSerializationInfo LoadGraphInternal(Stream stream)
         {
             using (var reader = new BinaryReader(stream, Encoding.Default, leaveOpen: true))
             {

@@ -2,13 +2,13 @@
 
 namespace Shared.Primitives
 {
-    public sealed class Disposable : IDisposable
+    public readonly ref struct Disposable
     {
         private readonly Action[] actions;
 
-        public static IDisposable Use(params Action[] actions)
+        public static Disposable Use(params Action[] actions)
         {
-            return new Disposable(actions);
+            return new(actions);
         }
 
         private Disposable(Action[] actions)
@@ -16,7 +16,7 @@ namespace Shared.Primitives
             this.actions = actions;
         }
 
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             for (int i = 0; i < actions.Length; i++)
             {

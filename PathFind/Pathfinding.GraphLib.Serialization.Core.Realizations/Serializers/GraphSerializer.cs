@@ -13,10 +13,10 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
         where TVertex : IVertex
         where TGraph : IGraph<TVertex>
     {
-        private readonly IVertexFromInfoFactory<TVertex> vertexFactory;
-        private readonly IGraphFactory<TGraph, TVertex> graphFactory;
-        private readonly IVertexCostFactory costFactory;
-        private readonly ICoordinateFactory coordinateFactory;
+        protected readonly IVertexFromInfoFactory<TVertex> vertexFactory;
+        protected readonly IGraphFactory<TGraph, TVertex> graphFactory;
+        protected readonly IVertexCostFactory costFactory;
+        protected readonly ICoordinateFactory coordinateFactory;
 
         public GraphSerializer(IVertexFromInfoFactory<TVertex> factory,
             IGraphFactory<TGraph, TVertex> graphFactory,
@@ -33,8 +33,10 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
         {
             try
             {
-                var graphInfo = LoadGraphInternal(stream, costFactory, coordinateFactory);
-                var vertices = graphInfo.VerticesInfo.Select(vertexFactory.CreateFrom).ToArray();
+                var graphInfo = LoadGraphInternal(stream);
+                var vertices = graphInfo.VerticesInfo
+                    .Select(vertexFactory.CreateFrom)
+                    .ToArray();
                 var graph = graphFactory.CreateGraph(vertices, graphInfo.DimensionsSizes);
                 graphInfo.VerticesInfo
                     .Zip(graph, (info, vertex) => (Vertex: vertex, Info: info))
@@ -59,12 +61,11 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
             }
         }
 
-        protected abstract GraphSerializationInfo LoadGraphInternal(Stream stream,
-            IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory);
+        protected abstract GraphSerializationInfo LoadGraphInternal(Stream stream);
 
         protected abstract void SaveGraphInternal(IGraph<IVertex> graph, Stream stream);
 
-        private void SetNeighbourhood((TVertex Vertex, VertexSerializationInfo Info) info, TGraph graph)
+        private static void SetNeighbourhood((TVertex Vertex, VertexSerializationInfo Info) info, TGraph graph)
         {
             info.Vertex.Neighbours = info.Info.Neighbourhood
                 .Select(coordinate => (IVertex)graph.Get(coordinate))

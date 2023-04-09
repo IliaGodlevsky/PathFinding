@@ -28,19 +28,12 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             IVertexCostFactory costFactory, ICoordinateFactory factory)
         {
             bool isObstacle = element.Element(Obstacle).Attribute<bool>(string.Format(Value, 0));
-
             int costValue = element.Element(Cost).Attribute<int>(string.Format(Value, 0));
-
             var rangeValues = element.Element(Range).Attributes<int>();
-
             var range = new InclusiveValueRange<int>(rangeValues[0], rangeValues[1]);
-
             var cost = costFactory.CreateCost(costValue, range);
-
             var coordinateValues = element.Element(Coordinate).Attributes<int>();
-
             var coordinate = factory.CreateCoordinate(coordinateValues);
-
             var neighbours = element.Element(Neighbours)
                 .Elements()
                 .Select(Attributes<int>)
