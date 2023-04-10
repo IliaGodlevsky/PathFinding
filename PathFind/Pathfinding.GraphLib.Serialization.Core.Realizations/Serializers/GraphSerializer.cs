@@ -38,9 +38,14 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
                     .Select(vertexFactory.CreateFrom)
                     .ToArray();
                 var graph = graphFactory.CreateGraph(vertices, graphInfo.DimensionsSizes);
-                graphInfo.VerticesInfo
+                var zipped = graphInfo.VerticesInfo
                     .Zip(graph, (info, vertex) => (Vertex: vertex, Info: info))
-                    .ForEach(item => SetNeighbourhood(item, graph));
+                    .ForEach(info =>
+                    {
+                        info.Vertex.Neighbours = info.Info.Neighbourhood
+                            .Select(coordinate => (IVertex)graph.Get(coordinate))
+                            .ToList();
+                    });
                 return graph;
             }
             catch (Exception ex)
@@ -64,12 +69,5 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
         protected abstract GraphSerializationInfo LoadGraphInternal(Stream stream);
 
         protected abstract void SaveGraphInternal(IGraph<IVertex> graph, Stream stream);
-
-        private static void SetNeighbourhood((TVertex Vertex, VertexSerializationInfo Info) info, TGraph graph)
-        {
-            info.Vertex.Neighbours = info.Info.Neighbourhood
-                .Select(coordinate => (IVertex)graph.Get(coordinate))
-                .ToList();
-        }
     }
 }
