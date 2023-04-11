@@ -16,7 +16,8 @@ namespace GraphLib.Serialization.Serializers.Decorators
         private readonly IGraphSerializer<TGraph, TVertex> serializer;
         private readonly SymmetricAlgorithm algorithm;
 
-        public CryptoGraphSerializer(IGraphSerializer<TGraph, TVertex> serializer, 
+        public CryptoGraphSerializer(
+            IGraphSerializer<TGraph, TVertex> serializer, 
             SymmetricAlgorithm algorithm, 
             ICrypto crypto)
         {
@@ -25,7 +26,8 @@ namespace GraphLib.Serialization.Serializers.Decorators
             this.crypto = crypto;
         }
 
-        public CryptoGraphSerializer(IGraphSerializer<TGraph, TVertex> serializer,
+        public CryptoGraphSerializer(
+            IGraphSerializer<TGraph, TVertex> serializer,
             SymmetricAlgorithm algorithm)
             : this(serializer, algorithm, new AesCrypto())
         {

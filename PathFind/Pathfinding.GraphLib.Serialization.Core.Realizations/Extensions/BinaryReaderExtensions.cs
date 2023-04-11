@@ -4,6 +4,7 @@ using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Shared.Primitives.ValueRange;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
 {
@@ -24,13 +25,19 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             var vertices = new VertexSerializationInfo[verticesCount];
             for (int i = 0; i < verticesCount; i++)
             {
-                bool isObstacle = reader.ReadBoolean();
-                var cost = reader.ReadCost(costFactory);
-                var neighbourhood = reader.ReadNeighborhood(coordinateFactory);
-                var position = reader.ReadCoordinate(coordinateFactory);
-                vertices[i] = new(isObstacle, cost, position, neighbourhood);
+                vertices[i] = reader.ReadVertex(costFactory, coordinateFactory);
             }
             return vertices;
+        }
+
+        private static VertexSerializationInfo ReadVertex(this BinaryReader reader,
+            IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory)
+        {
+            bool isObstacle = reader.ReadBoolean();
+            var cost = reader.ReadCost(costFactory);
+            var neighbourhood = reader.ReadNeighborhood(coordinateFactory);
+            var position = reader.ReadCoordinate(coordinateFactory);
+            return new(isObstacle, cost, position, neighbourhood);
         }
 
         private static int[] ReadIntArray(this BinaryReader reader)

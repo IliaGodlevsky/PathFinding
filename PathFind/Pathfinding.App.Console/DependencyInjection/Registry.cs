@@ -7,7 +7,7 @@ namespace Pathfinding.App.Console.DependencyInjection
 {
     internal static class Registry
     {
-        public static IContainer Configure(IEnumerable<IRegistry> registries)
+        public static ILifetimeScope Configure(IEnumerable<IRegistry> registries)
         {
             var builder = new ContainerBuilder();
 
@@ -19,7 +19,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             return builder.Build();
         }
 
-        public static IContainer Configure(params IRegistry[] registries)
+        public static ILifetimeScope Configure(params IRegistry[] registries)
         {
             return Configure(registries.AsEnumerable());
         }

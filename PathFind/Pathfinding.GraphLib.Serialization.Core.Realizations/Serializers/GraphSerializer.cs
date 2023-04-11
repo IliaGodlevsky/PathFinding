@@ -38,7 +38,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
                     .Select(vertexFactory.CreateFrom)
                     .ToArray();
                 var graph = graphFactory.CreateGraph(vertices, graphInfo.DimensionsSizes);
-                var zipped = graphInfo.VerticesInfo
+                graphInfo.VerticesInfo
                     .Zip(graph, (info, vertex) => (Vertex: vertex, Info: info))
                     .ForEach(info =>
                     {
