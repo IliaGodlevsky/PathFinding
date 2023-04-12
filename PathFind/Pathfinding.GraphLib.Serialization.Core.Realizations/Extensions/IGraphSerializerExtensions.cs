@@ -37,35 +37,5 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
                 return self.LoadGraph(fileStream);
             }
         }
-
-        public static void SaveGraphToPipe<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, IGraph<IVertex> graph, string pipeName, string serverName = ".")
-            where TGraph : IGraph<TVertex>
-            where TVertex : IVertex
-        {
-            using (var stream = new NamedPipeClientStream(serverName, pipeName))
-            {
-                stream.Connect();
-                self.SaveGraph(graph, stream);
-            }
-        }
-
-        public static TGraph LoadGraphFromPipe<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, string pipeName)
-            where TGraph : IGraph<TVertex>
-            where TVertex : IVertex
-        {
-            using (var stream = new NamedPipeServerStream(pipeName))
-            {
-                stream.WaitForConnection();
-                return self.LoadGraph(stream);
-            }
-        }
-
-        public static async ValueTask SaveGraphToPipeAsync<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self,
-            IGraph<IVertex> graph, string pipeName, string serverName = ".")
-            where TGraph : IGraph<TVertex>
-            where TVertex : IVertex
-        {
-            await Task.Run(() => self.SaveGraphToPipe(graph, pipeName, serverName));
-        }
     }
 }
