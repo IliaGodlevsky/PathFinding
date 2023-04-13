@@ -15,12 +15,10 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory)
         {
             var dimensions = root.Element(Dimensions).Attributes<int>();
-
             var vertices = root.Element(Vertices)
                 .Elements()
                 .Select(element => element.GetVertex(costFactory, coordinateFactory))
                 .ToArray();
-
             return new(dimensions, vertices);
         }
 

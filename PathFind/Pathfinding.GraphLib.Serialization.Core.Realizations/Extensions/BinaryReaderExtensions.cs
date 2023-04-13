@@ -58,7 +58,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             return new (upperValueOfCostRange, lowerValueOfCostRange);
         }
 
-        private static IReadOnlyCollection<ICoordinate> ReadNeighborhood(this BinaryReader reader, 
+        private static ICoordinate[] ReadNeighborhood(this BinaryReader reader, 
             ICoordinateFactory factory)
         {
             int count = reader.ReadInt32();

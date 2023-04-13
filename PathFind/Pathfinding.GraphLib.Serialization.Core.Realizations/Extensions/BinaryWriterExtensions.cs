@@ -25,9 +25,9 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
         }
 
         private static void WriterNeighborhood(this BinaryWriter writer,
-            IReadOnlyCollection<ICoordinate> neighbourhood)
+            ICoordinate[] neighbourhood)
         {
-            writer.Write(neighbourhood.Count);
+            writer.Write(neighbourhood.Length);
             neighbourhood.ForEach(writer.WriteIntArray);
         }
 
@@ -39,9 +39,9 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
         }
 
         private static void WriteVertices(this BinaryWriter writer,
-            IReadOnlyCollection<VertexSerializationInfo> vertices)
+            VertexSerializationInfo[] vertices)
         {
-            writer.Write(vertices.Count);
+            writer.Write(vertices.Length);
             foreach (var vertex in vertices)
             {
                 writer.Write(vertex.IsObstacle);

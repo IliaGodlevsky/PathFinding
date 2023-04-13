@@ -9,7 +9,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations
     {
         public IReadOnlyList<int> DimensionsSizes { get; }
 
-        public IReadOnlyCollection<VertexSerializationInfo> VerticesInfo { get; }
+        public VertexSerializationInfo[] VerticesInfo { get; }
 
         internal GraphSerializationInfo(IGraph<IVertex> graph)
         {
@@ -20,7 +20,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations
         }
 
         internal GraphSerializationInfo(int[] dimensionsSizes,
-            IReadOnlyCollection<VertexSerializationInfo> info)
+            VertexSerializationInfo[] info)
         {
             DimensionsSizes = dimensionsSizes;
             VerticesInfo = info;
