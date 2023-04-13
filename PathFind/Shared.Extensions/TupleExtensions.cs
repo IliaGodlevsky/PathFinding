@@ -40,7 +40,7 @@ namespace Shared.Extensions
 
             public void Reset()
             {
-                current = start;
+                current = start - 1;
             }
 
             public void Dispose()
