@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using System;
 
 namespace Shared.Extensions
 {
@@ -11,7 +8,8 @@ namespace Shared.Extensions
         {
             private readonly int start;
             private readonly int end;
-            private int current;
+
+            public int Current { get; private set; }
 
             internal Enumerator(int start, int end)
             {
@@ -22,31 +20,15 @@ namespace Shared.Extensions
                     start = temp;
                 }
                 this.start = start;
-                this.end = end;
-                current = start - 1;
+                this.end = end - 1;
+                Current = start - 1;
             }
 
-            public bool MoveNext()
-            {
-                if (current < end - 1)
-                {
-                    current++;
-                    return true;
-                }
-                return false;
-            }
+            public bool MoveNext() => Current++ < end;
 
-            public int Current => current;
+            public void Reset() => Current = start - 1;
 
-            public void Reset()
-            {
-                current = start - 1;
-            }
-
-            public void Dispose()
-            {
-                Reset();
-            }
+            public void Dispose() => Reset();           
         }
 
         public static Enumerator GetEnumerator(this(int start, int end) tuple)
