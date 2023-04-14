@@ -25,7 +25,11 @@ namespace Pathfinding.AlgorithmLib.History
 
         public History()
         {
-            volumes = volumesCount.Times<TVolume>().ToArray();
+            volumes = new TVolume[volumesCount];
+            for (int i = 0; i < volumesCount; i++)
+            {
+                volumes[i] = new TVolume();
+            }
         }
 
         public IEnumerable<ICoordinate> GetObstacles(Guid key)

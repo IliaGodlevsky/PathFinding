@@ -16,7 +16,7 @@ namespace Pathfinding.App.Console.Model
 
         public IReadOnlyCollection<Vertex> Vertices { get; }
 
-        private IReadOnlyCollection<IDisplayable> Displayables { get; }
+        private IDisplayable[] Displayables { get; }
 
         public GraphField(Graph2D<Vertex> graph)
             : this(graph, new FramedOverAbscissa(graph),

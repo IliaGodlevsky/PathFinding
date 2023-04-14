@@ -14,6 +14,7 @@ using Shared.Extensions;
 using Shared.Primitives.ValueRange;
 using Shared.Random.Realizations;
 using System.IO;
+using System.Linq;
 
 namespace Pathfinding.GraphLib.Serialization.Tests
 {
@@ -42,7 +43,7 @@ namespace Pathfinding.GraphLib.Serialization.Tests
 
                 Assert.Multiple(() =>
                 {
-                    Assert.IsTrue(loaded.DimensionsSizes.Juxtapose(graph.DimensionsSizes), errorMessage);
+                    Assert.IsTrue(loaded.DimensionsSizes.SequenceEqual(graph.DimensionsSizes), errorMessage);
                     Assert.IsTrue(graph.GetObstaclesCount() == loaded.GetObstaclesCount(), errorMessage);
                     Assert.IsTrue(graph.Juxtapose(loaded, (a, b) => a.Equals(b)), errorMessage);
                     Assert.IsTrue(graph.Juxtapose(loaded, CompareNeighbors), wrongNeighbors);

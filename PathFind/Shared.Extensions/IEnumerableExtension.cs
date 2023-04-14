@@ -46,17 +46,6 @@ namespace Shared.Extensions
             return self.SequenceEqual(second, new MatchComparer<T>(predicate));
         }
 
-        public static bool Juxtapose<T>(this IEnumerable<T> self, IEnumerable<T> second)
-        {
-            return self.Juxtapose(second, (a, b) => a.Equals(b));
-        }
-
-        public static IEnumerable<T> Times<T>(this int count)
-            where T : new()
-        {
-            while (count-- > 0) yield return new();
-        }
-
         public static IEnumerable<T> Except<T>(this IEnumerable<T> collection, params T[] items)
         {
             return collection.Except(items.AsEnumerable());
@@ -84,11 +73,6 @@ namespace Shared.Extensions
         public static Queue<T> ToQueue<T>(this IEnumerable<T> collection)
         {
             return new(collection);
-        }
-
-        public static int ToHashCode(this IEnumerable<int> array)
-        {
-            return array.AggregateOrDefault(HashCode.Combine);
         }
     }
 }

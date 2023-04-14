@@ -48,10 +48,8 @@
   <ItemGroup>
     <Compile Include="IGenericComparableExtensions.cs" />
     <Compile Include="GenericExtensions.cs" />
-    <Compile Include="ICollectionExtensions.cs" />
     <Compile Include="IDictionaryExtensions.cs" />
     <Compile Include="IEnumerableExtension.cs" />
-    <Compile Include="TupleExtensions.cs" />
     <Compile Include="MemberInfoExtensions.cs" />
     <Compile Include="ObjectExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

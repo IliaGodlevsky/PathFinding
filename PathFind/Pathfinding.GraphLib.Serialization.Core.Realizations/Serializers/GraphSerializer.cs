@@ -58,7 +58,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
         {
             try
             {
-                SaveGraphInternal(graph, stream);
+                SaveGraphInternal(new(graph), stream);
             }
             catch (Exception ex)
             {
@@ -68,6 +68,6 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
 
         protected abstract GraphSerializationInfo LoadGraphInternal(Stream stream);
 
-        protected abstract void SaveGraphInternal(IGraph<IVertex> graph, Stream stream);
+        protected abstract void SaveGraphInternal(GraphSerializationInfo info, Stream stream);
     }
 }

@@ -28,11 +28,11 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
             }
         }
 
-        protected override void SaveGraphInternal(IGraph<IVertex> graph, Stream stream)
+        protected override void SaveGraphInternal(GraphSerializationInfo info, Stream stream)
         {
             using (var writer = new BinaryWriter(stream, Encoding.Default, leaveOpen: true))
             {
-                writer.WriteGraph(graph);
+                writer.WriteGraph(info);
             }
         }
     }

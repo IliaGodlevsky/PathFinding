@@ -34,11 +34,5 @@ namespace Shared.Extensions
             return value.IsLessOrEqual(upper)
                 && value.IsGreaterOrEqual(lower);
         }
-
-        public static bool IsEqual<T>(this T first, T second)
-            where T : IComparable<T>
-        {
-            return first.CompareTo(second) == 0;
-        }
     }
 }

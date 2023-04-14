@@ -40,9 +40,9 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
             return XDocument.Load(stream).Root.GetGraphInfo(costFactory, coordinateFactory);
         }
 
-        protected override void SaveGraphInternal(IGraph<IVertex> graph, Stream stream)
+        protected override void SaveGraphInternal(GraphSerializationInfo info, Stream stream)
         {
-            new XmlDocument().Append(new(graph)).Save(stream);
+            new XmlDocument().Append(info).Save(stream);
         }
     }
 }

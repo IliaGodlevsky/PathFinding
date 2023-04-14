@@ -10,9 +10,8 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
     internal static class BinaryWriterExtensions
     {
         public static void WriteGraph(this BinaryWriter writer,
-            IGraph<IVertex> graph)
+            GraphSerializationInfo info)
         {
-            var info = new GraphSerializationInfo(graph);
             writer.WriteIntArray(info.DimensionsSizes);
             writer.WriteVertices(info.VerticesInfo);
         }

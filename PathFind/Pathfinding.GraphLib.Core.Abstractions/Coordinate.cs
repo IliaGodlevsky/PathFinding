@@ -1,5 +1,6 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Shared.Extensions;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace Pathfinding.GraphLib.Core.Abstractions
                 .TakeOrDefault(numberOfDimensions)
                 .ToArray();
             toString = $"({string.Join(",", CoordinatesValues)})";
-            hashCode = CoordinatesValues.ToHashCode();
+            hashCode = CoordinatesValues.AggregateOrDefault(HashCode.Combine);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

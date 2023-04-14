@@ -13,7 +13,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex
         {
-            await Task.Run(() => self.SaveGraphToFile(graph, filePath));
+            await Task.Run(() => self.SaveGraphToFile(graph, filePath)).ConfigureAwait(false);
         }
 
         public static void SaveGraphToFile<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self,

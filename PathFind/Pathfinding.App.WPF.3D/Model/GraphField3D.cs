@@ -23,7 +23,7 @@ namespace Pathfinding.App.WPF._3D.Model
         public GraphField3D(Graph3D<Vertex3D> graph)
         {
             Vertices = graph;
-            Children.AddRange(graph);
+            Vertices.ForEach(Children.Add);
             Abscissa = new(graph);
             Ordinate = new(graph);
             Applicate = new(graph);

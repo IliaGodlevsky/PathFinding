@@ -1,4 +1,5 @@
-﻿using Pathfinding.GraphLib.Factory.Interface;
+﻿using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Shared.Primitives.ValueRange;
 using System;
@@ -25,13 +26,11 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
         private static VertexSerializationInfo GetVertex(this XElement element,
             IVertexCostFactory costFactory, ICoordinateFactory factory)
         {
-            bool isObstacle = element.Element(Obstacle).Attribute<bool>(string.Format(Value, 0));
-            int costValue = element.Element(Cost).Attribute<int>(string.Format(Value, 0));
-            var rangeValues = element.Element(Range).Attributes<int>();
-            var range = new InclusiveValueRange<int>(rangeValues[0], rangeValues[1]);
+            bool isObstacle = element.Element(Obstacle).Attributes<bool>().Single();
+            int costValue = element.Element(Cost).Attributes<int>().Single();
+            var range = element.Element(Range).Attributes<int>().ToRange();
             var cost = costFactory.CreateCost(costValue, range);
-            var coordinateValues = element.Element(Coordinate).Attributes<int>();
-            var coordinate = factory.CreateCoordinate(coordinateValues);
+            var coordinate = element.Element(Coordinate).Attributes<int>().Create(factory);
             var neighbours = element.Element(Neighbours)
                 .Elements()
                 .Select(Attributes<int>)
@@ -39,6 +38,16 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
                 .ToArray();
 
             return new(isObstacle, cost, coordinate, neighbours);
+        }
+
+        private static ICoordinate Create(this int[] values, ICoordinateFactory factory)
+        {
+            return factory.CreateCoordinate(values);
+        }
+
+        private static InclusiveValueRange<int> ToRange(this int[] values)
+        {
+            return new InclusiveValueRange<int>(values.First(), values.Last());
         }
 
         private static T Attribute<T>(this XElement element, string name)
