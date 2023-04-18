@@ -1,7 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
@@ -14,15 +13,14 @@ using System.Linq;
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     [MediumPriority]
-    internal sealed class LoadGraphMenuItem : IMenuItem
+    internal sealed class RecieveGraphMenuItem : IMenuItem
     {
         private readonly IMessenger messenger;
-        private readonly IPathInput input;
+        private readonly IInput<int> input;
         private readonly IGraphSerializer<Graph2D<Vertex>, Vertex> serializer;
         private readonly ILog log;
 
-        public LoadGraphMenuItem(IMessenger messenger,
-            IPathInput input,
+        public RecieveGraphMenuItem(IMessenger messenger, IInput<int> input,
             IGraphSerializer<Graph2D<Vertex>, Vertex> serializer, ILog log)
         {
             this.serializer = serializer;
@@ -35,8 +33,12 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             try
             {
-                string path = input.InputLoadPath();
-                var graph = serializer.LoadGraphFromFile(path);
+                int port = 0;
+                using (Cursor.UseCurrentPositionWithClean())
+                {
+                    port = input.Input("Input port: ");
+                }
+                var graph = serializer.RecieveGraph(port);
                 var range = graph.First().Cost.CostRange;
                 messenger.SendData(range, Tokens.Screen);
                 messenger.SendData(graph, Tokens.Screen | Tokens.Main | Tokens.Common);
@@ -49,7 +51,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public override string ToString()
         {
-            return Languages.LoadGraph;
+            return "Recieve graph";
         }
     }
 }

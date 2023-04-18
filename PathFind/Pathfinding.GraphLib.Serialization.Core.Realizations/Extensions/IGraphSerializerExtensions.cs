@@ -40,7 +40,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             }
         }
 
-        public static void TransferGraph<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self,
+        public static void SendGraph<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self,
            IGraph<IVertex> graph, string host, int port)
            where TGraph : IGraph<TVertex>
            where TVertex : IVertex
@@ -54,7 +54,15 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             }
         }
 
-        public static TGraph AcceptGraph<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, int port)
+        public static async Task SendGraphAsync<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self,
+            IGraph<IVertex> graph, string host, int port)
+            where TGraph : IGraph<TVertex>
+            where TVertex : IVertex
+        {
+            await Task.Run(() => self.SendGraph(graph, host, port));
+        }
+
+        public static TGraph RecieveGraph<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, int port)
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex
         {

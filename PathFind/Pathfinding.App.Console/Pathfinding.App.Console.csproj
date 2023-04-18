@@ -102,6 +102,8 @@
     <Compile Include="MenuItems\EditorMenuItems\ReverseVertexMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\SaveGraphMenuItem.cs" />
     <Compile Include="MenuItems\EditorMenuItems\SmoothGraphMenuItem.cs" />
+    <Compile Include="MenuItems\GraphMenuItems\RecieveGraphMenuItem.cs" />
+    <Compile Include="MenuItems\GraphMenuItems\SendGraphMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\ColorsUnitMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\EditorUnitMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\GraphCreateMenuItem.cs" />
@@ -139,6 +141,7 @@
     <Compile Include="Messages\GraphChangedMessage.cs" />
     <Compile Include="DependencyInjection\Registrations\IRegistry.cs" />
     <Compile Include="DependencyInjection\Registrations\Registries.cs" />
+    <Compile Include="Model\AddressInput.cs" />
     <Compile Include="Tokens.cs" />
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\Answer.cs" />

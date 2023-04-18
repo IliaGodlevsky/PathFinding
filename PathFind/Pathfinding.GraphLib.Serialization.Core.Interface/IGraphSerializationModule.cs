@@ -1,4 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
+using System.Threading.Tasks;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Interface
 {

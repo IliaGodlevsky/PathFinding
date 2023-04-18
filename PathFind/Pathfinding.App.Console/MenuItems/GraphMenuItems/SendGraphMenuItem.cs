@@ -1,7 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
@@ -10,21 +9,21 @@ using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
 using System;
-using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     [MediumPriority]
-    internal sealed class SaveGraphMenuItem : IConditionedMenuItem, ICanRecieveMessage
+    internal sealed class SendGraphMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         private readonly IMessenger messenger;
-        private readonly IPathInput input;
+        private readonly AddressInput input;
         private readonly IGraphSerializer<Graph2D<Vertex>, Vertex> serializer;
         private readonly ILog log;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        public SaveGraphMenuItem(IMessenger messenger,
-            IPathInput input,
+        public SendGraphMenuItem(IMessenger messenger,
+            AddressInput input,
             IGraphSerializer<Graph2D<Vertex>, Vertex> serializer,
             ILog log)
         {
@@ -40,8 +39,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             try
             {
-                string path = input.InputSavePath();
-                await serializer.SaveGraphToFileAsync(graph, path);
+                var address = input.InputAddress();
+                await serializer.SendGraphAsync(graph, address.Host, address.Port);
             }
             catch (Exception ex)
             {
@@ -56,7 +55,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public override string ToString()
         {
-            return Languages.SaveGraph;
+            return "Send graph";
         }
 
         public void RegisterHanlders(IMessenger messenger)
