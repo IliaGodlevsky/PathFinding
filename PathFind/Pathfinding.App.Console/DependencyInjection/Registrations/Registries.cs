@@ -166,7 +166,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<LoadGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
 
                 builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
-                builder.RegisterType<XmlGraphSerializer<Graph2D<Vertex>, Vertex>>().As<GraphSerializer>().SingleInstance();
+                builder.RegisterInstance(Aes.Create()).As<SymmetricAlgorithm>().SingleInstance();
+                builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>().As<GraphSerializer>().SingleInstance();
                 builder.RegisterDecorator<BufferedGraphSerializer<Graph2D<Vertex>, Vertex>, GraphSerializer>();
                 builder.RegisterDecorator<CompressGraphSerializer<Graph2D<Vertex>, Vertex>, GraphSerializer>();
                 builder.RegisterDecorator<CryptoGraphSerializer<Graph2D<Vertex>, Vertex>, GraphSerializer>();

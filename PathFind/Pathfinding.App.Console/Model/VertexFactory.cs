@@ -15,7 +15,7 @@ namespace Pathfinding.App.Console.Model
 
         public Vertex CreateVertex(ICoordinate coordinate)
         {
-            return new Vertex(coordinate, visualization);
+            return new (coordinate, visualization);
         }
     }
 }

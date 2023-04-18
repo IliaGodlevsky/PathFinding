@@ -47,7 +47,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
 
         private static InclusiveValueRange<int> ToRange(this int[] values)
         {
-            return new InclusiveValueRange<int>(values.First(), values.Last());
+            return new (values.First(), values.Last());
         }
 
         private static T Attribute<T>(this XElement element, string name)

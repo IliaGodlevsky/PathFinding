@@ -10,7 +10,7 @@ namespace Pathfinding.GraphLib.Core.Abstractions
     public abstract class Graph<TVertex> : IGraph<TVertex>
         where TVertex : IVertex
     {
-        protected readonly IReadOnlyDictionary<ICoordinate, TVertex> vertices;
+        private readonly IReadOnlyDictionary<ICoordinate, TVertex> vertices;
 
         public int Count { get; }
 

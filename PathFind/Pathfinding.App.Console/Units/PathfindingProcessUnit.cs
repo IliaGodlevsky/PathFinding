@@ -79,8 +79,8 @@ namespace Pathfinding.App.Console.Units
             {
                 PrepareForPathfinding(algorithm);
                 path = algorithm.FindPath();
-                var vertices = path.Select(graph.Get);
-                vertices.ForEach(v => v.VisualizeAsPath());
+                path.Select(graph.Get)
+                    .ForEach(v => v.VisualizeAsPath());
             }
             input.Input();
         }

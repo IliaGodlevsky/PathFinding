@@ -1,6 +1,5 @@
 ﻿using Shared.Extensions;
 using System;
-using System.Diagnostics;
 
 namespace Shared.Primitives.ValueRange
 {
@@ -10,7 +9,6 @@ namespace Shared.Primitives.ValueRange
     /// </summary>
     /// <typeparam name="T">The type of values, that 
     /// will represent the range</typeparam>
-    [DebuggerDisplay("[{LowerValueOfRange}...{UpperValueOfRange}]")]
     public readonly record struct InclusiveValueRange<T>
         where T : IComparable<T>
     {
@@ -34,6 +32,11 @@ namespace Shared.Primitives.ValueRange
                 UpperValueOfRange = upperValueOfRange;
                 LowerValueOfRange = lowerValueOfRange;
             }
+        }
+
+        public override string ToString()
+        {
+            return $"[{LowerValueOfRange}...{UpperValueOfRange}]";
         }
     }
 }
