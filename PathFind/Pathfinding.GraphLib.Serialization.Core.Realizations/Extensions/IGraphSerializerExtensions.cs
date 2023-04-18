@@ -1,5 +1,6 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
+using Shared.Primitives;
 using System.IO;
 using System.IO.Pipes;
 using System.Net;
@@ -67,12 +68,15 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             where TVertex : IVertex
         {
             var listener = new TcpListener(IPAddress.Any, port);
-            listener.Start();
-            using (var client = listener.AcceptTcpClient())
+            using (Disposable.Use(listener.Stop))
             {
-                using (var networkStream = client.GetStream())
+                listener.Start();
+                using (var client = listener.AcceptTcpClient())
                 {
-                    return self.LoadGraph(networkStream);
+                    using (var networkStream = client.GetStream())
+                    {
+                        return self.LoadGraph(networkStream);
+                    }
                 }
             }
         }

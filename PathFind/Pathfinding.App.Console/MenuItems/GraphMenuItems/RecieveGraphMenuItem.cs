@@ -7,6 +7,7 @@ using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
+using Shared.Primitives.ValueRange;
 using System;
 using System.Linq;
 
@@ -38,6 +39,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 {
                     port = input.Input("Input port: ");
                 }
+                System.Console.Write("Waiting for connection...");
                 var graph = serializer.RecieveGraph(port);
                 var range = graph.First().Cost.CostRange;
                 messenger.SendData(range, Tokens.Screen);

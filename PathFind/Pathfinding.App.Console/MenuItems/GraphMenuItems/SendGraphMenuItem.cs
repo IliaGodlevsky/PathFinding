@@ -17,13 +17,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     internal sealed class SendGraphMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         private readonly IMessenger messenger;
-        private readonly AddressInput input;
+        private readonly IInput<(string Host, int Port)> input;
         private readonly IGraphSerializer<Graph2D<Vertex>, Vertex> serializer;
         private readonly ILog log;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         public SendGraphMenuItem(IMessenger messenger,
-            AddressInput input,
+            IInput<(string Host, int Port)> input,
             IGraphSerializer<Graph2D<Vertex>, Vertex> serializer,
             ILog log)
         {
@@ -39,7 +39,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             try
             {
-                var address = input.InputAddress();
+                var address = input.Input();
                 await serializer.SendGraphAsync(graph, address.Host, address.Port);
             }
             catch (Exception ex)

@@ -3,18 +3,19 @@ using Pathfinding.App.Console.Interface;
 
 namespace Pathfinding.App.Console.Model
 {
-    internal sealed class AddressInput
+    internal sealed class AddressInput : IInput<(string Host, int Port)>
     {
         private readonly IInput<int> intInput;
         private readonly IInput<string> stringInput;
 
-        public AddressInput(IInput<int> intInput, IInput<string> stringInput)
+        public AddressInput(IInput<int> intInput, 
+            IInput<string> stringInput)
         {
             this.intInput = intInput;
             this.stringInput = stringInput;
         }
 
-        public (string Host, int Port) InputAddress()
+        public (string Host, int Port) Input()
         {
             using (Cursor.UseCurrentPositionWithClean())
             {
