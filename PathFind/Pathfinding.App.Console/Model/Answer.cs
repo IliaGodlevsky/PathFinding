@@ -1,7 +1,6 @@
 ﻿using Pathfinding.App.Console.Localization;
 using Shared.Primitives.ValueRange;
 using System;
-using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.Model
 {
@@ -34,21 +33,35 @@ namespace Pathfinding.App.Console.Model
 
         public static bool TryParse(string input, out Answer result)
         {
-            var ignoreCase = StringComparison.OrdinalIgnoreCase;
             if (int.TryParse(input, out int value))
             {
-                result = value == Yes.value ? 
-                    Yes : value == No.value ? No : Default;
+                result = value;
                 return !result.Equals(Default);
             }
-            result = input.Equals(Yes.display, ignoreCase)
-                ? Yes : input.Equals(No.display, ignoreCase) ? No : Default;
+            result = input;
             return !result.Equals(Default);
         }
 
         public static implicit operator bool(Answer answer)
         {
             return answer.Equals(Yes);
+        }
+
+        public static implicit operator Answer(int value)
+        {
+            return value == Yes.value ? Yes : value == No.value ? No : Default;
+        }
+
+        public static implicit operator int(Answer answer)
+        {
+            return answer.value;
+        }
+
+        public static implicit operator Answer(string value)
+        {
+            var ignoreCase = StringComparison.OrdinalIgnoreCase;
+            return value.Equals(Yes.display, ignoreCase)
+                ? Yes : value.Equals(No.display, ignoreCase) ? No : Default;
         }
     }
 }

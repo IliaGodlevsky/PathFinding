@@ -10,6 +10,7 @@ using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
 using System;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
@@ -40,7 +41,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             try
             {
                 string path = input.InputSavePath();
-                await serializer.SaveGraphToFileAsync(graph, path);
+                await Task.Run(() => serializer.TransferGraph(graph, "127.0.0.1", 8888));
             }
             catch (Exception ex)
             {

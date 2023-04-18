@@ -23,7 +23,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
     public abstract class PathfindingAlgorithm<TStorage> : PathfindingProcess
         where TStorage : new()
     {
-        protected sealed record SubRange(IVertex Source, IVertex Target);
+        protected readonly record struct SubRange(IVertex Source, IVertex Target);
 
         protected readonly IEnumerable<IVertex> pathfindingRange;
         protected readonly HashSet<IVertex> visited = new(VertexEqualityComparer.Interface);

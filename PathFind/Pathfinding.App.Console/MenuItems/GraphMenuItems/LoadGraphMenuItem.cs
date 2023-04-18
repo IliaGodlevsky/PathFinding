@@ -35,8 +35,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             try
             {
-                string path = input.InputLoadPath();
-                var graph = serializer.LoadGraphFromFile(path);
+                //string path = input.InputLoadPath();
+                var graph = serializer.AcceptGraph(8888);
                 var range = graph.First().Cost.CostRange;
                 messenger.SendData(range, Tokens.Screen);
                 messenger.SendData(graph, Tokens.Screen | Tokens.Main | Tokens.Common);
