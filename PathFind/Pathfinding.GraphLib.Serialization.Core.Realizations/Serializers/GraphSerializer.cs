@@ -36,17 +36,16 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
                 var graphInfo = LoadGraphInternal(stream);
                 var vertices = graphInfo.VerticesInfo
                     .Select(vertexFactory.CreateFrom)
-                    .ToArray();
-                var graph = graphFactory.CreateGraph(vertices, graphInfo.DimensionsSizes);
-                graphInfo.VerticesInfo
-                    .Zip(graph, (info, vertex) => (Vertex: vertex, Info: info))
-                    .ForEach(info =>
-                    {
-                        info.Vertex.Neighbours = info.Info.Neighbourhood
-                            .Select(coordinate => (IVertex)graph.Get(coordinate))
-                            .ToList();
-                    });
-                return graph;
+                    .ToDictionary(item => item.Position);
+                foreach (var info in graphInfo.VerticesInfo)
+                {
+                    var neighbours = info.Neighbourhood
+                        .Select(coordinate => (IVertex)vertices[coordinate])
+                        .ToList();
+                    vertices[info.Position].Neighbours = neighbours;
+                }
+                return graphFactory.CreateGraph(vertices.Values, 
+                    graphInfo.DimensionsSizes);
             }
             catch (Exception ex)
             {

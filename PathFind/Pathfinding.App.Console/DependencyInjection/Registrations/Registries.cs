@@ -169,6 +169,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
                 builder.RegisterType<AddressInput>().As<IInput<(string Host, int Port)>>().SingleInstance();
+
                 builder.RegisterInstance(Aes.Create()).As<SymmetricAlgorithm>().SingleInstance();
                 builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>().As<GraphSerializer>().SingleInstance();
                 builder.RegisterDecorator<BufferedGraphSerializer<Graph2D<Vertex>, Vertex>, GraphSerializer>();

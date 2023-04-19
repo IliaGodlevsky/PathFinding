@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Shared.Primitives
 {
@@ -16,7 +17,7 @@ namespace Shared.Primitives
             this.actions = actions;
         }
 
-        public void Dispose()
+        public readonly void Dispose()
         {
             for (int i = 0; i < actions.Length; i++)
             {
