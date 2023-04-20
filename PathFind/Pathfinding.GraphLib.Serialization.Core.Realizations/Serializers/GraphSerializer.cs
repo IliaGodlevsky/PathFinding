@@ -33,7 +33,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
         {
             try
             {
-                var graphInfo = LoadGraphInternal(stream);
+                var graphInfo = DeserializeInternal(stream);
                 var vertices = graphInfo.VerticesInfo
                     .Select(vertexFactory.CreateFrom)
                     .ToDictionary(item => item.Position);
@@ -57,7 +57,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
         {
             try
             {
-                SaveGraphInternal(new((IGraph<IVertex>)graph), stream);
+                SerializeInternal(new((IGraph<IVertex>)graph), stream);
             }
             catch (Exception ex)
             {
@@ -65,8 +65,8 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
             }
         }
 
-        protected abstract GraphSerializationInfo LoadGraphInternal(Stream stream);
+        protected abstract GraphSerializationInfo DeserializeInternal(Stream stream);
 
-        protected abstract void SaveGraphInternal(GraphSerializationInfo info, Stream stream);
+        protected abstract void SerializeInternal(GraphSerializationInfo info, Stream stream);
     }
 }

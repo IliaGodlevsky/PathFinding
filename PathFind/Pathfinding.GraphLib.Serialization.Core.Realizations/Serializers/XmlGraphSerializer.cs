@@ -35,12 +35,12 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
 
         }
 
-        protected override GraphSerializationInfo LoadGraphInternal(Stream stream)
+        protected override GraphSerializationInfo DeserializeInternal(Stream stream)
         {
             return XDocument.Load(stream).Root.GetGraphInfo(costFactory, coordinateFactory);
         }
 
-        protected override void SaveGraphInternal(GraphSerializationInfo info, Stream stream)
+        protected override void SerializeInternal(GraphSerializationInfo info, Stream stream)
         {
             new XmlDocument().Append(info).Save(stream);
         }

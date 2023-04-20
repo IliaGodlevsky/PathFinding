@@ -20,7 +20,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
 
         }
 
-        protected override GraphSerializationInfo LoadGraphInternal(Stream stream)
+        protected override GraphSerializationInfo DeserializeInternal(Stream stream)
         {
             using (var reader = new BinaryReader(stream, Encoding.Default, leaveOpen: true))
             {
@@ -28,7 +28,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
             }
         }
 
-        protected override void SaveGraphInternal(GraphSerializationInfo info, Stream stream)
+        protected override void SerializeInternal(GraphSerializationInfo info, Stream stream)
         {
             using (var writer = new BinaryWriter(stream, Encoding.Default, leaveOpen: true))
             {
