@@ -167,15 +167,17 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<SendGraphMenuItem>().Keyed<IMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<RecieveGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
 
-                builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
+                builder.RegisterType<FilePathInput>().As<IFilePathInput>().SingleInstance();
                 builder.RegisterType<AddressInput>().As<IInput<(string Host, int Port)>>().SingleInstance();
 
-                builder.RegisterInstance(Aes.Create()).As<SymmetricAlgorithm>().SingleInstance();
+                builder.RegisterInstance(Aes.Create()).As<SymmetricAlgorithm>().InstancePerDependency();
+
                 builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>().As<GraphSerializer>().SingleInstance();
                 builder.RegisterDecorator<BufferedGraphSerializer<Graph2D<Vertex>, Vertex>, GraphSerializer>();
                 builder.RegisterDecorator<CompressGraphSerializer<Graph2D<Vertex>, Vertex>, GraphSerializer>();
                 builder.RegisterDecorator<CryptoGraphSerializer<Graph2D<Vertex>, Vertex>, GraphSerializer>();
                 builder.RegisterDecorator<ThreadSafeGraphSerializer<Graph2D<Vertex>, Vertex>, GraphSerializer>();
+
                 builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory<Vertex>>().SingleInstance();
             }
         }

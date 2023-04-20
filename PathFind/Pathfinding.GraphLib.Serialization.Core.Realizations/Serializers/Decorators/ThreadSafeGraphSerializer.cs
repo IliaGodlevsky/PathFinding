@@ -18,13 +18,13 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decor
             this.serializer = serializer;
         }
 
-        public TGraph LoadGraph(Stream stream)
+        public TGraph DeserializeFrom(Stream stream)
         {
             lock (syncRoot)
             {
                 try
                 {
-                    return serializer.LoadGraph(stream);
+                    return serializer.DeserializeFrom(stream);
                 }
                 catch (Exception ex)
                 {
@@ -33,13 +33,13 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decor
             }
         }
 
-        public void SaveGraph(IGraph<IVertex> graph, Stream stream)
+        public void SerializeTo(TGraph graph, Stream stream)
         {
             lock (syncRoot)
             {
                 try
                 {
-                    serializer.SaveGraph(graph, stream);
+                    serializer.SerializeTo(graph, stream);
                 }
                 catch (Exception ex)
                 {

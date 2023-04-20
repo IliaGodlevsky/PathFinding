@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Interface
 {
-    public interface IGraphSerializationModule<out TGraph, in TVertex>
+    public interface IGraphSerializationModule<TGraph, TVertex>
         where TGraph : IGraph<TVertex>
         where TVertex : IVertex
     {
-        void SaveGraph(IGraph<IVertex> graph);
+        void SaveGraph(TGraph graph);
 
         TGraph LoadGraph();
     }

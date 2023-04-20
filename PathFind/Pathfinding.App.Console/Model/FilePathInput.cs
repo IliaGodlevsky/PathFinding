@@ -1,30 +1,24 @@
 ﻿using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
-using Pathfinding.GraphLib.Serialization.Core.Interface;
 
 namespace Pathfinding.App.Console.Model
 {
-    internal sealed class PathInput : IPathInput
+    internal sealed class FilePathInput : IFilePathInput
     {
         private readonly IInput<string> input;
 
-        public PathInput(IInput<string> input)
+        public FilePathInput(IInput<string> input)
         {
             this.input = input;
         }
 
-        public string InputLoadPath()
+        public string Input()
         {
-            return Input();
+            return InputFilePath();
         }
 
-        public string InputSavePath()
-        {
-            return Input();
-        }
-
-        private string Input()
+        private string InputFilePath()
         {
             using (Cursor.UseCurrentPositionWithClean())
             {

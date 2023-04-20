@@ -40,7 +40,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             try
             {
                 var address = input.Input();
-                await serializer.SendGraphAsync(graph, address);
+                await serializer.SerializeToNetworkAsync(graph, address);
             }
             catch (Exception ex)
             {

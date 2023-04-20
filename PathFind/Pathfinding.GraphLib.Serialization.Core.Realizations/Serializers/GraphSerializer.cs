@@ -29,7 +29,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
             this.coordinateFactory = coordinateFactory;
         }
 
-        public TGraph LoadGraph(Stream stream)
+        public TGraph DeserializeFrom(Stream stream)
         {
             try
             {
@@ -53,11 +53,11 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
             }
         }
 
-        public void SaveGraph(IGraph<IVertex> graph, Stream stream)
+        public void SerializeTo(TGraph graph, Stream stream)
         {
             try
             {
-                SaveGraphInternal(new(graph), stream);
+                SaveGraphInternal(new((IGraph<IVertex>)graph), stream);
             }
             catch (Exception ex)
             {

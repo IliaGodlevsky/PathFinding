@@ -18,13 +18,13 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decor
             this.serializer = serializer;
         }
 
-        public TGraph LoadGraph(Stream stream)
+        public TGraph DeserializeFrom(Stream stream)
         {
             try
             {
                 using (var compressionStream = new GZipStream(stream, CompressionMode.Decompress, leaveOpen: true))
                 {
-                    return serializer.LoadGraph(compressionStream);
+                    return serializer.DeserializeFrom(compressionStream);
                 }
             }
             catch (Exception ex)
@@ -33,13 +33,13 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decor
             }
         }
 
-        public void SaveGraph(IGraph<IVertex> graph, Stream stream)
+        public void SerializeTo(TGraph graph, Stream stream)
         {
             try
             {
                 using (var compressionStream = new GZipStream(stream, CompressionMode.Compress, leaveOpen: true))
                 {
-                    serializer.SaveGraph(graph, compressionStream);
+                    serializer.SerializeTo(graph, compressionStream);
                 }
             }
             catch (Exception ex)

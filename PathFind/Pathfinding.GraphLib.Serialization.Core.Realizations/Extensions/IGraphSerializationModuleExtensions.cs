@@ -13,7 +13,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             return await Task.Run(() => self.LoadGraph()).ConfigureAwait(false);
         }
 
-        public static async Task SaveGraphAsync<TGraph, TVertex>(this IGraphSerializationModule<TGraph, TVertex> self, IGraph<IVertex> graph)
+        public static async Task SaveGraphAsync<TGraph, TVertex>(this IGraphSerializationModule<TGraph, TVertex> self, TGraph graph)
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex
         {

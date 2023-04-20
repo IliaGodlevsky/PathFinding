@@ -17,12 +17,12 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     internal sealed class LoadGraphMenuItem : IMenuItem
     {
         private readonly IMessenger messenger;
-        private readonly IPathInput input;
+        private readonly IFilePathInput input;
         private readonly IGraphSerializer<Graph2D<Vertex>, Vertex> serializer;
         private readonly ILog log;
 
         public LoadGraphMenuItem(IMessenger messenger,
-            IPathInput input,
+            IFilePathInput input,
             IGraphSerializer<Graph2D<Vertex>, Vertex> serializer, ILog log)
         {
             this.serializer = serializer;
@@ -35,8 +35,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             try
             {
-                string path = input.InputLoadPath();
-                var graph = serializer.LoadGraphFromFile(path);
+                string path = input.Input();
+                var graph = serializer.DeserializeFromFile(path);
                 var range = graph.First().Cost.CostRange;
                 messenger.SendData(range, Tokens.Screen);
                 messenger.SendData(graph, Tokens.Screen | Tokens.Main | Tokens.Common);

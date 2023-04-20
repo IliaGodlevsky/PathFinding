@@ -38,7 +38,7 @@ namespace GraphLib.Serialization.Serializers.Decorators
         {
         }
 
-        public TGraph LoadGraph(Stream stream)
+        public TGraph DeserializeFrom(Stream stream)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace GraphLib.Serialization.Serializers.Decorators
                 {
                     using (var cryptoStream = new CryptoStream(stream, decryptor, CryptoStreamMode.Read, leaveOpen: true))
                     {
-                        return serializer.LoadGraph(cryptoStream);
+                        return serializer.DeserializeFrom(cryptoStream);
                     }
                 }
             }
@@ -56,7 +56,7 @@ namespace GraphLib.Serialization.Serializers.Decorators
             }
         }
 
-        public void SaveGraph(IGraph<IVertex> graph, Stream stream)
+        public void SerializeTo(TGraph graph, Stream stream)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace GraphLib.Serialization.Serializers.Decorators
                 {
                     using (var cryptoStream = new CryptoStream(stream, encryptor, CryptoStreamMode.Write, leaveOpen: true))
                     {
-                        serializer.SaveGraph(graph, cryptoStream);
+                        serializer.SerializeTo(graph, cryptoStream);
                     }
                 }
             }

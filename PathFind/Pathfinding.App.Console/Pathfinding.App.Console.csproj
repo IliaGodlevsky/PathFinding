@@ -142,6 +142,7 @@
     <Compile Include="DependencyInjection\Registrations\IRegistry.cs" />
     <Compile Include="DependencyInjection\Registrations\Registries.cs" />
     <Compile Include="Model\AddressInput.cs" />
+    <Compile Include="Model\FilePathInput.cs" />
     <Compile Include="Tokens.cs" />
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\Answer.cs" />
@@ -171,7 +172,7 @@
     <Compile Include="Model\PathfindingActions\PathfindingStepByStep.cs" />
     <Compile Include="Model\MenuList.cs" />
     <Compile Include="Model\PathfindingHistoryVolume.cs" />
-    <Compile Include="Model\PathInput.cs" />
+    <Compile Include="Interface\IFilePathInput.cs" />
     <Compile Include="Model\Vertex.cs" />
     <Compile Include="Model\VertexActions\ChangeCostAction.cs" />
     <Compile Include="Model\VertexActions\DecreaseCostAction.cs" />

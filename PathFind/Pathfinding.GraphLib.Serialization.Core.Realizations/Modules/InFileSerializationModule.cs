@@ -20,13 +20,13 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Modules
         public TGraph LoadGraph()
         {
             string loadPath = input.InputLoadPath();
-            return serializer.LoadGraphFromFile(loadPath);
+            return serializer.DeserializeFromFile(loadPath);
         }
 
-        public void SaveGraph(IGraph<IVertex> graph)
+        public void SaveGraph(TGraph graph)
         {
             string savePath = input.InputSavePath();
-            serializer.SaveGraphToFile(graph, savePath);
+            serializer.SerializeToFile(graph, savePath);
         }
     }
 }

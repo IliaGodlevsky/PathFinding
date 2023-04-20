@@ -18,13 +18,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     internal sealed class SaveGraphMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         private readonly IMessenger messenger;
-        private readonly IPathInput input;
+        private readonly IFilePathInput input;
         private readonly IGraphSerializer<Graph2D<Vertex>, Vertex> serializer;
         private readonly ILog log;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         public SaveGraphMenuItem(IMessenger messenger,
-            IPathInput input,
+            IFilePathInput input,
             IGraphSerializer<Graph2D<Vertex>, Vertex> serializer,
             ILog log)
         {
@@ -40,8 +40,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             try
             {
-                string path = input.InputSavePath();
-                await serializer.SaveGraphToFileAsync(graph, path);
+                string path = input.InputFilePath();
+                await serializer.SerializeToFileAsync(graph, path);
             }
             catch (Exception ex)
             {

@@ -3,7 +3,6 @@ using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Exceptions;
 using System;
 using System.IO;
-using System.Net.Sockets;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decorators
 {
@@ -18,13 +17,13 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decor
             this.serializer = serializer;
         }
 
-        public TGraph LoadGraph(Stream stream)
+        public TGraph DeserializeFrom(Stream stream)
         {
             try
             {
                 using (var buffer = new BufferedStream(stream))
                 {
-                    return serializer.LoadGraph(buffer);
+                    return serializer.DeserializeFrom(buffer);
                 }
             }
             catch (Exception ex)
@@ -33,13 +32,13 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decor
             }
         }
 
-        public void SaveGraph(IGraph<IVertex> graph, Stream stream)
+        public void SerializeTo(TGraph graph, Stream stream)
         {
             try
             {
                 using (var buffer = new BufferedStream(stream))
                 {
-                    serializer.SaveGraph(graph, buffer);
+                    serializer.SerializeTo(graph, buffer);
                 }
             }
             catch (Exception ex)

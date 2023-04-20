@@ -40,7 +40,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                     port = input.Input(Languages.InputPort);
                 }
                 System.Console.Write(Languages.WaitingForConnection);
-                var graph = serializer.RecieveGraph(port);
+                var graph = serializer.DeserializeFromNetwork(port);
                 var range = graph.First().Cost.CostRange;
                 messenger.SendData(range, Tokens.Screen);
                 messenger.SendData(graph, Tokens.Screen | Tokens.Main | Tokens.Common);

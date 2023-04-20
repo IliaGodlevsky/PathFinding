@@ -37,9 +37,9 @@ namespace Pathfinding.GraphLib.Serialization.Tests
                 var layers = GetLayers();
                 var graph = assemble.AssembleGraph(layers, dimensions);
 
-                serializer.SaveGraph(graph, stream);
+                serializer.SerializeTo(graph, stream);
                 stream.Seek(0, SeekOrigin.Begin);
-                var loaded = serializer.LoadGraph(stream);
+                var loaded = serializer.DeserializeFrom(stream);
 
                 Assert.Multiple(() =>
                 {
