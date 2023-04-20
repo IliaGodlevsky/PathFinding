@@ -502,6 +502,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Input host name: .
+        /// </summary>
+        public static string InputHostName {
+            get {
+                return ResourceManager.GetString("InputHostName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input obstacle percent.
         /// </summary>
         public static string InputObstaclePercent {
@@ -525,6 +534,15 @@ namespace Pathfinding.App.Console.Localization {
         public static string InputPipeMsg {
             get {
                 return ResourceManager.GetString("InputPipeMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input port: .
+        /// </summary>
+        public static string InputPort {
+            get {
+                return ResourceManager.GetString("InputPort", resourceCulture);
             }
         }
         

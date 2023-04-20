@@ -1,5 +1,6 @@
 ﻿using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 
 namespace Pathfinding.App.Console.Model
 {
@@ -19,12 +20,12 @@ namespace Pathfinding.App.Console.Model
         {
             using (Cursor.UseCurrentPositionWithClean())
             {
-                string host = stringInput.Input("Input host name: ");
+                string host = stringInput.Input(Languages.InputHostName);
                 while (string.IsNullOrEmpty(host))
                 {
-                    host = stringInput.Input("Input host name: ");
+                    host = stringInput.Input(Languages.InputHostName);
                 }
-                int port = intInput.Input("Input port: ");
+                int port = intInput.Input(Languages.InputPort);
                 return (host, port);
             }
         }

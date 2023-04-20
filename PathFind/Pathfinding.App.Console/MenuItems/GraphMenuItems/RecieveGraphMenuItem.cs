@@ -1,13 +1,13 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
-using Shared.Primitives.ValueRange;
 using System;
 using System.Linq;
 
@@ -37,9 +37,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 int port = 0;
                 using (Cursor.UseCurrentPositionWithClean())
                 {
-                    port = input.Input("Input port: ");
+                    port = input.Input(Languages.InputPort);
                 }
-                System.Console.Write("Waiting for connection...");
+                System.Console.Write(Languages.WaitingForConnection);
                 var graph = serializer.RecieveGraph(port);
                 var range = graph.First().Cost.CostRange;
                 messenger.SendData(range, Tokens.Screen);
@@ -53,7 +53,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public override string ToString()
         {
-            return "Recieve graph";
+            return Languages.RecieveGraph;
         }
     }
 }

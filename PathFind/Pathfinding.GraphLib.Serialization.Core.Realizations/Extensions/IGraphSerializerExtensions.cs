@@ -63,6 +63,14 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             await Task.Run(() => self.SendGraph(graph, host, port));
         }
 
+        public static async Task SendGraphAsync<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self,
+            IGraph<IVertex> graph, (string Host, int Port) address)
+            where TGraph : IGraph<TVertex>
+            where TVertex : IVertex
+        {
+            await self.SendGraphAsync(graph, address.Host, address.Port);
+        }
+
         public static TGraph RecieveGraph<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, int port)
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex

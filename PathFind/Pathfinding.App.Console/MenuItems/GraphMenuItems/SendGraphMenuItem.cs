@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
@@ -9,7 +10,6 @@ using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
 using System;
-using System.Runtime.CompilerServices;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
@@ -40,7 +40,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             try
             {
                 var address = input.Input();
-                await serializer.SendGraphAsync(graph, address.Host, address.Port);
+                await serializer.SendGraphAsync(graph, address);
             }
             catch (Exception ex)
             {
@@ -55,7 +55,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public override string ToString()
         {
-            return "Send graph";
+            return Languages.SendGraph;
         }
 
         public void RegisterHanlders(IMessenger messenger)

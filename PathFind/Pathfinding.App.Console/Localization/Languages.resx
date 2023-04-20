@@ -264,6 +264,9 @@
   <data name="InputGraphParametres" xml:space="preserve">
     <value>Input graph parametres</value>
   </data>
+  <data name="InputHostName" xml:space="preserve">
+    <value>Input host name: </value>
+  </data>
   <data name="InputObstaclePercent" xml:space="preserve">
     <value>Input obstacle percent</value>
   </data>
@@ -272,6 +275,9 @@
   </data>
   <data name="InputPipeMsg" xml:space="preserve">
     <value>Input pipe name: </value>
+  </data>
+  <data name="InputPort" xml:space="preserve">
+    <value>Input port: </value>
   </data>
   <data name="InputServerNameMsg" xml:space="preserve">
     <value>Input server name: </value>
