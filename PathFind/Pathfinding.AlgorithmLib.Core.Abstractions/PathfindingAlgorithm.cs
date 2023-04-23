@@ -34,8 +34,6 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         protected IVertex CurrentVertex { get; set; } = NullVertex.Instance;
 
-        private bool IsDestination => CurrentVertex.Equals(CurrentRange.Target);
-
         protected PathfindingAlgorithm(IEnumerable<IVertex> pathfindingRange)
         {
             this.pathfindingRange = pathfindingRange;
@@ -51,7 +49,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
                 foreach (var range in GetSubRanges())
                 {
                     PrepareForSubPathfinding(range);
-                    while (!IsDestination)
+                    while (!IsDestination())
                     {
                         ThrowIfInterrupted();
                         WaitUntilResumed();
@@ -71,6 +69,11 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         protected abstract void InspectVertex(IVertex vertex);
 
         protected abstract void VisitCurrentVertex();
+
+        protected virtual bool IsDestination()
+        {
+            return CurrentVertex.Equals(CurrentRange.Target);
+        }
 
         protected virtual void PrepareForSubPathfinding(SubRange range)
         {

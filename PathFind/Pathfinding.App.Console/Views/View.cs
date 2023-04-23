@@ -23,14 +23,13 @@ namespace Pathfinding.App.Console.Views
         {
             bool isClosureRequested = false;
             while (!isClosureRequested)
-            {
-                var menuItems = unit.GetMenuItems();
-                var options = GetMenuOptions(menuItems);
-                Screen.SetCursorPositionUnderMenu(1);
+            {              
                 try
                 {
-                    int index = InputItemIndex(options);
-                    menuItems[index].Execute();
+                    Screen.SetCursorPositionUnderMenu(1);
+                    var menuItems = unit.GetMenuItems();
+                    var menuItem = InputMenuItem(menuItems);
+                    menuItem.Execute();
                 }
                 catch (ExitRequiredException)
                 {
@@ -39,21 +38,17 @@ namespace Pathfinding.App.Console.Views
             }
         }
 
-        private (string Message, InclusiveValueRange<int> MenuRange)
-            GetMenuOptions(IReadOnlyCollection<IMenuItem> menuItems)
+        private IMenuItem InputMenuItem(IReadOnlyList<IMenuItem> menuItems)
         {
             int columnsNumber = (int)Math.Ceiling(menuItems.Count / 4.0);
             var menuList = menuItems.CreateMenuList(columnsNumber);
             var menuRange = new InclusiveValueRange<int>(menuItems.Count, 1);
-            var message = string.Concat(menuList, "\n", Languages.MenuOptionChoiceMsg);
-            return (message, menuRange);
-        }
-
-        private int InputItemIndex((string Message, InclusiveValueRange<int> MenuRange) options)
-        {
+            string menu = string.Concat(menuList, "\n", Languages.MenuOptionChoiceMsg);
             using (Cursor.UseCurrentPositionWithClean())
             {
-                return intInput.Input(options.Message, options.MenuRange) - 1;
+                int index = intInput.Input(menu, menuRange) - 1;
+                var menuItem = menuItems[index];
+                return menuItem;
             }
         }
     }

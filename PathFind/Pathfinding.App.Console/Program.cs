@@ -3,8 +3,6 @@ using Pathfinding.App.Console.DependencyInjection.Registrations;
 using Pathfinding.App.Console.MenuItems;
 
 Registry.Configure(
-    Registries.Initial,
-    Registries.UserInput,
     Registries.PathfindingStatistics,
     Registries.PathfindingVisualization,
     Registries.TransitVertices,
@@ -15,5 +13,7 @@ Registry.Configure(
     Registries.GraphEditor,
     Registries.WaveAlgorithms,
     Registries.BreadthAlgorithms,
-    Registries.GreedyAlgorithms)
+    Registries.GreedyAlgorithms,
+    Registries.UserInput,
+    Registries.Initial)
     .Run<MainUnitMenuItem>();
