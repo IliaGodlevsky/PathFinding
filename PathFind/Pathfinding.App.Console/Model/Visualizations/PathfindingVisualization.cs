@@ -41,15 +41,15 @@ namespace Pathfinding.App.Console.Model.Visualizations
             VisualizeVertex(visualizable, VisitedVertexColor);
         }
 
-        private void ColorsChanged(DataMessage<ConsoleColor[]> msg)
+        private void ColorsChanged(DataMessage<(ConsoleColor Enqueued, ConsoleColor Visited)> msg)
         {
-            EnqueuedVertexColor = msg.Value.FirstOrDefault();
-            VisitedVertexColor = msg.Value.LastOrDefault();
+            EnqueuedVertexColor = msg.Value.Enqueued;
+            VisitedVertexColor = msg.Value.Visited;
         }
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterData<ConsoleColor[]>(this, Tokens.Pathfinding, ColorsChanged);
+            messenger.RegisterData<(ConsoleColor Enqueued, ConsoleColor Visited)>(this, Tokens.Pathfinding, ColorsChanged);
         }
     }
 }

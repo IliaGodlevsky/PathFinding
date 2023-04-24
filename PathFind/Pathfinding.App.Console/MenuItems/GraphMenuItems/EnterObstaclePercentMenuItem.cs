@@ -14,8 +14,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
         }
 
-
-
         public override void Execute()
         {
             using (Cursor.UseCurrentPositionWithClean())

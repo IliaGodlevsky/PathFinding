@@ -106,7 +106,6 @@
     <Compile Include="MenuItems\EditorMenuItems\SmoothGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\RecieveGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\SendGraphMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\ExportGraphMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\ColorsUnitMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\EditorUnitMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\GraphCreateMenuItem.cs" />

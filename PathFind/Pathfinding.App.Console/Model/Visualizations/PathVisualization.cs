@@ -28,10 +28,10 @@ namespace Pathfinding.App.Console.Model.Visualizations
             return vertices.Contains(visualizable);
         }
 
-        private void ColorsRecieve(DataMessage<ConsoleColor[]> msg)
+        private void ColorsRecieve(DataMessage<(ConsoleColor Path, ConsoleColor Crossed)> msg)
         {
-            PathVertexColor = msg.Value.FirstOrDefault();
-            CrossedPathVertexColor = msg.Value.LastOrDefault();
+            PathVertexColor = msg.Value.Path;
+            CrossedPathVertexColor = msg.Value.Crossed;
         }
 
         public void VisualizeAsPath(Vertex visualizable)
@@ -52,7 +52,7 @@ namespace Pathfinding.App.Console.Model.Visualizations
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterData<ConsoleColor[]>(this, Tokens.Path, ColorsRecieve);
+            messenger.RegisterData<(ConsoleColor Path, ConsoleColor Crossed)>(this, Tokens.Path, ColorsRecieve);
             messenger.RegisterData<Vertex>(this, Tokens.Path, RemoveVertex);
         }
 

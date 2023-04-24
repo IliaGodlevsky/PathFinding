@@ -3,22 +3,19 @@ using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Pathfinding.Logging.Loggers;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.Extensions
 {
     internal static class IMessengerExtensions
     {
-        private static Tokens[] Tokens { get; }
+        private static IReadOnlyList<Tokens> Tokens { get; }
 
         static IMessengerExtensions()
         {
-            Tokens = Enum.GetValues(typeof(Tokens))
-                .Cast<Tokens>()
-                .OrderBy(_ => _)
-                .ToArray();
+            Tokens = Enum.GetValues(typeof(Tokens)).Cast<Tokens>().ToList().AsReadOnly();
         }
 
         public static void SendData<TData>(this IMessenger messenger,
@@ -53,7 +50,7 @@ namespace Pathfinding.App.Console.Extensions
 
         private static void SendMessage<TMessage>(this IMessenger messenger, TMessage msg, Tokens token)
         {
-            for (int i = 0; i < Tokens.Length; i++)
+            for (int i = 0; i < Tokens.Count; i++)
             {
                 if ((token & Tokens[i]) != 0)
                 {

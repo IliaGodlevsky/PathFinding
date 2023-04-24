@@ -46,10 +46,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         protected void OnObstaclePercent(DataMessage<int> msg) => obstaclePercent = msg.Value;
 
-        protected void OnGraphParams(DataMessage<int[]> msg)
+        protected void OnGraphParams(DataMessage<(int Width, int Length)> msg)
         {
-            width = msg.Value.FirstOrDefault();
-            length = msg.Value.LastOrDefault();
+            width = msg.Value.Width;
+            length = msg.Value.Length;
         }
 
         public void Execute()
@@ -81,7 +81,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         public virtual void RegisterHanlders(IMessenger messenger)
         {
             messenger.RegisterData<int>(this, Tokens.Graph, OnObstaclePercent);
-            messenger.RegisterData<int[]>(this, Tokens.Graph, OnGraphParams);
+            messenger.RegisterData<(int Width, int Length)>(this, Tokens.Graph, OnGraphParams);
             messenger.RegisterData<InclusiveValueRange<int>>(this, Tokens.Graph, OnCostRange);
             messenger.RegisterData<GraphAssemble>(this, Tokens.Graph, OnAssembleChosen);
         }

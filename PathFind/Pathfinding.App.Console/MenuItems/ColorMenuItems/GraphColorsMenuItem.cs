@@ -25,7 +25,7 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
 
         protected override void SendColorsMessage()
         {
-            messenger.SendData(new[] { RegularColor, ObstacleColor }, Tokens.Graph);
+            messenger.SendData((Regular: RegularColor, Obstacle: ObstacleColor), Tokens.Graph);
         }
 
         public override string ToString()

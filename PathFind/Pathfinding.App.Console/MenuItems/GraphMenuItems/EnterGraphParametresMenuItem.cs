@@ -21,7 +21,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             {
                 int width = input.Input(Languages.GraphWidthInputMsg, Constants.GraphWidthValueRange);
                 int length = input.Input(Languages.GraphHeightInputMsg, Constants.GraphLengthValueRange);
-                messenger.SendData(new[] { width, length }, Tokens.Graph);
+                messenger.SendData((Width: width, Length: length), Tokens.Graph);
             }
         }
 

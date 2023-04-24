@@ -37,7 +37,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             try
             {
                 var path = input.Input();
-                await ExportAsync(path);
+                await ExportAsync(graph, path);
             }
             catch (Exception ex)
             {
@@ -50,7 +50,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
         }
 
-        protected abstract Task ExportAsync(TPath path);
+        protected abstract Task ExportAsync(Graph2D<Vertex> graph, TPath path);
 
         private void OnGraphCreated(DataMessage<Graph2D<Vertex>> msg)
         {

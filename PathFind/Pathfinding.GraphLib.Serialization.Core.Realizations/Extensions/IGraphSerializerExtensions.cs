@@ -60,7 +60,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             where TGraph : IGraph<TVertex>
             where TVertex : IVertex
         {
-            await Task.Run(() => self.SerializeToNetwork(graph, host, port));
+            await Task.Run(() => self.SerializeToNetwork(graph, host, port)).ConfigureAwait(false);
         }
 
         public static async Task SerializeToNetworkAsync<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self,

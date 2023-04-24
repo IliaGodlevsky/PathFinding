@@ -54,8 +54,8 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
         {
             using (Cursor.UseCurrentPositionWithClean())
             {
-                menuList.Display();
-                return intInput.Input(Languages.ChooseColor, limit, bottom) - 1;
+                string menu = menuList + "\n" + Languages.ChooseColor;
+                return intInput.Input(menu, limit, bottom) - 1;
             }
         }
 

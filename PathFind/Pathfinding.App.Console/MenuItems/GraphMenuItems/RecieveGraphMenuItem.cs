@@ -11,7 +11,7 @@ using Pathfinding.Logging.Interface;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    [MediumPriority]
+    [LowPriority]
     internal sealed class RecieveGraphMenuItem : ImportGraphMenuItem<int>
     {
         public RecieveGraphMenuItem(IMessenger messenger, IInput<int> input,

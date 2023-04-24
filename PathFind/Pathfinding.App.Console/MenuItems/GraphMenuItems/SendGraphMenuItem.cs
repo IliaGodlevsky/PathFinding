@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    [MediumPriority]
+    [LowPriority]
     internal sealed class SendGraphMenuItem : ExportGraphMenuItem<(string Host, int Port)>
     {
         public SendGraphMenuItem(IMessenger messenger, IInput<(string Host, int Port)> input,
@@ -23,7 +23,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         public override string ToString() => Languages.SendGraph;
 
 
-        protected override async Task ExportAsync((string Host, int Port) path)
+        protected override async Task ExportAsync(Graph2D<Vertex> graph, 
+            (string Host, int Port) path)
         {
             await serializer.SerializeToNetworkAsync(graph, path);
         }

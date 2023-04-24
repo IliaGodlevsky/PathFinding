@@ -10,7 +10,7 @@ using Pathfinding.Logging.Interface;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    [MediumPriority]
+    [LowPriority]
     internal sealed class LoadGraphMenuItem : ImportGraphMenuItem<string>
     {
         public LoadGraphMenuItem(IMessenger messenger, IFilePathInput input,

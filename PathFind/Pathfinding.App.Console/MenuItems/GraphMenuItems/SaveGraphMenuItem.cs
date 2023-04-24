@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    [MediumPriority]
+    [LowPriority]
     internal sealed class SaveGraphMenuItem : ExportGraphMenuItem<string>
     {
         public SaveGraphMenuItem(IMessenger messenger, IFilePathInput input,
@@ -23,29 +23,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         public override string ToString() => Languages.SaveGraph;
 
 
-        protected override async Task ExportAsync(string path)
+        protected override async Task ExportAsync(Graph2D<Vertex> graph, string path)
         {
             await serializer.SerializeToFileAsync(graph, path);
-        }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-        }
-
-        private void OnGraphCreated(DataMessage<Graph2D<Vertex>> msg)
-        {
-            graph = msg.Value;
-        }
-
-        public override string ToString()
-        {
-            return Languages.SaveGraph;
-        }
-
-        public void RegisterHanlders(IMessenger messenger)
-        {
-            messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
         }
     }
 }

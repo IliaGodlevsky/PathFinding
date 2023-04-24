@@ -50,15 +50,15 @@ namespace Pathfinding.App.Console.Model.Visualizations
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterData<ConsoleColor[]>(this, Tokens.Range, ColorsRecieved);
+            messenger.RegisterData<(ConsoleColor Source, ConsoleColor Target, ConsoleColor Transit)>(this, Tokens.Range, ColorsRecieved);
             messenger.RegisterData<Vertex>(this, Tokens.Range, RemoveVertex);
         }
 
-        private void ColorsRecieved(DataMessage<ConsoleColor[]> msg)
+        private void ColorsRecieved(DataMessage<(ConsoleColor Source, ConsoleColor Target, ConsoleColor Transit)> msg)
         {
-            SourceVertexColor = msg.Value.FirstOrDefault();
-            TransitVertexColor = msg.Value.ElementAtOrDefault(1);
-            TargetVertexColor = msg.Value.LastOrDefault();
+            SourceVertexColor = msg.Value.Source;
+            TransitVertexColor = msg.Value.Target;
+            TargetVertexColor = msg.Value.Transit;
         }
 
         private void RemoveVertex(DataMessage<Vertex> msg)

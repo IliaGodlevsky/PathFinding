@@ -164,7 +164,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             {
                 builder.RegisterType<SaveGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<LoadGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
-                builder.RegisterType<SendGraphMenuItem>().Keyed<IMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
+                builder.RegisterType<SendGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<RecieveGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
 
                 builder.RegisterType<FilePathInput>().As<IFilePathInput>().SingleInstance();

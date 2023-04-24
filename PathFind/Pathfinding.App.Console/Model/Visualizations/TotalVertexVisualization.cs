@@ -64,13 +64,13 @@ namespace Pathfinding.App.Console.Model.Visualizations
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterData<ConsoleColor[]>(this, Tokens.Graph, ColorsRecieved);
+            messenger.RegisterData<(ConsoleColor Regular, ConsoleColor Obstacle)>(this, Tokens.Graph, ColorsRecieved);
         }
 
-        private void ColorsRecieved(DataMessage<ConsoleColor[]> msg)
+        private void ColorsRecieved(DataMessage<(ConsoleColor Regualar, ConsoleColor Obstacle)> msg)
         {
-            RegularVertexColor = msg.Value.FirstOrDefault();
-            ObstacleVertexColor = msg.Value.LastOrDefault();
+            RegularVertexColor = msg.Value.Regualar;
+            ObstacleVertexColor = msg.Value.Obstacle;
         }
     }
 }

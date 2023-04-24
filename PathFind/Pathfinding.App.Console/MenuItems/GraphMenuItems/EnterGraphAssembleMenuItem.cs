@@ -29,11 +29,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             var menuList = assembles.CreateMenuList(columnsNumber: 1);
             var range = new InclusiveValueRange<int>(assembles.Count, 1);
-            string message = Languages.GraphAssembleChoiceMsg;
+            string menu = Languages.GraphAssembleChoiceMsg + "\n" + menuList;
             using (Cursor.UseCurrentPositionWithClean())
             {
-                menuList.Display();
-                int index = input.Input(message, range) - 1;
+                int index = input.Input(menu, range) - 1;
                 messenger.SendData(assembles[index], Tokens.Graph);
             }
         }
