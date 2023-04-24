@@ -33,7 +33,7 @@ namespace Pathfinding.App.Console.Units
             var token = ConditionToken.Create(IsStatisticsApplied, Tokens.Statistics);
             messenger.RegisterData<PathfindingProcess>(this, token, OnSusbcribe);
             messenger.RegisterAlgorithmData<IGraphPath>(this, Tokens.Statistics, OnPathFound);
-            messenger.RegisterData<bool>(this, token, RecieveApplyStatistics);
+            messenger.RegisterData<bool>(this, Tokens.Statistics, RecieveApplyStatistics);
         }
 
         private bool IsStatisticsApplied() => isStatisticsApplied;

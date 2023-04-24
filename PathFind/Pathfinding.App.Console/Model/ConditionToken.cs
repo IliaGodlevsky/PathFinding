@@ -26,11 +26,6 @@ namespace Pathfinding.App.Console.Model
             return token.GetHashCode();
         }
 
-        public static implicit operator Tokens(ConditionToken token)
-        {
-            return token.token;
-        }
-
         public override string ToString()
         {
             return token.ToString();

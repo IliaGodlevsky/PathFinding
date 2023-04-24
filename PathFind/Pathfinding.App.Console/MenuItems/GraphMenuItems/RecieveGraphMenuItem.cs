@@ -8,52 +8,35 @@ using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
-using System;
-using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     [MediumPriority]
-    internal sealed class RecieveGraphMenuItem : IMenuItem
+    internal sealed class RecieveGraphMenuItem : ImportGraphMenuItem<int>
     {
-        private readonly IMessenger messenger;
-        private readonly IInput<int> input;
-        private readonly IGraphSerializer<Graph2D<Vertex>, Vertex> serializer;
-        private readonly ILog log;
-
         public RecieveGraphMenuItem(IMessenger messenger, IInput<int> input,
             IGraphSerializer<Graph2D<Vertex>, Vertex> serializer, ILog log)
+            : base(messenger, input, serializer, log) 
         {
-            this.serializer = serializer;
-            this.messenger = messenger;
-            this.input = input;
-            this.log = log;
-        }
 
-        public void Execute()
-        {
-            try
-            {
-                int port = 0;
-                using (Cursor.UseCurrentPositionWithClean())
-                {
-                    port = input.Input(Languages.InputPort);
-                }
-                System.Console.Write(Languages.WaitingForConnection);
-                var graph = serializer.DeserializeFromNetwork(port);
-                var range = graph.First().Cost.CostRange;
-                messenger.SendData(range, Tokens.Screen);
-                messenger.SendData(graph, Tokens.Screen | Tokens.Main | Tokens.Common);
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
         }
 
         public override string ToString()
         {
             return Languages.RecieveGraph;
+        }
+
+        protected override int InputPath()
+        {
+            using (Cursor.UseCurrentPositionWithClean())
+            {
+                return input.Input(Languages.InputPort);
+            }
+        }
+
+        protected override Graph2D<Vertex> ImportGraph(int port)
+        {
+            return serializer.DeserializeFromNetwork(port);
         }
     }
 }

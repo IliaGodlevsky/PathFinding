@@ -34,7 +34,7 @@ namespace Pathfinding.App.Console.Extensions
         }
 
         public static void RegisterData<TData>(this IMessenger messenger, object recipient,
-            Tokens token, Action<DataMessage<TData>> action)
+            object token, Action<DataMessage<TData>> action)
         {
             messenger.Register<DataMessage<TData>>(recipient, token, action);
         }
@@ -46,7 +46,7 @@ namespace Pathfinding.App.Console.Extensions
         }
 
         public static void RegisterAlgorithmData<TData>(this IMessenger messenger, object recipient,
-            Tokens token, Action<AlgorithmMessage<TData>> action)
+            object token, Action<AlgorithmMessage<TData>> action)
         {
             messenger.Register<AlgorithmMessage<TData>>(recipient, token, action);
         }

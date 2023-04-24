@@ -15,11 +15,6 @@ namespace Pathfinding.App.Console.Model
 
         public string Input()
         {
-            return InputFilePath();
-        }
-
-        private string InputFilePath()
-        {
             using (Cursor.UseCurrentPositionWithClean())
             {
                 string path = input.Input(Languages.InputPathMsg);
