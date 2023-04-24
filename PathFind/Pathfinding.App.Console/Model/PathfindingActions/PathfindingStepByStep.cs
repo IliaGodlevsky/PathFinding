@@ -7,7 +7,7 @@ namespace Pathfinding.App.Console.Model.InProcessActions
 {
     internal sealed class PathfindingStepByStep : IPathfindingAction
     {
-        private static readonly TimeSpan Wait = TimeSpan.FromMilliseconds(0.1);
+        private readonly TimeSpan Wait = TimeSpan.FromMilliseconds(0.1);
 
         public void Do(PathfindingProcess algorithm)
         {

@@ -16,14 +16,12 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     {
         public SendGraphMenuItem(IMessenger messenger, IInput<(string Host, int Port)> input,
             IGraphSerializer<Graph2D<Vertex>, Vertex> serializer, ILog log)
-            : base(messenger, input, serializer, log)
+             : base(messenger, input, serializer, log)
         {
         }
 
-        public override string ToString()
-        {
-            return Languages.SendGraph;
-        }
+        public override string ToString() => Languages.SendGraph;
+
 
         protected override async Task ExportAsync((string Host, int Port) path)
         {

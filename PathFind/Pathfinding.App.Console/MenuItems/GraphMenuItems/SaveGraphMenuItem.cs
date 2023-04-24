@@ -20,14 +20,32 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
         }
 
+        public override string ToString() => Languages.SaveGraph;
+
+
+        protected override async Task ExportAsync(string path)
+        {
+            await serializer.SerializeToFileAsync(graph, path);
+        }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+
+        private void OnGraphCreated(DataMessage<Graph2D<Vertex>> msg)
+        {
+            graph = msg.Value;
+        }
+
         public override string ToString()
         {
             return Languages.SaveGraph;
         }
 
-        protected override async Task ExportAsync(string path)
+        public void RegisterHanlders(IMessenger messenger)
         {
-            await serializer.SerializeToFileAsync(graph, path);
+            messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
         }
     }
 }

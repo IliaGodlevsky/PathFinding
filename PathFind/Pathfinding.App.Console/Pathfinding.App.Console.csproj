@@ -89,6 +89,7 @@
     <Compile Include="MenuItems\ColorMenuItems\PathfindingColorsMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\RangeColorsMenuItem.cs" />
     <Compile Include="MenuItems\ExitMenuItem.cs" />
+    <Compile Include="MenuItems\GraphMenuItems\ExportGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\GraphCreatingMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\ImportGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\ResizeGraphMenuItem.cs" />
@@ -390,6 +391,9 @@
     </PackageReference>
     <PackageReference Include="MvvmLightLibs">
       <Version>5.4.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

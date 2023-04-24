@@ -11,19 +11,18 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    internal abstract class ExportGraphMenuItem<TPath> : IConditionedMenuItem, ICanRecieveMessage
+    internal abstract class ExportGraphMenuItem<TPath> 
+        : IConditionedMenuItem, ICanRecieveMessage
     {
         protected readonly IMessenger messenger;
         protected readonly IInput<TPath> input;
         protected readonly IGraphSerializer<Graph2D<Vertex>, Vertex> serializer;
         protected readonly ILog log;
 
-        protected Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
+        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        protected ExportGraphMenuItem(IMessenger messenger,
-            IInput<TPath> input,
-            IGraphSerializer<Graph2D<Vertex>, Vertex> serializer,
-            ILog log)
+        protected ExportGraphMenuItem(IMessenger messenger, IInput<TPath> input,
+            IGraphSerializer<Graph2D<Vertex>, Vertex> serializer, ILog log)
         {
             this.messenger = messenger;
             this.input = input;
@@ -46,7 +45,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             }
         }
 
-        public void RegisterHanlders(IMessenger messenger)
+        public virtual void RegisterHanlders(IMessenger messenger)
         {
             messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
         }
