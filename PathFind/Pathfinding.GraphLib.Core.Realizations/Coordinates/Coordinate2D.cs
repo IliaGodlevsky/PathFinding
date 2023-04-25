@@ -10,7 +10,7 @@ namespace Pathfinding.GraphLib.Core.Realizations.Coordinates
     public sealed class Coordinate2D : Coordinate
     {
         public static readonly Coordinate2D Empty
-            = new (Array.Empty<int>());
+            = new(Array.Empty<int>());
 
         public int X { get; }
 

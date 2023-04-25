@@ -53,10 +53,10 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
         {
             int upperValueOfCostRange = reader.ReadInt32();
             int lowerValueOfCostRange = reader.ReadInt32();
-            return new (upperValueOfCostRange, lowerValueOfCostRange);
+            return new(upperValueOfCostRange, lowerValueOfCostRange);
         }
 
-        private static ICoordinate[] ReadNeighborhood(this BinaryReader reader, 
+        private static ICoordinate[] ReadNeighborhood(this BinaryReader reader,
             ICoordinateFactory factory)
         {
             int count = reader.ReadInt32();
@@ -75,7 +75,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             return factory.CreateCost(cost, range);
         }
 
-        private static ICoordinate ReadCoordinate(this BinaryReader reader, 
+        private static ICoordinate ReadCoordinate(this BinaryReader reader,
             ICoordinateFactory factory)
         {
             var coordinates = reader.ReadIntArray();

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    internal abstract class ExportGraphMenuItem<TPath> 
+    internal abstract class ExportGraphMenuItem<TPath>
         : IConditionedMenuItem, ICanRecieveMessage
     {
         protected readonly IMessenger messenger;

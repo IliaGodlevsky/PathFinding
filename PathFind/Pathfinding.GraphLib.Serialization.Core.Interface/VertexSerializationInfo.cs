@@ -15,17 +15,17 @@ namespace Pathfinding.GraphLib.Serialization.Core.Interface
         public ICoordinate[] Neighbourhood { get; }
 
         public VertexSerializationInfo(IVertex vertex)
-            : this(vertex.IsObstacle, 
-                  vertex.Cost, 
-                  vertex.Position, 
+            : this(vertex.IsObstacle,
+                  vertex.Cost,
+                  vertex.Position,
                   vertex.Neighbours.GetCoordinates().ToArray())
         {
 
         }
 
-        public VertexSerializationInfo(bool isObstacle, 
-            IVertexCost cost, 
-            ICoordinate position, 
+        public VertexSerializationInfo(bool isObstacle,
+            IVertexCost cost,
+            ICoordinate position,
             ICoordinate[] neighborhood)
         {
             IsObstacle = isObstacle;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.GraphLib.Core.Interface.Comparers
 {
-    public sealed class CoordinateEqualityComparer 
+    public sealed class CoordinateEqualityComparer
         : Singleton<CoordinateEqualityComparer, IEqualityComparer<ICoordinate>>, IEqualityComparer<ICoordinate>
     {
         private CoordinateEqualityComparer()

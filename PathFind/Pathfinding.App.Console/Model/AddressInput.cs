@@ -9,7 +9,7 @@ namespace Pathfinding.App.Console.Model
         private readonly IInput<int> intInput;
         private readonly IInput<string> stringInput;
 
-        public AddressInput(IInput<int> intInput, 
+        public AddressInput(IInput<int> intInput,
             IInput<string> stringInput)
         {
             this.intInput = intInput;

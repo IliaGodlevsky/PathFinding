@@ -16,7 +16,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     {
         public RecieveGraphMenuItem(IMessenger messenger, IInput<int> input,
             IGraphSerializer<Graph2D<Vertex>, Vertex> serializer, ILog log)
-            : base(messenger, input, serializer, log) 
+            : base(messenger, input, serializer, log)
         {
 
         }

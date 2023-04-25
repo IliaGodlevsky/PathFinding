@@ -7,10 +7,10 @@ namespace Pathfinding.AlgorithmLib.History
 {
     public static class HistoryExtensions
     {
-        public static void AddPath(this IHistoryRepository<IHistoryVolume<ICoordinate>> repository, 
+        public static void AddPath(this IHistoryRepository<IHistoryVolume<ICoordinate>> repository,
             Guid key, IEnumerable<ICoordinate> vertices)
         {
-            foreach(var vertex in vertices)
+            foreach (var vertex in vertices)
             {
                 repository.AddPath(key, vertex);
             }

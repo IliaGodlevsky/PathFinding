@@ -5,7 +5,6 @@ using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.VisualizationLib.Core.Interface;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Pathfinding.App.Console.Model.Visualizations
 {

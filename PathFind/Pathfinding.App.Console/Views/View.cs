@@ -23,7 +23,7 @@ namespace Pathfinding.App.Console.Views
         {
             bool isClosureRequested = false;
             while (!isClosureRequested)
-            {              
+            {
                 try
                 {
                     Screen.SetCursorPositionUnderMenu(1);

@@ -17,8 +17,8 @@ namespace GraphLib.Serialization.Serializers.Decorators
         private readonly SymmetricAlgorithm algorithm;
 
         public CryptoGraphSerializer(
-            IGraphSerializer<TGraph, TVertex> serializer, 
-            SymmetricAlgorithm algorithm, 
+            IGraphSerializer<TGraph, TVertex> serializer,
+            SymmetricAlgorithm algorithm,
             ICrypto crypto)
         {
             this.serializer = serializer;

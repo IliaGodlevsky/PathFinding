@@ -2,7 +2,6 @@
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Smoothing.Interface;
-using System;
 using System.Linq;
 
 namespace Pathfinding.GraphLib.Smoothing

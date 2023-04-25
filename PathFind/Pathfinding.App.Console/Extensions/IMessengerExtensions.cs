@@ -24,7 +24,7 @@ namespace Pathfinding.App.Console.Extensions
             messenger.SendMessage(new DataMessage<TData>(data), token);
         }
 
-        public static void SendData<TData>(this IMessenger messenger, 
+        public static void SendData<TData>(this IMessenger messenger,
             PathfindingProcess algorithm, TData data, Tokens token)
         {
             messenger.SendMessage(new AlgorithmMessage<TData>(algorithm, data), token);

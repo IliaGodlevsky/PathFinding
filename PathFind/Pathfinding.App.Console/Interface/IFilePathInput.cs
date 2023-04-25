@@ -2,6 +2,6 @@
 {
     internal interface IFilePathInput : IInput<string>
     {
-        
+
     }
 }

@@ -44,7 +44,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
                         .ToList();
                     vertices[info.Position].Neighbours = neighbours;
                 }
-                return graphFactory.CreateGraph(vertices.Values, 
+                return graphFactory.CreateGraph(vertices.Values,
                     graphInfo.DimensionsSizes);
             }
             catch (Exception ex)

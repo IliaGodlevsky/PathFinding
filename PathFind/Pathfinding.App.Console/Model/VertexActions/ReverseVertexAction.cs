@@ -28,7 +28,7 @@ namespace Pathfinding.App.Console.Model.VertexActions
             {
                 vertex.IsObstacle = true;
             }
-            messenger.Send(new GraphChangedMessage());
+            messenger.Send(new GraphChangedMessage(), Tokens.Main);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Pathfinding.GraphLib.Core.Abstractions
 
         public IReadOnlyList<int> DimensionsSizes { get; }
 
-        protected Graph(int requiredNumberOfDimensions, 
+        protected Graph(int requiredNumberOfDimensions,
             IReadOnlyCollection<TVertex> vertices,
             IReadOnlyList<int> dimensionSizes)
         {

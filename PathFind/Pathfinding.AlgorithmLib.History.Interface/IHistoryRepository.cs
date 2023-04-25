@@ -1,6 +1,6 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.History.Interface
 {

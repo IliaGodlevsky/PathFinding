@@ -24,7 +24,7 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
 
         protected override void SendColorsMessage()
         {
-            messenger.SendData((Path:PathColor, Crossed: CrossedPathColor), Tokens.Path);
+            messenger.SendData((Path: PathColor, Crossed: CrossedPathColor), Tokens.Path);
         }
 
         public override string ToString()

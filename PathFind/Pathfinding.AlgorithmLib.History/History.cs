@@ -3,7 +3,6 @@ using Pathfinding.GraphLib.Core.Interface;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Pathfinding.AlgorithmLib.History
 {

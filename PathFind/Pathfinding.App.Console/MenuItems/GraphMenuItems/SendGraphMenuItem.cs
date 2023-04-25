@@ -22,7 +22,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public override string ToString() => Languages.SendGraph;
 
-        protected override async Task ExportAsync(Graph2D<Vertex> graph, 
+
+        protected override async Task ExportAsync(Graph2D<Vertex> graph,
             (string Host, int Port) path)
         {
             await serializer.SerializeToNetworkAsync(graph, path);

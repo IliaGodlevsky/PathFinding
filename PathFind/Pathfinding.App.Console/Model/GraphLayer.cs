@@ -4,7 +4,6 @@ using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
 using Shared.Extensions;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.Model
