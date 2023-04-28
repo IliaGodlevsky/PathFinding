@@ -21,7 +21,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.StepRules
         public double CalculateStepCost(IVertex neighbour, IVertex current)
         {
             double cost = stepRule.CalculateStepCost(neighbour, current);
-            return current.IsCardinal(neighbour)
+            return current.Position.IsCardinal(neighbour.Position)
                 ? cost
                 : Math.Round(stepCostIncreaseFactor * cost);
         }

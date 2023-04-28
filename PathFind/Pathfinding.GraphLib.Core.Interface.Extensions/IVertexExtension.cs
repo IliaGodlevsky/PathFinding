@@ -17,11 +17,6 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
             return vertex.Neighbours.Count == 0;
         }
 
-        public static bool IsCardinal(this IVertex vertex, IVertex neighbor)
-        {
-            return vertex.Position.IsCardinal(neighbor.Position);
-        }
-
         public static void InitializeComponents(this IVertex self)
         {
             self.Cost = NullCost.Interface;
