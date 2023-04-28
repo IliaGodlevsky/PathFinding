@@ -11,8 +11,6 @@ namespace Pathfinding.GraphLib.Core.Realizations.Neighborhoods
     [DebuggerDisplay("Count = {Neighbours.Count}")]
     public sealed class VonNeumannNeighborhood : INeighborhood
     {
-        private readonly ICoordinate selfCoordinate;
-        private readonly INeighborhood neighbours;
         private readonly Lazy<IReadOnlyCollection<ICoordinate>> neighbourhood;
 
         private IReadOnlyCollection<ICoordinate> Neighbours => neighbourhood.Value;
@@ -21,15 +19,14 @@ namespace Pathfinding.GraphLib.Core.Realizations.Neighborhoods
 
         public VonNeumannNeighborhood(ICoordinate coordinate)
         {
-            neighbourhood = new(DetectNeighborhood, true);
-            selfCoordinate = coordinate;
-            neighbours = new MooreNeighborhood(coordinate);
+            neighbourhood = new(() => DetectNeighborhood(coordinate), true);
         }
 
-        private IReadOnlyCollection<ICoordinate> DetectNeighborhood()
+        private IReadOnlyCollection<ICoordinate> DetectNeighborhood(ICoordinate self)
         {
-            return neighbours
-                .Where(neighbour => neighbour.IsCardinal(selfCoordinate))
+            var mooreNeighbourhood = new MooreNeighborhood(self);
+            return mooreNeighbourhood
+                .Where(neighbour => neighbour.IsCardinal(self))
                 .ToArray();
         }
 
