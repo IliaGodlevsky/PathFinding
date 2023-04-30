@@ -214,15 +214,6 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose graph assemble.
-        /// </summary>
-        public static string ChooseGraphAssemble {
-            get {
-                return ResourceManager.GetString("ChooseGraphAssemble", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Clear vertices colors.
         /// </summary>
         public static string ClearColors {

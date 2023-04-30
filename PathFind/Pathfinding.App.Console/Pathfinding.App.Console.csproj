@@ -96,7 +96,6 @@
     <Compile Include="MenuItems\EditorMenuItems\ChangeCostMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\AssembleGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\EnterCostRangeMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\EnterGraphAssembleMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\EnterGraphParametresMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\EnterObstaclePercentMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\LoadGraphMenuItem.cs" />

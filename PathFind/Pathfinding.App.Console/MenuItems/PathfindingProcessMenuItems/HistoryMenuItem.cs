@@ -6,7 +6,7 @@ using Pathfinding.Logging.Interface;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
-    [HighPriority]
+    [MediumPriority]
     internal sealed class HistoryMenuItem : UnitDisplayMenuItem<PathfindingHistoryUnit>
     {
         public HistoryMenuItem(IViewFactory viewFactory, PathfindingHistoryUnit viewModel, ILog log)

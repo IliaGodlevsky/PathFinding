@@ -11,7 +11,7 @@ using Shared.Executable;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
-    [MediumPriority]
+    [LowPriority]
     internal sealed class ClearGraphMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         private readonly IMessenger messenger;

@@ -11,14 +11,15 @@ using Pathfinding.Visualization.Extensions;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
-    [MediumPriority]
+    [LowPriority]
     internal sealed class ClearColorsMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         private readonly IMessenger messenger;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        public ClearColorsMenuItem(IMessenger messenger, IPathfindingRangeBuilder<Vertex> rangeBuilder)
+        public ClearColorsMenuItem(IMessenger messenger, 
+            IPathfindingRangeBuilder<Vertex> rangeBuilder)
         {
             this.messenger = messenger;
             this.rangeBuilder = rangeBuilder;

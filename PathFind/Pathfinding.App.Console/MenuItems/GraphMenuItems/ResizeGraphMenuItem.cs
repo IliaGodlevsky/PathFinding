@@ -17,9 +17,12 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     {
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        public ResizeGraphMenuItem(IMessenger messenger, IRandom random,
-            IVertexCostFactory costFactory, INeighborhoodFactory neighborhoodFactory)
-            : base(messenger, random, costFactory, neighborhoodFactory)
+        public ResizeGraphMenuItem(IMessenger messenger, 
+            IGraphAssemble<Graph2D<Vertex>, Vertex> assemble,
+            IRandom random,
+            IVertexCostFactory costFactory, 
+            INeighborhoodFactory neighborhoodFactory)
+            : base(messenger, assemble, random, costFactory, neighborhoodFactory)
         {
 
         }

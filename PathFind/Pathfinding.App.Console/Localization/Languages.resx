@@ -168,9 +168,6 @@
   <data name="ChooseColor" xml:space="preserve">
     <value>Choose color: </value>
   </data>
-  <data name="ChooseGraphAssemble" xml:space="preserve">
-    <value>Choose graph assemble</value>
-  </data>
   <data name="ClearColors" xml:space="preserve">
     <value>Clear vertices colors</value>
   </data>

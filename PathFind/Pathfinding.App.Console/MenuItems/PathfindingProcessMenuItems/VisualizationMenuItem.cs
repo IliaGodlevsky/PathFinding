@@ -6,7 +6,7 @@ using Pathfinding.Logging.Interface;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
-    [HighPriority]
+    [MediumPriority]
     internal sealed class VisualizationMenuItem : UnitDisplayMenuItem<PathfindingVisualizationUnit>
     {
         public VisualizationMenuItem(IViewFactory viewFactory,
