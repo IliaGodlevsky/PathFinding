@@ -16,7 +16,7 @@ namespace Pathfinding.AlgorithmLib.Benchmarks.Pathfinding
 {
     public abstract class AlgorithmsBenchmarks
     {
-        protected readonly IRandom random = new PseudoRandom();
+        protected readonly IRandom random = new DummyRandom();
         private readonly InclusiveValueRange<int> range = new InclusiveValueRange<int>(5, 1);
         private readonly TestGraphFactory graphFactory = new TestGraphFactory();
         private readonly INeighborhoodFactory neighbourhood = new MooreNeighborhoodFactory();

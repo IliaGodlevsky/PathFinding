@@ -19,11 +19,11 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests
 
     [TestFixture]
     [Explicit]
-    public class PathfindingAlagorithmStressTests
+    public class PathfindingAlgorithmStressTests
     {
         private readonly string wrongPathMsg = "Path was not found";
 
-        protected readonly IRandom random = new PseudoRandom();
+        private readonly IRandom random = new DummyRandom();
         private readonly InclusiveValueRange<int> range = new InclusiveValueRange<int>(5, 1);
         private readonly TestGraphFactory graphFactory = new TestGraphFactory();
         private readonly INeighborhoodFactory neighbourhood = new MooreNeighborhoodFactory();
@@ -31,16 +31,14 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests
         private readonly IVertexFactory<TestVertex> vertexFactory = new TestVertexFactory();
         private readonly IVertexCostFactory costFactory = new TestCostFactory();
         private readonly IGraphAssemble<TestGraph, TestVertex> graphAssemble;
-        private readonly ILayer<TestGraph, TestVertex> costLayer;
-        private readonly ILayer<TestGraph, TestVertex> neighboursLayer;
         private readonly ILayer<TestGraph, TestVertex>[] layers;
 
-        public PathfindingAlagorithmStressTests()
+        public PathfindingAlgorithmStressTests()
         {
             graphAssemble = new GraphAssemble<TestGraph, TestVertex>(
                 vertexFactory, coordinateFactory, graphFactory);
-            costLayer = new VertexCostLayer<TestGraph, TestVertex>(costFactory, range, random);
-            neighboursLayer = new NeighborhoodLayer<TestGraph, TestVertex>(neighbourhood);
+            var costLayer = new VertexCostLayer<TestGraph, TestVertex>(costFactory, range, random);
+            var neighboursLayer = new NeighborhoodLayer<TestGraph, TestVertex>(neighbourhood);
             layers = new ILayer<TestGraph, TestVertex>[] { costLayer, neighboursLayer };
         }
 
