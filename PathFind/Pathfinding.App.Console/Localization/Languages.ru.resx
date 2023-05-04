@@ -220,7 +220,7 @@
     <value>Enter pathfinding range</value>
   </data>
   <data name="Exit" xml:space="preserve">
-    <value>Exit</value>
+    <value>Выйти</value>
   </data>
   <data name="ExitMsg" xml:space="preserve">
     <value>Do you want to exit {0}?: </value>
@@ -229,7 +229,7 @@
     <value>Find path</value>
   </data>
   <data name="Graph" xml:space="preserve">
-    <value>Graph</value>
+    <value>Граф</value>
   </data>
   <data name="GraphAssembleChoiceMsg" xml:space="preserve">
     <value>Choose graph assemble: </value>

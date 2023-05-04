@@ -466,15 +466,6 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visited: {0}.
-        /// </summary>
-        public static string InProcessStatisticsFormat {
-            get {
-                return ResourceManager.GetString("InProcessStatisticsFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Input cost range.
         /// </summary>
         public static string InputCostRange {
@@ -516,15 +507,6 @@ namespace Pathfinding.App.Console.Localization {
         public static string InputPathMsg {
             get {
                 return ResourceManager.GetString("InputPathMsg", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Input pipe name: .
-        /// </summary>
-        public static string InputPipeMsg {
-            get {
-                return ResourceManager.GetString("InputPipeMsg", resourceCulture);
             }
         }
         
@@ -655,11 +637,11 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Steps: {0}  Path cost: {1}  Visited: {2}.
+        ///   Looks up a localized string similar to {0} Steps: {1} Path cost: {2}.
         /// </summary>
-        public static string PathfindingStatisticsFormat {
+        public static string PathfindingResultFormat {
             get {
-                return ResourceManager.GetString("PathfindingStatisticsFormat", resourceCulture);
+                return ResourceManager.GetString("PathfindingResultFormat", resourceCulture);
             }
         }
         
@@ -777,6 +759,15 @@ namespace Pathfinding.App.Console.Localization {
         public static string Statistics {
             get {
                 return ResourceManager.GetString("Statistics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}  Time: {1}     Visited: {2}.
+        /// </summary>
+        public static string StatisticsFormat {
+            get {
+                return ResourceManager.GetString("StatisticsFormat", resourceCulture);
             }
         }
         

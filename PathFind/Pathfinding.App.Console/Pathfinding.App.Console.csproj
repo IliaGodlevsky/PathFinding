@@ -83,6 +83,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Languages.resx</DependentUpon>
     </Compile>
+    <Compile Include="Localization\Languages.ru.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Languages.ru.resx</DependentUpon>
+    </Compile>
     <Compile Include="MenuItems\ColorMenuItems\ColorsMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\GraphColorsMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\PathColorsMenuItem.cs" />
@@ -400,6 +405,10 @@
     <EmbeddedResource Include="Localization\Languages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Languages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\Languages.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Languages.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

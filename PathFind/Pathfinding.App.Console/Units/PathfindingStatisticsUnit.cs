@@ -82,7 +82,7 @@ namespace Pathfinding.App.Console.Units
             return new ()
             {
                 AlgorithmName = algorithm.ToString(),
-                Time = timer.Elapsed.ToString(@"mm\:ss\.fff"),
+                Elapsed = timer.Elapsed,
                 VisitedVertices = visited
             };
         }
@@ -93,9 +93,9 @@ namespace Pathfinding.App.Console.Units
             return new ()
             {
                 AlgorithmName = statistics.AlgorithmName,
-                Time = statistics.Time,
+                Elapsed = statistics.Elapsed,
                 VisitedVertices = statistics.VisitedVertices,
-                Cost = (int)path.Cost,
+                Cost = path.Cost,
                 Steps = path.Count
             };
         }
