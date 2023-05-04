@@ -144,6 +144,8 @@
     <Compile Include="DependencyInjection\Registrations\Registries.cs" />
     <Compile Include="Model\AddressInput.cs" />
     <Compile Include="Model\FilePathInput.cs" />
+    <Compile Include="Model\Notes\HistoryNote.cs" />
+    <Compile Include="Model\Notes\StatisticsNote.cs" />
     <Compile Include="Tokens.cs" />
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\Answer.cs" />

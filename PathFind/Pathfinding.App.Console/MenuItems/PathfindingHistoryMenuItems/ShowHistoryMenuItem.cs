@@ -6,12 +6,14 @@ using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.Notes;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms.VisualStyles;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 {
@@ -20,7 +22,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
     {
         private readonly IMessenger messenger;
         private readonly IInput<int> input;
-        private readonly Dictionary<Guid, string> pages = new();
+        private readonly Dictionary<Guid, StatisticsNote> pages = new();
 
         private bool isHistoryApplied = false;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
@@ -38,7 +40,10 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void Execute()
         {
-            var menuList = pages.Values.Append(Languages.Quit).CreateMenuList(columnsNumber: 1);
+            var menuList = pages.Values
+                .Select(note => note.ToString())
+                .Append(Languages.Quit)
+                .CreateMenuList(columnsNumber: 1);
             string inputMessage = string.Concat(menuList, "\n", Languages.AlgorithmChoiceMsg);
             using (RememberGraphState())
             {
@@ -51,7 +56,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
                         using (Cursor.HideCursor())
                         {
                             messenger.SendData(page.Key, Tokens.History);
-                            messenger.SendData(page.Value, Tokens.Screen);
+                            messenger.SendData(page.Value.ToString(), Tokens.Screen);
                         }
                     }
                     index = GetAlgorithmIndex(inputMessage);
@@ -86,7 +91,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             }
         }
 
-        private void OnAlgorithmFinished(AlgorithmMessage<string> msg)
+        private void OnAlgorithmFinished(AlgorithmMessage<StatisticsNote> msg)
         {
             if (isHistoryApplied)
             {
@@ -107,7 +112,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         public void RegisterHanlders(IMessenger messenger)
         {
             messenger.RegisterData<bool>(this, Tokens.History, RecieveApplyInfo);
-            messenger.Register<AlgorithmMessage<string>>(this, Tokens.History, OnAlgorithmFinished);
+            messenger.Register<AlgorithmMessage<StatisticsNote>>(this, Tokens.History, OnAlgorithmFinished);
             messenger.Register<ClearHistoryMessage>(this, _ => pages.Clear());
             messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
         }

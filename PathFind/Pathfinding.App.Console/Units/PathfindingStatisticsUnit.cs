@@ -4,9 +4,9 @@ using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.Notes;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -55,16 +55,18 @@ namespace Pathfinding.App.Console.Units
 
         private void OnPathFound(AlgorithmMessage<IGraphPath> msg)
         {
-            string stats = msg.Algorithm.ToString();
-            if (isStatisticsApplied)
+            var algorithm = msg.Algorithm;
+            var note = GetStatistics(algorithm);
+            if (IsStatisticsApplied())
             {
-                stats = msg.Value.Count > 0
-                    ? GetStatistics(msg.Value, msg.Algorithm)
-                    : GetStatistics(msg.Algorithm);
+                if (msg.Value.Count > 0)
+                {
+                    note = GetStatistics(msg.Value, algorithm);
+                }
                 visited = 0;
-                messenger.SendData(stats, Tokens.Screen);
+                messenger.SendData(note.ToString(), Tokens.Screen);
             }
-            var message = new AlgorithmMessage<string>(msg.Algorithm, stats);
+            var message = new AlgorithmMessage<StatisticsNote>(algorithm, note);
             messenger.Send(message, Tokens.History);
         }
 
@@ -72,25 +74,30 @@ namespace Pathfinding.App.Console.Units
         {
             visited++;
             var statistics = GetStatistics((PathfindingProcess)sender);
-            messenger.SendData(statistics, Tokens.Screen);
+            messenger.SendData(statistics.ToString(), Tokens.Screen);
         }
 
-        private string GetStatistics(PathfindingProcess algorithm)
+        private StatisticsNote GetStatistics(PathfindingProcess algorithm)
         {
-            return GetStatistics(Languages.InProcessStatisticsFormat, algorithm, visited);
+            return new ()
+            {
+                AlgorithmName = algorithm.ToString(),
+                Time = timer.Elapsed.ToString(@"mm\:ss\.fff"),
+                VisitedVertices = visited
+            };
         }
 
-        private string GetStatistics(IGraphPath path, PathfindingProcess algorithm)
+        private HistoryNote GetStatistics(IGraphPath path, PathfindingProcess algorithm)
         {
-            return GetStatistics(Languages.PathfindingStatisticsFormat, algorithm, path.Count, path.Cost, visited);
-        }
-
-        private string GetStatistics(string format, PathfindingProcess algorithm, params object[] values)
-        {
-            var time = timer.Elapsed.ToString(@"mm\:ss\.fff");
-            string algorithmName = algorithm.ToString().PadRight(totalWidth: 20);
-            string pathfindingInfo = string.Format(format, values);
-            return string.Join("\t", algorithmName, time, pathfindingInfo);
+            var statistics = GetStatistics(algorithm);
+            return new ()
+            {
+                AlgorithmName = statistics.AlgorithmName,
+                Time = statistics.Time,
+                VisitedVertices = statistics.VisitedVertices,
+                Cost = (int)path.Cost,
+                Steps = path.Count
+            };
         }
     }
 }

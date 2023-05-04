@@ -64,8 +64,7 @@ namespace Pathfinding.App.Console
         {
             int upperValueRange = message.Value.UpperValueOfRange;
             int lowerValueRange = message.Value.LowerValueOfRange;
-            int max = Math.Max(Math.Abs(upperValueRange), Math.Abs(lowerValueRange));
-            CurrentMaxValueOfRange = max;
+            CurrentMaxValueOfRange = Math.Max(Math.Abs(upperValueRange), Math.Abs(lowerValueRange));
             RecalculateVerticesConsolePosition();
         }
 
