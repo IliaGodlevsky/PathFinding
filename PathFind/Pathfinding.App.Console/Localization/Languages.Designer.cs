@@ -259,6 +259,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Crossed path color.
+        /// </summary>
+        public static string CrossedPathColor {
+            get {
+                return ResourceManager.GetString("CrossedPathColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Custom.
         /// </summary>
         public static string CustomSmoothLevel {
@@ -349,6 +358,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enqueued color.
+        /// </summary>
+        public static string EnqueuedColor {
+            get {
+                return ResourceManager.GetString("EnqueuedColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter animation delay.
         /// </summary>
         public static string EnterAnimationDelay {
@@ -399,15 +417,6 @@ namespace Pathfinding.App.Console.Localization {
         public static string Graph {
             get {
                 return ResourceManager.GetString("Graph", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Choose graph assemble: .
-        /// </summary>
-        public static string GraphAssembleChoiceMsg {
-            get {
-                return ResourceManager.GetString("GraphAssembleChoiceMsg", resourceCulture);
             }
         }
         
@@ -529,15 +538,6 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Input level of smoothing: .
-        /// </summary>
-        public static string InputSmoothLevelMsg {
-            get {
-                return ResourceManager.GetString("InputSmoothLevelMsg", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string Language {
@@ -601,6 +601,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Obstacle color.
+        /// </summary>
+        public static string ObstacleColor {
+            get {
+                return ResourceManager.GetString("ObstacleColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input percent of obstacles: .
         /// </summary>
         public static string ObstaclePercentInputMsg {
@@ -615,6 +624,15 @@ namespace Pathfinding.App.Console.Localization {
         public static string OutOfRangeMsg {
             get {
                 return ResourceManager.GetString("OutOfRangeMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path color.
+        /// </summary>
+        public static string PathColor {
+            get {
+                return ResourceManager.GetString("PathColor", resourceCulture);
             }
         }
         
@@ -691,6 +709,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Regular color.
+        /// </summary>
+        public static string RegularColor {
+            get {
+                return ResourceManager.GetString("RegularColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resize graph.
         /// </summary>
         public static string ResizeGraph {
@@ -745,11 +772,11 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose smooth level: .
+        ///   Looks up a localized string similar to Source color.
         /// </summary>
-        public static string SmoothLevelMsg {
+        public static string SourceColor {
             get {
-                return ResourceManager.GetString("SmoothLevelMsg", resourceCulture);
+                return ResourceManager.GetString("SourceColor", resourceCulture);
             }
         }
         
@@ -768,6 +795,33 @@ namespace Pathfinding.App.Console.Localization {
         public static string StatisticsFormat {
             get {
                 return ResourceManager.GetString("StatisticsFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target color.
+        /// </summary>
+        public static string TargetColor {
+            get {
+                return ResourceManager.GetString("TargetColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transit color.
+        /// </summary>
+        public static string TransitColor {
+            get {
+                return ResourceManager.GetString("TransitColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visited color.
+        /// </summary>
+        public static string VisitedColor {
+            get {
+                return ResourceManager.GetString("VisitedColor", resourceCulture);
             }
         }
         

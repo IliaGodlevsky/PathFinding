@@ -20,7 +20,7 @@ namespace Pathfinding.App.Console.Model.Notes
 
         public override string ToString()
         {
-            string algorithmName = AlgorithmName.PadRight(totalWidth: 25);
+            string algorithmName = AlgorithmName.PadRight(totalWidth: 35);
             string elapsed = Elapsed.ToString(TimeFormat, CultureInfo.InvariantCulture);
             string visited = VisitedVertices.ToString().PadRight(IntPadding);
             return string.Format(StatsFormat, algorithmName, elapsed, visited);

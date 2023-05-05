@@ -50,6 +50,11 @@
     <Compile Include="Layers\NeighborhoodLayer.cs" />
     <Compile Include="Layers\ObstacleLayer.cs" />
     <Compile Include="Layers\VertexCostLayer.cs" />
+    <Compile Include="Localizations\Languages.ru.Designer.cs">
+      <DependentUpon>Languages.ru.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Localizations\Languages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -102,6 +107,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Localizations\Languages.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Languages.ru.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Localizations\Languages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Languages.Designer.cs</LastGenOutput>

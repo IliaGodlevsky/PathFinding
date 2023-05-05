@@ -46,6 +46,11 @@
     <Compile Include="IGraphExtensions.cs" />
     <Compile Include="Interface\IMeanCost.cs" />
     <Compile Include="Interface\ISmoothLevel.cs" />
+    <Compile Include="Localization\Languages.ru.Designer.cs">
+      <DependentUpon>Languages.ru.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Localization\Languages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -59,6 +64,10 @@
     <Compile Include="SmoothLayer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Localization\Languages.ru.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Languages.ru.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Localization\Languages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Languages.Designer.cs</LastGenOutput>

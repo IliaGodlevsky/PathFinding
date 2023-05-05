@@ -183,6 +183,9 @@
   <data name="ColorsUnitMenuItem" xml:space="preserve">
     <value>Colors</value>
   </data>
+  <data name="CrossedPathColor" xml:space="preserve">
+    <value>Crossed path color</value>
+  </data>
   <data name="CustomSmoothLevel" xml:space="preserve">
     <value>Custom</value>
   </data>
@@ -213,6 +216,9 @@
   <data name="DelayTimeInputMsg" xml:space="preserve">
     <value>Input animation speed delay time (milliseconds): </value>
   </data>
+  <data name="EnqueuedColor" xml:space="preserve">
+    <value>Enqueued color</value>
+  </data>
   <data name="EnterAnimationDelay" xml:space="preserve">
     <value>Enter animation delay</value>
   </data>
@@ -230,9 +236,6 @@
   </data>
   <data name="Graph" xml:space="preserve">
     <value>Graph</value>
-  </data>
-  <data name="GraphAssembleChoiceMsg" xml:space="preserve">
-    <value>Choose graph assemble: </value>
   </data>
   <data name="GraphFormat" xml:space="preserve">
     <value>Obstacle percent: {0} ({1}/{2})</value>
@@ -273,9 +276,6 @@
   <data name="InputServerNameMsg" xml:space="preserve">
     <value>Input server name: </value>
   </data>
-  <data name="InputSmoothLevelMsg" xml:space="preserve">
-    <value>Input level of smoothing: </value>
-  </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
   </data>
@@ -297,11 +297,17 @@
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
+  <data name="ObstacleColor" xml:space="preserve">
+    <value>Obstacle color</value>
+  </data>
   <data name="ObstaclePercentInputMsg" xml:space="preserve">
     <value>Input percent of obstacles: </value>
   </data>
   <data name="OutOfRangeMsg" xml:space="preserve">
     <value>Value is out of range. Try again: </value>
+  </data>
+  <data name="PathColor" xml:space="preserve">
+    <value>Path color</value>
   </data>
   <data name="Pathfinding" xml:space="preserve">
     <value>Pathfinding</value>
@@ -327,6 +333,9 @@
   <data name="Red" xml:space="preserve">
     <value>Red</value>
   </data>
+  <data name="RegularColor" xml:space="preserve">
+    <value>Regular color</value>
+  </data>
   <data name="ResizeGraph" xml:space="preserve">
     <value>Resize graph</value>
   </data>
@@ -345,14 +354,23 @@
   <data name="SmoothGraph" xml:space="preserve">
     <value>Smooth graph</value>
   </data>
-  <data name="SmoothLevelMsg" xml:space="preserve">
-    <value>Choose smooth level: </value>
+  <data name="SourceColor" xml:space="preserve">
+    <value>Source color</value>
   </data>
   <data name="Statistics" xml:space="preserve">
     <value>Pathfinding statistics</value>
   </data>
   <data name="StatisticsFormat" xml:space="preserve">
     <value>{0}  Time: {1}     Visited: {2}</value>
+  </data>
+  <data name="TargetColor" xml:space="preserve">
+    <value>Target color</value>
+  </data>
+  <data name="TransitColor" xml:space="preserve">
+    <value>Transit color</value>
+  </data>
+  <data name="VisitedColor" xml:space="preserve">
+    <value>Visited color</value>
   </data>
   <data name="Visual" xml:space="preserve">
     <value>Pathfinding visualization</value>

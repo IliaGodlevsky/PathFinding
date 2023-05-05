@@ -118,258 +118,276 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AlgorithmChoiceMsg" xml:space="preserve">
-    <value>Choose algorithm: </value>
+    <value>Выберите алгоритм: </value>
   </data>
   <data name="ApplyHistory" xml:space="preserve">
-    <value>Apply history</value>
+    <value>Применить историю</value>
   </data>
   <data name="ApplyHistoryMsg" xml:space="preserve">
-    <value>Apply history recording {0}?: </value>
+    <value>Применить историю {0}?: </value>
   </data>
   <data name="ApplyStatistics" xml:space="preserve">
-    <value>Apply pathfinding statistics</value>
+    <value>Применить статистику</value>
   </data>
   <data name="ApplyStatisticsMsg" xml:space="preserve">
-    <value>Apply statistics {0}?: </value>
+    <value>Применить статистику {0}?: </value>
   </data>
   <data name="ApplyVisualization" xml:space="preserve">
-    <value>Apply pathfinding visualization</value>
+    <value>Применить визуализацию</value>
   </data>
   <data name="ApplyVisualizationMsg" xml:space="preserve">
-    <value>Apply visualization {0}?: </value>
+    <value>Применить реализацию {0}?: </value>
   </data>
   <data name="AssembleGraph" xml:space="preserve">
-    <value>Assemble graph</value>
+    <value>Собрать граф</value>
   </data>
   <data name="BadInputMsg" xml:space="preserve">
-    <value>Bad value input. Try again: </value>
+    <value>Неверный ввод. Попробуйте еще: </value>
   </data>
   <data name="Black" xml:space="preserve">
-    <value>Black</value>
+    <value>Черный</value>
   </data>
   <data name="Blue" xml:space="preserve">
-    <value>Blue</value>
+    <value>Синий</value>
   </data>
   <data name="ChangeCost" xml:space="preserve">
-    <value>Change cost</value>
+    <value>Поменять стоимость</value>
   </data>
   <data name="ChangeGraphColors" xml:space="preserve">
-    <value>Change graph colors</value>
+    <value>Поменять цвета графа</value>
   </data>
   <data name="ChangePathColors" xml:space="preserve">
-    <value>Change path colors</value>
+    <value>Поменять цвета пути</value>
   </data>
   <data name="ChangePathfindingColors" xml:space="preserve">
-    <value>Change pathfinding colors</value>
+    <value>Поменять цвета поиска пути</value>
   </data>
   <data name="ChangeRangeColors" xml:space="preserve">
-    <value>Change range colors</value>
+    <value>Поменять цвета диапазона поиска</value>
   </data>
   <data name="ChooseColor" xml:space="preserve">
-    <value>Choose color: </value>
+    <value>Выберите цвет: </value>
   </data>
   <data name="ClearColors" xml:space="preserve">
-    <value>Clear vertices colors</value>
+    <value>Очистить цвета вершин</value>
   </data>
   <data name="ClearGraph" xml:space="preserve">
-    <value>Clear graph</value>
+    <value>Очистить граф</value>
   </data>
   <data name="ClearHistory" xml:space="preserve">
-    <value>Clear history</value>
+    <value>Очистить историю</value>
   </data>
   <data name="ClearPathfindingRange" xml:space="preserve">
-    <value>Clear pathfinding range</value>
+    <value>Очистить даипазон пути</value>
   </data>
   <data name="ColorsUnitMenuItem" xml:space="preserve">
-    <value>Colors</value>
+    <value>Цвета</value>
+  </data>
+  <data name="CrossedPathColor" xml:space="preserve">
+    <value>Цвет пересечения путей</value>
   </data>
   <data name="CustomSmoothLevel" xml:space="preserve">
-    <value>Custom</value>
+    <value>Пользовательский</value>
   </data>
   <data name="Cyan" xml:space="preserve">
-    <value>Cyan</value>
+    <value>Голубой</value>
   </data>
   <data name="DarkBlue" xml:space="preserve">
-    <value>Dark blue</value>
+    <value>Темно-синий</value>
   </data>
   <data name="DarkCyan" xml:space="preserve">
-    <value>Dark cyan</value>
+    <value>Темно-голубой</value>
   </data>
   <data name="DarkGray" xml:space="preserve">
-    <value>Dark gray</value>
+    <value>Темно-серый</value>
   </data>
   <data name="DarkGreen" xml:space="preserve">
-    <value>Dark green</value>
+    <value>Темно-зеленый</value>
   </data>
   <data name="DarkMagenta" xml:space="preserve">
-    <value>Dark magenta</value>
+    <value>Темно-пурпурный</value>
   </data>
   <data name="DarkRed" xml:space="preserve">
-    <value>Dark red</value>
+    <value>Темно-красный</value>
   </data>
   <data name="DarkYellow" xml:space="preserve">
-    <value>Dark yellow</value>
+    <value>Темно-желтый</value>
   </data>
   <data name="DelayTimeInputMsg" xml:space="preserve">
-    <value>Input animation speed delay time (milliseconds): </value>
+    <value>Введите задержку аниманции (milliseconds): </value>
+  </data>
+  <data name="EnqueuedColor" xml:space="preserve">
+    <value>Цвет очередной вершины</value>
   </data>
   <data name="EnterAnimationDelay" xml:space="preserve">
-    <value>Enter animation delay</value>
+    <value>Ввод задержки анимации</value>
   </data>
   <data name="EnterPathfindingRange" xml:space="preserve">
-    <value>Enter pathfinding range</value>
+    <value>Ввод диапазона поиска пути</value>
   </data>
   <data name="Exit" xml:space="preserve">
     <value>Выйти</value>
   </data>
   <data name="ExitMsg" xml:space="preserve">
-    <value>Do you want to exit {0}?: </value>
+    <value>Вы хотите выйти {0}?: </value>
   </data>
   <data name="FindPath" xml:space="preserve">
-    <value>Find path</value>
+    <value>Поиск пути</value>
   </data>
   <data name="Graph" xml:space="preserve">
     <value>Граф</value>
   </data>
-  <data name="GraphAssembleChoiceMsg" xml:space="preserve">
-    <value>Choose graph assemble: </value>
-  </data>
   <data name="GraphFormat" xml:space="preserve">
-    <value>Obstacle percent: {0} ({1}/{2})</value>
+    <value>Процент препятствий: {0} ({1}/{2})</value>
   </data>
   <data name="GraphHeightInputMsg" xml:space="preserve">
-    <value>Input height of graph: </value>
+    <value>Введите длину графа: </value>
   </data>
   <data name="GraphWidthInputMsg" xml:space="preserve">
-    <value>Input width of graph: </value>
+    <value>Введите ширину графа: </value>
   </data>
   <data name="Gray" xml:space="preserve">
-    <value>Gray</value>
+    <value>Серый</value>
   </data>
   <data name="Green" xml:space="preserve">
-    <value>Green</value>
+    <value>Зеленый</value>
   </data>
   <data name="History" xml:space="preserve">
-    <value>Pathfinding history</value>
+    <value>История поиска пути</value>
   </data>
   <data name="InputCostRange" xml:space="preserve">
-    <value>Input cost range</value>
+    <value>Ввод диапазона цен</value>
   </data>
   <data name="InputGraphParametres" xml:space="preserve">
-    <value>Input graph parametres</value>
+    <value>Ввод параметров графа</value>
   </data>
   <data name="InputHostName" xml:space="preserve">
-    <value>Input host name: </value>
+    <value>Введите имя хоста: </value>
   </data>
   <data name="InputObstaclePercent" xml:space="preserve">
-    <value>Input obstacle percent</value>
+    <value>Ввод процента препятствий</value>
   </data>
   <data name="InputPathMsg" xml:space="preserve">
-    <value>Input path: </value>
+    <value>Введите путь: </value>
   </data>
   <data name="InputPort" xml:space="preserve">
-    <value>Input port: </value>
+    <value>Введите порт: </value>
   </data>
   <data name="InputServerNameMsg" xml:space="preserve">
-    <value>Input server name: </value>
-  </data>
-  <data name="InputSmoothLevelMsg" xml:space="preserve">
-    <value>Input level of smoothing: </value>
+    <value>Введите имя сервера: </value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Language</value>
+    <value>Язык</value>
   </data>
   <data name="LanguageMsg" xml:space="preserve">
-    <value>Input language: </value>
+    <value>Выберите язык: </value>
   </data>
   <data name="LengthDimensionName" xml:space="preserve">
-    <value>Length</value>
+    <value>Длина</value>
   </data>
   <data name="LoadGraph" xml:space="preserve">
-    <value>Load graph</value>
+    <value>Загрузить граф</value>
   </data>
   <data name="Magenta" xml:space="preserve">
-    <value>Magenta</value>
+    <value>Пурпурный</value>
   </data>
   <data name="MenuOptionChoiceMsg" xml:space="preserve">
-    <value>Choose menu option: </value>
+    <value>Выберите пункт меню: </value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>No</value>
+    <value>Нет</value>
+  </data>
+  <data name="ObstacleColor" xml:space="preserve">
+    <value>Цвет препятсвия</value>
   </data>
   <data name="ObstaclePercentInputMsg" xml:space="preserve">
-    <value>Input percent of obstacles: </value>
+    <value>Введите процент препятствий: </value>
   </data>
   <data name="OutOfRangeMsg" xml:space="preserve">
-    <value>Value is out of range. Try again: </value>
+    <value>Значение за пределами диапазона. Попробуйте еще: </value>
+  </data>
+  <data name="PathColor" xml:space="preserve">
+    <value>Цвет пути</value>
   </data>
   <data name="Pathfinding" xml:space="preserve">
-    <value>Pathfinding</value>
+    <value>Поиск пути</value>
   </data>
   <data name="PathfindingRange" xml:space="preserve">
-    <value>Pathfinding range</value>
+    <value>Диапазон поиска пути</value>
   </data>
   <data name="PathfindingResultFormat" xml:space="preserve">
-    <value>{0} Steps: {1} Path cost: {2}</value>
+    <value>{0} Шаги: {1} Стоимость: {2}</value>
   </data>
   <data name="Quit" xml:space="preserve">
-    <value>Quit</value>
+    <value>Выйти</value>
   </data>
   <data name="RangeLowerValueInputMsg" xml:space="preserve">
-    <value>Input lower value of range: </value>
+    <value>Введите нижнее значение диапазона: </value>
   </data>
   <data name="RangeUpperValueInputMsg" xml:space="preserve">
-    <value>Input upper value of range: </value>
+    <value>Введите верхнее значение диапазона: </value>
   </data>
   <data name="RecieveGraph" xml:space="preserve">
-    <value>Recieve graph</value>
+    <value>Принять граф</value>
   </data>
   <data name="Red" xml:space="preserve">
-    <value>Red</value>
+    <value>Красный</value>
+  </data>
+  <data name="RegularColor" xml:space="preserve">
+    <value>Обычный цвет</value>
   </data>
   <data name="ResizeGraph" xml:space="preserve">
-    <value>Resize graph</value>
+    <value>Изменить размер графа</value>
   </data>
   <data name="ReverseVertices" xml:space="preserve">
-    <value>Reverse vertices</value>
+    <value>Перевернуть вершины</value>
   </data>
   <data name="SaveGraph" xml:space="preserve">
-    <value>Save graph</value>
+    <value>Сохранить граф</value>
   </data>
   <data name="SendGraph" xml:space="preserve">
-    <value>Send graph</value>
+    <value>Отправить граф</value>
   </data>
   <data name="ShowHistory" xml:space="preserve">
-    <value>Show history</value>
+    <value>Показать историю</value>
   </data>
   <data name="SmoothGraph" xml:space="preserve">
-    <value>Smooth graph</value>
+    <value>Выровнять граф</value>
   </data>
-  <data name="SmoothLevelMsg" xml:space="preserve">
-    <value>Choose smooth level: </value>
+  <data name="SourceColor" xml:space="preserve">
+    <value>Цвет источника</value>
   </data>
   <data name="Statistics" xml:space="preserve">
-    <value>Pathfinding statistics</value>
+    <value>Статистика поиска пути</value>
   </data>
   <data name="StatisticsFormat" xml:space="preserve">
-    <value>{0}  Time: {1}     Visited: {2}</value>
+    <value>{0}  Время: {1}     Посещенные: {2}</value>
+  </data>
+  <data name="TargetColor" xml:space="preserve">
+    <value>Цвет цели</value>
+  </data>
+  <data name="TransitColor" xml:space="preserve">
+    <value>Цвет транзитной вершины</value>
+  </data>
+  <data name="VisitedColor" xml:space="preserve">
+    <value>Цвет посещенной вершины</value>
   </data>
   <data name="Visual" xml:space="preserve">
-    <value>Pathfinding visualization</value>
+    <value>Визуализация поиска пути</value>
   </data>
   <data name="WaitingForConnection" xml:space="preserve">
-    <value>Waiting for connection...</value>
+    <value>Ожидание соединения...</value>
   </data>
   <data name="White" xml:space="preserve">
-    <value>White</value>
+    <value>Белый</value>
   </data>
   <data name="WidthDimensionName" xml:space="preserve">
-    <value>Width</value>
+    <value>Ширина</value>
   </data>
   <data name="Yellow" xml:space="preserve">
-    <value>Yellow</value>
+    <value>Желтый</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>Да</value>
   </data>
 </root>

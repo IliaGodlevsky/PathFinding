@@ -3,18 +3,17 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
+using Shared.Extensions;
 using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
 {
     [MediumPriority]
     internal sealed class PathColorsMenuItem : ColorsMenuItem
     {
-        [Description("Path color")]
         private ConsoleColor PathColor { get; set; }
 
-        [Description("Crossed path color")]
         private ConsoleColor CrossedPathColor { get; set; }
 
         public PathColorsMenuItem(IMessenger messenger, IInput<int> intInput)
@@ -25,6 +24,15 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
         protected override void SendColorsMessage()
         {
             messenger.SendData((Path: PathColor, Crossed: CrossedPathColor), Tokens.Path);
+        }
+
+        protected override IReadOnlyDictionary<string, string> GetColorsMap()
+        {
+            return new Dictionary<string, string>()
+            {
+                { nameof(PathColor), Languages.PathColor },
+                { nameof(CrossedPathColor), Languages.CrossedPathColor },
+            }.AsReadOnly();
         }
 
         public override string ToString()

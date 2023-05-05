@@ -28,11 +28,13 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
             var enumType = typeof(ConsoleColor);
             allColors = Enum.GetValues(enumType).Cast<ConsoleColor>().ToArray();
             allColorsMenuList = allColors.CreateMenuList(GetName);
-            properties = GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance)
+            var flags = BindingFlags.NonPublic | BindingFlags.Instance;
+            properties = GetType().GetProperties(flags)
                 .Where(prop => prop.PropertyType == enumType)
                 .ToArray();
+            var colorsMap = GetColorsMap();
             menuItemsColorsMenuList = properties
-                .Select(prop => prop.GetAttributeOrDefault<DescriptionAttribute>().Description)
+                .Select(prop => colorsMap[prop.Name])
                 .Append(Languages.Quit)
                 .CreateMenuList();
         }
@@ -60,6 +62,8 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
         }
 
         protected abstract void SendColorsMessage();
+
+        protected abstract IReadOnlyDictionary<string, string> GetColorsMap();
 
         private static string GetName(ConsoleColor color)
         {
