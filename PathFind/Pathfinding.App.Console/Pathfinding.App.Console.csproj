@@ -46,6 +46,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DependencyInjection\ConfigurationMiddlewears\TotalVisualizationMiddleware.cs" />
+    <Compile Include="Interface\IVisual.cs" />
+    <Compile Include="MenuItems\ColorMenuItems\CrossedPathVertexColorMenuItem.cs" />
+    <Compile Include="MenuItems\ColorMenuItems\EnqueuedVertexColorMenuItem.cs" />
+    <Compile Include="MenuItems\ColorMenuItems\ObstacleVertexColorMenuItem.cs" />
+    <Compile Include="MenuItems\ColorMenuItems\PathVertexColorMenuItem.cs" />
+    <Compile Include="MenuItems\ColorMenuItems\RegularVertexColorMenuItem.cs" />
+    <Compile Include="MenuItems\ColorMenuItems\SourceVertexColorMenuItem.cs" />
+    <Compile Include="MenuItems\ColorMenuItems\TargetVertexColorMenuItem.cs" />
+    <Compile Include="MenuItems\ColorMenuItems\TransitVertexColorMenuItem.cs" />
+    <Compile Include="MenuItems\ColorMenuItems\VisitedVertexColorMenuItem.cs" />
+    <Compile Include="Model\Visualizations\Visuals\CrossedPathVisual.cs" />
+    <Compile Include="Model\Visualizations\Visuals\EnqueuedVisual.cs" />
+    <Compile Include="Model\Visualizations\Visuals\ObstacleVisual.cs" />
+    <Compile Include="Model\Visualizations\Visuals\PathVisual.cs" />
+    <Compile Include="Model\Visualizations\Visuals\RegularVisual.cs" />
+    <Compile Include="Model\Visualizations\Visuals\SourceVisual.cs" />
+    <Compile Include="Model\Visualizations\Visuals\TargetVisual.cs" />
+    <Compile Include="Model\Visualizations\Visuals\TransitVisual.cs" />
+    <Compile Include="Model\Visualizations\Visuals\VisitedVisual.cs" />
+    <Compile Include="Model\Visualizations\Visuals\Visual.cs" />
+    <Compile Include="Model\Visualizations\VisualType.cs" />
+    <Compile Include="Settings\Features.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Features.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\Parametres.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Parametres.settings</DependentUpon>
+    </Compile>
     <Compile Include="DependencyInjection\AutofacExtensions.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\PathfindingItemResolveMiddleware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\VertexActionResolveMiddlewear.cs" />
@@ -67,7 +99,6 @@
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IInputExtensions.cs" />
     <Compile Include="Interface\IAnimationSpeedAction.cs" />
-    <Compile Include="Interface\IClearable.cs" />
     <Compile Include="Interface\IConditionedMenuItem.cs" />
     <Compile Include="Interface\IMenuItem.cs" />
     <Compile Include="Interface\IPathfindingAction.cs" />
@@ -89,10 +120,6 @@
       <DependentUpon>Languages.ru.resx</DependentUpon>
     </Compile>
     <Compile Include="MenuItems\ColorMenuItems\ColorsMenuItem.cs" />
-    <Compile Include="MenuItems\ColorMenuItems\GraphColorsMenuItem.cs" />
-    <Compile Include="MenuItems\ColorMenuItems\PathColorsMenuItem.cs" />
-    <Compile Include="MenuItems\ColorMenuItems\PathfindingColorsMenuItem.cs" />
-    <Compile Include="MenuItems\ColorMenuItems\RangeColorsMenuItem.cs" />
     <Compile Include="MenuItems\ExitMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\ExportGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\GraphCreatingMenuItem.cs" />
@@ -151,6 +178,11 @@
     <Compile Include="Model\FilePathInput.cs" />
     <Compile Include="Model\Notes\HistoryNote.cs" />
     <Compile Include="Model\Notes\StatisticsNote.cs" />
+    <Compile Include="Settings\Colours.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Colours.settings</DependentUpon>
+    </Compile>
     <Compile Include="Tokens.cs" />
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\Answer.cs" />
@@ -194,9 +226,6 @@
     <Compile Include="Model\VertexFactory.cs" />
     <Compile Include="Model\VertexFromInfoFactory.cs" />
     <Compile Include="Model\ViewFactory.cs" />
-    <Compile Include="Model\Visualizations\PathfindingVisualization.cs" />
-    <Compile Include="Model\Visualizations\RangeVisualization.cs" />
-    <Compile Include="Model\Visualizations\PathVisualization.cs" />
     <Compile Include="Model\Visualizations\TotalVertexVisualization.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -392,13 +421,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac">
-      <Version>6.4.0</Version>
+      <Version>7.0.1</Version>
     </PackageReference>
     <PackageReference Include="MvvmLightLibs">
       <Version>5.4.1.1</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -411,5 +437,21 @@
       <LastGenOutput>Languages.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Settings\Features.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Features.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Settings\Parametres.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Parametres.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Settings\Colours.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Colours.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

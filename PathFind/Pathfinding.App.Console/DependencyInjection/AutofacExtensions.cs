@@ -4,6 +4,7 @@ using Autofac.Core;
 using Autofac.Features.Metadata;
 using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Model.Visualizations;
 using Shared.Extensions;
 using System;
 using System.Collections;
@@ -50,6 +51,13 @@ namespace Pathfinding.App.Console.DependencyInjection
                 }
             }
             return builder.OnActivated(Register);
+        }
+
+        public static void RegisterVisual<TVisual>(this ContainerBuilder builder, VisualType type)
+            where TVisual : IVisual
+        {
+            builder.RegisterType<TVisual>().As<IVisual>().As<ICanRecieveMessage>()
+                .WithMetadata(RegistrationConstants.VisualTypeKey, type).SingleInstance();
         }
 
         public static void Run<TMenuItem>(this ILifetimeScope scope)

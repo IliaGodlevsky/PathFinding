@@ -6,9 +6,13 @@ namespace Pathfinding.App.Console.Model.PathfindingActions
 {
     internal sealed class SlowDownAnimation : IAnimationSpeedAction
     {
+        private static readonly TimeSpan Millisecond = TimeSpan.FromMilliseconds(1);
+
         public TimeSpan Do(TimeSpan current)
         {
-            return Constants.AlgorithmDelayTimeValueRange.ReturnInRange(current + TimeSpan.FromMilliseconds(1));
+            var range = Constants.AlgorithmDelayTimeValueRange;
+            var time = current + Millisecond;
+            return range.ReturnInRange(time);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Pathfinding.GraphLib.Core.Interface.Comparers
 
         public int GetHashCode(IVertex obj)
         {
-            return HashCode.Combine(obj.Cost.CurrentCost, obj.Position);
+            return obj.GetHashCode();
         }
     }
 }

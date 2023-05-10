@@ -13,7 +13,14 @@ namespace Pathfinding.App.Console
         Graph = 2 << 5,
         Pathfinding = 2 << 6,
         Path = 2 << 7,
-        Range = 2 << 8,
-        Common = 2 << 9
+        Common = 2 << 8,
+        Regular = 2 << 9,
+        Obstacle = 2 << 10,
+        Source = 2 << 11,
+        Target = 2 << 12,
+        Transit = 2 << 13,
+        Visited = 2 << 14,
+        Enqueued = 2 << 15,
+        Crossed = 2 << 16,
     }
 }

@@ -25,14 +25,9 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
 
         public static bool IsEqual(this IVertex self, IVertex vertex)
         {
-            if (!ReferenceEquals(self, vertex))
-            {
-                bool hasEqualCost = self.Cost.Equals(vertex.Cost);
-                bool hasEqualPosition = self.Position.Equals(vertex.Position);
-                bool hasSameObstacleStatus = self.IsObstacle == vertex.IsObstacle;
-                return hasEqualCost && hasEqualPosition && hasSameObstacleStatus;
-            }
-            return true;
+            return self.Cost.Equals(vertex.Cost)
+                && self.Position.Equals(vertex.Position)
+                && self.IsObstacle == vertex.IsObstacle;
         }
     }
 }

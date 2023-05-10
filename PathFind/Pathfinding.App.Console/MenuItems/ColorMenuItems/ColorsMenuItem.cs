@@ -3,12 +3,9 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Model;
-using Shared.Extensions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
 
 namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
 {
@@ -17,53 +14,45 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
         protected readonly IMessenger messenger;
         private readonly IInput<int> intInput;
         private readonly IReadOnlyList<ConsoleColor> allColors;
-        private readonly IReadOnlyList<PropertyInfo> properties;
         private readonly MenuList allColorsMenuList;
-        private readonly MenuList menuItemsColorsMenuList;
+
+        protected abstract Tokens Token { get; }
 
         protected ColorsMenuItem(IMessenger messenger, IInput<int> intInput)
         {
             this.messenger = messenger;
             this.intInput = intInput;
-            var enumType = typeof(ConsoleColor);
-            allColors = Enum.GetValues(enumType).Cast<ConsoleColor>().ToArray();
-            allColorsMenuList = allColors.CreateMenuList(GetName);
-            var flags = BindingFlags.NonPublic | BindingFlags.Instance;
-            properties = GetType().GetProperties(flags)
-                .Where(prop => prop.PropertyType == enumType)
+            allColors = Enum.GetValues(typeof(ConsoleColor))
+                .Cast<ConsoleColor>()
                 .ToArray();
-            var colorsMap = GetColorsMap();
-            menuItemsColorsMenuList = properties
-                .Select(prop => colorsMap[prop.Name])
+            allColorsMenuList = allColors
+                .Select(GetName)
                 .Append(Languages.Quit)
-                .CreateMenuList();
+                .CreateMenuList(columnsNumber: 4);
         }
 
         public void Execute()
         {
-            int index = GetIndex(menuItemsColorsMenuList, properties.Count + 1, 1);
-            while (index != properties.Count)
-            {
-                int toChangeIndex = GetIndex(allColorsMenuList, allColors.Count, 1);
-                var colorToChange = allColors[toChangeIndex];
-                properties[index].SetValue(this, colorToChange);
-                index = GetIndex(menuItemsColorsMenuList, properties.Count + 1, 1);
-            }
-            SendColorsMessage();
-        }
-
-        private int GetIndex(MenuList menuList, int limit, int bottom)
-        {
+            int index = default;
             using (Cursor.UseCurrentPositionWithClean())
             {
-                string menu = menuList + "\n" + Languages.ChooseColor;
-                return intInput.Input(menu, limit, bottom) - 1;
+                string menu = allColorsMenuList + "\n" + Languages.ChooseColor;
+                index = intInput.Input(menu, allColors.Count + 1, 1) - 1;
+            }
+            if (index != allColors.Count)
+            {
+                var color = allColors[index];
+                using (Cursor.HideCursor())
+                {
+                    SendColorsMessage(color);
+                }
             }
         }
 
-        protected abstract void SendColorsMessage();
-
-        protected abstract IReadOnlyDictionary<string, string> GetColorsMap();
+        protected virtual void SendColorsMessage(ConsoleColor color)
+        {
+            messenger.SendData(color, Token);
+        }
 
         private static string GetName(ConsoleColor color)
         {

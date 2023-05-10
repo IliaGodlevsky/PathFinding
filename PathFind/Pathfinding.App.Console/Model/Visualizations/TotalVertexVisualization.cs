@@ -1,75 +1,84 @@
-﻿using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.App.Console.Extensions;
-using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Messages.DataMessages;
+﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.VisualizationLib.Core.Interface;
-using System;
+using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.Model.Visualizations
 {
-    internal sealed class TotalVertexVisualization : ITotalVisualization<Vertex>, ICanRecieveMessage
+    internal sealed class TotalVertexVisualization : ITotalVisualization<Vertex>
     {
-        private readonly IMessenger messenger;
-        private readonly IPathfindingVisualization<Vertex> pathfindingVisualization;
-        private readonly IRangeVisualization<Vertex> rangeVisualization;
-        private readonly IPathVisualization<Vertex> pathVisualization;
+        private readonly IReadOnlyDictionary<VisualType, IVisual> visuals;
 
-        public ConsoleColor RegularVertexColor { get; set; } = ConsoleColor.DarkGray;
-
-        public ConsoleColor ObstacleVertexColor { get; set; } = ConsoleColor.Black;
-
-        public TotalVertexVisualization(IMessenger messenger,
-            IPathfindingVisualization<Vertex> pathfindingVisualization = null,
-            IRangeVisualization<Vertex> rangeVisualization = null,
-            IPathVisualization<Vertex> pathVisualization = null)
+        public TotalVertexVisualization(IReadOnlyDictionary<VisualType, IVisual> visuals)
         {
-            this.messenger = messenger;
-            this.pathfindingVisualization = pathfindingVisualization;
-            this.rangeVisualization = rangeVisualization;
-            this.pathVisualization = pathVisualization;
+            this.visuals = visuals;
+        }
+
+        public bool IsVisualizedAsPath(Vertex visualizable)
+        {
+            return TryGetOrNull(VisualType.Crossed)?.Contains(visualizable) == true
+                || TryGetOrNull(VisualType.Path)?.Contains(visualizable) == true;
+        }
+
+        public bool IsVisualizedAsRange(Vertex visualizable)
+        {
+            return TryGetOrNull(VisualType.Source)?.Contains(visualizable) == true
+                || TryGetOrNull(VisualType.Target)?.Contains(visualizable) == true
+                || TryGetOrNull(VisualType.Transit)?.Contains(visualizable) == true;
+        }
+
+        public void VisualizeAsPath(Vertex visualizable)
+        {
+            if (!visualizable.IsVisualizedAsRange())
+            {
+                if (!visualizable.IsVisualizedAsPath())
+                {
+                    TryGetOrNull(VisualType.Path)?.Visualize(visualizable);
+                }
+                else
+                {
+                    TryGetOrNull(VisualType.Crossed)?.Visualize(visualizable);
+                }
+            }
+        }
+
+        public void VisualizeAsSource(Vertex visualizable)
+        {
+            TryGetOrNull(VisualType.Source)?.Visualize(visualizable);
+        }
+
+        public void VisualizeAsTarget(Vertex visualizable)
+        {
+            TryGetOrNull(VisualType.Target)?.Visualize(visualizable);
+        }
+
+        public void VisualizeAsTransit(Vertex visualizable)
+        {
+            TryGetOrNull(VisualType.Transit)?.Visualize(visualizable);
         }
 
         public void VisualizeAsObstacle(Vertex vertex)
         {
-            VisualizeVertex(vertex, ObstacleVertexColor);
+            TryGetOrNull(VisualType.Obstacle)?.Visualize(vertex);
         }
 
         public void VisualizeAsRegular(Vertex vertex)
         {
-            VisualizeVertex(vertex, RegularVertexColor);
+            TryGetOrNull(VisualType.Regular)?.Visualize(vertex);
         }
 
-        private void VisualizeVertex(Vertex vertex, ConsoleColor color)
+        public void VisualizeAsVisited(Vertex vertex)
         {
-            vertex.Color = color;
-            messenger.SendData(vertex, Tokens.Range | Tokens.Path);
+            TryGetOrNull(VisualType.Visited)?.Visualize(vertex);
         }
 
-        public bool IsVisualizedAsPath(Vertex vertex) => pathVisualization?.IsVisualizedAsPath(vertex) == true;
-
-        public bool IsVisualizedAsRange(Vertex vertex) => rangeVisualization?.IsVisualizedAsRange(vertex) == true;
-
-        public void VisualizeAsTarget(Vertex vertex) => rangeVisualization?.VisualizeAsTarget(vertex);
-
-        public void VisualizeAsSource(Vertex vertex) => rangeVisualization?.VisualizeAsSource(vertex);
-
-        public void VisualizeAsTransit(Vertex vertex) => rangeVisualization?.VisualizeAsTransit(vertex);
-
-        public void VisualizeAsPath(Vertex vertex) => pathVisualization?.VisualizeAsPath(vertex);
-
-        public void VisualizeAsVisited(Vertex vertex) => pathfindingVisualization?.VisualizeAsVisited(vertex);
-
-        public void VisualizeAsEnqueued(Vertex vertex) => pathfindingVisualization?.VisualizeAsEnqueued(vertex);
-
-        public void RegisterHanlders(IMessenger messenger)
+        public void VisualizeAsEnqueued(Vertex vertex)
         {
-            messenger.RegisterData<(ConsoleColor Regular, ConsoleColor Obstacle)>(this, Tokens.Graph, ColorsRecieved);
+            TryGetOrNull(VisualType.Enqueued)?.Visualize(vertex);
         }
 
-        private void ColorsRecieved(DataMessage<(ConsoleColor Regualar, ConsoleColor Obstacle)> msg)
+        private IVisual TryGetOrNull(VisualType type)
         {
-            RegularVertexColor = msg.Value.Regualar;
-            ObstacleVertexColor = msg.Value.Obstacle;
+            return visuals.TryGetValue(type, out var visual) ? visual : null;
         }
     }
 }

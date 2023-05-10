@@ -16,7 +16,7 @@ namespace Pathfinding.AlgorithmLib.Benchmarks.Pathfinding
 {
     public abstract class AlgorithmsBenchmarks
     {
-        protected readonly IRandom random = new DummyRandom();
+        
         private readonly InclusiveValueRange<int> range = new InclusiveValueRange<int>(5, 1);
         private readonly TestGraphFactory graphFactory = new TestGraphFactory();
         private readonly INeighborhoodFactory neighbourhood = new MooreNeighborhoodFactory();
@@ -30,8 +30,9 @@ namespace Pathfinding.AlgorithmLib.Benchmarks.Pathfinding
 
         protected AlgorithmsBenchmarks()
         {
+            var random = new DummyRandom();
             graphAssemble = new GraphAssemble<TestGraph, TestVertex>(
-                vertexFactory, coordinateFactory, graphFactory);
+                    vertexFactory, coordinateFactory, graphFactory);
             costLayer = new VertexCostLayer<TestGraph, TestVertex>(costFactory, range, random);
             neighboursLayer = new NeighborhoodLayer<TestGraph, TestVertex>(neighbourhood);
             layers = new ILayer<TestGraph, TestVertex>[] { costLayer, neighboursLayer };
@@ -44,11 +45,11 @@ namespace Pathfinding.AlgorithmLib.Benchmarks.Pathfinding
             {
                 int dimension = i * 10;
                 var graph = graphAssemble.AssembleGraph(layers, i * 10, i * 10);
-                yield return GetRandomVertices(graph);
+                yield return GetRange(graph);
             }
         }
 
-        private IEnumerable<IVertex> GetRandomVertices(TestGraph graph)
+        private IEnumerable<IVertex> GetRange(TestGraph graph)
         {
             yield return graph.First();
             yield return graph.Last();

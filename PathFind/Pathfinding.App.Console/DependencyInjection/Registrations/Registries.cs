@@ -26,6 +26,8 @@ using Pathfinding.App.Console.Model.InProcessActions;
 using Pathfinding.App.Console.Model.PathfindingActions;
 using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.App.Console.Model.Visualizations;
+using Pathfinding.App.Console.Model.Visualizations.Visuals;
+using Pathfinding.App.Console.Settings;
 using Pathfinding.App.Console.ValueInput.UserInput;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Modules;
@@ -52,6 +54,8 @@ using Shared.Executable;
 using Shared.Random;
 using Shared.Random.Realizations;
 using System;
+using System.Configuration;
+using System.Linq;
 using System.Security.Cryptography;
 using static Pathfinding.App.Console.DependencyInjection.PathfindingUnits;
 using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
@@ -64,19 +68,42 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
     internal static class Registries
     {
-        public static readonly IRegistry Initial = new InitialRegistration();
-        public static readonly IRegistry UserInput = new UserInputRegistration();
-        public static readonly IRegistry GraphEditor = new GraphEditorRegistration();
-        public static readonly IRegistry ColorEditor = new ColorEditorRegistration();
-        public static readonly IRegistry TransitVertices = new TransitVerticesRegistration();
-        public static readonly IRegistry WaveAlgorithms = new WaveAlgorithmsRegistration();
-        public static readonly IRegistry GreedyAlgorithms = new GreedyAlgorithmsRegistration();
-        public static readonly IRegistry BreadthAlgorithms = new BreadthAlgorithmsRegistration();
-        public static readonly IRegistry PathfindingVisualization = new PathfindingVisualizationRegistration();
-        public static readonly IRegistry PathfindingHistory = new PathfindingHistoryRegistration();
-        public static readonly IRegistry VisualizationControl = new VisualizationControlRegistration();
-        public static readonly IRegistry PathfindingStatistics = new PathfindingStatisticsRegistration();
-        public static readonly IRegistry GraphSharing = new GraphSharingRegistration();
+        private static readonly Lazy<IRegistry[]> registries = new(GetAppliedRegistries);
+
+        public static IRegistry[] AppliedRegistries => registries.Value;
+
+        private static IRegistry[] GetAppliedRegistries()
+        {
+            var features = Features.Default;
+            var applied = features.GetType()
+                .GetProperties()
+                .Where(prop => Attribute.IsDefined(prop, typeof(ApplicationScopedSettingAttribute)))
+                .Select(prop => (Name: prop.Name, Value: (bool)prop.GetValue(features)))
+                .Where(item => item.Value)
+                .Select(item =>
+                {
+                    object result = item.Name switch
+                    {
+                        nameof(features.ApplyGraphEditor) => new GraphEditorRegistration(),
+                        nameof(features.ApplyColorEditor) => new ColorEditorRegistration(),
+                        nameof(features.ApplyTransitVertices) => new TransitVerticesRegistration(),
+                        nameof(features.ApplyPathfindingVisualization) => new PathfindingVisualizationRegistration(),
+                        nameof(features.ApplyPathfindingHistory) => new PathfindingHistoryRegistration(),
+                        nameof(features.ApplyVisualizationControl) => new VisualizationControlRegistration(),
+                        nameof(features.ApplyPathfindingStatistics) => new PathfindingStatisticsRegistration(),
+                        nameof(features.ApplyGraphSharing) => new GraphSharingRegistration(),
+                        nameof(features.ApplyWaveAlgorithms) => new WaveAlgorithmsRegistration(),
+                        nameof(features.ApplyBreadthAlgorithms) => new BreadthAlgorithmsRegistration(),
+                        nameof(features.ApplyGreedyAlgorithms) => new GreedyAlgorithmsRegistration(),
+                        _ => throw new ArgumentException($"Unknown property: {item.Name}")
+                    };
+                    return (IRegistry)result;
+                })
+                .Append(new InitialRegistration())
+                .Append(new UserInputRegistration())
+                .ToArray();
+            return applied;
+        }
 
         private sealed class InitialRegistration : IRegistry
         {
@@ -99,9 +126,14 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<GraphCreateMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
                 builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IConditionedMenuItem>(Main).As<ICanRecieveMessage>().SingleInstance();
 
-                builder.RegisterType<TotalVertexVisualization>().As<ITotalVisualization<Vertex>>().As<ICanRecieveMessage>().SingleInstance();
-                builder.RegisterType<PathVisualization>().As<IPathVisualization<Vertex>>().As<ICanRecieveMessage>().SingleInstance();
-                builder.RegisterType<RangeVisualization>().As<IRangeVisualization<Vertex>>().SingleInstance();
+                builder.RegisterType<TotalVertexVisualization>().As<ITotalVisualization<Vertex>>().SingleInstance()
+                    .ConfigurePipeline(p => p.Use(new TotalVisualizationMiddleware()));
+                builder.RegisterVisual<TargetVisual>(VisualType.Target);
+                builder.RegisterVisual<SourceVisual>(VisualType.Source);
+                builder.RegisterVisual<RegularVisual>(VisualType.Regular);
+                builder.RegisterVisual<PathVisual>(VisualType.Path);
+                builder.RegisterVisual<ObstacleVisual>(VisualType.Obstacle);
+                builder.RegisterVisual<CrossedPathVisual>(VisualType.Crossed);
 
                 builder.RegisterType<PathfindingRangeMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
                 builder.RegisterType<PathfindingAlgorithmMenuItem>().Keyed<IConditionedMenuItem>(Process)
@@ -200,10 +232,12 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             public void Configure(ContainerBuilder builder)
             {
                 builder.RegisterType<ColorsUnitMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
-                builder.RegisterType<GraphColorsMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
-                builder.RegisterType<PathColorsMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
-                builder.RegisterType<RangeColorsMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
-                builder.RegisterType<PathfindingColorsMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
+                builder.RegisterType<RegularVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
+                builder.RegisterType<PathVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
+                builder.RegisterType<SourceVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();                
+                builder.RegisterType<TargetVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
+                builder.RegisterType<CrossedPathVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
+                builder.RegisterType<ObstacleVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
             }
         }
 
@@ -217,6 +251,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<ReplaceTransitVertexAction>().Keyed<IVertexAction>(PathfindingRange).WithMetadata(PathfindingRange, ConsoleKey.P);
                 builder.RegisterType<ReplaceTransitIsolatedVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 1).SingleInstance();
                 builder.RegisterType<IncludeTransitVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 6).SingleInstance();
+                builder.RegisterType<TransitVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
+                builder.RegisterVisual<TransitVisual>(VisualType.Transit);
             }
         }
 
@@ -256,9 +292,12 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             public void Configure(ContainerBuilder builder)
             {
                 builder.RegisterType<VisualizationMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
-                builder.RegisterType<ApplyVisualizationMenuItem>().Keyed<IMenuItem>(Visual).SingleInstance();
-                builder.RegisterType<EnterAnimationDelayMenuItem>().Keyed<IConditionedMenuItem>(Visual).As<ICanRecieveMessage>().SingleInstance();
-                builder.RegisterType<PathfindingVisualization>().As<IPathfindingVisualization<Vertex>>().SingleInstance();
+                builder.RegisterType<ApplyVisualizationMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Visual).SingleInstance();
+                builder.RegisterType<EnterAnimationDelayMenuItem>().Keyed<IConditionedMenuItem>(PathfindingUnits.Visual).As<ICanRecieveMessage>().SingleInstance();
+                builder.RegisterType<VisitedVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
+                builder.RegisterType<EnqueuedVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
+                builder.RegisterVisual<VisitedVisual>(VisualType.Visited);
+                builder.RegisterVisual<EnqueuedVisual>(VisualType.Enqueued);
             }
         }
 

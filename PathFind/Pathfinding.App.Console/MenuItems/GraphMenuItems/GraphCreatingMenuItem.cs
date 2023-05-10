@@ -70,9 +70,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         protected virtual IEnumerable<ILayer<Graph2D<Vertex>, Vertex>> GetLayers()
         {
-            yield return new NeighborhoodLayer<Graph2D<Vertex>, Vertex>(neighborhoodFactory);
-            yield return new ObstacleLayer<Graph2D<Vertex>, Vertex>(random, obstaclePercent);
+            yield return new NeighborhoodLayer<Graph2D<Vertex>, Vertex>(neighborhoodFactory);            
             yield return new VertexCostLayer<Graph2D<Vertex>, Vertex>(costFactory, costRange, random);
+            yield return new ObstacleLayer<Graph2D<Vertex>, Vertex>(random, obstaclePercent);
         }
 
         public virtual void RegisterHanlders(IMessenger messenger)

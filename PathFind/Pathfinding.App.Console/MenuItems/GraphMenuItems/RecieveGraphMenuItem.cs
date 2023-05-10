@@ -36,6 +36,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         protected override Graph2D<Vertex> ImportGraph(int port)
         {
+            System.Console.Write(Languages.WaitingForConnection);
             return serializer.DeserializeFromNetwork(port);
         }
     }

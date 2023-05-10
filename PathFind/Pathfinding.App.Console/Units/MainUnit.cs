@@ -4,6 +4,7 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Interface.Comparers;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
 using Pathfinding.VisualizationLib.Core.Interface;
@@ -11,6 +12,7 @@ using Shared.Executable;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace Pathfinding.App.Console.Units
 {
