@@ -1,7 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Messages.DataMessages;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
@@ -43,12 +42,12 @@ namespace Pathfinding.App.Console.Model.Visualizations.Visuals
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterData<ConsoleColor>(this, Token, ColorChanged);
+            messenger.RegisterData<ConsoleColor>(this, Token, SetColor);
         }
 
-        private void ColorChanged(DataMessage<ConsoleColor> message)
+        private void SetColor(ConsoleColor color)
         {
-            Color = message.Value;
+            Color = color;
             vertices.ForEach(vertex => vertex.Color = Color);
         }
     }

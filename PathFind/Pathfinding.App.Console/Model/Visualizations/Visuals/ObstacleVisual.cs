@@ -6,7 +6,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.Visuals
 {
     internal sealed class ObstacleVisual : Visual
     {
-        protected override ConsoleColor Color 
+        protected override ConsoleColor Color
         {
             get => Colours.Default.ObstacleColor;
             set => Colours.Default.ObstacleColor = value;

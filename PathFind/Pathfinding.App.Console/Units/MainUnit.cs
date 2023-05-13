@@ -2,9 +2,7 @@
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
-using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Interface.Comparers;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
 using Pathfinding.VisualizationLib.Core.Interface;
@@ -12,7 +10,6 @@ using Shared.Executable;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 
 namespace Pathfinding.App.Console.Units
 {
@@ -20,7 +17,6 @@ namespace Pathfinding.App.Console.Units
 
     internal sealed class MainUnit : Unit, ICanRecieveMessage
     {
-        private readonly IMessenger messenger;
         private readonly FieldFactory fieldFactory;
         private readonly IUndo undo;
         private readonly ILog log;
@@ -32,14 +28,12 @@ namespace Pathfinding.App.Console.Units
         public MainUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
             FieldFactory fieldFactory,
-            IMessenger messenger,
             IUndo undo,
             ILog log)
             : base(menuItems, conditioned)
         {
             this.undo = undo;
             this.log = log;
-            this.messenger = messenger;
             this.fieldFactory = fieldFactory;
         }
 
@@ -64,10 +58,10 @@ namespace Pathfinding.App.Console.Units
             }
         }
 
-        private void SetGraph(DataMessage<Graph2D<Vertex>> msg)
+        private void SetGraph(Graph2D<Vertex> graph)
         {
             undo.Undo();
-            Graph = msg.Value;
+            Graph = graph;
             GraphField = fieldFactory.CreateGraphField(Graph);
             DisplayGraph();
         }

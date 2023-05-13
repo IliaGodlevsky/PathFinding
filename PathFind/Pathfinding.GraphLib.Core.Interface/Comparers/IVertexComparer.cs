@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Pathfinding.GraphLib.Core.Interface.Comparers
 {
-    public sealed class VertexCoordinateComparer 
+    public sealed class VertexCoordinateComparer
         : Singleton<VertexCoordinateComparer, IComparer<IVertex>>, IComparer<IVertex>
     {
         private VertexCoordinateComparer()

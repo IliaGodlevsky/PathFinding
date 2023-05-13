@@ -216,6 +216,9 @@
   <data name="DelayTimeInputMsg" xml:space="preserve">
     <value>Введите задержку аниманции (milliseconds): </value>
   </data>
+  <data name="Editor" xml:space="preserve">
+    <value>Редактор</value>
+  </data>
   <data name="EnqueuedColor" xml:space="preserve">
     <value>Цвет очередной вершины</value>
   </data>

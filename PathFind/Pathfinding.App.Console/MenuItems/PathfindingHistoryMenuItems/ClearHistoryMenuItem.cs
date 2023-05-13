@@ -4,7 +4,6 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
-using Pathfinding.App.Console.Messages.DataMessages;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 {
@@ -27,9 +26,9 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             messenger.Send(new ClearHistoryMessage());
         }
 
-        private void RecieveApplyInfo(DataMessage<bool> message)
+        private void SetIsApplied(bool isApplied)
         {
-            isHistoryApplied = message.Value;
+            isHistoryApplied = isApplied;
         }
 
         public override string ToString()
@@ -39,7 +38,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterData<bool>(this, Tokens.History, RecieveApplyInfo);
+            messenger.RegisterData<bool>(this, Tokens.History, SetIsApplied);
         }
     }
 }

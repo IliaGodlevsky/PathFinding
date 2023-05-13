@@ -1,5 +1,4 @@
-﻿using Shared.Extensions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -10,11 +9,11 @@ namespace Pathfinding.App.Console.ValueInput.ProgrammedInput
         protected override Queue<T> GenerateCommands()
         {
             var flags = BindingFlags.NonPublic | BindingFlags.Static;
-            return GetType()
+            var values = GetType()
                 .GetFields(flags)
                 .Where(field => field.FieldType == typeof(T))
-                .Select(field => (T)field.GetValue(null))
-                .ToQueue();
+                .Select(field => (T)field.GetValue(null));
+            return new(values);
         }
     }
 }

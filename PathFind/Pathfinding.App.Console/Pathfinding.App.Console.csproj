@@ -93,7 +93,6 @@
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Cursor.cs" />
-    <Compile Include="DependencyInjection\Registry.cs" />
     <Compile Include="EventArguments\ConsoleKeyPressedEventArgs.cs" />
     <Compile Include="EventHandlers\ConsoleKeyPressedEventHandler.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
@@ -169,11 +168,9 @@
     <Compile Include="MenuItems\UnitDisplayMenuItem.cs" />
     <Compile Include="Messages\ClearColorsMessage.cs" />
     <Compile Include="Messages\ClearHistoryMessage.cs" />
-    <Compile Include="Messages\DataMessages\AlgorithmMessage.cs" />
-    <Compile Include="Messages\DataMessages\DataMessage.cs" />
     <Compile Include="Messages\GraphChangedMessage.cs" />
     <Compile Include="DependencyInjection\Registrations\IRegistry.cs" />
-    <Compile Include="DependencyInjection\Registrations\Registries.cs" />
+    <Compile Include="DependencyInjection\Registry.cs" />
     <Compile Include="Model\AddressInput.cs" />
     <Compile Include="Model\FilePathInput.cs" />
     <Compile Include="Model\Notes\HistoryNote.cs" />

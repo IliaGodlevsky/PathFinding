@@ -6,7 +6,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.Visuals
 {
     internal sealed class TargetVisual : Visual
     {
-        protected override ConsoleColor Color 
+        protected override ConsoleColor Color
         {
             get => Colours.Default.TargetColor;
             set => Colours.Default.TargetColor = value;

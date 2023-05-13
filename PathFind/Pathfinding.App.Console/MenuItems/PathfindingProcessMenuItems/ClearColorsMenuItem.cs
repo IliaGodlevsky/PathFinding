@@ -3,7 +3,6 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
-using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
@@ -18,7 +17,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        public ClearColorsMenuItem(IMessenger messenger, 
+        public ClearColorsMenuItem(IMessenger messenger,
             IPathfindingRangeBuilder<Vertex> rangeBuilder)
         {
             this.messenger = messenger;
@@ -34,9 +33,9 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
             rangeBuilder.Range.RestoreVerticesVisualState();
         }
 
-        private void OnGraphCreated(DataMessage<Graph2D<Vertex>> msg)
+        private void SetGraph(Graph2D<Vertex> graph)
         {
-            graph = msg.Value;
+            this.graph = graph;
         }
 
         public override string ToString()
@@ -46,7 +45,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
+            messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }
     }
 }

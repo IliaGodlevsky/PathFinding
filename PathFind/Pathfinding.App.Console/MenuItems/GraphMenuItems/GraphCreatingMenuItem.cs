@@ -1,7 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Extensions;
@@ -31,10 +30,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected int length = 0;
         protected int obstaclePercent = 0;
 
-        protected GraphCreatingMenuItem(IMessenger messenger, 
+        protected GraphCreatingMenuItem(IMessenger messenger,
             GraphAssemble assemble,
             IRandom random,
-            IVertexCostFactory costFactory, 
+            IVertexCostFactory costFactory,
             INeighborhoodFactory neighborhoodFactory)
         {
             this.messenger = messenger;
@@ -44,14 +43,14 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             this.assemble = assemble;
         }
 
-        protected void OnCostRange(DataMessage<InclusiveValueRange<int>> msg) => costRange = msg.Value;
+        protected void SetCostRange(InclusiveValueRange<int> range) => costRange = range;
 
-        protected void OnObstaclePercent(DataMessage<int> msg) => obstaclePercent = msg.Value;
+        protected void SetObstaclePercent(int percent) => obstaclePercent = percent;
 
-        protected void OnGraphParams(DataMessage<(int Width, int Length)> msg)
+        protected void SetGraphParams((int Width, int Length) parametres)
         {
-            width = msg.Value.Width;
-            length = msg.Value.Length;
+            width = parametres.Width;
+            length = parametres.Length;
         }
 
         public void Execute()
@@ -59,7 +58,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             var layers = GetLayers();
             var graph = assemble.AssembleGraph(layers, width, length);
             messenger.SendData(costRange, Tokens.Screen);
-            messenger.SendData(graph, Tokens.Screen | Tokens.Main | Tokens.Common);
+            messenger.SendData(graph, Tokens.Screen, Tokens.Main, Tokens.Common);
         }
 
         public virtual bool CanBeExecuted()
@@ -70,16 +69,17 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         protected virtual IEnumerable<ILayer<Graph2D<Vertex>, Vertex>> GetLayers()
         {
-            yield return new NeighborhoodLayer<Graph2D<Vertex>, Vertex>(neighborhoodFactory);            
+            // The order of the layers shouldn't be changed
+            yield return new NeighborhoodLayer<Graph2D<Vertex>, Vertex>(neighborhoodFactory);
             yield return new VertexCostLayer<Graph2D<Vertex>, Vertex>(costFactory, costRange, random);
             yield return new ObstacleLayer<Graph2D<Vertex>, Vertex>(random, obstaclePercent);
         }
 
         public virtual void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterData<int>(this, Tokens.Graph, OnObstaclePercent);
-            messenger.RegisterData<(int Width, int Length)>(this, Tokens.Graph, OnGraphParams);
-            messenger.RegisterData<InclusiveValueRange<int>>(this, Tokens.Graph, OnCostRange);
+            messenger.RegisterData<int>(this, Tokens.Graph, SetObstaclePercent);
+            messenger.RegisterData<(int Width, int Length)>(this, Tokens.Graph, SetGraphParams);
+            messenger.RegisterData<InclusiveValueRange<int>>(this, Tokens.Graph, SetCostRange);
         }
     }
 }

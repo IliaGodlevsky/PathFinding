@@ -2,7 +2,6 @@
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
-using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
@@ -17,19 +16,19 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     {
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        public ResizeGraphMenuItem(IMessenger messenger, 
+        public ResizeGraphMenuItem(IMessenger messenger,
             IGraphAssemble<Graph2D<Vertex>, Vertex> assemble,
             IRandom random,
-            IVertexCostFactory costFactory, 
+            IVertexCostFactory costFactory,
             INeighborhoodFactory neighborhoodFactory)
             : base(messenger, assemble, random, costFactory, neighborhoodFactory)
         {
 
         }
 
-        private void OnGraphCreated(DataMessage<Graph2D<Vertex>> msg)
+        private void SetGraph(Graph2D<Vertex> graph)
         {
-            graph = msg.Value;
+            this.graph = graph;
         }
 
         public override bool CanBeExecuted()
@@ -47,7 +46,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         public override void RegisterHanlders(IMessenger messenger)
         {
             base.RegisterHanlders(messenger);
-            messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
+            messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }
 
         public override string ToString()

@@ -4,7 +4,6 @@ using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.App.Console.EventArguments;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.PathfindingActions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
@@ -40,21 +39,21 @@ namespace Pathfinding.App.Console.Units
             this.pathfindingActions = pathfindingActions;
         }
 
-        private void RecieveAnimationDelay(DataMessage<TimeSpan> message)
+        private void SetAnimationDelay(TimeSpan delay)
         {
-            animationDelay = message.Value;
+            animationDelay = delay;
         }
 
         private bool IsVisualizationApplied() => isVisualizationApplied;
 
-        private void RecieveApplyInfo(DataMessage<bool> message)
+        private void SetIsApplied(bool isApplied)
         {
-            isVisualizationApplied = message.Value;
+            isVisualizationApplied = isApplied;
         }
 
-        private void OnGraphCreated(DataMessage<Graph2D<Vertex>> msg)
+        private void SetGraph(Graph2D<Vertex> graph)
         {
-            graph = msg.Value;
+            this.graph = graph;
         }
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
@@ -81,9 +80,9 @@ namespace Pathfinding.App.Console.Units
             algorithm = PathfindingProcess.Null;
         }
 
-        private void OnPathfindingPrepare(DataMessage<PathfindingProcess> msg)
+        private void SubscribeOnVisualization(PathfindingProcess process)
         {
-            algorithm = msg.Value;
+            algorithm = process;
             algorithm.VertexVisited += OnVertexVisited;
             algorithm.VertexEnqueued += OnVertexEnqueued;
             algorithm.Started += OnAlgorithmStarted;
@@ -102,10 +101,10 @@ namespace Pathfinding.App.Console.Units
         public void RegisterHanlders(IMessenger messenger)
         {
             var token = ConditionToken.Create(IsVisualizationApplied, Tokens.Visualization);
-            messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
-            messenger.RegisterData<TimeSpan>(this, token, RecieveAnimationDelay);
-            messenger.RegisterData<bool>(this, Tokens.Visualization, RecieveApplyInfo);
-            messenger.RegisterData<PathfindingProcess>(this, token, OnPathfindingPrepare);
+            messenger.RegisterGraph(this, Tokens.Common, SetGraph);
+            messenger.RegisterData<TimeSpan>(this, token, SetAnimationDelay);
+            messenger.RegisterData<bool>(this, Tokens.Visualization, SetIsApplied);
+            messenger.RegisterData<PathfindingProcess>(this, token, SubscribeOnVisualization);
         }
     }
 }

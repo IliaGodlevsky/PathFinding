@@ -6,10 +6,10 @@ namespace Pathfinding.App.Console.Model.Visualizations.Visuals
 {
     internal sealed class SourceVisual : Visual
     {
-        protected override ConsoleColor Color 
+        protected override ConsoleColor Color
         {
             get => Colours.Default.SourceColor;
-            set => Colours.Default.SourceColor = value; 
+            set => Colours.Default.SourceColor = value;
         }
 
         protected override Tokens Token => Tokens.Source;

@@ -1,6 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
-using Pathfinding.App.Console.Messages.DataMessages;
+using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Coordinates;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
@@ -11,7 +11,7 @@ using System.Drawing;
 
 namespace Pathfinding.App.Console
 {
-    internal sealed class Screen
+    internal sealed class Screen : ICanRecieveMessage
     {
         public const int HeightOfAbscissaView = 2;
         public const int HeightOfGraphParametresView = 1;
@@ -19,8 +19,6 @@ namespace Pathfinding.App.Console
         public static readonly int WidthOfOrdinateView
             = (Constants.GraphLengthValueRange.UpperValueOfRange - 1).GetDigitsNumber() + 1;
         public static readonly int YCoordinatePadding = WidthOfOrdinateView - 1;
-
-        private readonly IMessenger messenger;
 
         private static int CurrentMaxValueOfRange;
 
@@ -39,12 +37,11 @@ namespace Pathfinding.App.Console
             GraphFieldPosition = new(x, y);
         }
 
-        public Screen(IMessenger messenger)
+        public void RegisterHanlders(IMessenger messenger)
         {
-            this.messenger = messenger;
-            messenger.RegisterData<InclusiveValueRange<int>>(this, Tokens.Screen, OnCostRangeChanged);
-            messenger.RegisterData<string>(this, Tokens.Screen, OnStatisticsUpdated);
-            messenger.RegisterGraph(this, Tokens.Screen, OnNewGraphCreated);
+            messenger.RegisterData<InclusiveValueRange<int>>(this, Tokens.Screen, SetRange);
+            messenger.RegisterData<string>(this, Tokens.Screen, ShowStatistics);
+            messenger.RegisterGraph(this, Tokens.Screen, SetGraph);
         }
 
         public static void SetCursorPositionUnderMenu(int menuOffset = 0)
@@ -52,18 +49,18 @@ namespace Pathfinding.App.Console
             System.Console.SetCursorPosition(StatisticsPosition.X, StatisticsPosition.Y + menuOffset);
         }
 
-        private static void OnNewGraphCreated(DataMessage<Graph2D<Vertex>> message)
+        private static void SetGraph(Graph2D<Vertex> graph)
         {
-            Graph = message.Value;
-            int pathFindingStatisticsOffset = message.Value.Length + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
+            Graph = graph;
+            int pathFindingStatisticsOffset = Graph.Length + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
             StatisticsPosition = new(0, pathFindingStatisticsOffset);
             RecalculateVerticesConsolePosition();
         }
 
-        private static void OnCostRangeChanged(DataMessage<InclusiveValueRange<int>> message)
+        private static void SetRange(InclusiveValueRange<int> range)
         {
-            int upperValueRange = message.Value.UpperValueOfRange;
-            int lowerValueRange = message.Value.LowerValueOfRange;
+            int upperValueRange = range.UpperValueOfRange;
+            int lowerValueRange = range.LowerValueOfRange;
             CurrentMaxValueOfRange = Math.Max(Math.Abs(upperValueRange), Math.Abs(lowerValueRange));
             RecalculateVerticesConsolePosition();
         }
@@ -74,10 +71,10 @@ namespace Pathfinding.App.Console
             Graph.ForEach(RecalculateConsolePosition);
         }
 
-        private static void OnStatisticsUpdated(DataMessage<string> msg)
+        private static void ShowStatistics(string statistics)
         {
             Cursor.SetPosition(StatisticsPosition);
-            System.Console.Write(msg.Value.PadRight(System.Console.BufferWidth));
+            System.Console.Write(statistics.PadRight(System.Console.BufferWidth));
         }
 
         private static void RecalculateConsolePosition(Vertex vertex)

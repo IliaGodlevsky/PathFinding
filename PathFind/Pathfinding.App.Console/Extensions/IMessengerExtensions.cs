@@ -1,61 +1,55 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Pathfinding.App.Console.Extensions
 {
     internal static class IMessengerExtensions
     {
-        private static IReadOnlyList<Tokens> Tokens { get; }
-
-        static IMessengerExtensions()
+        public static void SendData<T>(this IMessenger messenger,
+            T data, params Tokens[] tokens)
         {
-            Tokens = Enum.GetValues(typeof(Tokens)).Cast<Tokens>().ToList().AsReadOnly();
+            messenger.SendMessage(data, tokens);
         }
 
-        public static void SendData<TData>(this IMessenger messenger,
-            TData data, Tokens token)
+        public static void SendData<T>(this IMessenger messenger,
+            PathfindingProcess algorithm, T data, params Tokens[] tokens)
         {
-            messenger.SendMessage(new DataMessage<TData>(data), token);
+            messenger.SendMessage((algorithm, data), tokens);
         }
 
-        public static void SendData<TData>(this IMessenger messenger,
-            PathfindingProcess algorithm, TData data, Tokens token)
+        public static void RegisterData<T>(this IMessenger messenger, object recipient,
+            object token, Action<T> action)
         {
-            messenger.SendMessage(new AlgorithmMessage<TData>(algorithm, data), token);
+            messenger.Register<T>(recipient, token, action);
         }
 
-        public static void RegisterData<TData>(this IMessenger messenger, object recipient,
-            object token, Action<DataMessage<TData>> action)
+        public static void RegisterData<TFirst, TSecond>(this IMessenger messenger, object recipient,
+            object token, Action<(TFirst, TSecond)> action)
         {
-            messenger.Register<DataMessage<TData>>(recipient, token, action);
+            messenger.RegisterData<(TFirst, TSecond)>(recipient, token, action);
         }
 
         public static void RegisterGraph(this IMessenger messenger, object recipient,
-            Tokens token, Action<DataMessage<Graph2D<Vertex>>> action)
+            Tokens token, Action<Graph2D<Vertex>> action)
         {
-            messenger.RegisterData<Graph2D<Vertex>>(recipient, token, action);
+            messenger.RegisterData(recipient, token, action);
         }
 
-        public static void RegisterAlgorithmData<TData>(this IMessenger messenger, object recipient,
-            object token, Action<AlgorithmMessage<TData>> action)
+        public static void RegisterAlgorithmData<T>(this IMessenger messenger, object recipient,
+            object token, Action<(PathfindingProcess, T)> action)
         {
-            messenger.Register<AlgorithmMessage<TData>>(recipient, token, action);
+            messenger.Register<(PathfindingProcess, T)>(recipient, token, action);
         }
 
-        private static void SendMessage<TMessage>(this IMessenger messenger, TMessage msg, Tokens token)
+        private static void SendMessage<TMessage>(this IMessenger messenger, 
+            TMessage msg, params Tokens[] tokens)
         {
-            for (int i = 0; i < Tokens.Count; i++)
+            for (int i = 0; i < tokens.Length; i++)
             {
-                if ((token & Tokens[i]) != 0)
-                {
-                    messenger.Send(msg, Tokens[i]);
-                }
+                messenger.Send(msg, tokens[i]);
             }
         }
     }

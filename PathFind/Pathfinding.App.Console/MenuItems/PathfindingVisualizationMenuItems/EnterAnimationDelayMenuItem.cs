@@ -3,7 +3,6 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
-using Pathfinding.App.Console.Messages.DataMessages;
 using Shared.Primitives.ValueRange;
 using System;
 
@@ -37,9 +36,9 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
 
         public bool CanBeExecuted() => IsVisualizationApplied;
 
-        private void OnVisualizationApplied(DataMessage<bool> msg)
+        private void SetApplied(bool isApplied)
         {
-            IsVisualizationApplied = msg.Value;
+            IsVisualizationApplied = isApplied;
         }
 
         public override string ToString()
@@ -49,7 +48,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterData<bool>(this, Tokens.Visualization, OnVisualizationApplied);
+            messenger.RegisterData<bool>(this, Tokens.Visualization, SetApplied);
         }
     }
 }
