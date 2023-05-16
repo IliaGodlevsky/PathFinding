@@ -16,16 +16,14 @@ namespace Pathfinding.App.Console.MenuItems
 
     internal abstract class SwitchVerticesMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
-        protected readonly IMessenger messenger;
         protected readonly IInput<ConsoleKey> keyInput;
         protected readonly VertexActions actions;
 
         protected Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        protected SwitchVerticesMenuItem(IMessenger messenger,
-            VertexActions actions, IInput<ConsoleKey> keyInput)
+        protected SwitchVerticesMenuItem(VertexActions actions,
+            IInput<ConsoleKey> keyInput)
         {
-            this.messenger = messenger;
             this.keyInput = keyInput;
             this.actions = actions;
         }

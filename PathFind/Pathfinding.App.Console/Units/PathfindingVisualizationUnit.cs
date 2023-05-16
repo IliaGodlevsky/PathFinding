@@ -5,7 +5,6 @@ using Pathfinding.App.Console.EventArguments;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
-using Pathfinding.App.Console.Model.PathfindingActions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Extensions;
 using Shared.Process.EventArguments;
@@ -17,7 +16,6 @@ namespace Pathfinding.App.Console.Units
 {
     internal sealed class PathfindingVisualizationUnit : Unit, ICanRecieveMessage
     {
-        private readonly IMessenger messenger;
         private readonly ConsoleKeystrokesHook keyStrokeHook = new();
         private readonly IReadOnlyDictionary<ConsoleKey, IPathfindingAction> pathfindingActions;
         private readonly IReadOnlyDictionary<ConsoleKey, IAnimationSpeedAction> animationActions;
@@ -30,11 +28,9 @@ namespace Pathfinding.App.Console.Units
         public PathfindingVisualizationUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
             IReadOnlyDictionary<ConsoleKey, IPathfindingAction> pathfindingActions,
-            IReadOnlyDictionary<ConsoleKey, IAnimationSpeedAction> animationActions,
-            IMessenger messenger)
+            IReadOnlyDictionary<ConsoleKey, IAnimationSpeedAction> animationActions)
             : base(menuItems, conditioned)
         {
-            this.messenger = messenger;
             this.animationActions = animationActions;
             this.pathfindingActions = pathfindingActions;
         }
@@ -92,10 +88,7 @@ namespace Pathfinding.App.Console.Units
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
         {
             pathfindingActions.GetOrDefault(e.PressedKey)?.Do(algorithm);
-
-            animationDelay = animationActions
-                .GetOrDefault(e.PressedKey, NullAnimationAction.Instance)
-                .Do(animationDelay);
+            animationDelay = animationActions.GetOrDefault(e.PressedKey)?.Do(animationDelay) ?? animationDelay;
         }
 
         public void RegisterHanlders(IMessenger messenger)
