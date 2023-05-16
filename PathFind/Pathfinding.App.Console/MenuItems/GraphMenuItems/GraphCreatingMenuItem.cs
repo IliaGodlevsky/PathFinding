@@ -57,8 +57,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             var layers = GetLayers();
             var graph = assemble.AssembleGraph(layers, width, length);
-            messenger.SendData(costRange, Tokens.Screen);
-            messenger.SendData(graph, Tokens.Screen, Tokens.Main, Tokens.Common);
+            messenger.SendData(costRange, Tokens.AppLayout);
+            messenger.SendData(graph, Tokens.AppLayout, Tokens.Main, Tokens.Common);
         }
 
         public virtual bool CanBeExecuted()

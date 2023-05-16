@@ -62,16 +62,16 @@ namespace Pathfinding.App.Console.Units
                     note = GetStatistics(value.Path, value.Process);
                 }
                 visited = 0;
-                messenger.SendData(note.ToString(), Tokens.Screen);
+                messenger.SendData(note.ToString(), Tokens.AppLayout);
             }
-            messenger.SendData(value.Process, note, Tokens.History);
+            messenger.SendAlgorithmData(value.Process, note, Tokens.History);
         }
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
         {
             visited++;
             var statistics = GetStatistics((PathfindingProcess)sender);
-            messenger.SendData(statistics.ToString(), Tokens.Screen);
+            messenger.SendData(statistics.ToString(), Tokens.AppLayout);
         }
 
         private StatisticsNote GetStatistics(PathfindingProcess algorithm)

@@ -2,7 +2,7 @@
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 
-namespace Pathfinding.App.Console.Model
+namespace Pathfinding.App.Console.ValueInput
 {
     internal sealed class AddressInput : IInput<(string Host, int Port)>
     {

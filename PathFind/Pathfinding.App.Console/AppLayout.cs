@@ -11,42 +11,33 @@ using System.Drawing;
 
 namespace Pathfinding.App.Console
 {
-    internal sealed class Screen : ICanRecieveMessage
+    internal sealed class AppLayout : ICanRecieveMessage
     {
         public const int HeightOfAbscissaView = 2;
         public const int HeightOfGraphParametresView = 1;
 
-        public static readonly int WidthOfOrdinateView
-            = (Constants.GraphLengthValueRange.UpperValueOfRange - 1).GetDigitsNumber() + 1;
+        public static readonly int WidthOfOrdinateView = (Constants.GraphLengthValueRange.UpperValueOfRange - 1).GetDigitsNumber() + 1;
         public static readonly int YCoordinatePadding = WidthOfOrdinateView - 1;
 
+        private static readonly Point GraphFieldPosition = new(WidthOfOrdinateView, HeightOfAbscissaView + HeightOfGraphParametresView);
+
         private static int CurrentMaxValueOfRange;
+        private static Point StatisticsPosition = Point.Empty;
 
         private static Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
 
         public static int LateralDistanceBetweenVertices { get; private set; }
 
-        public static Point GraphFieldPosition { get; }
-
-        public static Point StatisticsPosition { get; private set; } = Point.Empty;
-
-        static Screen()
-        {
-            int x = WidthOfOrdinateView;
-            int y = HeightOfAbscissaView + HeightOfGraphParametresView;
-            GraphFieldPosition = new(x, y);
-        }
-
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterData<InclusiveValueRange<int>>(this, Tokens.Screen, SetRange);
-            messenger.RegisterData<string>(this, Tokens.Screen, ShowStatistics);
-            messenger.RegisterGraph(this, Tokens.Screen, SetGraph);
+            messenger.RegisterData<InclusiveValueRange<int>>(this, Tokens.AppLayout, SetRange);
+            messenger.RegisterData<string>(this, Tokens.AppLayout, ShowStatistics);
+            messenger.RegisterGraph(this, Tokens.AppLayout, SetGraph);
         }
 
-        public static void SetCursorPositionUnderMenu(int menuOffset = 0)
+        public static void SetCursorPositionUnderGraphField()
         {
-            System.Console.SetCursorPosition(StatisticsPosition.X, StatisticsPosition.Y + menuOffset);
+            System.Console.SetCursorPosition(StatisticsPosition.X, StatisticsPosition.Y + 1);
         }
 
         private static void SetGraph(Graph2D<Vertex> graph)
@@ -65,31 +56,25 @@ namespace Pathfinding.App.Console
             RecalculateVerticesConsolePosition();
         }
 
-        private static void RecalculateVerticesConsolePosition()
-        {
-            LateralDistanceBetweenVertices = CalculateLateralDistanceBetweenVertices();
-            Graph.ForEach(RecalculateConsolePosition);
-        }
-
         private static void ShowStatistics(string statistics)
         {
             Cursor.SetPosition(StatisticsPosition);
             System.Console.Write(statistics.PadRight(System.Console.BufferWidth));
         }
 
-        private static void RecalculateConsolePosition(Vertex vertex)
-        {
-            var point = (Coordinate2D)vertex.Position;
-            int left = GraphFieldPosition.X + point.X * LateralDistanceBetweenVertices;
-            int top = GraphFieldPosition.Y + point.Y;
-            vertex.ConsolePosition = new(left, top);
-        }
-
-        private static int CalculateLateralDistanceBetweenVertices()
+        private static void RecalculateVerticesConsolePosition()
         {
             int costWidth = CurrentMaxValueOfRange.GetDigitsNumber();
-            int width = (Constants.GraphWidthValueRange.UpperValueOfRange - 1).GetDigitsNumber();
-            return costWidth >= width ? costWidth + 2 : width + width - costWidth;
+            int costUpperValue = Constants.GraphWidthValueRange.UpperValueOfRange - 1;
+            int width = costUpperValue.GetDigitsNumber();
+            LateralDistanceBetweenVertices = costWidth >= width ? costWidth + 2 : width * 2 - costWidth;
+            Graph.ForEach(vertex =>
+            {
+                var point = (Coordinate2D)vertex.Position;
+                int left = GraphFieldPosition.X + point.X * LateralDistanceBetweenVertices;
+                int top = GraphFieldPosition.Y + point.Y;
+                vertex.ConsolePosition = new(left, top);
+            });
         }
     }
 }

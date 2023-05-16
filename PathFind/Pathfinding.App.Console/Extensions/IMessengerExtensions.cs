@@ -14,7 +14,7 @@ namespace Pathfinding.App.Console.Extensions
             messenger.SendMessage(data, tokens);
         }
 
-        public static void SendData<T>(this IMessenger messenger,
+        public static void SendAlgorithmData<T>(this IMessenger messenger,
             PathfindingProcess algorithm, T data, params Tokens[] tokens)
         {
             messenger.SendMessage((algorithm, data), tokens);
@@ -24,12 +24,6 @@ namespace Pathfinding.App.Console.Extensions
             object token, Action<T> action)
         {
             messenger.Register<T>(recipient, token, action);
-        }
-
-        public static void RegisterData<TFirst, TSecond>(this IMessenger messenger, object recipient,
-            object token, Action<(TFirst, TSecond)> action)
-        {
-            messenger.RegisterData<(TFirst, TSecond)>(recipient, token, action);
         }
 
         public static void RegisterGraph(this IMessenger messenger, object recipient,
@@ -44,7 +38,7 @@ namespace Pathfinding.App.Console.Extensions
             messenger.Register<(PathfindingProcess, T)>(recipient, token, action);
         }
 
-        private static void SendMessage<TMessage>(this IMessenger messenger, 
+        private static void SendMessage<TMessage>(this IMessenger messenger,
             TMessage msg, params Tokens[] tokens)
         {
             for (int i = 0; i < tokens.Length; i++)

@@ -55,7 +55,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
                         using (Cursor.HideCursor())
                         {
                             messenger.SendData(page.Key, Tokens.History);
-                            messenger.SendData(page.Value.ToString(), Tokens.Screen);
+                            messenger.SendData(page.Value.ToString(), Tokens.AppLayout);
                         }
                     }
                     index = GetAlgorithmIndex(inputMessage);

@@ -5,7 +5,7 @@
         Main = 1,
         Path,
         Graph,
-        Screen,
+        AppLayout,
         Common,
         History,
         Target,

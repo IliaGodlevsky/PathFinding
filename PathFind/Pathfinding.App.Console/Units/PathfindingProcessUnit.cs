@@ -65,7 +65,7 @@ namespace Pathfinding.App.Console.Units
         {
             graph.RestoreVerticesVisualState();
             rangeBuilder.Range.RestoreVerticesVisualState();
-            messenger.SendData(string.Empty, Tokens.Screen);
+            messenger.SendData(string.Empty, Tokens.AppLayout);
         }
 
         private void FindPath(PathfindingProcess algorithm)
@@ -73,7 +73,7 @@ namespace Pathfinding.App.Console.Units
             var path = NullGraphPath.Interface;
             void Summarize()
             {
-                messenger.SendData(algorithm, path, Tokens.History, Tokens.Statistics);
+                messenger.SendAlgorithmData(algorithm, path, Tokens.History, Tokens.Statistics);
             }
             using (Disposable.Use(Summarize))
             {
@@ -92,10 +92,10 @@ namespace Pathfinding.App.Console.Units
 
         private void PrepareForPathfinding(PathfindingProcess algorithm)
         {
-            messenger.SendData(algorithm.ToString(), Tokens.Screen);
-            messenger.SendData(algorithm, Tokens.Visualization, 
+            messenger.SendData(algorithm.ToString(), Tokens.AppLayout);
+            messenger.SendData(algorithm, Tokens.Visualization,
                 Tokens.History, Tokens.Statistics);
-            messenger.SendData(algorithm, rangeBuilder.Range, Tokens.History);
+            messenger.SendAlgorithmData(algorithm, rangeBuilder.Range, Tokens.History);
         }
 
         public void RegisterHanlders(IMessenger messenger)

@@ -29,7 +29,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
         {
             graph.RestoreVerticesVisualState();
             undo.Undo();
-            messenger.SendData(string.Empty, Tokens.Screen);
+            messenger.SendData(string.Empty, Tokens.AppLayout);
         }
 
         private void SetGraph(Graph2D<Vertex> graph)

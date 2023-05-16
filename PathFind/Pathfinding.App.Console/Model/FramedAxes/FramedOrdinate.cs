@@ -13,12 +13,12 @@ namespace Pathfinding.App.Console.Model.FramedAxes
             : base()
         {
             this.graphLength = graphLength;
-            yCoordinatePadding = Screen.YCoordinatePadding;
+            yCoordinatePadding = AppLayout.YCoordinatePadding;
         }
 
         public override void Display()
         {
-            System.Console.SetCursorPosition(0, Screen.HeightOfAbscissaView + 1);
+            System.Console.SetCursorPosition(0, AppLayout.HeightOfAbscissaView + 1);
             System.Console.Write(GetFramedAxis());
         }
 

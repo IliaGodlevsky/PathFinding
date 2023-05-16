@@ -28,6 +28,7 @@ using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.App.Console.Model.Visualizations;
 using Pathfinding.App.Console.Model.Visualizations.Visuals;
 using Pathfinding.App.Console.Settings;
+using Pathfinding.App.Console.ValueInput;
 using Pathfinding.App.Console.ValueInput.UserInput;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Modules;
@@ -68,6 +69,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
     internal static class Registry
     {
+        private static readonly Features features = Features.Default;
         private static readonly Lazy<IRegistry[]> registries = new(GetAppliedRegistries);
 
         private static IRegistry[] AppliedRegistries => registries.Value;
@@ -84,35 +86,36 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
         private static IRegistry[] GetAppliedRegistries()
         {
-            var features = Features.Default;
             var applied = features.GetType()
                 .GetProperties()
                 .Where(prop => Attribute.IsDefined(prop, typeof(ApplicationScopedSettingAttribute)))
                 .Select(prop => (Name: prop.Name, Value: (bool)prop.GetValue(features)))
                 .Where(item => item.Value)
-                .Select(item =>
-                {
-                    object result = item.Name switch
-                    {
-                        nameof(features.ApplyGraphEditor) => new GraphEditorRegistration(),
-                        nameof(features.ApplyColorEditor) => new ColorEditorRegistration(),
-                        nameof(features.ApplyTransitVertices) => new TransitVerticesRegistration(),
-                        nameof(features.ApplyPathfindingVisualization) => new PathfindingVisualizationRegistration(),
-                        nameof(features.ApplyPathfindingHistory) => new PathfindingHistoryRegistration(),
-                        nameof(features.ApplyVisualizationControl) => new VisualizationControlRegistration(),
-                        nameof(features.ApplyPathfindingStatistics) => new PathfindingStatisticsRegistration(),
-                        nameof(features.ApplyGraphSharing) => new GraphSharingRegistration(),
-                        nameof(features.ApplyWaveAlgorithms) => new WaveAlgorithmsRegistration(),
-                        nameof(features.ApplyBreadthAlgorithms) => new BreadthAlgorithmsRegistration(),
-                        nameof(features.ApplyGreedyAlgorithms) => new GreedyAlgorithmsRegistration(),
-                        _ => throw new ArgumentException($"Unknown property: {item.Name}")
-                    };
-                    return (IRegistry)result;
-                })
+                .Select(item => GetRegistry(item.Name))
+                .OfType<IRegistry>()
                 .Append(new InitialRegistration())
                 .Append(new UserInputRegistration())
                 .ToArray();
             return applied;
+        }
+
+        private static object GetRegistry(string name)
+        {
+            return name switch
+            {
+                nameof(features.ApplyGraphEditor) => new GraphEditorRegistration(),
+                nameof(features.ApplyColorEditor) => new ColorEditorRegistration(),
+                nameof(features.ApplyTransitVertices) => new TransitVerticesRegistration(),
+                nameof(features.ApplyPathfindingVisualization) => new PathfindingVisualizationRegistration(),
+                nameof(features.ApplyPathfindingHistory) => new PathfindingHistoryRegistration(),
+                nameof(features.ApplyVisualizationControl) => new VisualizationControlRegistration(),
+                nameof(features.ApplyPathfindingStatistics) => new PathfindingStatisticsRegistration(),
+                nameof(features.ApplyGraphSharing) => new GraphSharingRegistration(),
+                nameof(features.ApplyWaveAlgorithms) => new WaveAlgorithmsRegistration(),
+                nameof(features.ApplyBreadthAlgorithms) => new BreadthAlgorithmsRegistration(),
+                nameof(features.ApplyGreedyAlgorithms) => new GreedyAlgorithmsRegistration(),
+                _ => new()
+            };
         }
 
         private sealed class InitialRegistration : IRegistry
@@ -120,7 +123,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             public void Configure(ContainerBuilder builder)
             {
                 builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance().RegisterRecievers();
-                builder.RegisterType<Screen>().AsSelf().As<ICanRecieveMessage>().SingleInstance().AutoActivate();
+
+                builder.RegisterType<AppLayout>().As<ICanRecieveMessage>().SingleInstance().AutoActivate();
 
                 builder.RegisterTypes(AllUnits).SingleInstance().WithMetadata(UnitTypeKey, type => type).AsSelf()
                     .AsImplementedInterfaces().AutoActivate().ConfigurePipeline(p => p.Use(new UnitResolveMiddleware(UnitTypeKey)));

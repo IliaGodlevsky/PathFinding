@@ -28,7 +28,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 
         public void Execute()
         {
-            messenger.SendData(string.Empty, Tokens.Screen);
+            messenger.SendData(string.Empty, Tokens.AppLayout);
             graph.RestoreVerticesVisualState();
             rangeBuilder.Range.RestoreVerticesVisualState();
         }
