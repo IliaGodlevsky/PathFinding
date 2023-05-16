@@ -11,6 +11,7 @@ using Pathfinding.AlgorithmLib.History;
 using Pathfinding.AlgorithmLib.History.Interface;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Loggers;
 using Pathfinding.App.Console.MenuItems;
 using Pathfinding.App.Console.MenuItems.ColorMenuItems;
 using Pathfinding.App.Console.MenuItems.EditorMenuItems;

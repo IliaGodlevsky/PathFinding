@@ -186,8 +186,8 @@
     <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\ConditionToken.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
-    <Compile Include="Model\ConsoleLog.cs" />
-    <Compile Include="Model\DebugLog.cs" />
+    <Compile Include="Loggers\ConsoleLog.cs" />
+    <Compile Include="Loggers\DebugLog.cs" />
     <Compile Include="Model\FramedAxes\FramedAbscissa.cs" />
     <Compile Include="Model\FramedAxes\FramedAxis.cs" />
     <Compile Include="Model\FramedAxes\FramedOrdinate.cs" />

@@ -3,7 +3,7 @@ using System;
 
 using Log = System.Diagnostics.Debug;
 
-namespace Pathfinding.App.Console.Model
+namespace Pathfinding.App.Console.Loggers
 {
     internal sealed class DebugLog : ILog
     {

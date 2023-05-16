@@ -1,7 +1,7 @@
 ﻿using Pathfinding.Logging.Interface;
 using System;
 
-namespace Pathfinding.App.Console.Model
+namespace Pathfinding.App.Console.Loggers
 {
     internal sealed class ConsoleLog : ILog
     {
