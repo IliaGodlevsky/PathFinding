@@ -59,6 +59,7 @@
     <Compile Include="MenuItems\ColorMenuItems\VisitedVertexColorMenuItem.cs" />
     <Compile Include="Model\Visualizations\Visuals\CrossedPathVisual.cs" />
     <Compile Include="Model\Visualizations\Visuals\EnqueuedVisual.cs" />
+    <Compile Include="Model\Visualizations\Visuals\NullVisual.cs" />
     <Compile Include="Model\Visualizations\Visuals\ObstacleVisual.cs" />
     <Compile Include="Model\Visualizations\Visuals\PathVisual.cs" />
     <Compile Include="Model\Visualizations\Visuals\RegularVisual.cs" />
