@@ -216,6 +216,9 @@
   <data name="DelayTimeInputMsg" xml:space="preserve">
     <value>Input animation speed delay time (milliseconds): </value>
   </data>
+  <data name="Editor" xml:space="preserve">
+    <value>Editor</value>
+  </data>
   <data name="EnqueuedColor" xml:space="preserve">
     <value>Enqueued color</value>
   </data>

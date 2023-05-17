@@ -11,7 +11,7 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
 {
     internal abstract class ColorsMenuItem : IMenuItem
     {
-        protected readonly IMessenger messenger;
+        private readonly IMessenger messenger;
         private readonly IInput<int> intInput;
         private readonly IReadOnlyList<ConsoleColor> allColors;
         private readonly MenuList allColorsMenuList;
@@ -26,7 +26,8 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
                 .Cast<ConsoleColor>()
                 .ToArray();
             allColorsMenuList = allColors
-                .Select(GetName)
+                .Select(color => color.ToString())
+                .Select(Languages.ResourceManager.GetString)
                 .Append(Languages.Quit)
                 .CreateMenuList(columnsNumber: 4);
         }
@@ -41,41 +42,11 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
             }
             if (index != allColors.Count)
             {
-                var color = allColors[index];
                 using (Cursor.HideCursor())
                 {
-                    SendColorsMessage(color);
+                    messenger.SendData(allColors[index], Token);
                 }
             }
-        }
-
-        protected virtual void SendColorsMessage(ConsoleColor color)
-        {
-            messenger.SendData(color, Token);
-        }
-
-        private static string GetName(ConsoleColor color)
-        {
-            return color switch
-            {
-                ConsoleColor.Black => Languages.Black,
-                ConsoleColor.White => Languages.White,
-                ConsoleColor.Red => Languages.Red,
-                ConsoleColor.Green => Languages.Green,
-                ConsoleColor.Blue => Languages.Blue,
-                ConsoleColor.Yellow => Languages.Yellow,
-                ConsoleColor.DarkGreen => Languages.DarkGreen,
-                ConsoleColor.DarkGray => Languages.DarkGray,
-                ConsoleColor.Gray => Languages.Gray,
-                ConsoleColor.DarkCyan => Languages.DarkCyan,
-                ConsoleColor.DarkRed => Languages.DarkRed,
-                ConsoleColor.Cyan => Languages.Cyan,
-                ConsoleColor.Magenta => Languages.Magenta,
-                ConsoleColor.DarkMagenta => Languages.DarkMagenta,
-                ConsoleColor.DarkBlue => Languages.DarkBlue,
-                ConsoleColor.DarkYellow => Languages.DarkYellow,
-                _ => throw new ArgumentOutOfRangeException(nameof(color))
-            };
         }
     }
 }

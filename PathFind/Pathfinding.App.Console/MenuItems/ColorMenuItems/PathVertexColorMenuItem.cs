@@ -10,7 +10,7 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
     {
         protected override Tokens Token => Tokens.Path;
 
-        public PathVertexColorMenuItem(IMessenger messenger, IInput<int> intInput) 
+        public PathVertexColorMenuItem(IMessenger messenger, IInput<int> intInput)
             : base(messenger, intInput)
         {
         }

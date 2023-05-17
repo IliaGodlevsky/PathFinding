@@ -59,11 +59,5 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<TVisual>().As<IVisual>().As<ICanRecieveMessage>()
                 .WithMetadata(RegistrationConstants.VisualTypeKey, type).SingleInstance();
         }
-
-        public static void Run<TMenuItem>(this ILifetimeScope scope)
-            where TMenuItem : IMenuItem
-        {
-            scope.Resolve<TMenuItem>().Execute();
-        }
     }
 }

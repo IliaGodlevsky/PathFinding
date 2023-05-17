@@ -12,7 +12,7 @@ namespace Pathfinding.App.Console.Model.FramedAxes
         protected const char Endl = '\n';
         protected const string NewLine = "\n";
 
-        private static readonly string LargeSpace = new string(Space, Screen.WidthOfOrdinateView);
+        private static readonly string LargeSpace = new string(Space, AppLayout.WidthOfOrdinateView);
 
         private readonly int graphWidth;
 
@@ -23,7 +23,7 @@ namespace Pathfinding.App.Console.Model.FramedAxes
 
         public override void Display()
         {
-            System.Console.SetCursorPosition(0, Screen.HeightOfGraphParametresView);
+            System.Console.SetCursorPosition(0, AppLayout.HeightOfGraphParametresView);
             System.Console.Write(GetFramedAxis());
         }
 

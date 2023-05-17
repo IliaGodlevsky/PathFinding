@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\TotalVisualizationMiddleware.cs" />
+    <Compile Include="Interface\IConsoleElement.cs" />
     <Compile Include="Interface\IVisual.cs" />
     <Compile Include="MenuItems\ColorMenuItems\CrossedPathVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\EnqueuedVertexColorMenuItem.cs" />
@@ -94,7 +95,6 @@
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Cursor.cs" />
-    <Compile Include="DependencyInjection\Registry.cs" />
     <Compile Include="EventArguments\ConsoleKeyPressedEventArgs.cs" />
     <Compile Include="EventHandlers\ConsoleKeyPressedEventHandler.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
@@ -170,13 +170,11 @@
     <Compile Include="MenuItems\UnitDisplayMenuItem.cs" />
     <Compile Include="Messages\ClearColorsMessage.cs" />
     <Compile Include="Messages\ClearHistoryMessage.cs" />
-    <Compile Include="Messages\DataMessages\AlgorithmMessage.cs" />
-    <Compile Include="Messages\DataMessages\DataMessage.cs" />
     <Compile Include="Messages\GraphChangedMessage.cs" />
     <Compile Include="DependencyInjection\Registrations\IRegistry.cs" />
-    <Compile Include="DependencyInjection\Registrations\Registries.cs" />
-    <Compile Include="Model\AddressInput.cs" />
-    <Compile Include="Model\FilePathInput.cs" />
+    <Compile Include="DependencyInjection\Registry.cs" />
+    <Compile Include="ValueInput\AddressInput.cs" />
+    <Compile Include="ValueInput\FilePathInput.cs" />
     <Compile Include="Model\Notes\HistoryNote.cs" />
     <Compile Include="Model\Notes\StatisticsNote.cs" />
     <Compile Include="Settings\Colours.Designer.cs">
@@ -189,8 +187,8 @@
     <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\ConditionToken.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
-    <Compile Include="Model\ConsoleLog.cs" />
-    <Compile Include="Model\DebugLog.cs" />
+    <Compile Include="Loggers\ConsoleLog.cs" />
+    <Compile Include="Loggers\DebugLog.cs" />
     <Compile Include="Model\FramedAxes\FramedAbscissa.cs" />
     <Compile Include="Model\FramedAxes\FramedAxis.cs" />
     <Compile Include="Model\FramedAxes\FramedOrdinate.cs" />
@@ -230,7 +228,7 @@
     <Compile Include="Model\Visualizations\TotalVertexVisualization.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Screen.cs" />
+    <Compile Include="AppLayout.cs" />
     <Compile Include="DependencyInjection\PathfindingUnits.cs" />
     <Compile Include="Units\ColorsUnit.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedAnswerInput.cs" />

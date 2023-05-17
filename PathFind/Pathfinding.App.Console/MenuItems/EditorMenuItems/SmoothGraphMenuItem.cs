@@ -3,7 +3,6 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
-using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
@@ -80,9 +79,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             }
         }
 
-        private void OnGraphCreated(DataMessage<Graph2D<Vertex>> message)
+        private void OnGraphCreated(Graph2D<Vertex> graph)
         {
-            graph = message.Value;
+            this.graph = graph;
             costs.Clear();
         }
 

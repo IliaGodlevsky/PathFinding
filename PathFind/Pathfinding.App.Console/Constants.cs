@@ -1,9 +1,6 @@
 ﻿using Pathfinding.App.Console.Settings;
 using Shared.Primitives.ValueRange;
 using System;
-using System.Collections.Specialized;
-using System.Configuration;
-using System.Windows.Forms.PropertyGridInternal;
 
 namespace Pathfinding.App.Console
 {
@@ -30,7 +27,7 @@ namespace Pathfinding.App.Console
             double maxDelatTimeMilliseconds = Settings.VisualizationDelayMaxValue;
             double minDelatTimeMilliseconds = Settings.VisualizationDelayMinValue;
             AlgorithmDelayTimeValueRange = new(
-                TimeSpan.FromMilliseconds(maxDelatTimeMilliseconds), 
+                TimeSpan.FromMilliseconds(maxDelatTimeMilliseconds),
                 TimeSpan.FromMilliseconds(minDelatTimeMilliseconds));
         }
     }

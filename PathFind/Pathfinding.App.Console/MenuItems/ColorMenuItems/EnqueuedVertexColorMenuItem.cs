@@ -10,7 +10,7 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
     {
         protected override Tokens Token => Tokens.Enqueued;
 
-        public EnqueuedVertexColorMenuItem(IMessenger messenger, IInput<int> intInput) 
+        public EnqueuedVertexColorMenuItem(IMessenger messenger, IInput<int> intInput)
             : base(messenger, intInput)
         {
         }

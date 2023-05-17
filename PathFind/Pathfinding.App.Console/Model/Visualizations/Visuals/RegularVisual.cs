@@ -6,10 +6,10 @@ namespace Pathfinding.App.Console.Model.Visualizations.Visuals
 {
     internal sealed class RegularVisual : Visual
     {
-        protected override ConsoleColor Color 
+        protected override ConsoleColor Color
         {
             get => Colours.Default.RegularColor;
-            set => Colours.Default.RegularColor = value; 
+            set => Colours.Default.RegularColor = value;
         }
 
         protected override Tokens Token => Tokens.Regular;

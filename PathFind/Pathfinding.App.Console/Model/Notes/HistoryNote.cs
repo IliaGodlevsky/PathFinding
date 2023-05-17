@@ -1,5 +1,4 @@
-﻿using Pathfinding.App.Console.Extensions;
-using Pathfinding.App.Console.Localization;
+﻿using Pathfinding.App.Console.Localization;
 
 namespace Pathfinding.App.Console.Model.Notes
 {

@@ -69,10 +69,5 @@ namespace Shared.Extensions
                 yield return defaultValue;
             }
         }
-
-        public static Queue<T> ToQueue<T>(this IEnumerable<T> collection)
-        {
-            return new(collection);
-        }
     }
 }

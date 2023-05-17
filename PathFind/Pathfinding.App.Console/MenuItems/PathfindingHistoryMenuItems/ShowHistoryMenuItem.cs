@@ -1,10 +1,10 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
-using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Notes;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
@@ -13,7 +13,6 @@ using Shared.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms.VisualStyles;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 {
@@ -56,7 +55,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
                         using (Cursor.HideCursor())
                         {
                             messenger.SendData(page.Key, Tokens.History);
-                            messenger.SendData(page.Value.ToString(), Tokens.Screen);
+                            messenger.SendData(page.Value.ToString(), Tokens.AppLayout);
                         }
                     }
                     index = GetAlgorithmIndex(inputMessage);
@@ -77,9 +76,9 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             });
         }
 
-        private void OnGraphCreated(DataMessage<Graph2D<Vertex>> msg)
+        private void SetGraph(Graph2D<Vertex> graph)
         {
-            graph = msg.Value;
+            this.graph = graph;
             pages.Clear();
         }
 
@@ -91,17 +90,17 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             }
         }
 
-        private void OnAlgorithmFinished(AlgorithmMessage<StatisticsNote> msg)
+        private void SetStatistics((PathfindingProcess Process, StatisticsNote Note) value)
         {
             if (isHistoryApplied)
             {
-                pages[msg.Id] = msg.Value;
+                pages[value.Process.Id] = value.Note;
             }
         }
 
-        private void RecieveApplyInfo(DataMessage<bool> msg)
+        private void SetIsApplied(bool isApplied)
         {
-            isHistoryApplied = msg.Value;
+            isHistoryApplied = isApplied;
         }
 
         public override string ToString()
@@ -111,10 +110,10 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterData<bool>(this, Tokens.History, RecieveApplyInfo);
-            messenger.Register<AlgorithmMessage<StatisticsNote>>(this, Tokens.History, OnAlgorithmFinished);
+            messenger.RegisterData<bool>(this, Tokens.History, SetIsApplied);
+            messenger.RegisterAlgorithmData<StatisticsNote>(this, Tokens.History, SetStatistics);
             messenger.Register<ClearHistoryMessage>(this, _ => pages.Clear());
-            messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
+            messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }
     }
 }

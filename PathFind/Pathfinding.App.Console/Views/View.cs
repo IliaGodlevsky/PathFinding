@@ -26,7 +26,7 @@ namespace Pathfinding.App.Console.Views
             {
                 try
                 {
-                    Screen.SetCursorPositionUnderMenu(1);
+                    AppLayout.SetCursorPositionUnderGraphField();
                     var menuItems = unit.GetMenuItems();
                     var menuItem = InputMenuItem(menuItems);
                     menuItem.Execute();

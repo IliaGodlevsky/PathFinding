@@ -4,7 +4,6 @@ using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Notes;
 using System.Collections.Generic;
@@ -31,55 +30,53 @@ namespace Pathfinding.App.Console.Units
         public void RegisterHanlders(IMessenger messenger)
         {
             var token = ConditionToken.Create(IsStatisticsApplied, Tokens.Statistics);
-            messenger.RegisterData<PathfindingProcess>(this, token, OnSusbcribe);
+            messenger.RegisterData<PathfindingProcess>(this, token, SubscribeOnStatistics);
             messenger.RegisterAlgorithmData<IGraphPath>(this, Tokens.Statistics, OnPathFound);
-            messenger.RegisterData<bool>(this, Tokens.Statistics, RecieveApplyStatistics);
+            messenger.RegisterData<bool>(this, Tokens.Statistics, SetIsApplied);
         }
 
         private bool IsStatisticsApplied() => isStatisticsApplied;
 
-        private void OnSusbcribe(DataMessage<PathfindingProcess> message)
+        private void SubscribeOnStatistics(PathfindingProcess algorithm)
         {
-            message.Value.VertexVisited += OnVertexVisited;
-            message.Value.Finished += (s, e) => timer.Stop();
-            message.Value.Started += (s, e) => timer.Restart();
-            message.Value.Interrupted += (s, e) => timer.Stop();
-            message.Value.Paused += (s, e) => timer.Stop();
-            message.Value.Resumed += (s, e) => timer.Start();
+            algorithm.VertexVisited += OnVertexVisited;
+            algorithm.Finished += (s, e) => timer.Stop();
+            algorithm.Started += (s, e) => timer.Restart();
+            algorithm.Interrupted += (s, e) => timer.Stop();
+            algorithm.Paused += (s, e) => timer.Stop();
+            algorithm.Resumed += (s, e) => timer.Start();
         }
 
-        private void RecieveApplyStatistics(DataMessage<bool> msg)
+        private void SetIsApplied(bool isApplied)
         {
-            isStatisticsApplied = msg.Value;
+            isStatisticsApplied = isApplied;
         }
 
-        private void OnPathFound(AlgorithmMessage<IGraphPath> msg)
+        private void OnPathFound((PathfindingProcess Process, IGraphPath Path) value)
         {
-            var algorithm = msg.Algorithm;
-            var note = GetStatistics(algorithm);
+            var note = GetStatistics(value.Process);
             if (IsStatisticsApplied())
             {
-                if (msg.Value.Count > 0)
+                if (value.Path.Count > 0)
                 {
-                    note = GetStatistics(msg.Value, algorithm);
+                    note = GetStatistics(value.Path, value.Process);
                 }
                 visited = 0;
-                messenger.SendData(note.ToString(), Tokens.Screen);
+                messenger.SendData(note.ToString(), Tokens.AppLayout);
             }
-            var message = new AlgorithmMessage<StatisticsNote>(algorithm, note);
-            messenger.Send(message, Tokens.History);
+            messenger.SendAlgorithmData(value.Process, note, Tokens.History);
         }
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
         {
             visited++;
             var statistics = GetStatistics((PathfindingProcess)sender);
-            messenger.SendData(statistics.ToString(), Tokens.Screen);
+            messenger.SendData(statistics.ToString(), Tokens.AppLayout);
         }
 
         private StatisticsNote GetStatistics(PathfindingProcess algorithm)
         {
-            return new ()
+            return new()
             {
                 AlgorithmName = algorithm.ToString(),
                 Elapsed = timer.Elapsed,
@@ -90,7 +87,7 @@ namespace Pathfinding.App.Console.Units
         private HistoryNote GetStatistics(IGraphPath path, PathfindingProcess algorithm)
         {
             var statistics = GetStatistics(algorithm);
-            return new ()
+            return new()
             {
                 AlgorithmName = statistics.AlgorithmName,
                 Elapsed = statistics.Elapsed,

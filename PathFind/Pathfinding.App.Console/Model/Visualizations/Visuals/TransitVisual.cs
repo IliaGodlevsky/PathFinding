@@ -6,7 +6,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.Visuals
 {
     internal sealed class TransitVisual : Visual
     {
-        protected override ConsoleColor Color 
+        protected override ConsoleColor Color
         {
             get => Colours.Default.TransitColor;
             set => Colours.Default.TransitColor = value;

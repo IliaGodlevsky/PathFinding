@@ -33,8 +33,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 var path = InputPath();
                 var graph = ImportGraph(path);
                 var range = graph.First().Cost.CostRange;
-                messenger.SendData(range, Tokens.Screen);
-                messenger.SendData(graph, Tokens.Screen | Tokens.Main | Tokens.Common);
+                messenger.SendData(range, Tokens.AppLayout);
+                messenger.SendData(graph, Tokens.AppLayout, Tokens.Main, Tokens.Common);
             }
             catch (Exception ex)
             {

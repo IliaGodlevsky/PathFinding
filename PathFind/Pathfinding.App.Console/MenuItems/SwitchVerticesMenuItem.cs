@@ -1,7 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Coordinates;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
@@ -17,16 +16,14 @@ namespace Pathfinding.App.Console.MenuItems
 
     internal abstract class SwitchVerticesMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
-        protected readonly IMessenger messenger;
         protected readonly IInput<ConsoleKey> keyInput;
         protected readonly VertexActions actions;
 
         protected Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        protected SwitchVerticesMenuItem(IMessenger messenger,
-            VertexActions actions, IInput<ConsoleKey> keyInput)
+        protected SwitchVerticesMenuItem(VertexActions actions,
+            IInput<ConsoleKey> keyInput)
         {
-            this.messenger = messenger;
             this.keyInput = keyInput;
             this.actions = actions;
         }
@@ -64,14 +61,14 @@ namespace Pathfinding.App.Console.MenuItems
             return range.ReturnInRange(coordinate, ReturnOptions.Cycle);
         }
 
-        private void OnGraphCreated(DataMessage<Graph2D<Vertex>> msg)
+        private void SetGraph(Graph2D<Vertex> graph)
         {
-            graph = msg.Value;
+            this.graph = graph;
         }
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
+            messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }
     }
 }

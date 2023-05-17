@@ -358,6 +358,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Editor.
+        /// </summary>
+        public static string Editor {
+            get {
+                return ResourceManager.GetString("Editor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enqueued color.
         /// </summary>
         public static string EnqueuedColor {

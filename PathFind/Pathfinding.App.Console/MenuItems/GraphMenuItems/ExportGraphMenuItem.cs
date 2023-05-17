@@ -1,7 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Messages.DataMessages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
@@ -52,9 +51,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         protected abstract Task ExportAsync(Graph2D<Vertex> graph, TPath path);
 
-        private void OnGraphCreated(DataMessage<Graph2D<Vertex>> msg)
+        private void OnGraphCreated(Graph2D<Vertex> graph)
         {
-            graph = msg.Value;
+            this.graph = graph;
         }
     }
 }
