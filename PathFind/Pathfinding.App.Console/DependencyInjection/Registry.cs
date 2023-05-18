@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Serialization.Serializers.Decorators;
+using Microsoft.Win32;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
@@ -53,12 +54,16 @@ using Pathfinding.Logging.Loggers;
 using Pathfinding.Visualization.Core.Abstractions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Executable;
+using Shared.Extensions;
 using Shared.Random;
 using Shared.Random.Realizations;
 using System;
+using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
+
 using static Pathfinding.App.Console.DependencyInjection.PathfindingUnits;
 using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
 
@@ -70,12 +75,11 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
     internal static class Registry
     {
-        private static readonly Features features = Features.Default;
         private static readonly Lazy<IRegistry[]> registries = new(GetAppliedRegistries);
 
         private static IRegistry[] AppliedRegistries => registries.Value;
 
-        public static IContainer Configure()
+        public static ILifetimeScope Configure()
         {
             var builder = new ContainerBuilder();
             foreach (var registry in AppliedRegistries)
@@ -87,36 +91,18 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
         private static IRegistry[] GetAppliedRegistries()
         {
-            var applied = features.GetType()
-                .GetProperties()
+            var descriptions = typeof(Registry).GetNestedTypes(BindingFlags.NonPublic)
+                .Where(member => Attribute.IsDefined(member, typeof(DescriptionAttribute)))
+                .ToDictionary(registry => registry.GetDescription())
+                .AsReadOnly();
+            var applied = Features.Default.GetType().GetProperties()
                 .Where(prop => Attribute.IsDefined(prop, typeof(ApplicationScopedSettingAttribute)))
-                .Select(prop => (Name: prop.Name, Value: (bool)prop.GetValue(features)))
-                .Where(item => item.Value)
-                .Select(item => GetRegistry(item.Name))
-                .OfType<IRegistry>()
-                .Append(new InitialRegistration())
-                .Append(new UserInputRegistration())
+                .Select(prop => (Name: prop.Name, Value: (bool)prop.GetValue(Features.Default)))
+                .Where(item => item.Value == true && descriptions.ContainsKey(item.Name))
+                .Select(item => (IRegistry)Activator.CreateInstance(descriptions[item.Name]))
+                .Concat(new IRegistry[] { new InitialRegistration(), new UserInputRegistration() })
                 .ToArray();
             return applied;
-        }
-
-        private static object GetRegistry(string name)
-        {
-            return name switch
-            {
-                nameof(features.ApplyGraphEditor) => new GraphEditorRegistration(),
-                nameof(features.ApplyColorEditor) => new ColorEditorRegistration(),
-                nameof(features.ApplyTransitVertices) => new TransitVerticesRegistration(),
-                nameof(features.ApplyPathfindingVisualization) => new PathfindingVisualizationRegistration(),
-                nameof(features.ApplyPathfindingHistory) => new PathfindingHistoryRegistration(),
-                nameof(features.ApplyVisualizationControl) => new VisualizationControlRegistration(),
-                nameof(features.ApplyPathfindingStatistics) => new PathfindingStatisticsRegistration(),
-                nameof(features.ApplyGraphSharing) => new GraphSharingRegistration(),
-                nameof(features.ApplyWaveAlgorithms) => new WaveAlgorithmsRegistration(),
-                nameof(features.ApplyBreadthAlgorithms) => new BreadthAlgorithmsRegistration(),
-                nameof(features.ApplyGreedyAlgorithms) => new GreedyAlgorithmsRegistration(),
-                _ => new()
-            };
         }
 
         private sealed class InitialRegistration : IRegistry
@@ -203,6 +189,19 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
+        private sealed class UserInputRegistration : IRegistry
+        {
+            public void Configure(ContainerBuilder builder)
+            {
+                builder.RegisterType<ConsoleUserAnswerInput>().As<IInput<Answer>>().SingleInstance();
+                builder.RegisterType<ConsoleUserIntInput>().As<IInput<int>>().SingleInstance();
+                builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance();
+                builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
+                builder.RegisterType<ConsoleUserTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
+            }
+        }
+
+        [Description(nameof(Features.Default.ApplyGraphSharing))]
         private sealed class GraphSharingRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -226,6 +225,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
+        [Description(nameof(Features.Default.ApplyGraphEditor))]
         private sealed class GraphEditorRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -242,6 +242,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
+        [Description(nameof(Features.Default.ApplyColorEditor))]
         private sealed class ColorEditorRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -256,6 +257,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
+        [Description(nameof(Features.Default.ApplyTransitVertices))]
         private sealed class TransitVerticesRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -271,6 +273,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
+        [Description(nameof(Features.Default.ApplyBreadthAlgorithms))]
         private sealed class BreadthAlgorithmsRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -280,6 +283,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
+        [Description(nameof(Features.Default.ApplyWaveAlgorithms))]
         private sealed class WaveAlgorithmsRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -291,6 +295,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
+        [Description(nameof(Features.Default.ApplyGreedyAlgorithms))]
         private sealed class GreedyAlgorithmsRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -302,6 +307,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
+        [Description(nameof(Features.Default.ApplyPathfindingVisualization))]
         private sealed class PathfindingVisualizationRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -316,6 +322,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
+        [Description(nameof(Features.Default.ApplyPathfindingHistory))]
         private sealed class PathfindingHistoryRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -327,6 +334,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
+        [Description(nameof(Features.Default.ApplyVisualizationControl))]
         private sealed class VisualizationControlRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -340,24 +348,13 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
+        [Description(nameof(Features.Default.ApplyPathfindingStatistics))]
         private sealed class PathfindingStatisticsRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
             {
                 builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
                 builder.RegisterType<ApplyStatisticsMenuItem>().Keyed<IMenuItem>(Statistics).SingleInstance();
-            }
-        }
-
-        private sealed class UserInputRegistration : IRegistry
-        {
-            public void Configure(ContainerBuilder builder)
-            {
-                builder.RegisterType<ConsoleUserAnswerInput>().As<IInput<Answer>>().SingleInstance();
-                builder.RegisterType<ConsoleUserIntInput>().As<IInput<int>>().SingleInstance();
-                builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance();
-                builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
-                builder.RegisterType<ConsoleUserTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
             }
         }
     }

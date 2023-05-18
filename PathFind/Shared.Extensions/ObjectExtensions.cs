@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Reflection;
 
 namespace Shared.Extensions
@@ -11,10 +12,16 @@ namespace Shared.Extensions
             MemberInfo info = self switch
             {
                 Enum e => e.GetType().GetField(e.ToString()),
+                Type t => t,
                 MemberInfo i => i,
                 _ => self.GetType()
             };
             return info.GetAttributeOrDefault<TAttribute>();
+        }
+
+        public static string GetDescription(this object self)
+        {
+            return self.GetAttributeOrDefault<DescriptionAttribute>().Description;
         }
     }
 }
