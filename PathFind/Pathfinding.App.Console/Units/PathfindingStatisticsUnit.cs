@@ -16,7 +16,7 @@ namespace Pathfinding.App.Console.Units
         private readonly IMessenger messenger;
         private readonly Stopwatch timer = new();
 
-        private bool isStatisticsApplied = false;
+        private bool isStatisticsApplied = true;
         private int visited = 0;
 
         public PathfindingStatisticsUnit(IReadOnlyCollection<IMenuItem> menuItems,

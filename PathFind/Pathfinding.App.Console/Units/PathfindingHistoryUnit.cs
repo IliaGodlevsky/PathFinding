@@ -23,7 +23,7 @@ namespace Pathfinding.App.Console.Units
         private readonly Dictionary<Guid, IReadOnlyList<int>> pricesHistory = new();
 
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
-        private bool isHistoryApplied = false;
+        private bool isHistoryApplied = true;
 
         public PathfindingHistoryUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
@@ -93,7 +93,7 @@ namespace Pathfinding.App.Console.Units
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
             messenger.RegisterData<bool>(this, Tokens.History, SetIsApplied);
             messenger.RegisterData<Guid>(this, token, VisualizeHistory);
-            messenger.Register<ClearHistoryMessage>(this, token, _ => ClearHistory());
+            messenger.RegisterAction<ClearHistoryMessage>(this, token, ClearHistory);
         }
     }
 }

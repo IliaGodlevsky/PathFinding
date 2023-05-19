@@ -4,7 +4,6 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Coordinates;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Shared.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
 using System.Drawing;
@@ -40,7 +39,7 @@ namespace Pathfinding.App.Console
             System.Console.SetCursorPosition(StatisticsPosition.X, StatisticsPosition.Y + 1);
         }
 
-        private static void SetGraph(Graph2D<Vertex> graph)
+        private void SetGraph(Graph2D<Vertex> graph)
         {
             Graph = graph;
             int pathFindingStatisticsOffset = Graph.Length + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
@@ -48,7 +47,7 @@ namespace Pathfinding.App.Console
             RecalculateVerticesConsolePosition();
         }
 
-        private static void SetRange(InclusiveValueRange<int> range)
+        private void SetRange(InclusiveValueRange<int> range)
         {
             int upperValueRange = range.UpperValueOfRange;
             int lowerValueRange = range.LowerValueOfRange;
@@ -56,7 +55,7 @@ namespace Pathfinding.App.Console
             RecalculateVerticesConsolePosition();
         }
 
-        private static void ShowStatistics(string statistics)
+        private void ShowStatistics(string statistics)
         {
             Cursor.SetPosition(StatisticsPosition);
             System.Console.Write(statistics.PadRight(System.Console.BufferWidth));
@@ -68,13 +67,13 @@ namespace Pathfinding.App.Console
             int costUpperValue = Constants.GraphWidthValueRange.UpperValueOfRange - 1;
             int width = costUpperValue.GetDigitsNumber();
             LateralDistanceBetweenVertices = costWidth >= width ? costWidth + 2 : width * 2 - costWidth;
-            Graph.ForEach(vertex =>
+            foreach (var vertex in Graph)
             {
                 var point = (Coordinate2D)vertex.Position;
                 int left = GraphFieldPosition.X + point.X * LateralDistanceBetweenVertices;
                 int top = GraphFieldPosition.Y + point.Y;
                 vertex.ConsolePosition = new(left, top);
-            });
+            }
         }
     }
 }

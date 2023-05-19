@@ -23,7 +23,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         private readonly IInput<int> input;
         private readonly Dictionary<Guid, StatisticsNote> pages = new();
 
-        private bool isHistoryApplied = false;
+        private bool isHistoryApplied = true;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         public ShowHistoryMenuItem(IMessenger messenger, IInput<int> input)
@@ -90,12 +90,11 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             }
         }
 
+        private bool IsHistoryApplied() => isHistoryApplied;
+
         private void SetStatistics((PathfindingProcess Process, StatisticsNote Note) value)
         {
-            if (isHistoryApplied)
-            {
-                pages[value.Process.Id] = value.Note;
-            }
+            pages[value.Process.Id] = value.Note;
         }
 
         private void SetIsApplied(bool isApplied)
@@ -110,9 +109,10 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void RegisterHanlders(IMessenger messenger)
         {
+            var token = ConditionToken.Create(IsHistoryApplied, Tokens.History);
             messenger.RegisterData<bool>(this, Tokens.History, SetIsApplied);
-            messenger.RegisterAlgorithmData<StatisticsNote>(this, Tokens.History, SetStatistics);
-            messenger.Register<ClearHistoryMessage>(this, _ => pages.Clear());
+            messenger.RegisterAlgorithmData<StatisticsNote>(this, token, SetStatistics);
+            messenger.RegisterAction<ClearHistoryMessage>(this, token, pages.Clear);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }
     }

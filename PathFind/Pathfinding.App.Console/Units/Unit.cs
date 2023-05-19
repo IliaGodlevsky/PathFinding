@@ -1,5 +1,6 @@
 ﻿using Pathfinding.App.Console.Interface;
 using Shared.Primitives.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,11 +21,12 @@ namespace Pathfinding.App.Console.Units
 
         public IReadOnlyList<IMenuItem> GetMenuItems()
         {
-            return ConditionedMenuItems
+            var items = ConditionedMenuItems
                 .Where(item => item.CanBeExecuted())
                 .Concat(MenuItems)
                 .OrderByOrderAttribute()
                 .ToArray();
+            return Array.AsReadOnly(items);
         }
     }
 }

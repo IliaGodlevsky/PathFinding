@@ -98,15 +98,6 @@ namespace Pathfinding.App.Console.Settings {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ApplyBreadthAlgorithms {
-            get {
-                return ((bool)(this["ApplyBreadthAlgorithms"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool ApplyGreedyAlgorithms {
             get {
                 return ((bool)(this["ApplyGreedyAlgorithms"]));

@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DependencyInjection\Attributes\MandatoryRegistrationAttribute.cs" />
+    <Compile Include="DependencyInjection\Attributes\SettingsPropertyAttribute.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\TotalVisualizationMiddleware.cs" />
     <Compile Include="Interface\IConsoleElement.cs" />
     <Compile Include="Interface\IVisual.cs" />

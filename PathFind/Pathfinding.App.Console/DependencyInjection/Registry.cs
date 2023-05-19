@@ -9,6 +9,7 @@ using Pathfinding.AlgorithmLib.Factory;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.AlgorithmLib.History;
 using Pathfinding.AlgorithmLib.History.Interface;
+using Pathfinding.App.Console.DependencyInjection.Attributes;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Loggers;
@@ -57,7 +58,7 @@ using Shared.Extensions;
 using Shared.Random;
 using Shared.Random.Realizations;
 using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
@@ -74,36 +75,40 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
     internal static class Registry
     {
-        private static readonly Lazy<IRegistry[]> registries = new(GetAppliedRegistries);
-
-        private static IRegistry[] AppliedRegistries => registries.Value;
-
         public static ILifetimeScope Configure()
         {
             var builder = new ContainerBuilder();
-            foreach (var registry in AppliedRegistries)
+
+            foreach (var registry in GetAppliedRegistries())
             {
                 registry.Configure(builder);
             }
+
             return builder.Build();
         }
 
-        private static IRegistry[] GetAppliedRegistries()
+        private static IReadOnlyCollection<IRegistry> GetAppliedRegistries()
         {
-            var descriptions = typeof(Registry).GetNestedTypes(BindingFlags.NonPublic)
-                .Where(member => Attribute.IsDefined(member, typeof(DescriptionAttribute)))
-                .ToDictionary(registry => registry.GetDescription())
+            var nestedTypes = typeof(Registry).GetNestedTypes(BindingFlags.NonPublic);
+            var mandatoryRegistrations = nestedTypes
+                .Where(member => Attribute.IsDefined(member, typeof(MandatoryRegistrationAttribute)))
+                .Select(member => (IRegistry)Activator.CreateInstance(member))
+                .ToArray();
+            var features = nestedTypes
+                .Where(member => Attribute.IsDefined(member, typeof(SettingsPropertyAttribute)))
+                .ToDictionary(registry => registry.GetAttributeOrDefault<SettingsPropertyAttribute>().SettingsProperty)
                 .AsReadOnly();
             var applied = Features.Default.GetType().GetProperties()
                 .Where(prop => Attribute.IsDefined(prop, typeof(ApplicationScopedSettingAttribute)))
-                .Select(prop => (Name: prop.Name, Value: (bool)prop.GetValue(Features.Default)))
-                .Where(item => item.Value == true && descriptions.ContainsKey(item.Name))
-                .Select(item => (IRegistry)Activator.CreateInstance(descriptions[item.Name]))
-                .Concat(new IRegistry[] { new InitialRegistration(), new UserInputRegistration() })
+                .Select(prop => (Name: prop.Name, Value: prop.GetValue(Features.Default)))
+                .Where(item => item.Value.Equals(true) && features.ContainsKey(item.Name))
+                .Select(item => (IRegistry)Activator.CreateInstance(features[item.Name]))
+                .Concat(mandatoryRegistrations)
                 .ToArray();
-            return applied;
+            return Array.AsReadOnly(applied);
         }
 
+        [MandatoryRegistration]
         private sealed class InitialRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -188,6 +193,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
+        [MandatoryRegistration]
         private sealed class UserInputRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -200,7 +206,17 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        [Description(nameof(Features.Default.ApplyGraphSharing))]
+        [MandatoryRegistration]
+        private sealed class BreadthAlgorithmsRegistration : IRegistry
+        {
+            public void Configure(ContainerBuilder builder)
+            {
+                builder.RegisterType<AStarLeeAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, BreadthGroup).WithMetadata(Order, 2);
+                builder.RegisterType<LeeAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, BreadthGroup).WithMetadata(Order, 1);
+            }
+        }
+
+        [SettingsProperty(nameof(Features.ApplyGraphSharing))]
         private sealed class GraphSharingRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -224,7 +240,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        [Description(nameof(Features.Default.ApplyGraphEditor))]
+        [SettingsProperty(nameof(Features.ApplyGraphEditor))]
         private sealed class GraphEditorRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -241,7 +257,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        [Description(nameof(Features.Default.ApplyColorEditor))]
+        [SettingsProperty(nameof(Features.ApplyColorEditor))]
         private sealed class ColorEditorRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -256,7 +272,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        [Description(nameof(Features.Default.ApplyTransitVertices))]
+        [SettingsProperty(nameof(Features.ApplyTransitVertices))]
         private sealed class TransitVerticesRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -272,17 +288,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        [Description(nameof(Features.Default.ApplyBreadthAlgorithms))]
-        private sealed class BreadthAlgorithmsRegistration : IRegistry
-        {
-            public void Configure(ContainerBuilder builder)
-            {
-                builder.RegisterType<AStarLeeAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, BreadthGroup).WithMetadata(Order, 2);
-                builder.RegisterType<LeeAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, BreadthGroup).WithMetadata(Order, 1);
-            }
-        }
-
-        [Description(nameof(Features.Default.ApplyWaveAlgorithms))]
+        [SettingsProperty(nameof(Features.ApplyWaveAlgorithms))]
         private sealed class WaveAlgorithmsRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -294,7 +300,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        [Description(nameof(Features.Default.ApplyGreedyAlgorithms))]
+        [SettingsProperty(nameof(Features.ApplyGreedyAlgorithms))]
         private sealed class GreedyAlgorithmsRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -306,7 +312,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        [Description(nameof(Features.Default.ApplyPathfindingVisualization))]
+        [SettingsProperty(nameof(Features.ApplyPathfindingVisualization))]
         private sealed class PathfindingVisualizationRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -321,7 +327,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        [Description(nameof(Features.Default.ApplyPathfindingHistory))]
+        [SettingsProperty(nameof(Features.ApplyPathfindingHistory))]
         private sealed class PathfindingHistoryRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -333,7 +339,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        [Description(nameof(Features.Default.ApplyVisualizationControl))]
+        [SettingsProperty(nameof(Features.ApplyVisualizationControl))]
         private sealed class VisualizationControlRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)
@@ -347,7 +353,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        [Description(nameof(Features.Default.ApplyPathfindingStatistics))]
+        [SettingsProperty(nameof(Features.ApplyPathfindingStatistics))]
         private sealed class PathfindingStatisticsRegistration : IRegistry
         {
             public void Configure(ContainerBuilder builder)

@@ -22,7 +22,7 @@ namespace Pathfinding.App.Console.Units
 
         private PathfindingProcess algorithm = PathfindingProcess.Null;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
-        private bool isVisualizationApplied = false;
+        private bool isVisualizationApplied = true;
         private TimeSpan animationDelay = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
 
         public PathfindingVisualizationUnit(IReadOnlyCollection<IMenuItem> menuItems,

@@ -12,7 +12,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
     {
         private readonly IMessenger messenger;
 
-        private bool isHistoryApplied;
+        private bool isHistoryApplied = true;
 
         public ClearHistoryMenuItem(IMessenger messenger)
         {
@@ -23,7 +23,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void Execute()
         {
-            messenger.Send(new ClearHistoryMessage());
+            messenger.Send(new ClearHistoryMessage(), Tokens.History);
         }
 
         private void SetIsApplied(bool isApplied)

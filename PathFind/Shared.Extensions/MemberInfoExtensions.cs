@@ -35,9 +35,7 @@ namespace Shared.Extensions
             var flags = BindingFlags.Static | BindingFlags.Public
                 | BindingFlags.FlattenHierarchy | BindingFlags.Instance;
             var field = attributeType.GetField(defaultFieldName, flags);
-            return field == null
-                ? default(TAttribute)
-                : (TAttribute)field.GetValue(null);
+            return field == null ? default : (TAttribute)field.GetValue(null);
         }
     }
 }

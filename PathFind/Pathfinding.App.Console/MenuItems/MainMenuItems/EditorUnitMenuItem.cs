@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.Logging.Interface;
 
@@ -17,7 +18,7 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
 
         public override string ToString()
         {
-            return "Editor";
+            return Languages.Editor;
         }
     }
 }
