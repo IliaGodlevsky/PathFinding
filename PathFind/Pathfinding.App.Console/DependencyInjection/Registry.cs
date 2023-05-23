@@ -93,20 +93,24 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             var nestedTypes = typeof(Registry).GetNestedTypes(BindingFlags.NonPublic);
             var mandatoryRegistrations = nestedTypes
                 .Where(member => Attribute.IsDefined(member, typeof(MandatoryRegistrationAttribute)))
-                .Select(member => (IRegistry)Activator.CreateInstance(member))
-                .ToArray();
+                .Select(member => (IRegistry)Activator.CreateInstance(member));
             var features = nestedTypes
                 .Where(member => Attribute.IsDefined(member, typeof(SettingsPropertyAttribute)))
-                .ToDictionary(registry => registry.GetAttributeOrDefault<SettingsPropertyAttribute>().SettingsProperty)
+                .ToDictionary(GetSettingsProperty)
                 .AsReadOnly();
             var applied = Features.Default.GetType().GetProperties()
                 .Where(prop => Attribute.IsDefined(prop, typeof(ApplicationScopedSettingAttribute)))
-                .Select(prop => (Name: prop.Name, Value: prop.GetValue(Features.Default)))
+                .Select(prop => (prop.Name, Value: prop.GetValue(Features.Default)))
                 .Where(item => item.Value.Equals(true) && features.ContainsKey(item.Name))
                 .Select(item => (IRegistry)Activator.CreateInstance(features[item.Name]))
                 .Concat(mandatoryRegistrations)
                 .ToArray();
             return Array.AsReadOnly(applied);
+        }
+
+        private static string GetSettingsProperty(Type type)
+        {
+            return type.GetAttributeOrDefault<SettingsPropertyAttribute>().SettingsProperty;
         }
 
         [MandatoryRegistration]
