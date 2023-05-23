@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Settings;
 using System;
 
@@ -12,7 +13,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.Visuals
             set => Colours.Default.ObstacleColor = value;
         }
 
-        protected override Tokens Token => Tokens.Obstacle;
+        protected override IToken Token => Tokens.Obstacle;
 
         public ObstacleVisual(IMessenger messenger) : base(messenger)
         {

@@ -8,7 +8,7 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
     [LowPriority]
     internal sealed class CrossedPathVertexColorMenuItem : ColorsMenuItem
     {
-        protected override Tokens Token => Tokens.Crossed;
+        protected override IToken Token => Tokens.Crossed;
 
         public CrossedPathVertexColorMenuItem(IMessenger messenger, IInput<int> intInput)
             : base(messenger, intInput)

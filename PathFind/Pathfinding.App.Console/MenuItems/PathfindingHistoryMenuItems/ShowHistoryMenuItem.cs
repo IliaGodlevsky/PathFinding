@@ -109,7 +109,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            var token = ConditionToken.Create(IsHistoryApplied, Tokens.History);
+            var token = Tokens.Bind(IsHistoryApplied, Tokens.History);
             messenger.RegisterData<bool>(this, Tokens.History, SetIsApplied);
             messenger.RegisterAlgorithmData<StatisticsNote>(this, token, SetStatistics);
             messenger.RegisterAction<ClearHistoryMessage>(this, token, pages.Clear);

@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Settings;
 using System;
 
@@ -16,7 +17,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.Visuals
         {
         }
 
-        protected override Tokens Token => Tokens.Visited;
+        protected override IToken Token => Tokens.Visited;
 
         public override void Visualize(Vertex vertex)
         {

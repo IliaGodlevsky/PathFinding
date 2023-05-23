@@ -8,7 +8,7 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
     [LowPriority]
     internal sealed class ObstacleVertexColorMenuItem : ColorsMenuItem
     {
-        protected override Tokens Token => Tokens.Obstacle;
+        protected override IToken Token => Tokens.Obstacle;
 
         public ObstacleVertexColorMenuItem(IMessenger messenger, IInput<int> intInput)
             : base(messenger, intInput)

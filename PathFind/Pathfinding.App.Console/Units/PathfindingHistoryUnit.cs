@@ -86,7 +86,7 @@ namespace Pathfinding.App.Console.Units
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            var token = ConditionToken.Create(IsHistoryApplied, Tokens.History);
+            var token = Tokens.Bind(IsHistoryApplied, Tokens.History);
             messenger.RegisterAlgorithmData<IPathfindingRange<Vertex>>(this, token, AddRange);
             messenger.RegisterAlgorithmData<IGraphPath>(this, token, AddPath);
             messenger.RegisterData<PathfindingProcess>(this, token, SubscribeOnHistory);

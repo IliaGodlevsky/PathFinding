@@ -29,7 +29,7 @@ namespace Pathfinding.App.Console.Units
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            var token = ConditionToken.Create(IsStatisticsApplied, Tokens.Statistics);
+            var token = Tokens.Bind(IsStatisticsApplied, Tokens.Statistics);
             messenger.RegisterData<PathfindingProcess>(this, token, SubscribeOnStatistics);
             messenger.RegisterAlgorithmData<IGraphPath>(this, Tokens.Statistics, OnPathFound);
             messenger.RegisterData<bool>(this, Tokens.Statistics, SetIsApplied);

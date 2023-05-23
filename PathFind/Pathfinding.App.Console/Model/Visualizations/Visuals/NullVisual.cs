@@ -6,7 +6,9 @@ namespace Pathfinding.App.Console.Model.Visualizations.Visuals
 {
     internal sealed class NullVisual : Singleton<NullVisual, IVisual>, IVisual
     {
+#pragma warning disable CS0067
         public event Action<Vertex> Visualized;
+#pragma warning restore CS0067
 
         public bool Contains(Vertex vertex)
         {
@@ -15,7 +17,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.Visuals
 
         public void Remove(Vertex vertex)
         {
-            
+
         }
 
         public void Visualize(Vertex vertex)

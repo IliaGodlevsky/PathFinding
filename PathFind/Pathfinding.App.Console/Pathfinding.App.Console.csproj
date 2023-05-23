@@ -49,7 +49,7 @@
     <Compile Include="DependencyInjection\Attributes\MandatoryRegistrationAttribute.cs" />
     <Compile Include="DependencyInjection\Attributes\SettingsPropertyAttribute.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\TotalVisualizationMiddleware.cs" />
-    <Compile Include="Interface\IConsoleElement.cs" />
+    <Compile Include="Interface\IToken.cs" />
     <Compile Include="Interface\IVisual.cs" />
     <Compile Include="MenuItems\ColorMenuItems\CrossedPathVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\EnqueuedVertexColorMenuItem.cs" />
@@ -119,7 +119,7 @@
     <Compile Include="Interface\IDisplayable.cs" />
     <Compile Include="Interface\IFramedAxis.cs" />
     <Compile Include="Interface\IInput.cs" />
-    <Compile Include="Interface\ISendRecieveMessage.cs" />
+    <Compile Include="Interface\ICanRecieveMessage.cs" />
     <Compile Include="Interface\IVertexAction.cs" />
     <Compile Include="Interface\IViewFactory.cs" />
     <Compile Include="Interface\IUnit.cs" />
@@ -199,7 +199,6 @@
     <Compile Include="Tokens.cs" />
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\Answer.cs" />
-    <Compile Include="Model\ConditionToken.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
     <Compile Include="Loggers\ConsoleLog.cs" />
     <Compile Include="Loggers\DebugLog.cs" />

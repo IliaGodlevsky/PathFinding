@@ -16,7 +16,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.Visuals
 
         protected abstract ConsoleColor Color { get; set; }
 
-        protected abstract Tokens Token { get; }
+        protected abstract IToken Token { get; }
 
         protected Visual(IMessenger messenger)
         {

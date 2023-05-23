@@ -16,7 +16,7 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
         private readonly IReadOnlyList<ConsoleColor> allColors;
         private readonly MenuList allColorsMenuList;
 
-        protected abstract Tokens Token { get; }
+        protected abstract IToken Token { get; }
 
         protected ColorsMenuItem(IMessenger messenger, IInput<int> intInput)
         {

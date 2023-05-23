@@ -8,7 +8,7 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
     [HighPriority]
     internal sealed class SourceVertexColorMenuItem : ColorsMenuItem
     {
-        protected override Tokens Token => Tokens.Source;
+        protected override IToken Token => Tokens.Source;
 
         public SourceVertexColorMenuItem(IMessenger messenger, IInput<int> intInput)
             : base(messenger, intInput)

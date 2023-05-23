@@ -17,15 +17,15 @@ namespace Pathfinding.App.Console.Model.Visualizations
 
         public bool IsVisualizedAsPath(Vertex visualizable)
         {
-            return GetOrDefault(VisualType.Crossed).Contains(visualizable) == true
-                || GetOrDefault(VisualType.Path).Contains(visualizable) == true;
+            return GetOrDefault(VisualType.Crossed).Contains(visualizable)
+                || GetOrDefault(VisualType.Path).Contains(visualizable);
         }
 
         public bool IsVisualizedAsRange(Vertex visualizable)
         {
-            return GetOrDefault(VisualType.Source).Contains(visualizable) == true
-                || GetOrDefault(VisualType.Target).Contains(visualizable) == true
-                || GetOrDefault(VisualType.Transit).Contains(visualizable) == true;
+            return GetOrDefault(VisualType.Source).Contains(visualizable)
+                || GetOrDefault(VisualType.Target).Contains(visualizable)
+                || GetOrDefault(VisualType.Transit).Contains(visualizable);
         }
 
         public void VisualizeAsPath(Vertex visualizable)
