@@ -112,5 +112,14 @@ namespace Pathfinding.App.Console.Settings {
                 return ((bool)(this["ApplyPathfindingVisualization"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ApplyKeysEditor {
+            get {
+                return ((bool)(this["ApplyKeysEditor"]));
+            }
+        }
     }
 }

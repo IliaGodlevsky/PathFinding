@@ -168,6 +168,9 @@
   <data name="ChooseColor" xml:space="preserve">
     <value>Choose color: </value>
   </data>
+  <data name="ChooseKeyMsg" xml:space="preserve">
+    <value>{0}Choose key to change: </value>
+  </data>
   <data name="ClearColors" xml:space="preserve">
     <value>Clear vertices colors</value>
   </data>
@@ -213,11 +216,17 @@
   <data name="DarkYellow" xml:space="preserve">
     <value>Dark yellow</value>
   </data>
+  <data name="DecreaseCost" xml:space="preserve">
+    <value>Decrease cost key</value>
+  </data>
   <data name="DelayTimeInputMsg" xml:space="preserve">
     <value>Input animation speed delay time (milliseconds): </value>
   </data>
   <data name="Editor" xml:space="preserve">
     <value>Editor</value>
+  </data>
+  <data name="EditorKeys" xml:space="preserve">
+    <value>Editor keys</value>
   </data>
   <data name="EnqueuedColor" xml:space="preserve">
     <value>Enqueued color</value>
@@ -227,6 +236,9 @@
   </data>
   <data name="EnterPathfindingRange" xml:space="preserve">
     <value>Enter pathfinding range</value>
+  </data>
+  <data name="ExcludeFromRange" xml:space="preserve">
+    <value>Exclude from range key</value>
   </data>
   <data name="Exit" xml:space="preserve">
     <value>Exit</value>
@@ -258,6 +270,12 @@
   <data name="History" xml:space="preserve">
     <value>Pathfinding history</value>
   </data>
+  <data name="IncludeInRange" xml:space="preserve">
+    <value>Include in range key</value>
+  </data>
+  <data name="IncreaseCost" xml:space="preserve">
+    <value>Increase cost key</value>
+  </data>
   <data name="InputCostRange" xml:space="preserve">
     <value>Input cost range</value>
   </data>
@@ -266,6 +284,9 @@
   </data>
   <data name="InputHostName" xml:space="preserve">
     <value>Input host name: </value>
+  </data>
+  <data name="InputKeyMsg" xml:space="preserve">
+    <value>{0}Input key on which you want to change it (Current: {1}): </value>
   </data>
   <data name="InputObstaclePercent" xml:space="preserve">
     <value>Input obstacle percent</value>
@@ -278,6 +299,12 @@
   </data>
   <data name="InputServerNameMsg" xml:space="preserve">
     <value>Input server name: </value>
+  </data>
+  <data name="InterruptAlgorithm" xml:space="preserve">
+    <value>Interrupt algorithm key</value>
+  </data>
+  <data name="KeysUnit" xml:space="preserve">
+    <value>Keys</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
@@ -293,6 +320,9 @@
   </data>
   <data name="Magenta" xml:space="preserve">
     <value>Magenta</value>
+  </data>
+  <data name="MarkToReplace" xml:space="preserve">
+    <value>Mark to replace key</value>
   </data>
   <data name="MenuOptionChoiceMsg" xml:space="preserve">
     <value>Choose menu option: </value>
@@ -315,11 +345,17 @@
   <data name="Pathfinding" xml:space="preserve">
     <value>Pathfinding</value>
   </data>
+  <data name="PathfindingControlKeys" xml:space="preserve">
+    <value>Pathfinding control keys</value>
+  </data>
   <data name="PathfindingRange" xml:space="preserve">
     <value>Pathfinding range</value>
   </data>
   <data name="PathfindingResultFormat" xml:space="preserve">
     <value>{0} Steps: {1} Path cost: {2}</value>
+  </data>
+  <data name="PauseAlgorithm" xml:space="preserve">
+    <value>Pause algorithm key</value>
   </data>
   <data name="Quit" xml:space="preserve">
     <value>Quit</value>
@@ -339,8 +375,23 @@
   <data name="RegularColor" xml:space="preserve">
     <value>Regular color</value>
   </data>
+  <data name="RegularKeys" xml:space="preserve">
+    <value>Regular keys</value>
+  </data>
+  <data name="ReplaceTransit" xml:space="preserve">
+    <value>Replace transit key</value>
+  </data>
+  <data name="ResetSmooth" xml:space="preserve">
+    <value>Reset smooth key</value>
+  </data>
   <data name="ResizeGraph" xml:space="preserve">
     <value>Resize graph</value>
+  </data>
+  <data name="ResumeAlgorithm" xml:space="preserve">
+    <value>Resume algorithm key</value>
+  </data>
+  <data name="ReverseVertex" xml:space="preserve">
+    <value>Reverse vertex key</value>
   </data>
   <data name="ReverseVertices" xml:space="preserve">
     <value>Reverse vertices</value>
@@ -355,10 +406,19 @@
     <value>Show history</value>
   </data>
   <data name="SmoothGraph" xml:space="preserve">
+    <value>Smooth graph key</value>
+  </data>
+  <data name="SmoothGraphItem" xml:space="preserve">
     <value>Smooth graph</value>
   </data>
   <data name="SourceColor" xml:space="preserve">
     <value>Source color</value>
+  </data>
+  <data name="SpeedDown" xml:space="preserve">
+    <value>Pathfinding speed down key</value>
+  </data>
+  <data name="SpeedUp" xml:space="preserve">
+    <value>Pathfinding speed up key</value>
   </data>
   <data name="Statistics" xml:space="preserve">
     <value>Pathfinding statistics</value>
@@ -366,11 +426,35 @@
   <data name="StatisticsFormat" xml:space="preserve">
     <value>{0}  Time: {1}     Visited: {2}</value>
   </data>
+  <data name="StepByStepPathfinding" xml:space="preserve">
+    <value>Step by step pathfinding key</value>
+  </data>
+  <data name="SubmitSmooth" xml:space="preserve">
+    <value>Submit smooth key</value>
+  </data>
   <data name="TargetColor" xml:space="preserve">
     <value>Target color</value>
   </data>
   <data name="TransitColor" xml:space="preserve">
     <value>Transit color</value>
+  </data>
+  <data name="TransitKeys" xml:space="preserve">
+    <value>Transit keys</value>
+  </data>
+  <data name="UndoSmooth" xml:space="preserve">
+    <value>Undo smooth key</value>
+  </data>
+  <data name="VertexDown" xml:space="preserve">
+    <value>Vertex down key</value>
+  </data>
+  <data name="VertexLeft" xml:space="preserve">
+    <value>Vertex left key</value>
+  </data>
+  <data name="VertexRight" xml:space="preserve">
+    <value>Vertex right key</value>
+  </data>
+  <data name="VertexUp" xml:space="preserve">
+    <value>Vertex up key</value>
   </data>
   <data name="VisitedColor" xml:space="preserve">
     <value>Visited color</value>

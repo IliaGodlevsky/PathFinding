@@ -214,7 +214,7 @@
     <value>Темно-желтый</value>
   </data>
   <data name="DelayTimeInputMsg" xml:space="preserve">
-    <value>Введите задержку аниманции (milliseconds): </value>
+    <value>Введите задержку аниманции (миллисекунды): </value>
   </data>
   <data name="Editor" xml:space="preserve">
     <value>Редактор</value>
@@ -354,7 +354,7 @@
   <data name="ShowHistory" xml:space="preserve">
     <value>Показать историю</value>
   </data>
-  <data name="SmoothGraph" xml:space="preserve">
+  <data name="SmoothGraphItem" xml:space="preserve">
     <value>Выровнять граф</value>
   </data>
   <data name="SourceColor" xml:space="preserve">

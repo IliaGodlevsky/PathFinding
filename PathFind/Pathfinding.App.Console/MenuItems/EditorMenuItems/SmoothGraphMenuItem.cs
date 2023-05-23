@@ -4,6 +4,7 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Settings;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Smoothing;
@@ -34,9 +35,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             this.input = input;
             actions = new()
             {
-                { ConsoleKey.W, Smooth },
-                { ConsoleKey.S, Undo },
-                { ConsoleKey.Escape, Cancel }
+                { Keys.Default.SmoothGraph, Smooth },
+                { Keys.Default.UndoSmooth, Undo },
+                { Keys.Default.ResetSmooth, Cancel }
             };
         }
 
@@ -47,7 +48,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             using (Cursor.HideCursor())
             {
                 var key = input.Input();
-                while (key != ConsoleKey.Enter)
+                while (key != Keys.Default.SubmitSmooth)
                 {
                     actions.GetOrDefault(key)?.Invoke();
                     key = input.Input();
@@ -87,7 +88,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public override string ToString()
         {
-            return Languages.SmoothGraph;
+            return Languages.SmoothGraphItem;
         }
 
         public void RegisterHanlders(IMessenger messenger)

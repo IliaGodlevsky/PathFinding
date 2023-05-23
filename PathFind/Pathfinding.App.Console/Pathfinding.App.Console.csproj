@@ -60,6 +60,12 @@
     <Compile Include="MenuItems\ColorMenuItems\TargetVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\TransitVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\VisitedVertexColorMenuItem.cs" />
+    <Compile Include="MenuItems\KeysMenuItems\EditorKeysMenuItem.cs" />
+    <Compile Include="MenuItems\KeysMenuItems\KeysMenuItem.cs" />
+    <Compile Include="MenuItems\KeysMenuItems\PathfindingControlKeysMenuItem.cs" />
+    <Compile Include="MenuItems\KeysMenuItems\RegularKeysMenuItem.cs" />
+    <Compile Include="MenuItems\KeysMenuItems\TransitKeysMenuItem.cs" />
+    <Compile Include="MenuItems\MainMenuItems\KeysUnitMenuItem.cs" />
     <Compile Include="Model\Visualizations\Visuals\CrossedPathVisual.cs" />
     <Compile Include="Model\Visualizations\Visuals\EnqueuedVisual.cs" />
     <Compile Include="Model\Visualizations\Visuals\NullVisual.cs" />
@@ -76,6 +82,11 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Features.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\Keys.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Keys.settings</DependentUpon>
     </Compile>
     <Compile Include="Settings\Parametres.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -143,7 +154,7 @@
     <Compile Include="MenuItems\MainMenuItems\ColorsUnitMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\EditorUnitMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\GraphCreateMenuItem.cs" />
-    <Compile Include="MenuItems\MainMenuItems\GraphEditorUnit.cs" />
+    <Compile Include="Units\GraphEditorUnit.cs" />
     <Compile Include="MenuItems\MainMenuItems\MainMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\PathfindingProcessMenuItem.cs" />
     <Compile Include="MenuItems\AnswerExitMenuItem.cs" />
@@ -175,6 +186,7 @@
     <Compile Include="Messages\GraphChangedMessage.cs" />
     <Compile Include="DependencyInjection\Registrations\IRegistry.cs" />
     <Compile Include="DependencyInjection\Registry.cs" />
+    <Compile Include="Units\KeysUnit.cs" />
     <Compile Include="ValueInput\AddressInput.cs" />
     <Compile Include="ValueInput\FilePathInput.cs" />
     <Compile Include="Model\Notes\HistoryNote.cs" />
@@ -443,6 +455,10 @@
     <None Include="Settings\Features.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Features.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Settings\Keys.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Keys.Designer.cs</LastGenOutput>
     </None>
     <None Include="Settings\Parametres.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>

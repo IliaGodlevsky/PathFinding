@@ -17,6 +17,7 @@ using Pathfinding.App.Console.MenuItems;
 using Pathfinding.App.Console.MenuItems.ColorMenuItems;
 using Pathfinding.App.Console.MenuItems.EditorMenuItems;
 using Pathfinding.App.Console.MenuItems.GraphMenuItems;
+using Pathfinding.App.Console.MenuItems.KeysMenuItems;
 using Pathfinding.App.Console.MenuItems.MainMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems;
@@ -148,8 +149,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<ClearPathfindingRangeMenuItem>().Keyed<IConditionedMenuItem>(Range).SingleInstance();
                 builder.RegisterType<EnterPathfindingRangeMenuItem>().Keyed<IConditionedMenuItem>(Range).As<ICanRecieveMessage>().SingleInstance()
                     .ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(PathfindingRange)));
-                builder.RegisterType<IncludeInRangeAction>().Keyed<IVertexAction>(PathfindingRange).WithMetadata(PathfindingRange, ConsoleKey.Enter);
-                builder.RegisterType<ExcludeFromRangeAction>().Keyed<IVertexAction>(PathfindingRange).WithMetadata(PathfindingRange, ConsoleKey.X);
+                builder.RegisterType<IncludeInRangeAction>().Keyed<IVertexAction>(PathfindingRange).WithMetadata(PathfindingRange, Keys.Default.IncludeInRange);
+                builder.RegisterType<ExcludeFromRangeAction>().Keyed<IVertexAction>(PathfindingRange).WithMetadata(PathfindingRange, Keys.Default.ExcludeFromRange);
 
                 builder.RegisterType<AssembleGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ResizeGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
@@ -245,15 +246,16 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Configure(ContainerBuilder builder)
             {
+                builder.RegisterType<EditorKeysMenuItem>().Keyed<IMenuItem>(KeysUnit).SingleInstance();
                 builder.RegisterType<EditorUnitMenuItem>().Keyed<IConditionedMenuItem>(Main).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ReverseVertexMenuItem>().Keyed<IConditionedMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance()
                     .ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(Reverse)));
-                builder.RegisterType<ReverseVertexAction>().Keyed<IVertexAction>(Reverse).WithMetadata(Reverse, ConsoleKey.Enter);
+                builder.RegisterType<ReverseVertexAction>().Keyed<IVertexAction>(Reverse).WithMetadata(Reverse, Keys.Default.ReverseVertex);
                 builder.RegisterType<SmoothGraphMenuItem>().Keyed<IConditionedMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ChangeCostMenuItem>().Keyed<IConditionedMenuItem>(Editor).SingleInstance()
                     .As<ICanRecieveMessage>().ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(ChangeCost)));
-                builder.RegisterType<IncreaseCostAction>().Keyed<IVertexAction>(ChangeCost).WithMetadata(ChangeCost, ConsoleKey.UpArrow);
-                builder.RegisterType<DecreaseCostAction>().Keyed<IVertexAction>(ChangeCost).WithMetadata(ChangeCost, ConsoleKey.DownArrow);
+                builder.RegisterType<IncreaseCostAction>().Keyed<IVertexAction>(ChangeCost).WithMetadata(ChangeCost, Keys.Default.IncreaseCost);
+                builder.RegisterType<DecreaseCostAction>().Keyed<IVertexAction>(ChangeCost).WithMetadata(ChangeCost, Keys.Default.DecreaseCost);
             }
         }
 
@@ -277,10 +279,11 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Configure(ContainerBuilder builder)
             {
+                builder.RegisterType<TransitKeysMenuItem>().Keyed<IMenuItem>(KeysUnit).SingleInstance();
                 builder.RegisterType<ExcludeTransitVertex<Vertex>>().Keyed<Command>(ExcludeCommand).WithMetadata(Order, 3).SingleInstance();
                 builder.RegisterType<ReplaceTransitVerticesModule<Vertex>>().AsSelf().As<IUndo>().SingleInstance();
-                builder.RegisterType<MarkTransitToReplaceAction>().Keyed<IVertexAction>(PathfindingRange).WithMetadata(PathfindingRange, ConsoleKey.R);
-                builder.RegisterType<ReplaceTransitVertexAction>().Keyed<IVertexAction>(PathfindingRange).WithMetadata(PathfindingRange, ConsoleKey.P);
+                builder.RegisterType<MarkTransitToReplaceAction>().Keyed<IVertexAction>(PathfindingRange).WithMetadata(PathfindingRange, Keys.Default.MarkToReplace);
+                builder.RegisterType<ReplaceTransitVertexAction>().Keyed<IVertexAction>(PathfindingRange).WithMetadata(PathfindingRange, Keys.Default.ReplaceTransit);
                 builder.RegisterType<ReplaceTransitIsolatedVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 1).SingleInstance();
                 builder.RegisterType<IncludeTransitVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 6).SingleInstance();
                 builder.RegisterType<TransitVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
@@ -344,12 +347,13 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Configure(ContainerBuilder builder)
             {
-                builder.RegisterType<SpeedUpAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.UpArrow);
-                builder.RegisterType<SlowDownAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, ConsoleKey.DownArrow);
-                builder.RegisterType<ResumeAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Enter);
-                builder.RegisterType<PauseAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.P);
-                builder.RegisterType<InterruptAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.Escape);
-                builder.RegisterType<PathfindingStepByStep>().As<IPathfindingAction>().WithMetadata(Key, ConsoleKey.W);
+                builder.RegisterType<PathfindingControlKeysMenuItem>().Keyed<IMenuItem>(KeysUnit).SingleInstance();
+                builder.RegisterType<SpeedUpAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, Keys.Default.SpeedUp);
+                builder.RegisterType<SlowDownAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, Keys.Default.SpeedDown);
+                builder.RegisterType<ResumeAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, Keys.Default.ResumeAlgorithm);
+                builder.RegisterType<PauseAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, Keys.Default.PauseAlgorithm);
+                builder.RegisterType<InterruptAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, Keys.Default.InterruptAlgorithm);
+                builder.RegisterType<PathfindingStepByStep>().As<IPathfindingAction>().WithMetadata(Key, Keys.Default.StepByStepPathfinding);
             }
         }
 
@@ -360,6 +364,16 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             {
                 builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
                 builder.RegisterType<ApplyStatisticsMenuItem>().Keyed<IMenuItem>(Statistics).SingleInstance();
+            }
+        }
+
+        [SettingsProperty(nameof(Features.ApplyKeysEditor))]
+        private sealed class KeysEditorRegistration : IRegistry
+        {
+            public void Configure(ContainerBuilder builder)
+            {
+                builder.RegisterType<KeysUnitMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
+                builder.RegisterType<RegularKeysMenuItem>().Keyed<IMenuItem>(KeysUnit).SingleInstance();
             }
         }
     }

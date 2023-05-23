@@ -1,8 +1,7 @@
 ﻿using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Units;
 using System.Collections.Generic;
 
-namespace Pathfinding.App.Console.MenuItems.MainMenuItems
+namespace Pathfinding.App.Console.Units
 {
     internal sealed class GraphEditorUnit : Unit
     {

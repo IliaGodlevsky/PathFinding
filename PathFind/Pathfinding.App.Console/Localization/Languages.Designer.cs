@@ -214,6 +214,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0}Choose key to change: .
+        /// </summary>
+        public static string ChooseKeyMsg {
+            get {
+                return ResourceManager.GetString("ChooseKeyMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear vertices colors.
         /// </summary>
         public static string ClearColors {
@@ -349,6 +358,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Decrease cost key.
+        /// </summary>
+        public static string DecreaseCost {
+            get {
+                return ResourceManager.GetString("DecreaseCost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input animation speed delay time (milliseconds): .
         /// </summary>
         public static string DelayTimeInputMsg {
@@ -363,6 +381,15 @@ namespace Pathfinding.App.Console.Localization {
         public static string Editor {
             get {
                 return ResourceManager.GetString("Editor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editor keys.
+        /// </summary>
+        public static string EditorKeys {
+            get {
+                return ResourceManager.GetString("EditorKeys", resourceCulture);
             }
         }
         
@@ -390,6 +417,15 @@ namespace Pathfinding.App.Console.Localization {
         public static string EnterPathfindingRange {
             get {
                 return ResourceManager.GetString("EnterPathfindingRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exclude from range key.
+        /// </summary>
+        public static string ExcludeFromRange {
+            get {
+                return ResourceManager.GetString("ExcludeFromRange", resourceCulture);
             }
         }
         
@@ -484,6 +520,24 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Include in range key.
+        /// </summary>
+        public static string IncludeInRange {
+            get {
+                return ResourceManager.GetString("IncludeInRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Increase cost key.
+        /// </summary>
+        public static string IncreaseCost {
+            get {
+                return ResourceManager.GetString("IncreaseCost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input cost range.
         /// </summary>
         public static string InputCostRange {
@@ -507,6 +561,15 @@ namespace Pathfinding.App.Console.Localization {
         public static string InputHostName {
             get {
                 return ResourceManager.GetString("InputHostName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}Input key on which you want to change it (Current: {1}): .
+        /// </summary>
+        public static string InputKeyMsg {
+            get {
+                return ResourceManager.GetString("InputKeyMsg", resourceCulture);
             }
         }
         
@@ -543,6 +606,24 @@ namespace Pathfinding.App.Console.Localization {
         public static string InputServerNameMsg {
             get {
                 return ResourceManager.GetString("InputServerNameMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interrupt algorithm key.
+        /// </summary>
+        public static string InterruptAlgorithm {
+            get {
+                return ResourceManager.GetString("InterruptAlgorithm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keys.
+        /// </summary>
+        public static string KeysUnit {
+            get {
+                return ResourceManager.GetString("KeysUnit", resourceCulture);
             }
         }
         
@@ -588,6 +669,15 @@ namespace Pathfinding.App.Console.Localization {
         public static string Magenta {
             get {
                 return ResourceManager.GetString("Magenta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mark to replace key.
+        /// </summary>
+        public static string MarkToReplace {
+            get {
+                return ResourceManager.GetString("MarkToReplace", resourceCulture);
             }
         }
         
@@ -655,6 +745,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pathfinding control keys.
+        /// </summary>
+        public static string PathfindingControlKeys {
+            get {
+                return ResourceManager.GetString("PathfindingControlKeys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pathfinding range.
         /// </summary>
         public static string PathfindingRange {
@@ -669,6 +768,15 @@ namespace Pathfinding.App.Console.Localization {
         public static string PathfindingResultFormat {
             get {
                 return ResourceManager.GetString("PathfindingResultFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pause algorithm key.
+        /// </summary>
+        public static string PauseAlgorithm {
+            get {
+                return ResourceManager.GetString("PauseAlgorithm", resourceCulture);
             }
         }
         
@@ -727,11 +835,56 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Regular keys.
+        /// </summary>
+        public static string RegularKeys {
+            get {
+                return ResourceManager.GetString("RegularKeys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace transit key.
+        /// </summary>
+        public static string ReplaceTransit {
+            get {
+                return ResourceManager.GetString("ReplaceTransit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset smooth key.
+        /// </summary>
+        public static string ResetSmooth {
+            get {
+                return ResourceManager.GetString("ResetSmooth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resize graph.
         /// </summary>
         public static string ResizeGraph {
             get {
                 return ResourceManager.GetString("ResizeGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resume algorithm key.
+        /// </summary>
+        public static string ResumeAlgorithm {
+            get {
+                return ResourceManager.GetString("ResumeAlgorithm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reverse vertex key.
+        /// </summary>
+        public static string ReverseVertex {
+            get {
+                return ResourceManager.GetString("ReverseVertex", resourceCulture);
             }
         }
         
@@ -772,11 +925,20 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Smooth graph.
+        ///   Looks up a localized string similar to Smooth graph key.
         /// </summary>
         public static string SmoothGraph {
             get {
                 return ResourceManager.GetString("SmoothGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Smooth graph.
+        /// </summary>
+        public static string SmoothGraphItem {
+            get {
+                return ResourceManager.GetString("SmoothGraphItem", resourceCulture);
             }
         }
         
@@ -786,6 +948,24 @@ namespace Pathfinding.App.Console.Localization {
         public static string SourceColor {
             get {
                 return ResourceManager.GetString("SourceColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pathfinding speed down key.
+        /// </summary>
+        public static string SpeedDown {
+            get {
+                return ResourceManager.GetString("SpeedDown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pathfinding speed up key.
+        /// </summary>
+        public static string SpeedUp {
+            get {
+                return ResourceManager.GetString("SpeedUp", resourceCulture);
             }
         }
         
@@ -808,6 +988,24 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Step by step pathfinding key.
+        /// </summary>
+        public static string StepByStepPathfinding {
+            get {
+                return ResourceManager.GetString("StepByStepPathfinding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit smooth key.
+        /// </summary>
+        public static string SubmitSmooth {
+            get {
+                return ResourceManager.GetString("SubmitSmooth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Target color.
         /// </summary>
         public static string TargetColor {
@@ -822,6 +1020,60 @@ namespace Pathfinding.App.Console.Localization {
         public static string TransitColor {
             get {
                 return ResourceManager.GetString("TransitColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transit keys.
+        /// </summary>
+        public static string TransitKeys {
+            get {
+                return ResourceManager.GetString("TransitKeys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Undo smooth key.
+        /// </summary>
+        public static string UndoSmooth {
+            get {
+                return ResourceManager.GetString("UndoSmooth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertex down key.
+        /// </summary>
+        public static string VertexDown {
+            get {
+                return ResourceManager.GetString("VertexDown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertex left key.
+        /// </summary>
+        public static string VertexLeft {
+            get {
+                return ResourceManager.GetString("VertexLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertex right key.
+        /// </summary>
+        public static string VertexRight {
+            get {
+                return ResourceManager.GetString("VertexRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertex up key.
+        /// </summary>
+        public static string VertexUp {
+            get {
+                return ResourceManager.GetString("VertexUp", resourceCulture);
             }
         }
         

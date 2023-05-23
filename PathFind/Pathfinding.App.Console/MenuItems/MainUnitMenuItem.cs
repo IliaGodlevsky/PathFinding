@@ -17,6 +17,7 @@ namespace Pathfinding.App.Console.MenuItems
         public void Dispose()
         {
             Colours.Default.Save();
+            Keys.Default.Save();
         }
     }
 }
