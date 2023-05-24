@@ -66,7 +66,7 @@
     <Compile Include="MenuItems\KeysMenuItems\RegularKeysMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\TransitKeysMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\KeysUnitMenuItem.cs" />
-    <Compile Include="Model\ApplicationSettingsSave.cs" />
+    <Compile Include="Model\ApplicationSettingsStore.cs" />
     <Compile Include="Model\Visualizations\Visuals\CrossedPathVisual.cs" />
     <Compile Include="Model\Visualizations\Visuals\EnqueuedVisual.cs" />
     <Compile Include="Model\Visualizations\Visuals\NullVisual.cs" />

@@ -118,7 +118,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Configure(ContainerBuilder builder)
             {
-                builder.RegisterType<ApplicationSettingsSave>().As<IDisposable>().SingleInstance().AutoActivate();
+                builder.RegisterType<ApplicationSettingsStore>().As<IDisposable>().SingleInstance().AutoActivate();
 
                 builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance().RegisterRecievers();
 
