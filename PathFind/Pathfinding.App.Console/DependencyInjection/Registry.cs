@@ -118,6 +118,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Configure(ContainerBuilder builder)
             {
+                builder.RegisterType<ApplicationSettingsSave>().As<IDisposable>().SingleInstance().AutoActivate();
+
                 builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance().RegisterRecievers();
 
                 builder.RegisterType<AppLayout>().As<ICanRecieveMessage>().SingleInstance().AutoActivate();
@@ -268,6 +270,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Configure(ContainerBuilder builder)
             {
+                builder.RegisterInstance(Colours.Default).As<SettingsBase>().SingleInstance();
                 builder.RegisterType<ColorsUnitMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
                 builder.RegisterType<RegularVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
                 builder.RegisterType<PathVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
@@ -376,6 +379,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Configure(ContainerBuilder builder)
             {
+                builder.RegisterInstance(Keys.Default).As<SettingsBase>().SingleInstance();
                 builder.RegisterType<KeysUnitMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
                 builder.RegisterType<RegularKeysMenuItem>().Keyed<IMenuItem>(KeysUnit).SingleInstance();
             }
