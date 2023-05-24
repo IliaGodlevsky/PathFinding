@@ -35,7 +35,12 @@ namespace Pathfinding.App.Console
 
         public bool Equals(IToken other)
         {
-            return other.GetHashCode() == GetHashCode();
+            return Equals((object)other);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj.GetHashCode() == GetHashCode();
         }
 
         public override int GetHashCode()
