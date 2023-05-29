@@ -22,14 +22,16 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
             return middleware.GetParameters(context, key).Concat(GetParameters(context));
         }
 
-        private static IReadOnlyDictionary<ConsoleKey, TValue> Resolve<TValue>(IComponentContext context)
+        private static IReadOnlyCollection<(string, TValue)> Resolve<TValue>(IComponentContext context)
         {
-            return context.ResolveWithMetadata<ConsoleKey, TValue>(Key);
+            return context.ResolveWithMetadata<string, TValue>(Key)
+                .Select(item => (item.Key, item.Value))
+                .ToHashSet();
         }
 
         private static TypedParameter GetParameter<TKey>(object value)
         {
-            return new(typeof(IReadOnlyDictionary<ConsoleKey, TKey>), value);
+            return new(typeof(IReadOnlyCollection<(string, TKey)>), value);
         }
 
         private static IEnumerable<TypedParameter> GetParameters(IComponentContext context)

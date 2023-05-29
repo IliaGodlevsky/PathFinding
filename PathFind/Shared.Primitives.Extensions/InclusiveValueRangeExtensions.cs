@@ -7,18 +7,54 @@ namespace Shared.Primitives.Extensions
 {
     public static class InclusiveValueRangeExtensions
     {
+        public struct RangeEnumerator
+        {
+            private readonly int start;
+            private readonly int end;
+
+            public int Current { get; private set; }
+
+            internal RangeEnumerator(int start, int end)
+            {
+                this.start = start;
+                this.end = end;
+                Current = start - 1;
+            }
+
+            internal RangeEnumerator(InclusiveValueRange<int> range)
+                : this(range.LowerValueOfRange, range.UpperValueOfRange)
+            {
+
+            }
+
+            public bool MoveNext()
+            {
+                return ++Current <= end;
+            }
+
+            public void Reset()
+            {
+                Current = start - 1;
+            }
+        }
+
         /// <summary>
         /// Returns all values from <paramref name="range"/>
         /// </summary>
         /// <param name="range"></param>
         /// <returns>An enumerable, that contains all 
         /// values from <paramref name="range"/></returns>
-        public static IEnumerable<int> Enumerate(this InclusiveValueRange<int> range)
+        public static IEnumerable<int> Iterate(this InclusiveValueRange<int> range)
         {
-            for (int value = range.LowerValueOfRange; value <= range.UpperValueOfRange; value++)
+            foreach (int value in range)
             {
                 yield return value;
             }
+        }
+
+        public static RangeEnumerator GetEnumerator(this InclusiveValueRange<int> range)
+        {
+            return new RangeEnumerator(range);
         }
 
         public static long Amplitude(this InclusiveValueRange<int> valueRange)

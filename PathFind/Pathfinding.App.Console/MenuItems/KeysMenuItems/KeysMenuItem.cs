@@ -28,9 +28,7 @@ namespace Pathfinding.App.Console.MenuItems.KeysMenuItems
                 .Select(item => item.ToString())
                 .Append(Languages.Quit)
                 .CreateMenuList(columnsNumber: 3);
-            consoleKeys = GetConsoleKeys()
-                .ToList()
-                .AsReadOnly();
+            consoleKeys = GetConsoleKeys().ToList().AsReadOnly();
             consoleKeysMenuList = consoleKeys
                 .Select(key => key.ToString())
                 .Append(Languages.Quit)

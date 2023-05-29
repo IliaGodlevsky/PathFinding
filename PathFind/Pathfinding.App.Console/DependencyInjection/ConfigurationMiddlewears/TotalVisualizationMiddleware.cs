@@ -27,7 +27,7 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
             }
             var paramType = typeof(IReadOnlyDictionary<VisualType, IVisual>);
             var parameter = new TypedParameter(paramType, resolved);
-            context.ChangeParameters(new[] { parameter });
+            context.ChangeParametres(parameter);
             next(context);
         }
     }

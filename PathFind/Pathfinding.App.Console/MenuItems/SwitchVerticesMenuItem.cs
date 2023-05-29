@@ -5,15 +5,15 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Settings;
 using Pathfinding.GraphLib.Core.Realizations.Coordinates;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Shared.Extensions;
 using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems
 {
-    using VertexActions = IReadOnlyDictionary<ConsoleKey, IVertexAction>;
+    using VertexActions = IReadOnlyCollection<(string ResourceName, IVertexAction Action)>;
 
     internal abstract class SwitchVerticesMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
@@ -21,6 +21,8 @@ namespace Pathfinding.App.Console.MenuItems
         protected readonly VertexActions actions;
 
         protected Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
+        protected InclusiveValueRange<int> xRange = default;
+        protected InclusiveValueRange<int> yRange = default;
 
         protected SwitchVerticesMenuItem(VertexActions actions,
             IInput<ConsoleKey> keyInput)
@@ -34,10 +36,8 @@ namespace Pathfinding.App.Console.MenuItems
             return graph != Graph2D<Vertex>.Empty;
         }
 
-        public void Execute()
+         public void Execute()
         {
-            var xRange = new InclusiveValueRange<int>(graph.Width - 1);
-            var yRange = new InclusiveValueRange<int>(graph.Length - 1);
             int x = 0, y = 0;
             var key = default(ConsoleKey);
             do
@@ -55,7 +55,7 @@ namespace Pathfinding.App.Console.MenuItems
                 else if (key == Keys.Default.VertexRight)
                     x = ReturnInRange(x + 1, xRange);
                 else
-                    actions.GetOrDefault(key)?.Do(vertex);
+                    GetOrDefault(key)?.Do(vertex);
             } while (key != ConsoleKey.Escape);
         }
 
@@ -64,9 +64,24 @@ namespace Pathfinding.App.Console.MenuItems
             return range.ReturnInRange(coordinate, ReturnOptions.Cycle);
         }
 
+        private IVertexAction GetOrDefault(ConsoleKey key)
+        {
+            ConsoleKey GetValue(string resourceName)
+            {
+                return (ConsoleKey)Keys.Default.GetValueOrDefault(resourceName);
+            }
+
+            var action = actions
+                .FirstOrDefault(action => GetValue(action.ResourceName) == key)
+                .Action;
+            return action;
+        }
+
         private void SetGraph(Graph2D<Vertex> graph)
         {
             this.graph = graph;
+            xRange = new InclusiveValueRange<int>(graph.Width - 1);
+            yRange = new InclusiveValueRange<int>(graph.Length - 1);
         }
 
         public void RegisterHanlders(IMessenger messenger)

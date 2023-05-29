@@ -10,7 +10,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
     [HighestPriority]
     internal sealed class EnterPathfindingRangeMenuItem : SwitchVerticesMenuItem
     {
-        public EnterPathfindingRangeMenuItem(IReadOnlyDictionary<ConsoleKey, IVertexAction> actions,
+        public EnterPathfindingRangeMenuItem(IReadOnlyCollection<(string, IVertexAction)> actions,
             IInput<ConsoleKey> keyInput)
             : base(actions, keyInput)
         {

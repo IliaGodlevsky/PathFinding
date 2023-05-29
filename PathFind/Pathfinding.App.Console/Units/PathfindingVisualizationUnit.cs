@@ -5,11 +5,13 @@ using Pathfinding.App.Console.EventArguments;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Settings;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Extensions;
 using Shared.Process.EventArguments;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.Units
@@ -17,8 +19,8 @@ namespace Pathfinding.App.Console.Units
     internal sealed class PathfindingVisualizationUnit : Unit, ICanRecieveMessage
     {
         private readonly ConsoleKeystrokesHook keyStrokeHook = new();
-        private readonly IReadOnlyDictionary<ConsoleKey, IPathfindingAction> pathfindingActions;
-        private readonly IReadOnlyDictionary<ConsoleKey, IAnimationSpeedAction> animationActions;
+        private readonly IReadOnlyCollection<(string, IPathfindingAction)> pathfindingActions;
+        private readonly IReadOnlyCollection<(string, IAnimationSpeedAction)> animationActions;
 
         private PathfindingProcess algorithm = PathfindingProcess.Null;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
@@ -27,8 +29,8 @@ namespace Pathfinding.App.Console.Units
 
         public PathfindingVisualizationUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
-            IReadOnlyDictionary<ConsoleKey, IPathfindingAction> pathfindingActions,
-            IReadOnlyDictionary<ConsoleKey, IAnimationSpeedAction> animationActions)
+            IReadOnlyCollection<(string, IPathfindingAction)> pathfindingActions,
+            IReadOnlyCollection<(string, IAnimationSpeedAction)> animationActions)
             : base(menuItems, conditioned)
         {
             this.animationActions = animationActions;
@@ -87,8 +89,15 @@ namespace Pathfinding.App.Console.Units
 
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
         {
-            pathfindingActions.GetOrDefault(e.PressedKey)?.Do(algorithm);
-            animationDelay = animationActions.GetOrDefault(e.PressedKey)?.Do(animationDelay) ?? animationDelay;
+            GetOrDefault(e.PressedKey, pathfindingActions)?.Do(algorithm);
+            animationDelay = GetOrDefault(e.PressedKey, animationActions)?.Do(animationDelay) ?? animationDelay;
+        }
+
+        private T GetOrDefault<T>(ConsoleKey key, IReadOnlyCollection<(string SourceName, T Action)> actions)
+        {
+            return actions
+                .FirstOrDefault(action => Keys.Default.GetValueOrDefault(action.SourceName).Equals(key))
+                .Action;
         }
 
         public void RegisterHanlders(IMessenger messenger)

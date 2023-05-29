@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Builder;
 using Autofac.Core;
+using Autofac.Core.Resolving.Pipeline;
 using Autofac.Features.Metadata;
 using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Interface;
@@ -58,6 +59,12 @@ namespace Pathfinding.App.Console.DependencyInjection
         {
             builder.RegisterType<TVisual>().As<IVisual>().As<ICanRecieveMessage>()
                 .WithMetadata(RegistrationConstants.VisualTypeKey, type).SingleInstance();
+        }
+
+        public static void ChangeParametres(this ResolveRequestContext context, 
+            params Parameter[] parameters)
+        {
+            context.ChangeParameters(parameters.AsEnumerable());
         }
     }
 }

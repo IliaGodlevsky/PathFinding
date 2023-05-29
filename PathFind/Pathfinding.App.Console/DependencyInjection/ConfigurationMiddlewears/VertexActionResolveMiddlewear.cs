@@ -3,6 +3,7 @@ using Autofac.Core.Resolving.Pipeline;
 using Pathfinding.App.Console.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 {
@@ -19,10 +20,12 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 
         public void Execute(ResolveRequestContext context, Action<ResolveRequestContext> next)
         {
-            var paramType = typeof(IReadOnlyDictionary<ConsoleKey, IVertexAction>);
-            var actions = context.ResolveWithMetadataKeyed<ConsoleKey, IVertexAction>(key);
+            var paramType = typeof(IReadOnlyCollection<(string, IVertexAction)>);
+            var actions = context.ResolveWithMetadataKeyed<string, IVertexAction>(key)
+                .Select(item => (item.Key, item.Value))
+                .ToHashSet();
             var actionsParameter = new TypedParameter(paramType, actions);
-            context.ChangeParameters(new[] { actionsParameter });
+            context.ChangeParametres(actionsParameter);
             next(context);
         }
     }

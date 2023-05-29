@@ -30,14 +30,5 @@ namespace Pathfinding.App.Console.Extensions
             }
             return input;
         }
-
-        public static void InputWhile(this IInput<ConsoleKey> self, ConsoleKey @while)
-        {
-            var key = self.Input();
-            while (key != @while)
-            {
-                key = self.Input();
-            }
-        }
     }
 }

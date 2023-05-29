@@ -32,7 +32,7 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
                 .Select(item => item.Value)
                 .ToArray();
             var parameter = new TypedParameter(typeof(IReadOnlyList<AlgorithmFactory>), value);
-            context.ChangeParameters(new[] { parameter });
+            context.ChangeParametres(parameter);
             next(context);
         }
     }

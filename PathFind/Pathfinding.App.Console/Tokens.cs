@@ -28,11 +28,11 @@ namespace Pathfinding.App.Console
 
         private sealed class Token : IToken
         {
-            private readonly int hashCode;
+            private readonly Guid token;
 
             public Token()
             {
-                hashCode = Guid.NewGuid().GetHashCode();
+                token = Guid.NewGuid();
             }
 
             public bool Equals(IToken other)
@@ -47,12 +47,12 @@ namespace Pathfinding.App.Console
 
             public override int GetHashCode()
             {
-                return hashCode;
+                return token.GetHashCode();
             }
 
             public override string ToString()
             {
-                return hashCode.ToString();
+                return token.ToString();
             }
         }
 

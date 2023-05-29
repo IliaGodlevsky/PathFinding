@@ -49,6 +49,7 @@
     <Compile Include="DependencyInjection\Attributes\MandatoryRegistrationAttribute.cs" />
     <Compile Include="DependencyInjection\Attributes\SettingsPropertyAttribute.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\TotalVisualizationMiddleware.cs" />
+    <Compile Include="Extensions\SettingsExtensions.cs" />
     <Compile Include="Interface\IToken.cs" />
     <Compile Include="Interface\IVisual.cs" />
     <Compile Include="MenuItems\ColorMenuItems\CrossedPathVertexColorMenuItem.cs" />

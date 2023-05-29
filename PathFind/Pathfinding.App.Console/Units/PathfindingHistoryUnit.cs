@@ -93,7 +93,7 @@ namespace Pathfinding.App.Console.Units
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
             messenger.RegisterData<bool>(this, Tokens.History, SetIsApplied);
             messenger.RegisterData<Guid>(this, token, VisualizeHistory);
-            messenger.RegisterAction<ClearHistoryMessage>(this, token, ClearHistory);
+            messenger.RegisterAction<ClearHistoryMessage>(this, Tokens.History, ClearHistory);
         }
     }
 }

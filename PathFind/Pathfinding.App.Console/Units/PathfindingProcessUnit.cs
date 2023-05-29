@@ -93,8 +93,7 @@ namespace Pathfinding.App.Console.Units
         private void PrepareForPathfinding(PathfindingProcess algorithm)
         {
             messenger.SendData(algorithm.ToString(), Tokens.AppLayout);
-            messenger.SendData(algorithm, Tokens.Visualization,
-                Tokens.History, Tokens.Statistics);
+            messenger.SendData(algorithm, Tokens.Visualization, Tokens.History, Tokens.Statistics);
             messenger.SendAlgorithmData(algorithm, rangeBuilder.Range, Tokens.History);
         }
 
