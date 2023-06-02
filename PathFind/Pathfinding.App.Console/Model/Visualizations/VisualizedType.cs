@@ -1,6 +1,6 @@
 ﻿namespace Pathfinding.App.Console.Model.Visualizations
 {
-    public enum VisualType
+    public enum VisualizedType
     {
         Obstacle,
         Regular,

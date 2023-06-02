@@ -4,10 +4,10 @@ using System;
 
 namespace Pathfinding.App.Console.Model.Visualizations.Visuals
 {
-    internal sealed class NullVisual : Singleton<NullVisual, IVisual>, IVisual
+    internal sealed class NullVisualizedVertices : Singleton<NullVisualizedVertices, IVisualizedVertices>, IVisualizedVertices
     {
 #pragma warning disable CS0067
-        public event Action<Vertex> Visualized;
+        public event Action<Vertex> VertexVisualized;
 #pragma warning restore CS0067
 
         public bool Contains(Vertex vertex)
@@ -22,10 +22,10 @@ namespace Pathfinding.App.Console.Model.Visualizations.Visuals
 
         public void Visualize(Vertex vertex)
         {
-            
+
         }
 
-        private NullVisual()
+        private NullVisualizedVertices()
         {
 
         }

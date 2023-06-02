@@ -57,7 +57,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 
         private int GetAlgorithmIndex(string message)
         {
-            //AppLayout.SetCursorPositionUnderGraphField();
             using (Cursor.UseCurrentPositionWithClean())
             {
                 return input.Input(message, factories.Count + 1, 1) - 1;

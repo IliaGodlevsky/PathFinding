@@ -16,16 +16,16 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 
         public void Execute(ResolveRequestContext context, Action<ResolveRequestContext> next)
         {
-            var resolved = context.ResolveWithMetadata<VisualType, IVisual>(VisualTypeKey);
+            var resolved = context.ResolveWithMetadata<VisualizedType, IVisualizedVertices>(VisualizedTypeKey);
             foreach (var outerVisual in resolved.Values)
             {
                 var except = resolved.Values.Except(outerVisual);
                 foreach (var innerVisual in except)
                 {
-                    outerVisual.Visualized += innerVisual.Remove;
+                    outerVisual.VertexVisualized += innerVisual.Remove;
                 }
             }
-            var paramType = typeof(IReadOnlyDictionary<VisualType, IVisual>);
+            var paramType = typeof(IReadOnlyDictionary<VisualizedType, IVisualizedVertices>);
             var parameter = new TypedParameter(paramType, resolved);
             context.ChangeParametres(parameter);
             next(context);

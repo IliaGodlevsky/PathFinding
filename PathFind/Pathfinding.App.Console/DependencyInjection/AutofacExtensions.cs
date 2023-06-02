@@ -54,14 +54,14 @@ namespace Pathfinding.App.Console.DependencyInjection
             return builder.OnActivated(Register);
         }
 
-        public static void RegisterVisual<TVisual>(this ContainerBuilder builder, VisualType type)
-            where TVisual : IVisual
+        public static void RegisterVisualizedVertices<TVisual>(this ContainerBuilder builder, VisualizedType type)
+            where TVisual : IVisualizedVertices
         {
-            builder.RegisterType<TVisual>().As<IVisual>().As<ICanRecieveMessage>()
-                .WithMetadata(RegistrationConstants.VisualTypeKey, type).SingleInstance();
+            builder.RegisterType<TVisual>().As<IVisualizedVertices>()
+                .WithMetadata(RegistrationConstants.VisualizedTypeKey, type).SingleInstance();
         }
 
-        public static void ChangeParametres(this ResolveRequestContext context, 
+        public static void ChangeParametres(this ResolveRequestContext context,
             params Parameter[] parameters)
         {
             context.ChangeParameters(parameters.AsEnumerable());

@@ -7,7 +7,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Attributes
     {
         public string SettingsProperty { get; }
 
-        public SettingsPropertyAttribute(string property) 
+        public SettingsPropertyAttribute(string property)
         {
             SettingsProperty = property;
         }

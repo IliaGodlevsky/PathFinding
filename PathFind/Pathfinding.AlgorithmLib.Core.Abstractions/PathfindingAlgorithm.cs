@@ -83,8 +83,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         protected virtual IGraphPath GetSubPath()
         {
-            var traces = this.traces.ToDictionary();
-            return new GraphPath(traces, CurrentRange.Target);
+            return new GraphPath(traces.ToDictionary(), CurrentRange.Target);
         }
 
         protected virtual void Enqueued(IVertex vertex)

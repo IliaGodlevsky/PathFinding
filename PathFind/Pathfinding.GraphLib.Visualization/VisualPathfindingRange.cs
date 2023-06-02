@@ -12,6 +12,7 @@ namespace Pathfinding.Visualization.Core.Abstractions
         where TVertex : IVertex, IRangeVisualizable, IGraphVisualizable
     {
         private readonly IPathfindingRange<TVertex> range;
+        private readonly ObservableCollection<TVertex> transit;
 
         public TVertex Source
         {
@@ -35,17 +36,16 @@ namespace Pathfinding.Visualization.Core.Abstractions
             }
         }
 
-        public IList<TVertex> Transit { get; }
+        public IList<TVertex> Transit => transit;
 
         public VisualPathfindingRange(IPathfindingRange<TVertex> range)
         {
             this.range = range;
-            var transit = new ObservableCollection<TVertex>(range.Transit);
-            transit.CollectionChanged += OnIntermediatesChanged;
-            Transit = transit;
+            transit = new ObservableCollection<TVertex>();
+            transit.CollectionChanged += OnTransitChanged;
         }
 
-        private void OnIntermediatesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnTransitChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {

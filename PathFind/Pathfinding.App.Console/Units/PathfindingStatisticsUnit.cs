@@ -4,7 +4,6 @@ using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Notes;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -64,7 +63,7 @@ namespace Pathfinding.App.Console.Units
                 visited = 0;
                 messenger.SendData(note.ToString(), Tokens.AppLayout);
             }
-            messenger.SendAlgorithmData(value.Process, note, Tokens.History);
+            messenger.SendData((value.Process, note), Tokens.History);
         }
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
@@ -86,12 +85,8 @@ namespace Pathfinding.App.Console.Units
 
         private HistoryNote GetStatistics(IGraphPath path, PathfindingProcess algorithm)
         {
-            var statistics = GetStatistics(algorithm);
-            return new()
+            return new(GetStatistics(algorithm))
             {
-                AlgorithmName = statistics.AlgorithmName,
-                Elapsed = statistics.Elapsed,
-                VisitedVertices = statistics.VisitedVertices,
                 Cost = path.Cost,
                 Steps = path.Count
             };

@@ -9,8 +9,8 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
     [MediumPriority]
     internal sealed class ReverseVertexMenuItem : SwitchVerticesMenuItem
     {
-        public ReverseVertexMenuItem(IReadOnlyCollection<(string, IVertexAction)> actions, 
-            IInput<ConsoleKey> keyInput) 
+        public ReverseVertexMenuItem(IReadOnlyCollection<(string, IVertexAction)> actions,
+            IInput<ConsoleKey> keyInput)
             : base(actions, keyInput)
         {
 

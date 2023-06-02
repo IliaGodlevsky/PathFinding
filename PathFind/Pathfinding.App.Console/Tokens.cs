@@ -11,19 +11,11 @@ namespace Pathfinding.App.Console
         public static readonly IToken AppLayout = new Token();
         public static readonly IToken Common = new Token();
         public static readonly IToken History = new Token();
-        public static readonly IToken Target = new Token();
-        public static readonly IToken Transit = new Token();
-        public static readonly IToken Visited = new Token();
-        public static readonly IToken Enqueued = new Token();
-        public static readonly IToken Crossed = new Token();
-        public static readonly IToken Obstacle = new Token();
-        public static readonly IToken Regular = new Token();
-        public static readonly IToken Source = new Token();
         public static readonly IToken Statistics = new Token();
         public static readonly IToken Visualization = new Token();
         public static readonly IToken Pathfinding = new Token();
 
-        public static IToken Bind(Func<bool> condition, IToken token) 
+        public static IToken Bind(Func<bool> condition, IToken token)
             => new ConditionToken(condition, token);
 
         private sealed class Token : IToken

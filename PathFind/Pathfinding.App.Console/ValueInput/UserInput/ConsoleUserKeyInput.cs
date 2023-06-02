@@ -7,8 +7,8 @@ namespace Pathfinding.App.Console.ValueInput.UserInput
     {
         private readonly bool intercept;
 
-        public ConsoleUserKeyInput(bool intercept = true) 
-        { 
+        public ConsoleUserKeyInput(bool intercept = true)
+        {
             this.intercept = intercept;
         }
 

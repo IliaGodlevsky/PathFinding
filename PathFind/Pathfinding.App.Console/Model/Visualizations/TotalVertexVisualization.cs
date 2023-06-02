@@ -8,24 +8,24 @@ namespace Pathfinding.App.Console.Model.Visualizations
 {
     internal sealed class TotalVertexVisualization : ITotalVisualization<Vertex>
     {
-        private readonly IReadOnlyDictionary<VisualType, IVisual> visuals;
+        private readonly IReadOnlyDictionary<VisualizedType, IVisualizedVertices> visuals;
 
-        public TotalVertexVisualization(IReadOnlyDictionary<VisualType, IVisual> visuals)
+        public TotalVertexVisualization(IReadOnlyDictionary<VisualizedType, IVisualizedVertices> visuals)
         {
             this.visuals = visuals;
         }
 
         public bool IsVisualizedAsPath(Vertex visualizable)
         {
-            return GetOrDefault(VisualType.Crossed).Contains(visualizable)
-                || GetOrDefault(VisualType.Path).Contains(visualizable);
+            return GetOrDefault(VisualizedType.Crossed).Contains(visualizable)
+                || GetOrDefault(VisualizedType.Path).Contains(visualizable);
         }
 
         public bool IsVisualizedAsRange(Vertex visualizable)
         {
-            return GetOrDefault(VisualType.Source).Contains(visualizable)
-                || GetOrDefault(VisualType.Target).Contains(visualizable)
-                || GetOrDefault(VisualType.Transit).Contains(visualizable);
+            return GetOrDefault(VisualizedType.Source).Contains(visualizable)
+                || GetOrDefault(VisualizedType.Target).Contains(visualizable)
+                || GetOrDefault(VisualizedType.Transit).Contains(visualizable);
         }
 
         public void VisualizeAsPath(Vertex visualizable)
@@ -34,53 +34,53 @@ namespace Pathfinding.App.Console.Model.Visualizations
             {
                 if (!visualizable.IsVisualizedAsPath())
                 {
-                    GetOrDefault(VisualType.Path).Visualize(visualizable);
+                    GetOrDefault(VisualizedType.Path).Visualize(visualizable);
                 }
                 else
                 {
-                    GetOrDefault(VisualType.Crossed).Visualize(visualizable);
+                    GetOrDefault(VisualizedType.Crossed).Visualize(visualizable);
                 }
             }
         }
 
         public void VisualizeAsSource(Vertex visualizable)
         {
-            GetOrDefault(VisualType.Source).Visualize(visualizable);
+            GetOrDefault(VisualizedType.Source).Visualize(visualizable);
         }
 
         public void VisualizeAsTarget(Vertex visualizable)
         {
-            GetOrDefault(VisualType.Target).Visualize(visualizable);
+            GetOrDefault(VisualizedType.Target).Visualize(visualizable);
         }
 
         public void VisualizeAsTransit(Vertex visualizable)
         {
-            GetOrDefault(VisualType.Transit).Visualize(visualizable);
+            GetOrDefault(VisualizedType.Transit).Visualize(visualizable);
         }
 
         public void VisualizeAsObstacle(Vertex vertex)
         {
-            GetOrDefault(VisualType.Obstacle).Visualize(vertex);
+            GetOrDefault(VisualizedType.Obstacle).Visualize(vertex);
         }
 
         public void VisualizeAsRegular(Vertex vertex)
         {
-            GetOrDefault(VisualType.Regular).Visualize(vertex);
+            GetOrDefault(VisualizedType.Regular).Visualize(vertex);
         }
 
         public void VisualizeAsVisited(Vertex vertex)
         {
-            GetOrDefault(VisualType.Visited).Visualize(vertex);
+            GetOrDefault(VisualizedType.Visited).Visualize(vertex);
         }
 
         public void VisualizeAsEnqueued(Vertex vertex)
         {
-            GetOrDefault(VisualType.Enqueued).Visualize(vertex);
+            GetOrDefault(VisualizedType.Enqueued).Visualize(vertex);
         }
 
-        private IVisual GetOrDefault(VisualType type)
+        private IVisualizedVertices GetOrDefault(VisualizedType type)
         {
-            return visuals.GetOrDefault(type, NullVisual.Instance);
+            return visuals.GetOrDefault(type, NullVisualizedVertices.Instance);
         }
     }
 }

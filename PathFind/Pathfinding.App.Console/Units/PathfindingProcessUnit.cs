@@ -73,7 +73,7 @@ namespace Pathfinding.App.Console.Units
             var path = NullGraphPath.Interface;
             void Summarize()
             {
-                messenger.SendAlgorithmData(algorithm, path, Tokens.History, Tokens.Statistics);
+                messenger.SendData((algorithm, path), Tokens.History, Tokens.Statistics);
             }
             using (Disposable.Use(Summarize))
             {
@@ -94,7 +94,7 @@ namespace Pathfinding.App.Console.Units
         {
             messenger.SendData(algorithm.ToString(), Tokens.AppLayout);
             messenger.SendData(algorithm, Tokens.Visualization, Tokens.History, Tokens.Statistics);
-            messenger.SendAlgorithmData(algorithm, rangeBuilder.Range, Tokens.History);
+            messenger.SendData((algorithm, rangeBuilder.Range), Tokens.History);
         }
 
         public void RegisterHanlders(IMessenger messenger)

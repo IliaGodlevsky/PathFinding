@@ -11,7 +11,7 @@
         public const string PathfindingRange = "Range";
         public const string ChangeCost = "Cost";
         public const string Reverse = "Reverse";
-        public const string VisualTypeKey = "VisualType";
+        public const string VisualizedTypeKey = "VisualType";
 
         public const string Group = "Group";
         public const int GreedGroup = 0;

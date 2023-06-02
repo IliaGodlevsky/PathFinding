@@ -96,7 +96,7 @@ namespace Pathfinding.App.Console.Units
         private T GetOrDefault<T>(ConsoleKey key, IReadOnlyCollection<(string SourceName, T Action)> actions)
         {
             return actions
-                .FirstOrDefault(action => Keys.Default.GetValueOrDefault(action.SourceName).Equals(key))
+                .FirstOrDefault(action => Keys.Default[action.SourceName].Equals(key))
                 .Action;
         }
 

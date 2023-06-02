@@ -1,6 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.VisualizationLib.Core.Interface;
-using Shared.Extensions;
 
 namespace Pathfinding.Visualization.Extensions
 {
@@ -9,7 +8,10 @@ namespace Pathfinding.Visualization.Extensions
         public static void RestoreVerticesVisualState<TVertex>(this IGraph<TVertex> graph)
             where TVertex : IVertex, ITotallyVisualizable
         {
-            graph.ForEach(vertex => vertex.RestoreDefaultVisualState());
+            foreach (var vertex in graph)
+            {
+                vertex.RestoreDefaultVisualState();
+            }
         }
     }
 }

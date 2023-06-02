@@ -66,13 +66,8 @@ namespace Pathfinding.App.Console.MenuItems
 
         private IVertexAction GetOrDefault(ConsoleKey key)
         {
-            ConsoleKey GetValue(string resourceName)
-            {
-                return (ConsoleKey)Keys.Default.GetValueOrDefault(resourceName);
-            }
-
             var action = actions
-                .FirstOrDefault(action => GetValue(action.ResourceName) == key)
+                .FirstOrDefault(action => Keys.Default[action.ResourceName].Equals(key))
                 .Action;
             return action;
         }

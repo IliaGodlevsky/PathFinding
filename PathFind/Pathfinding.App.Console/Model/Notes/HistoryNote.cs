@@ -6,6 +6,18 @@ namespace Pathfinding.App.Console.Model.Notes
     {
         private readonly string NoteFormat = Languages.PathfindingResultFormat;
 
+        public HistoryNote()
+        {
+
+        }
+
+        public HistoryNote(StatisticsNote note)
+        {
+            AlgorithmName = note.AlgorithmName;
+            Elapsed = note.Elapsed;
+            VisitedVertices = note.VisitedVertices;
+        }
+
         public int Steps { get; set; }
 
         public double Cost { get; set; }

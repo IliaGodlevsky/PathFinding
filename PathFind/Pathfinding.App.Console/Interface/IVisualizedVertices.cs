@@ -3,9 +3,9 @@ using System;
 
 namespace Pathfinding.App.Console.Interface
 {
-    internal interface IVisual
+    internal interface IVisualizedVertices
     {
-        event Action<Vertex> Visualized;
+        event Action<Vertex> VertexVisualized;
 
         bool Contains(Vertex vertex);
 

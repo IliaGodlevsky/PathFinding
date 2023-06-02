@@ -140,12 +140,12 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterType<TotalVertexVisualization>().As<ITotalVisualization<Vertex>>().SingleInstance()
                     .ConfigurePipeline(p => p.Use(new TotalVisualizationMiddleware()));
-                builder.RegisterVisual<TargetVisual>(VisualType.Target);
-                builder.RegisterVisual<SourceVisual>(VisualType.Source);
-                builder.RegisterVisual<RegularVisual>(VisualType.Regular);
-                builder.RegisterVisual<PathVisual>(VisualType.Path);
-                builder.RegisterVisual<ObstacleVisual>(VisualType.Obstacle);
-                builder.RegisterVisual<CrossedPathVisual>(VisualType.Crossed);
+                builder.RegisterVisualizedVertices<VisualizedTarget>(VisualizedType.Target);
+                builder.RegisterVisualizedVertices<VisualizedSource>(VisualizedType.Source);
+                builder.RegisterVisualizedVertices<VisualizedRegular>(VisualizedType.Regular);
+                builder.RegisterVisualizedVertices<VisualizedPath>(VisualizedType.Path);
+                builder.RegisterVisualizedVertices<VisualizedObstacle>(VisualizedType.Obstacle);
+                builder.RegisterVisualizedVertices<VisualizedCrossedPath>(VisualizedType.Crossed);
 
                 builder.RegisterType<PathfindingRangeMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
                 builder.RegisterType<PathfindingAlgorithmMenuItem>().Keyed<IConditionedMenuItem>(Process)
@@ -294,7 +294,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<ReplaceTransitIsolatedVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 1).SingleInstance();
                 builder.RegisterType<IncludeTransitVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 6).SingleInstance();
                 builder.RegisterType<TransitVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
-                builder.RegisterVisual<TransitVisual>(VisualType.Transit);
+                builder.RegisterVisualizedVertices<VisualizedTransit>(VisualizedType.Transit);
             }
         }
 
@@ -332,8 +332,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<EnterAnimationDelayMenuItem>().Keyed<IConditionedMenuItem>(PathfindingUnits.Visual).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<VisitedVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
                 builder.RegisterType<EnqueuedVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
-                builder.RegisterVisual<VisitedVisual>(VisualType.Visited);
-                builder.RegisterVisual<EnqueuedVisual>(VisualType.Enqueued);
+                builder.RegisterVisualizedVertices<VisualizedVisited>(VisualizedType.Visited);
+                builder.RegisterVisualizedVertices<VisualizedEnqueued>(VisualizedType.Enqueued);
             }
         }
 

@@ -49,9 +49,8 @@
     <Compile Include="DependencyInjection\Attributes\MandatoryRegistrationAttribute.cs" />
     <Compile Include="DependencyInjection\Attributes\SettingsPropertyAttribute.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\TotalVisualizationMiddleware.cs" />
-    <Compile Include="Extensions\SettingsExtensions.cs" />
     <Compile Include="Interface\IToken.cs" />
-    <Compile Include="Interface\IVisual.cs" />
+    <Compile Include="Interface\IVisualizedVertices.cs" />
     <Compile Include="MenuItems\ColorMenuItems\CrossedPathVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\EnqueuedVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\ObstacleVertexColorMenuItem.cs" />
@@ -68,18 +67,18 @@
     <Compile Include="MenuItems\KeysMenuItems\TransitKeysMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\KeysUnitMenuItem.cs" />
     <Compile Include="Model\ApplicationSettingsStore.cs" />
-    <Compile Include="Model\Visualizations\Visuals\CrossedPathVisual.cs" />
-    <Compile Include="Model\Visualizations\Visuals\EnqueuedVisual.cs" />
-    <Compile Include="Model\Visualizations\Visuals\NullVisual.cs" />
-    <Compile Include="Model\Visualizations\Visuals\ObstacleVisual.cs" />
-    <Compile Include="Model\Visualizations\Visuals\PathVisual.cs" />
-    <Compile Include="Model\Visualizations\Visuals\RegularVisual.cs" />
-    <Compile Include="Model\Visualizations\Visuals\SourceVisual.cs" />
-    <Compile Include="Model\Visualizations\Visuals\TargetVisual.cs" />
-    <Compile Include="Model\Visualizations\Visuals\TransitVisual.cs" />
-    <Compile Include="Model\Visualizations\Visuals\VisitedVisual.cs" />
-    <Compile Include="Model\Visualizations\Visuals\Visual.cs" />
-    <Compile Include="Model\Visualizations\VisualType.cs" />
+    <Compile Include="Model\Visualizations\Visuals\VisualizedCrossedPath.cs" />
+    <Compile Include="Model\Visualizations\Visuals\VisualizedEnqueued.cs" />
+    <Compile Include="Model\Visualizations\Visuals\NullVisualizedVertices.cs" />
+    <Compile Include="Model\Visualizations\Visuals\VisualizedObstacle.cs" />
+    <Compile Include="Model\Visualizations\Visuals\VisualizedPath.cs" />
+    <Compile Include="Model\Visualizations\Visuals\VisualizedRegular.cs" />
+    <Compile Include="Model\Visualizations\Visuals\VisualizedSource.cs" />
+    <Compile Include="Model\Visualizations\Visuals\VisualizedTarget.cs" />
+    <Compile Include="Model\Visualizations\Visuals\VisualizedTransit.cs" />
+    <Compile Include="Model\Visualizations\Visuals\VisualizedVisited.cs" />
+    <Compile Include="Model\Visualizations\Visuals\VisualizedVertices.cs" />
+    <Compile Include="Model\Visualizations\VisualizedType.cs" />
     <Compile Include="Settings\Features.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

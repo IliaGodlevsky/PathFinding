@@ -1,17 +1,17 @@
-﻿using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.App.Console.Interface;
+﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
+using Pathfinding.App.Console.Settings;
 
 namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
 {
     [LowPriority]
     internal sealed class ObstacleVertexColorMenuItem : ColorsMenuItem
     {
-        protected override IToken Token => Tokens.Obstacle;
+        protected override string SettingKey { get; } = nameof(Colours.ObstacleColor);
 
-        public ObstacleVertexColorMenuItem(IMessenger messenger, IInput<int> intInput)
-            : base(messenger, intInput)
+        public ObstacleVertexColorMenuItem(IInput<int> intInput)
+            : base(intInput)
         {
         }
 
