@@ -1,6 +1,7 @@
 ﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Settings;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -12,9 +13,9 @@ namespace Pathfinding.App.Console.Model.Visualizations.Visuals
 
         private readonly HashSet<Vertex> vertices = new();
 
-        private ConsoleColor Color => (ConsoleColor)Colours.Default[SettingsKey];
+        private ConsoleColor Color => (ConsoleColor)Colours.Default[SettingKey];
 
-        protected abstract string SettingsKey { get; }
+        protected abstract string SettingKey { get; }
 
         protected VisualizedVertices()
         {
@@ -40,13 +41,23 @@ namespace Pathfinding.App.Console.Model.Visualizations.Visuals
 
         private void OnSettingsChaged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName.Equals(SettingsKey))
+            if (e.PropertyName.Equals(SettingKey))
             {
                 foreach (var vertex in vertices)
                 {
                     vertex.Color = Color;
                 }
             }
+        }
+
+        public IEnumerator<Vertex> GetEnumerator()
+        {
+            return vertices.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

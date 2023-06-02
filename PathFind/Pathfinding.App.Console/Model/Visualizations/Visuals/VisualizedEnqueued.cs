@@ -4,7 +4,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.Visuals
 {
     internal sealed class VisualizedEnqueued : VisualizedVertices
     {
-        protected override string SettingsKey { get; } = nameof(Colours.EnqueuedColor);
+        protected override string SettingKey { get; } = nameof(Colours.EnqueuedColor);
 
         public override void Visualize(Vertex vertex)
         {

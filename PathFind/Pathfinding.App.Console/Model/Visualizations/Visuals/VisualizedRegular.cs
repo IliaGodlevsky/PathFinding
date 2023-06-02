@@ -4,6 +4,6 @@ namespace Pathfinding.App.Console.Model.Visualizations.Visuals
 {
     internal sealed class VisualizedRegular : VisualizedVertices
     {
-        protected override string SettingsKey { get; } = nameof(Colours.RegularColor);
+        protected override string SettingKey { get; } = nameof(Colours.RegularColor);
     }
 }

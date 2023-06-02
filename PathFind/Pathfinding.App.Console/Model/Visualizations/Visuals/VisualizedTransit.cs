@@ -4,6 +4,6 @@ namespace Pathfinding.App.Console.Model.Visualizations.Visuals
 {
     internal sealed class VisualizedTransit : VisualizedVertices
     {
-        protected override string SettingsKey { get; } = nameof(Colours.TransitColor);
+        protected override string SettingKey { get; } = nameof(Colours.TransitColor);
     }
 }

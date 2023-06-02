@@ -54,10 +54,10 @@ namespace Pathfinding.App.Console.DependencyInjection
             return builder.OnActivated(Register);
         }
 
-        public static void RegisterVisualizedVertices<TVisual>(this ContainerBuilder builder, VisualizedType type)
-            where TVisual : IVisualizedVertices
+        public static void RegisterVisualizedVertices<T>(this ContainerBuilder builder, VisualizedType type)
+            where T : IVisualizedVertices
         {
-            builder.RegisterType<TVisual>().As<IVisualizedVertices>()
+            builder.RegisterType<T>().As<IVisualizedVertices>()
                 .WithMetadata(RegistrationConstants.VisualizedTypeKey, type).SingleInstance();
         }
 
