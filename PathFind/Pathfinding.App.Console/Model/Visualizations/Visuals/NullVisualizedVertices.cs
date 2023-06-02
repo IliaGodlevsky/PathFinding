@@ -1,6 +1,9 @@
 ﻿using Pathfinding.App.Console.Interface;
 using Shared.Primitives.Single;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.App.Console.Model.Visualizations.Visuals
 {
@@ -23,6 +26,16 @@ namespace Pathfinding.App.Console.Model.Visualizations.Visuals
         public void Visualize(Vertex vertex)
         {
 
+        }
+
+        public IEnumerator<Vertex> GetEnumerator()
+        {
+            return Enumerable.Empty<Vertex>().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         private NullVisualizedVertices()
