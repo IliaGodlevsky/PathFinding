@@ -20,7 +20,7 @@ namespace Pathfinding.GraphLib.Serialization.Tests
 {
     using Assemble = GraphAssemble<TestGraph, TestVertex>;
     using Layer = ILayer<TestGraph, TestVertex>;
-    using Serializer = IGraphSerializer<TestGraph, TestVertex>;
+    using Serializer = ISerializer<TestGraph>;
 
     [TestFixture]
     public class GraphSerializationTests

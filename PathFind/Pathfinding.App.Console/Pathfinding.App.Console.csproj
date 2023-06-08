@@ -49,7 +49,20 @@
     <Compile Include="DependencyInjection\Attributes\MandatoryRegistrationAttribute.cs" />
     <Compile Include="DependencyInjection\Attributes\SettingsPropertyAttribute.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\TotalVisualizationMiddleware.cs" />
+    <Compile Include="Dto\AlgorithmDto.cs" />
+    <Compile Include="Dto\GraphDto.cs" />
+    <Compile Include="Dto\StatisticsDto.cs" />
+    <Compile Include="Dto\VerticesDto.cs" />
+    <Compile Include="Entities\AlgorithmEntity.cs" />
+    <Compile Include="Entities\GraphEntity.cs" />
+    <Compile Include="Entities\StatisticsEntity.cs" />
+    <Compile Include="Entities\VerticesEntity.cs" />
+    <Compile Include="Interface\IDto.cs" />
+    <Compile Include="Interface\IEntity.cs" />
+    <Compile Include="Interface\IMapper.cs" />
+    <Compile Include="Interface\IRepository.cs" />
     <Compile Include="Interface\IToken.cs" />
+    <Compile Include="Interface\IUnitOfWork.cs" />
     <Compile Include="Interface\IVisualizedVertices.cs" />
     <Compile Include="MenuItems\ColorMenuItems\CrossedPathVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\EnqueuedVertexColorMenuItem.cs" />
@@ -60,6 +73,10 @@
     <Compile Include="MenuItems\ColorMenuItems\TargetVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\TransitVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\VisitedVertexColorMenuItem.cs" />
+    <Compile Include="MenuItems\GraphMenuItems\LoadRangeMenuItem.cs" />
+    <Compile Include="MenuItems\GraphMenuItems\RecieveRangeMenuItem.cs" />
+    <Compile Include="MenuItems\GraphMenuItems\SaveRangeMenuItem.cs" />
+    <Compile Include="MenuItems\GraphMenuItems\SendRangeMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\EditorKeysMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\KeysMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\PathfindingControlKeysMenuItem.cs" />
@@ -79,6 +96,10 @@
     <Compile Include="Model\Visualizations\Visuals\VisualizedVisited.cs" />
     <Compile Include="Model\Visualizations\Visuals\VisualizedVertices.cs" />
     <Compile Include="Model\Visualizations\VisualizedType.cs" />
+    <Compile Include="Repositories\AlgorithmMemoryRepository.cs" />
+    <Compile Include="Repositories\GraphMemoryRepository.cs" />
+    <Compile Include="Repositories\MemoryRepository.cs" />
+    <Compile Include="Repositories\VerticesMemoryRepository.cs" />
     <Compile Include="Settings\Features.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -155,6 +176,7 @@
     <Compile Include="MenuItems\MainMenuItems\ColorsUnitMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\EditorUnitMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\GraphCreateMenuItem.cs" />
+    <Compile Include="UnitOfWork\MemoryUnitOfWork.cs" />
     <Compile Include="Units\GraphEditorUnit.cs" />
     <Compile Include="MenuItems\MainMenuItems\MainMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\PathfindingProcessMenuItem.cs" />

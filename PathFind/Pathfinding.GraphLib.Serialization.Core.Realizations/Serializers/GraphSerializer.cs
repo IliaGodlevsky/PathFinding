@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
 {
-    public abstract class GraphSerializer<TGraph, TVertex> : IGraphSerializer<TGraph, TVertex>
+    public abstract class GraphSerializer<TGraph, TVertex> : ISerializer<TGraph>
         where TVertex : IVertex
         where TGraph : IGraph<TVertex>
     {
@@ -49,7 +49,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
             }
             catch (Exception ex)
             {
-                throw new GraphSerializationException(ex.Message, ex);
+                throw new SerializationException(ex.Message, ex);
             }
         }
 
@@ -61,7 +61,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
             }
             catch (Exception ex)
             {
-                throw new GraphSerializationException(ex.Message, ex);
+                throw new SerializationException(ex.Message, ex);
             }
         }
 

@@ -1,23 +1,20 @@
-﻿using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Serialization.Core.Interface;
+﻿using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Exceptions;
 using System;
 using System.IO;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decorators
 {
-    public sealed class BufferedGraphSerializer<TGraph, TVertex> : IGraphSerializer<TGraph, TVertex>
-        where TGraph : IGraph<TVertex>
-        where TVertex : IVertex
+    public sealed class BufferedSerializer<T> : ISerializer<T>
     {
-        private readonly IGraphSerializer<TGraph, TVertex> serializer;
+        private readonly ISerializer<T> serializer;
 
-        public BufferedGraphSerializer(IGraphSerializer<TGraph, TVertex> serializer)
+        public BufferedSerializer(ISerializer<T> serializer)
         {
             this.serializer = serializer;
         }
 
-        public TGraph DeserializeFrom(Stream stream)
+        public T DeserializeFrom(Stream stream)
         {
             try
             {
@@ -28,11 +25,11 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decor
             }
             catch (Exception ex)
             {
-                throw new GraphSerializationException(ex.Message, ex);
+                throw new SerializationException(ex.Message, ex);
             }
         }
 
-        public void SerializeTo(TGraph graph, Stream stream)
+        public void SerializeTo(T graph, Stream stream)
         {
             try
             {
@@ -43,7 +40,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decor
             }
             catch (Exception ex)
             {
-                throw new GraphSerializationException(ex.Message, ex);
+                throw new SerializationException(ex.Message, ex);
             }
         }
     }

@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AesCrypto.cs" />
-    <Compile Include="Exceptions\GraphSerializationException.cs" />
+    <Compile Include="Exceptions\SerializationException.cs" />
     <Compile Include="Extensions\BinaryReaderExtensions.cs" />
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
     <Compile Include="Extensions\IGraphSerializationModuleExtensions.cs" />
@@ -61,11 +61,12 @@
     <Compile Include="Modules\InFileSerializationModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serializers\BinaryGraphSerializer.cs" />
-    <Compile Include="Serializers\Decorators\BufferedGraphSerializer.cs" />
-    <Compile Include="Serializers\Decorators\CompressGraphSerializer.cs" />
-    <Compile Include="Serializers\Decorators\CryptoGraphSerializer.cs" />
-    <Compile Include="Serializers\Decorators\ThreadSafeGraphSerializer.cs" />
+    <Compile Include="Serializers\Decorators\BufferedSerializer.cs" />
+    <Compile Include="Serializers\Decorators\CompressSerializer.cs" />
+    <Compile Include="Serializers\Decorators\CryptoSerializer.cs" />
+    <Compile Include="Serializers\Decorators\ThreadSafeSerializer.cs" />
     <Compile Include="Serializers\GraphSerializer.cs" />
+    <Compile Include="Serializers\BinaryRangeSerializer.cs" />
     <Compile Include="Serializers\XmlGraphSerializer.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -15,7 +15,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     internal sealed class SendGraphMenuItem : ExportGraphMenuItem<(string Host, int Port)>
     {
         public SendGraphMenuItem(IMessenger messenger, IInput<(string Host, int Port)> input,
-            IGraphSerializer<Graph2D<Vertex>, Vertex> serializer, ILog log)
+            ISerializer<Graph2D<Vertex>> serializer, ILog log)
              : base(messenger, input, serializer, log)
         {
         }

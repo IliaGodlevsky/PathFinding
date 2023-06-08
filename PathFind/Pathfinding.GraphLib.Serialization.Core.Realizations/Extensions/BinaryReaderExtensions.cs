@@ -33,12 +33,12 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
         {
             bool isObstacle = reader.ReadBoolean();
             var cost = reader.ReadCost(costFactory);
-            var neighbourhood = reader.ReadNeighborhood(coordinateFactory);
+            var neighbourhood = reader.ReadCoordinates(coordinateFactory);
             var position = reader.ReadCoordinate(coordinateFactory);
             return new(isObstacle, cost, position, neighbourhood);
         }
 
-        private static int[] ReadIntArray(this BinaryReader reader)
+        public static int[] ReadIntArray(this BinaryReader reader)
         {
             int count = reader.ReadInt32();
             var coordinates = new int[count];
@@ -56,7 +56,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             return new(upperValueOfCostRange, lowerValueOfCostRange);
         }
 
-        private static ICoordinate[] ReadNeighborhood(this BinaryReader reader,
+        public static ICoordinate[] ReadCoordinates(this BinaryReader reader,
             ICoordinateFactory factory)
         {
             int count = reader.ReadInt32();

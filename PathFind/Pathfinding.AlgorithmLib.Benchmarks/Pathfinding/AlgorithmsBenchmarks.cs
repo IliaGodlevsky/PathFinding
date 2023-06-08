@@ -7,6 +7,7 @@ using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
 using Pathfinding.GraphLib.UnitTest.Realizations.TestFactories;
 using Pathfinding.GraphLib.UnitTest.Realizations.TestObjects;
 using Shared.Primitives.ValueRange;
+using Shared.Random;
 using Shared.Random.Realizations;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Pathfinding.AlgorithmLib.Benchmarks.Pathfinding
 {
     public abstract class AlgorithmsBenchmarks
     {
-
+        protected readonly IRandom random = new DummyRandom();
         private readonly InclusiveValueRange<int> range = new InclusiveValueRange<int>(5, 1);
         private readonly TestGraphFactory graphFactory = new TestGraphFactory();
         private readonly INeighborhoodFactory neighbourhood = new MooreNeighborhoodFactory();
@@ -29,7 +30,6 @@ namespace Pathfinding.AlgorithmLib.Benchmarks.Pathfinding
 
         protected AlgorithmsBenchmarks()
         {
-            var random = new DummyRandom();
             graphAssemble = new GraphAssemble<TestGraph, TestVertex>(
                     vertexFactory, coordinateFactory, graphFactory);
             costLayer = new VertexCostLayer<TestGraph, TestVertex>(costFactory, range, random);

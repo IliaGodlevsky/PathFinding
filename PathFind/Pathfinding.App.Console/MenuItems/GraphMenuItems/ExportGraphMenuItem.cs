@@ -15,13 +15,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     {
         protected readonly IMessenger messenger;
         protected readonly IInput<TPath> input;
-        protected readonly IGraphSerializer<Graph2D<Vertex>, Vertex> serializer;
+        protected readonly ISerializer<Graph2D<Vertex>> serializer;
         protected readonly ILog log;
 
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         protected ExportGraphMenuItem(IMessenger messenger, IInput<TPath> input,
-            IGraphSerializer<Graph2D<Vertex>, Vertex> serializer, ILog log)
+            ISerializer<Graph2D<Vertex>> serializer, ILog log)
         {
             this.messenger = messenger;
             this.input = input;

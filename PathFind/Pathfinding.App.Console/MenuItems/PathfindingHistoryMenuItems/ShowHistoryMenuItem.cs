@@ -21,6 +21,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
     {
         private readonly IMessenger messenger;
         private readonly IInput<int> input;
+        private readonly IUnitOfWork unitOfWork;
         private readonly Dictionary<Guid, StatisticsNote> pages = new();
 
         private bool isHistoryApplied = true;

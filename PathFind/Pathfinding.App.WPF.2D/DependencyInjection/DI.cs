@@ -47,7 +47,7 @@ namespace WPFVersion.DependencyInjection
     using AlgorithmFactory = IAlgorithmFactory<PathfindingProcess>;
     using Command = IPathfindingRangeCommand<Vertex>;
     using Graph = Graph2D<Vertex>;
-    using GraphSerializer = IGraphSerializer<Graph2D<Vertex>, Vertex>;
+    using GraphSerializer = ISerializer<Graph2D<Vertex>>;
 
     internal static class DI
     {
@@ -111,8 +111,8 @@ namespace WPFVersion.DependencyInjection
                 .As<IGraphSerializationModule<Graph, Vertex>>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
             builder.RegisterType<XmlGraphSerializer<Graph, Vertex>>().As<GraphSerializer>().SingleInstance();
-            builder.RegisterDecorator<CompressGraphSerializer<Graph, Vertex>, GraphSerializer>();
-            builder.RegisterDecorator<CryptoGraphSerializer<Graph, Vertex>, GraphSerializer>();
+            builder.RegisterDecorator<CompressSerializer<Graph, Vertex>, GraphSerializer>();
+            builder.RegisterDecorator<CryptoSerializer<Graph, Vertex>, GraphSerializer>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory<Vertex>>().SingleInstance();
             // Algorithms registrations
             builder.RegisterAssemblyTypes(Assemblies).AssignableTo<AlgorithmFactory>()

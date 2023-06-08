@@ -10,18 +10,14 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
 {
     public static class IGraphSerializerExtensions
     {
-        public static async Task SerializeToFileAsync<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self,
-            TGraph graph, string filePath)
-            where TGraph : IGraph<TVertex>
-            where TVertex : IVertex
+        public static async Task SerializeToFileAsync<T>(this ISerializer<T> self,
+            T item, string filePath)
         {
-            await Task.Run(() => self.SerializeToFile(graph, filePath)).ConfigureAwait(false);
+            await Task.Run(() => self.SerializeToFile(item, filePath)).ConfigureAwait(false);
         }
 
-        public static void SerializeToFile<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self,
-            TGraph graph, string filePath)
-            where TGraph : IGraph<TVertex>
-            where TVertex : IVertex
+        public static void SerializeToFile<T>(this ISerializer<T> self,
+            T graph, string filePath)
         {
             var fileMode = File.Exists(filePath) ? FileMode.Truncate : FileMode.Create;
             using (var fileStream = new FileStream(filePath, fileMode, FileAccess.Write))
@@ -30,9 +26,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             }
         }
 
-        public static TGraph DeserializeFromFile<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, string filePath)
-            where TGraph : IGraph<TVertex>
-            where TVertex : IVertex
+        public static T DeserializeFromFile<T>(this ISerializer<T> self, string filePath)
         {
             using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
             {
@@ -40,10 +34,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             }
         }
 
-        public static void SerializeToNetwork<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self,
-           TGraph graph, string host, int port)
-           where TGraph : IGraph<TVertex>
-           where TVertex : IVertex
+        public static void SerializeToNetwork<T>(this ISerializer<T> self, T graph, string host, int port)
         {
             using (var client = new TcpClient(host, port))
             {
@@ -54,25 +45,19 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             }
         }
 
-        public static async Task SerializeToNetworkAsync<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self,
-            TGraph graph, string host, int port)
-            where TGraph : IGraph<TVertex>
-            where TVertex : IVertex
+        public static async Task SerializeToNetworkAsync<T>(this ISerializer<T> self,
+            T graph, string host, int port)
         {
             await Task.Run(() => self.SerializeToNetwork(graph, host, port)).ConfigureAwait(false);
         }
 
-        public static async Task SerializeToNetworkAsync<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self,
-            TGraph graph, (string Host, int Port) address)
-            where TGraph : IGraph<TVertex>
-            where TVertex : IVertex
+        public static async Task SerializeToNetworkAsync<T>(this ISerializer<T> self,
+            T graph, (string Host, int Port) address)
         {
             await self.SerializeToNetworkAsync(graph, address.Host, address.Port);
         }
 
-        public static TGraph DeserializeFromNetwork<TGraph, TVertex>(this IGraphSerializer<TGraph, TVertex> self, int port)
-            where TGraph : IGraph<TVertex>
-            where TVertex : IVertex
+        public static T DeserializeFromNetwork<T>(this ISerializer<T> self, int port)
         {
             var listener = new TcpListener(IPAddress.Any, port);
             using (Disposable.Use(listener.Stop))

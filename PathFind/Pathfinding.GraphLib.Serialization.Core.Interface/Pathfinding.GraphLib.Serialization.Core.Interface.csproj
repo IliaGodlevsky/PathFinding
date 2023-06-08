@@ -45,8 +45,8 @@
   <ItemGroup>
     <Compile Include="ICrypto.cs" />
     <Compile Include="IGraphSerializationModule.cs" />
-    <Compile Include="IGraphSerializer.cs" />
     <Compile Include="IPathInput.cs" />
+    <Compile Include="ISerializer.cs" />
     <Compile Include="IVertexFromInfoFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VertexSerializationInfo.cs" />

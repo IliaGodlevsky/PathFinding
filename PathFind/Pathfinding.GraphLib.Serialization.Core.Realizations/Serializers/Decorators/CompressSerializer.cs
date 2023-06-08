@@ -7,18 +7,16 @@ using System.IO.Compression;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decorators
 {
-    public sealed class CompressGraphSerializer<TGraph, TVertex> : IGraphSerializer<TGraph, TVertex>
-        where TGraph : IGraph<TVertex>
-        where TVertex : IVertex
+    public sealed class CompressSerializer<T> : ISerializer<T>
     {
-        private readonly IGraphSerializer<TGraph, TVertex> serializer;
+        private readonly ISerializer<T> serializer;
 
-        public CompressGraphSerializer(IGraphSerializer<TGraph, TVertex> serializer)
+        public CompressSerializer(ISerializer<T> serializer)
         {
             this.serializer = serializer;
         }
 
-        public TGraph DeserializeFrom(Stream stream)
+        public T DeserializeFrom(Stream stream)
         {
             try
             {
@@ -29,11 +27,11 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decor
             }
             catch (Exception ex)
             {
-                throw new GraphSerializationException(ex.Message, ex);
+                throw new SerializationException(ex.Message, ex);
             }
         }
 
-        public void SerializeTo(TGraph graph, Stream stream)
+        public void SerializeTo(T graph, Stream stream)
         {
             try
             {
@@ -44,7 +42,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decor
             }
             catch (Exception ex)
             {
-                throw new GraphSerializationException(ex.Message, ex);
+                throw new SerializationException(ex.Message, ex);
             }
         }
     }

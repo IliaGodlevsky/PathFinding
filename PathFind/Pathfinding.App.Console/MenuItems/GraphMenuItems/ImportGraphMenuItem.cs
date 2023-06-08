@@ -14,11 +14,11 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     {
         protected readonly IMessenger messenger;
         protected readonly IInput<TPath> input;
-        protected readonly IGraphSerializer<Graph2D<Vertex>, Vertex> serializer;
+        protected readonly ISerializer<Graph2D<Vertex>> serializer;
         protected readonly ILog log;
 
         protected ImportGraphMenuItem(IMessenger messenger, IInput<TPath> input,
-            IGraphSerializer<Graph2D<Vertex>, Vertex> serializer, ILog log)
+            ISerializer<Graph2D<Vertex>> serializer, ILog log)
         {
             this.serializer = serializer;
             this.messenger = messenger;

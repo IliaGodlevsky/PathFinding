@@ -1,24 +1,21 @@
-﻿using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Serialization.Core.Interface;
+﻿using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Exceptions;
 using System;
 using System.IO;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decorators
 {
-    public sealed class ThreadSafeGraphSerializer<TGraph, TVertex> : IGraphSerializer<TGraph, TVertex>
-        where TGraph : IGraph<TVertex>
-        where TVertex : IVertex
+    public sealed class ThreadSafeSerializer<T> : ISerializer<T>
     {
         private readonly object syncRoot = new();
-        private readonly IGraphSerializer<TGraph, TVertex> serializer;
+        private readonly ISerializer<T> serializer;
 
-        public ThreadSafeGraphSerializer(IGraphSerializer<TGraph, TVertex> serializer)
+        public ThreadSafeSerializer(ISerializer<T> serializer)
         {
             this.serializer = serializer;
         }
 
-        public TGraph DeserializeFrom(Stream stream)
+        public T DeserializeFrom(Stream stream)
         {
             lock (syncRoot)
             {
@@ -28,12 +25,12 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decor
                 }
                 catch (Exception ex)
                 {
-                    throw new GraphSerializationException(ex.Message, ex);
+                    throw new SerializationException(ex.Message, ex);
                 }
             }
         }
 
-        public void SerializeTo(TGraph graph, Stream stream)
+        public void SerializeTo(T graph, Stream stream)
         {
             lock (syncRoot)
             {
@@ -43,7 +40,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decor
                 }
                 catch (Exception ex)
                 {
-                    throw new GraphSerializationException(ex.Message, ex);
+                    throw new SerializationException(ex.Message, ex);
                 }
             }
         }

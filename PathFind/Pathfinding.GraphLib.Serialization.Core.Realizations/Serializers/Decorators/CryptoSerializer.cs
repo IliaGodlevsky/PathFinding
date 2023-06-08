@@ -8,16 +8,14 @@ using System.Security.Cryptography;
 
 namespace GraphLib.Serialization.Serializers.Decorators
 {
-    public sealed class CryptoGraphSerializer<TGraph, TVertex> : IGraphSerializer<TGraph, TVertex>, IDisposable
-        where TGraph : IGraph<TVertex>
-        where TVertex : IVertex
+    public sealed class CryptoSerializer<T> : ISerializer<T>, IDisposable
     {
         private readonly ICrypto crypto;
-        private readonly IGraphSerializer<TGraph, TVertex> serializer;
+        private readonly ISerializer<T> serializer;
         private readonly SymmetricAlgorithm algorithm;
 
-        public CryptoGraphSerializer(
-            IGraphSerializer<TGraph, TVertex> serializer,
+        public CryptoSerializer(
+            ISerializer<T> serializer,
             SymmetricAlgorithm algorithm,
             ICrypto crypto)
         {
@@ -26,19 +24,19 @@ namespace GraphLib.Serialization.Serializers.Decorators
             this.crypto = crypto;
         }
 
-        public CryptoGraphSerializer(
-            IGraphSerializer<TGraph, TVertex> serializer,
+        public CryptoSerializer(
+            ISerializer<T> serializer,
             SymmetricAlgorithm algorithm)
             : this(serializer, algorithm, new AesCrypto())
         {
         }
 
-        public CryptoGraphSerializer(IGraphSerializer<TGraph, TVertex> serializer)
+        public CryptoSerializer(ISerializer<T> serializer)
             : this(serializer, Aes.Create(), new AesCrypto())
         {
         }
 
-        public TGraph DeserializeFrom(Stream stream)
+        public T DeserializeFrom(Stream stream)
         {
             try
             {
@@ -52,11 +50,11 @@ namespace GraphLib.Serialization.Serializers.Decorators
             }
             catch (Exception ex)
             {
-                throw new GraphSerializationException(ex.Message, ex);
+                throw new SerializationException(ex.Message, ex);
             }
         }
 
-        public void SerializeTo(TGraph graph, Stream stream)
+        public void SerializeTo(T graph, Stream stream)
         {
             try
             {
@@ -70,7 +68,7 @@ namespace GraphLib.Serialization.Serializers.Decorators
             }
             catch (Exception ex)
             {
-                throw new GraphSerializationException(ex.Message, ex);
+                throw new SerializationException(ex.Message, ex);
             }
         }
 

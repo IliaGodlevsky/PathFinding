@@ -97,9 +97,9 @@ namespace Pathfinding.App.WPF._3D.DependencyInjection
 
             builder.RegisterType<InFileSerializationModule<Graph3D<Vertex3D>, Vertex3D>>().As<IGraphSerializationModule<Graph3D<Vertex3D>, Vertex3D>>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
-            builder.RegisterType<XmlGraphSerializer<Graph3D<Vertex3D>, Vertex3D>>().As<IGraphSerializer<Graph3D<Vertex3D>, Vertex3D>>().SingleInstance();
-            builder.RegisterDecorator<CompressGraphSerializer<Graph3D<Vertex3D>, Vertex3D>, IGraphSerializer<Graph3D<Vertex3D>, Vertex3D>>();
-            builder.RegisterDecorator<CryptoGraphSerializer<Graph3D<Vertex3D>, Vertex3D>, IGraphSerializer<Graph3D<Vertex3D>, Vertex3D>>();
+            builder.RegisterType<XmlGraphSerializer<Graph3D<Vertex3D>, Vertex3D>>().As<ISerializer<Graph3D<Vertex3D>>>().SingleInstance();
+            builder.RegisterDecorator<CompressSerializer<Graph3D<Vertex3D>, Vertex3D>, ISerializer<Graph3D<Vertex3D>>>();
+            builder.RegisterDecorator<CryptoSerializer<Graph3D<Vertex3D>, Vertex3D>, ISerializer<Graph3D<Vertex3D>>>();
             builder.RegisterType<Vertex3DFromInfoFactory>().As<IVertexFromInfoFactory<Vertex3D>>().SingleInstance();
 
             builder.RegisterAssemblyTypes(Assemblies).AssignableTo<AlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();

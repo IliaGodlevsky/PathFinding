@@ -14,7 +14,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     internal sealed class LoadGraphMenuItem : ImportGraphMenuItem<string>
     {
         public LoadGraphMenuItem(IMessenger messenger, IFilePathInput input,
-            IGraphSerializer<Graph2D<Vertex>, Vertex> serializer, ILog log)
+            ISerializer<Graph2D<Vertex>> serializer, ILog log)
              : base(messenger, input, serializer, log)
         {
 

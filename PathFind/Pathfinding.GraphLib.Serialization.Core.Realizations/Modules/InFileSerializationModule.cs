@@ -8,10 +8,10 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Modules
         where TGraph : IGraph<TVertex>
         where TVertex : IVertex
     {
-        private readonly IGraphSerializer<TGraph, TVertex> serializer;
+        private readonly ISerializer<TGraph> serializer;
         private readonly IPathInput input;
 
-        public InFileSerializationModule(IGraphSerializer<TGraph, TVertex> graphSerializer, IPathInput pathInput)
+        public InFileSerializationModule(ISerializer<TGraph> graphSerializer, IPathInput pathInput)
         {
             serializer = graphSerializer;
             input = pathInput;

@@ -3,21 +3,21 @@ using System.Runtime.Serialization;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Exceptions
 {
-    public class GraphSerializationException : SystemException
+    public class SerializationException : SystemException
     {
-        public GraphSerializationException(string message)
+        public SerializationException(string message)
             : base(message)
         {
 
         }
 
-        public GraphSerializationException(string message, Exception innerException)
+        public SerializationException(string message, Exception innerException)
             : base(message, innerException)
         {
 
         }
 
-        protected GraphSerializationException(SerializationInfo info, StreamingContext context)
+        protected SerializationException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
 
