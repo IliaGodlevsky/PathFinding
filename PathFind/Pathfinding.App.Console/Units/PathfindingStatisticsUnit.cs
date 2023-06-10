@@ -83,13 +83,12 @@ namespace Pathfinding.App.Console.Units
             };
         }
 
-        private HistoryNote GetStatistics(IGraphPath path, PathfindingProcess algorithm)
+        private StatisticsNote GetStatistics(IGraphPath path, PathfindingProcess algorithm)
         {
-            return new(GetStatistics(algorithm))
-            {
-                Cost = path.Cost,
-                Steps = path.Count
-            };
+            var note = GetStatistics(algorithm);
+            note.Steps = path.Count;
+            note.Cost = path.Cost;
+            return note;
         }
     }
 }

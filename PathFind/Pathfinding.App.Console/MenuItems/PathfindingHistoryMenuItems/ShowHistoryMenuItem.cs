@@ -11,7 +11,6 @@ using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Primitives;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
@@ -22,44 +21,44 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         private readonly IMessenger messenger;
         private readonly IInput<int> input;
         private readonly IUnitOfWork unitOfWork;
-        private readonly Dictionary<Guid, StatisticsNote> pages = new();
 
         private bool isHistoryApplied = true;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        public ShowHistoryMenuItem(IMessenger messenger, IInput<int> input)
+        public ShowHistoryMenuItem(IMessenger messenger, 
+            IInput<int> input,
+            IUnitOfWork unitOfWork)
         {
+            this.unitOfWork = unitOfWork;
             this.input = input;
             this.messenger = messenger;
         }
 
-        public bool CanBeExecuted()
-        {
-            return isHistoryApplied && pages.Count > 0;
-        }
+        public bool CanBeExecuted() => IsHistoryApplied();
 
         public void Execute()
         {
-            var menuList = pages.Values
+            var keys = unitOfWork.Keys;
+            var menuList = keys.Select(unitOfWork.StatisticsRepository.Get)
                 .Select(note => note.ToString())
                 .Append(Languages.Quit)
                 .CreateMenuList(columnsNumber: 1);
             string inputMessage = string.Concat(menuList, "\n", Languages.AlgorithmChoiceMsg);
             using (RememberGraphState())
             {
-                int index = GetAlgorithmIndex(inputMessage);
-                while (index != pages.Count)
+                Guid id = GetAlgorithmId(inputMessage);
+                while (id != Guid.Empty)
                 {
-                    var page = pages.ElementAt(index);
+                    var page = unitOfWork.StatisticsRepository.Get(id);
                     using (Cursor.UseCurrentPosition())
                     {
                         using (Cursor.HideCursor())
                         {
-                            messenger.SendData(page.Key, Tokens.History);
-                            messenger.SendData(page.Value.ToString(), Tokens.AppLayout);
+                            messenger.SendData(id, Tokens.History);
+                            messenger.SendData(page.ToString(), Tokens.AppLayout);
                         }
                     }
-                    index = GetAlgorithmIndex(inputMessage);
+                    id = GetAlgorithmId(inputMessage);
                 }
             }
         }
@@ -80,14 +79,15 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         private void SetGraph(Graph2D<Vertex> graph)
         {
             this.graph = graph;
-            pages.Clear();
+            unitOfWork.StatisticsRepository.RemoveAll();
         }
 
-        private int GetAlgorithmIndex(string message)
+        private Guid GetAlgorithmId(string message)
         {
             using (Cursor.UseCurrentPositionWithClean())
             {
-                return input.Input(message, pages.Count + 1, 1) - 1;
+                int index = input.Input(message, unitOfWork.Keys.Count + 1, 1) - 1;
+                return index == unitOfWork.Keys.Count ? Guid.Empty : unitOfWork.Keys[index];
             }
         }
 
@@ -95,7 +95,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         private void SetStatistics((PathfindingProcess Process, StatisticsNote Note) value)
         {
-            pages[value.Process.Id] = value.Note;
+            unitOfWork.StatisticsRepository.Add(value.Process.Id, value.Note);
         }
 
         private void SetIsApplied(bool isApplied)
@@ -108,12 +108,17 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             return Languages.ShowHistory;
         }
 
+        private void ClearStatistics(ClearHistoryMessage msg)
+        {
+            unitOfWork.StatisticsRepository.RemoveAll();
+        }
+
         public void RegisterHanlders(IMessenger messenger)
         {
             var token = Tokens.Bind(IsHistoryApplied, Tokens.History);
             messenger.RegisterData<bool>(this, Tokens.History, SetIsApplied);
             messenger.RegisterAlgorithmData<StatisticsNote>(this, token, SetStatistics);
-            messenger.RegisterAction<ClearHistoryMessage>(this, token, pages.Clear);
+            messenger.Register<ClearHistoryMessage>(this, token, ClearStatistics);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }
     }

@@ -3,7 +3,7 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
@@ -14,18 +14,21 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     [LowPriority]
     internal sealed class SaveGraphMenuItem : ExportGraphMenuItem<string>
     {
-        public SaveGraphMenuItem(IMessenger messenger, IFilePathInput input,
-            ISerializer<Graph2D<Vertex>> serializer, ILog log)
-            : base(messenger, input, serializer, log)
+        public SaveGraphMenuItem(IMessenger messenger, 
+            IFilePathInput input, IUnitOfWork unitOfWork, 
+            ISerializer<SerializationInfo> graphSerializer, 
+            IPathfindingRangeBuilder<Vertex> rangeBuilder, 
+            ILog log) 
+            : base(messenger, input, unitOfWork, graphSerializer, rangeBuilder, log)
         {
         }
 
         public override string ToString() => Languages.SaveGraph;
 
 
-        protected override async Task ExportAsync(Graph2D<Vertex> graph, string path)
+        protected override async Task ExportAsync(SerializationInfo info, string path)
         {
-            await serializer.SerializeToFileAsync(graph, path);
+            await graphSerializer.SerializeToFileAsync(info, path);
         }
     }
 }

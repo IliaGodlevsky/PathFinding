@@ -30,7 +30,8 @@ namespace Pathfinding.App.Console.Units
         public PathfindingProcessUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
-            IInput<ConsoleKey> input, IMessenger messenger, ILog log)
+            IInput<ConsoleKey> input, IMessenger messenger,
+            ILog log)
             : base(menuItems, conditioned)
         {
             this.messenger = messenger;

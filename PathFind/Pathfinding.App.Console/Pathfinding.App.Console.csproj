@@ -49,20 +49,7 @@
     <Compile Include="DependencyInjection\Attributes\MandatoryRegistrationAttribute.cs" />
     <Compile Include="DependencyInjection\Attributes\SettingsPropertyAttribute.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\TotalVisualizationMiddleware.cs" />
-    <Compile Include="Dto\AlgorithmDto.cs" />
-    <Compile Include="Dto\GraphDto.cs" />
-    <Compile Include="Dto\StatisticsDto.cs" />
-    <Compile Include="Dto\VerticesDto.cs" />
-    <Compile Include="Entities\AlgorithmEntity.cs" />
-    <Compile Include="Entities\GraphEntity.cs" />
-    <Compile Include="Entities\StatisticsEntity.cs" />
-    <Compile Include="Entities\VerticesEntity.cs" />
-    <Compile Include="Interface\IDto.cs" />
-    <Compile Include="Interface\IEntity.cs" />
-    <Compile Include="Interface\IMapper.cs" />
-    <Compile Include="Interface\IRepository.cs" />
     <Compile Include="Interface\IToken.cs" />
-    <Compile Include="Interface\IUnitOfWork.cs" />
     <Compile Include="Interface\IVisualizedVertices.cs" />
     <Compile Include="MenuItems\ColorMenuItems\CrossedPathVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\EnqueuedVertexColorMenuItem.cs" />
@@ -73,10 +60,6 @@
     <Compile Include="MenuItems\ColorMenuItems\TargetVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\TransitVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\VisitedVertexColorMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\LoadRangeMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\RecieveRangeMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\SaveRangeMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\SendRangeMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\EditorKeysMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\KeysMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\PathfindingControlKeysMenuItem.cs" />
@@ -84,6 +67,16 @@
     <Compile Include="MenuItems\KeysMenuItems\TransitKeysMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\KeysUnitMenuItem.cs" />
     <Compile Include="Model\ApplicationSettingsStore.cs" />
+    <Compile Include="Model\GraphSerializer.cs" />
+    <Compile Include="Model\IRepository.cs" />
+    <Compile Include="Model\IUnitOfWork.cs" />
+    <Compile Include="Model\Notes\HistoryNote.cs" />
+    <Compile Include="Model\Repositories\CoordinatesRepository.cs" />
+    <Compile Include="Model\Repositories\CostRepository.cs" />
+    <Compile Include="Model\Repositories\StatisticsRepository.cs" />
+    <Compile Include="Model\SerializationInfo.cs" />
+    <Compile Include="Model\MemoryUnitOfWork.cs" />
+    <Compile Include="Model\BinaryUnitOfWorkSerializer.cs" />
     <Compile Include="Model\Visualizations\Visuals\VisualizedCrossedPath.cs" />
     <Compile Include="Model\Visualizations\Visuals\VisualizedEnqueued.cs" />
     <Compile Include="Model\Visualizations\Visuals\NullVisualizedVertices.cs" />
@@ -96,10 +89,6 @@
     <Compile Include="Model\Visualizations\Visuals\VisualizedVisited.cs" />
     <Compile Include="Model\Visualizations\Visuals\VisualizedVertices.cs" />
     <Compile Include="Model\Visualizations\VisualizedType.cs" />
-    <Compile Include="Repositories\AlgorithmMemoryRepository.cs" />
-    <Compile Include="Repositories\GraphMemoryRepository.cs" />
-    <Compile Include="Repositories\MemoryRepository.cs" />
-    <Compile Include="Repositories\VerticesMemoryRepository.cs" />
     <Compile Include="Settings\Features.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -176,8 +165,6 @@
     <Compile Include="MenuItems\MainMenuItems\ColorsUnitMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\EditorUnitMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\GraphCreateMenuItem.cs" />
-    <Compile Include="UnitOfWork\MemoryUnitOfWork.cs" />
-    <Compile Include="Units\GraphEditorUnit.cs" />
     <Compile Include="MenuItems\MainMenuItems\MainMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\PathfindingProcessMenuItem.cs" />
     <Compile Include="MenuItems\AnswerExitMenuItem.cs" />
@@ -209,10 +196,19 @@
     <Compile Include="Messages\GraphChangedMessage.cs" />
     <Compile Include="DependencyInjection\Registrations\IRegistry.cs" />
     <Compile Include="DependencyInjection\Registry.cs" />
+    <Compile Include="Units\ColorsUnit.cs" />
+    <Compile Include="Units\GraphEditorUnit.cs" />
+    <Compile Include="Units\GraphUnit.cs" />
     <Compile Include="Units\KeysUnit.cs" />
+    <Compile Include="Units\MainUnit.cs" />
+    <Compile Include="Units\PathfindingHistoryUnit.cs" />
+    <Compile Include="Units\PathfindingProcessUnit.cs" />
+    <Compile Include="Units\PathfindingRangeUnit.cs" />
+    <Compile Include="Units\PathfindingStatisticsUnit.cs" />
+    <Compile Include="Units\PathfindingVisualizationUnit.cs" />
+    <Compile Include="Units\Unit.cs" />
     <Compile Include="ValueInput\AddressInput.cs" />
     <Compile Include="ValueInput\FilePathInput.cs" />
-    <Compile Include="Model\Notes\HistoryNote.cs" />
     <Compile Include="Model\Notes\StatisticsNote.cs" />
     <Compile Include="Settings\Colours.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -266,7 +262,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AppLayout.cs" />
     <Compile Include="DependencyInjection\PathfindingUnits.cs" />
-    <Compile Include="Units\ColorsUnit.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedAnswerInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedInput.cs" />
     <Compile Include="ValueInput\ProgrammedInput\ConsoleProgrammedIntInput.cs" />
@@ -294,14 +289,6 @@
     <Compile Include="ValueInput\UserInput\ConsoleUserKeyInput.cs" />
     <Compile Include="ValueInput\UserInput\ConsoleUserStringInput.cs" />
     <Compile Include="ValueInput\UserInput\ConsoleUserTimeSpanInput.cs" />
-    <Compile Include="Units\PathfindingHistoryUnit.cs" />
-    <Compile Include="Units\PathfindingProcessUnit.cs" />
-    <Compile Include="Units\PathfindingRangeUnit.cs" />
-    <Compile Include="Units\GraphUnit.cs" />
-    <Compile Include="Units\MainUnit.cs" />
-    <Compile Include="Units\PathfindingStatisticsUnit.cs" />
-    <Compile Include="Units\PathfindingVisualizationUnit.cs" />
-    <Compile Include="Units\Unit.cs" />
     <Compile Include="Views\View.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -460,6 +447,9 @@
     </PackageReference>
     <PackageReference Include="MvvmLightLibs">
       <Version>5.4.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

@@ -45,14 +45,14 @@ namespace Pathfinding.GraphLib.Serialization.Tests
         private static TestCaseData GenerateBinaryCryptoGraphSerializer(params int[] dimensions)
         {
             var serializer = GetSerializer<BinaryGraphSerializer<TestGraph, TestVertex>>();
-            var decorator = new CryptoGraphSerializer<TestGraph, TestVertex>(serializer);
+            var decorator = new CryptoSerializer<TestGraph>(serializer);
             return new TestCaseData(decorator, dimensions);
         }
 
         private static TestCaseData GenerateBinaryCompressGraphSerializer(params int[] dimensions)
         {
             var serializer = GetSerializer<BinaryGraphSerializer<TestGraph, TestVertex>>();
-            var decorator = new CompressGraphSerializer<TestGraph, TestVertex>(serializer);
+            var decorator = new CompressSerializer<TestGraph>(serializer);
             return new TestCaseData(decorator, dimensions);
         }
 

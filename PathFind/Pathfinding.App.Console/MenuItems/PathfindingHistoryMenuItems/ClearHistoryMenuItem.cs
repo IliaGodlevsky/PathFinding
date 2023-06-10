@@ -23,7 +23,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void Execute()
         {
-            messenger.Send(new ClearHistoryMessage(), Tokens.History);
+            messenger.SendData(new ClearHistoryMessage(), Tokens.History);
         }
 
         private void SetIsApplied(bool isApplied)

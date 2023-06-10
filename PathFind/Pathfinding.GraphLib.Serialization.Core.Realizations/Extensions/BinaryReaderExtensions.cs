@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
 {
-    internal static class BinaryReaderExtensions
+    public static class BinaryReaderExtensions
     {
         public static GraphSerializationInfo ReadGraph(this BinaryReader reader,
             IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory)

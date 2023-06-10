@@ -2,6 +2,8 @@
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
@@ -15,18 +17,26 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     {
         protected readonly IMessenger messenger;
         protected readonly IInput<TPath> input;
-        protected readonly ISerializer<Graph2D<Vertex>> serializer;
+        protected readonly ISerializer<SerializationInfo> graphSerializer;
+        protected readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
+        protected readonly IUnitOfWork unitOfWork;
         protected readonly ILog log;
 
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        protected ExportGraphMenuItem(IMessenger messenger, IInput<TPath> input,
-            ISerializer<Graph2D<Vertex>> serializer, ILog log)
+        protected ExportGraphMenuItem(IMessenger messenger, 
+            IInput<TPath> input, 
+            IUnitOfWork unitOfWork,
+            ISerializer<SerializationInfo> graphSerializer,
+            IPathfindingRangeBuilder<Vertex> rangeBuilder, 
+            ILog log)
         {
             this.messenger = messenger;
             this.input = input;
-            this.serializer = serializer;
+            this.graphSerializer = graphSerializer;
             this.log = log;
+            this.unitOfWork = unitOfWork;
+            this.rangeBuilder = rangeBuilder;
         }
 
         public virtual bool CanBeExecuted() => graph != Graph2D<Vertex>.Empty;
@@ -36,7 +46,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             try
             {
                 var path = input.Input();
-                await ExportAsync(graph, path);
+                var info = new SerializationInfo
+                {
+                    Graph = graph,
+                    Range = rangeBuilder.Range.GetCoordinates(),
+                    UnitOfWork = unitOfWork
+                };
+                await ExportAsync(info, path);
             }
             catch (Exception ex)
             {
@@ -49,7 +65,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
         }
 
-        protected abstract Task ExportAsync(Graph2D<Vertex> graph, TPath path);
+        protected abstract Task ExportAsync(SerializationInfo graph, TPath path);
 
         private void OnGraphCreated(Graph2D<Vertex> graph)
         {

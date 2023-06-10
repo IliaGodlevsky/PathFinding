@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
 {
-    internal static class BinaryWriterExtensions
+    public static class BinaryWriterExtensions
     {
         public static void WriteGraph(this BinaryWriter writer,
             GraphSerializationInfo info)
@@ -24,9 +24,9 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
         }
 
         public static void WriterCoordinates(this BinaryWriter writer,
-            ICoordinate[] neighbourhood)
+            IReadOnlyList<ICoordinate> neighbourhood)
         {
-            writer.Write(neighbourhood.Length);
+            writer.Write(neighbourhood.Count);
             neighbourhood.ForEach(writer.WriteIntArray);
         }
 
