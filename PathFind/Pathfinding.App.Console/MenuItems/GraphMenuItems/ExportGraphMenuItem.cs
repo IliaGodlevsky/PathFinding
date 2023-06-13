@@ -2,6 +2,7 @@
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Serialization;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
@@ -19,14 +20,14 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected readonly IInput<TPath> input;
         protected readonly ISerializer<SerializationInfo> graphSerializer;
         protected readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
-        protected readonly IUnitOfWork unitOfWork;
+        protected readonly IPathfindingHistory history;
         protected readonly ILog log;
 
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         protected ExportGraphMenuItem(IMessenger messenger, 
             IInput<TPath> input, 
-            IUnitOfWork unitOfWork,
+            IPathfindingHistory history,
             ISerializer<SerializationInfo> graphSerializer,
             IPathfindingRangeBuilder<Vertex> rangeBuilder, 
             ILog log)
@@ -35,7 +36,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             this.input = input;
             this.graphSerializer = graphSerializer;
             this.log = log;
-            this.unitOfWork = unitOfWork;
+            this.history = history;
             this.rangeBuilder = rangeBuilder;
         }
 
@@ -50,7 +51,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 {
                     Graph = graph,
                     Range = rangeBuilder.Range.GetCoordinates(),
-                    UnitOfWork = unitOfWork
+                    History = history
                 };
                 await ExportAsync(info, path);
             }

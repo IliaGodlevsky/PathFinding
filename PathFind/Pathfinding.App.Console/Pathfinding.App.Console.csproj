@@ -49,6 +49,8 @@
     <Compile Include="DependencyInjection\Attributes\MandatoryRegistrationAttribute.cs" />
     <Compile Include="DependencyInjection\Attributes\SettingsPropertyAttribute.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\TotalVisualizationMiddleware.cs" />
+    <Compile Include="Extensions\BinaryReaderExtensions.cs" />
+    <Compile Include="Extensions\BinaryWriterExtensions.cs" />
     <Compile Include="Interface\IToken.cs" />
     <Compile Include="Interface\IVisualizedVertices.cs" />
     <Compile Include="MenuItems\ColorMenuItems\CrossedPathVertexColorMenuItem.cs" />
@@ -67,16 +69,16 @@
     <Compile Include="MenuItems\KeysMenuItems\TransitKeysMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\KeysUnitMenuItem.cs" />
     <Compile Include="Model\ApplicationSettingsStore.cs" />
-    <Compile Include="Model\GraphSerializer.cs" />
-    <Compile Include="Model\IRepository.cs" />
-    <Compile Include="Model\IUnitOfWork.cs" />
+    <Compile Include="Serialization\GraphSerializer.cs" />
+    <Compile Include="Interface\IHistoryVolume.cs" />
+    <Compile Include="Interface\IHistoryJournal.cs" />
     <Compile Include="Model\Notes\HistoryNote.cs" />
-    <Compile Include="Model\Repositories\CoordinatesRepository.cs" />
-    <Compile Include="Model\Repositories\CostRepository.cs" />
-    <Compile Include="Model\Repositories\StatisticsRepository.cs" />
-    <Compile Include="Model\SerializationInfo.cs" />
-    <Compile Include="Model\MemoryUnitOfWork.cs" />
-    <Compile Include="Model\BinaryUnitOfWorkSerializer.cs" />
+    <Compile Include="DataAccess\Repositories\CoordinatesVolume.cs" />
+    <Compile Include="DataAccess\Repositories\CostsVolume.cs" />
+    <Compile Include="DataAccess\Repositories\StatisticsVolume.cs" />
+    <Compile Include="Serialization\SerializationInfo.cs" />
+    <Compile Include="DataAccess\PathfindingHistory.cs" />
+    <Compile Include="Serialization\BinaryHistorySerializer.cs" />
     <Compile Include="Model\Visualizations\Visuals\VisualizedCrossedPath.cs" />
     <Compile Include="Model\Visualizations\Visuals\VisualizedEnqueued.cs" />
     <Compile Include="Model\Visualizations\Visuals\NullVisualizedVertices.cs" />
@@ -481,6 +483,8 @@
       <LastGenOutput>Colours.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Visualization\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

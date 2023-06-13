@@ -1,11 +1,12 @@
-﻿using Pathfinding.App.Console.Model.Notes;
+﻿using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Model.Notes;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 
-namespace Pathfinding.App.Console.Model.Repositories
+namespace Pathfinding.App.Console.DataAccess.Repositories
 {
-    internal sealed class StatisticsRepository : IRepository<StatisticsNote>
+    internal sealed class StatisticsVolume : IHistoryVolume<Guid, StatisticsNote>
     {
         private readonly Dictionary<Guid, StatisticsNote> notes = new();
 

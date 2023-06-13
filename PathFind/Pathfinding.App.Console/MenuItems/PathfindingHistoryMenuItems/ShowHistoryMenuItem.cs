@@ -20,16 +20,16 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
     {
         private readonly IMessenger messenger;
         private readonly IInput<int> input;
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IPathfindingHistory history;
 
         private bool isHistoryApplied = true;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         public ShowHistoryMenuItem(IMessenger messenger, 
             IInput<int> input,
-            IUnitOfWork unitOfWork)
+            IPathfindingHistory history)
         {
-            this.unitOfWork = unitOfWork;
+            this.history = history;
             this.input = input;
             this.messenger = messenger;
         }
@@ -38,8 +38,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void Execute()
         {
-            var keys = unitOfWork.Keys;
-            var menuList = keys.Select(unitOfWork.StatisticsRepository.Get)
+            var keys = history.Algorithms;
+            var menuList = keys.Select(history.Statistics.Get)
                 .Select(note => note.ToString())
                 .Append(Languages.Quit)
                 .CreateMenuList(columnsNumber: 1);
@@ -49,7 +49,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
                 Guid id = GetAlgorithmId(inputMessage);
                 while (id != Guid.Empty)
                 {
-                    var page = unitOfWork.StatisticsRepository.Get(id);
+                    var page = history.Statistics.Get(id);
                     using (Cursor.UseCurrentPosition())
                     {
                         using (Cursor.HideCursor())
@@ -79,15 +79,15 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         private void SetGraph(Graph2D<Vertex> graph)
         {
             this.graph = graph;
-            unitOfWork.StatisticsRepository.RemoveAll();
+            history.Statistics.RemoveAll();
         }
 
         private Guid GetAlgorithmId(string message)
         {
             using (Cursor.UseCurrentPositionWithClean())
             {
-                int index = input.Input(message, unitOfWork.Keys.Count + 1, 1) - 1;
-                return index == unitOfWork.Keys.Count ? Guid.Empty : unitOfWork.Keys[index];
+                int index = input.Input(message, history.Algorithms.Count + 1, 1) - 1;
+                return index == history.Algorithms.Count ? Guid.Empty : history.Algorithms[index];
             }
         }
 
@@ -95,7 +95,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         private void SetStatistics((PathfindingProcess Process, StatisticsNote Note) value)
         {
-            unitOfWork.StatisticsRepository.Add(value.Process.Id, value.Note);
+            history.Statistics.Add(value.Process.Id, value.Note);
         }
 
         private void SetIsApplied(bool isApplied)
@@ -110,7 +110,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         private void ClearStatistics(ClearHistoryMessage msg)
         {
-            unitOfWork.StatisticsRepository.RemoveAll();
+            history.Statistics.RemoveAll();
         }
 
         public void RegisterHanlders(IMessenger messenger)

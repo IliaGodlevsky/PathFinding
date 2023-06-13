@@ -1,11 +1,12 @@
-﻿using Pathfinding.GraphLib.Core.Interface;
+﻿using Pathfinding.App.Console.Interface;
+using Pathfinding.GraphLib.Core.Interface;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 
-namespace Pathfinding.App.Console.Model.Repositories
+namespace Pathfinding.App.Console.DataAccess.Repositories
 {
-    internal sealed class CoordinatesRepository : IRepository<IReadOnlyList<ICoordinate>>
+    internal sealed class CoordinatesVolume : IHistoryVolume<Guid, IReadOnlyList<ICoordinate>>
     {
         private readonly Dictionary<Guid, IReadOnlyList<ICoordinate>> coordinates = new();
 

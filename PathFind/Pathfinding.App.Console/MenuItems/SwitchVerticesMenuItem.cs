@@ -36,7 +36,7 @@ namespace Pathfinding.App.Console.MenuItems
             return graph != Graph2D<Vertex>.Empty;
         }
 
-        public void Execute()
+        public virtual void Execute()
         {
             int x = 0, y = 0;
             var key = default(ConsoleKey);

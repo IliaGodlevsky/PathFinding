@@ -2,6 +2,7 @@
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Serialization;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
@@ -20,16 +21,16 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected readonly IInput<TPath> input;
         protected readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         protected readonly ISerializer<SerializationInfo> serializer;
-        protected readonly IUnitOfWork unitOfWork;
+        protected readonly IPathfindingHistory history;
         protected readonly ILog log;
 
         protected ImportGraphMenuItem(IMessenger messenger, 
             IInput<TPath> input,
-            IUnitOfWork unitOfWork,
+            IPathfindingHistory history,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
             ISerializer<SerializationInfo> serializer, ILog log)
         {
-            this.unitOfWork = unitOfWork;
+            this.history = history;
             this.rangeBuilder = rangeBuilder;
             this.serializer = serializer;
             this.messenger = messenger;
@@ -45,7 +46,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 var info = ImportGraph(path);
                 SetGraph(info.Graph);
                 SetRange(info.Range, info.Graph);
-                SetUnitOfWork(info.UnitOfWork);
+                SetUnitOfWork(info.History);
             }
             catch (Exception ex)
             {
@@ -70,17 +71,17 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             rangeBuilder.Include(pathfindingRange, graph);
         }
 
-        private void SetUnitOfWork(IUnitOfWork unit)
+        private void SetUnitOfWork(IPathfindingHistory h)
         {
-            foreach (var key in unit.Keys)
+            foreach (var key in h.Algorithms)
             {
-                unitOfWork.Keys.Add(key);
-                unitOfWork.VisitedRepository.Add(key, unit.VisitedRepository.Get(key));
-                unitOfWork.ObstacleRepository.Add(key, unit.ObstacleRepository.Get(key));
-                unitOfWork.PathRepository.Add(key, unit.PathRepository.Get(key));
-                unitOfWork.RangeRepository.Add(key, unit.RangeRepository.Get(key));
-                unitOfWork.CostRepository.Add(key, unit.CostRepository.Get(key));
-                unitOfWork.StatisticsRepository.Add(key, unit.StatisticsRepository.Get(key));
+                history.Algorithms.Add(key);
+                history.VisitedVertices.Add(key, h.VisitedVertices.Get(key));
+                history.ObstacleVertices.Add(key, h.ObstacleVertices.Get(key));
+                history.PathVertices.Add(key, h.PathVertices.Get(key));
+                history.RangeVertices.Add(key, h.RangeVertices.Get(key));
+                history.Costs.Add(key, h.Costs.Get(key));
+                history.Statistics.Add(key, h.Statistics.Get(key));
             }
         }
 

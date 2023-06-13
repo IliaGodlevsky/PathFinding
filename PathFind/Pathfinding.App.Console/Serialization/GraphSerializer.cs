@@ -1,4 +1,6 @@
-﻿using Pathfinding.GraphLib.Core.Interface;
+﻿using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Exceptions;
@@ -6,20 +8,20 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Pathfinding.App.Console.Model
+namespace Pathfinding.App.Console.Serialization
 {
     internal sealed class GraphSerializer : ISerializer<SerializationInfo>
     {
         private readonly ISerializer<IEnumerable<ICoordinate>> rangeSerializer;
-        private readonly ISerializer<IUnitOfWork> unitOfWorkSerializer;
+        private readonly ISerializer<IPathfindingHistory> historySerializer;
         private readonly ISerializer<Graph2D<Vertex>> graphSerializer;
 
-        public GraphSerializer(ISerializer<IEnumerable<ICoordinate>> rangeSerializer, 
-            ISerializer<IUnitOfWork> unitOfWorkSerializer, 
+        public GraphSerializer(ISerializer<IEnumerable<ICoordinate>> rangeSerializer,
+            ISerializer<IPathfindingHistory> historySerializer,
             ISerializer<Graph2D<Vertex>> graphSerializer)
         {
             this.rangeSerializer = rangeSerializer;
-            this.unitOfWorkSerializer = unitOfWorkSerializer;
+            this.historySerializer = historySerializer;
             this.graphSerializer = graphSerializer;
         }
 
@@ -29,8 +31,8 @@ namespace Pathfinding.App.Console.Model
             {
                 var graph = graphSerializer.DeserializeFrom(stream);
                 var range = rangeSerializer.DeserializeFrom(stream);
-                var unit = unitOfWorkSerializer.DeserializeFrom(stream);
-                return new SerializationInfo { Graph = graph, Range = range, UnitOfWork = unit };
+                var unit = historySerializer.DeserializeFrom(stream);
+                return new SerializationInfo { Graph = graph, Range = range, History = unit };
             }
             catch (Exception ex)
             {
@@ -44,7 +46,7 @@ namespace Pathfinding.App.Console.Model
             {
                 graphSerializer.SerializeTo(item.Graph, stream);
                 rangeSerializer.SerializeTo(item.Range, stream);
-                unitOfWorkSerializer.SerializeTo(item.UnitOfWork, stream);
+                historySerializer.SerializeTo(item.History, stream);
             }
             catch (Exception ex)
             {

@@ -1,10 +1,11 @@
-﻿using Shared.Extensions;
+﻿using Pathfinding.App.Console.Interface;
+using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 
-namespace Pathfinding.App.Console.Model.Repositories
+namespace Pathfinding.App.Console.DataAccess.Repositories
 {
-    internal sealed class CostRepository : IRepository<IReadOnlyList<int>>
+    internal sealed class CostsVolume : IHistoryVolume<Guid, IReadOnlyList<int>>
     {
         private readonly Dictionary<Guid, IReadOnlyList<int>> costs = new();
 

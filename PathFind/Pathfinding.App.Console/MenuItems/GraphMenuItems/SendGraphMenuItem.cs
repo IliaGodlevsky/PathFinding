@@ -3,6 +3,7 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Serialization;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
@@ -16,10 +17,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     {
         public SendGraphMenuItem(IMessenger messenger, 
             IInput<(string Host, int Port)> input, 
-            IUnitOfWork unitOfWork, ISerializer<SerializationInfo> graphSerializer, 
+            IPathfindingHistory history, ISerializer<SerializationInfo> graphSerializer, 
             IPathfindingRangeBuilder<Vertex> rangeBuilder, 
             ILog log) 
-            : base(messenger, input, unitOfWork, graphSerializer, rangeBuilder, log)
+            : base(messenger, input, history, graphSerializer, rangeBuilder, log)
         {
         }
 

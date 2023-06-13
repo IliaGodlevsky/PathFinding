@@ -7,6 +7,7 @@ using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.AlgorithmLib.Factory;
 using Pathfinding.AlgorithmLib.Factory.Interface;
+using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.DependencyInjection.Attributes;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
@@ -28,6 +29,7 @@ using Pathfinding.App.Console.Model.PathfindingActions;
 using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.App.Console.Model.Visualizations;
 using Pathfinding.App.Console.Model.Visualizations.Visuals;
+using Pathfinding.App.Console.Serialization;
 using Pathfinding.App.Console.Settings;
 using Pathfinding.App.Console.ValueInput;
 using Pathfinding.App.Console.ValueInput.UserInput;
@@ -124,7 +126,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterTypes(AllUnits).SingleInstance().WithMetadata(UnitTypeKey, type => type).AsSelf()
                     .AsImplementedInterfaces().AutoActivate().ConfigurePipeline(p => p.Use(new UnitResolveMiddleware(UnitTypeKey)));
 
-                builder.RegisterType<MemoryUnitOfWork>().As<IUnitOfWork>().SingleInstance();
+                builder.RegisterType<PathfindingHistory>().As<IPathfindingHistory>().SingleInstance();
 
                 builder.RegisterType<ExitMenuItem>().Keyed(typeof(IMenuItem), WithoutMain).SingleInstance();
 
@@ -237,7 +239,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterType<GraphSerializer>().As<ISerializer<SerializationInfo>>().SingleInstance();
 
-                builder.RegisterType<BinaryUnitOfWorkSerializer>().As<ISerializer<IUnitOfWork>>().SingleInstance();
+                builder.RegisterType<BinaryHistorySerializer>().As<ISerializer<IPathfindingHistory>>().SingleInstance();
                 builder.RegisterType<BinaryRangeSerializer>().As<ISerializer<IEnumerable<ICoordinate>>>().SingleInstance();
                 builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>().As<ISerializer<Graph2D<Vertex>>>().SingleInstance();
 

@@ -1,8 +1,10 @@
-﻿using Pathfinding.GraphLib.Core.Interface;
+﻿using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using System.Collections.Generic;
 
-namespace Pathfinding.App.Console.Model
+namespace Pathfinding.App.Console.Serialization
 {
     internal sealed class SerializationInfo
     {
@@ -10,6 +12,6 @@ namespace Pathfinding.App.Console.Model
 
         public IEnumerable<ICoordinate> Range { get; set; }
 
-        public IUnitOfWork UnitOfWork { get; set; }
+        public IPathfindingHistory History { get; set; }
     }
 }

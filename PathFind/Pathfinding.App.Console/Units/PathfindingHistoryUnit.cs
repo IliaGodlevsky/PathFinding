@@ -21,29 +21,29 @@ namespace Pathfinding.App.Console.Units
     internal sealed class PathfindingHistoryUnit : Unit, ICanRecieveMessage
     {
         private readonly Dictionary<Guid, List<ICoordinate>> visited = new();        
-        private readonly IUnitOfWork unitOfWork;
+        private readonly IPathfindingHistory history;
 
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
         private bool isHistoryApplied = true;
 
         public PathfindingHistoryUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
-            IUnitOfWork unitOfWrok)
+            IPathfindingHistory history)
             : base(menuItems, conditioned)
         {
-            this.unitOfWork = unitOfWrok;
+            this.history = history;
         }
 
         private void VisualizeHistory(Guid key)
         {
             graph.RestoreVerticesVisualState();
-            graph.ApplyCosts(unitOfWork.CostRepository.Get(key));
-            unitOfWork.ObstacleRepository.Get(key).Select(graph.Get)
+            graph.ApplyCosts(history.Costs.Get(key));
+            history.ObstacleVertices.Get(key).Select(graph.Get)
                 .ForEach(vertex => vertex.VisualizeAsObstacle());
-            unitOfWork.VisitedRepository.Get(key).Select(graph.Get)
+            history.VisitedVertices.Get(key).Select(graph.Get)
                 .ForEach(vertex=>vertex.VisualizeAsVisited());
-            unitOfWork.RangeRepository.Get(key).Select(graph.Get).Reverse().VisualizeAsRange();
-            unitOfWork.PathRepository.Get(key).Select(graph.Get).VisualizeAsPath();
+            history.RangeVertices.Get(key).Select(graph.Get).Reverse().VisualizeAsRange();
+            history.PathVertices.Get(key).Select(graph.Get).VisualizeAsPath();
         }
 
         private void SetIsApplied(bool isApplied)
@@ -59,12 +59,12 @@ namespace Pathfinding.App.Console.Units
 
         private void ClearHistory(ClearHistoryMessage msg)
         {
-            unitOfWork.ObstacleRepository.RemoveAll();
-            unitOfWork.PathRepository.RemoveAll();
-            unitOfWork.RangeRepository.RemoveAll();
-            unitOfWork.CostRepository.RemoveAll();
-            unitOfWork.VisitedRepository.RemoveAll();
-            unitOfWork.Keys.Clear();
+            history.ObstacleVertices.RemoveAll();
+            history.PathVertices.RemoveAll();
+            history.RangeVertices.RemoveAll();
+            history.Costs.RemoveAll();
+            history.VisitedVertices.RemoveAll();
+            history.Algorithms.Clear();
         }
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
@@ -79,7 +79,7 @@ namespace Pathfinding.App.Console.Units
         {
             if (sender is PathfindingProcess process)
             {
-                unitOfWork.Keys.Add(process.Id);
+                history.Algorithms.Add(process.Id);
             }
         }
 
@@ -88,19 +88,19 @@ namespace Pathfinding.App.Console.Units
         private void AddRange((PathfindingProcess Algorithm, IPathfindingRange<Vertex> Range) value)
         {
             var range = value.Range.GetCoordinates().ToList();
-            unitOfWork.RangeRepository.Add(value.Algorithm.Id, range);
+            history.RangeVertices.Add(value.Algorithm.Id, range);
         }
 
         private void AddPath((PathfindingProcess Algorithm, IGraphPath Path) value)
         {
-            unitOfWork.PathRepository.Add(value.Algorithm.Id, value.Path.ToList());
+            history.PathVertices.Add(value.Algorithm.Id, value.Path.ToList());
         }
 
         private void SubscribeOnHistory(PathfindingProcess algorithm)
         {
             var obstacles = graph.GetObstaclesCoordinates().ToList();
-            unitOfWork.ObstacleRepository.Add(algorithm.Id, obstacles);
-            unitOfWork.CostRepository.Add(algorithm.Id, graph.GetCosts());
+            history.ObstacleVertices.Add(algorithm.Id, obstacles);
+            history.Costs.Add(algorithm.Id, graph.GetCosts());
             algorithm.VertexVisited += OnVertexVisited;
             algorithm.Finished += OnAlgorithmFinished;
             algorithm.Started += OnAlgorithmStarted;
@@ -110,7 +110,7 @@ namespace Pathfinding.App.Console.Units
         {
             if (sender is PathfindingProcess process)
             {
-                unitOfWork.VisitedRepository.Add(process.Id, visited[process.Id]);
+                history.VisitedVertices.Add(process.Id, visited[process.Id]);
                 visited.Remove(process.Id);
             }
         }
