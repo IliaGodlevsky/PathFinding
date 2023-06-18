@@ -25,7 +25,7 @@ namespace Pathfinding.App.Console.Extensions
                 history.PathVertices.Add(key, reader.ReadCoordinates(factory));
                 history.Costs.Add(key, reader.ReadIntArray());
                 var json = reader.ReadString();
-                var statistics = JsonConvert.DeserializeObject<StatisticsNote>(json);
+                var statistics = JsonConvert.DeserializeObject<Statistics>(json);
                 history.Statistics.Add(key, statistics);
             }
             return history;

@@ -46,6 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\IIdentityItem.cs" />
+    <Compile Include="DataAccess\Models\AlgorithmModel.cs" />
+    <Compile Include="DataAccess\Models\CoordinatesModel.cs" />
+    <Compile Include="DataAccess\Models\CostsModel.cs" />
+    <Compile Include="DataAccess\Models\GraphModel.cs" />
+    <Compile Include="DataAccess\Models\StatisticsModel.cs" />
+    <Compile Include="DataAccess\Repos\IRepository.cs" />
+    <Compile Include="DataAccess\Repos\Repository.cs" />
+    <Compile Include="DataAccess\UnitOfWorks\IUnitOfWork.cs" />
+    <Compile Include="DataAccess\UnitOfWorks\UnitOfWork.cs" />
     <Compile Include="DependencyInjection\Attributes\MandatoryRegistrationAttribute.cs" />
     <Compile Include="DependencyInjection\Attributes\SettingsPropertyAttribute.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\TotalVisualizationMiddleware.cs" />
@@ -72,7 +82,6 @@
     <Compile Include="Serialization\GraphSerializer.cs" />
     <Compile Include="Interface\IHistoryVolume.cs" />
     <Compile Include="Interface\IHistoryJournal.cs" />
-    <Compile Include="Model\Notes\HistoryNote.cs" />
     <Compile Include="DataAccess\Repositories\CoordinatesVolume.cs" />
     <Compile Include="DataAccess\Repositories\CostsVolume.cs" />
     <Compile Include="DataAccess\Repositories\StatisticsVolume.cs" />

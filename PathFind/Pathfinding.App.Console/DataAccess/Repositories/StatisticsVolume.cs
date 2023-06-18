@@ -6,17 +6,17 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DataAccess.Repositories
 {
-    internal sealed class StatisticsVolume : IHistoryVolume<Guid, StatisticsNote>
+    internal sealed class StatisticsVolume : IHistoryVolume<Guid, Statistics>
     {
-        private readonly Dictionary<Guid, StatisticsNote> notes = new();
+        private readonly Dictionary<Guid, Statistics> notes = new();
 
-        public bool Add(Guid id, StatisticsNote item)
+        public bool Add(Guid id, Statistics item)
         {
             notes.Add(id, item);
             return true;
         }
 
-        public StatisticsNote Get(Guid id)
+        public Statistics Get(Guid id)
         {
             return notes.GetOrDefault(id, () => null);
         }

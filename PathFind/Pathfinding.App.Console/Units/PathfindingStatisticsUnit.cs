@@ -73,7 +73,7 @@ namespace Pathfinding.App.Console.Units
             messenger.SendData(statistics.ToString(), Tokens.AppLayout);
         }
 
-        private StatisticsNote GetStatistics(PathfindingProcess algorithm)
+        private Statistics GetStatistics(PathfindingProcess algorithm)
         {
             return new()
             {
@@ -83,7 +83,7 @@ namespace Pathfinding.App.Console.Units
             };
         }
 
-        private StatisticsNote GetStatistics(IGraphPath path, PathfindingProcess algorithm)
+        private Statistics GetStatistics(IGraphPath path, PathfindingProcess algorithm)
         {
             var note = GetStatistics(algorithm);
             note.Steps = path.Count;

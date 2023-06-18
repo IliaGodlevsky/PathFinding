@@ -4,9 +4,9 @@ using System.Globalization;
 
 namespace Pathfinding.App.Console.Model.Notes
 {
-    internal class StatisticsNote
+    internal class Statistics
     {
-        protected const int IntPadding = 10;
+        private const int IntPadding = 10;
 
         private readonly string NoteFormat = Languages.PathfindingResultFormat;
         private readonly string TimeFormat = @"mm\:ss\.fff";

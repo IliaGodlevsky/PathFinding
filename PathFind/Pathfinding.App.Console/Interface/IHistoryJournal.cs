@@ -19,6 +19,6 @@ namespace Pathfinding.App.Console.Interface
 
         IHistoryVolume<Guid, IReadOnlyList<int>> Costs { get; }
 
-        IHistoryVolume<Guid, StatisticsNote> Statistics { get; }
+        IHistoryVolume<Guid, Statistics> Statistics { get; }
     }
 }

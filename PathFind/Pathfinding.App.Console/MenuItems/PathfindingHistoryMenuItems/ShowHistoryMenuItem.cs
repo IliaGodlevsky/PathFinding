@@ -93,7 +93,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         private bool IsHistoryApplied() => isHistoryApplied;
 
-        private void SetStatistics((PathfindingProcess Process, StatisticsNote Note) value)
+        private void SetStatistics((PathfindingProcess Process, Statistics Note) value)
         {
             history.Statistics.Add(value.Process.Id, value.Note);
         }
@@ -117,7 +117,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         {
             var token = Tokens.Bind(IsHistoryApplied, Tokens.History);
             messenger.RegisterData<bool>(this, Tokens.History, SetIsApplied);
-            messenger.RegisterAlgorithmData<StatisticsNote>(this, token, SetStatistics);
+            messenger.RegisterAlgorithmData<Statistics>(this, token, SetStatistics);
             messenger.Register<ClearHistoryMessage>(this, token, ClearStatistics);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }

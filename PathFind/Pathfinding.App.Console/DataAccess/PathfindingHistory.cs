@@ -21,6 +21,6 @@ namespace Pathfinding.App.Console.DataAccess
 
         public IHistoryVolume<Guid, IReadOnlyList<int>> Costs { get; } = new CostsVolume();
 
-        public IHistoryVolume<Guid, StatisticsNote> Statistics { get; } = new StatisticsVolume();
+        public IHistoryVolume<Guid, Statistics> Statistics { get; } = new StatisticsVolume();
     }
 }
