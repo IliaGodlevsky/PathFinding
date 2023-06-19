@@ -50,12 +50,22 @@
     <Compile Include="DataAccess\Models\AlgorithmModel.cs" />
     <Compile Include="DataAccess\Models\CoordinatesModel.cs" />
     <Compile Include="DataAccess\Models\CostsModel.cs" />
+    <Compile Include="DataAccess\Models\GraphInformation.cs" />
     <Compile Include="DataAccess\Models\GraphModel.cs" />
     <Compile Include="DataAccess\Models\StatisticsModel.cs" />
+    <Compile Include="DataAccess\Repos\AlgorithmsJsonRepository.cs" />
+    <Compile Include="DataAccess\Repos\CoordinatesJsonRepository.cs" />
+    <Compile Include="DataAccess\Repos\CostsJsonRepository.cs" />
+    <Compile Include="DataAccess\Repos\GraphInformationJsonRepository.cs" />
+    <Compile Include="DataAccess\Repos\GraphJsonRepository.cs" />
     <Compile Include="DataAccess\Repos\IRepository.cs" />
-    <Compile Include="DataAccess\Repos\Repository.cs" />
+    <Compile Include="DataAccess\Repos\ProxyRepository.cs" />
+    <Compile Include="DataAccess\Repos\JsonRepository.cs" />
+    <Compile Include="DataAccess\Repos\StatisticsJsonRepository.cs" />
+    <Compile Include="DataAccess\Services\IService.cs" />
     <Compile Include="DataAccess\UnitOfWorks\IUnitOfWork.cs" />
-    <Compile Include="DataAccess\UnitOfWorks\UnitOfWork.cs" />
+    <Compile Include="DataAccess\UnitOfWorks\JsonUnitOfWork.cs" />
+    <Compile Include="DataAccess\UnitOfWorks\ProxyUnitOfWork.cs" />
     <Compile Include="DependencyInjection\Attributes\MandatoryRegistrationAttribute.cs" />
     <Compile Include="DependencyInjection\Attributes\SettingsPropertyAttribute.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\TotalVisualizationMiddleware.cs" />
@@ -100,6 +110,11 @@
     <Compile Include="Model\Visualizations\Visuals\VisualizedVisited.cs" />
     <Compile Include="Model\Visualizations\Visuals\VisualizedVertices.cs" />
     <Compile Include="Model\Visualizations\VisualizedType.cs" />
+    <Compile Include="Settings\Connections.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Connections.settings</DependentUpon>
+    </Compile>
     <Compile Include="Settings\Features.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -456,6 +471,9 @@
     <PackageReference Include="Autofac">
       <Version>7.0.1</Version>
     </PackageReference>
+    <PackageReference Include="JsonFlatFileDataStore">
+      <Version>2.4.1</Version>
+    </PackageReference>
     <PackageReference Include="MvvmLightLibs">
       <Version>5.4.1.1</Version>
     </PackageReference>
@@ -475,6 +493,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Settings\Connections.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Connections.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Settings\Features.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Features.Designer.cs</LastGenOutput>

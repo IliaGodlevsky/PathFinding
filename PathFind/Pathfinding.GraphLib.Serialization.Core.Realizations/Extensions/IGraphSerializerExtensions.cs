@@ -19,6 +19,8 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
         public static void SerializeToFile<T>(this ISerializer<T> self,
             T graph, string filePath)
         {
+            var info = new FileInfo(filePath);
+            info.Directory.Create();
             var fileMode = File.Exists(filePath) ? FileMode.Truncate : FileMode.Create;
             using (var fileStream = new FileStream(filePath, fileMode, FileAccess.Write))
             {

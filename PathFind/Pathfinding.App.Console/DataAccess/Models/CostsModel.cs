@@ -9,6 +9,6 @@ namespace Pathfinding.App.Console.DataAccess.Models
 
         public Guid AlgorithmId { get; set; }
 
-        public IReadOnlyList<int> Costs { get; set; }
+        public int[] Costs { get; set; }
     }
 }

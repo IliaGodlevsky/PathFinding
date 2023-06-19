@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.DataAccess.Repos
 {
@@ -14,10 +15,14 @@ namespace Pathfinding.App.Console.DataAccess.Repos
 
         T GetById(Guid id);
 
-        void Add(T item);
+        T Add(T item);
 
-        void Delete(T item);
+        T Delete(T item);
 
-        void Update(T item);
+        T Update(T item);
+
+        void Commit();
+
+        ValueTask CommitAsync();
     }
 }

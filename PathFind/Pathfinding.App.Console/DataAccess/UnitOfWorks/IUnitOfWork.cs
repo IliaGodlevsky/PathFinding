@@ -6,6 +6,8 @@ namespace Pathfinding.App.Console.DataAccess.UnitOfWorks
 {
     internal interface IUnitOfWork : IDisposable
     {
+        IRepository<GraphInformationModel> InformationRepository { get; }
+
         IRepository<GraphModel> GraphRepository { get; }
 
         IRepository<AlgorithmModel> AlgorithmRepository { get; }
