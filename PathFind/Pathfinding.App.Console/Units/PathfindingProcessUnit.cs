@@ -7,6 +7,7 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
@@ -25,12 +26,14 @@ namespace Pathfinding.App.Console.Units
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         private readonly IInput<ConsoleKey> input;
         private readonly ILog log;
+
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         public PathfindingProcessUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
-            IInput<ConsoleKey> input, IMessenger messenger,
+            IInput<ConsoleKey> input,
+            IMessenger messenger,
             ILog log)
             : base(menuItems, conditioned)
         {
@@ -74,7 +77,7 @@ namespace Pathfinding.App.Console.Units
             var path = NullGraphPath.Interface;
             void Summarize()
             {
-                messenger.SendData((algorithm, path), Tokens.History, Tokens.Statistics);
+                messenger.SendData(path, Tokens.Storage, Tokens.Statistics);
             }
             using (Disposable.Use(Summarize))
             {
@@ -93,9 +96,11 @@ namespace Pathfinding.App.Console.Units
 
         private void PrepareForPathfinding(PathfindingProcess algorithm)
         {
+            var message = new ObstaclesMessage { Coordinates = graph.GetObstaclesCoordinates().ToArray() };
+            messenger.SendData(message, Tokens.Storage);
+            messenger.SendData(rangeBuilder.Range, Tokens.Storage);
             messenger.SendData(algorithm.ToString(), Tokens.AppLayout);
-            messenger.SendData(algorithm, Tokens.Visualization, Tokens.History, Tokens.Statistics);
-            messenger.SendData((algorithm, rangeBuilder.Range), Tokens.History);
+            messenger.SendData(algorithm, Tokens.Visualization, Tokens.Storage, Tokens.Statistics);
         }
 
         public void RegisterHanlders(IMessenger messenger)

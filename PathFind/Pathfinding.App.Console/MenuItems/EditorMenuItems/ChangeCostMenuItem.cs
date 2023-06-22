@@ -1,4 +1,6 @@
-﻿using Pathfinding.App.Console.Interface;
+﻿using Pathfinding.App.Console.DataAccess.UnitOfWorks;
+using Pathfinding.App.Console.Extensions;
+using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using System;
@@ -10,8 +12,9 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
     internal sealed class ChangeCostMenuItem : SwitchVerticesMenuItem
     {
         public ChangeCostMenuItem(IReadOnlyCollection<(string, IVertexAction)> actions,
+            IUnitOfWork unitOfWork,
             IInput<ConsoleKey> keyInput)
-            : base(actions, keyInput)
+            : base(actions, keyInput, unitOfWork)
         {
         }
 

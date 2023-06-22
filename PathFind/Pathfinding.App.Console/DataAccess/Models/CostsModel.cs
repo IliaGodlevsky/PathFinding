@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DataAccess.Models
 {
-    internal class CostsModel : IIdentityItem<Guid>
+    internal class CostsModel : IIdentityItem<long>
     {
-        public Guid Id { get; set; }
+        public long Id { get; set; }
 
-        public Guid AlgorithmId { get; set; }
+        public long AlgorithmId { get; set; }
 
         public int[] Costs { get; set; }
     }

@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Serialization.Serializers.Decorators;
+using JsonFlatFileDataStore;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
@@ -8,6 +9,7 @@ using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.AlgorithmLib.Factory;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.App.Console.DataAccess;
+using Pathfinding.App.Console.DataAccess.UnitOfWorks;
 using Pathfinding.App.Console.DependencyInjection.Attributes;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
@@ -126,7 +128,9 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterTypes(AllUnits).SingleInstance().WithMetadata(UnitTypeKey, type => type).AsSelf()
                     .AsImplementedInterfaces().AutoActivate().ConfigurePipeline(p => p.Use(new UnitResolveMiddleware(UnitTypeKey)));
 
-                builder.RegisterType<PathfindingHistory>().As<IPathfindingHistory>().SingleInstance();
+                builder.RegisterInstance(new DataStore(Connections.Default.ConnectionString)).AsSelf().SingleInstance();
+                builder.RegisterType<JsonUnitOfWork>().As<IUnitOfWork>().SingleInstance();
+                builder.RegisterDecorator<ProxyUnitOfWork, IUnitOfWork>();
 
                 builder.RegisterType<ExitMenuItem>().Keyed(typeof(IMenuItem), WithoutMain).SingleInstance();
 
@@ -239,7 +243,6 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterType<GraphSerializer>().As<ISerializer<SerializationInfo>>().SingleInstance();
 
-                builder.RegisterType<BinaryHistorySerializer>().As<ISerializer<IPathfindingHistory>>().SingleInstance();
                 builder.RegisterType<BinaryRangeSerializer>().As<ISerializer<IEnumerable<ICoordinate>>>().SingleInstance();
                 builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>().As<ISerializer<Graph2D<Vertex>>>().SingleInstance();
 
@@ -259,12 +262,12 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             {
                 builder.RegisterType<EditorKeysMenuItem>().Keyed<IMenuItem>(KeysUnit).SingleInstance();
                 builder.RegisterType<EditorUnitMenuItem>().Keyed<IConditionedMenuItem>(Main).As<ICanRecieveMessage>().SingleInstance();
-                builder.RegisterType<ReverseVertexMenuItem>().Keyed<IConditionedMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance()
-                    .ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(Reverse)));
+                //builder.RegisterType<ReverseVertexMenuItem>().Keyed<IConditionedMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance()
+                //    .ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(Reverse)));
                 builder.RegisterType<ReverseVertexAction>().Keyed<IVertexAction>(Reverse).WithMetadata(Reverse, nameof(Keys.Default.ReverseVertex));
-                builder.RegisterType<SmoothGraphMenuItem>().Keyed<IConditionedMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
-                builder.RegisterType<ChangeCostMenuItem>().Keyed<IConditionedMenuItem>(Editor).SingleInstance()
-                    .As<ICanRecieveMessage>().ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(ChangeCost)));
+                //builder.RegisterType<SmoothGraphMenuItem>().Keyed<IConditionedMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
+                builder.RegisterType<ChangeCostMenuItem>().Keyed<IConditionedMenuItem>(Editor).As<ICanRecieveMessage>()
+                    .SingleInstance().ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(ChangeCost)));
                 builder.RegisterType<IncreaseCostAction>().Keyed<IVertexAction>(ChangeCost).WithMetadata(ChangeCost, nameof(Keys.Default.IncreaseCost));
                 builder.RegisterType<DecreaseCostAction>().Keyed<IVertexAction>(ChangeCost).WithMetadata(ChangeCost, nameof(Keys.Default.DecreaseCost));
             }

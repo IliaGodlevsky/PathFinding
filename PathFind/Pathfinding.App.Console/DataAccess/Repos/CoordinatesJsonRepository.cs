@@ -1,13 +1,22 @@
 ﻿using JsonFlatFileDataStore;
 using Pathfinding.App.Console.DataAccess.Models;
 using Pathfinding.GraphLib.Factory.Interface;
-using System.Collections;
-using System.Dynamic;
+using System;
 using System.Linq;
 
 namespace Pathfinding.App.Console.DataAccess.Repos
 {
-    internal sealed class CoordinatesJsonRepository : JsonRepository<CoordinatesModel>
+    public sealed class JsonCoordinates : IIdentityItem<long>
+    {
+        public JsonCoordinates() { }
+        public long Id { get; set; }
+
+        public long AlgorithmId { get; set; }
+
+        public GraphJsonCoordinates[] Coordinates { get; set; }
+    }
+
+    internal sealed class CoordinatesJsonRepository : JsonRepository<CoordinatesModel, JsonCoordinates>
     {
         private readonly ICoordinateFactory factory;
 
@@ -21,26 +30,26 @@ namespace Pathfinding.App.Console.DataAccess.Repos
             Table = tableName;
         }
 
-        protected override dynamic Map(CoordinatesModel item)
+        protected override JsonCoordinates Map(CoordinatesModel item)
         {
-            dynamic result = new ExpandoObject();
+            var result = new JsonCoordinates();
             result.Id = item.Id;
             result.AlgorithmId = item.AlgorithmId;
             result.Coordinates = item.Coordinates
-                .Select(c => new { Coordinates = c.ToArray() })
+                .Select(c => new GraphJsonCoordinates { Coordinates = c.ToArray() })
                 .ToArray();
             return result;
         }
 
-        protected override CoordinatesModel Map(dynamic model)
+        protected override CoordinatesModel Map(JsonCoordinates model)
         {
-            var modelCoordinates = (IEnumerable)model.Coordinates;
+            var modelCoordinates = model.Coordinates;
             return new CoordinatesModel()
             {
                 Id = model.Id,
                 AlgorithmId = model.AlgorithmId,
-                Coordinates = modelCoordinates.OfType<dynamic>()
-                    .Select(c => factory.CreateCoordinate((int[])c.Coordinates))
+                Coordinates = modelCoordinates
+                    .Select(c => factory.CreateCoordinate(c.Coordinates))
                     .ToArray()
             };
         }

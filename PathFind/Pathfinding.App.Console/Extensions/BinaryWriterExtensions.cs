@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Serialization;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using System.IO;
 
@@ -7,18 +7,17 @@ namespace Pathfinding.App.Console.Extensions
 {
     internal static class BinaryWriterExtensions
     {
-        public static void WriteHistory(this BinaryWriter writer, IPathfindingHistory history)
+        public static void WriteHistory(this BinaryWriter writer, SerializationInfo info)
         {
-            writer.Write(history.Algorithms.Count);
-            foreach (var key in history.Algorithms)
+            writer.Write(info.Algorithms.Count);
+            for (int i = 0; i < info.Algorithms.Count; i++)
             {
-                writer.Write(key.ToByteArray());
-                writer.WriterCoordinates(history.ObstacleVertices.Get(key));
-                writer.WriterCoordinates(history.VisitedVertices.Get(key));
-                writer.WriterCoordinates(history.RangeVertices.Get(key));
-                writer.WriterCoordinates(history.PathVertices.Get(key));
-                writer.WriteIntArray(history.Costs.Get(key));
-                var statistics = history.Statistics.Get(key);
+                writer.WriterCoordinates(info.Obstacles[i]);
+                writer.WriterCoordinates(info.Visited[i]);
+                writer.WriterCoordinates(info.Ranges[i]);
+                writer.WriterCoordinates(info.Paths[i]);
+                writer.WriteIntArray(info.Costs[i]);
+                var statistics = info.Statistics[i];
                 writer.Write(JsonConvert.SerializeObject(statistics));
             }
         }

@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.DataAccess.Models;
+using Pathfinding.App.Console.DataAccess.UnitOfWorks;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
@@ -19,21 +21,24 @@ namespace Pathfinding.App.Console.MenuItems
     {
         protected readonly IInput<ConsoleKey> keyInput;
         protected readonly VertexActions actions;
+        protected IUnitOfWork unitOfWork;
 
-        protected Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
+        protected GraphModel graph = new();
         protected InclusiveValueRange<int> xRange = default;
         protected InclusiveValueRange<int> yRange = default;
 
         protected SwitchVerticesMenuItem(VertexActions actions,
-            IInput<ConsoleKey> keyInput)
+            IInput<ConsoleKey> keyInput,
+            IUnitOfWork unitOfWork)
         {
             this.keyInput = keyInput;
             this.actions = actions;
+            this.unitOfWork = unitOfWork;
         }
 
         public virtual bool CanBeExecuted()
         {
-            return graph != Graph2D<Vertex>.Empty;
+            return graph.Graph != Graph2D<Vertex>.Empty;
         }
 
         public virtual void Execute()
@@ -43,7 +48,7 @@ namespace Pathfinding.App.Console.MenuItems
             do
             {
                 var coordinate = new Coordinate2D(x, y);
-                var vertex = graph.Get(coordinate);
+                var vertex = graph.Graph.Get(coordinate);
                 Cursor.SetPosition(vertex.ConsolePosition);
                 key = keyInput.Input();
                 if (key == Keys.Default.VertexUp)
@@ -57,6 +62,12 @@ namespace Pathfinding.App.Console.MenuItems
                 else
                     GetOrDefault(key)?.Do(vertex);
             } while (key != ConsoleKey.Escape);
+            PostExecute();
+        }
+
+        protected virtual void PostExecute()
+        {
+            unitOfWork.UpdateGraph(graph);
         }
 
         private static int ReturnInRange(int coordinate, InclusiveValueRange<int> range)
@@ -72,16 +83,16 @@ namespace Pathfinding.App.Console.MenuItems
             return action;
         }
 
-        private void SetGraph(Graph2D<Vertex> graph)
+        private void SetGraph(GraphModel graph)
         {
             this.graph = graph;
-            xRange = new InclusiveValueRange<int>(graph.Width - 1);
-            yRange = new InclusiveValueRange<int>(graph.Length - 1);
+            xRange = new InclusiveValueRange<int>(graph.Graph.Width - 1);
+            yRange = new InclusiveValueRange<int>(graph.Graph.Length - 1);
         }
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterGraph(this, Tokens.Common, SetGraph);
+            messenger.RegisterData<GraphModel>(this, Tokens.Common, SetGraph);
         }
     }
 }

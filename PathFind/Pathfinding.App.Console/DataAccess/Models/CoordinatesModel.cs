@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DataAccess.Models
 {
-    internal class CoordinatesModel : IIdentityItem<Guid>
+    internal class CoordinatesModel : IIdentityItem<long>
     {
-        public Guid Id { get; set; }
+        public long Id { get; set; }
 
-        public Guid AlgorithmId { get; set; }
+        public long AlgorithmId { get; set; }
 
         public IReadOnlyList<ICoordinate> Coordinates { get; set; }
     }

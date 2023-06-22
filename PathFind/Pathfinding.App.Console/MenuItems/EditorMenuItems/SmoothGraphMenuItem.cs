@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.DataAccess.Models;
+using Pathfinding.App.Console.DataAccess.UnitOfWorks;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -21,19 +23,22 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private readonly IMeanCost meanAlgorithm;
         private readonly IMessenger messenger;
         private readonly IInput<ConsoleKey> input;
+        private readonly IUnitOfWork unitOfWork;
         private readonly Stack<IReadOnlyList<int>> costs = new();
 
-        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
+        private GraphModel graph = new();
 
         public SmoothGraphMenuItem(IMeanCost meanAlgorithm,
-            IMessenger messenger, IInput<ConsoleKey> input)
+            IMessenger messenger, IInput<ConsoleKey> input,
+            IUnitOfWork unitOfWork)
         {
             this.meanAlgorithm = meanAlgorithm;
             this.messenger = messenger;
             this.input = input;
+            this.unitOfWork = unitOfWork;
         }
 
-        public bool CanBeExecuted() => graph != Graph2D<Vertex>.Empty;
+        public bool CanBeExecuted() => graph.Graph != Graph2D<Vertex>.Empty;
 
         public void Execute()
         {
@@ -50,20 +55,21 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                         Cancel();
                     key = input.Input();
                 }
+                unitOfWork.UpdateGraph(graph);
             }
         }
 
         private void Smooth()
         {
-            costs.Push(graph.GetCosts());
-            graph.Smooth(meanAlgorithm);
+            costs.Push(graph.Graph.GetCosts());
+            graph.Graph.Smooth(meanAlgorithm);
         }
 
         private void Undo()
         {
             if (costs.Count > 0)
             {
-                graph.Reverse().ApplyCosts(costs.Pop().Reverse());
+                graph.Graph.Reverse().ApplyCosts(costs.Pop().Reverse());
             }
         }
 
@@ -72,12 +78,12 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             if (costs.Count > 0)
             {
                 var initPrices = costs.Last().Reverse();
-                graph.Reverse().ApplyCosts(initPrices);
+                graph.Graph.Reverse().ApplyCosts(initPrices);
                 costs.Clear();
             }
         }
 
-        private void OnGraphCreated(Graph2D<Vertex> graph)
+        private void OnGraphCreated(GraphModel graph)
         {
             this.graph = graph;
             costs.Clear();
@@ -90,7 +96,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
+            messenger.RegisterData<GraphModel>(this, Tokens.Common, OnGraphCreated);
         }
     }
 }

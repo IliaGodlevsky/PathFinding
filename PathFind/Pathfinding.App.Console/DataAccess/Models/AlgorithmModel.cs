@@ -2,11 +2,11 @@
 
 namespace Pathfinding.App.Console.DataAccess.Models
 {
-    internal class AlgorithmModel : IIdentityItem<Guid>
+    internal class AlgorithmModel : IIdentityItem<long>
     {
-        public Guid Id { get; set; }
+        public long Id { get; set; }
 
-        public Guid GraphId { get; set; }
+        public long GraphId { get; set; }
 
         public string Name { get; set; }
     }

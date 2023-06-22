@@ -1,34 +1,31 @@
 ﻿using Newtonsoft.Json;
-using Pathfinding.App.Console.DataAccess;
-using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Model.Notes;
+using Pathfinding.App.Console.DataAccess.Models;
+using Pathfinding.App.Console.Serialization;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
-using System;
 using System.IO;
 
 namespace Pathfinding.App.Console.Extensions
 {
     internal static class BinaryReaderExtensions
     {
-        public static IPathfindingHistory ReadHistory(this BinaryReader reader, ICoordinateFactory factory)
+        public static SerializationInfo ReadHistory(this BinaryReader reader, 
+            SerializationInfo info, ICoordinateFactory factory)
         {
-            var history = new PathfindingHistory();
-            int keyCount = reader.ReadInt32();
-            for (int i = 0; i < keyCount; i++)
+            int algorithms = reader.ReadInt32();
+            for (int i = 0; i < algorithms; i++)
             {
-                var key = new Guid(reader.ReadBytes(16));
-                history.Algorithms.Add(key);
-                history.ObstacleVertices.Add(key, reader.ReadCoordinates(factory));
-                history.VisitedVertices.Add(key, reader.ReadCoordinates(factory));
-                history.RangeVertices.Add(key, reader.ReadCoordinates(factory));
-                history.PathVertices.Add(key, reader.ReadCoordinates(factory));
-                history.Costs.Add(key, reader.ReadIntArray());
+                info.Obstacles.Add(reader.ReadCoordinates(factory));
+                info.Visited.Add(reader.ReadCoordinates(factory));
+                info.Ranges.Add(reader.ReadCoordinates(factory));
+                info.Paths.Add(reader.ReadCoordinates(factory));
+                info.Costs.Add(reader.ReadIntArray());
                 var json = reader.ReadString();
-                var statistics = JsonConvert.DeserializeObject<Statistics>(json);
-                history.Statistics.Add(key, statistics);
+                var statistics = JsonConvert.DeserializeObject<StatisticsModel>(json);
+                info.Statistics.Add(statistics);
+                info.Algorithms.Add(statistics.AlgorithmName);
             }
-            return history;
+            return info;
         }
     }
 }

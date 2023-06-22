@@ -62,7 +62,6 @@
     <Compile Include="DataAccess\Repos\ProxyRepository.cs" />
     <Compile Include="DataAccess\Repos\JsonRepository.cs" />
     <Compile Include="DataAccess\Repos\StatisticsJsonRepository.cs" />
-    <Compile Include="DataAccess\Services\IService.cs" />
     <Compile Include="DataAccess\UnitOfWorks\IUnitOfWork.cs" />
     <Compile Include="DataAccess\UnitOfWorks\JsonUnitOfWork.cs" />
     <Compile Include="DataAccess\UnitOfWorks\ProxyUnitOfWork.cs" />
@@ -71,6 +70,7 @@
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\TotalVisualizationMiddleware.cs" />
     <Compile Include="Extensions\BinaryReaderExtensions.cs" />
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
+    <Compile Include="Extensions\UnitOfWorkExtensions.cs" />
     <Compile Include="Interface\IToken.cs" />
     <Compile Include="Interface\IVisualizedVertices.cs" />
     <Compile Include="MenuItems\ColorMenuItems\CrossedPathVertexColorMenuItem.cs" />
@@ -88,15 +88,16 @@
     <Compile Include="MenuItems\KeysMenuItems\RegularKeysMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\TransitKeysMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\KeysUnitMenuItem.cs" />
+    <Compile Include="Messages\CoordinatesMessage.cs" />
+    <Compile Include="Messages\ObstaclesMessage.cs" />
+    <Compile Include="Messages\RangeMessage.cs" />
+    <Compile Include="Messages\UpdateGraphMessage.cs" />
+    <Compile Include="Messages\VisitedMessage.cs" />
     <Compile Include="Model\ApplicationSettingsStore.cs" />
+    <Compile Include="Model\GraphChooseInformation.cs" />
     <Compile Include="Serialization\GraphSerializer.cs" />
     <Compile Include="Interface\IHistoryVolume.cs" />
-    <Compile Include="Interface\IHistoryJournal.cs" />
-    <Compile Include="DataAccess\Repositories\CoordinatesVolume.cs" />
-    <Compile Include="DataAccess\Repositories\CostsVolume.cs" />
-    <Compile Include="DataAccess\Repositories\StatisticsVolume.cs" />
     <Compile Include="Serialization\SerializationInfo.cs" />
-    <Compile Include="DataAccess\PathfindingHistory.cs" />
     <Compile Include="Serialization\BinaryHistorySerializer.cs" />
     <Compile Include="Model\Visualizations\Visuals\VisualizedCrossedPath.cs" />
     <Compile Include="Model\Visualizations\Visuals\VisualizedEnqueued.cs" />
@@ -232,10 +233,10 @@
     <Compile Include="Units\PathfindingRangeUnit.cs" />
     <Compile Include="Units\PathfindingStatisticsUnit.cs" />
     <Compile Include="Units\PathfindingVisualizationUnit.cs" />
+    <Compile Include="Units\StorageUnit.cs" />
     <Compile Include="Units\Unit.cs" />
     <Compile Include="ValueInput\AddressInput.cs" />
     <Compile Include="ValueInput\FilePathInput.cs" />
-    <Compile Include="Model\Notes\StatisticsNote.cs" />
     <Compile Include="Settings\Colours.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -268,7 +269,6 @@
     <Compile Include="Model\PathfindingActions\ResumeAlgorithm.cs" />
     <Compile Include="Model\PathfindingActions\PathfindingStepByStep.cs" />
     <Compile Include="Model\MenuList.cs" />
-    <Compile Include="Model\PathfindingHistoryVolume.cs" />
     <Compile Include="Interface\IFilePathInput.cs" />
     <Compile Include="Model\Vertex.cs" />
     <Compile Include="Model\VertexActions\ChangeCostAction.cs" />
@@ -514,8 +514,6 @@
       <LastGenOutput>Colours.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Visualization\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

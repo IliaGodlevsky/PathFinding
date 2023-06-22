@@ -14,6 +14,7 @@ namespace Pathfinding.App.Console
         public static readonly IToken Statistics = new Token();
         public static readonly IToken Visualization = new Token();
         public static readonly IToken Pathfinding = new Token();
+        public static readonly IToken Storage = new Token();
 
         public static IToken Bind(Func<bool> condition, IToken token)
             => new ConditionToken(condition, token);

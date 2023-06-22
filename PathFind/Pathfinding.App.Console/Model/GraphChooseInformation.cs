@@ -1,12 +1,11 @@
 ﻿using Pathfinding.App.Console.DataAccess.Models;
-using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using System.Collections.Generic;
 
-namespace Pathfinding.App.Console.Serialization
+namespace Pathfinding.App.Console.Model
 {
-    internal sealed class SerializationInfo
+    internal class GraphPathfindingInformation
     {
         public Graph2D<Vertex> Graph { get; set; }
 
@@ -25,7 +24,5 @@ namespace Pathfinding.App.Console.Serialization
         public IList<IReadOnlyList<ICoordinate>> Ranges { get; set; } = new List<IReadOnlyList<ICoordinate>>();
 
         public IList<IReadOnlyList<ICoordinate>> Paths { get; set; } = new List<IReadOnlyList<ICoordinate>>();
-
-        public string GraphInformation { get; set; } = string.Empty;
     }
 }

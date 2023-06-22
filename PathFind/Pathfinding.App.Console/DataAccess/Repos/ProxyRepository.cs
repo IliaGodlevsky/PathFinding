@@ -7,20 +7,15 @@ using System.Threading.Tasks;
 namespace Pathfinding.App.Console.DataAccess.Repos
 {
     internal sealed class ProxyRepository<T> : IRepository<T>
-        where T : class, IIdentityItem<Guid>
+        where T : class, IIdentityItem<long>
     {
         private readonly IRepository<T> repository;
 
-        private readonly Dictionary<Guid, T> items = new();
+        private readonly Dictionary<long, T> items = new();
 
         public ProxyRepository(IRepository<T> repository)
         {
             this.repository = repository;
-        }
-        
-        public ProxyRepository() : this(null)
-        {
-
         }
 
         public T Add(T item)
@@ -70,10 +65,10 @@ namespace Pathfinding.App.Console.DataAccess.Repos
                     return item;
                 }
             }
-            return null;
+            return item;
         }
 
-        public T GetById(Guid id)
+        public T GetById(long id)
         {
             if (items.TryGetValue(id, out var item))
             {

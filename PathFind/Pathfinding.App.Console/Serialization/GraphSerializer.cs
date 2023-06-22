@@ -1,28 +1,31 @@
-﻿using Pathfinding.App.Console.Interface;
+﻿using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace Pathfinding.App.Console.Serialization
 {
     internal sealed class GraphSerializer : ISerializer<SerializationInfo>
     {
         private readonly ISerializer<IEnumerable<ICoordinate>> rangeSerializer;
-        private readonly ISerializer<IPathfindingHistory> historySerializer;
         private readonly ISerializer<Graph2D<Vertex>> graphSerializer;
+        private readonly ICoordinateFactory coordinateFactory;
 
         public GraphSerializer(ISerializer<IEnumerable<ICoordinate>> rangeSerializer,
-            ISerializer<IPathfindingHistory> historySerializer,
-            ISerializer<Graph2D<Vertex>> graphSerializer)
+            ISerializer<Graph2D<Vertex>> graphSerializer,
+            ICoordinateFactory coordinateFactory)
         {
             this.rangeSerializer = rangeSerializer;
-            this.historySerializer = historySerializer;
             this.graphSerializer = graphSerializer;
+            this.coordinateFactory = coordinateFactory;
         }
 
         public SerializationInfo DeserializeFrom(Stream stream)
@@ -31,8 +34,11 @@ namespace Pathfinding.App.Console.Serialization
             {
                 var graph = graphSerializer.DeserializeFrom(stream);
                 var range = rangeSerializer.DeserializeFrom(stream);
-                var unit = historySerializer.DeserializeFrom(stream);
-                return new SerializationInfo { Graph = graph, Range = range, History = unit };
+                var info =  new SerializationInfo { Graph = graph, Range = range.ToArray() };
+                using (var reader = new BinaryReader(stream, Encoding.Default, leaveOpen: true))
+                {
+                    return reader.ReadHistory(info, coordinateFactory);
+                }
             }
             catch (Exception ex)
             {
@@ -46,7 +52,10 @@ namespace Pathfinding.App.Console.Serialization
             {
                 graphSerializer.SerializeTo(item.Graph, stream);
                 rangeSerializer.SerializeTo(item.Range, stream);
-                historySerializer.SerializeTo(item.History, stream);
+                using (var writer = new BinaryWriter(stream, Encoding.Default, leaveOpen: true))
+                {
+                    writer.WriteHistory(item);
+                }
             }
             catch (Exception ex)
             {

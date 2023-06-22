@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace Pathfinding.App.Console.DataAccess.Repos
 {
     internal interface IRepository<T>
-        where T : class, IIdentityItem<Guid>
+        where T : class, IIdentityItem<long>
     {
         IEnumerable<T> GetAll();
 
@@ -13,7 +13,7 @@ namespace Pathfinding.App.Console.DataAccess.Repos
 
         T GetBy(Func<T, bool> predicate);
 
-        T GetById(Guid id);
+        T GetById(long id);
 
         T Add(T item);
 

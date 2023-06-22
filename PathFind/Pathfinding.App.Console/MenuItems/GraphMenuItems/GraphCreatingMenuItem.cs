@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.DataAccess.Models;
+using Pathfinding.App.Console.DataAccess.UnitOfWorks;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
@@ -24,6 +26,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected readonly IVertexCostFactory costFactory;
         protected readonly INeighborhoodFactory neighborhoodFactory;
         protected readonly GraphAssemble assemble;
+        protected readonly IUnitOfWork unitOfWork;
 
         protected InclusiveValueRange<int> costRange = new(9, 1);
         protected int width = 0;
@@ -32,7 +35,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         protected GraphCreatingMenuItem(IMessenger messenger,
             GraphAssemble assemble,
-            IRandom random,
+            IRandom random, IUnitOfWork unitOfWork,
             IVertexCostFactory costFactory,
             INeighborhoodFactory neighborhoodFactory)
         {
@@ -41,6 +44,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             this.costFactory = costFactory;
             this.neighborhoodFactory = neighborhoodFactory;
             this.assemble = assemble;
+            this.unitOfWork = unitOfWork;
         }
 
         protected void SetCostRange(InclusiveValueRange<int> range) => costRange = range;
@@ -59,7 +63,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             var graph = assemble.AssembleGraph(layers, width, length);
             messenger.SendData(costRange, Tokens.AppLayout);
             messenger.SendData(graph, Tokens.AppLayout, Tokens.Main, Tokens.Common);
+            var model = new GraphModel();
+            model.Graph = graph;
+            model = GraphAction(model);
+            messenger.SendData(model, Tokens.Common);
         }
+
+        protected abstract GraphModel GraphAction(GraphModel graph);
 
         public virtual bool CanBeExecuted()
         {

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.DataAccess.Repos
 {
-    internal abstract class JsonRepository<T> : IRepository<T>
-        where T : class, IIdentityItem<Guid>
+    internal abstract class JsonRepository<T, TMap> : IRepository<T>
+        where T : class, IIdentityItem<long>
+        where TMap : class, IIdentityItem<long>, new()
     {
         private readonly DataStore context;
 
@@ -20,9 +21,10 @@ namespace Pathfinding.App.Console.DataAccess.Repos
 
         public virtual T Add(T item)
         {
-            item.Id = Guid.NewGuid();
-            var mapped = Map(item);
-            var collection = context.GetCollection(Table);
+            var collection = context.GetCollection<TMap>(Table);
+            int id = (int)collection.GetNextIdValue();
+            item.Id = id++;
+            var mapped = Map(item);           
             collection.InsertOne(mapped);
             return item;
         }
@@ -40,21 +42,21 @@ namespace Pathfinding.App.Console.DataAccess.Repos
         public virtual T Delete(T item)
         {
             var mapped = Map(item);
-            var collection = context.GetCollection(Table);
+            var collection = context.GetCollection<TMap>(Table);
             collection.DeleteOne(mapped);
             return item;
         }
 
         public virtual IEnumerable<T> GetAll()
         {
-            return context.GetCollection(Table)
+            return context.GetCollection<TMap>(Table)
                 .AsQueryable()
                 .Select(Map);
         }
 
         public virtual IEnumerable<T> GetAll(Func<T, bool> predicate)
         {
-            return context.GetCollection(Table)
+            return context.GetCollection<TMap>(Table)
                 .AsQueryable()
                 .Select(Map)
                 .Where(predicate);
@@ -62,27 +64,31 @@ namespace Pathfinding.App.Console.DataAccess.Repos
 
         public virtual T GetBy(Func<T, bool> predicate)
         {
-            return context.GetCollection(Table)
+            return context.GetCollection<TMap>(Table)
                 .AsQueryable()
                 .Select(Map)
                 .FirstOrDefault(predicate);
         }
 
-        public virtual T GetById(Guid id)
+        public virtual T GetById(long id)
         {
-            var value = context.GetItem<dynamic>(id.ToString());
+            var collection = context.GetCollection<TMap>(Table);
+            var value = collection.AsQueryable().FirstOrDefault(c => c.Id == id);
             return Map(value);
         }
 
         public virtual T Update(T item)
         {
             var mapped = Map(item);
-            context.UpdateItem(item.Id.ToString(), item);
+            var collection = context.GetCollection<TMap>(Table);
+            var i = GetById(item.Id);
+            collection.DeleteOne(item.Id);
+            collection.InsertOne(mapped);
             return item;
         }
 
-        protected abstract dynamic Map(T item);
+        protected abstract TMap Map(T item);
 
-        protected abstract T Map(dynamic model);
+        protected abstract T Map(TMap model);
     }
 }
