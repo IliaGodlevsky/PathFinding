@@ -2,8 +2,35 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Pathfinding.App.Console.Settings" GeneratedClassName="Connections">
   <Profiles />
   <Settings>
-    <Setting Name="ConnectionString" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">storage.json</Value>
+    <Setting Name="Folder" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">database</Value>
+    </Setting>
+    <Setting Name="GraphsConnection" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">graphs.json</Value>
+    </Setting>
+    <Setting Name="InformationConnection" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">information.json</Value>
+    </Setting>
+    <Setting Name="AlgorithmsConnection" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">algorithms.json</Value>
+    </Setting>
+    <Setting Name="VisitedConnection" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">visited.json</Value>
+    </Setting>
+    <Setting Name="ObstaclesConnection" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">obstacles.json</Value>
+    </Setting>
+    <Setting Name="RangesConnection" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ranges.json</Value>
+    </Setting>
+    <Setting Name="PathsConnection" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">paths.json</Value>
+    </Setting>
+    <Setting Name="CostsConnection" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">costs.json</Value>
+    </Setting>
+    <Setting Name="StatisticsConnection" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">statistics.json</Value>
     </Setting>
   </Settings>
 </SettingsFile>

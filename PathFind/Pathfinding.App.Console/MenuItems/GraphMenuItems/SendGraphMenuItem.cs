@@ -1,5 +1,4 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.App.Console.DataAccess.UnitOfWorks;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
@@ -18,10 +17,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     {
         public SendGraphMenuItem(IMessenger messenger, 
             IInput<(string Host, int Port)> input, 
-            IUnitOfWork history, ISerializer<SerializationInfo> graphSerializer, 
+            ISerializer<SerializationInfo> graphSerializer, 
             IPathfindingRangeBuilder<Vertex> rangeBuilder, 
             ILog log) 
-            : base(messenger, input, history, graphSerializer, rangeBuilder, log)
+            : base(messenger, input, graphSerializer, rangeBuilder, log)
         {
         }
 

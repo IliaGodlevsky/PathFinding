@@ -1,5 +1,4 @@
-﻿using JsonFlatFileDataStore;
-using Pathfinding.App.Console.DataAccess.Models;
+﻿using Pathfinding.App.Console.DataAccess.Models;
 using Pathfinding.App.Console.DataAccess.Repos;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
@@ -9,7 +8,7 @@ namespace Pathfinding.App.Console.DataAccess.UnitOfWorks
 {
     internal sealed class JsonUnitOfWork : IUnitOfWork
     {
-        private readonly DataStore storage;
+        private readonly DataContext context;
 
         public IRepository<GraphModel> GraphRepository { get; }
 
@@ -32,19 +31,19 @@ namespace Pathfinding.App.Console.DataAccess.UnitOfWorks
         public JsonUnitOfWork(IVertexFactory<Vertex> vertexFactory, 
             IGraphFactory<Graph2D<Vertex>, Vertex> graphFactory,
             ICoordinateFactory coordinateFactory,
-            DataStore storage) 
+            DataContext storage) 
         {
-            this.storage = storage;
-            GraphRepository = new GraphJsonRepository(storage,
+            this.context = storage;
+            GraphRepository = new GraphJsonRepository(context.Graphs,
                 coordinateFactory, vertexFactory, graphFactory);
-            AlgorithmRepository = new AlgorithmsJsonRepository(storage);
-            CostsRepository = new CostsJsonRepository(storage);
-            VisitedRepository = new CoordinatesJsonRepository(storage, "visited", coordinateFactory);
-            ObstaclesRepository = new CoordinatesJsonRepository(storage,"obstacles", coordinateFactory);
-            RangesRepository = new CoordinatesJsonRepository(storage, "ranges", coordinateFactory);
-            PathsRepository = new CoordinatesJsonRepository(storage, "paths", coordinateFactory);
-            StatisticsRepository = new StatisticsJsonRepository(storage);
-            InformationRepository = new GraphInformationJsonRepository(storage);
+            AlgorithmRepository = new AlgorithmsJsonRepository(context.Algorithms);
+            CostsRepository = new CostsJsonRepository(context.Costs);
+            VisitedRepository = new CoordinatesJsonRepository(context.Visited, coordinateFactory);
+            ObstaclesRepository = new CoordinatesJsonRepository(context.Obstacles, coordinateFactory);
+            RangesRepository = new CoordinatesJsonRepository(context.Ranges, coordinateFactory);
+            PathsRepository = new CoordinatesJsonRepository(context.Paths, coordinateFactory);
+            StatisticsRepository = new StatisticsJsonRepository(context.Statistics);
+            InformationRepository = new GraphInformationJsonRepository(context.Informations);
         }
 
         public void Commit()
@@ -54,7 +53,7 @@ namespace Pathfinding.App.Console.DataAccess.UnitOfWorks
 
         public void Dispose()
         {
-            storage.Dispose();
+            context.Dispose();
         }
     }
 }

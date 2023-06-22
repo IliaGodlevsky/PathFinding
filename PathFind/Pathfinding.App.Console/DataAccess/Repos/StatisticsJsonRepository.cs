@@ -1,29 +1,10 @@
 ﻿using JsonFlatFileDataStore;
 using Pathfinding.App.Console.DataAccess.Models;
-using System.Globalization;
-using System;
+using Pathfinding.App.Console.DataAccess.Entities.JsonEntities;
 
 namespace Pathfinding.App.Console.DataAccess.Repos
 {
-    public sealed class JsonStatistics : IIdentityItem<long>
-    {
-        public JsonStatistics() { }
-        public long Id { get; set; }
-
-        public long AlgorithmId { get; set; }
-
-        public string AlgorithmName { get; set; }
-
-        public TimeSpan Elapsed { get; set; }
-
-        public int Visited { get; set; }
-
-        public int Steps { get; set; }
-
-        public double Cost { get; set; }
-    }
-
-    internal sealed class StatisticsJsonRepository : JsonRepository<StatisticsModel, JsonStatistics>
+    internal sealed class StatisticsJsonRepository : JsonRepository<StatisticsModel, JsonStatisticsEntity>
     {
         public StatisticsJsonRepository(DataStore storage) 
             : base(storage)
@@ -32,9 +13,9 @@ namespace Pathfinding.App.Console.DataAccess.Repos
 
         protected override string Table { get; } = "statistics";
 
-        protected override JsonStatistics Map(StatisticsModel item)
+        protected override JsonStatisticsEntity Map(StatisticsModel item)
         {
-            return new JsonStatistics()
+            return new JsonStatisticsEntity()
             {
                 Id = item.Id,
                 AlgorithmId = item.AlgorithmId,
@@ -46,7 +27,7 @@ namespace Pathfinding.App.Console.DataAccess.Repos
             };
         }
 
-        protected override StatisticsModel Map(JsonStatistics model)
+        protected override StatisticsModel Map(JsonStatisticsEntity model)
         {
             return new()
             {

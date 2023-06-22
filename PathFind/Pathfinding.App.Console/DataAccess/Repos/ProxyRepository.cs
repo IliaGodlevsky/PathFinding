@@ -43,7 +43,7 @@ namespace Pathfinding.App.Console.DataAccess.Repos
         }
 
         public IEnumerable<T> GetAll(Func<T, bool> predicate)
-        {           
+        {
             if (items.Count == 0)
             {
                 var all = repository.GetAll();

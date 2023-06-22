@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Serialization.Serializers.Decorators;
-using JsonFlatFileDataStore;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
@@ -125,12 +124,12 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterType<AppLayout>().As<ICanRecieveMessage>().SingleInstance().AutoActivate();
 
-                builder.RegisterTypes(AllUnits).SingleInstance().WithMetadata(UnitTypeKey, type => type).AsSelf()
-                    .AsImplementedInterfaces().AutoActivate().ConfigurePipeline(p => p.Use(new UnitResolveMiddleware(UnitTypeKey)));
+                builder.RegisterTypes(AllUnits).WithMetadata(UnitTypeKey, type => type).AsSelf()
+                    .AsImplementedInterfaces().ConfigurePipeline(p => p.Use(new UnitResolveMiddleware(UnitTypeKey))).AutoActivate();
 
-                builder.RegisterInstance(new DataStore(Connections.Default.ConnectionString)).AsSelf().SingleInstance();
-                builder.RegisterType<JsonUnitOfWork>().As<IUnitOfWork>().SingleInstance();
-                builder.RegisterDecorator<ProxyUnitOfWork, IUnitOfWork>();
+                //builder.RegisterType<DataContext>().AsSelf();
+                //builder.RegisterType<JsonUnitOfWork>().As<IUnitOfWork>();
+                //builder.RegisterDecorator<ProxyUnitOfWork, IUnitOfWork>();
 
                 builder.RegisterType<ExitMenuItem>().Keyed(typeof(IMenuItem), WithoutMain).SingleInstance();
 

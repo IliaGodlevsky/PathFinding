@@ -25,10 +25,91 @@ namespace Pathfinding.App.Console.Settings {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("storage.json")]
-        public string ConnectionString {
+        [global::System.Configuration.DefaultSettingValueAttribute("database")]
+        public string Folder {
             get {
-                return ((string)(this["ConnectionString"]));
+                return ((string)(this["Folder"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("graphs.json")]
+        public string GraphsConnection {
+            get {
+                return ((string)(this["GraphsConnection"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("information.json")]
+        public string InformationConnection {
+            get {
+                return ((string)(this["InformationConnection"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("algorithms.json")]
+        public string AlgorithmsConnection {
+            get {
+                return ((string)(this["AlgorithmsConnection"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("visited.json")]
+        public string VisitedConnection {
+            get {
+                return ((string)(this["VisitedConnection"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("obstacles.json")]
+        public string ObstaclesConnection {
+            get {
+                return ((string)(this["ObstaclesConnection"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ranges.json")]
+        public string RangesConnection {
+            get {
+                return ((string)(this["RangesConnection"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("paths.json")]
+        public string PathsConnection {
+            get {
+                return ((string)(this["PathsConnection"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("costs.json")]
+        public string CostsConnection {
+            get {
+                return ((string)(this["CostsConnection"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("statistics.json")]
+        public string StatisticsConnection {
+            get {
+                return ((string)(this["StatisticsConnection"]));
             }
         }
     }

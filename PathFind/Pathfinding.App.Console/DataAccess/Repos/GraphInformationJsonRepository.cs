@@ -1,20 +1,10 @@
 ﻿using JsonFlatFileDataStore;
+using Pathfinding.App.Console.DataAccess.Entities.JsonEntities;
 using Pathfinding.App.Console.DataAccess.Models;
-using System;
 
 namespace Pathfinding.App.Console.DataAccess.Repos
 {
-    public sealed class JsonInformation : IIdentityItem<long>
-    {
-        public JsonInformation() { }
-        public long Id { get; set; }
-
-        public long GraphId { get; set; }
-
-        public string Description { get; set; }
-    }
-
-    internal sealed class GraphInformationJsonRepository : JsonRepository<GraphInformationModel, JsonInformation>
+    internal sealed class GraphInformationJsonRepository : JsonRepository<GraphInformationModel, JsonInformationEntity>
     {
         public GraphInformationJsonRepository(DataStore storage) 
             : base(storage)
@@ -23,7 +13,7 @@ namespace Pathfinding.App.Console.DataAccess.Repos
 
         protected override string Table { get; } = "graphinfo";
 
-        protected override JsonInformation Map(GraphInformationModel item)
+        protected override JsonInformationEntity Map(GraphInformationModel item)
         {
             return new()
             {
@@ -33,7 +23,7 @@ namespace Pathfinding.App.Console.DataAccess.Repos
             };
         }
 
-        protected override GraphInformationModel Map(JsonInformation model)
+        protected override GraphInformationModel Map(JsonInformationEntity model)
         {
             return new GraphInformationModel()
             {

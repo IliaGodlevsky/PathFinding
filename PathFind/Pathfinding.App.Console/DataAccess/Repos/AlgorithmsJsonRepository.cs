@@ -1,20 +1,10 @@
 ﻿using JsonFlatFileDataStore;
+using Pathfinding.App.Console.DataAccess.Entities.JsonEntities;
 using Pathfinding.App.Console.DataAccess.Models;
-using System;
 
 namespace Pathfinding.App.Console.DataAccess.Repos
 {
-    public sealed class JsonAlgorithm : IIdentityItem<long>
-    {
-        public JsonAlgorithm() { }
-        public long Id { get; set; }
-
-        public long GraphId { get; set; }
-
-        public string Name { get; set; }
-    }
-
-    internal sealed class AlgorithmsJsonRepository : JsonRepository<AlgorithmModel, JsonAlgorithm>
+    internal sealed class AlgorithmsJsonRepository : JsonRepository<AlgorithmModel, JsonAlgorithmEntity>
     {
         public AlgorithmsJsonRepository(DataStore connection) 
             : base(connection)
@@ -24,7 +14,7 @@ namespace Pathfinding.App.Console.DataAccess.Repos
 
         protected override string Table { get; } = "algorithms";
 
-        protected override JsonAlgorithm Map(AlgorithmModel item)
+        protected override JsonAlgorithmEntity Map(AlgorithmModel item)
         {
             return new()
             {
@@ -34,7 +24,7 @@ namespace Pathfinding.App.Console.DataAccess.Repos
             };
         }
 
-        protected override AlgorithmModel Map(JsonAlgorithm model)
+        protected override AlgorithmModel Map(JsonAlgorithmEntity model)
         {
             return new()
             {

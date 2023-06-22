@@ -33,7 +33,11 @@ namespace Pathfinding.App.Console.Units
         private void VisualizeHistory(long key)
         {
             graph.RestoreVerticesVisualState();
-            rtrtrt
+            var msg = new AskVisualizationSetMessage() { Id = key };
+            messenger.Send(msg, Tokens.Storage);
+            var set = msg.Response;
+            graph.ApplyCosts(set.Costs);
+            set.Visualize(graph);
         }
 
         private void SetIsApplied(bool isApplied)

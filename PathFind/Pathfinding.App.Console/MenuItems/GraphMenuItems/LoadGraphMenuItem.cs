@@ -1,5 +1,4 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.App.Console.DataAccess.UnitOfWorks;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
@@ -16,10 +15,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     internal sealed class LoadGraphMenuItem : ImportGraphMenuItem<string>
     {
         public LoadGraphMenuItem(IMessenger messenger, 
-            IFilePathInput input, IUnitOfWork history, 
+            IFilePathInput input, 
             IPathfindingRangeBuilder<Vertex> rangeBuilder, 
             ISerializer<SerializationInfo> serializer, ILog log) 
-            : base(messenger, input, history, rangeBuilder, serializer, log)
+            : base(messenger, input, rangeBuilder, serializer, log)
         {
         }
 

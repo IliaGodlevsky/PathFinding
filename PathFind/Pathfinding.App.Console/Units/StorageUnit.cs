@@ -7,6 +7,7 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Serialization;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
@@ -28,9 +29,7 @@ namespace Pathfinding.App.Console.Units
 
         public StorageUnit(IReadOnlyCollection<IMenuItem> menuItems, 
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
-            IMessenger messenger, 
-            IUnitOfWork unitOfWork,
-            ILog log) 
+            IMessenger messenger, IUnitOfWork unitOfWork, ILog log) 
             : base(menuItems, conditioned)
         {
             this.messenger = messenger;
@@ -41,7 +40,7 @@ namespace Pathfinding.App.Console.Units
         private void AddGraph(Graph2D<Vertex> graph)
         {
             CurrentGraph = unitOfWork.AddGraph(graph);
-            unitOfWork.AddGraphInformation(CurrentAlgorithm.GraphId, graph.ToString());
+            unitOfWork.AddGraphInformation(CurrentGraph.Id, graph.ToString());
         }
 
         private void AddAlgorithm(PathfindingProcess process)
@@ -96,6 +95,33 @@ namespace Pathfinding.App.Console.Units
             CurrentGraph = unitOfWork.UpdateGraph(CurrentGraph);
         }
 
+        private void SendSerializationInfo(AskSerializationInfoMessage msg)
+        {
+            msg.Response = unitOfWork.GetSerializationInfo(CurrentGraph.Id);
+        }
+
+        private void SetSerializationInfo(SerializationInfo info)
+        {
+            unitOfWork.AddSerializationInfo(info);
+        }
+
+        private void SendStatistics(AskStatisticsMessage msg)
+        {
+            var algorithms = unitOfWork.AlgorithmRepository
+                .GetAll(a => a.GraphId == CurrentGraph.Id)
+                .Select(a => a.Id)
+                .ToList();
+            var statistics = unitOfWork.StatisticsRepository
+                .GetAll(s => algorithms.Contains(s.AlgorithmId))
+                .ToList();
+            msg.Response = statistics;
+        }
+
+        private void SendVisualizationSet(AskVisualizationSetMessage msg)
+        {
+            msg.Response = unitOfWork.GetVisualizationSet(msg.Id);
+        }
+
         public void RegisterHanlders(IMessenger messenger)
         {
             messenger.RegisterGraph(this, Tokens.Storage, AddGraph);
@@ -109,6 +135,10 @@ namespace Pathfinding.App.Console.Units
             messenger.RegisterData<IReadOnlyList<int>>(this, Tokens.Storage, AddCosts);
             messenger.RegisterData<long>(this, Tokens.Storage, SetGraph);
             messenger.Register<UpdateGraphMessage>(this, Tokens.Storage, UpdateGraph);
+            messenger.RegisterData<SerializationInfo>(this, Tokens.Storage, SetSerializationInfo);
+            messenger.Register<AskSerializationInfoMessage>(this, Tokens.Storage, SendSerializationInfo);
+            messenger.Register<AskStatisticsMessage>(this, Tokens.Storage, SendStatistics);
+            messenger.Register<AskVisualizationSetMessage>(this, Tokens.Storage, SendVisualizationSet);
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Pathfinding.App.Console.Units
 
         private bool isStatisticsApplied = true;
         private int visited = 0;
+        private string algorithmName = string.Empty;
 
         public PathfindingStatisticsUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
@@ -38,6 +39,7 @@ namespace Pathfinding.App.Console.Units
 
         private void SubscribeOnStatistics(PathfindingProcess algorithm)
         {
+            algorithmName = algorithm.ToString();
             algorithm.VertexVisited += OnVertexVisited;
             algorithm.Finished += (s, e) => timer.Stop();
             algorithm.Started += (s, e) => timer.Restart();
@@ -53,14 +55,15 @@ namespace Pathfinding.App.Console.Units
 
         private void OnPathFound(IGraphPath path)
         {
-            var note = GetStatistics(algorithm);
+            var note = GetStatistics(algorithmName);
             if (IsStatisticsApplied())
             {
                 if (path.Count > 0)
                 {
-                    note = GetStatistics(path, algorithm);
+                    note = GetStatistics(path, algorithmName);
                 }
                 visited = 0;
+                algorithmName = string.Empty;
                 messenger.SendData(note.ToString(), Tokens.AppLayout);
             }
             messenger.SendData(note, Tokens.Storage);
@@ -69,23 +72,23 @@ namespace Pathfinding.App.Console.Units
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
         {
             visited++;
-            var statistics = GetStatistics((PathfindingProcess)sender);
+            var statistics = GetStatistics(sender.ToString());
             messenger.SendData(statistics.ToString(), Tokens.AppLayout);
         }
 
-        private StatisticsModel GetStatistics(PathfindingProcess process)
+        private StatisticsModel GetStatistics(string algorithmName)
         {
             return new()
             {
-                AlgorithmName = process.ToString(),
+                AlgorithmName = algorithmName,
                 Elapsed = timer.Elapsed,
                 Visited = visited
             };
         }
 
-        private StatisticsModel GetStatistics(IGraphPath path, PathfindingProcess algorithm)
+        private StatisticsModel GetStatistics(IGraphPath path, string algorithmName)
         {
-            var note = GetStatistics(algorithm);
+            var note = GetStatistics(algorithmName);
             note.Steps = path.Count;
             note.Cost = path.Cost;
             return note;

@@ -46,6 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\DataContext.cs" />
+    <Compile Include="DataAccess\Entities\JsonEntities\JsonAlgorithmEntity.cs" />
+    <Compile Include="DataAccess\Entities\JsonEntities\JsonCoordinatesEntity.cs" />
+    <Compile Include="DataAccess\Entities\JsonEntities\JsonCostsEntity.cs" />
+    <Compile Include="DataAccess\Entities\JsonEntities\JsonGraphEntity.cs" />
+    <Compile Include="DataAccess\Entities\JsonEntities\JsonInformationEntity.cs" />
+    <Compile Include="DataAccess\Entities\JsonEntities\JsonStatisticsEntity.cs" />
     <Compile Include="DataAccess\IIdentityItem.cs" />
     <Compile Include="DataAccess\Models\AlgorithmModel.cs" />
     <Compile Include="DataAccess\Models\CoordinatesModel.cs" />
@@ -71,6 +78,7 @@
     <Compile Include="Extensions\BinaryReaderExtensions.cs" />
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
     <Compile Include="Extensions\UnitOfWorkExtensions.cs" />
+    <Compile Include="Extensions\VisualizationSetExtensions.cs" />
     <Compile Include="Interface\IToken.cs" />
     <Compile Include="Interface\IVisualizedVertices.cs" />
     <Compile Include="MenuItems\ColorMenuItems\CrossedPathVertexColorMenuItem.cs" />
@@ -88,13 +96,19 @@
     <Compile Include="MenuItems\KeysMenuItems\RegularKeysMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\TransitKeysMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\KeysUnitMenuItem.cs" />
+    <Compile Include="Messages\AskMessage.cs" />
+    <Compile Include="Messages\AskSerializationInfoMessage.cs" />
+    <Compile Include="Messages\AskStatisticsMessage.cs" />
+    <Compile Include="Messages\AskVisualizationSetMessage.cs" />
     <Compile Include="Messages\CoordinatesMessage.cs" />
     <Compile Include="Messages\ObstaclesMessage.cs" />
     <Compile Include="Messages\RangeMessage.cs" />
     <Compile Include="Messages\UpdateGraphMessage.cs" />
+    <Compile Include="Messages\UpdateGraphMessage2.cs" />
     <Compile Include="Messages\VisitedMessage.cs" />
     <Compile Include="Model\ApplicationSettingsStore.cs" />
     <Compile Include="Model\GraphChooseInformation.cs" />
+    <Compile Include="Model\VisualizationSet.cs" />
     <Compile Include="Serialization\GraphSerializer.cs" />
     <Compile Include="Interface\IHistoryVolume.cs" />
     <Compile Include="Serialization\SerializationInfo.cs" />

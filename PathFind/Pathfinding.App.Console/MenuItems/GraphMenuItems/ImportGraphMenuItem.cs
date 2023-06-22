@@ -1,6 +1,4 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.App.Console.DataAccess.Models;
-using Pathfinding.App.Console.DataAccess.UnitOfWorks;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
@@ -20,16 +18,14 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected readonly IInput<TPath> input;
         protected readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         protected readonly ISerializer<SerializationInfo> serializer;
-        protected readonly IUnitOfWork history;
         protected readonly ILog log;
 
         protected ImportGraphMenuItem(IMessenger messenger, 
             IInput<TPath> input, 
-            IUnitOfWork history,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
-            ISerializer<SerializationInfo> serializer, ILog log)
+            ISerializer<SerializationInfo> serializer, 
+            ILog log)
         {
-            this.history = history;
             this.rangeBuilder = rangeBuilder;
             this.serializer = serializer;
             this.messenger = messenger;
@@ -43,8 +39,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             {
                 var path = InputPath();
                 var info = ImportGraph(path);
-                var model = SetGraph(info);
-                SetPathfindingResults(info, model);
+                ApplySerializationInfo(info);
             }
             catch (Exception ex)
             {
@@ -52,7 +47,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             }
         }
 
-        private GraphModel SetGraph(SerializationInfo info)
+        private void ApplySerializationInfo(SerializationInfo info)
         {
             var costRange = info.Graph.First().Cost.CostRange;
             messenger.SendData(costRange, Tokens.AppLayout);
@@ -63,26 +58,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             pathfindingRange.Insert(1, target);
             rangeBuilder.Undo();
             rangeBuilder.Include(pathfindingRange, info.Graph);
-            var model = history.AddGraph(info.Graph);
-            model.Range = pathfindingRange.ToArray();
-            model = history.UpdateGraph(model);
-            history.AddGraphInformation(model.Id, info.GraphInformation);
-            messenger.SendData(model, Tokens.Common);
-            return model;
-        }
-
-        private void SetPathfindingResults(SerializationInfo info, GraphModel model)
-        {
-            for (int i = 0; i < info.Algorithms.Count; i++)
-            {
-                var algorithm = history.AddAlgorithm(model.Id, info.Algorithms[i]);
-                history.AddVisited(algorithm.Id, info.Visited[i]);
-                history.AddObstacles(algorithm.Id, info.Obstacles[i]);
-                history.AddPath(algorithm.Id, info.Paths[i]);
-                history.AddRange(algorithm.Id, info.Ranges[i]);
-                history.AddCosts(algorithm.Id, info.Costs[i]);
-                history.AddStatistics(algorithm.Id, info.Statistics[i]);
-            }
+            messenger.SendData(info, Tokens.Storage);
         }
 
         protected abstract TPath InputPath();

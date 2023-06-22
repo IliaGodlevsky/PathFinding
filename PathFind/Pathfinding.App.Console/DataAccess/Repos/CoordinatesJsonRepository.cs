@@ -1,38 +1,27 @@
 ﻿using JsonFlatFileDataStore;
+using Pathfinding.App.Console.DataAccess.Entities.JsonEntities;
 using Pathfinding.App.Console.DataAccess.Models;
 using Pathfinding.GraphLib.Factory.Interface;
-using System;
 using System.Linq;
 
 namespace Pathfinding.App.Console.DataAccess.Repos
 {
-    public sealed class JsonCoordinates : IIdentityItem<long>
-    {
-        public JsonCoordinates() { }
-        public long Id { get; set; }
-
-        public long AlgorithmId { get; set; }
-
-        public GraphJsonCoordinates[] Coordinates { get; set; }
-    }
-
-    internal sealed class CoordinatesJsonRepository : JsonRepository<CoordinatesModel, JsonCoordinates>
+    internal sealed class CoordinatesJsonRepository : JsonRepository<CoordinatesModel, JsonCoordinatesEntity>
     {
         private readonly ICoordinateFactory factory;
 
         protected override string Table { get; }
 
-        public CoordinatesJsonRepository(DataStore storage, string tableName,
-            ICoordinateFactory factory) 
+        public CoordinatesJsonRepository(DataStore storage,ICoordinateFactory factory) 
             : base(storage)
         {
             this.factory = factory;
-            Table = tableName;
+            Table = "coordinates";
         }
 
-        protected override JsonCoordinates Map(CoordinatesModel item)
+        protected override JsonCoordinatesEntity Map(CoordinatesModel item)
         {
-            var result = new JsonCoordinates();
+            var result = new JsonCoordinatesEntity();
             result.Id = item.Id;
             result.AlgorithmId = item.AlgorithmId;
             result.Coordinates = item.Coordinates
@@ -41,7 +30,7 @@ namespace Pathfinding.App.Console.DataAccess.Repos
             return result;
         }
 
-        protected override CoordinatesModel Map(JsonCoordinates model)
+        protected override CoordinatesModel Map(JsonCoordinatesEntity model)
         {
             var modelCoordinates = model.Coordinates;
             return new CoordinatesModel()

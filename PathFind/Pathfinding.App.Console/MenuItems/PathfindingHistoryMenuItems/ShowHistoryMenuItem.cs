@@ -1,14 +1,14 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.DataAccess.Models;
-using Pathfinding.App.Console.DataAccess.UnitOfWorks;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Primitives;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,8 +21,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         private readonly IInput<int> input;
 
         private bool isHistoryApplied = true;
-        private GraphModel graph = new();
-        private AlgorithmModel algorithm;
+        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         public ShowHistoryMenuItem(IMessenger messenger, 
             IInput<int> input)
@@ -35,21 +34,19 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void Execute()
         {
-            var algorithms = history.AlgorithmRepository
-                .GetAll(a => a.GraphId == graph.Id)
-                .ToDictionary(a => a.Id);
-            var statistics = history.StatisticsRepository
-                .GetAll(s => algorithms.ContainsKey(s.AlgorithmId))
-                .ToArray();
-            var menuList = statistics
+            var msg = new AskStatisticsMessage();
+            messenger.Send(msg, Tokens.Storage);
+            var statistics = msg.Response;
+            int count = statistics.Count;
+            var menuList = msg.Response
                 .Select(note => note.ToString())
                 .Append(Languages.Quit)
                 .CreateMenuList(columnsNumber: 1);
             string inputMessage = string.Concat(menuList, "\n", Languages.AlgorithmChoiceMsg);
             using (RememberGraphState())
             {
-                int index = GetAlgorithmId(inputMessage, algorithms);
-                while (index != algorithms.Count)
+                int index = GetAlgorithmId(inputMessage, count);
+                while (index != count)
                 {
                     var page = statistics[index];
                     using (Cursor.UseCurrentPosition())
@@ -60,7 +57,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
                             messenger.SendData(page.ToString(), Tokens.AppLayout);
                         }
                     }
-                    index = GetAlgorithmId(inputMessage, algorithms);
+                    index = GetAlgorithmId(inputMessage, count);
                 }
             }
         }
@@ -72,43 +69,32 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         private Disposable RememberGraphState()
         {
-            var costs = graph.Graph.GetCosts();
+            var costs = graph.GetCosts();
             return Disposable.Use(() =>
             {
                 using (Cursor.HideCursor())
                 {
-                    graph.Graph.ApplyCosts(costs);
+                    graph.ApplyCosts(costs);
                     messenger.Send(new ClearColorsMessage());
                 }
             });
         }
 
-        private void SetGraph(GraphModel graph)
+        private void SetGraph(Graph2D<Vertex> graph)
         {
             this.graph = graph;
         }
 
-        private void SetAlgorithm(AlgorithmModel algorithm)
-        {
-            this.algorithm = algorithm;
-        }
-
-        private int GetAlgorithmId(string message, 
-            IReadOnlyDictionary<long, AlgorithmModel> algorithms)
+        private int GetAlgorithmId(string message, int count)
         {
             using (Cursor.UseCurrentPositionWithClean())
             {
-                int index = input.Input(message, algorithms.Count + 1, 1) - 1;
-                return index == algorithms.Count ? algorithms.Count : index;
+                int index = input.Input(message, count + 1, 1) - 1;
+                return index == count ? count : index;
             }
         }
 
         private bool IsHistoryApplied() => isHistoryApplied;
-
-        private void SetStatistics(StatisticsModel value)
-        {
-            history.AddStatistics(algorithm.Id, value);
-        }
 
         private void SetIsApplied(bool isApplied)
         {
@@ -129,10 +115,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         {
             var token = Tokens.Bind(IsHistoryApplied, Tokens.History);
             messenger.RegisterData<bool>(this, Tokens.History, SetIsApplied);
-            messenger.RegisterData<StatisticsModel>(this, token, SetStatistics);
             messenger.Register<ClearHistoryMessage>(this, token, ClearStatistics);
-            messenger.RegisterData<GraphModel>(this, Tokens.Common, SetGraph);
-            messenger.RegisterData<AlgorithmModel>(this, Tokens.History, SetAlgorithm);
+            messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }
     }
 }
