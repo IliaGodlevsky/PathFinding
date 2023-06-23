@@ -1,8 +1,8 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
-using Pathfinding.App.Console.Serialization;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
@@ -20,15 +20,15 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected readonly IMessenger messenger;
         protected readonly IInput<TPath> input;
         protected readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
-        protected readonly ISerializer<SerializationInfo> serializer;
-        protected readonly IPathfindingHistory history;
+        protected readonly ISerializer<PathfindingHistory> serializer;
+        protected readonly PathfindingHistory history;
         protected readonly ILog log;
 
         protected ImportGraphMenuItem(IMessenger messenger, 
             IInput<TPath> input,
-            IPathfindingHistory history,
+            PathfindingHistory history,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
-            ISerializer<SerializationInfo> serializer, ILog log)
+            ISerializer<PathfindingHistory> serializer, ILog log)
         {
             this.history = history;
             this.rangeBuilder = rangeBuilder;
@@ -43,10 +43,20 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             try
             {
                 var path = InputPath();
-                var info = ImportGraph(path);
-                SetGraph(info.Graph);
-                SetRange(info.Range, info.Graph);
-                SetUnitOfWork(info.History);
+                var history = ImportGraph(path);
+                foreach (var note in history.History)
+                {
+                    this.history.History.Add(note.Key, note.Value);
+                }
+                if (this.history.History.Count == history.History.Count)
+                {
+                    var graph = history.History.Keys.LastOrDefault();
+                    var costRange = graph.First().Cost.CostRange;
+                    messenger.SendData(costRange, Tokens.AppLayout);
+                    messenger.SendData(graph, Tokens.AppLayout, Tokens.Main, Tokens.Common);
+                    var range = history.History[graph].PathfindingRange;
+                    SetRange(range, graph);
+                }
             }
             catch (Exception ex)
             {
@@ -54,39 +64,21 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             }
         }
 
-        private void SetGraph(Graph2D<Vertex> graph)
-        {
-            var costRange = graph.First().Cost.CostRange;
-            messenger.SendData(costRange, Tokens.AppLayout);
-            messenger.SendData(graph, Tokens.AppLayout, Tokens.Main, Tokens.Common);
-        }
-
         private void SetRange(IEnumerable<ICoordinate> range, Graph2D<Vertex> graph)
         {
             var pathfindingRange = range.ToList();
-            var target = pathfindingRange[pathfindingRange.Count - 1];
-            pathfindingRange.RemoveAt(pathfindingRange.Count - 1);
-            pathfindingRange.Insert(1, target);
+            if (pathfindingRange.Count > 2)
+            {
+                var target = pathfindingRange[pathfindingRange.Count - 1];
+                pathfindingRange.RemoveAt(pathfindingRange.Count - 1);
+                pathfindingRange.Insert(1, target);
+            }
             rangeBuilder.Undo();
             rangeBuilder.Include(pathfindingRange, graph);
         }
 
-        private void SetUnitOfWork(IPathfindingHistory h)
-        {
-            foreach (var key in h.Algorithms)
-            {
-                history.Algorithms.Add(key);
-                history.VisitedVertices.Add(key, h.VisitedVertices.Get(key));
-                history.ObstacleVertices.Add(key, h.ObstacleVertices.Get(key));
-                history.PathVertices.Add(key, h.PathVertices.Get(key));
-                history.RangeVertices.Add(key, h.RangeVertices.Get(key));
-                history.Costs.Add(key, h.Costs.Get(key));
-                history.Statistics.Add(key, h.Statistics.Get(key));
-            }
-        }
-
         protected abstract TPath InputPath();
 
-        protected abstract SerializationInfo ImportGraph(TPath path);
+        protected abstract PathfindingHistory ImportGraph(TPath path);
     }
 }

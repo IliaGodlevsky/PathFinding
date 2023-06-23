@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
+using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -20,14 +21,14 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
     {
         private readonly IMessenger messenger;
         private readonly IInput<int> input;
-        private readonly IPathfindingHistory history;
+        private readonly PathfindingHistory history;
 
         private bool isHistoryApplied = true;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         public ShowHistoryMenuItem(IMessenger messenger, 
             IInput<int> input,
-            IPathfindingHistory history)
+            PathfindingHistory history)
         {
             this.history = history;
             this.input = input;
@@ -38,18 +39,19 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void Execute()
         {
-            var keys = history.Algorithms;
-            var menuList = keys.Select(history.Statistics.Get)
+            var current = history.History[graph];
+            var keys = current.Algorithms;
+            var menuList = keys.Select(k => current.Statistics[k])
                 .Select(note => note.ToString())
                 .Append(Languages.Quit)
                 .CreateMenuList(columnsNumber: 1);
             string inputMessage = string.Concat(menuList, "\n", Languages.AlgorithmChoiceMsg);
             using (RememberGraphState())
             {
-                Guid id = GetAlgorithmId(inputMessage);
+                Guid id = GetAlgorithmId(inputMessage, keys.Count);
                 while (id != Guid.Empty)
                 {
-                    var page = history.Statistics.Get(id);
+                    var page = current.Statistics[id];
                     using (Cursor.UseCurrentPosition())
                     {
                         using (Cursor.HideCursor())
@@ -58,7 +60,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
                             messenger.SendData(page.ToString(), Tokens.AppLayout);
                         }
                     }
-                    id = GetAlgorithmId(inputMessage);
+                    id = GetAlgorithmId(inputMessage, keys.Count);
                 }
             }
         }
@@ -79,15 +81,15 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         private void SetGraph(Graph2D<Vertex> graph)
         {
             this.graph = graph;
-            history.Statistics.RemoveAll();
         }
 
-        private Guid GetAlgorithmId(string message)
+        private Guid GetAlgorithmId(string message, int count)
         {
+            var current = history.History[graph];
             using (Cursor.UseCurrentPositionWithClean())
             {
-                int index = input.Input(message, history.Algorithms.Count + 1, 1) - 1;
-                return index == history.Algorithms.Count ? Guid.Empty : history.Algorithms[index];
+                int index = input.Input(message, count + 1, 1) - 1;
+                return index == current.Algorithms.Count ? Guid.Empty : current.Algorithms[index];
             }
         }
 
@@ -95,7 +97,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         private void SetStatistics((PathfindingProcess Process, StatisticsNote Note) value)
         {
-            history.Statistics.Add(value.Process.Id, value.Note);
+            history.History[graph].Statistics.Add(value.Process.Id, value.Note);
         }
 
         private void SetIsApplied(bool isApplied)
@@ -110,7 +112,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         private void ClearStatistics(ClearHistoryMessage msg)
         {
-            history.Statistics.RemoveAll();
+            history.History[graph].Statistics.Clear();
         }
 
         public void RegisterHanlders(IMessenger messenger)

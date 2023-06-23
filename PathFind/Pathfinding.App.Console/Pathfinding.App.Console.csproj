@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\PathfindingHistory.cs" />
     <Compile Include="DependencyInjection\Attributes\MandatoryRegistrationAttribute.cs" />
     <Compile Include="DependencyInjection\Attributes\SettingsPropertyAttribute.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\TotalVisualizationMiddleware.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="MenuItems\ColorMenuItems\TargetVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\TransitVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\VisitedVertexColorMenuItem.cs" />
+    <Compile Include="MenuItems\GraphMenuItems\ChooseGraphMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\EditorKeysMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\KeysMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\PathfindingControlKeysMenuItem.cs" />
@@ -71,13 +73,8 @@
     <Compile Include="Model\ApplicationSettingsStore.cs" />
     <Compile Include="Serialization\GraphSerializer.cs" />
     <Compile Include="Interface\IHistoryVolume.cs" />
-    <Compile Include="Interface\IHistoryJournal.cs" />
     <Compile Include="Model\Notes\HistoryNote.cs" />
-    <Compile Include="DataAccess\Repositories\CoordinatesVolume.cs" />
-    <Compile Include="DataAccess\Repositories\CostsVolume.cs" />
-    <Compile Include="DataAccess\Repositories\StatisticsVolume.cs" />
-    <Compile Include="Serialization\SerializationInfo.cs" />
-    <Compile Include="DataAccess\PathfindingHistory.cs" />
+    <Compile Include="DataAccess\GraphPathfindingHistory.cs" />
     <Compile Include="Serialization\BinaryHistorySerializer.cs" />
     <Compile Include="Model\Visualizations\Visuals\VisualizedCrossedPath.cs" />
     <Compile Include="Model\Visualizations\Visuals\VisualizedEnqueued.cs" />

@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
@@ -16,8 +17,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     internal sealed class SaveGraphMenuItem : ExportGraphMenuItem<string>
     {
         public SaveGraphMenuItem(IMessenger messenger, 
-            IFilePathInput input, IPathfindingHistory history, 
-            ISerializer<SerializationInfo> graphSerializer, 
+            IFilePathInput input, PathfindingHistory history, 
+            ISerializer<PathfindingHistory> graphSerializer, 
             IPathfindingRangeBuilder<Vertex> rangeBuilder, 
             ILog log) 
             : base(messenger, input, history, graphSerializer, rangeBuilder, log)
@@ -27,7 +28,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         public override string ToString() => Languages.SaveGraph;
 
 
-        protected override async Task ExportAsync(SerializationInfo info, string path)
+        protected override async Task ExportAsync(PathfindingHistory info, string path)
         {
             await graphSerializer.SerializeToFileAsync(info, path);
         }

@@ -126,7 +126,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterTypes(AllUnits).SingleInstance().WithMetadata(UnitTypeKey, type => type).AsSelf()
                     .AsImplementedInterfaces().AutoActivate().ConfigurePipeline(p => p.Use(new UnitResolveMiddleware(UnitTypeKey)));
 
-                builder.RegisterType<PathfindingHistory>().As<IPathfindingHistory>().SingleInstance();
+                builder.RegisterType<PathfindingHistory>().AsSelf().SingleInstance();
 
                 builder.RegisterType<ExitMenuItem>().Keyed(typeof(IMenuItem), WithoutMain).SingleInstance();
 
@@ -159,6 +159,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterType<AssembleGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ResizeGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
+                builder.RegisterType<ChooseGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
                 builder.RegisterType<EnterCostRangeMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
                 builder.RegisterType<EnterGraphParametresMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
                 builder.RegisterType<EnterObstaclePercentMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
@@ -237,16 +238,16 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterInstance(Aes.Create()).As<SymmetricAlgorithm>().SingleInstance();
 
-                builder.RegisterType<GraphSerializer>().As<ISerializer<SerializationInfo>>().SingleInstance();
+                builder.RegisterType<GraphSerializer>().As<ISerializer<PathfindingHistory>>().SingleInstance();
 
-                builder.RegisterType<BinaryHistorySerializer>().As<ISerializer<IPathfindingHistory>>().SingleInstance();
+                builder.RegisterType<BinaryHistorySerializer>().As<ISerializer<GraphPathfindingHistory>>().SingleInstance();
                 builder.RegisterType<BinaryRangeSerializer>().As<ISerializer<IEnumerable<ICoordinate>>>().SingleInstance();
                 builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>().As<ISerializer<Graph2D<Vertex>>>().SingleInstance();
 
-                builder.RegisterDecorator<BufferedSerializer<SerializationInfo>, ISerializer<SerializationInfo>>();
-                builder.RegisterDecorator<CompressSerializer<SerializationInfo>, ISerializer<SerializationInfo>>();
-                builder.RegisterDecorator<CryptoSerializer<SerializationInfo>, ISerializer<SerializationInfo>>();
-                builder.RegisterDecorator<ThreadSafeSerializer<SerializationInfo>, ISerializer<SerializationInfo>>();
+                builder.RegisterDecorator<BufferedSerializer<PathfindingHistory>, ISerializer<PathfindingHistory>>();
+                builder.RegisterDecorator<CompressSerializer<PathfindingHistory>, ISerializer<PathfindingHistory>>();
+                builder.RegisterDecorator<CryptoSerializer<PathfindingHistory>, ISerializer<PathfindingHistory>>();
+                builder.RegisterDecorator<ThreadSafeSerializer<PathfindingHistory>, ISerializer<PathfindingHistory>>();
 
                 builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory<Vertex>>().SingleInstance();
             }

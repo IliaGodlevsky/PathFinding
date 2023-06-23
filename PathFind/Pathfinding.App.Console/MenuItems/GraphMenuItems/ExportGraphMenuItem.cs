@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
@@ -18,17 +19,17 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     {
         protected readonly IMessenger messenger;
         protected readonly IInput<TPath> input;
-        protected readonly ISerializer<SerializationInfo> graphSerializer;
+        protected readonly ISerializer<PathfindingHistory> graphSerializer;
         protected readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
-        protected readonly IPathfindingHistory history;
+        protected readonly PathfindingHistory history;
         protected readonly ILog log;
 
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         protected ExportGraphMenuItem(IMessenger messenger, 
             IInput<TPath> input, 
-            IPathfindingHistory history,
-            ISerializer<SerializationInfo> graphSerializer,
+            PathfindingHistory history,
+            ISerializer<PathfindingHistory> graphSerializer,
             IPathfindingRangeBuilder<Vertex> rangeBuilder, 
             ILog log)
         {
@@ -47,13 +48,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             try
             {
                 var path = input.Input();
-                var info = new SerializationInfo
-                {
-                    Graph = graph,
-                    Range = rangeBuilder.Range.GetCoordinates(),
-                    History = history
-                };
-                await ExportAsync(info, path);
+                await ExportAsync(history, path);
             }
             catch (Exception ex)
             {
@@ -66,7 +61,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
         }
 
-        protected abstract Task ExportAsync(SerializationInfo graph, TPath path);
+        protected abstract Task ExportAsync(PathfindingHistory graph, TPath path);
 
         private void OnGraphCreated(Graph2D<Vertex> graph)
         {

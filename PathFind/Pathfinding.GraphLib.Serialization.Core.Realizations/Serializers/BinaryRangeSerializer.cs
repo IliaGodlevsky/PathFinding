@@ -41,7 +41,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
             {
                 using (var writer = new BinaryWriter(stream, Encoding.Default, leaveOpen: true))
                 {
-                    writer.WriterCoordinates(item.ToArray());
+                    writer.WriteCoordinates(item.ToArray());
                 }
             }
             catch (Exception ex)

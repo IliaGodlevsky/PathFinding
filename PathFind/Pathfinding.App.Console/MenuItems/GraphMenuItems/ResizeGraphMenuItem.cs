@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
@@ -20,8 +21,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             IGraphAssemble<Graph2D<Vertex>, Vertex> assemble,
             IRandom random,
             IVertexCostFactory costFactory,
-            INeighborhoodFactory neighborhoodFactory)
-            : base(messenger, assemble, random, costFactory, neighborhoodFactory)
+            INeighborhoodFactory neighborhoodFactory,
+            PathfindingHistory history)
+            : base(messenger, assemble, random, costFactory, neighborhoodFactory, history)
         {
 
         }
