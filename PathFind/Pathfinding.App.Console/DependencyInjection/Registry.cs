@@ -124,11 +124,11 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterType<AppLayout>().As<ICanRecieveMessage>().SingleInstance().AutoActivate();
 
-                builder.RegisterTypes(AllUnits).WithMetadata(UnitTypeKey, type => type).AsSelf()
-                    .AsImplementedInterfaces().ConfigurePipeline(p => p.Use(new UnitResolveMiddleware(UnitTypeKey))).AutoActivate();
+                builder.RegisterTypes(AllUnits).SingleInstance().AutoActivate().WithMetadata(UnitTypeKey, type => type).AsSelf()
+                    .AsImplementedInterfaces().ConfigurePipeline(p => p.Use(new UnitResolveMiddleware(UnitTypeKey)));
 
-                //builder.RegisterType<DataContext>().AsSelf();
-                //builder.RegisterType<JsonUnitOfWork>().As<IUnitOfWork>();
+                builder.RegisterType<DataContext>().AsSelf().SingleInstance();
+                builder.RegisterType<JsonUnitOfWork>().As<IUnitOfWork>().SingleInstance();
                 //builder.RegisterDecorator<ProxyUnitOfWork, IUnitOfWork>();
 
                 builder.RegisterType<ExitMenuItem>().Keyed(typeof(IMenuItem), WithoutMain).SingleInstance();
@@ -193,8 +193,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<VertexFactory>().As<IVertexFactory<Vertex>>().SingleInstance();
                 builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField>>().SingleInstance();
                 builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
-                builder.RegisterType<Graph2DFactory<Vertex>>().As<IGraphFactory<Graph2D<Vertex>, Vertex>>().SingleInstance();
-                builder.RegisterDecorator<Graph2DWrapFactory, IGraphFactory<Graph2D<Vertex>, Vertex>>();
+                builder.RegisterType<Graph2DWrapFactory>().As<IGraphFactory<Graph2D<Vertex>, Vertex>>().SingleInstance();
+                //builder.RegisterDecorator<Graph2DWrapFactory, IGraphFactory<Graph2D<Vertex>, Vertex>>();
                 builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
 
                 builder.RegisterType<DefaultStepRule>().As<IStepRule>().SingleInstance();
@@ -261,10 +261,10 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             {
                 builder.RegisterType<EditorKeysMenuItem>().Keyed<IMenuItem>(KeysUnit).SingleInstance();
                 builder.RegisterType<EditorUnitMenuItem>().Keyed<IConditionedMenuItem>(Main).As<ICanRecieveMessage>().SingleInstance();
-                //builder.RegisterType<ReverseVertexMenuItem>().Keyed<IConditionedMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance()
-                //    .ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(Reverse)));
+                builder.RegisterType<ReverseVertexMenuItem>().Keyed<IConditionedMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance()
+                    .ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(Reverse)));
                 builder.RegisterType<ReverseVertexAction>().Keyed<IVertexAction>(Reverse).WithMetadata(Reverse, nameof(Keys.Default.ReverseVertex));
-                //builder.RegisterType<SmoothGraphMenuItem>().Keyed<IConditionedMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
+                builder.RegisterType<SmoothGraphMenuItem>().Keyed<IConditionedMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ChangeCostMenuItem>().Keyed<IConditionedMenuItem>(Editor).As<ICanRecieveMessage>()
                     .SingleInstance().ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(ChangeCost)));
                 builder.RegisterType<IncreaseCostAction>().Keyed<IVertexAction>(ChangeCost).WithMetadata(ChangeCost, nameof(Keys.Default.IncreaseCost));

@@ -96,11 +96,13 @@ namespace Pathfinding.App.Console.Units
 
         private void PrepareForPathfinding(PathfindingProcess algorithm)
         {
+            messenger.SendData(algorithm, Tokens.Visualization, Tokens.Storage, Tokens.Statistics, Tokens.History);
             var message = new ObstaclesMessage { Coordinates = graph.GetObstaclesCoordinates().ToArray() };
             messenger.SendData(message, Tokens.Storage);
-            messenger.SendData(rangeBuilder.Range, Tokens.Storage);
+            var rangeMessage = new RangeMessage { Coordinates = rangeBuilder.Range.GetCoordinates().ToArray() };
+            messenger.SendData(rangeMessage, Tokens.Storage);
+            messenger.SendData(graph.GetCosts().ToArray(), Tokens.Storage);
             messenger.SendData(algorithm.ToString(), Tokens.AppLayout);
-            messenger.SendData(algorithm, Tokens.Visualization, Tokens.Storage, Tokens.Statistics);
         }
 
         public void RegisterHanlders(IMessenger messenger)

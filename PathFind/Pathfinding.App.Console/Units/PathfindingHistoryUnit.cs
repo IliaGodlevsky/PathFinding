@@ -66,7 +66,7 @@ namespace Pathfinding.App.Console.Units
 
         private void OnAlgorithmFinished(object sender, EventArgs e)
         {
-            var message = new VisitedMessage { Coordinates = visited };
+            var message = new VisitedMessage { Coordinates = visited.ToArray() };
             messenger.SendData(message, Tokens.Storage);
             visited.Clear();
         }

@@ -31,6 +31,7 @@ namespace Pathfinding.App.Console.MenuItems
         {
             this.keyInput = keyInput;
             this.actions = actions;
+            this.messenger = messenger;
         }
 
         public virtual bool CanBeExecuted()

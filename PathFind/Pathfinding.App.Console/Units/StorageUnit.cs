@@ -79,7 +79,7 @@ namespace Pathfinding.App.Console.Units
             unitOfWork.AddStatistics(CurrentAlgorithm.Id, model);
         }
 
-        private void AddCosts(IReadOnlyList<int> costs)
+        private void AddCosts(int[] costs)
         {
             unitOfWork.AddCosts(CurrentAlgorithm.Id, costs);
         }
@@ -132,7 +132,7 @@ namespace Pathfinding.App.Console.Units
             messenger.RegisterData<RangeMessage>(this, Tokens.Storage, AddRange);
             messenger.RegisterData<StatisticsModel>(this, Tokens.Storage, AddStatistics);
             messenger.RegisterData<IPathfindingRange<Vertex>>(this, Tokens.Storage, UpdatePathfindingRange);
-            messenger.RegisterData<IReadOnlyList<int>>(this, Tokens.Storage, AddCosts);
+            messenger.RegisterData<int[]>(this, Tokens.Storage, AddCosts);
             messenger.RegisterData<long>(this, Tokens.Storage, SetGraph);
             messenger.Register<UpdateGraphMessage>(this, Tokens.Storage, UpdateGraph);
             messenger.RegisterData<SerializationInfo>(this, Tokens.Storage, SetSerializationInfo);
