@@ -1,7 +1,4 @@
-﻿using Autofac;
-using Autofac.Core.Resolving.Pipeline;
-using Autofac.Features.Metadata;
-using Pathfinding.App.WPF._3D.Model;
+﻿using Pathfinding.App.WPF._3D.Model;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using System;
 using System.Collections.Generic;

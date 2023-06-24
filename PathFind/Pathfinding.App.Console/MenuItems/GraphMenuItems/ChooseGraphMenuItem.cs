@@ -4,7 +4,9 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
-using Pathfinding.GraphLib.Core.Abstractions;
+using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.GraphLib.Core.Modules.Interface;
 using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
@@ -15,19 +17,22 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private readonly IMessenger messenger;
         private readonly IInput<int> input;
         private readonly PathfindingHistory history;
+        private readonly IPathfindingRangeBuilder<Vertex> builder;
 
         public ChooseGraphMenuItem(IMessenger messenger,
+            IPathfindingRangeBuilder<Vertex> builder,
             IInput<int> input,
             PathfindingHistory history)
         {
             this.messenger = messenger;
             this.input = input;
             this.history = history;
+            this.builder = builder;
         }
 
         public bool CanBeExecuted()
         {
-            return history.History.Count > 0;
+            return history.History.Count > 1;
         }
 
         public void Execute()
@@ -40,13 +45,18 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             int index = GetIndex(menuList, graphs.Count);
             if (index != graphs.Count)
             {
-                messenger.SendData(graphs[index], Tokens.AppLayout, Tokens.Main, Tokens.Common);
+                var graph = graphs[index];
+                messenger.SendData(graph, Tokens.AppLayout, Tokens.Main, Tokens.Common);
+                var hist = history.History[graph];
+                var pathfindingRange = hist.PathfindingRange;
+                builder.Undo();
+                builder.Include(pathfindingRange, graph);
             }
         }
 
         public override string ToString()
         {
-            return "Choose graph";
+            return Languages.ChooseGraph;
         }
 
         private int GetIndex(string message, int count)

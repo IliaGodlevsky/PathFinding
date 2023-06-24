@@ -29,7 +29,7 @@ namespace Pathfinding.App.Console.Serialization
                 using (var reader = new BinaryReader(stream, Encoding.Default, leaveOpen: true))
                 {
                     int count = reader.ReadInt32();
-                    for (int i = 0; i < count; i++)
+                    while (count-- > 0)
                     {
                         var graph = graphSerializer.DeserializeFrom(stream);
                         var graphHistory = historySerializer.DeserializeFrom(stream);

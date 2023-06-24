@@ -28,7 +28,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             protected override void DropState() { }
         }
 
-        public static readonly PathfindingProcess Null = new NullProcess();
+        public static readonly PathfindingProcess Idle = new NullProcess();
 
         public event PathfindingEventHandler VertexVisited;
         public event PathfindingEventHandler VertexEnqueued;

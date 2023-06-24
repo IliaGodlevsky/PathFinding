@@ -12,9 +12,9 @@ namespace Pathfinding.App.Console.Model.Notes
         private readonly string TimeFormat = @"mm\:ss\.fff";
         private readonly string StatsFormat = Languages.StatisticsFormat;
 
-        public string AlgorithmName { get; set; }
+        public string AlgorithmName { get; set; } = string.Empty;
 
-        public TimeSpan Elapsed { get; set; }
+        public TimeSpan Elapsed { get; set; } = TimeSpan.Zero;
 
         public int VisitedVertices { get; set; }
 

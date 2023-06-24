@@ -15,7 +15,7 @@ using System.Linq;
 namespace Pathfinding.App.Console.Units
 {
     internal sealed class PathfindingHistoryUnit : Unit, ICanRecieveMessage
-    {     
+    {
         private readonly PathfindingHistory history;
 
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
@@ -35,7 +35,7 @@ namespace Pathfinding.App.Console.Units
             var currentHistory = history.History[graph];
             graph.ApplyCosts(currentHistory.Costs[key]);
             currentHistory.Obstacles[key].Select(graph.Get).ForEach(vertex => vertex.VisualizeAsObstacle());
-            currentHistory.Visited[key].Select(graph.Get).ForEach(vertex=>vertex.VisualizeAsVisited());
+            currentHistory.Visited[key].Select(graph.Get).ForEach(vertex => vertex.VisualizeAsVisited());
             currentHistory.Ranges[key].Select(graph.Get).Reverse().VisualizeAsRange();
             currentHistory.Paths[key].Select(graph.Get).VisualizeAsPath();
         }

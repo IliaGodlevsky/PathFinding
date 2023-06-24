@@ -1,5 +1,4 @@
-﻿using Autofac;
-using GalaSoft.MvvmLight.Messaging;
+﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.App.WPF._3D.DependencyInjection;
 using Pathfinding.App.WPF._3D.Infrastructure.Commands;

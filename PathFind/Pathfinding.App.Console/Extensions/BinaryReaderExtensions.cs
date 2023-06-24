@@ -27,8 +27,7 @@ namespace Pathfinding.App.Console.Extensions
                 history.Ranges.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates(factory));
                 history.Paths.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates(factory));
                 history.Costs.TryGetOrAddNew(key).AddRange(reader.ReadIntArray());
-                var json = reader.ReadString();
-                var statistics = JsonConvert.DeserializeObject<StatisticsNote>(json);
+                var statistics = JsonConvert.DeserializeObject<StatisticsNote>(reader.ReadString()); 
                 history.Statistics.Add(key, statistics);
             }
             return history;

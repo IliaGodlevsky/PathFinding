@@ -72,7 +72,6 @@
     <Compile Include="MenuItems\MainMenuItems\KeysUnitMenuItem.cs" />
     <Compile Include="Model\ApplicationSettingsStore.cs" />
     <Compile Include="Serialization\GraphSerializer.cs" />
-    <Compile Include="Interface\IHistoryVolume.cs" />
     <Compile Include="Model\Notes\HistoryNote.cs" />
     <Compile Include="DataAccess\GraphPathfindingHistory.cs" />
     <Compile Include="Serialization\BinaryHistorySerializer.cs" />
@@ -241,7 +240,6 @@
     <Compile Include="Model\PathfindingActions\ResumeAlgorithm.cs" />
     <Compile Include="Model\PathfindingActions\PathfindingStepByStep.cs" />
     <Compile Include="Model\MenuList.cs" />
-    <Compile Include="Model\PathfindingHistoryVolume.cs" />
     <Compile Include="Interface\IFilePathInput.cs" />
     <Compile Include="Model\Vertex.cs" />
     <Compile Include="Model\VertexActions\ChangeCostAction.cs" />
@@ -480,8 +478,6 @@
       <LastGenOutput>Colours.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Visualization\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,5 +1,4 @@
-﻿using Autofac;
-using Pathfinding.App.WPF._3D.DependencyInjection;
+﻿using Pathfinding.App.WPF._3D.DependencyInjection;
 using Pathfinding.App.WPF._3D.Interface;
 using Shared.Primitives.ValueRange;
 using Shared.Random;

@@ -26,7 +26,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         private bool isHistoryApplied = true;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        public ShowHistoryMenuItem(IMessenger messenger, 
+        public ShowHistoryMenuItem(IMessenger messenger,
             IInput<int> input,
             PathfindingHistory history)
         {

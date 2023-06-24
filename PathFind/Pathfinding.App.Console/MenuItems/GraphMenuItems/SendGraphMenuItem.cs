@@ -15,12 +15,14 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     [LowPriority]
     internal sealed class SendGraphMenuItem : ExportGraphMenuItem<(string Host, int Port)>
     {
-        public SendGraphMenuItem(IMessenger messenger, 
-            IInput<(string Host, int Port)> input, 
-            PathfindingHistory history, ISerializer<PathfindingHistory> graphSerializer, 
-            IPathfindingRangeBuilder<Vertex> rangeBuilder, 
-            ILog log) 
-            : base(messenger, input, history, graphSerializer, rangeBuilder, log)
+        public SendGraphMenuItem(IMessenger messenger,
+            IInput<(string Host, int Port)> input,
+            IInput<int> intInput,
+            PathfindingHistory history,
+            ISerializer<PathfindingHistory> graphSerializer,
+            IPathfindingRangeBuilder<Vertex> rangeBuilder,
+            ILog log)
+            : base(messenger, input, intInput, history, graphSerializer, rangeBuilder, log)
         {
         }
 

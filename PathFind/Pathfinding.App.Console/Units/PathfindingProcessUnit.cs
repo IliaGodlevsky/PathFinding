@@ -35,7 +35,7 @@ namespace Pathfinding.App.Console.Units
         public PathfindingProcessUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
-            IInput<ConsoleKey> input, 
+            IInput<ConsoleKey> input,
             IMessenger messenger,
             PathfindingHistory history,
             ILog log)

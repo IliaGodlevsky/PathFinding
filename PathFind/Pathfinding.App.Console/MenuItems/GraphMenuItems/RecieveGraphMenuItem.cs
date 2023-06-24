@@ -16,10 +16,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     internal sealed class RecieveGraphMenuItem : ImportGraphMenuItem<int>
     {
         public RecieveGraphMenuItem(IMessenger messenger,
-            IInput<int> input, PathfindingHistory history, 
-            IPathfindingRangeBuilder<Vertex> rangeBuilder, 
-            ISerializer<PathfindingHistory> serializer, 
-            ILog log) 
+            IInput<int> input, PathfindingHistory history,
+            IPathfindingRangeBuilder<Vertex> rangeBuilder,
+            ISerializer<PathfindingHistory> serializer,
+            ILog log)
             : base(messenger, input, history, rangeBuilder, serializer, log)
         {
         }

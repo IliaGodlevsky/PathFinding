@@ -22,7 +22,7 @@ namespace Pathfinding.App.Console.Units
         private readonly IReadOnlyCollection<(string, IPathfindingAction)> pathfindingActions;
         private readonly IReadOnlyCollection<(string, IAnimationSpeedAction)> animationActions;
 
-        private PathfindingProcess algorithm = PathfindingProcess.Null;
+        private PathfindingProcess algorithm = PathfindingProcess.Idle;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
         private bool isVisualizationApplied = true;
         private TimeSpan animationDelay = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
@@ -75,7 +75,7 @@ namespace Pathfinding.App.Console.Units
         {
             keyStrokeHook.Interrupt();
             keyStrokeHook.KeyPressed -= OnConsoleKeyPressed;
-            algorithm = PathfindingProcess.Null;
+            algorithm = PathfindingProcess.Idle;
         }
 
         private void SubscribeOnVisualization(PathfindingProcess process)

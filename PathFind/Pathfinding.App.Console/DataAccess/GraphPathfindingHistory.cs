@@ -7,7 +7,7 @@ namespace Pathfinding.App.Console.DataAccess
 {
     internal sealed class GraphPathfindingHistory
     {
-        public List<Guid> Algorithms { get; } = new List<Guid>();
+        public List<Guid> Algorithms { get; } = new();
 
         public List<ICoordinate> PathfindingRange { get; set; } = new();
 

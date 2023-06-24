@@ -228,9 +228,9 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Configure(ContainerBuilder builder)
             {
-                builder.RegisterType<SaveGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
+                builder.RegisterType<SaveGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
                 builder.RegisterType<LoadGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
-                builder.RegisterType<SendGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
+                builder.RegisterType<SendGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
                 builder.RegisterType<RecieveGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
 
                 builder.RegisterType<FilePathInput>().As<IFilePathInput>().SingleInstance();
@@ -241,7 +241,6 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<GraphSerializer>().As<ISerializer<PathfindingHistory>>().SingleInstance();
 
                 builder.RegisterType<BinaryHistorySerializer>().As<ISerializer<GraphPathfindingHistory>>().SingleInstance();
-                builder.RegisterType<BinaryRangeSerializer>().As<ISerializer<IEnumerable<ICoordinate>>>().SingleInstance();
                 builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>().As<ISerializer<Graph2D<Vertex>>>().SingleInstance();
 
                 builder.RegisterDecorator<BufferedSerializer<PathfindingHistory>, ISerializer<PathfindingHistory>>();

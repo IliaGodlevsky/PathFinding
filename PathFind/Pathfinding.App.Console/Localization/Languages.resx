@@ -120,6 +120,9 @@
   <data name="AlgorithmChoiceMsg" xml:space="preserve">
     <value>Choose algorithm: </value>
   </data>
+  <data name="All" xml:space="preserve">
+    <value>Select all</value>
+  </data>
   <data name="ApplyHistory" xml:space="preserve">
     <value>Apply history</value>
   </data>
@@ -167,6 +170,9 @@
   </data>
   <data name="ChooseColor" xml:space="preserve">
     <value>Choose color: </value>
+  </data>
+  <data name="ChooseGraph" xml:space="preserve">
+    <value>Choose graph</value>
   </data>
   <data name="ChooseKeyMsg" xml:space="preserve">
     <value>{0}Choose key to change: </value>

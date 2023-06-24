@@ -1,6 +1,5 @@
 ﻿using Pathfinding.App.Console.Model;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.Interface

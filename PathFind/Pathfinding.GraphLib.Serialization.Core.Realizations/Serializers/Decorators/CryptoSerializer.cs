@@ -1,5 +1,4 @@
-﻿using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Serialization.Core.Interface;
+﻿using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Exceptions;
 using System;
@@ -40,7 +39,7 @@ namespace GraphLib.Serialization.Serializers.Decorators
         public T DeserializeFrom(Stream stream)
         {
             try
-            {             
+            {
                 using (var decryptor = algorithm.CreateDecryptor(crypto.Key, crypto.IV))
                 {
                     using (var cryptoStream = new CryptoStream(stream, decryptor, CryptoStreamMode.Read, leaveOpen: true))
@@ -59,7 +58,6 @@ namespace GraphLib.Serialization.Serializers.Decorators
         {
             try
             {
-
                 using (var encryptor = algorithm.CreateEncryptor(crypto.Key, crypto.IV))
                 {
                     using (var cryptoStream = new CryptoStream(stream, encryptor, CryptoStreamMode.Write, leaveOpen: true))
