@@ -32,12 +32,12 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public bool CanBeExecuted()
         {
-            return history.History.Count > 1;
+            return history.Count > 1;
         }
 
         public void Execute()
         {
-            var graphs = history.History.Keys.ToList();
+            var graphs = history.Graphs.ToList();
             var menuList = graphs.Select(s => s.ToString())
                 .Append(Languages.Quit)
                 .CreateMenuList(1)
@@ -46,8 +46,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             if (index != graphs.Count)
             {
                 var graph = graphs[index];
+                var costRange = graph.First().Cost.CostRange;
                 messenger.SendData(graph, Tokens.AppLayout, Tokens.Main, Tokens.Common);
-                var hist = history.History[graph];
+                messenger.SendData(costRange, Tokens.AppLayout);
+                var hist = history.GetFor(graph);
                 var pathfindingRange = hist.PathfindingRange;
                 builder.Undo();
                 builder.Include(pathfindingRange, graph);

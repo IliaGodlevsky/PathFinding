@@ -32,7 +32,7 @@ namespace Pathfinding.App.Console.Units
         private void VisualizeHistory(Guid key)
         {
             graph.RestoreVerticesVisualState();
-            var currentHistory = history.History[graph];
+            var currentHistory = history.GetFor(graph);
             graph.ApplyCosts(currentHistory.Costs[key]);
             currentHistory.Obstacles[key].Select(graph.Get).ForEach(vertex => vertex.VisualizeAsObstacle());
             currentHistory.Visited[key].Select(graph.Get).ForEach(vertex => vertex.VisualizeAsVisited());
@@ -52,7 +52,7 @@ namespace Pathfinding.App.Console.Units
 
         private void ClearHistory(ClearHistoryMessage msg)
         {
-            var hist = history.History[graph];
+            var hist = history.GetFor(graph);
             hist.Obstacles.Clear();
             hist.Paths.Clear();
             hist.Ranges.Clear();

@@ -83,7 +83,7 @@ namespace Pathfinding.App.Console.Units
             void Summarize()
             {
                 messenger.SendData((algorithm, path), Tokens.Statistics);
-                history.History[graph].Paths.TryGetOrAddNew(algorithm.Id).AddRange(path);
+                history.GetFor(graph).Paths.TryGetOrAddNew(algorithm.Id).AddRange(path);
             }
             using (Disposable.Use(Summarize))
             {
@@ -103,14 +103,14 @@ namespace Pathfinding.App.Console.Units
         {
             if (sender is PathfindingProcess process)
             {
-                var visited = history.History[graph].Visited;
+                var visited = history.GetFor(graph).Visited;
                 visited.TryGetOrAddNew(process.Id).Add(e.Current);
             }
         }
 
         private void PrepareForPathfinding(PathfindingProcess algorithm)
         {
-            var hist = history.History[graph];
+            var hist = history.GetFor(graph);
             hist.Algorithms.Add(algorithm.Id);
             hist.Obstacles.TryGetOrAddNew(algorithm.Id).AddRange(graph.GetObstaclesCoordinates());
             hist.Costs.TryGetOrAddNew(algorithm.Id).AddRange(graph.GetCosts());

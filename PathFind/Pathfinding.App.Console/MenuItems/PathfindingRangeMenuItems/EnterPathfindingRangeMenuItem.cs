@@ -33,7 +33,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
         public override void Execute()
         {
             base.Execute();
-            var hist = history.History[graph];
+            var hist = history.GetFor(graph);
             hist.PathfindingRange.Clear();
             hist.PathfindingRange.AddRange(builder.Range.GetCoordinates());
         }

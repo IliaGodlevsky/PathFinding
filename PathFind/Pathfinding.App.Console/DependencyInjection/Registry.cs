@@ -238,10 +238,10 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterInstance(Aes.Create()).As<SymmetricAlgorithm>().SingleInstance();
 
-                builder.RegisterType<GraphSerializer>().As<ISerializer<PathfindingHistory>>().SingleInstance();
-
                 builder.RegisterType<BinaryHistorySerializer>().As<ISerializer<GraphPathfindingHistory>>().SingleInstance();
                 builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>().As<ISerializer<Graph2D<Vertex>>>().SingleInstance();
+
+                builder.RegisterType<GraphSerializer>().As<ISerializer<PathfindingHistory>>().SingleInstance();
 
                 builder.RegisterDecorator<BufferedSerializer<PathfindingHistory>, ISerializer<PathfindingHistory>>();
                 builder.RegisterDecorator<CompressSerializer<PathfindingHistory>, ISerializer<PathfindingHistory>>();

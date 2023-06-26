@@ -33,7 +33,7 @@ namespace Pathfinding.App.Console.Serialization
                     {
                         var graph = graphSerializer.DeserializeFrom(stream);
                         var graphHistory = historySerializer.DeserializeFrom(stream);
-                        history.History.Add(graph, graphHistory);
+                        history.Add(graph, graphHistory);
                     }
                 }
                 return history;
@@ -50,11 +50,11 @@ namespace Pathfinding.App.Console.Serialization
             {
                 using (var writer = new BinaryWriter(stream, Encoding.Default, leaveOpen: true))
                 {
-                    writer.Write(item.History.Count);
-                    foreach (var note in item.History)
+                    writer.Write(item.Count);
+                    foreach (var note in item)
                     {
-                        graphSerializer.SerializeTo(note.Key, stream);
-                        historySerializer.SerializeTo(note.Value, stream);
+                        graphSerializer.SerializeTo(note.Graph, stream);
+                        historySerializer.SerializeTo(note.History, stream);
                     }
                 }
             }

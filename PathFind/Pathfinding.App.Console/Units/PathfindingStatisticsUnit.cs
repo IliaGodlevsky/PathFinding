@@ -72,7 +72,7 @@ namespace Pathfinding.App.Console.Units
                 visited = 0;
                 messenger.SendData(note.ToString(), Tokens.AppLayout);
             }
-            history.History[graph].Statistics.Add(value.Process.Id, note);
+            history.GetFor(graph).Statistics.Add(value.Process.Id, note);
         }
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)

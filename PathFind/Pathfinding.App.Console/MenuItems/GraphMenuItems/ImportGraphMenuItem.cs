@@ -42,14 +42,14 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             {
                 var path = InputPath();
                 var importedHistory = ImportGraph(path);
-                history.History.AddRange(importedHistory.History);
-                if (history.History.Count == importedHistory.History.Count)
+                importedHistory.ForEach(history.Add);
+                if (history.Count == importedHistory.Count)
                 {
-                    var graph = importedHistory.History.Keys.LastOrDefault();
+                    var graph = importedHistory.Graphs.LastOrDefault();
                     var costRange = graph.First().Cost.CostRange;
                     messenger.SendData(costRange, Tokens.AppLayout);
                     messenger.SendData(graph, Tokens.AppLayout, Tokens.Main, Tokens.Common);
-                    var range = importedHistory.History[graph].PathfindingRange;
+                    var range = importedHistory.GetFor(graph).PathfindingRange;
                     rangeBuilder.Undo();
                     rangeBuilder.Include(range, graph);
                 }

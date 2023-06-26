@@ -35,11 +35,15 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             this.messenger = messenger;
         }
 
-        public bool CanBeExecuted() => IsHistoryApplied();
+        public bool CanBeExecuted()
+        {
+            return IsHistoryApplied() 
+                && history.GetFor(graph).Algorithms.Count > 0;
+        }
 
         public void Execute()
         {
-            var current = history.History[graph];
+            var current = history.GetFor(graph);
             var keys = current.Algorithms;
             var menuList = keys.Select(k => current.Statistics[k])
                 .Select(note => note.ToString())
@@ -85,11 +89,13 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         private Guid GetAlgorithmId(string message, int count)
         {
-            var current = history.History[graph];
+            var current = history.GetFor(graph);
             using (Cursor.UseCurrentPositionWithClean())
             {
                 int index = input.Input(message, count + 1, 1) - 1;
-                return index == current.Algorithms.Count ? Guid.Empty : current.Algorithms[index];
+                return index == current.Algorithms.Count 
+                    ? Guid.Empty 
+                    : current.Algorithms[index];
             }
         }
 
@@ -97,7 +103,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         private void SetStatistics((PathfindingProcess Process, StatisticsNote Note) value)
         {
-            history.History[graph].Statistics.Add(value.Process.Id, value.Note);
+            history.GetFor(graph).Statistics.Add(value.Process.Id, value.Note);
         }
 
         private void SetIsApplied(bool isApplied)
@@ -112,7 +118,17 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         private void ClearStatistics(ClearHistoryMessage msg)
         {
-            history.History[graph].Statistics.Clear();
+            var hist = history.GetFor(graph);
+            foreach (var algorithm in hist.Algorithms)
+            {
+                hist.Obstacles[algorithm].Clear();
+                hist.Visited[algorithm].Clear();
+                hist.Ranges[algorithm].Clear();
+                hist.Costs[algorithm].Clear();
+                hist.Statistics.Clear();
+                hist.Paths[algorithm].Clear();
+            }
+            hist.Algorithms.Clear();
         }
 
         public void RegisterHanlders(IMessenger messenger)

@@ -1,6 +1,7 @@
 ﻿using Pathfinding.GraphLib.Core.Modules.Interface;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Pathfinding.GraphLib.Core.Interface.Extensions
 {

@@ -72,7 +72,6 @@
     <Compile Include="MenuItems\MainMenuItems\KeysUnitMenuItem.cs" />
     <Compile Include="Model\ApplicationSettingsStore.cs" />
     <Compile Include="Serialization\GraphSerializer.cs" />
-    <Compile Include="Model\Notes\HistoryNote.cs" />
     <Compile Include="DataAccess\GraphPathfindingHistory.cs" />
     <Compile Include="Serialization\BinaryHistorySerializer.cs" />
     <Compile Include="Model\Visualizations\Visuals\VisualizedCrossedPath.cs" />

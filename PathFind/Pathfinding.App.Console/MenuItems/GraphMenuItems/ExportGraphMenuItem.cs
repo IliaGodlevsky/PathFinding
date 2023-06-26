@@ -10,6 +10,7 @@ using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -42,31 +43,38 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             this.rangeBuilder = rangeBuilder;
         }
 
-        public virtual bool CanBeExecuted() => history.History.Count > 0;
+        public virtual bool CanBeExecuted() => history.Count > 0;
 
         public virtual async void Execute()
         {
             try
             {
-                var keys = history.History.Keys.ToList();
-                string menuList = CreateMenuList(keys);
-                var toExport = new PathfindingHistory();
-                int index = InputIndex(menuList, keys.Count);
-                while (index != keys.Count + 1 && keys.Count > 0)
+                if (history.Count == 1)
                 {
+                    var path = input.Input();
+                    await ExportAsync(history, path);
+                    return;
+                }
+                var keys = history.Graphs.ToList();
+                string menuList = CreateMenuList(keys);
+                int index;
+                var toExport = new PathfindingHistory();
+                do
+                {
+                    index = InputIndex(menuList, keys.Count);
                     if (index == keys.Count)
                     {
                         toExport = history;
                         break;
                     }
                     var key = keys[index];
-                    var toAdd = history.History[key];
+                    var toAdd = history.GetFor(key);
                     keys.Remove(key);
                     menuList = CreateMenuList(keys);
-                    toExport.History.Add(key, toAdd);
-                    index = InputIndex(menuList, keys.Count);
+                    toExport.Add(key, toAdd);
                 }
-                if (toExport.History.Count > 0)
+                while (index != keys.Count + 1 && keys.Count > 0);
+                if (toExport.Count > 0)
                 {
                     var path = input.Input();
                     await ExportAsync(toExport, path);
@@ -90,8 +98,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private string CreateMenuList(IReadOnlyCollection<Graph2D<Vertex>> graphs)
         {
             return graphs.Select(k => k.ToString())
-                .Append(Languages.All).Append(Languages.Quit)
-                .CreateMenuList(1).ToString();
+                .Append(Languages.All)
+                .Append(Languages.Quit)
+                .CreateMenuList(1)
+                .ToString();
         }
 
         protected abstract Task ExportAsync(PathfindingHistory graph, TPath path);
