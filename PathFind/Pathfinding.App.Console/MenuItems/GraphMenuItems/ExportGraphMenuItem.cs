@@ -56,12 +56,11 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                     return;
                 }
                 var keys = history.Graphs.ToList();
-                string menuList = CreateMenuList(keys);
-                int index;
                 var toExport = new PathfindingHistory();
-                do
+                string menuList = CreateMenuList(keys);
+                int index = InputIndex(menuList, keys.Count);
+                while (index != keys.Count + 1)
                 {
-                    index = InputIndex(menuList, keys.Count);
                     if (index == keys.Count)
                     {
                         toExport = history;
@@ -70,10 +69,14 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                     var key = keys[index];
                     var toAdd = history.GetFor(key);
                     keys.Remove(key);
-                    menuList = CreateMenuList(keys);
                     toExport.Add(key, toAdd);
+                    if (keys.Count == 0)
+                    {
+                        break;
+                    }
+                    menuList = CreateMenuList(keys);
+                    index = InputIndex(menuList, keys.Count);
                 }
-                while (index != keys.Count + 1 && keys.Count > 0);
                 if (toExport.Count > 0)
                 {
                     var path = input.Input();

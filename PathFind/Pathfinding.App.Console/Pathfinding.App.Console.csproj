@@ -64,6 +64,7 @@
     <Compile Include="MenuItems\ColorMenuItems\TransitVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\VisitedVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\ChooseGraphMenuItem.cs" />
+    <Compile Include="MenuItems\GraphMenuItems\DeleteGraphMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\EditorKeysMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\KeysMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\PathfindingControlKeysMenuItem.cs" />
