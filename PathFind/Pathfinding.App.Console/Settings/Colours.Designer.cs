@@ -130,5 +130,17 @@ namespace Pathfinding.App.Console.Settings {
                 this["TransitColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Cyan")]
+        public global::System.ConsoleColor NeighbourhoodColor {
+            get {
+                return ((global::System.ConsoleColor)(this["NeighbourhoodColor"]));
+            }
+            set {
+                this["NeighbourhoodColor"] = value;
+            }
+        }
     }
 }

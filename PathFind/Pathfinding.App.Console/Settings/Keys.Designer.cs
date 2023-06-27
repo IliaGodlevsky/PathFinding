@@ -8,9 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-
 namespace Pathfinding.App.Console.Settings {
     
     
@@ -133,7 +130,7 @@ namespace Pathfinding.App.Console.Settings {
                 this["DecreaseCost"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("P")]
@@ -275,6 +272,42 @@ namespace Pathfinding.App.Console.Settings {
             }
             set {
                 this["SubmitSmooth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Enter")]
+        public global::System.ConsoleKey NeighbourhoodAction {
+            get {
+                return ((global::System.ConsoleKey)(this["NeighbourhoodAction"]));
+            }
+            set {
+                this["NeighbourhoodAction"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Spacebar")]
+        public global::System.ConsoleKey ExitVertexAction {
+            get {
+                return ((global::System.ConsoleKey)(this["ExitVertexAction"]));
+            }
+            set {
+                this["ExitVertexAction"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Escape")]
+        public global::System.ConsoleKey ResetSwitching {
+            get {
+                return ((global::System.ConsoleKey)(this["ResetSwitching"]));
+            }
+            set {
+                this["ResetSwitching"] = value;
             }
         }
     }

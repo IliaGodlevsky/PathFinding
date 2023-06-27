@@ -52,6 +52,7 @@
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\TotalVisualizationMiddleware.cs" />
     <Compile Include="Extensions\BinaryReaderExtensions.cs" />
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
+    <Compile Include="Interface\INeighbourhoodCommand.cs" />
     <Compile Include="Interface\IToken.cs" />
     <Compile Include="Interface\IVisualizedVertices.cs" />
     <Compile Include="MenuItems\ColorMenuItems\CrossedPathVertexColorMenuItem.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="MenuItems\ColorMenuItems\TargetVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\TransitVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\VisitedVertexColorMenuItem.cs" />
+    <Compile Include="MenuItems\EditorMenuItems\NeighbourhoodMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\ChooseGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\DeleteGraphMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\EditorKeysMenuItem.cs" />
@@ -72,6 +74,12 @@
     <Compile Include="MenuItems\KeysMenuItems\TransitKeysMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\KeysUnitMenuItem.cs" />
     <Compile Include="Model\ApplicationSettingsStore.cs" />
+    <Compile Include="Model\VertexActions\ActiveVertex.cs" />
+    <Compile Include="Model\VertexActions\NeighbourhoodActions\ActivateVertexCommand.cs" />
+    <Compile Include="Model\VertexActions\NeighbourhoodActions\ExcludeVertexCommand.cs" />
+    <Compile Include="Model\VertexActions\NeighbourhoodActions\ExitAction.cs" />
+    <Compile Include="Model\VertexActions\NeighbourhoodActions\IncludeVertexCommand.cs" />
+    <Compile Include="Model\VertexActions\NeighbourhoodActions\NeighbourhoodAction.cs" />
     <Compile Include="Serialization\GraphSerializer.cs" />
     <Compile Include="DataAccess\GraphPathfindingHistory.cs" />
     <Compile Include="Serialization\BinaryHistorySerializer.cs" />
