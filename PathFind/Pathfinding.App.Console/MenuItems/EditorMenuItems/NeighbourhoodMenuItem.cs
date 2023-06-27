@@ -23,12 +23,11 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
         {
             var activeVertex = new ActiveVertex();
             var exitAction = new ExitAction(activeVertex);
-            var instantExitAction = new ExitAction(activeVertex);
             var neighbourhoodAction = new NeighbourhoodAction(activeVertex, factory);
             var result = new (string ResourceName, IVertexAction Action)[]
             {
                 (nameof(Keys.NeighbourhoodAction), neighbourhoodAction),
-                (nameof(Keys.ResetSwitching), instantExitAction),
+                (nameof(Keys.ResetSwitching), exitAction),
                 (nameof(Keys.ExitVertexAction), exitAction)
             };
             return Array.AsReadOnly(result);
