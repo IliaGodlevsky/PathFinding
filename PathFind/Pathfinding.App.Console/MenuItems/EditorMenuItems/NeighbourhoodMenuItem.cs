@@ -19,15 +19,15 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
 
         }
 
-        private static IReadOnlyCollection<(string, IVertexAction)> GetActions(INeighborhoodFactory factory)
+        private static VertexActions GetActions(INeighborhoodFactory factory)
         {
             var activeVertex = new ActiveVertex();
             var exitAction = new ExitAction(activeVertex);
             var neighbourhoodAction = new NeighbourhoodAction(activeVertex, factory);
-            var result = new (string ResourceName, IVertexAction Action)[]
+            var result = new (string, IVertexAction)[]
             {
                 (nameof(Keys.NeighbourhoodAction), neighbourhoodAction),
-                (nameof(Keys.ResetSwitching), exitAction),
+                (nameof(Keys.ExitVertexSwitching), exitAction),
                 (nameof(Keys.ExitVertexAction), exitAction)
             };
             return Array.AsReadOnly(result);

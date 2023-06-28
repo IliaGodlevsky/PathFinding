@@ -1,4 +1,6 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿global using VertexActions = System.Collections.Generic.IReadOnlyCollection<(string ResourceName, Pathfinding.App.Console.Interface.IVertexAction Action)>;
+
+using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
@@ -8,13 +10,10 @@ using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems
 {
-    using VertexActions = IReadOnlyCollection<(string ResourceName, IVertexAction Action)>;
-
     internal abstract class SwitchVerticesMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         protected readonly IInput<ConsoleKey> keyInput;
@@ -56,7 +55,7 @@ namespace Pathfinding.App.Console.MenuItems
                     x = ReturnInRange(x + 1, xRange);
                 else
                     GetOrDefault(key)?.Do(vertex);
-            } while (key != Keys.Default.ResetSwitching);
+            } while (key != Keys.Default.ExitVertexSwitching);
         }
 
         private static int ReturnInRange(int coordinate, InclusiveValueRange<int> range)

@@ -1,7 +1,6 @@
 ﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Settings;
 using Pathfinding.GraphLib.Factory.Interface;
-using System.Linq;
 
 namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions
 {
@@ -27,11 +26,14 @@ namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions
             {
                 active.Availiable.Add(neighbour);
             }
-            foreach (Vertex neighbour in vertex.Neighbours)
+            using (Cursor.HideCursor())
             {
-                if (!neighbour.IsObstacle && !neighbour.IsVisualizedAsRange())
+                foreach (Vertex neighbour in vertex.Neighbours)
                 {
-                    neighbour.Color = Colours.Default.NeighbourhoodColor;
+                    if (!neighbour.IsObstacle && !neighbour.IsVisualizedAsRange())
+                    {
+                        neighbour.Color = Colours.Default.NeighbourhoodColor;
+                    }
                 }
             }
         }

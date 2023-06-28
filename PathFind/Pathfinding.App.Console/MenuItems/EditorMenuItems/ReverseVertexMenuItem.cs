@@ -2,14 +2,13 @@
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using System;
-using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
 {
     [MediumPriority]
     internal sealed class ReverseVertexMenuItem : SwitchVerticesMenuItem
     {
-        public ReverseVertexMenuItem(IReadOnlyCollection<(string, IVertexAction)> actions,
+        public ReverseVertexMenuItem(VertexActions actions,
             IInput<ConsoleKey> keyInput)
             : base(actions, keyInput)
         {

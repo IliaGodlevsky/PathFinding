@@ -302,12 +302,12 @@ namespace Pathfinding.App.Console.Settings {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Escape")]
-        public global::System.ConsoleKey ResetSwitching {
+        public global::System.ConsoleKey ExitVertexSwitching {
             get {
-                return ((global::System.ConsoleKey)(this["ResetSwitching"]));
+                return ((global::System.ConsoleKey)(this["ExitVertexSwitching"]));
             }
             set {
-                this["ResetSwitching"] = value;
+                this["ExitVertexSwitching"] = value;
             }
         }
     }

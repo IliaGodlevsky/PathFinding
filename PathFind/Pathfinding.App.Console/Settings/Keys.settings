@@ -71,7 +71,7 @@
     <Setting Name="ExitVertexAction" Type="System.ConsoleKey" Scope="User">
       <Value Profile="(Default)">Spacebar</Value>
     </Setting>
-    <Setting Name="ResetSwitching" Type="System.ConsoleKey" Scope="User">
+    <Setting Name="ExitVertexSwitching" Type="System.ConsoleKey" Scope="User">
       <Value Profile="(Default)">Escape</Value>
     </Setting>
   </Settings>

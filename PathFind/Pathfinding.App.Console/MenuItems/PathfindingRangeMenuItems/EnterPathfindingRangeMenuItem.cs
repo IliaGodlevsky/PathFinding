@@ -16,7 +16,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
         private readonly PathfindingHistory history;
         private readonly IPathfindingRangeBuilder<Vertex> builder;
 
-        public EnterPathfindingRangeMenuItem(IReadOnlyCollection<(string, IVertexAction)> actions,
+        public EnterPathfindingRangeMenuItem(VertexActions actions,
             IInput<ConsoleKey> keyInput, IPathfindingRangeBuilder<Vertex> builder,
             PathfindingHistory history)
             : base(actions, keyInput)

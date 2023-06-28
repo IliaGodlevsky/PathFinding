@@ -9,7 +9,7 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
     [MediumPriority]
     internal sealed class ChangeCostMenuItem : SwitchVerticesMenuItem
     {
-        public ChangeCostMenuItem(IReadOnlyCollection<(string, IVertexAction)> actions,
+        public ChangeCostMenuItem(VertexActions actions,
             IInput<ConsoleKey> keyInput)
             : base(actions, keyInput)
         {

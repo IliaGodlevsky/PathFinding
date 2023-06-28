@@ -15,7 +15,7 @@ namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions
         public void Execute(ActiveVertex active, Vertex vertex)
         {
             active.Current.Neighbours.Add(vertex);
-            if(!vertex.IsObstacle && !vertex.IsVisualizedAsPath())
+            if (!vertex.IsObstacle && !vertex.IsVisualizedAsRange())
             {
                 vertex.Color = Colours.Default.NeighbourhoodColor;
             }
