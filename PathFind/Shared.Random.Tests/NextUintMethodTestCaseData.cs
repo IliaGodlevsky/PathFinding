@@ -9,6 +9,7 @@ namespace Shared.Random.Tests
         private const string PseudoRandom = "PseudoRandom";
         private const string KnuthRandom = "KnuthRandom";
         private const string CryptoRandom = "CryptoRandom";
+        private const string XorRandom = "XorshiftRandom";
 
         public static IEnumerable Data
         {
@@ -22,7 +23,10 @@ namespace Shared.Random.Tests
                 yield return GenerateTestCaseData(new KnuthRandom(), 500000, 50, KnuthRandom);
                 yield return GenerateTestCaseData(new CryptoRandom(), 5000, 0, CryptoRandom);
                 yield return GenerateTestCaseData(new CryptoRandom(), 50000, 2, CryptoRandom);
-                yield return GenerateTestCaseData(new CryptoRandom(), 250000, 10, CryptoRandom);
+                yield return GenerateTestCaseData(new CryptoRandom(), 250000, 15, CryptoRandom);
+                yield return GenerateTestCaseData(new XorshiftRandom(), 5000, 0, XorRandom);
+                yield return GenerateTestCaseData(new XorshiftRandom(), 100000, 0, XorRandom);
+                yield return GenerateTestCaseData(new XorshiftRandom(), 1000000, 0, XorRandom);
             }
         }
 

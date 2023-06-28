@@ -45,7 +45,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 importedHistory.ForEach(history.Add);
                 if (history.Count == importedHistory.Count)
                 {
-                    var graph = importedHistory.Graphs.LastOrDefault();
+                    var graph = importedHistory.Graphs.FirstOrDefault();
                     var costRange = graph.First().Cost.CostRange;
                     messenger.SendData(costRange, Tokens.AppLayout);
                     messenger.SendData(graph, Tokens.AppLayout, Tokens.Main, Tokens.Common);
