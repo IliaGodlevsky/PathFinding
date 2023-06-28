@@ -159,6 +159,9 @@
   <data name="ChangeGraphColors" xml:space="preserve">
     <value>Change graph colors</value>
   </data>
+  <data name="ChangeNeighbourhood" xml:space="preserve">
+    <value>Change neighbourhood</value>
+  </data>
   <data name="ChangePathColors" xml:space="preserve">
     <value>Change path colors</value>
   </data>

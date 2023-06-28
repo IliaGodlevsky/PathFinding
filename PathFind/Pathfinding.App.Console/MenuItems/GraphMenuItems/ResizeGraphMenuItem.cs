@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    [LowPriority]
+    [MediumPriority]
     internal sealed class ResizeGraphMenuItem : GraphCreatingMenuItem
     {
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;

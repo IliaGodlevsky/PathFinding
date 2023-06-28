@@ -7,7 +7,7 @@ using Shared.Primitives.ValueRange;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    [LowPriority]
+    [MediumPriority]
     internal sealed class EnterCostRangeMenuItem : GraphMenuItem
     {
         public EnterCostRangeMenuItem(IMessenger messenger, IInput<int> input)

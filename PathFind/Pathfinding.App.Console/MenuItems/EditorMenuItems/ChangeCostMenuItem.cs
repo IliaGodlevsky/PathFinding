@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
 {
-    [MediumPriority]
+    [LowPriority]
     internal sealed class ChangeCostMenuItem : SwitchVerticesMenuItem
     {
         public ChangeCostMenuItem(VertexActions actions,

@@ -5,7 +5,7 @@ using System;
 
 namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
 {
-    [MediumPriority]
+    [HighPriority]
     internal sealed class ReverseVertexMenuItem : SwitchVerticesMenuItem
     {
         public ReverseVertexMenuItem(VertexActions actions,

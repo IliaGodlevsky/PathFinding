@@ -187,6 +187,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change neighbourhood.
+        /// </summary>
+        public static string ChangeNeighbourhood {
+            get {
+                return ResourceManager.GetString("ChangeNeighbourhood", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change path colors.
         /// </summary>
         public static string ChangePathColors {

@@ -15,7 +15,7 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    [LowPriority]
+    [HighestPriority]
     internal sealed class SmoothGraphMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         private readonly IMeanCost meanAlgorithm;
