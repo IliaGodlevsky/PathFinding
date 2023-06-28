@@ -60,7 +60,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public override string ToString()
         {
-            return "Delete graph";
+            return Languages.DeleteGraph;
         }
 
         public void RegisterHanlders(IMessenger messenger)

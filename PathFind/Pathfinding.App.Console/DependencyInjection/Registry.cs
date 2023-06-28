@@ -95,15 +95,13 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 .Select(member => (IRegistry)Activator.CreateInstance(member));
             var features = nestedTypes
                 .Where(member => Attribute.IsDefined(member, typeof(SettingsPropertyAttribute)))
-                .ToDictionary(type => GetSettingsAttribute(type).SettingsProperty)
-                .AsReadOnly();
+                .ToDictionary(type => GetSettingsAttribute(type).SettingsProperty).AsReadOnly();
             var applied = Features.Default.GetType().GetProperties()
                 .Where(prop => Attribute.IsDefined(prop, typeof(ApplicationScopedSettingAttribute)))
                 .Select(prop => (prop.Name, Value: prop.GetValue(Features.Default)))
                 .Where(item => item.Value.Equals(true) && features.ContainsKey(item.Name))
                 .Select(item => (IRegistry)Activator.CreateInstance(features[item.Name]))
-                .Union(mandatoryRegistrations)
-                .ToHashSet();
+                .Concat(mandatoryRegistrations).ToList().AsReadOnly();
             return applied;
         }
 
@@ -174,6 +172,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
                 builder.RegisterType<CryptoRandom>().As<IRandom>().SingleInstance();
+                builder.RegisterDecorator<ThreadSafeRandom, IRandom>();
                 builder.RegisterType<MeanCost>().As<IMeanCost>().SingleInstance();
 
                 builder.RegisterType<PathfindingRange<Vertex>>().As<IPathfindingRange<Vertex>>().SingleInstance();

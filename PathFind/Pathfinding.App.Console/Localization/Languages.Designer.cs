@@ -403,6 +403,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete graph.
+        /// </summary>
+        public static string DeleteGraph {
+            get {
+                return ResourceManager.GetString("DeleteGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Editor.
         /// </summary>
         public static string Editor {

@@ -1,7 +1,7 @@
 ﻿using Pathfinding.GraphLib.Core.Modules.Interface;
+using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace Pathfinding.GraphLib.Core.Interface.Extensions
 {
@@ -18,11 +18,7 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
                 pathfindingRange.RemoveAt(pathfindingRange.Count - 1);
                 pathfindingRange.Insert(1, target);
             }
-            foreach (var coordinate in coordinates)
-            {
-                var vertex = graph.Get(coordinate);
-                builder.Include(vertex);
-            }
+            pathfindingRange.Select(graph.Get).ForEach(builder.Include);
         }
     }
 }
