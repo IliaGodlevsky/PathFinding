@@ -10,36 +10,36 @@ namespace Pathfinding.App.Console.DataAccess
     {
         private readonly Dictionary<Graph2D<Vertex>, GraphPathfindingHistory> history = new();
 
-        public virtual GraphPathfindingHistory GetFor(Graph2D<Vertex> key)
+        public GraphPathfindingHistory GetFor(Graph2D<Vertex> key)
         {
             return history[key];
         }
 
-        public virtual IReadOnlyCollection<Graph2D<Vertex>> Graphs => history.Keys;
+        public IReadOnlyCollection<Graph2D<Vertex>> Graphs => history.Keys;
 
-        public virtual int Count => history.Count;
+        public int Count => history.Count;
 
-        public virtual void Add(Graph2D<Vertex> key, GraphPathfindingHistory value)
+        public void Add(Graph2D<Vertex> key, GraphPathfindingHistory value)
         {
             history.Add(key, value);
         }
 
-        public virtual void Add((Graph2D<Vertex> Graph, GraphPathfindingHistory History) note)
+        public void Add((Graph2D<Vertex> Graph, GraphPathfindingHistory History) note)
         {
             history.Add(note.Graph, note.History);
         }
 
-        public virtual void Clear()
+        public void Clear()
         {
             history.Clear();
         }
 
-        public virtual bool Remove(Graph2D<Vertex> key)
+        public bool Remove(Graph2D<Vertex> key)
         {
             return history.Remove(key);
         }
 
-        public virtual IEnumerator<(Graph2D<Vertex> Graph, GraphPathfindingHistory History)> GetEnumerator()
+        public IEnumerator<(Graph2D<Vertex> Graph, GraphPathfindingHistory History)> GetEnumerator()
         {
             return history
                 .Select(pair => (Graph: pair.Key, History: pair.Value))
