@@ -24,10 +24,13 @@ namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions
 
         public void Do(Vertex vertex)
         {
-            var command = Commands.FirstOrDefault(cmd => cmd.CanExecute(Active, vertex));
-            if (command != null)
+            using (Cursor.HideCursor())
             {
-                command.Execute(Active, vertex);
+                var command = Commands.FirstOrDefault(cmd => cmd.CanExecute(Active, vertex));
+                if (command != null)
+                {
+                    command.Execute(Active, vertex);
+                }
             }
         }
     }

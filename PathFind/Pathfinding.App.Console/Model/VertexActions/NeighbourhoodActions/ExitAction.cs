@@ -16,11 +16,14 @@ namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions
         {
             if (Active.Current != null)
             {
-                foreach (Vertex neighbour in Active.Current.Neighbours)
+                using (Cursor.HideCursor())
                 {
-                    if (neighbour.Color == Colours.Default.NeighbourhoodColor)
+                    foreach (Vertex neighbour in Active.Current.Neighbours)
                     {
-                        neighbour.VisualizeAsRegular();
+                        if (neighbour.Color == Colours.Default.NeighbourhoodColor)
+                        {
+                            neighbour.VisualizeAsRegular();
+                        }
                     }
                 }
                 Active.Current = null;

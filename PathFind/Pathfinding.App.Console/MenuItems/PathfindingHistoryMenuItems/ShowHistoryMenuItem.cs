@@ -116,27 +116,11 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             return Languages.ShowHistory;
         }
 
-        private void ClearStatistics(ClearHistoryMessage msg)
-        {
-            var hist = history.GetFor(graph);
-            foreach (var algorithm in hist.Algorithms)
-            {
-                hist.Obstacles[algorithm].Clear();
-                hist.Visited[algorithm].Clear();
-                hist.Ranges[algorithm].Clear();
-                hist.Costs[algorithm].Clear();
-                hist.Statistics.Clear();
-                hist.Paths[algorithm].Clear();
-            }
-            hist.Algorithms.Clear();
-        }
-
         public void RegisterHanlders(IMessenger messenger)
         {
             var token = Tokens.Bind(IsHistoryApplied, Tokens.History);
             messenger.RegisterData<bool>(this, Tokens.History, SetIsApplied);
             messenger.RegisterAlgorithmData<StatisticsNote>(this, token, SetStatistics);
-            messenger.Register<ClearHistoryMessage>(this, token, ClearStatistics);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }
     }

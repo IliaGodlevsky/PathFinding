@@ -26,14 +26,11 @@ namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions
             {
                 active.Availiable.Add(neighbour);
             }
-            using (Cursor.HideCursor())
+            foreach (Vertex neighbour in vertex.Neighbours)
             {
-                foreach (Vertex neighbour in vertex.Neighbours)
+                if (!neighbour.IsObstacle && !neighbour.IsVisualizedAsRange())
                 {
-                    if (!neighbour.IsObstacle && !neighbour.IsVisualizedAsRange())
-                    {
-                        neighbour.Color = Colours.Default.NeighbourhoodColor;
-                    }
+                    neighbour.Color = Colours.Default.NeighbourhoodColor;
                 }
             }
         }
