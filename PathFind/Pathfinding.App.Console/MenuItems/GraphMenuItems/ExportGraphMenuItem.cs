@@ -1,59 +1,87 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Model;
-using Pathfinding.App.Console.Serialization;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    internal abstract class ExportGraphMenuItem<TPath>
-        : IConditionedMenuItem, ICanRecieveMessage
+    internal abstract class ExportGraphMenuItem<TPath> : IConditionedMenuItem
     {
         protected readonly IMessenger messenger;
         protected readonly IInput<TPath> input;
-        protected readonly ISerializer<SerializationInfo> graphSerializer;
+        protected readonly IInput<int> intInput;
+        protected readonly ISerializer<PathfindingHistory> graphSerializer;
         protected readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
-        protected readonly IPathfindingHistory history;
+        protected readonly PathfindingHistory history;
         protected readonly ILog log;
 
-        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
-
-        protected ExportGraphMenuItem(IMessenger messenger, 
-            IInput<TPath> input, 
-            IPathfindingHistory history,
-            ISerializer<SerializationInfo> graphSerializer,
-            IPathfindingRangeBuilder<Vertex> rangeBuilder, 
+        protected ExportGraphMenuItem(IMessenger messenger,
+            IInput<TPath> input,
+            IInput<int> intInput,
+            PathfindingHistory history,
+            ISerializer<PathfindingHistory> graphSerializer,
+            IPathfindingRangeBuilder<Vertex> rangeBuilder,
             ILog log)
         {
             this.messenger = messenger;
             this.input = input;
+            this.intInput = intInput;
             this.graphSerializer = graphSerializer;
             this.log = log;
             this.history = history;
             this.rangeBuilder = rangeBuilder;
         }
 
-        public virtual bool CanBeExecuted() => graph != Graph2D<Vertex>.Empty;
+        public virtual bool CanBeExecuted() => history.Count > 0;
 
         public virtual async void Execute()
         {
             try
             {
-                var path = input.Input();
-                var info = new SerializationInfo
+                if (history.Count == 1)
                 {
-                    Graph = graph,
-                    Range = rangeBuilder.Range.GetCoordinates(),
-                    History = history
-                };
-                await ExportAsync(info, path);
+                    var path = input.Input();
+                    await ExportAsync(history, path);
+                    return;
+                }
+                var keys = history.Graphs.ToList();
+                var toExport = new PathfindingHistory();
+                string menuList = CreateMenuList(keys);
+                int index = InputIndex(menuList, keys.Count);
+                while (index != keys.Count + 1)
+                {
+                    if (index == keys.Count)
+                    {
+                        toExport = history;
+                        break;
+                    }
+                    var key = keys[index];
+                    var toAdd = history.GetFor(key);
+                    keys.Remove(key);
+                    toExport.Add(key, toAdd);
+                    if (keys.Count == 0)
+                    {
+                        break;
+                    }
+                    menuList = CreateMenuList(keys);
+                    index = InputIndex(menuList, keys.Count);
+                }
+                if (toExport.Count > 0)
+                {
+                    var path = input.Input();
+                    await ExportAsync(toExport, path);
+                }
             }
             catch (Exception ex)
             {
@@ -61,16 +89,24 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             }
         }
 
-        public virtual void RegisterHanlders(IMessenger messenger)
+        private int InputIndex(string message, int count)
         {
-            messenger.RegisterGraph(this, Tokens.Common, OnGraphCreated);
+            using (Cursor.UseCurrentPositionWithClean())
+            {
+                int index = intInput.Input(message, count + 2, 1) - 1;
+                return index;
+            }
         }
 
-        protected abstract Task ExportAsync(SerializationInfo graph, TPath path);
-
-        private void OnGraphCreated(Graph2D<Vertex> graph)
+        private string CreateMenuList(IReadOnlyCollection<Graph2D<Vertex>> graphs)
         {
-            this.graph = graph;
+            return graphs.Select(k => k.ToString())
+                .Append(Languages.All)
+                .Append(Languages.Quit)
+                .CreateMenuList(1)
+                .ToString();
         }
+
+        protected abstract Task ExportAsync(PathfindingHistory graph, TPath path);
     }
 }

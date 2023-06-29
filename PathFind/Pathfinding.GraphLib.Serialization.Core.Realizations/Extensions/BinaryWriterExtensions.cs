@@ -23,7 +23,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             array.ForEach(writer.Write);
         }
 
-        public static void WriterCoordinates(this BinaryWriter writer,
+        public static void WriteCoordinates(this BinaryWriter writer,
             IReadOnlyList<ICoordinate> neighbourhood)
         {
             writer.Write(neighbourhood.Count);
@@ -46,7 +46,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
                 writer.Write(vertex.IsObstacle);
                 writer.Write(vertex.Cost.CurrentCost);
                 writer.WriteRange(vertex.Cost.CostRange);
-                writer.WriterCoordinates(vertex.Neighbourhood);
+                writer.WriteCoordinates(vertex.Neighbourhood);
                 writer.WriteIntArray(vertex.Position);
             }
         }

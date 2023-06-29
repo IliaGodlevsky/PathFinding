@@ -1,38 +1,42 @@
-﻿using Pathfinding.App.Console.Interface;
+﻿using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Exceptions;
 using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace Pathfinding.App.Console.Serialization
 {
-    internal sealed class GraphSerializer : ISerializer<SerializationInfo>
+    internal sealed class GraphSerializer : ISerializer<PathfindingHistory>
     {
-        private readonly ISerializer<IEnumerable<ICoordinate>> rangeSerializer;
-        private readonly ISerializer<IPathfindingHistory> historySerializer;
+        private readonly ISerializer<GraphPathfindingHistory> historySerializer;
         private readonly ISerializer<Graph2D<Vertex>> graphSerializer;
 
-        public GraphSerializer(ISerializer<IEnumerable<ICoordinate>> rangeSerializer,
-            ISerializer<IPathfindingHistory> historySerializer,
+        public GraphSerializer(ISerializer<GraphPathfindingHistory> historySerializer,
             ISerializer<Graph2D<Vertex>> graphSerializer)
         {
-            this.rangeSerializer = rangeSerializer;
             this.historySerializer = historySerializer;
             this.graphSerializer = graphSerializer;
         }
 
-        public SerializationInfo DeserializeFrom(Stream stream)
+        public PathfindingHistory DeserializeFrom(Stream stream)
         {
             try
             {
-                var graph = graphSerializer.DeserializeFrom(stream);
-                var range = rangeSerializer.DeserializeFrom(stream);
-                var unit = historySerializer.DeserializeFrom(stream);
-                return new SerializationInfo { Graph = graph, Range = range, History = unit };
+                var history = new PathfindingHistory();
+                using (var reader = new BinaryReader(stream, Encoding.Default, leaveOpen: true))
+                {
+                    int count = reader.ReadInt32();
+                    while (count-- > 0)
+                    {
+                        var graph = graphSerializer.DeserializeFrom(stream);
+                        var graphHistory = historySerializer.DeserializeFrom(stream);
+                        history.Add(graph, graphHistory);
+                    }
+                }
+                return history;
             }
             catch (Exception ex)
             {
@@ -40,13 +44,19 @@ namespace Pathfinding.App.Console.Serialization
             }
         }
 
-        public void SerializeTo(SerializationInfo item, Stream stream)
+        public void SerializeTo(PathfindingHistory item, Stream stream)
         {
             try
             {
-                graphSerializer.SerializeTo(item.Graph, stream);
-                rangeSerializer.SerializeTo(item.Range, stream);
-                historySerializer.SerializeTo(item.History, stream);
+                using (var writer = new BinaryWriter(stream, Encoding.Default, leaveOpen: true))
+                {
+                    writer.Write(item.Count);
+                    foreach (var note in item)
+                    {
+                        graphSerializer.SerializeTo(note.Graph, stream);
+                        historySerializer.SerializeTo(note.History, stream);
+                    }
+                }
             }
             catch (Exception ex)
             {

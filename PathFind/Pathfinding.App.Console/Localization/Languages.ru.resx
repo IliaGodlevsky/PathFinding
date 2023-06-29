@@ -120,6 +120,9 @@
   <data name="AlgorithmChoiceMsg" xml:space="preserve">
     <value>Выберите алгоритм: </value>
   </data>
+  <data name="All" xml:space="preserve">
+    <value>Выбрать все</value>
+  </data>
   <data name="ApplyHistory" xml:space="preserve">
     <value>Применить историю</value>
   </data>
@@ -167,6 +170,9 @@
   </data>
   <data name="ChooseColor" xml:space="preserve">
     <value>Выберите цвет: </value>
+  </data>
+  <data name="ChooseGraph" xml:space="preserve">
+    <value>Выбрать граф</value>
   </data>
   <data name="ClearColors" xml:space="preserve">
     <value>Очистить цвета вершин</value>
@@ -278,6 +284,9 @@
   </data>
   <data name="InputServerNameMsg" xml:space="preserve">
     <value>Введите имя сервера: </value>
+  </data>
+  <data name="KeysUnit" xml:space="preserve">
+    <value>Клавиши</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Язык</value>

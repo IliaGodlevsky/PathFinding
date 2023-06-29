@@ -1,26 +1,54 @@
-﻿using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Model.Notes;
-using Pathfinding.App.Console.DataAccess.Repositories;
-using Pathfinding.GraphLib.Core.Interface;
-using System;
+﻿using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.App.Console.DataAccess
 {
-    internal sealed class PathfindingHistory : IPathfindingHistory
+    internal class PathfindingHistory : IEnumerable<(Graph2D<Vertex> Graph, GraphPathfindingHistory History)>
     {
-        public IList<Guid> Algorithms { get; } = new List<Guid>();
+        private readonly Dictionary<Graph2D<Vertex>, GraphPathfindingHistory> history = new();
 
-        public IHistoryVolume<Guid, IReadOnlyList<ICoordinate>> VisitedVertices { get; } = new CoordinatesVolume();
+        public virtual GraphPathfindingHistory GetFor(Graph2D<Vertex> key)
+        {
+            return history[key];
+        }
 
-        public IHistoryVolume<Guid, IReadOnlyList<ICoordinate>> PathVertices { get; } = new CoordinatesVolume();
+        public virtual IReadOnlyCollection<Graph2D<Vertex>> Graphs => history.Keys;
 
-        public IHistoryVolume<Guid, IReadOnlyList<ICoordinate>> ObstacleVertices { get; } = new CoordinatesVolume();
+        public virtual int Count => history.Count;
 
-        public IHistoryVolume<Guid, IReadOnlyList<ICoordinate>> RangeVertices { get; } = new CoordinatesVolume();
+        public virtual void Add(Graph2D<Vertex> key, GraphPathfindingHistory value)
+        {
+            history.Add(key, value);
+        }
 
-        public IHistoryVolume<Guid, IReadOnlyList<int>> Costs { get; } = new CostsVolume();
+        public virtual void Add((Graph2D<Vertex> Graph, GraphPathfindingHistory History) note)
+        {
+            history.Add(note.Graph, note.History);
+        }
 
-        public IHistoryVolume<Guid, Statistics> Statistics { get; } = new StatisticsVolume();
+        public virtual void Clear()
+        {
+            history.Clear();
+        }
+
+        public virtual bool Remove(Graph2D<Vertex> key)
+        {
+            return history.Remove(key);
+        }
+
+        public virtual IEnumerator<(Graph2D<Vertex> Graph, GraphPathfindingHistory History)> GetEnumerator()
+        {
+            return history
+                .Select(pair => (Graph: pair.Key, History: pair.Value))
+                .GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 }

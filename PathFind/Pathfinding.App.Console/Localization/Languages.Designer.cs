@@ -70,6 +70,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select all.
+        /// </summary>
+        public static string All {
+            get {
+                return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apply history.
         /// </summary>
         public static string ApplyHistory {
@@ -178,6 +187,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change neighbourhood.
+        /// </summary>
+        public static string ChangeNeighbourhood {
+            get {
+                return ResourceManager.GetString("ChangeNeighbourhood", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change path colors.
         /// </summary>
         public static string ChangePathColors {
@@ -210,6 +228,15 @@ namespace Pathfinding.App.Console.Localization {
         public static string ChooseColor {
             get {
                 return ResourceManager.GetString("ChooseColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose graph.
+        /// </summary>
+        public static string ChooseGraph {
+            get {
+                return ResourceManager.GetString("ChooseGraph", resourceCulture);
             }
         }
         
@@ -372,6 +399,15 @@ namespace Pathfinding.App.Console.Localization {
         public static string DelayTimeInputMsg {
             get {
                 return ResourceManager.GetString("DelayTimeInputMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete graph.
+        /// </summary>
+        public static string DeleteGraph {
+            get {
+                return ResourceManager.GetString("DeleteGraph", resourceCulture);
             }
         }
         

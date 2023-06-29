@@ -1,5 +1,5 @@
-﻿using Pathfinding.App.Console.Extensions;
-using Pathfinding.App.Console.Interface;
+﻿using Pathfinding.App.Console.DataAccess;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using System.IO;
@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Pathfinding.App.Console.Serialization
 {
-    internal sealed class BinaryHistorySerializer : ISerializer<IPathfindingHistory>
+    internal sealed class BinaryHistorySerializer : ISerializer<GraphPathfindingHistory>
     {
         private readonly ICoordinateFactory factory;
 
@@ -16,7 +16,7 @@ namespace Pathfinding.App.Console.Serialization
             this.factory = factory;
         }
 
-        public IPathfindingHistory DeserializeFrom(Stream stream)
+        public GraphPathfindingHistory DeserializeFrom(Stream stream)
         {
             using (var reader = new BinaryReader(stream, Encoding.Default, leaveOpen: true))
             {
@@ -24,7 +24,7 @@ namespace Pathfinding.App.Console.Serialization
             }
         }
 
-        public void SerializeTo(IPathfindingHistory history, Stream stream)
+        public void SerializeTo(GraphPathfindingHistory history, Stream stream)
         {
             using (var writer = new BinaryWriter(stream, Encoding.Default, leaveOpen: true))
             {

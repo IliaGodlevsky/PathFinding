@@ -6,7 +6,7 @@ using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    [MediumPriority]
+    [HighPriority]
     internal sealed class EnterObstaclePercentMenuItem : GraphMenuItem
     {
         public EnterObstaclePercentMenuItem(IMessenger messenger, IInput<int> input)

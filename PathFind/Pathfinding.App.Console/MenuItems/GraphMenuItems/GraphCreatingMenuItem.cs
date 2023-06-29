@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
@@ -24,6 +25,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected readonly IVertexCostFactory costFactory;
         protected readonly INeighborhoodFactory neighborhoodFactory;
         protected readonly GraphAssemble assemble;
+        protected readonly PathfindingHistory history;
 
         protected InclusiveValueRange<int> costRange = new(9, 1);
         protected int width = 0;
@@ -34,8 +36,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             GraphAssemble assemble,
             IRandom random,
             IVertexCostFactory costFactory,
-            INeighborhoodFactory neighborhoodFactory)
+            INeighborhoodFactory neighborhoodFactory,
+            PathfindingHistory history)
         {
+            this.history = history;
             this.messenger = messenger;
             this.random = random;
             this.costFactory = costFactory;
@@ -59,6 +63,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             var graph = assemble.AssembleGraph(layers, width, length);
             messenger.SendData(costRange, Tokens.AppLayout);
             messenger.SendData(graph, Tokens.AppLayout, Tokens.Main, Tokens.Common);
+            history.Add(graph, new GraphPathfindingHistory());
         }
 
         public virtual bool CanBeExecuted()

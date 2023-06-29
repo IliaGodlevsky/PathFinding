@@ -120,6 +120,9 @@
   <data name="AlgorithmChoiceMsg" xml:space="preserve">
     <value>Choose algorithm: </value>
   </data>
+  <data name="All" xml:space="preserve">
+    <value>Select all</value>
+  </data>
   <data name="ApplyHistory" xml:space="preserve">
     <value>Apply history</value>
   </data>
@@ -156,6 +159,9 @@
   <data name="ChangeGraphColors" xml:space="preserve">
     <value>Change graph colors</value>
   </data>
+  <data name="ChangeNeighbourhood" xml:space="preserve">
+    <value>Change neighbourhood</value>
+  </data>
   <data name="ChangePathColors" xml:space="preserve">
     <value>Change path colors</value>
   </data>
@@ -167,6 +173,9 @@
   </data>
   <data name="ChooseColor" xml:space="preserve">
     <value>Choose color: </value>
+  </data>
+  <data name="ChooseGraph" xml:space="preserve">
+    <value>Choose graph</value>
   </data>
   <data name="ChooseKeyMsg" xml:space="preserve">
     <value>{0}Choose key to change: </value>
@@ -221,6 +230,9 @@
   </data>
   <data name="DelayTimeInputMsg" xml:space="preserve">
     <value>Input animation speed delay time (milliseconds): </value>
+  </data>
+  <data name="DeleteGraph" xml:space="preserve">
+    <value>Delete graph</value>
   </data>
   <data name="Editor" xml:space="preserve">
     <value>Editor</value>

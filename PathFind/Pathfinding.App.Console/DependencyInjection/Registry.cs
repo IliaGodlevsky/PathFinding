@@ -95,15 +95,13 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 .Select(member => (IRegistry)Activator.CreateInstance(member));
             var features = nestedTypes
                 .Where(member => Attribute.IsDefined(member, typeof(SettingsPropertyAttribute)))
-                .ToDictionary(type => GetSettingsAttribute(type).SettingsProperty)
-                .AsReadOnly();
+                .ToDictionary(type => GetSettingsAttribute(type).SettingsProperty).AsReadOnly();
             var applied = Features.Default.GetType().GetProperties()
                 .Where(prop => Attribute.IsDefined(prop, typeof(ApplicationScopedSettingAttribute)))
                 .Select(prop => (prop.Name, Value: prop.GetValue(Features.Default)))
                 .Where(item => item.Value.Equals(true) && features.ContainsKey(item.Name))
                 .Select(item => (IRegistry)Activator.CreateInstance(features[item.Name]))
-                .Union(mandatoryRegistrations)
-                .ToHashSet();
+                .Concat(mandatoryRegistrations).ToList().AsReadOnly();
             return applied;
         }
 
@@ -126,7 +124,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterTypes(AllUnits).SingleInstance().WithMetadata(UnitTypeKey, type => type).AsSelf()
                     .AsImplementedInterfaces().AutoActivate().ConfigurePipeline(p => p.Use(new UnitResolveMiddleware(UnitTypeKey)));
 
-                builder.RegisterType<PathfindingHistory>().As<IPathfindingHistory>().SingleInstance();
+                builder.RegisterType<PathfindingHistory>().AsSelf().SingleInstance();
 
                 builder.RegisterType<ExitMenuItem>().Keyed(typeof(IMenuItem), WithoutMain).SingleInstance();
 
@@ -159,6 +157,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterType<AssembleGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ResizeGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
+                builder.RegisterType<ChooseGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
+                builder.RegisterType<DeleteGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance().As<ICanRecieveMessage>();
                 builder.RegisterType<EnterCostRangeMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
                 builder.RegisterType<EnterGraphParametresMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
                 builder.RegisterType<EnterObstaclePercentMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
@@ -172,6 +172,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
                 builder.RegisterType<CryptoRandom>().As<IRandom>().SingleInstance();
+                builder.RegisterDecorator<ThreadSafeRandom, IRandom>();
                 builder.RegisterType<MeanCost>().As<IMeanCost>().SingleInstance();
 
                 builder.RegisterType<PathfindingRange<Vertex>>().As<IPathfindingRange<Vertex>>().SingleInstance();
@@ -227,9 +228,9 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Configure(ContainerBuilder builder)
             {
-                builder.RegisterType<SaveGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
+                builder.RegisterType<SaveGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
                 builder.RegisterType<LoadGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
-                builder.RegisterType<SendGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
+                builder.RegisterType<SendGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
                 builder.RegisterType<RecieveGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
 
                 builder.RegisterType<FilePathInput>().As<IFilePathInput>().SingleInstance();
@@ -237,16 +238,15 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterInstance(Aes.Create()).As<SymmetricAlgorithm>().SingleInstance();
 
-                builder.RegisterType<GraphSerializer>().As<ISerializer<SerializationInfo>>().SingleInstance();
-
-                builder.RegisterType<BinaryHistorySerializer>().As<ISerializer<IPathfindingHistory>>().SingleInstance();
-                builder.RegisterType<BinaryRangeSerializer>().As<ISerializer<IEnumerable<ICoordinate>>>().SingleInstance();
+                builder.RegisterType<BinaryHistorySerializer>().As<ISerializer<GraphPathfindingHistory>>().SingleInstance();
                 builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>().As<ISerializer<Graph2D<Vertex>>>().SingleInstance();
 
-                builder.RegisterDecorator<BufferedSerializer<SerializationInfo>, ISerializer<SerializationInfo>>();
-                builder.RegisterDecorator<CompressSerializer<SerializationInfo>, ISerializer<SerializationInfo>>();
-                builder.RegisterDecorator<CryptoSerializer<SerializationInfo>, ISerializer<SerializationInfo>>();
-                builder.RegisterDecorator<ThreadSafeSerializer<SerializationInfo>, ISerializer<SerializationInfo>>();
+                builder.RegisterType<GraphSerializer>().As<ISerializer<PathfindingHistory>>().SingleInstance();
+
+                builder.RegisterDecorator<BufferedSerializer<PathfindingHistory>, ISerializer<PathfindingHistory>>();
+                builder.RegisterDecorator<CompressSerializer<PathfindingHistory>, ISerializer<PathfindingHistory>>();
+                builder.RegisterDecorator<CryptoSerializer<PathfindingHistory>, ISerializer<PathfindingHistory>>();
+                builder.RegisterDecorator<ThreadSafeSerializer<PathfindingHistory>, ISerializer<PathfindingHistory>>();
 
                 builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory<Vertex>>().SingleInstance();
             }
@@ -261,6 +261,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<EditorUnitMenuItem>().Keyed<IConditionedMenuItem>(Main).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ReverseVertexMenuItem>().Keyed<IConditionedMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance()
                     .ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(Reverse)));
+                builder.RegisterType<NeighbourhoodMenuItem>().Keyed<IConditionedMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ReverseVertexAction>().Keyed<IVertexAction>(Reverse).WithMetadata(Reverse, nameof(Keys.Default.ReverseVertex));
                 builder.RegisterType<SmoothGraphMenuItem>().Keyed<IConditionedMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ChangeCostMenuItem>().Keyed<IConditionedMenuItem>(Editor).SingleInstance()

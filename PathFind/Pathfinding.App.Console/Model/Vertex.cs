@@ -70,10 +70,13 @@ namespace Pathfinding.App.Console.Model
 
         public void Display()
         {
-            Cursor.SetPosition(ConsolePosition);
-            using (Cursor.UseColor(Color))
+            if (!ConsolePosition.IsEmpty)
             {
-                System.Console.Write(Cost);
+                Cursor.SetPosition(ConsolePosition);
+                using (Cursor.UseColor(Color))
+                {
+                    System.Console.Write(Cost);
+                }
             }
         }
 

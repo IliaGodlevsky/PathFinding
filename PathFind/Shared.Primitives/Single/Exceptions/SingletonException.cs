@@ -6,7 +6,7 @@ namespace Shared.Primitives.Single.Exceptions
     {
         private static string GetMessage(Type genericType)
         {
-            return string.Format("{0} has neither private nor protected parametreless constructor", genericType.Name);
+            return $"{genericType.Name} has neither private nor protected parametreless constructor";
         }
 
         internal SingletonException(Type type) : base(GetMessage(type))

@@ -1,12 +1,15 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
+using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Core.Exceptions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.AlgorithmLib.Factory.Interface;
+using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
@@ -25,15 +28,20 @@ namespace Pathfinding.App.Console.Units
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         private readonly IInput<ConsoleKey> input;
         private readonly ILog log;
+        private readonly PathfindingHistory history;
+
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         public PathfindingProcessUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
-            IInput<ConsoleKey> input, IMessenger messenger,
+            IInput<ConsoleKey> input,
+            IMessenger messenger,
+            PathfindingHistory history,
             ILog log)
             : base(menuItems, conditioned)
         {
+            this.history = history;
             this.messenger = messenger;
             this.log = log;
             this.rangeBuilder = rangeBuilder;
@@ -74,14 +82,14 @@ namespace Pathfinding.App.Console.Units
             var path = NullGraphPath.Interface;
             void Summarize()
             {
-                messenger.SendData((algorithm, path), Tokens.History, Tokens.Statistics);
+                messenger.SendData((algorithm, path), Tokens.Statistics);
+                history.GetFor(graph).Paths.TryGetOrAddNew(algorithm.Id).AddRange(path);
             }
             using (Disposable.Use(Summarize))
             {
                 PrepareForPathfinding(algorithm);
                 path = algorithm.FindPath();
-                path.Select(graph.Get)
-                    .ForEach(v => v.VisualizeAsPath());
+                path.Select(graph.Get).ForEach(v => v.VisualizeAsPath());
             }
             input.Input();
         }
@@ -91,11 +99,25 @@ namespace Pathfinding.App.Console.Units
             this.graph = graph;
         }
 
+        private void OnVertexVisited(object sender, PathfindingEventArgs e)
+        {
+            if (sender is PathfindingProcess process)
+            {
+                var visited = history.GetFor(graph).Visited;
+                visited.TryGetOrAddNew(process.Id).Add(e.Current);
+            }
+        }
+
         private void PrepareForPathfinding(PathfindingProcess algorithm)
         {
+            var hist = history.GetFor(graph);
+            hist.Algorithms.Add(algorithm.Id);
+            hist.Obstacles.TryGetOrAddNew(algorithm.Id).AddRange(graph.GetObstaclesCoordinates());
+            hist.Costs.TryGetOrAddNew(algorithm.Id).AddRange(graph.GetCosts());
+            hist.Ranges.TryGetOrAddNew(algorithm.Id).AddRange(rangeBuilder.Range.GetCoordinates());
+            algorithm.VertexVisited += OnVertexVisited;
             messenger.SendData(algorithm.ToString(), Tokens.AppLayout);
-            messenger.SendData(algorithm, Tokens.Visualization, Tokens.History, Tokens.Statistics);
-            messenger.SendData((algorithm, rangeBuilder.Range), Tokens.History);
+            messenger.SendData(algorithm, Tokens.Visualization, Tokens.Statistics);
         }
 
         public void RegisterHanlders(IMessenger messenger)

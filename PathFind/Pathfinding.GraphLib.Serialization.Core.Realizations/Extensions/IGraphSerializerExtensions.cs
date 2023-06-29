@@ -1,5 +1,4 @@
-﻿using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Serialization.Core.Interface;
+﻿using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Shared.Primitives;
 using System.IO;
 using System.Net;
@@ -19,10 +18,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
         public static void SerializeToFile<T>(this ISerializer<T> self,
             T graph, string filePath)
         {
-            var info = new FileInfo(filePath);
-            info.Directory.Create();
-            var fileMode = File.Exists(filePath) ? FileMode.Truncate : FileMode.Create;
-            using (var fileStream = new FileStream(filePath, fileMode, FileAccess.Write))
+            using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
             {
                 self.SerializeTo(graph, fileStream);
             }
@@ -30,7 +26,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
 
         public static T DeserializeFromFile<T>(this ISerializer<T> self, string filePath)
         {
-            using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            using (var fileStream = File.OpenRead(filePath))
             {
                 return self.DeserializeFrom(fileStream);
             }

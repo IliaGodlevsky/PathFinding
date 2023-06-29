@@ -65,5 +65,14 @@
     <Setting Name="SubmitSmooth" Type="System.ConsoleKey" Scope="User">
       <Value Profile="(Default)">Enter</Value>
     </Setting>
+    <Setting Name="NeighbourhoodAction" Type="System.ConsoleKey" Scope="User">
+      <Value Profile="(Default)">Enter</Value>
+    </Setting>
+    <Setting Name="ExitVertexAction" Type="System.ConsoleKey" Scope="User">
+      <Value Profile="(Default)">Spacebar</Value>
+    </Setting>
+    <Setting Name="ExitVertexSwitching" Type="System.ConsoleKey" Scope="User">
+      <Value Profile="(Default)">Escape</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

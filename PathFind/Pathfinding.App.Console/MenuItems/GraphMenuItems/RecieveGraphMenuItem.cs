@@ -1,10 +1,10 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
-using Pathfinding.App.Console.Serialization;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
@@ -16,10 +16,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     internal sealed class RecieveGraphMenuItem : ImportGraphMenuItem<int>
     {
         public RecieveGraphMenuItem(IMessenger messenger,
-            IInput<int> input, IPathfindingHistory history, 
-            IPathfindingRangeBuilder<Vertex> rangeBuilder, 
-            ISerializer<SerializationInfo> serializer, 
-            ILog log) 
+            IInput<int> input, PathfindingHistory history,
+            IPathfindingRangeBuilder<Vertex> rangeBuilder,
+            ISerializer<PathfindingHistory> serializer,
+            ILog log)
             : base(messenger, input, history, rangeBuilder, serializer, log)
         {
         }
@@ -37,7 +37,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             }
         }
 
-        protected override SerializationInfo ImportGraph(int port)
+        protected override PathfindingHistory ImportGraph(int port)
         {
             System.Console.Write(Languages.WaitingForConnection);
             return serializer.DeserializeFromNetwork(port);

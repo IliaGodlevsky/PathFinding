@@ -1,5 +1,4 @@
-﻿using Autofac;
-using Pathfinding.App.WPF._3D.DependencyInjection;
+﻿using Pathfinding.App.WPF._3D.DependencyInjection;
 using Pathfinding.App.WPF._3D.View;
 using System.Windows;
 

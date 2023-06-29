@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Pathfinding.App.Console.DataAccess;
-using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model.Notes;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
+using Shared.Extensions;
 using System;
 using System.IO;
 
@@ -11,21 +11,23 @@ namespace Pathfinding.App.Console.Extensions
 {
     internal static class BinaryReaderExtensions
     {
-        public static IPathfindingHistory ReadHistory(this BinaryReader reader, ICoordinateFactory factory)
+        private const int GuidSize = 16;
+
+        public static GraphPathfindingHistory ReadHistory(this BinaryReader reader, ICoordinateFactory factory)
         {
-            var history = new PathfindingHistory();
+            var history = new GraphPathfindingHistory();
             int keyCount = reader.ReadInt32();
+            history.PathfindingRange.AddRange(reader.ReadCoordinates(factory));
             for (int i = 0; i < keyCount; i++)
             {
-                var key = new Guid(reader.ReadBytes(16));
+                var key = new Guid(reader.ReadBytes(GuidSize));
                 history.Algorithms.Add(key);
-                history.ObstacleVertices.Add(key, reader.ReadCoordinates(factory));
-                history.VisitedVertices.Add(key, reader.ReadCoordinates(factory));
-                history.RangeVertices.Add(key, reader.ReadCoordinates(factory));
-                history.PathVertices.Add(key, reader.ReadCoordinates(factory));
-                history.Costs.Add(key, reader.ReadIntArray());
-                var json = reader.ReadString();
-                var statistics = JsonConvert.DeserializeObject<Statistics>(json);
+                history.Obstacles.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates(factory));
+                history.Visited.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates(factory));
+                history.Ranges.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates(factory));
+                history.Paths.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates(factory));
+                history.Costs.TryGetOrAddNew(key).AddRange(reader.ReadIntArray());
+                var statistics = JsonConvert.DeserializeObject<Statistics>(reader.ReadString()); 
                 history.Statistics.Add(key, statistics);
             }
             return history;
