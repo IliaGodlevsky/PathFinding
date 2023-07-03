@@ -171,7 +171,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
                 builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
-                builder.RegisterType<CryptoRandom>().As<IRandom>().SingleInstance();
+                builder.RegisterType<XorshiftRandom>().As<IRandom>().SingleInstance();
                 builder.RegisterDecorator<ThreadSafeRandom, IRandom>();
                 builder.RegisterType<MeanCost>().As<IMeanCost>().SingleInstance();
 

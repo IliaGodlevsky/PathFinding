@@ -11,6 +11,8 @@ namespace Pathfinding.App.Console.DataAccess
 
         public List<ICoordinate> PathfindingRange { get; set; } = new();
 
+        public Stack<IReadOnlyList<int>> SmoothHistory { get; } = new();
+
         public Dictionary<Guid, List<ICoordinate>> Visited { get; } = new();
 
         public Dictionary<Guid, List<ICoordinate>> Paths { get; } = new();

@@ -64,6 +64,12 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             return CreatePath(subPaths);
         }
 
+        public override void Dispose()
+        {
+            base.Dispose();
+            DropState();
+        }
+
         protected abstract IVertex GetNextVertex();
 
         protected abstract void InspectVertex(IVertex vertex);
@@ -91,7 +97,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             RaiseVertexEnqueued(vertex);
         }
 
-        protected override void DropState()
+        protected virtual void DropState()
         {
             visited.Clear();
             traces.Clear();

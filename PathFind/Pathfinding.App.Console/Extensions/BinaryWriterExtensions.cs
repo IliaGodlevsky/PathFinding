@@ -24,6 +24,8 @@ namespace Pathfinding.App.Console.Extensions
                 var statistics = history.Statistics.GetOrDefault(key, new Statistics());
                 writer.Write(JsonConvert.SerializeObject(statistics));
             }
+            writer.Write(history.SmoothHistory.Count);
+            history.SmoothHistory.ForEach(writer.WriteIntArray);
         }
     }
 }

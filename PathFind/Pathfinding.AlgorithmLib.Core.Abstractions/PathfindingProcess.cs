@@ -24,8 +24,6 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             public override void Pause() { }
 
             public override void Resume() { }
-
-            protected override void DropState() { }
         }
 
         public static readonly PathfindingProcess Idle = new NullProcess();
@@ -37,6 +35,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         public event ProcessEventHandler Interrupted;
         public event ProcessEventHandler Paused;
         public event ProcessEventHandler Resumed;
+        public event EventHandler StateDropped;
 
         private readonly AutoResetEvent pauseEvent;
 
@@ -69,7 +68,6 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             Paused = null;
             Resumed = null;
             pauseEvent.Dispose();
-            DropState();
         }
 
         public virtual void Interrupt()
@@ -102,8 +100,6 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
                 Resumed?.Invoke(this, new());
             }
         }
-
-        protected abstract void DropState();
 
         protected virtual void WaitUntilResumed()
         {

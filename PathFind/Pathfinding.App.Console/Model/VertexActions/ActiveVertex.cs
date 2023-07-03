@@ -7,6 +7,6 @@ namespace Pathfinding.App.Console.Model.VertexActions
     {
         public Vertex Current { get; set; }
 
-        public IList<ICoordinate> Availiable { get; } = new List<ICoordinate>();
+        public List<ICoordinate> Availiable { get; } = new ();
     }
 }

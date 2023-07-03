@@ -41,7 +41,7 @@ namespace Pathfinding.Visualization.Core.Abstractions
         public VisualPathfindingRange(IPathfindingRange<TVertex> range)
         {
             this.range = range;
-            transit = new ObservableCollection<TVertex>();
+            transit = new ObservableCollection<TVertex>(range.Transit);
             transit.CollectionChanged += OnTransitChanged;
         }
 

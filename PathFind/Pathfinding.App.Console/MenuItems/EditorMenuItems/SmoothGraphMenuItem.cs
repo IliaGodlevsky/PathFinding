@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -21,15 +22,19 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private readonly IMeanCost meanAlgorithm;
         private readonly IMessenger messenger;
         private readonly IInput<ConsoleKey> input;
-        private readonly Stack<IReadOnlyList<int>> costs = new();
+        private readonly PathfindingHistory history;
+
+        private Stack<IReadOnlyList<int>> SmoothHistory => history.GetFor(graph).SmoothHistory;
 
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         public SmoothGraphMenuItem(IMeanCost meanAlgorithm,
-            IMessenger messenger, IInput<ConsoleKey> input)
+            IMessenger messenger, IInput<ConsoleKey> input,
+            PathfindingHistory history)
         {
             this.meanAlgorithm = meanAlgorithm;
             this.messenger = messenger;
+            this.history = history;
             this.input = input;
         }
 
@@ -55,32 +60,31 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         private void Smooth()
         {
-            costs.Push(graph.GetCosts());
+            SmoothHistory.Push(graph.GetCosts());
             graph.Smooth(meanAlgorithm);
         }
 
         private void Undo()
         {
-            if (costs.Count > 0)
+            if (SmoothHistory.Count > 0)
             {
-                graph.Reverse().ApplyCosts(costs.Pop().Reverse());
+                graph.Reverse().ApplyCosts(SmoothHistory.Pop().Reverse());
             }
         }
 
         private void Cancel()
         {
-            if (costs.Count > 0)
+            if (SmoothHistory.Count > 0)
             {
-                var initPrices = costs.Last().Reverse();
+                var initPrices = SmoothHistory.Last().Reverse();
                 graph.Reverse().ApplyCosts(initPrices);
-                costs.Clear();
+                SmoothHistory.Clear();
             }
         }
 
         private void OnGraphCreated(Graph2D<Vertex> graph)
         {
             this.graph = graph;
-            costs.Clear();
         }
 
         public override string ToString()

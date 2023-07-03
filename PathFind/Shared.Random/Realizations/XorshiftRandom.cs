@@ -22,7 +22,6 @@ namespace Shared.Random.Realizations
 
         }
 
-
         public uint NextUInt()
         {
             uint x = seed;

@@ -22,10 +22,8 @@ namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions
         {
             active.Current = vertex;
             var availaible = factory.CreateNeighborhood(vertex.Position);
-            foreach (var neighbour in availaible)
-            {
-                active.Availiable.Add(neighbour);
-            }
+            active.Availiable.AddRange(availaible);
+            
             foreach (Vertex neighbour in vertex.Neighbours)
             {
                 if (!neighbour.IsObstacle && !neighbour.IsVisualizedAsRange())

@@ -10,10 +10,7 @@ namespace Pathfinding.App.Console.DataAccess
     {
         private readonly Dictionary<Graph2D<Vertex>, GraphPathfindingHistory> history = new();
 
-        public GraphPathfindingHistory GetFor(Graph2D<Vertex> key)
-        {
-            return history[key];
-        }
+        public GraphPathfindingHistory GetFor(Graph2D<Vertex> key) => history[key];
 
         public IReadOnlyCollection<Graph2D<Vertex>> Graphs => history.Keys;
 
@@ -29,15 +26,9 @@ namespace Pathfinding.App.Console.DataAccess
             history.Add(note.Graph, note.History);
         }
 
-        public void Clear()
-        {
-            history.Clear();
-        }
+        public void Clear() => history.Clear();
 
-        public bool Remove(Graph2D<Vertex> key)
-        {
-            return history.Remove(key);
-        }
+        public bool Remove(Graph2D<Vertex> key) => history.Remove(key);
 
         public IEnumerator<(Graph2D<Vertex> Graph, GraphPathfindingHistory History)> GetEnumerator()
         {
@@ -46,9 +37,6 @@ namespace Pathfinding.App.Console.DataAccess
                 .GetEnumerator();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

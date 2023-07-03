@@ -6,6 +6,7 @@ using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Shared.Extensions;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace Pathfinding.App.Console.Extensions
 {
@@ -30,6 +31,8 @@ namespace Pathfinding.App.Console.Extensions
                 var statistics = JsonConvert.DeserializeObject<Statistics>(reader.ReadString()); 
                 history.Statistics.Add(key, statistics);
             }
+            Enumerable.Range(0, reader.ReadInt32())
+                .ForEach(i => history.SmoothHistory.Push(reader.ReadIntArray()));
             return history;
         }
     }

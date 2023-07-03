@@ -61,9 +61,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             var layers = GetLayers();
             var graph = assemble.AssembleGraph(layers, width, length);
+            history.Add(graph, new GraphPathfindingHistory());
             messenger.SendData(costRange, Tokens.AppLayout);
             messenger.SendData(graph, Tokens.AppLayout, Tokens.Main, Tokens.Common);
-            history.Add(graph, new GraphPathfindingHistory());
         }
 
         public virtual bool CanBeExecuted()
