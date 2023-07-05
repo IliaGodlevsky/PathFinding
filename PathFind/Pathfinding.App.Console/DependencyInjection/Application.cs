@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Autofac.Core;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Serialization.Serializers.Decorators;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
@@ -77,64 +76,36 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
     internal static class Application
     {
-        public static void Run()
-        {
-            try
-            {
-                using (var scope = Configure())
-                {
-                    var log = scope.Resolve<ILog>();
-                    try
-                    {
-                        var main = scope.Resolve<MainUnitMenuItem>();
-                        main.Execute();
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Fatal(ex);
-                    }
-                }
-            }
-            catch (DependencyResolutionException ex)
-            {
-                var log = new ConsoleLog();
-                log.Fatal(ex);
-            }
-        }
-
-        private static ILifetimeScope Configure()
+        public static void Start()
         {
             var builder = new ContainerBuilder();
-
             foreach (var feature in GetFeatures())
             {
                 feature.Apply(builder);
             }
-
-            return builder.Build();
+            using (var scope = builder.Build())
+            {
+                var main = scope.Resolve<MainUnitMenuItem>();
+                main.Execute();
+            }
         }
 
         private static IReadOnlyCollection<IFeature> GetFeatures()
         {
             var nestedTypes = typeof(Application).GetNestedTypes(BindingFlags.NonPublic);
-            var mandatoryRegistrations = nestedTypes
+            var mandatory = nestedTypes
                 .Where(member => Attribute.IsDefined(member, typeof(MandatoryAttribute)))
                 .Select(member => (IFeature)Activator.CreateInstance(member));
-            var features = nestedTypes
+            var optional = nestedTypes
                 .Where(member => Attribute.IsDefined(member, typeof(OptionalAttribute)))
                 .ToDictionary(type => type.Name).AsReadOnly();
             var applied = Features.Default.GetType().GetProperties()
                 .Where(prop => Attribute.IsDefined(prop, typeof(ApplicationScopedSettingAttribute)))
                 .Select(prop => (prop.Name, Value: prop.GetValue(Features.Default)))
-                .Where(item => item.Value.Equals(true) && features.ContainsKey(item.Name))
-                .Select(item => (IFeature)Activator.CreateInstance(features[item.Name]))
-                .Concat(mandatoryRegistrations).ToList().AsReadOnly();
+                .Where(item => item.Value.Equals(true) && optional.ContainsKey(item.Name))
+                .Select(item => (IFeature)Activator.CreateInstance(optional[item.Name]))
+                .Concat(mandatory).ToList().AsReadOnly();
             return applied;
-        }
-
-        private static OptionalAttribute GetSettingsAttribute(Type type)
-        {
-            return type.GetAttributeOrDefault<OptionalAttribute>();
         }
 
         [Mandatory]
@@ -243,6 +214,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
+        // !!!Do not change names of the classes, that are marked with [Optional] attribute.
+        // They are mapped with properties in Features.settings file
         [Optional]
         private sealed class GraphSharing : IFeature
         {
