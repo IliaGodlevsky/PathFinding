@@ -1,6 +1,8 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
+using Pathfinding.AlgorithmLib.History;
+using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.EventArguments;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
@@ -18,6 +20,7 @@ namespace Pathfinding.App.Console.Units
 {
     internal sealed class PathfindingVisualizationUnit : Unit, ICanRecieveMessage
     {
+        private readonly GraphsPathfindingHistory history;
         private readonly ConsoleKeystrokesHook keyStrokeHook = new();
         private readonly IReadOnlyCollection<(string, IPathfindingAction)> pathfindingActions;
         private readonly IReadOnlyCollection<(string, IAnimationSpeedAction)> animationActions;
@@ -30,11 +33,13 @@ namespace Pathfinding.App.Console.Units
         public PathfindingVisualizationUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
             IReadOnlyCollection<(string, IPathfindingAction)> pathfindingActions,
-            IReadOnlyCollection<(string, IAnimationSpeedAction)> animationActions)
+            IReadOnlyCollection<(string, IAnimationSpeedAction)> animationActions,
+            GraphsPathfindingHistory history)
             : base(menuItems, conditioned)
         {
             this.animationActions = animationActions;
             this.pathfindingActions = pathfindingActions;
+            this.history = history;
         }
 
         private void SetAnimationDelay(TimeSpan delay)

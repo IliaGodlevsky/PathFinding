@@ -14,7 +14,7 @@ namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions
         public NeighbourhoodAction(ActiveVertex active, INeighborhoodFactory factory)
         {
             Active = active;
-            Commands = new List<INeighbourhoodCommand>()
+            Commands = new INeighbourhoodCommand[]
             {
                 new ActivateVertexCommand(factory),
                 new IncludeVertexCommand(),

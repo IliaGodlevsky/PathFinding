@@ -16,13 +16,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     {
         private readonly IMessenger messenger;
         private readonly IInput<int> input;
-        private readonly PathfindingHistory history;
+        private readonly GraphsPathfindingHistory history;
         private readonly IPathfindingRangeBuilder<Vertex> builder;
 
         public ChooseGraphMenuItem(IMessenger messenger,
             IPathfindingRangeBuilder<Vertex> builder,
             IInput<int> input,
-            PathfindingHistory history)
+            GraphsPathfindingHistory history)
         {
             this.messenger = messenger;
             this.input = input;

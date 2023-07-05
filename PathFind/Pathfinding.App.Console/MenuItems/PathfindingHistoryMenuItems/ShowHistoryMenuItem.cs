@@ -1,5 +1,4 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
@@ -7,7 +6,6 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.App.Console.Model.Notes;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Primitives;
@@ -21,14 +19,14 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
     {
         private readonly IMessenger messenger;
         private readonly IInput<int> input;
-        private readonly PathfindingHistory history;
+        private readonly GraphsPathfindingHistory history;
 
         private bool isHistoryApplied = true;
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         public ShowHistoryMenuItem(IMessenger messenger,
             IInput<int> input,
-            PathfindingHistory history)
+            GraphsPathfindingHistory history)
         {
             this.history = history;
             this.input = input;
@@ -101,11 +99,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         private bool IsHistoryApplied() => isHistoryApplied;
 
-        private void SetStatistics((PathfindingProcess Process, Statistics Note) value)
-        {
-            history.GetFor(graph).Statistics.Add(value.Process.Id, value.Note);
-        }
-
         private void SetIsApplied(bool isApplied)
         {
             isHistoryApplied = isApplied;
@@ -120,7 +113,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         {
             var token = Tokens.Bind(IsHistoryApplied, Tokens.History);
             messenger.RegisterData<bool>(this, Tokens.History, SetIsApplied);
-            messenger.RegisterAlgorithmData<Statistics>(this, token, SetStatistics);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }
     }

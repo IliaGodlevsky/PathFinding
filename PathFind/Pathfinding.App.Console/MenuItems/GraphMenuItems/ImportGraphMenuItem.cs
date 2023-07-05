@@ -18,15 +18,15 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected readonly IMessenger messenger;
         protected readonly IInput<TPath> input;
         protected readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
-        protected readonly ISerializer<PathfindingHistory> serializer;
-        protected readonly PathfindingHistory history;
+        protected readonly ISerializer<GraphsPathfindingHistory> serializer;
+        protected readonly GraphsPathfindingHistory history;
         protected readonly ILog log;
 
         protected ImportGraphMenuItem(IMessenger messenger,
             IInput<TPath> input,
-            PathfindingHistory history,
+            GraphsPathfindingHistory history,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
-            ISerializer<PathfindingHistory> serializer, ILog log)
+            ISerializer<GraphsPathfindingHistory> serializer, ILog log)
         {
             this.history = history;
             this.rangeBuilder = rangeBuilder;
@@ -62,6 +62,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         protected abstract TPath InputPath();
 
-        protected abstract PathfindingHistory ImportGraph(TPath path);
+        protected abstract GraphsPathfindingHistory ImportGraph(TPath path);
     }
 }

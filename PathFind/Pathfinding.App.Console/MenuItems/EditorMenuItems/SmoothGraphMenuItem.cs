@@ -22,7 +22,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private readonly IMeanCost meanAlgorithm;
         private readonly IMessenger messenger;
         private readonly IInput<ConsoleKey> input;
-        private readonly PathfindingHistory history;
+        private readonly GraphsPathfindingHistory history;
 
         private Stack<IReadOnlyList<int>> SmoothHistory => history.GetFor(graph).SmoothHistory;
 
@@ -30,7 +30,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public SmoothGraphMenuItem(IMeanCost meanAlgorithm,
             IMessenger messenger, IInput<ConsoleKey> input,
-            PathfindingHistory history)
+            GraphsPathfindingHistory history)
         {
             this.meanAlgorithm = meanAlgorithm;
             this.messenger = messenger;

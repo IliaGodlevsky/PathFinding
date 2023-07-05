@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Core;
 using GalaSoft.MvvmLight.Messaging;
 using GraphLib.Serialization.Serializers.Decorators;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
@@ -31,6 +32,7 @@ using Pathfinding.App.Console.Model.Visualizations;
 using Pathfinding.App.Console.Model.Visualizations.Visuals;
 using Pathfinding.App.Console.Serialization;
 using Pathfinding.App.Console.Settings;
+using Pathfinding.App.Console.Units;
 using Pathfinding.App.Console.ValueInput;
 using Pathfinding.App.Console.ValueInput.UserInput;
 using Pathfinding.GraphLib.Core.Interface;
@@ -73,47 +75,72 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
     using AlgorithmFactory = IAlgorithmFactory<PathfindingProcess>;
     using Command = IPathfindingRangeCommand<Vertex>;
 
-    internal static class Registry
+    internal static class Application
     {
-        public static ILifetimeScope Configure()
+        public static void Run()
+        {
+            try
+            {
+                using (var scope = Configure())
+                {
+                    var log = scope.Resolve<ILog>();
+                    try
+                    {
+                        var main = scope.Resolve<MainUnitMenuItem>();
+                        main.Execute();
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Fatal(ex);
+                    }
+                }
+            }
+            catch (DependencyResolutionException ex)
+            {
+                var log = new ConsoleLog();
+                log.Fatal(ex);
+            }
+        }
+
+        private static ILifetimeScope Configure()
         {
             var builder = new ContainerBuilder();
 
-            foreach (var registry in GetAppliedRegistries())
+            foreach (var feature in GetFeatures())
             {
-                registry.Configure(builder);
+                feature.Apply(builder);
             }
 
             return builder.Build();
         }
 
-        private static IReadOnlyCollection<IRegistry> GetAppliedRegistries()
+        private static IReadOnlyCollection<IFeature> GetFeatures()
         {
-            var nestedTypes = typeof(Registry).GetNestedTypes(BindingFlags.NonPublic);
+            var nestedTypes = typeof(Application).GetNestedTypes(BindingFlags.NonPublic);
             var mandatoryRegistrations = nestedTypes
-                .Where(member => Attribute.IsDefined(member, typeof(MandatoryRegistrationAttribute)))
-                .Select(member => (IRegistry)Activator.CreateInstance(member));
+                .Where(member => Attribute.IsDefined(member, typeof(MandatoryAttribute)))
+                .Select(member => (IFeature)Activator.CreateInstance(member));
             var features = nestedTypes
-                .Where(member => Attribute.IsDefined(member, typeof(SettingsPropertyAttribute)))
-                .ToDictionary(type => GetSettingsAttribute(type).SettingsProperty).AsReadOnly();
+                .Where(member => Attribute.IsDefined(member, typeof(OptionalAttribute)))
+                .ToDictionary(type => type.Name).AsReadOnly();
             var applied = Features.Default.GetType().GetProperties()
                 .Where(prop => Attribute.IsDefined(prop, typeof(ApplicationScopedSettingAttribute)))
                 .Select(prop => (prop.Name, Value: prop.GetValue(Features.Default)))
                 .Where(item => item.Value.Equals(true) && features.ContainsKey(item.Name))
-                .Select(item => (IRegistry)Activator.CreateInstance(features[item.Name]))
+                .Select(item => (IFeature)Activator.CreateInstance(features[item.Name]))
                 .Concat(mandatoryRegistrations).ToList().AsReadOnly();
             return applied;
         }
 
-        private static SettingsPropertyAttribute GetSettingsAttribute(Type type)
+        private static OptionalAttribute GetSettingsAttribute(Type type)
         {
-            return type.GetAttributeOrDefault<SettingsPropertyAttribute>();
+            return type.GetAttributeOrDefault<OptionalAttribute>();
         }
 
-        [MandatoryRegistration]
-        private sealed class InitialRegistration : IRegistry
+        [Mandatory]
+        private sealed class Main : IFeature
         {
-            public void Configure(ContainerBuilder builder)
+            public void Apply(ContainerBuilder builder)
             {
                 builder.RegisterType<ApplicationSettingsStore>().SingleInstance().AutoActivate();
 
@@ -121,19 +148,14 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterType<AppLayout>().As<ICanRecieveMessage>().SingleInstance().AutoActivate();
 
-                builder.RegisterTypes(AllUnits).SingleInstance().WithMetadata(UnitTypeKey, type => type).AsSelf()
-                    .AsImplementedInterfaces().AutoActivate().ConfigurePipeline(p => p.Use(new UnitResolveMiddleware(UnitTypeKey)));
+                builder.RegisterUnit<MainUnit, AnswerExitMenuItem>();
+                builder.RegisterUnits<ExitMenuItem>(Graph, Process, Range);
 
-                builder.RegisterType<PathfindingHistory>().AsSelf().SingleInstance();
-
-                builder.RegisterType<ExitMenuItem>().Keyed(typeof(IMenuItem), WithoutMain).SingleInstance();
+                builder.RegisterType<GraphsPathfindingHistory>().AsSelf().SingleInstance();
 
                 builder.RegisterType<MainUnitMenuItem>().AsSelf().InstancePerDependency();
-
-                builder.RegisterType<AnswerExitMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
-
-                builder.RegisterType<GraphCreateMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
-                builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IConditionedMenuItem>(Main).As<ICanRecieveMessage>().SingleInstance();
+                builder.RegisterType<GraphCreateMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main).SingleInstance();
+                builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IConditionedMenuItem>(PathfindingUnits.Main).As<ICanRecieveMessage>().SingleInstance();
 
                 builder.RegisterType<TotalVertexVisualization>().As<ITotalVisualization<Vertex>>().SingleInstance()
                     .ConfigurePipeline(p => p.Use(new TotalVisualizationMiddleware()));
@@ -172,8 +194,6 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
                 builder.RegisterType<XorshiftRandom>().As<IRandom>().SingleInstance();
-                builder.RegisterDecorator<ThreadSafeRandom, IRandom>();
-                builder.RegisterType<MeanCost>().As<IMeanCost>().SingleInstance();
 
                 builder.RegisterType<PathfindingRange<Vertex>>().As<IPathfindingRange<Vertex>>().SingleInstance();
                 builder.RegisterDecorator<VisualPathfindingRange<Vertex>, IPathfindingRange<Vertex>>();
@@ -200,10 +220,10 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        [MandatoryRegistration]
-        private sealed class UserInputRegistration : IRegistry
+        [Mandatory]
+        private sealed class UserInput : IFeature
         {
-            public void Configure(ContainerBuilder builder)
+            public void Apply(ContainerBuilder builder)
             {
                 builder.RegisterType<ConsoleUserAnswerInput>().As<IInput<Answer>>().SingleInstance();
                 builder.RegisterType<ConsoleUserIntInput>().As<IInput<int>>().SingleInstance();
@@ -213,20 +233,20 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        [MandatoryRegistration]
-        private sealed class BreadthAlgorithmsRegistration : IRegistry
+        [Mandatory]
+        private sealed class BreadthAlgorithms : IFeature
         {
-            public void Configure(ContainerBuilder builder)
+            public void Apply(ContainerBuilder builder)
             {
                 builder.RegisterType<AStarLeeAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, BreadthGroup).WithMetadata(Order, 2);
                 builder.RegisterType<LeeAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, BreadthGroup).WithMetadata(Order, 1);
             }
         }
 
-        [SettingsProperty(nameof(Features.ApplyGraphSharing))]
-        private sealed class GraphSharingRegistration : IRegistry
+        [Optional]
+        private sealed class GraphSharing : IFeature
         {
-            public void Configure(ContainerBuilder builder)
+            public void Apply(ContainerBuilder builder)
             {
                 builder.RegisterType<SaveGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
                 builder.RegisterType<LoadGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
@@ -234,31 +254,32 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<RecieveGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
 
                 builder.RegisterType<FilePathInput>().As<IFilePathInput>().SingleInstance();
-                builder.RegisterType<AddressInput>().As<IInput<(string Host, int Port)>>().SingleInstance();
+                builder.RegisterType<AddressInput>().As<IInput<(string, int)>>().SingleInstance();
 
                 builder.RegisterInstance(Aes.Create()).As<SymmetricAlgorithm>().SingleInstance();
 
                 builder.RegisterType<BinaryHistorySerializer>().As<ISerializer<GraphPathfindingHistory>>().SingleInstance();
                 builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>().As<ISerializer<Graph2D<Vertex>>>().SingleInstance();
 
-                builder.RegisterType<GraphSerializer>().As<ISerializer<PathfindingHistory>>().SingleInstance();
+                builder.RegisterType<PathfindingHistorySerializer>().As<ISerializer<GraphsPathfindingHistory>>().SingleInstance();
 
-                builder.RegisterDecorator<BufferedSerializer<PathfindingHistory>, ISerializer<PathfindingHistory>>();
-                builder.RegisterDecorator<CompressSerializer<PathfindingHistory>, ISerializer<PathfindingHistory>>();
-                builder.RegisterDecorator<CryptoSerializer<PathfindingHistory>, ISerializer<PathfindingHistory>>();
-                builder.RegisterDecorator<ThreadSafeSerializer<PathfindingHistory>, ISerializer<PathfindingHistory>>();
+                builder.RegisterDecorator<BufferedSerializer<GraphsPathfindingHistory>, ISerializer<GraphsPathfindingHistory>>();
+                builder.RegisterDecorator<CompressSerializer<GraphsPathfindingHistory>, ISerializer<GraphsPathfindingHistory>>();
+                builder.RegisterDecorator<CryptoSerializer<GraphsPathfindingHistory>, ISerializer<GraphsPathfindingHistory>>();
+                builder.RegisterDecorator<ThreadSafeSerializer<GraphsPathfindingHistory>, ISerializer<GraphsPathfindingHistory>>();
 
                 builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory<Vertex>>().SingleInstance();
             }
         }
 
-        [SettingsProperty(nameof(Features.ApplyGraphEditor))]
-        private sealed class GraphEditorRegistration : IRegistry
+        [Optional]
+        private sealed class GraphEditor : IFeature
         {
-            public void Configure(ContainerBuilder builder)
+            public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterType<EditorKeysMenuItem>().Keyed<IMenuItem>(KeysUnit).SingleInstance();
-                builder.RegisterType<EditorUnitMenuItem>().Keyed<IConditionedMenuItem>(Main).As<ICanRecieveMessage>().SingleInstance();
+                builder.RegisterUnit<GraphEditorUnit, ExitMenuItem>();
+                builder.RegisterType<EditorKeysMenuItem>().Keyed<IMenuItem>(PathfindingUnits.KeysUnit).SingleInstance();
+                builder.RegisterType<EditorUnitMenuItem>().Keyed<IConditionedMenuItem>(PathfindingUnits.Main).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ReverseVertexMenuItem>().Keyed<IConditionedMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance()
                     .ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(Reverse)));
                 builder.RegisterType<NeighbourhoodMenuItem>().Keyed<IConditionedMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
@@ -268,16 +289,18 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                     .As<ICanRecieveMessage>().ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(ChangeCost)));
                 builder.RegisterType<IncreaseCostAction>().Keyed<IVertexAction>(ChangeCost).WithMetadata(ChangeCost, nameof(Keys.Default.IncreaseCost));
                 builder.RegisterType<DecreaseCostAction>().Keyed<IVertexAction>(ChangeCost).WithMetadata(ChangeCost, nameof(Keys.Default.DecreaseCost));
+                builder.RegisterType<MeanCost>().As<IMeanCost>().SingleInstance();
             }
         }
 
-        [SettingsProperty(nameof(Features.ApplyColorEditor))]
-        private sealed class ColorEditorRegistration : IRegistry
+        [Optional]
+        private sealed class ColorEditor : IFeature
         {
-            public void Configure(ContainerBuilder builder)
+            public void Apply(ContainerBuilder builder)
             {
+                builder.RegisterUnit<ColorsUnit, ExitMenuItem>();
                 builder.RegisterInstance(Colours.Default).As<SettingsBase>().SingleInstance();
-                builder.RegisterType<ColorsUnitMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
+                builder.RegisterType<ColorsUnitMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main).SingleInstance();
                 builder.RegisterType<RegularVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
                 builder.RegisterType<PathVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
                 builder.RegisterType<SourceVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
@@ -287,12 +310,12 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        [SettingsProperty(nameof(Features.ApplyTransitVertices))]
-        private sealed class TransitVerticesRegistration : IRegistry
+        [Optional]
+        private sealed class TransitVertices : IFeature
         {
-            public void Configure(ContainerBuilder builder)
+            public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterType<TransitKeysMenuItem>().Keyed<IMenuItem>(KeysUnit).SingleInstance();
+                builder.RegisterType<TransitKeysMenuItem>().Keyed<IMenuItem>(PathfindingUnits.KeysUnit).SingleInstance();
                 builder.RegisterType<ExcludeTransitVertex<Vertex>>().Keyed<Command>(ExcludeCommand).WithMetadata(Order, 3).SingleInstance();
                 builder.RegisterType<ReplaceTransitVerticesModule<Vertex>>().AsSelf().As<IUndo>().SingleInstance();
                 builder.RegisterType<MarkTransitToReplaceAction>().Keyed<IVertexAction>(PathfindingRange).WithMetadata(PathfindingRange, nameof(Keys.Default.MarkToReplace));
@@ -304,10 +327,10 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        [SettingsProperty(nameof(Features.ApplyWaveAlgorithms))]
-        private sealed class WaveAlgorithmsRegistration : IRegistry
+        [Optional]
+        private sealed class WaveAlgorithms : IFeature
         {
-            public void Configure(ContainerBuilder builder)
+            public void Apply(ContainerBuilder builder)
             {
                 builder.RegisterType<DijkstraAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, WaveGroup).WithMetadata(Order, 1);
                 builder.RegisterType<RandomAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, WaveGroup).WithMetadata(Order, 4);
@@ -316,10 +339,10 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        [SettingsProperty(nameof(Features.ApplyGreedyAlgorithms))]
-        private sealed class GreedyAlgorithmsRegistration : IRegistry
+        [Optional]
+        private sealed class GreedyAlgorithms : IFeature
         {
-            public void Configure(ContainerBuilder builder)
+            public void Apply(ContainerBuilder builder)
             {
                 builder.RegisterType<DistanceFirstAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, GreedGroup).WithMetadata(Order, 1);
                 builder.RegisterType<DepthFirstAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, GreedGroup).WithMetadata(Order, 2);
@@ -328,14 +351,15 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        [SettingsProperty(nameof(Features.ApplyPathfindingVisualization))]
-        private sealed class PathfindingVisualizationRegistration : IRegistry
+        [Optional]
+        private sealed class PathfindingVisualization : IFeature
         {
-            public void Configure(ContainerBuilder builder)
+            public void Apply(ContainerBuilder builder)
             {
+                builder.RegisterUnit<PathfindingVisualizationUnit, ExitMenuItem>();
                 builder.RegisterType<VisualizationMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
-                builder.RegisterType<ApplyVisualizationMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Visual).SingleInstance();
-                builder.RegisterType<EnterAnimationDelayMenuItem>().Keyed<IConditionedMenuItem>(PathfindingUnits.Visual).As<ICanRecieveMessage>().SingleInstance();
+                builder.RegisterType<ApplyVisualizationMenuItem>().Keyed<IMenuItem>(Visual).SingleInstance();
+                builder.RegisterType<EnterAnimationDelayMenuItem>().Keyed<IConditionedMenuItem>(Visual).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<VisitedVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
                 builder.RegisterType<EnqueuedVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
                 builder.RegisterVisualizedVertices<VisualizedVisited>(VisualizedType.Visited);
@@ -343,11 +367,12 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        [SettingsProperty(nameof(Features.ApplyPathfindingHistory))]
-        private sealed class PathfindingHistoryRegistration : IRegistry
+        [Optional]
+        private sealed class PathfindingHistory : IFeature
         {
-            public void Configure(ContainerBuilder builder)
+            public void Apply(ContainerBuilder builder)
             {
+                builder.RegisterUnit<PathfindingHistoryUnit, ExitMenuItem>();
                 builder.RegisterType<HistoryMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
                 builder.RegisterType<ApplyHistoryMenuItem>().Keyed<IMenuItem>(History).SingleInstance();
                 builder.RegisterType<ClearHistoryMenuItem>().Keyed<IConditionedMenuItem>(History).As<ICanRecieveMessage>().SingleInstance();
@@ -355,12 +380,12 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        [SettingsProperty(nameof(Features.ApplyVisualizationControl))]
-        private sealed class VisualizationControlRegistration : IRegistry
+        [Optional]
+        private sealed class VisualizationControl : IFeature
         {
-            public void Configure(ContainerBuilder builder)
+            public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterType<PathfindingControlKeysMenuItem>().Keyed<IMenuItem>(KeysUnit).SingleInstance();
+                builder.RegisterType<PathfindingControlKeysMenuItem>().Keyed<IMenuItem>(PathfindingUnits.KeysUnit).SingleInstance();
                 builder.RegisterType<SpeedUpAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, nameof(Keys.Default.SpeedUp));
                 builder.RegisterType<SlowDownAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, nameof(Keys.Default.SpeedDown));
                 builder.RegisterType<ResumeAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, nameof(Keys.Default.ResumeAlgorithm));
@@ -370,24 +395,26 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        [SettingsProperty(nameof(Features.ApplyPathfindingStatistics))]
-        private sealed class PathfindingStatisticsRegistration : IRegistry
+        [Optional]
+        private sealed class PathfindingStatistics : IFeature
         {
-            public void Configure(ContainerBuilder builder)
+            public void Apply(ContainerBuilder builder)
             {
+                builder.RegisterUnit<PathfindingStatisticsUnit, ExitMenuItem>();
                 builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
                 builder.RegisterType<ApplyStatisticsMenuItem>().Keyed<IMenuItem>(Statistics).SingleInstance();
             }
         }
 
-        [SettingsProperty(nameof(Features.ApplyKeysEditor))]
-        private sealed class KeysEditorRegistration : IRegistry
+        [Optional]
+        private sealed class KeysEditor : IFeature
         {
-            public void Configure(ContainerBuilder builder)
+            public void Apply(ContainerBuilder builder)
             {
+                builder.RegisterUnit<KeysUnit, ExitMenuItem>();
                 builder.RegisterInstance(Keys.Default).As<SettingsBase>().SingleInstance();
-                builder.RegisterType<KeysUnitMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
-                builder.RegisterType<RegularKeysMenuItem>().Keyed<IMenuItem>(KeysUnit).SingleInstance();
+                builder.RegisterType<KeysUnitMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main).SingleInstance();
+                builder.RegisterType<RegularKeysMenuItem>().Keyed<IMenuItem>(PathfindingUnits.KeysUnit).SingleInstance();
             }
         }
     }

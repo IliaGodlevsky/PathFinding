@@ -4,7 +4,9 @@ using Autofac.Core;
 using Autofac.Core.Resolving.Pipeline;
 using Autofac.Features.Metadata;
 using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.MenuItems;
 using Pathfinding.App.Console.Model.Visualizations;
 using Shared.Extensions;
 using System;
@@ -16,6 +18,22 @@ namespace Pathfinding.App.Console.DependencyInjection
 {
     internal static class AutofacExtensions
     {
+        public static void RegisterUnits<TExit>(this ContainerBuilder builder, params Type[] units)
+            where TExit : ExitMenuItem
+        {
+            builder.RegisterTypes(units).WithMetadata(RegistrationConstants.UnitTypeKey, type => type)
+                .AsSelf().AsImplementedInterfaces().AutoActivate().SingleInstance()
+                .ConfigurePipeline(p => p.Use(new UnitResolveMiddleware(RegistrationConstants.UnitTypeKey)));
+            builder.RegisterType<TExit>().Keyed(typeof(IMenuItem), units).SingleInstance();
+        }
+
+        public static void RegisterUnit<TUnit, TExit>(this ContainerBuilder builder) 
+            where TUnit : IUnit
+            where TExit : ExitMenuItem
+        {
+            builder.RegisterUnits<TExit>(typeof(TUnit));
+        }
+
         public static IReadOnlyDictionary<TKey, TValue> ResolveWithMetadata<TKey, TValue>(this IComponentContext context, string key)
         {
             return context.Resolve<IEnumerable<Meta<TValue>>>()

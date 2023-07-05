@@ -17,7 +17,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             IRandom random,
             IVertexCostFactory costFactory,
             INeighborhoodFactory neighborhoodFactory,
-            PathfindingHistory history)
+            GraphsPathfindingHistory history)
             : base(messenger, assemble, random, costFactory, neighborhoodFactory, history)
         {
 

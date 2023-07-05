@@ -46,9 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccess\PathfindingHistory.cs" />
-    <Compile Include="DependencyInjection\Attributes\MandatoryRegistrationAttribute.cs" />
-    <Compile Include="DependencyInjection\Attributes\SettingsPropertyAttribute.cs" />
+    <Compile Include="DataAccess\GraphsPathfindingHistory.cs" />
+    <Compile Include="DependencyInjection\Attributes\MandatoryAttribute.cs" />
+    <Compile Include="DependencyInjection\Attributes\OptionalAttribute.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\TotalVisualizationMiddleware.cs" />
     <Compile Include="Extensions\BinaryReaderExtensions.cs" />
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
@@ -80,7 +80,7 @@
     <Compile Include="Model\VertexActions\NeighbourhoodActions\ExitAction.cs" />
     <Compile Include="Model\VertexActions\NeighbourhoodActions\IncludeVertexCommand.cs" />
     <Compile Include="Model\VertexActions\NeighbourhoodActions\NeighbourhoodAction.cs" />
-    <Compile Include="Serialization\GraphSerializer.cs" />
+    <Compile Include="Serialization\PathfindingHistorySerializer.cs" />
     <Compile Include="DataAccess\GraphPathfindingHistory.cs" />
     <Compile Include="Serialization\BinaryHistorySerializer.cs" />
     <Compile Include="Model\Visualizations\Visuals\VisualizedCrossedPath.cs" />
@@ -95,11 +95,6 @@
     <Compile Include="Model\Visualizations\Visuals\VisualizedVisited.cs" />
     <Compile Include="Model\Visualizations\Visuals\VisualizedVertices.cs" />
     <Compile Include="Model\Visualizations\VisualizedType.cs" />
-    <Compile Include="Settings\Connections.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Connections.settings</DependentUpon>
-    </Compile>
     <Compile Include="Settings\Features.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -205,8 +200,8 @@
     <Compile Include="Messages\ClearColorsMessage.cs" />
     <Compile Include="Messages\ClearHistoryMessage.cs" />
     <Compile Include="Messages\GraphChangedMessage.cs" />
-    <Compile Include="DependencyInjection\Registrations\IRegistry.cs" />
-    <Compile Include="DependencyInjection\Registry.cs" />
+    <Compile Include="DependencyInjection\Registrations\IFeature.cs" />
+    <Compile Include="DependencyInjection\Application.cs" />
     <Compile Include="Units\ColorsUnit.cs" />
     <Compile Include="Units\GraphEditorUnit.cs" />
     <Compile Include="Units\GraphUnit.cs" />
@@ -220,7 +215,7 @@
     <Compile Include="Units\Unit.cs" />
     <Compile Include="ValueInput\AddressInput.cs" />
     <Compile Include="ValueInput\FilePathInput.cs" />
-    <Compile Include="Model\Notes\StatisticsNote.cs" />
+    <Compile Include="Model\Notes\Statistics.cs" />
     <Compile Include="Settings\Colours.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -458,9 +453,6 @@
     <PackageReference Include="MvvmLightLibs">
       <Version>5.4.1.1</Version>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>13.0.3</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Localization\Languages.resx">
@@ -474,10 +466,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Settings\Connections.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Connections.Designer.cs</LastGenOutput>
-    </None>
     <None Include="Settings\Features.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Features.Designer.cs</LastGenOutput>

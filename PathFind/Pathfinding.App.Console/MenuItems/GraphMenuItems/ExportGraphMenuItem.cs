@@ -10,7 +10,6 @@ using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,16 +20,16 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected readonly IMessenger messenger;
         protected readonly IInput<TPath> input;
         protected readonly IInput<int> intInput;
-        protected readonly ISerializer<PathfindingHistory> graphSerializer;
+        protected readonly ISerializer<GraphsPathfindingHistory> graphSerializer;
         protected readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
-        protected readonly PathfindingHistory history;
+        protected readonly GraphsPathfindingHistory history;
         protected readonly ILog log;
 
         protected ExportGraphMenuItem(IMessenger messenger,
             IInput<TPath> input,
             IInput<int> intInput,
-            PathfindingHistory history,
-            ISerializer<PathfindingHistory> graphSerializer,
+            GraphsPathfindingHistory history,
+            ISerializer<GraphsPathfindingHistory> graphSerializer,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
             ILog log)
         {
@@ -56,7 +55,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                     return;
                 }
                 var keys = history.Graphs.ToList();
-                var toExport = new PathfindingHistory();
+                var toExport = new GraphsPathfindingHistory();
                 string menuList = CreateMenuList(keys);
                 int index = InputIndex(menuList, keys.Count);
                 while (index != keys.Count + 1)
@@ -107,6 +106,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 .ToString();
         }
 
-        protected abstract Task ExportAsync(PathfindingHistory graph, TPath path);
+        protected abstract Task ExportAsync(GraphsPathfindingHistory graph, TPath path);
     }
 }

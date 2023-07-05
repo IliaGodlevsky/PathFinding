@@ -9,23 +9,23 @@ using System.Text;
 
 namespace Pathfinding.App.Console.Serialization
 {
-    internal sealed class GraphSerializer : ISerializer<PathfindingHistory>
+    internal sealed class PathfindingHistorySerializer : ISerializer<GraphsPathfindingHistory>
     {
         private readonly ISerializer<GraphPathfindingHistory> historySerializer;
         private readonly ISerializer<Graph2D<Vertex>> graphSerializer;
 
-        public GraphSerializer(ISerializer<GraphPathfindingHistory> historySerializer,
+        public PathfindingHistorySerializer(ISerializer<GraphPathfindingHistory> historySerializer,
             ISerializer<Graph2D<Vertex>> graphSerializer)
         {
             this.historySerializer = historySerializer;
             this.graphSerializer = graphSerializer;
         }
 
-        public PathfindingHistory DeserializeFrom(Stream stream)
+        public GraphsPathfindingHistory DeserializeFrom(Stream stream)
         {
             try
             {
-                var history = new PathfindingHistory();
+                var history = new GraphsPathfindingHistory();
                 using (var reader = new BinaryReader(stream, Encoding.Default, leaveOpen: true))
                 {
                     int count = reader.ReadInt32();
@@ -44,17 +44,17 @@ namespace Pathfinding.App.Console.Serialization
             }
         }
 
-        public void SerializeTo(PathfindingHistory item, Stream stream)
+        public void SerializeTo(GraphsPathfindingHistory item, Stream stream)
         {
             try
             {
                 using (var writer = new BinaryWriter(stream, Encoding.Default, leaveOpen: true))
                 {
                     writer.Write(item.Count);
-                    foreach (var note in item)
+                    foreach (var (Graph, History) in item)
                     {
-                        graphSerializer.SerializeTo(note.Graph, stream);
-                        historySerializer.SerializeTo(note.History, stream);
+                        graphSerializer.SerializeTo(Graph, stream);
+                        historySerializer.SerializeTo(History, stream);
                     }
                 }
             }

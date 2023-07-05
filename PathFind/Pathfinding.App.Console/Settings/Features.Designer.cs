@@ -26,99 +26,99 @@ namespace Pathfinding.App.Console.Settings {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ApplyColorEditor {
+        public bool ColorEditor {
             get {
-                return ((bool)(this["ApplyColorEditor"]));
+                return ((bool)(this["ColorEditor"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ApplyPathfindingStatistics {
+        public bool PathfindingStatistics {
             get {
-                return ((bool)(this["ApplyPathfindingStatistics"]));
+                return ((bool)(this["PathfindingStatistics"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ApplyTransitVertices {
+        public bool TransitVertices {
             get {
-                return ((bool)(this["ApplyTransitVertices"]));
+                return ((bool)(this["TransitVertices"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ApplyGraphEditor {
+        public bool GraphEditor {
             get {
-                return ((bool)(this["ApplyGraphEditor"]));
+                return ((bool)(this["GraphEditor"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ApplyGraphSharing {
+        public bool GraphSharing {
             get {
-                return ((bool)(this["ApplyGraphSharing"]));
+                return ((bool)(this["GraphSharing"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ApplyPathfindingHistory {
+        public bool PathfindingHistory {
             get {
-                return ((bool)(this["ApplyPathfindingHistory"]));
+                return ((bool)(this["PathfindingHistory"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ApplyVisualizationControl {
+        public bool VisualizationControl {
             get {
-                return ((bool)(this["ApplyVisualizationControl"]));
+                return ((bool)(this["VisualizationControl"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ApplyWaveAlgorithms {
+        public bool WaveAlgorithms {
             get {
-                return ((bool)(this["ApplyWaveAlgorithms"]));
+                return ((bool)(this["WaveAlgorithms"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ApplyGreedyAlgorithms {
+        public bool GreedyAlgorithms {
             get {
-                return ((bool)(this["ApplyGreedyAlgorithms"]));
+                return ((bool)(this["GreedyAlgorithms"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ApplyPathfindingVisualization {
+        public bool PathfindingVisualization {
             get {
-                return ((bool)(this["ApplyPathfindingVisualization"]));
+                return ((bool)(this["PathfindingVisualization"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ApplyKeysEditor {
+        public bool KeysEditor {
             get {
-                return ((bool)(this["ApplyKeysEditor"]));
+                return ((bool)(this["KeysEditor"]));
             }
         }
     }

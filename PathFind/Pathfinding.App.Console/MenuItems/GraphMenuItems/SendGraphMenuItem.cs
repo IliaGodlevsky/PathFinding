@@ -18,8 +18,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         public SendGraphMenuItem(IMessenger messenger,
             IInput<(string Host, int Port)> input,
             IInput<int> intInput,
-            PathfindingHistory history,
-            ISerializer<PathfindingHistory> graphSerializer,
+            GraphsPathfindingHistory history,
+            ISerializer<GraphsPathfindingHistory> graphSerializer,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
             ILog log)
             : base(messenger, input, intInput, history, graphSerializer, rangeBuilder, log)
@@ -29,7 +29,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         public override string ToString() => Languages.SendGraph;
 
 
-        protected override async Task ExportAsync(PathfindingHistory graph,
+        protected override async Task ExportAsync(GraphsPathfindingHistory graph,
             (string Host, int Port) path)
         {
             await graphSerializer.SerializeToNetworkAsync(graph, path);

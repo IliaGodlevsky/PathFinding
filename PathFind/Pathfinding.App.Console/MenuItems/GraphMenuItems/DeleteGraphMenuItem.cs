@@ -15,13 +15,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     [LowPriority]
     internal sealed class DeleteGraphMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
-        private readonly PathfindingHistory history;
+        private readonly GraphsPathfindingHistory history;
         private readonly IInput<int> input;
 
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
         public DeleteGraphMenuItem(IInput<int>input, 
-            PathfindingHistory history)
+            GraphsPathfindingHistory history)
         {
             this.history = history;
             this.input = input;

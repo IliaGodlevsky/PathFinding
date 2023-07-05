@@ -16,9 +16,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     internal sealed class RecieveGraphMenuItem : ImportGraphMenuItem<int>
     {
         public RecieveGraphMenuItem(IMessenger messenger,
-            IInput<int> input, PathfindingHistory history,
+            IInput<int> input, GraphsPathfindingHistory history,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
-            ISerializer<PathfindingHistory> serializer,
+            ISerializer<GraphsPathfindingHistory> serializer,
             ILog log)
             : base(messenger, input, history, rangeBuilder, serializer, log)
         {
@@ -37,7 +37,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             }
         }
 
-        protected override PathfindingHistory ImportGraph(int port)
+        protected override GraphsPathfindingHistory ImportGraph(int port)
         {
             System.Console.Write(Languages.WaitingForConnection);
             return serializer.DeserializeFromNetwork(port);

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.DataAccess
 {
-    internal class PathfindingHistory : IEnumerable<(Graph2D<Vertex> Graph, GraphPathfindingHistory History)>
+    internal class GraphsPathfindingHistory : IEnumerable<(Graph2D<Vertex> Graph, GraphPathfindingHistory History)>
     {
         private readonly Dictionary<Graph2D<Vertex>, GraphPathfindingHistory> history = new();
 

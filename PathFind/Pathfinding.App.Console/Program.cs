@@ -1,9 +1,3 @@
-﻿using Autofac;
-using Pathfinding.App.Console.DependencyInjection.Registrations;
-using Pathfinding.App.Console.MenuItems;
+﻿using Pathfinding.App.Console.DependencyInjection.Registrations;
 
-using (var container = Registry.Configure())
-{
-    var main = container.Resolve<MainUnitMenuItem>();
-    main.Execute();
-}
+Application.Run();

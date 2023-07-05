@@ -35,7 +35,6 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         public event ProcessEventHandler Interrupted;
         public event ProcessEventHandler Paused;
         public event ProcessEventHandler Resumed;
-        public event EventHandler StateDropped;
 
         private readonly AutoResetEvent pauseEvent;
 

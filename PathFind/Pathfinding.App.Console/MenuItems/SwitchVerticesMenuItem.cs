@@ -38,7 +38,7 @@ namespace Pathfinding.App.Console.MenuItems
         public virtual void Execute()
         {
             int x = 0, y = 0;
-            var key = default(ConsoleKey);
+            ConsoleKey key;
             do
             {
                 var coordinate = new Coordinate2D(x, y);

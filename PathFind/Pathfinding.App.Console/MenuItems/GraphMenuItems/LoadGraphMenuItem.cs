@@ -15,14 +15,14 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     internal sealed class LoadGraphMenuItem : ImportGraphMenuItem<string>
     {
         public LoadGraphMenuItem(IMessenger messenger,
-            IFilePathInput input, PathfindingHistory history,
+            IFilePathInput input, GraphsPathfindingHistory history,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
-            ISerializer<PathfindingHistory> serializer, ILog log)
+            ISerializer<GraphsPathfindingHistory> serializer, ILog log)
             : base(messenger, input, history, rangeBuilder, serializer, log)
         {
         }
 
-        protected override PathfindingHistory ImportGraph(string path)
+        protected override GraphsPathfindingHistory ImportGraph(string path)
         {
             return serializer.DeserializeFromFile(path);
         }

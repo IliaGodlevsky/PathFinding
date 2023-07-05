@@ -25,7 +25,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected readonly IVertexCostFactory costFactory;
         protected readonly INeighborhoodFactory neighborhoodFactory;
         protected readonly GraphAssemble assemble;
-        protected readonly PathfindingHistory history;
+        protected readonly GraphsPathfindingHistory history;
 
         protected InclusiveValueRange<int> costRange = new(9, 1);
         protected int width = 0;
@@ -37,7 +37,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             IRandom random,
             IVertexCostFactory costFactory,
             INeighborhoodFactory neighborhoodFactory,
-            PathfindingHistory history)
+            GraphsPathfindingHistory history)
         {
             this.history = history;
             this.messenger = messenger;

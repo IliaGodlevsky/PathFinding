@@ -7,8 +7,6 @@ namespace Pathfinding.App.Console.DependencyInjection
 {
     internal static class PathfindingUnits
     {
-        public static readonly Type[] AllUnits;
-        public static readonly Type[] WithoutMain;
         public static readonly Type[] WithoutVisual;
 
         public static readonly Type Main = typeof(MainUnit);
@@ -24,12 +22,11 @@ namespace Pathfinding.App.Console.DependencyInjection
 
         static PathfindingUnits()
         {
-            AllUnits = typeof(PathfindingUnits).GetFields()
+            WithoutVisual = typeof(PathfindingUnits).GetFields()
                 .Where(field => field.FieldType == typeof(Type))
                 .Select(field => (Type)field.GetValue(null))
+                .Except(Visual)
                 .ToArray();
-            WithoutMain = AllUnits.Except(Main).ToArray();
-            WithoutVisual = AllUnits.Except(Visual).ToArray();
         }
     }
 }

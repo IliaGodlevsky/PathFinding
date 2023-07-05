@@ -18,8 +18,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         public SaveGraphMenuItem(IMessenger messenger,
             IFilePathInput input,
             IInput<int> intInput,
-            PathfindingHistory history,
-            ISerializer<PathfindingHistory> graphSerializer,
+            GraphsPathfindingHistory history,
+            ISerializer<GraphsPathfindingHistory> graphSerializer,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
             ILog log)
             : base(messenger, input, intInput, history, graphSerializer, rangeBuilder, log)
@@ -29,7 +29,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         public override string ToString() => Languages.SaveGraph;
 
 
-        protected override async Task ExportAsync(PathfindingHistory info, string path)
+        protected override async Task ExportAsync(GraphsPathfindingHistory info, string path)
         {
             await graphSerializer.SerializeToFileAsync(info, path);
         }

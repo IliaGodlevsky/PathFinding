@@ -1,10 +1,15 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.AlgorithmLib.Core.Abstractions;
+using Pathfinding.AlgorithmLib.Core.Events;
+using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.Notes;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Visualization.Extensions;
 using Shared.Extensions;
@@ -16,17 +21,20 @@ namespace Pathfinding.App.Console.Units
 {
     internal sealed class PathfindingHistoryUnit : Unit, ICanRecieveMessage
     {
-        private readonly PathfindingHistory history;
+        private readonly GraphsPathfindingHistory history;
+        private readonly IPathfindingRangeBuilder<Vertex> builder;
 
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
         private bool isHistoryApplied = true;
 
         public PathfindingHistoryUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
-            PathfindingHistory history)
+            IPathfindingRangeBuilder<Vertex> builder,
+            GraphsPathfindingHistory history)
             : base(menuItems, conditioned)
         {
             this.history = history;
+            this.builder = builder;
         }
 
         private void VisualizeHistory(Guid key)
@@ -61,6 +69,35 @@ namespace Pathfinding.App.Console.Units
             hist.Algorithms.Clear();
         }
 
+        private void OnVertexVisited(object sender, PathfindingEventArgs args)
+        {
+            if (sender is PathfindingProcess process)
+            {
+                var visited = history.GetFor(graph).Visited;
+                visited.TryGetOrAddNew(process.Id).Add(args.Current);
+            }
+        }
+
+        private void PrepareForPathfinding(PathfindingProcess process)
+        {
+            var hist = history.GetFor(graph);
+            hist.Algorithms.Add(process.Id);
+            hist.Obstacles.TryGetOrAddNew(process.Id).AddRange(graph.GetObstaclesCoordinates());
+            hist.Costs.TryGetOrAddNew(process.Id).AddRange(graph.GetCosts());
+            hist.Ranges.TryGetOrAddNew(process.Id).AddRange(builder.Range.GetCoordinates());
+            process.VertexVisited += OnVertexVisited;
+        }
+
+        private void SetStatistics((PathfindingProcess Process, Statistics Note) value)
+        {
+            history.GetFor(graph).Statistics.Add(value.Process.Id, value.Note);
+        }
+
+        private void OnPathFound((PathfindingProcess Process, IGraphPath Path) value)
+        {
+            history.GetFor(graph).Paths.TryGetOrAddNew(value.Process.Id).AddRange(value.Path);
+        }
+
         private bool IsHistoryApplied() => isHistoryApplied;
 
         public void RegisterHanlders(IMessenger messenger)
@@ -69,6 +106,9 @@ namespace Pathfinding.App.Console.Units
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
             messenger.RegisterData<bool>(this, Tokens.History, SetIsApplied);
             messenger.RegisterData<Guid>(this, token, VisualizeHistory);
+            messenger.RegisterData<PathfindingProcess>(this, token, PrepareForPathfinding);
+            messenger.RegisterAlgorithmData<IGraphPath>(this, token, OnPathFound);
+            messenger.RegisterAlgorithmData<Statistics>(this, token, SetStatistics);
             messenger.Register<ClearHistoryMessage>(this, Tokens.History, ClearHistory);
         }
     }

@@ -13,12 +13,12 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
     [HighestPriority]
     internal sealed class EnterPathfindingRangeMenuItem : SwitchVerticesMenuItem
     {
-        private readonly PathfindingHistory history;
+        private readonly GraphsPathfindingHistory history;
         private readonly IPathfindingRangeBuilder<Vertex> builder;
 
         public EnterPathfindingRangeMenuItem(VertexActions actions,
             IInput<ConsoleKey> keyInput, IPathfindingRangeBuilder<Vertex> builder,
-            PathfindingHistory history)
+            GraphsPathfindingHistory history)
             : base(actions, keyInput)
         {
             this.history = history;

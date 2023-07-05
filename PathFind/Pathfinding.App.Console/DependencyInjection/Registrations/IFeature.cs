@@ -2,8 +2,8 @@
 
 namespace Pathfinding.App.Console.DependencyInjection.Registrations
 {
-    internal interface IRegistry
+    internal interface IFeature
     {
-        void Configure(ContainerBuilder builder);
+        void Apply(ContainerBuilder builder);
     }
 }

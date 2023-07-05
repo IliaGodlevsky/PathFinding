@@ -16,7 +16,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
 
         private InclusiveValueRange<TimeSpan> DelayRange { get; }
 
-        private bool IsVisualizationApplied { get; set; }
+        private bool IsVisualizationApplied { get; set; } = true;
 
         public EnterAnimationDelayMenuItem(IInput<TimeSpan> spanInput, IMessenger messenger)
         {
