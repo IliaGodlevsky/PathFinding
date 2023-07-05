@@ -214,7 +214,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        // !!!Do not change names of the classes, that are marked with [Optional] attribute.
+        // !!! Do not change names of the classes, that are marked with [Optional] attribute.
         // They are mapped with properties in Features.settings file
         [Optional]
         private sealed class GraphSharing : IFeature
