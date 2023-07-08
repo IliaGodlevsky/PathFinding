@@ -90,7 +90,7 @@ namespace Pathfinding.App.Console.Units
 
         private void SetStatistics((PathfindingProcess Process, Statistics Note) value)
         {
-            history.GetFor(graph).Statistics.Add(value.Process.Id, value.Note);
+            history.GetFor(graph).Statistics[value.Process.Id] = value.Note;
         }
 
         private void OnPathFound((PathfindingProcess Process, IGraphPath Path) value)

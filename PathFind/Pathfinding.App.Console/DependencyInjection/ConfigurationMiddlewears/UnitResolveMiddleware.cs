@@ -10,18 +10,14 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
     internal sealed class UnitResolveMiddleware : IResolveMiddleware
     {
         private readonly string metadataKey;
-        private readonly IReadOnlyDictionary<Type, IUnitMiddleware> middlewares;
+        private readonly IReadOnlyDictionary<Type, IParametresFactory> middlewares;
 
         public PipelinePhase Phase => PipelinePhase.ParameterSelection;
 
-        public UnitResolveMiddleware(string metadataKey)
+        public UnitResolveMiddleware(string metadataKey, IParametresFactory middleware, params Type[] types)
         {
             this.metadataKey = metadataKey;
-            middlewares = WithoutVisual
-                .ToDictionary(unit => unit, unit => (IUnitMiddleware)new UnitMiddleware())
-                .Append(new(Visual, new VisualizationUnitResolveMiddleware(new UnitMiddleware())))
-                .ToDictionary()
-                .AsReadOnly();
+            middlewares = types.ToDictionary(unit => unit, unit => middleware).AsReadOnly();
         }
 
         public void Execute(ResolveRequestContext context, Action<ResolveRequestContext> next)

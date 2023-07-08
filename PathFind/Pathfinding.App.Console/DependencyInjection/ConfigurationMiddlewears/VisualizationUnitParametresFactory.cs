@@ -8,18 +8,11 @@ using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
 
 namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 {
-    internal sealed class VisualizationUnitResolveMiddleware : IUnitMiddleware
+    internal sealed class VisualizationUnitParametresFactory : UnitParamtresFactory
     {
-        private readonly IUnitMiddleware middleware;
-
-        public VisualizationUnitResolveMiddleware(IUnitMiddleware middleware)
+        public override IEnumerable<Parameter> GetParameters(IComponentContext context, Type key)
         {
-            this.middleware = middleware;
-        }
-
-        public IEnumerable<Parameter> GetParameters(IComponentContext context, Type key)
-        {
-            return middleware.GetParameters(context, key).Concat(GetParameters(context));
+            return base.GetParameters(context, key).Concat(GetParameters(context));
         }
 
         private static IReadOnlyCollection<(string, TValue)> Resolve<TValue>(IComponentContext context)

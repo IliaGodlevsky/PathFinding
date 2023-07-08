@@ -7,6 +7,7 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.Notes;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
@@ -94,8 +95,11 @@ namespace Pathfinding.App.Console.Units
 
         private void PrepareForPathfinding(PathfindingProcess algorithm)
         {
-            messenger.SendData(algorithm.ToString(), Tokens.AppLayout);
+            string algorithmName = algorithm.ToString();
+            messenger.SendData(algorithmName, Tokens.AppLayout);
             messenger.SendData(algorithm, Tokens.Visualization, Tokens.Statistics, Tokens.History);
+            var initStatistics = new Statistics { AlgorithmName = algorithmName };
+            messenger.SendAlgorithmData(algorithm, initStatistics, Tokens.History);
         }
 
         public void RegisterHanlders(IMessenger messenger)

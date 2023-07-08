@@ -7,9 +7,9 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 {
-    internal sealed class UnitMiddleware : IUnitMiddleware
+    internal class UnitParamtresFactory : IParametresFactory
     {
-        public IEnumerable<Parameter> GetParameters(IComponentContext context, Type key)
+        public virtual IEnumerable<Parameter> GetParameters(IComponentContext context, Type key)
         {
             yield return GetParameter<IMenuItem>(Resolve<IMenuItem>(context, key));
             yield return GetParameter<IConditionedMenuItem>(Resolve<IConditionedMenuItem>(context, key));
