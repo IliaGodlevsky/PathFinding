@@ -36,7 +36,7 @@ namespace Shared.Primitives.ValueRange
 
         public override string ToString()
         {
-            return $"[{LowerValueOfRange}...{UpperValueOfRange}]";
+            return $"[{LowerValueOfRange},{UpperValueOfRange}]";
         }
     }
 }

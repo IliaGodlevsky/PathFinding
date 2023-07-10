@@ -15,5 +15,6 @@ namespace Pathfinding.App.Console.DependencyInjection
         public static readonly Type Colors = typeof(ColorsUnit);
         public static readonly Type Editor = typeof(GraphEditorUnit);
         public static readonly Type KeysUnit = typeof(KeysUnit);
+        public static readonly Type Algorithms = typeof(AlgorithmChooseUnit);
     }
 }

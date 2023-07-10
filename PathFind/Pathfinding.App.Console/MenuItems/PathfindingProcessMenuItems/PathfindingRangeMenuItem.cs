@@ -9,8 +9,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     [HighPriority]
     internal class PathfindingRangeMenuItem : UnitDisplayMenuItem<PathfindingRangeUnit>
     {
-        public PathfindingRangeMenuItem(IViewFactory viewFactory, PathfindingRangeUnit viewModel, ILog log)
-            : base(viewFactory, viewModel, log)
+        public PathfindingRangeMenuItem(IInput<int> input, PathfindingRangeUnit viewModel, ILog log) 
+            : base(input, viewModel, log)
         {
 
         }

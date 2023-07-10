@@ -14,8 +14,8 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
 
         private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
 
-        protected MainMenuItem(IViewFactory viewFactory, TUnit viewModel, IMessenger messenger, ILog log)
-            : base(viewFactory, viewModel, log)
+        protected MainMenuItem(IInput<int> input, TUnit viewModel, IMessenger messenger, ILog log)
+            : base(input, viewModel, log)
         {
             this.messenger = messenger;
         }

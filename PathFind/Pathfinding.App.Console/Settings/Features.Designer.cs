@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using Pathfinding.App.Console.DependencyInjection.Attributes;
+
 namespace Pathfinding.App.Console.Settings {
     
     
@@ -22,7 +24,8 @@ namespace Pathfinding.App.Console.Settings {
                 return defaultInstance;
             }
         }
-        
+
+        [Feature]
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
@@ -31,7 +34,8 @@ namespace Pathfinding.App.Console.Settings {
                 return ((bool)(this["ColorEditor"]));
             }
         }
-        
+
+        [Feature]
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
@@ -40,7 +44,8 @@ namespace Pathfinding.App.Console.Settings {
                 return ((bool)(this["PathfindingStatistics"]));
             }
         }
-        
+
+        [Feature]
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
@@ -49,7 +54,8 @@ namespace Pathfinding.App.Console.Settings {
                 return ((bool)(this["TransitVertices"]));
             }
         }
-        
+
+        [Feature]
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
@@ -58,7 +64,8 @@ namespace Pathfinding.App.Console.Settings {
                 return ((bool)(this["GraphEditor"]));
             }
         }
-        
+
+        [Feature]
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
@@ -67,7 +74,8 @@ namespace Pathfinding.App.Console.Settings {
                 return ((bool)(this["GraphSharing"]));
             }
         }
-        
+
+        [Feature]
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
@@ -76,7 +84,8 @@ namespace Pathfinding.App.Console.Settings {
                 return ((bool)(this["PathfindingHistory"]));
             }
         }
-        
+
+        [Feature]
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
@@ -85,7 +94,8 @@ namespace Pathfinding.App.Console.Settings {
                 return ((bool)(this["VisualizationControl"]));
             }
         }
-        
+
+        [Feature]
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
@@ -94,7 +104,8 @@ namespace Pathfinding.App.Console.Settings {
                 return ((bool)(this["WaveAlgorithms"]));
             }
         }
-        
+
+        [Feature]
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
@@ -103,7 +114,8 @@ namespace Pathfinding.App.Console.Settings {
                 return ((bool)(this["GreedyAlgorithms"]));
             }
         }
-        
+
+        [Feature]
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
@@ -112,7 +124,8 @@ namespace Pathfinding.App.Console.Settings {
                 return ((bool)(this["PathfindingVisualization"]));
             }
         }
-        
+
+        [Feature]
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]

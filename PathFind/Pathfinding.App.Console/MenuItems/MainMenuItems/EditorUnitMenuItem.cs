@@ -10,9 +10,9 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
     [MediumPriority]
     internal sealed class EditorUnitMenuItem : MainMenuItem<GraphEditorUnit>
     {
-        public EditorUnitMenuItem(IViewFactory viewFactory, GraphEditorUnit viewModel,
+        public EditorUnitMenuItem(IInput<int> input, GraphEditorUnit viewModel,
             IMessenger messenger, ILog log)
-            : base(viewFactory, viewModel, messenger, log)
+            : base(input, viewModel, messenger, log)
         {
 
         }

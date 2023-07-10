@@ -104,7 +104,7 @@ namespace Pathfinding.App.Console.Units
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterData<IAlgorithmFactory<PathfindingProcess>>(this, Tokens.Pathfinding, FindPath);
+            messenger.Register<IAlgorithmFactory<PathfindingProcess>>(this, Tokens.Pathfinding, true, FindPath);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
             messenger.Register<ClearColorsMessage>(this, _ => ClearColors());
         }

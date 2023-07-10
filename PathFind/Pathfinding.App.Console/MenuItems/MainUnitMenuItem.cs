@@ -6,8 +6,8 @@ namespace Pathfinding.App.Console.MenuItems
 {
     internal sealed class MainUnitMenuItem : UnitDisplayMenuItem<MainUnit>
     {
-        public MainUnitMenuItem(IViewFactory viewFactory, MainUnit viewModel, ILog log)
-            : base(viewFactory, viewModel, log)
+        public MainUnitMenuItem(IInput<int> input, MainUnit viewModel, ILog log) 
+            : base(input, viewModel, log)
         {
 
         }

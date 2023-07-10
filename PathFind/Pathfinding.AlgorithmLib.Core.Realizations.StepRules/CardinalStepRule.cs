@@ -25,5 +25,10 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.StepRules
                 ? cost
                 : Math.Round(stepCostIncreaseFactor * cost);
         }
+
+        public override string ToString()
+        {
+            return "Cardinal step rule";
+        }
     }
 }

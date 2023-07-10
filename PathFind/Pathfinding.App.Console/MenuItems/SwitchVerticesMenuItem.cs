@@ -78,7 +78,7 @@ namespace Pathfinding.App.Console.MenuItems
             yRange = new InclusiveValueRange<int>(graph.Length - 1);
         }
 
-        public void RegisterHanlders(IMessenger messenger)
+        public virtual void RegisterHanlders(IMessenger messenger)
         {
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }

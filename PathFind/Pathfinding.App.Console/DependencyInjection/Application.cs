@@ -100,7 +100,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 .Where(member => Attribute.IsDefined(member, typeof(OptionalAttribute)))
                 .ToDictionary(type => type.Name).AsReadOnly();
             var applied = Features.Default.GetType().GetProperties()
-                .Where(prop => Attribute.IsDefined(prop, typeof(ApplicationScopedSettingAttribute)))
+                .Where(prop => Attribute.IsDefined(prop, typeof(FeatureAttribute)))
                 .Select(prop => (prop.Name, Value: prop.GetValue(Features.Default)))
                 .Where(item => item.Value.Equals(true) && optional.ContainsKey(item.Name))
                 .Select(item => (IFeature)Activator.CreateInstance(optional[item.Name]))
@@ -137,9 +137,10 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterVisualizedVertices<VisualizedObstacle>(VisualizedType.Obstacle);
                 builder.RegisterVisualizedVertices<VisualizedCrossedPath>(VisualizedType.Crossed);
 
+                builder.RegisterUnit<AlgorithmChooseUnit, ExitMenuItem>(new UnitParamtresFactory());
+                builder.RegisterType<AlgorithmsUnitMenuItem>().Keyed<IConditionedMenuItem>(Process).SingleInstance();
+
                 builder.RegisterType<PathfindingRangeMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
-                builder.RegisterType<PathfindingAlgorithmMenuItem>().Keyed<IConditionedMenuItem>(Process)
-                    .SingleInstance().ConfigurePipeline(p => p.Use(new PathfindingItemResolveMiddleware(Group, Order)));
                 builder.RegisterType<ClearColorsMenuItem>().Keyed<IConditionedMenuItem>(Process).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ClearGraphMenuItem>().Keyed<IConditionedMenuItem>(Process).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ClearPathfindingRangeMenuItem>().Keyed<IConditionedMenuItem>(Range).SingleInstance();
@@ -155,8 +156,6 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<EnterCostRangeMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
                 builder.RegisterType<EnterGraphParametresMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
                 builder.RegisterType<EnterObstaclePercentMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
-
-                builder.RegisterType<ViewFactory>().As<IViewFactory>().SingleInstance();
 
                 builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
                 builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
@@ -187,7 +186,12 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
 
                 builder.RegisterType<DefaultStepRule>().As<IStepRule>().SingleInstance();
+                builder.RegisterType<CardinalStepRule>().As<IStepRule>().SingleInstance();
+                builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
+
                 builder.RegisterType<EuclidianDistance>().As<IHeuristic>().SingleInstance();
+                builder.RegisterType<ManhattanDistance>().As<IHeuristic>().SingleInstance();
+                builder.RegisterType<ChebyshevDistance>().As<IHeuristic>().SingleInstance();
             }
         }
 
@@ -306,10 +310,10 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterType<DijkstraAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, WaveGroup).WithMetadata(Order, 1);
-                builder.RegisterType<RandomAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, WaveGroup).WithMetadata(Order, 4);
-                builder.RegisterType<AStarAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, WaveGroup).WithMetadata(Order, 2);
-                builder.RegisterType<IDAStarAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, WaveGroup).WithMetadata(Order, 3);
+                builder.RegisterType<DijkstraAlgorithmMenuItem>().Keyed<IMenuItem>(Algorithms).SingleInstance();
+                builder.RegisterType<AStarAlgorithmMenuItem>().Keyed<IMenuItem>(Algorithms).SingleInstance();
+                builder.RegisterType<IDAStarAlgorithmMenuItem>().Keyed<IMenuItem>(Algorithms).SingleInstance();
+                builder.RegisterType<RandomAlgorithmMenuItem>().Keyed<IMenuItem>(Algorithms).SingleInstance();
             }
         }
 

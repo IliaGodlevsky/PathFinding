@@ -9,7 +9,7 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
     [LowPriority]
     internal sealed class KeysUnitMenuItem : UnitDisplayMenuItem<KeysUnit>
     {
-        public KeysUnitMenuItem(IViewFactory viewFactory, KeysUnit unit, ILog log)
+        public KeysUnitMenuItem(IInput<int> viewFactory, KeysUnit unit, ILog log)
             : base(viewFactory, unit, log)
         {
         }

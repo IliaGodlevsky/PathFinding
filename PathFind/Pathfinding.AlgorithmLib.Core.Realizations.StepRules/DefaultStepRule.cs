@@ -11,5 +11,10 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.StepRules
         {
             return neighbour.Cost.CurrentCost;
         }
+
+        public override string ToString()
+        {
+            return "Default step rule";
+        }
     }
 }

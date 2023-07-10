@@ -9,8 +9,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     [MediumPriority]
     internal sealed class VisualizationMenuItem : UnitDisplayMenuItem<PathfindingVisualizationUnit>
     {
-        public VisualizationMenuItem(IViewFactory viewFactory,
-            PathfindingVisualizationUnit viewModel, ILog log) : base(viewFactory, viewModel, log)
+        public VisualizationMenuItem(IInput<int> input, PathfindingVisualizationUnit viewModel, ILog log) 
+            : base(input, viewModel, log)
         {
 
         }

@@ -17,11 +17,13 @@ namespace Pathfinding.AlgorithmLib.Factory
     {
         private readonly IStepRule stepRule;
         private readonly IHeuristic heuristic;
+        private readonly int stashPercent;
 
-        public IDAStarAlgorithmFactory(IStepRule stepRule, IHeuristic heuristic)
+        public IDAStarAlgorithmFactory(IStepRule stepRule, IHeuristic heuristic, int stashPercent = 4)
         {
             this.heuristic = heuristic;
             this.stepRule = stepRule;
+            this.stashPercent = stashPercent;
         }
 
         public IDAStarAlgorithmFactory(IStepRule stepRule)
@@ -44,7 +46,7 @@ namespace Pathfinding.AlgorithmLib.Factory
 
         public IDAStarAlgorithm Create(IEnumerable<IVertex> pathfindingRange)
         {
-            return new IDAStarAlgorithm(pathfindingRange, stepRule, heuristic);
+            return new IDAStarAlgorithm(pathfindingRange, stepRule, heuristic, stashPercent);
         }
 
         public override string ToString()

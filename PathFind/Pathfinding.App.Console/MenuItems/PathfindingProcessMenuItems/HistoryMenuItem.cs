@@ -9,8 +9,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     [MediumPriority]
     internal sealed class HistoryMenuItem : UnitDisplayMenuItem<PathfindingHistoryUnit>
     {
-        public HistoryMenuItem(IViewFactory viewFactory, PathfindingHistoryUnit viewModel, ILog log)
-            : base(viewFactory, viewModel, log)
+        public HistoryMenuItem(IInput<int> input, PathfindingHistoryUnit viewModel, ILog log) 
+            : base(input, viewModel, log)
         {
         }
 
