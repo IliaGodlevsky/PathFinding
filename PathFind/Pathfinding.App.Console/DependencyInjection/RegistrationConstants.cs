@@ -12,6 +12,8 @@
         public const string ChangeCost = "Cost";
         public const string Reverse = "Reverse";
         public const string VisualizedTypeKey = "VisualType";
+        public const string PathfindingAlgorithms = "Algorithms";
+        public const string Neighbourhood = "Neighbourhoods";
 
         public const string Group = "Group";
         public const int GreedGroup = 0;

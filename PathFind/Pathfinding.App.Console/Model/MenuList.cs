@@ -14,6 +14,8 @@ namespace Pathfinding.App.Console.Model
         private readonly string NewLine = "\n";
         private readonly string Space = " ";
         private readonly string MenuFormat = "{0}. {1}";
+        private readonly string HeaderFormat = "{0}  {1}\n";
+        private readonly string header;
 
         private readonly int menuItemsCount;
         private readonly int columns;
@@ -23,8 +25,10 @@ namespace Pathfinding.App.Console.Model
         private readonly Lazy<string> menuList;
         private readonly Lazy<int> longestNameLength;
 
-        public MenuList(IEnumerable<string> menuItemsNames, int columns = 2)
+        public MenuList(IEnumerable<string> menuItemsNames, int columns = 2, 
+            string header = null)
         {
+            this.header = header;
             this.menuItemsNames = menuItemsNames.ToArray();
             this.menuItemsCount = this.menuItemsNames.Length;
             this.menuItemNumberPad = menuItemsCount.GetDigitsNumber();
@@ -54,6 +58,11 @@ namespace Pathfinding.App.Console.Model
         private string CreateMenu()
         {
             var stringBuilder = new StringBuilder();
+            if (!string.IsNullOrEmpty(header))
+            {
+                string padding = string.Empty.PadLeft(menuItemNumberPad);
+                stringBuilder.AppendFormat(HeaderFormat, padding, header);
+            }
 
             for (int index = 0; index < menuItemsCount; index++)
             {

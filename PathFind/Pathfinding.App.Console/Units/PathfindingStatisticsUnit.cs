@@ -2,6 +2,7 @@
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Core.Interface;
+using Pathfinding.AlgorithmLib.Core.Interface.Extensions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
@@ -18,6 +19,7 @@ namespace Pathfinding.App.Console.Units
 
         private bool isStatisticsApplied = true;
         private int visited = 0;
+        private Statistics statistics = Statistics.Empty;
 
         public PathfindingStatisticsUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
@@ -31,6 +33,7 @@ namespace Pathfinding.App.Console.Units
         {
             var token = Tokens.Bind(IsStatisticsApplied, Tokens.Statistics);
             messenger.RegisterData<PathfindingProcess>(this, token, SubscribeOnStatistics);
+            messenger.RegisterData<Statistics>(this, Tokens.Statistics, SetStatistics);
             messenger.RegisterAlgorithmData<IGraphPath>(this, Tokens.Statistics, OnPathFound);
             messenger.RegisterData<bool>(this, Tokens.Statistics, SetIsApplied);
         }
@@ -52,16 +55,23 @@ namespace Pathfinding.App.Console.Units
             isStatisticsApplied = isApplied;
         }
 
+        private void SetStatistics(Statistics stats)
+        {
+            statistics = stats;
+        }
+
         private void OnPathFound((PathfindingProcess Process, IGraphPath Path) value)
         {
-            var note = GetStatistics(value.Process);
+            var note = GetStatistics(value.Path);
+            note.ResultStatus = AlgorithmResultStatus.Succeeded;
+            if (value.Path.IsEmpty())
+            {
+                note.ResultStatus = AlgorithmResultStatus.Failed;
+            }
+            visited = 0;
+            statistics = Statistics.Empty;
             if (IsStatisticsApplied())
             {
-                if (value.Path.Count > 0)
-                {
-                    note = GetStatistics(value.Path, value.Process);
-                }
-                visited = 0;
                 messenger.SendData(note.ToString(), Tokens.AppLayout);
             }
             messenger.SendAlgorithmData(value.Process, note, Tokens.History);
@@ -70,25 +80,33 @@ namespace Pathfinding.App.Console.Units
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
         {
             visited++;
-            var statistics = GetStatistics((PathfindingProcess)sender);
-            messenger.SendData(statistics.ToString(), Tokens.AppLayout);
+            messenger.SendData(GetStatistics().ToString(), Tokens.AppLayout);
         }
 
-        private Statistics GetStatistics(IGraphPath path, PathfindingProcess algorithm)
+        private Statistics GetStatistics(IGraphPath path)
         {
-            return new()
+            var stats = new Statistics();
+            stats.Algorithm = statistics.Algorithm;
+            stats.ResultStatus = statistics.ResultStatus;
+            if (IsStatisticsApplied())
             {
-                AlgorithmName = algorithm.ToString(),
-                Elapsed = timer.Elapsed,
-                VisitedVertices = visited,
-                Steps = path.Count,
-                Cost = path.Cost
-            };
+                stats.StepRule = statistics.StepRule;
+                stats.Heuristics = statistics.Heuristics;
+                stats.Elapsed = timer.Elapsed;
+                stats.Visited = visited;
+                stats.Spread = statistics.Spread;
+            }
+            if (!path.IsEmpty() && IsStatisticsApplied())
+            {
+                stats.Steps = path.Count;
+                stats.Cost = path.Cost;
+            }
+            return stats;
         }
 
-        private Statistics GetStatistics(PathfindingProcess algorithm)
+        private Statistics GetStatistics()
         {
-            return GetStatistics(NullGraphPath.Instance, algorithm);
+            return GetStatistics(NullGraphPath.Instance);
         }
     }
 }

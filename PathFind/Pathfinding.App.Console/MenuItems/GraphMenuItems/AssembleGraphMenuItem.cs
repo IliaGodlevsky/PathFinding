@@ -16,9 +16,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             IGraphAssemble<Graph2D<Vertex>, Vertex> assemble,
             IRandom random,
             IVertexCostFactory costFactory,
-            INeighborhoodFactory neighborhoodFactory,
             GraphsPathfindingHistory history)
-            : base(messenger, assemble, random, costFactory, neighborhoodFactory, history)
+            : base(messenger, assemble, random, costFactory, history)
         {
 
         }

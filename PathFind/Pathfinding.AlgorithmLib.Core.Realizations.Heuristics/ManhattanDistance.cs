@@ -10,10 +10,5 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Heuristics
         {
             return Math.Abs(first - second);
         }
-
-        public override string ToString()
-        {
-            return "Manhattan distance";
-        }
     }
 }

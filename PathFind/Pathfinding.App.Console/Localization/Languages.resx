@@ -144,6 +144,12 @@
   <data name="AssembleGraph" xml:space="preserve">
     <value>Assemble graph</value>
   </data>
+  <data name="AStarAlgorithm" xml:space="preserve">
+    <value>A*</value>
+  </data>
+  <data name="AStarLeeAlgorithm" xml:space="preserve">
+    <value>A* lee</value>
+  </data>
   <data name="BadInputMsg" xml:space="preserve">
     <value>Bad value input. Try again: </value>
   </data>
@@ -171,14 +177,29 @@
   <data name="ChangeRangeColors" xml:space="preserve">
     <value>Change range colors</value>
   </data>
+  <data name="Chebyshev" xml:space="preserve">
+    <value>Chebyshev</value>
+  </data>
   <data name="ChooseColor" xml:space="preserve">
     <value>Choose color: </value>
   </data>
   <data name="ChooseGraph" xml:space="preserve">
     <value>Choose graph</value>
   </data>
+  <data name="ChooseHeuristicMsg" xml:space="preserve">
+    <value>Choose heuristic: </value>
+  </data>
   <data name="ChooseKeyMsg" xml:space="preserve">
     <value>{0}Choose key to change: </value>
+  </data>
+  <data name="ChooseNeighbourhood" xml:space="preserve">
+    <value>Choose neighbourhood</value>
+  </data>
+  <data name="ChooseNeighbourhoodMsg" xml:space="preserve">
+    <value>Choose neighbourhood: </value>
+  </data>
+  <data name="ChooseStepRuleMsg" xml:space="preserve">
+    <value>Choose step rule: </value>
   </data>
   <data name="ClearColors" xml:space="preserve">
     <value>Clear vertices colors</value>
@@ -194,6 +215,12 @@
   </data>
   <data name="ColorsUnitMenuItem" xml:space="preserve">
     <value>Colors</value>
+  </data>
+  <data name="Cost" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="CostGreedyAlgorithm" xml:space="preserve">
+    <value>Cost greedy</value>
   </data>
   <data name="CrossedPathColor" xml:space="preserve">
     <value>Crossed path color</value>
@@ -228,11 +255,17 @@
   <data name="DecreaseCost" xml:space="preserve">
     <value>Decrease cost key</value>
   </data>
+  <data name="Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
   <data name="DelayTimeInputMsg" xml:space="preserve">
     <value>Input animation speed delay time (milliseconds): </value>
   </data>
   <data name="DeleteGraph" xml:space="preserve">
     <value>Delete graph</value>
+  </data>
+  <data name="DijkstraAlgorithm" xml:space="preserve">
+    <value>Dijkstra</value>
   </data>
   <data name="Editor" xml:space="preserve">
     <value>Editor</value>
@@ -249,6 +282,9 @@
   <data name="EnterPathfindingRange" xml:space="preserve">
     <value>Enter pathfinding range</value>
   </data>
+  <data name="Euclidian" xml:space="preserve">
+    <value>Euclidian</value>
+  </data>
   <data name="ExcludeFromRange" xml:space="preserve">
     <value>Exclude from range key</value>
   </data>
@@ -257,6 +293,9 @@
   </data>
   <data name="ExitMsg" xml:space="preserve">
     <value>Do you want to exit {0}?: </value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Failed</value>
   </data>
   <data name="FindPath" xml:space="preserve">
     <value>Find path</value>
@@ -279,8 +318,14 @@
   <data name="Green" xml:space="preserve">
     <value>Green</value>
   </data>
+  <data name="Heuristics" xml:space="preserve">
+    <value>Heuristic</value>
+  </data>
   <data name="History" xml:space="preserve">
     <value>Pathfinding history</value>
+  </data>
+  <data name="IDAStarAlgorithm" xml:space="preserve">
+    <value>IDA*</value>
   </data>
   <data name="IncludeInRange" xml:space="preserve">
     <value>Include in range key</value>
@@ -315,14 +360,23 @@
   <data name="InterruptAlgorithm" xml:space="preserve">
     <value>Interrupt algorithm key</value>
   </data>
+  <data name="Interrupted" xml:space="preserve">
+    <value>Interrupted</value>
+  </data>
   <data name="KeysUnit" xml:space="preserve">
     <value>Keys</value>
+  </data>
+  <data name="Landscape" xml:space="preserve">
+    <value>Landscape</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
   </data>
   <data name="LanguageMsg" xml:space="preserve">
     <value>Input language: </value>
+  </data>
+  <data name="LeeAlgorithm" xml:space="preserve">
+    <value>Lee</value>
   </data>
   <data name="LengthDimensionName" xml:space="preserve">
     <value>Length</value>
@@ -333,14 +387,26 @@
   <data name="Magenta" xml:space="preserve">
     <value>Magenta</value>
   </data>
+  <data name="Manhattan" xml:space="preserve">
+    <value>Manhattan</value>
+  </data>
   <data name="MarkToReplace" xml:space="preserve">
     <value>Mark to replace key</value>
   </data>
   <data name="MenuOptionChoiceMsg" xml:space="preserve">
     <value>Choose menu option: </value>
   </data>
+  <data name="MooreNeighbourhood" xml:space="preserve">
+    <value>Moore neighbourhood</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Algorithm</value>
+  </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
+  </data>
+  <data name="NoItemsMsg" xml:space="preserve">
+    <value>No items to choose</value>
   </data>
   <data name="ObstacleColor" xml:space="preserve">
     <value>Obstacle color</value>
@@ -363,14 +429,14 @@
   <data name="PathfindingRange" xml:space="preserve">
     <value>Pathfinding range</value>
   </data>
-  <data name="PathfindingResultFormat" xml:space="preserve">
-    <value>{0} Steps: {1} Path cost: {2}</value>
-  </data>
   <data name="PauseAlgorithm" xml:space="preserve">
     <value>Pause algorithm key</value>
   </data>
   <data name="Quit" xml:space="preserve">
     <value>Quit</value>
+  </data>
+  <data name="RandomAlgorithm" xml:space="preserve">
+    <value>Random</value>
   </data>
   <data name="RangeLowerValueInputMsg" xml:space="preserve">
     <value>Input lower value of range: </value>
@@ -408,6 +474,9 @@
   <data name="ReverseVertices" xml:space="preserve">
     <value>Reverse vertices</value>
   </data>
+  <data name="Rule" xml:space="preserve">
+    <value>Rule</value>
+  </data>
   <data name="SaveGraph" xml:space="preserve">
     <value>Save graph</value>
   </data>
@@ -432,20 +501,38 @@
   <data name="SpeedUp" xml:space="preserve">
     <value>Pathfinding speed up key</value>
   </data>
+  <data name="Spread" xml:space="preserve">
+    <value>Spread</value>
+  </data>
+  <data name="SpreadLevelMsg" xml:space="preserve">
+    <value>Enter spread level {0}: </value>
+  </data>
+  <data name="Started" xml:space="preserve">
+    <value>Started</value>
+  </data>
   <data name="Statistics" xml:space="preserve">
     <value>Pathfinding statistics</value>
   </data>
-  <data name="StatisticsFormat" xml:space="preserve">
-    <value>{0}  Time: {1}     Visited: {2}</value>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
   </data>
   <data name="StepByStepPathfinding" xml:space="preserve">
     <value>Step by step pathfinding key</value>
   </data>
+  <data name="Steps" xml:space="preserve">
+    <value>Steps</value>
+  </data>
   <data name="SubmitSmooth" xml:space="preserve">
     <value>Submit smooth key</value>
   </data>
+  <data name="Succeeded" xml:space="preserve">
+    <value>Succeeded</value>
+  </data>
   <data name="TargetColor" xml:space="preserve">
     <value>Target color</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Time</value>
   </data>
   <data name="TransitColor" xml:space="preserve">
     <value>Transit color</value>
@@ -468,11 +555,17 @@
   <data name="VertexUp" xml:space="preserve">
     <value>Vertex up key</value>
   </data>
+  <data name="Visited" xml:space="preserve">
+    <value>Visited</value>
+  </data>
   <data name="VisitedColor" xml:space="preserve">
     <value>Visited color</value>
   </data>
   <data name="Visual" xml:space="preserve">
     <value>Pathfinding visualization</value>
+  </data>
+  <data name="VonNeumannNeighbourhood" xml:space="preserve">
+    <value>Von Neumann neighbourhood</value>
   </data>
   <data name="WaitingForConnection" xml:space="preserve">
     <value>Waiting for connection...</value>

@@ -4,7 +4,7 @@ using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions;
 using Pathfinding.App.Console.Settings;
-using Pathfinding.GraphLib.Factory.Interface;
+using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
 using System;
 
 namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
@@ -12,17 +12,17 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
     [MediumPriority]
     internal sealed class NeighbourhoodMenuItem : SwitchVerticesMenuItem
     {
-        public NeighbourhoodMenuItem(IInput<ConsoleKey> keyInput, 
-            INeighborhoodFactory factory) 
-            : base(GetActions(factory), keyInput)
+        public NeighbourhoodMenuItem(IInput<ConsoleKey> keyInput) 
+            : base(GetActions(), keyInput)
         {
 
         }
 
-        private static VertexActions GetActions(INeighborhoodFactory factory)
+        private static VertexActions GetActions()
         {
             var activeVertex = new ActiveVertex();
             var exitAction = new ExitAction(activeVertex);
+            var factory = new MooreNeighborhoodFactory();
             var neighbourhoodAction = new NeighbourhoodAction(activeVertex, factory);
             var actions = new (string, IVertexAction)[]
             {

@@ -112,5 +112,14 @@ namespace Pathfinding.App.Console.Settings {
                 return ((double)(this["VisualizationDelayMinValue"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("mm\\:ss\\.fff")]
+        public string TimeFormat {
+            get {
+                return ((string)(this["TimeFormat"]));
+            }
+        }
     }
 }

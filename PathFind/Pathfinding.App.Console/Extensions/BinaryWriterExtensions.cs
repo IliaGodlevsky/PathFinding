@@ -30,11 +30,42 @@ namespace Pathfinding.App.Console.Extensions
 
         private static void WriteStatistics(this BinaryWriter writer, Statistics statistics)
         {
-            writer.Write(statistics.AlgorithmName);
-            writer.Write(statistics.Elapsed.TotalMilliseconds);
-            writer.Write(statistics.VisitedVertices);
-            writer.Write(statistics.Cost);
-            writer.Write(statistics.Steps);
+            writer.Write((int)statistics.Algorithm);
+            writer.Write((int)statistics.ResultStatus);
+            writer.WriteNullableTimeSpan(statistics.Elapsed);
+            writer.WriteNullableInt32(statistics.Visited);
+            writer.WriteNullableDouble(statistics.Cost);
+            writer.WriteNullableInt32(statistics.Steps);
+            writer.WriteNullableInt32((int?)statistics.StepRule);
+            writer.WriteNullableInt32((int?)statistics.Heuristics);
+            writer.WriteNullableInt32(statistics.Spread);
+        }
+
+        private static void WriteNullableInt32(this BinaryWriter writer, int? value)
+        {
+            writer.Write(value.HasValue);
+            if (value.HasValue)
+            {
+                writer.Write(value.Value);
+            }
+        }
+
+        private static void WriteNullableTimeSpan(this BinaryWriter writer, TimeSpan? value)
+        {
+            writer.Write(value.HasValue);
+            if (value.HasValue)
+            {
+                writer.Write(value.Value.TotalMilliseconds);
+            }
+        }
+
+        private static void WriteNullableDouble(this BinaryWriter writer, double? value)
+        {
+            writer.Write(value.HasValue);
+            if (value.HasValue)
+            {
+                writer.Write(value.Value);
+            }
         }
 
         private static void WriteGuid(this BinaryWriter writer, Guid guid)

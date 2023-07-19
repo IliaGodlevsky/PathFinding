@@ -52,6 +52,7 @@ namespace Pathfinding.App.Console.Loggers
 
         private void ShowMessage(string message, ConsoleColor color)
         {
+            AppLayout.SetCursorPositionUnderGraphField();
             using (Cursor.UseCurrentPositionWithClean())
             {
                 using (Cursor.UseColor(color))

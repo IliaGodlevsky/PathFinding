@@ -5,7 +5,6 @@ using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
-using Pathfinding.AlgorithmLib.Factory;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.DependencyInjection.Attributes;
@@ -20,11 +19,13 @@ using Pathfinding.App.Console.MenuItems.KeysMenuItems;
 using Pathfinding.App.Console.MenuItems.MainMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems;
+using Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.AlgorithmMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingStatisticsMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.InProcessActions;
+using Pathfinding.App.Console.Model.Notes;
 using Pathfinding.App.Console.Model.PathfindingActions;
 using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.App.Console.Model.Visualizations;
@@ -71,7 +72,6 @@ using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
 
 namespace Pathfinding.App.Console.DependencyInjection.Registrations
 {
-    using AlgorithmFactory = IAlgorithmFactory<PathfindingProcess>;
     using Command = IPathfindingRangeCommand<Vertex>;
 
     internal static class Application
@@ -150,8 +150,9 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<ExcludeFromRangeAction>().Keyed<IVertexAction>(PathfindingRange).WithMetadata(PathfindingRange, nameof(Keys.Default.ExcludeFromRange));
 
                 builder.RegisterType<AssembleGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
-                builder.RegisterType<ResizeGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ChooseGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
+                builder.RegisterType<ChooseNeighbourhoodMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance()
+                    .ConfigurePipeline(p => p.Use(new KeyResolveMiddlware<Neighbourhoods, INeighborhoodFactory>(Neighbourhood)));
                 builder.RegisterType<DeleteGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance().As<ICanRecieveMessage>();
                 builder.RegisterType<EnterCostRangeMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
                 builder.RegisterType<EnterGraphParametresMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
@@ -183,15 +184,18 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
                 builder.RegisterType<Graph2DFactory<Vertex>>().As<IGraphFactory<Graph2D<Vertex>, Vertex>>().SingleInstance();
                 builder.RegisterDecorator<Graph2DWrapFactory, IGraphFactory<Graph2D<Vertex>, Vertex>>();
-                builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
 
-                builder.RegisterType<DefaultStepRule>().As<IStepRule>().SingleInstance();
-                builder.RegisterType<CardinalStepRule>().As<IStepRule>().SingleInstance();
-                builder.RegisterType<LandscapeStepRule>().As<IStepRule>().SingleInstance();
+                builder.RegisterType<MooreNeighborhoodFactory>().Keyed<INeighborhoodFactory>(Neighbourhood)
+                    .SingleInstance().WithMetadata(Neighbourhood, Neighbourhoods.MooreNeighbourhood);
+                builder.RegisterType<VonNeumannNeighborhoodFactory>().Keyed<INeighborhoodFactory>(Neighbourhood)
+                    .SingleInstance().WithMetadata(Neighbourhood, Neighbourhoods.VonNeumannNeighbourhood);
 
-                builder.RegisterType<EuclidianDistance>().As<IHeuristic>().SingleInstance();
-                builder.RegisterType<ManhattanDistance>().As<IHeuristic>().SingleInstance();
-                builder.RegisterType<ChebyshevDistance>().As<IHeuristic>().SingleInstance();
+                builder.RegisterType<DefaultStepRule>().Keyed<IStepRule>(PathfindingAlgorithms).SingleInstance().WithMetadata(PathfindingAlgorithms, StepRules.Default);
+                builder.RegisterType<LandscapeStepRule>().Keyed<IStepRule>(PathfindingAlgorithms).SingleInstance().WithMetadata(PathfindingAlgorithms, StepRules.Lanscape);
+
+                builder.RegisterType<EuclidianDistance>().Keyed<IHeuristic>(PathfindingAlgorithms).SingleInstance().WithMetadata(PathfindingAlgorithms, Heuristics.Euclidian);
+                builder.RegisterType<ManhattanDistance>().Keyed<IHeuristic>(PathfindingAlgorithms).SingleInstance().WithMetadata(PathfindingAlgorithms, Heuristics.Manhattan);
+                builder.RegisterType<ChebyshevDistance>().Keyed<IHeuristic>(PathfindingAlgorithms).SingleInstance().WithMetadata(PathfindingAlgorithms, Heuristics.Chebyshev);
             }
         }
 
@@ -213,8 +217,9 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterType<AStarLeeAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, BreadthGroup).WithMetadata(Order, 2);
-                builder.RegisterType<LeeAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, BreadthGroup).WithMetadata(Order, 1);
+                builder.RegisterType<AStarLeeAlgorithmMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Algorithms).SingleInstance()
+                    .ConfigurePipeline(p => p.Use(new KeyResolveMiddlware<Heuristics, IHeuristic>(PathfindingAlgorithms)));
+                builder.RegisterType<LeeAlgorithmMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Algorithms).SingleInstance();
             }
         }
 
@@ -310,10 +315,17 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterType<DijkstraAlgorithmMenuItem>().Keyed<IMenuItem>(Algorithms).SingleInstance();
-                builder.RegisterType<AStarAlgorithmMenuItem>().Keyed<IMenuItem>(Algorithms).SingleInstance();
-                builder.RegisterType<IDAStarAlgorithmMenuItem>().Keyed<IMenuItem>(Algorithms).SingleInstance();
-                builder.RegisterType<RandomAlgorithmMenuItem>().Keyed<IMenuItem>(Algorithms).SingleInstance();
+                var stepRuleResolveMiddleware = new KeyResolveMiddlware<StepRules, IStepRule>(PathfindingAlgorithms);
+                var heuristicsResolveMiddleware = new KeyResolveMiddlware<Heuristics, IHeuristic>(PathfindingAlgorithms);
+                var combinedResolveMiddleware = new CombinedAlgorithmsResolveMiddleware(PathfindingAlgorithms);
+
+                builder.RegisterType<DijkstraAlgorithmMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Algorithms).SingleInstance()
+                    .ConfigurePipeline(p => p.Use(stepRuleResolveMiddleware));
+                builder.RegisterType<AStarAlgorithmMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Algorithms).SingleInstance()
+                    .ConfigurePipeline(p => p.Use(combinedResolveMiddleware));
+                builder.RegisterType<IDAStarAlgorithmMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Algorithms).SingleInstance()
+                    .ConfigurePipeline(p => p.Use(combinedResolveMiddleware));
+                builder.RegisterType<RandomAlgorithmMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Algorithms).SingleInstance();
             }
         }
 
@@ -322,10 +334,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterType<DistanceFirstAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, GreedGroup).WithMetadata(Order, 1);
-                builder.RegisterType<DepthFirstAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, GreedGroup).WithMetadata(Order, 2);
-                builder.RegisterType<HeuristicCostGreedyAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, GreedGroup).WithMetadata(Order, 3);
-                builder.RegisterType<CostGreedyAlgorithmFactory>().As<AlgorithmFactory>().SingleInstance().WithMetadata(Group, GreedGroup).WithMetadata(Order, 4);
+                builder.RegisterType<CostGreedyAlgorithmMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Algorithms).SingleInstance()
+                    .ConfigurePipeline(p => p.Use(new KeyResolveMiddlware<StepRules, IStepRule>(PathfindingAlgorithms)));
             }
         }
 
@@ -380,7 +390,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             {
                 builder.RegisterUnit<PathfindingStatisticsUnit, ExitMenuItem>(new UnitParamtresFactory());
                 builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
-                builder.RegisterType<ApplyStatisticsMenuItem>().Keyed<IMenuItem>(Statistics).SingleInstance();
+                builder.RegisterType<ApplyStatisticsMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Statistics).SingleInstance();
             }
         }
 

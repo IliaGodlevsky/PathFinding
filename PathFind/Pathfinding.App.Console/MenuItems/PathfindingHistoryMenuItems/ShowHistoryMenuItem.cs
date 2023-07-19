@@ -6,11 +6,14 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.Notes;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Primitives;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 {
@@ -43,26 +46,31 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         {
             var current = history.GetFor(graph);
             var keys = current.Algorithms;
-            var menuList = keys.Select(k => current.Statistics[k])
-                .Select(note => note.ToString())
-                .Append(Languages.Quit)
-                .CreateMenuList(columnsNumber: 1);
-            string inputMessage = string.Concat(menuList, "\n", Languages.AlgorithmChoiceMsg);
+            var statistics = keys.Select(key => current.Statistics[key])
+                .GroupBy(s => s.Algorithm)
+                .SelectMany(s => s.OrderBy(i => i.Steps));
+            var table = new Table<Statistics>(statistics);
+            string header = Aggregate(table.Headers);
+            var rows = table.Rows.Select(Aggregate).ToArray();
+            var menuList = rows.Append(Languages.Quit).CreateTable(header);
+            string inputMessage = string.Concat(menuList, Languages.AlgorithmChoiceMsg);
             using (RememberGraphState())
             {
-                Guid id = GetAlgorithmId(inputMessage, keys.Count);
-                while (id != Guid.Empty)
+                int index = GetAlgorithmId(inputMessage, keys.Count);
+                while (index != keys.Count)
                 {
+                    Guid id = keys[index];
                     var page = current.Statistics[id];
                     using (Cursor.UseCurrentPosition())
                     {
                         using (Cursor.HideCursor())
                         {
                             messenger.SendData(id, Tokens.History);
-                            messenger.SendData(page.ToString(), Tokens.AppLayout);
+                            string data = $"{index + 1} {page}";
+                            messenger.SendData(data, Tokens.AppLayout);
                         }
                     }
-                    id = GetAlgorithmId(inputMessage, keys.Count);
+                    index = GetAlgorithmId(inputMessage, keys.Count);
                 }
             }
         }
@@ -85,15 +93,11 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             this.graph = graph;
         }
 
-        private Guid GetAlgorithmId(string message, int count)
+        private int GetAlgorithmId(string message, int count)
         {
-            var current = history.GetFor(graph);
             using (Cursor.UseCurrentPositionWithClean())
             {
-                int index = input.Input(message, count + 1, 1) - 1;
-                return index == current.Algorithms.Count 
-                    ? Guid.Empty 
-                    : current.Algorithms[index];
+                return input.Input(message, count + 1, 1) - 1;
             }
         }
 
@@ -114,6 +118,16 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             var token = Tokens.Bind(IsHistoryApplied, Tokens.History);
             messenger.RegisterData<bool>(this, Tokens.History, SetIsApplied);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
+        }
+
+        private static string Aggregate(IEnumerable<string> values)
+        {
+            var builder = new StringBuilder();
+            foreach (var value in values)
+            {
+                builder.Append(value);
+            }
+            return builder.ToString();
         }
     }
 }

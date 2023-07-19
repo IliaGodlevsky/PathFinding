@@ -12,10 +12,5 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.StepRules
         {
             return Math.Abs(neighbour.Cost.CurrentCost - current.Cost.CurrentCost);
         }
-
-        public override string ToString()
-        {
-            return "Landscape step rule";
-        }
     }
 }

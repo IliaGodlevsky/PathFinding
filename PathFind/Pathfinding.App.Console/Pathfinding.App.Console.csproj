@@ -50,12 +50,15 @@
     <Compile Include="DependencyInjection\Attributes\FeatureAttribute.cs" />
     <Compile Include="DependencyInjection\Attributes\MandatoryAttribute.cs" />
     <Compile Include="DependencyInjection\Attributes\OptionalAttribute.cs" />
+    <Compile Include="DependencyInjection\ConfigurationMiddlewears\KeyResolveMiddlware.cs" />
+    <Compile Include="DependencyInjection\ConfigurationMiddlewears\CombinedAlgorithmsResolveMiddleware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\TotalVisualizationMiddleware.cs" />
     <Compile Include="Extensions\BinaryReaderExtensions.cs" />
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
     <Compile Include="Interface\INeighbourhoodCommand.cs" />
     <Compile Include="Interface\IToken.cs" />
     <Compile Include="Interface\IVisualizedVertices.cs" />
+    <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\AlgorithmInputMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\CrossedPathVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\EnqueuedVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\ObstacleVertexColorMenuItem.cs" />
@@ -67,6 +70,7 @@
     <Compile Include="MenuItems\ColorMenuItems\VisitedVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\EditorMenuItems\NeighbourhoodMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\ChooseGraphMenuItem.cs" />
+    <Compile Include="MenuItems\GraphMenuItems\ChooseNeighbourhoodMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\DeleteGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\EnterNeighbourhoodMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\EditorKeysMenuItem.cs" />
@@ -75,12 +79,25 @@
     <Compile Include="MenuItems\KeysMenuItems\RegularKeysMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\TransitKeysMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\KeysUnitMenuItem.cs" />
+    <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\AlgorithmMenuItem.cs" />
+    <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\CostGreedyAlgorithmMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmsUnitMenuItem.cs" />
-    <Compile Include="MenuItems\PathfindingProcessMenuItems\AStarAlgorithmMenuItem.cs" />
-    <Compile Include="MenuItems\PathfindingProcessMenuItems\DijkstraAlgorithmMenuItem.cs" />
-    <Compile Include="MenuItems\PathfindingProcessMenuItems\IDAStartAlgorithmMenuItem.cs" />
-    <Compile Include="MenuItems\PathfindingProcessMenuItems\RandomAlgorithmMenuItem.cs" />
+    <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\AStarAlgorithmMenuItem.cs" />
+    <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\AStarLeeAlgorithmMenuItem.cs" />
+    <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\DijkstraAlgorithmMenuItem.cs" />
+    <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\IDAStartAlgorithmMenuItem.cs" />
+    <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\LeeAlgorithmMenuItem.cs" />
+    <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\RandomAlgorithmMenuItem.cs" />
     <Compile Include="Model\ApplicationSettingsStore.cs" />
+    <Compile Include="Model\Notes\Algorithms.cs" />
+    <Compile Include="Model\Notes\AlgorithmResultStatus.cs" />
+    <Compile Include="Model\Notes\DisplayableAttribute.cs" />
+    <Compile Include="Model\Notes\Heuristics.cs" />
+    <Compile Include="Model\Notes\Neighbourhoods.cs" />
+    <Compile Include="Model\Notes\NonDisplayableAttribute.cs" />
+    <Compile Include="Model\Notes\DisplayNameSourceAttribute.cs" />
+    <Compile Include="Model\Notes\Table.cs" />
+    <Compile Include="Model\Notes\StepRules.cs" />
     <Compile Include="Model\VertexActions\ActiveVertex.cs" />
     <Compile Include="Model\VertexActions\NeighbourhoodActions\ActivateVertexCommand.cs" />
     <Compile Include="Model\VertexActions\NeighbourhoodActions\ExcludeVertexCommand.cs" />
@@ -150,11 +167,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Languages.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Localization\Languages.ru.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Languages.ru.resx</DependentUpon>
     </Compile>
     <Compile Include="MenuItems\ColorMenuItems\ColorsMenuItem.cs" />
     <Compile Include="MenuItems\ExitMenuItem.cs" />
@@ -244,7 +256,6 @@
     <Compile Include="Model\Graph2DWrapFactory.cs" />
     <Compile Include="Model\GraphField.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
-    <Compile Include="Model\GraphLayer.cs" />
     <Compile Include="Model\PathfindingActions\NullAnimationAction.cs" />
     <Compile Include="Model\PathfindingActions\SpeedUpAnimation.cs" />
     <Compile Include="Model\PathfindingActions\SlowDownAnimation.cs" />
@@ -304,6 +315,10 @@
     <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.NullObjects\Pathfinding.AlgorithmLib.Core.NullObjects.csproj">
       <Project>{16755D15-4338-4243-8EAA-95673423599F}</Project>
       <Name>Pathfinding.AlgorithmLib.Core.NullObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Realizations.Algorithms\Pathfinding.AlgorithmLib.Core.Realizations.Algorithms.csproj">
+      <Project>{3EB7129C-BE34-4ECF-B8C5-65B772184186}</Project>
+      <Name>Pathfinding.AlgorithmLib.Core.Realizations.Algorithms</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Realizations.Heuristics\Pathfinding.AlgorithmLib.Core.Realizations.Heuristics.csproj">
       <Project>{AC9456F4-D4A9-4025-9E8F-6BA056FBA37D}</Project>
@@ -442,10 +457,6 @@
     <EmbeddedResource Include="Localization\Languages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Languages.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Localization\Languages.ru.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Languages.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

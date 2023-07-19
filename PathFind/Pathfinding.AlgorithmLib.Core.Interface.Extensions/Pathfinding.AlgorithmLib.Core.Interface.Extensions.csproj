@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="IAlgorithmExtensions.cs" />
     <Compile Include="IGraphExtensions.cs" />
+    <Compile Include="IGraphPathExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

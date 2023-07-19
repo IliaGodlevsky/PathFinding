@@ -43,10 +43,10 @@ namespace Pathfinding.App.Console.Units
             this.input = input;
         }
 
-        private void FindPath(IAlgorithmFactory<PathfindingProcess> factory)
+        private void FindPath((IAlgorithmFactory<PathfindingProcess> Factory, Statistics Statistics) info)
         {
             var range = rangeBuilder.Range;
-            using (var algorithm = factory.Create(range))
+            using (var algorithm = info.Factory.Create(range))
             {
                 using (Disposable.Use(ClearColors))
                 {
@@ -54,6 +54,7 @@ namespace Pathfinding.App.Console.Units
                     {
                         try
                         {
+                            PrepareForPathfinding((algorithm, info.Statistics));
                             FindPath(algorithm);
                         }
                         catch (PathfindingException ex)
@@ -81,7 +82,6 @@ namespace Pathfinding.App.Console.Units
             }
             using (Disposable.Use(Summarize))
             {
-                PrepareForPathfinding(algorithm);
                 path = algorithm.FindPath();
                 path.Select(graph.Get).ForEach(v => v.VisualizeAsPath());
             }
@@ -93,18 +93,17 @@ namespace Pathfinding.App.Console.Units
             this.graph = graph;
         }
 
-        private void PrepareForPathfinding(PathfindingProcess algorithm)
+        private void PrepareForPathfinding((PathfindingProcess Algorithm, Statistics Statistics) info)
         {
-            string algorithmName = algorithm.ToString();
-            messenger.SendData(algorithmName, Tokens.AppLayout);
-            messenger.SendData(algorithm, Tokens.Visualization, Tokens.Statistics, Tokens.History);
-            var initStatistics = new Statistics { AlgorithmName = algorithmName };
-            messenger.SendAlgorithmData(algorithm, initStatistics, Tokens.History);
+            messenger.SendData(info.Statistics.Name, Tokens.AppLayout);
+            messenger.SendData(info.Algorithm, Tokens.Visualization, Tokens.Statistics, Tokens.History);
+            messenger.SendAlgorithmData(info.Algorithm, info.Statistics, Tokens.History);
+            messenger.SendData(info.Statistics, Tokens.Statistics);
         }
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.Register<IAlgorithmFactory<PathfindingProcess>>(this, Tokens.Pathfinding, true, FindPath);
+            messenger.RegisterData<(IAlgorithmFactory<PathfindingProcess>, Statistics)>(this, Tokens.Pathfinding, FindPath);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
             messenger.Register<ClearColorsMessage>(this, _ => ClearColors());
         }

@@ -19,10 +19,5 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Heuristics
         {
             return Math.Pow(first - second, Power);
         }
-
-        public override string ToString()
-        {
-            return "Euclidian distance";
-        }
     }
 }

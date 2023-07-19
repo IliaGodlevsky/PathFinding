@@ -23,7 +23,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected readonly IMessenger messenger;
         protected readonly IRandom random;
         protected readonly IVertexCostFactory costFactory;
-        protected readonly INeighborhoodFactory neighborhoodFactory;
         protected readonly GraphAssemble assemble;
         protected readonly GraphsPathfindingHistory history;
 
@@ -31,25 +30,23 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected int width = 0;
         protected int length = 0;
         protected int obstaclePercent = 0;
-        protected INeighborhoodFactory factory;
+        protected INeighborhoodFactory neighborhoodFactory;
 
         protected GraphCreatingMenuItem(IMessenger messenger,
             GraphAssemble assemble,
             IRandom random,
             IVertexCostFactory costFactory,
-            INeighborhoodFactory neighborhoodFactory,
             GraphsPathfindingHistory history)
         {
             this.history = history;
             this.messenger = messenger;
             this.random = random;
             this.costFactory = costFactory;
-            this.neighborhoodFactory = neighborhoodFactory;
             this.assemble = assemble;
         }
 
 
-        protected void SetNeighbourhood(INeighborhoodFactory factory) => this.factory = factory;
+        protected void SetNeighbourhood(INeighborhoodFactory factory) => neighborhoodFactory = factory;
 
         protected void SetCostRange(InclusiveValueRange<int> range) => costRange = range;
 
@@ -74,13 +71,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             return Constants.GraphWidthValueRange.Contains(width)
                 && Constants.GraphLengthValueRange.Contains(length)
-                && factory != null;
+                && neighborhoodFactory != null;
         }
 
         protected virtual IEnumerable<ILayer<Graph2D<Vertex>, Vertex>> GetLayers()
         {
             // The order of the layers shouldn't be changed
-            yield return new NeighborhoodLayer<Graph2D<Vertex>, Vertex>(factory);
+            yield return new NeighborhoodLayer<Graph2D<Vertex>, Vertex>(neighborhoodFactory);
             yield return new VertexCostLayer<Graph2D<Vertex>, Vertex>(costFactory, costRange, random);
             yield return new ObstacleLayer<Graph2D<Vertex>, Vertex>(random, obstaclePercent);
         }

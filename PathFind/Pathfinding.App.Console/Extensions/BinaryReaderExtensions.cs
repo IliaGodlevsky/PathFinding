@@ -45,20 +45,59 @@ namespace Pathfinding.App.Console.Extensions
             return new(reader.ReadBytes(16));
         }
 
-        private static TimeSpan ReadTimeSpan(this BinaryReader reader)
+        private static int? ReadNullableInt32(this BinaryReader reader)
         {
-            return TimeSpan.FromMilliseconds(reader.ReadDouble());
+            bool hasValue = reader.ReadBoolean();
+            if (hasValue)
+            {
+                return reader.ReadInt32();
+            }
+            return null;
+        }
+
+        private static double? ReadNullableDouble(this BinaryReader reader)
+        {
+            bool hasValue = reader.ReadBoolean();
+            if (hasValue)
+            {
+                return reader.ReadDouble();
+            }
+            return null;
+        }
+
+        private static string ReadNullableString(this BinaryReader reader)
+        {
+            bool hasValue = reader.ReadBoolean();
+            if (hasValue)
+            {
+                return reader.ReadString();
+            }
+            return string.Empty;
+        }
+
+        private static TimeSpan? ReadNullableTimeSpan(this BinaryReader reader)
+        {
+            bool hasValue = reader.ReadBoolean();
+            if (hasValue)
+            {
+                return TimeSpan.FromMilliseconds(reader.ReadDouble());
+            }
+            return null;
         }
 
         private static Statistics ReadStatisitics(this BinaryReader reader)
         {
             return new()
             {
-                AlgorithmName = reader.ReadString(),
-                Elapsed = reader.ReadTimeSpan(),
-                VisitedVertices = reader.ReadInt32(),
-                Cost = reader.ReadDouble(),
-                Steps = reader.ReadInt32(),
+                Algorithm = (Algorithms)reader.ReadInt32(),
+                ResultStatus = (AlgorithmResultStatus)reader.ReadInt32(),
+                Elapsed = reader.ReadNullableTimeSpan(),
+                Visited = reader.ReadNullableInt32(),
+                Cost = reader.ReadNullableDouble(),
+                Steps = reader.ReadNullableInt32(),
+                StepRule = (StepRules?)reader.ReadNullableInt32(),
+                Heuristics = (Heuristics?)reader.ReadNullableInt32(),
+                Spread = reader.ReadNullableInt32()
             };
         }
     }
