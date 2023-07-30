@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace Pathfinding.AlgorithmLib.Core.Abstractions
 {
-    public abstract class PathfindingProcess : IAlgorithm<IGraphPath>, IHistoryPageKey, IProcess, IPausable, IInterruptable, IDisposable
+    public abstract class PathfindingProcess : IAlgorithm<IGraphPath>, IProcess, IPausable, IInterruptable, IDisposable
     {
         private sealed class NullProcess : PathfindingProcess
         {

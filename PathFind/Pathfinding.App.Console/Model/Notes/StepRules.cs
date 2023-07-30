@@ -3,6 +3,7 @@
     internal enum StepRules
     {
         Default,
-        Lanscape
+        Lanscape,
+        Spread
     }
 }

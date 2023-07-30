@@ -44,7 +44,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
             return storage.TryFirstOrDeadEndVertex();
         }
 
-        protected override void PrepareForSubPathfinding(SubRange range)
+        protected override void PrepareForSubPathfinding((IVertex Source, IVertex Target) range)
         {
             base.PrepareForSubPathfinding(range);
             storage.EnqueueOrUpdatePriority(CurrentRange.Source, default);

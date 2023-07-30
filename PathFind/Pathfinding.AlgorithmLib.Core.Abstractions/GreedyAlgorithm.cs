@@ -28,7 +28,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
                 .FirstOrNullVertex(vertex => CalculateHeuristic(vertex) == leastVertexCost);
         }
 
-        protected override void PrepareForSubPathfinding(SubRange range)
+        protected override void PrepareForSubPathfinding((IVertex Source, IVertex Target) range)
         {
             base.PrepareForSubPathfinding(range);
             VisitVertex(CurrentVertex);

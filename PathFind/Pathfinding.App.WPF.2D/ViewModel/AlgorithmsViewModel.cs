@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.History;
 using Pathfinding.AlgorithmLib.History.Interface;
@@ -147,7 +148,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel
         {
             await Task.Run(() =>
             {
-                if (sender is IHistoryPageKey key)
+                if (sender is PathfindingProcess key)
                 {
                     history.AddVisited(key.Id, e.Current);
                 }

@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IHistoryPageKey.cs" />
     <Compile Include="IHistoryRepository.cs" />
     <Compile Include="IHistoryVolume.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

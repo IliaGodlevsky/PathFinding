@@ -40,7 +40,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
             heuristics.Clear();
         }
 
-        protected override void PrepareForSubPathfinding(SubRange range)
+        protected override void PrepareForSubPathfinding((IVertex Source, IVertex Target) range)
         {
             base.PrepareForSubPathfinding(range);
             double value = CalculateHeuristic(CurrentRange.Source);

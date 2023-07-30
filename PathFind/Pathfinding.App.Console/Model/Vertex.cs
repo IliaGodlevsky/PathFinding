@@ -60,7 +60,7 @@ namespace Pathfinding.App.Console.Model
 
         public ICoordinate Position { get; } = NullCoordinate.Interface;
 
-        public Point ConsolePosition { get; set; } = Point.Empty;
+        public Point? ConsolePosition { get; set; } = null;
 
         public Vertex(ICoordinate coordinate, ITotalVisualization<Vertex> visualization)
         {
@@ -70,7 +70,7 @@ namespace Pathfinding.App.Console.Model
 
         public void Display()
         {
-            if (!ConsolePosition.IsEmpty)
+            if (ConsolePosition.HasValue)
             {
                 Cursor.SetPosition(ConsolePosition);
                 using (Cursor.UseColor(Color))

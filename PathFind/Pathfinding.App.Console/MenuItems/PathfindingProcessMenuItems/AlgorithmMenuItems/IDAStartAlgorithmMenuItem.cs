@@ -49,7 +49,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
                 var statistics = new Statistics
                 {
                     Algorithm = Algorithms.IDAStarAlgorithm,
-                    ResultStatus = AlgorithmResultStatus.Started,
+                    ResultStatus = AlgorithmStatus.Started,
                     StepRule = stepRule.Key,
                     Heuristics = heuristic.Key,
                     Spread = spread

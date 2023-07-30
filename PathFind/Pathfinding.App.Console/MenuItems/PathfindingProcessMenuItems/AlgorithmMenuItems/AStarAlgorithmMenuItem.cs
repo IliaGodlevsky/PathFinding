@@ -40,7 +40,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
             var statistics = new Statistics
             {
                 Algorithm = Algorithms.AStarAlgorithm,
-                ResultStatus = AlgorithmResultStatus.Started,
+                ResultStatus = AlgorithmStatus.Started,
                 StepRule = stepRule.Key,
                 Heuristics = heuristic.Key
             };

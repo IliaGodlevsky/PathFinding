@@ -31,7 +31,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
             var statistics = new Statistics()
             {
                 Algorithm = Algorithms.CostGreedyAlgorithm,
-                ResultStatus = AlgorithmResultStatus.Started,
+                ResultStatus = AlgorithmStatus.Started,
                 StepRule = stepRule.Key
             };
             var factory = new CostGreedyAlgorithmFactory(stepRule.Value);

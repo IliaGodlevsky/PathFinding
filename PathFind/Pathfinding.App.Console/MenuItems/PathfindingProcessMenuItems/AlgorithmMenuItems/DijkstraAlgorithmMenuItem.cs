@@ -35,7 +35,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
             var statistics = new Statistics()
             {
                 Algorithm = Algorithms.DijkstraAlgorithm,
-                ResultStatus = AlgorithmResultStatus.Started,
+                ResultStatus = AlgorithmStatus.Started,
                 StepRule = stepRule.Key
             };
             var factory = new DijkstraAlgorithmFactory(stepRule.Value);

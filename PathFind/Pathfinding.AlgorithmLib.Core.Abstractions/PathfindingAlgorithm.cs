@@ -7,14 +7,7 @@ using Pathfinding.GraphLib.Core.NullObjects;
 using Shared.Extensions;
 using Shared.Primitives;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-
-namespace System.Runtime.CompilerServices
-{
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    internal record IsExternalInit;
-}
 
 namespace Pathfinding.AlgorithmLib.Core.Abstractions
 {
@@ -23,14 +16,12 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
     public abstract class PathfindingAlgorithm<TStorage> : PathfindingProcess
         where TStorage : new()
     {
-        protected readonly record struct SubRange(IVertex Source, IVertex Target);
-
         protected readonly IEnumerable<IVertex> pathfindingRange;
         protected readonly HashSet<IVertex> visited = new(VertexEqualityComparer.Interface);
         protected readonly Traces traces = new(CoordinateEqualityComparer.Interface);
         protected readonly TStorage storage = new();
 
-        protected SubRange CurrentRange { get; set; }
+        protected (IVertex Source, IVertex Target) CurrentRange { get; set; }
 
         protected IVertex CurrentVertex { get; set; } = NullVertex.Instance;
 
@@ -81,7 +72,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             return CurrentVertex.Equals(CurrentRange.Target);
         }
 
-        protected virtual void PrepareForSubPathfinding(SubRange range)
+        protected virtual void PrepareForSubPathfinding((IVertex Source, IVertex Target) range)
         {
             CurrentRange = range;
             CurrentVertex = CurrentRange.Source;
@@ -110,7 +101,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
                 .ToArray();
         }
 
-        private IEnumerable<SubRange> GetSubRanges()
+        private IEnumerable<(IVertex Source, IVertex Target)> GetSubRanges()
         {
             using (var iterator = pathfindingRange.GetEnumerator())
             {
@@ -120,7 +111,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
                     while (iterator.MoveNext())
                     {
                         var current = iterator.Current;
-                        yield return new(previous, current);
+                        yield return (previous, current);
                         previous = iterator.Current;
                     }
                 }

@@ -36,7 +36,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
             var statistics = new Statistics
             {
                 Algorithm = Algorithms.AStarLeeAlgorithm,
-                ResultStatus = AlgorithmResultStatus.Started,
+                ResultStatus = AlgorithmStatus.Started,
                 Heuristics = heuristic.Key
             };
             var factory = new AStarLeeAlgorithmFactory(heuristic.Value);

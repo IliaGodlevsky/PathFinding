@@ -6,6 +6,7 @@ using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Pathfinding.App.Console.Extensions
 {
@@ -27,7 +28,7 @@ namespace Pathfinding.App.Console.Extensions
                 history.Costs.TryGetOrAddNew(key).AddRange(reader.ReadIntArray());
                 history.Statistics.Add(key, reader.ReadStatisitics());
             }
-            reader.ReadSmoothHistory().ForEach(history.SmoothHistory.Push);
+            reader.ReadSmoothHistory().Reverse().ForEach(history.SmoothHistory.Push);
             return history;
         }
 
@@ -53,6 +54,23 @@ namespace Pathfinding.App.Console.Extensions
                 return reader.ReadInt32();
             }
             return null;
+        }
+
+        private static T? ReadNullableEnum<T>(this BinaryReader reader)
+            where T : struct, Enum
+        {
+            bool hasValue = reader.ReadBoolean();
+            if (hasValue)
+            {
+                return reader.ReadEnum<T>();
+            }
+            return null;
+        }
+
+        private static T ReadEnum<T>(this BinaryReader reader)
+        {
+            string value = reader.ReadString();
+            return (T)Enum.Parse(typeof(T), value);
         }
 
         private static double? ReadNullableDouble(this BinaryReader reader)
@@ -89,14 +107,14 @@ namespace Pathfinding.App.Console.Extensions
         {
             return new()
             {
-                Algorithm = (Algorithms)reader.ReadInt32(),
-                ResultStatus = (AlgorithmResultStatus)reader.ReadInt32(),
+                Algorithm = reader.ReadEnum<Algorithms>(),
+                ResultStatus = reader.ReadEnum<AlgorithmStatus>(),
                 Elapsed = reader.ReadNullableTimeSpan(),
                 Visited = reader.ReadNullableInt32(),
                 Cost = reader.ReadNullableDouble(),
                 Steps = reader.ReadNullableInt32(),
-                StepRule = (StepRules?)reader.ReadNullableInt32(),
-                Heuristics = (Heuristics?)reader.ReadNullableInt32(),
+                StepRule = reader.ReadNullableEnum<StepRules>(),
+                Heuristics = reader.ReadNullableEnum<Heuristics>(),
                 Spread = reader.ReadNullableInt32()
             };
         }

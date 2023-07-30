@@ -27,7 +27,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
             var statistics = new Statistics 
             { 
                 Algorithm = Algorithms.LeeAlgorithm,
-                ResultStatus = AlgorithmResultStatus.Started
+                ResultStatus = AlgorithmStatus.Started
             };
             return (new LeeAlgorithmFactory(), statistics);
         }

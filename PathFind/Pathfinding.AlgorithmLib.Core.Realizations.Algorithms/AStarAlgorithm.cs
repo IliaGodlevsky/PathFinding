@@ -35,7 +35,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
             accumulatedCosts.Clear();
         }
 
-        protected override void PrepareForSubPathfinding(SubRange range)
+        protected override void PrepareForSubPathfinding((IVertex Source, IVertex Target) range)
         {
             base.PrepareForSubPathfinding(range);
             accumulatedCosts[CurrentRange.Source.Position] = default;

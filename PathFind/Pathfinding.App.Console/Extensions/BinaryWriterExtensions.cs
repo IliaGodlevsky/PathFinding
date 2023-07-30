@@ -30,15 +30,32 @@ namespace Pathfinding.App.Console.Extensions
 
         private static void WriteStatistics(this BinaryWriter writer, Statistics statistics)
         {
-            writer.Write((int)statistics.Algorithm);
-            writer.Write((int)statistics.ResultStatus);
+            writer.WriteEnum(statistics.Algorithm);
+            writer.WriteEnum(statistics.ResultStatus);
             writer.WriteNullableTimeSpan(statistics.Elapsed);
             writer.WriteNullableInt32(statistics.Visited);
             writer.WriteNullableDouble(statistics.Cost);
             writer.WriteNullableInt32(statistics.Steps);
-            writer.WriteNullableInt32((int?)statistics.StepRule);
-            writer.WriteNullableInt32((int?)statistics.Heuristics);
+            writer.WriteNullableEnum(statistics.StepRule);
+            writer.WriteNullableEnum(statistics.Heuristics);
             writer.WriteNullableInt32(statistics.Spread);
+        }
+
+        private static void WriteEnum<T>(this BinaryWriter writer, T value)
+            where T : struct, Enum
+        {
+            string val = value.ToString();
+            writer.Write(val);
+        }
+
+        public static void WriteNullableEnum<T>(this BinaryWriter writer, T? value)
+            where T : struct, Enum
+        {
+            writer.Write(value.HasValue);
+            if (value.HasValue)
+            {
+                writer.WriteEnum(value.Value);
+            }
         }
 
         private static void WriteNullableInt32(this BinaryWriter writer, int? value)

@@ -9,6 +9,7 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Notes;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Shared.Extensions;
 using Shared.Primitives;
 using System;
 using System.Collections.Generic;
@@ -44,33 +45,31 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void Execute()
         {
-            var current = history.GetFor(graph);
-            var keys = current.Algorithms;
-            var statistics = keys.Select(key => current.Statistics[key])
-                .GroupBy(s => s.Algorithm)
-                .SelectMany(s => s.OrderBy(i => i.Steps));
-            var table = new Table<Statistics>(statistics);
+            var statistics = history.GetFor(graph).Statistics
+                .GroupBy(s => s.Value.Algorithm)
+                .SelectMany(s => s.OrderBy(i => i.Value.Steps))
+                .ToDictionary();
+            var table = new Table<Statistics>(statistics.Values);
             string header = Aggregate(table.Headers);
             var rows = table.Rows.Select(Aggregate).ToArray();
             var menuList = rows.Append(Languages.Quit).CreateTable(header);
             string inputMessage = string.Concat(menuList, Languages.AlgorithmChoiceMsg);
             using (RememberGraphState())
             {
-                int index = GetAlgorithmId(inputMessage, keys.Count);
-                while (index != keys.Count)
+                int index = GetAlgorithmId(inputMessage, statistics.Count);
+                while (index != statistics.Count)
                 {
-                    Guid id = keys[index];
-                    var page = current.Statistics[id];
+                    var page = statistics.ElementAt(index);
                     using (Cursor.UseCurrentPosition())
                     {
                         using (Cursor.HideCursor())
                         {
-                            messenger.SendData(id, Tokens.History);
-                            string data = $"{index + 1} {page}";
+                            messenger.SendData(page.Key, Tokens.History);
+                            string data = $"{index + 1} {page.Value}";
                             messenger.SendData(data, Tokens.AppLayout);
                         }
                     }
-                    index = GetAlgorithmId(inputMessage, keys.Count);
+                    index = GetAlgorithmId(inputMessage, statistics.Count);
                 }
             }
         }

@@ -7,6 +7,7 @@ using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model.Notes;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -43,11 +44,17 @@ namespace Pathfinding.App.Console.Units
         private void SubscribeOnStatistics(PathfindingProcess algorithm)
         {
             algorithm.VertexVisited += OnVertexVisited;
+            algorithm.Interrupted += OnInterrupted;
             algorithm.Finished += (s, e) => timer.Stop();
             algorithm.Started += (s, e) => timer.Restart();
-            algorithm.Interrupted += (s, e) => timer.Stop();
             algorithm.Paused += (s, e) => timer.Stop();
             algorithm.Resumed += (s, e) => timer.Start();
+        }
+
+        private void OnInterrupted(object sender, EventArgs e)
+        {
+            statistics.ResultStatus = AlgorithmStatus.Interrupted;
+            timer.Stop();
         }
 
         private void SetIsApplied(bool isApplied)
@@ -63,18 +70,21 @@ namespace Pathfinding.App.Console.Units
         private void OnPathFound((PathfindingProcess Process, IGraphPath Path) value)
         {
             var note = GetStatistics(value.Path);
-            note.ResultStatus = AlgorithmResultStatus.Succeeded;
-            if (value.Path.IsEmpty())
+            if (note.ResultStatus != AlgorithmStatus.Interrupted)
             {
-                note.ResultStatus = AlgorithmResultStatus.Failed;
+                note.ResultStatus = AlgorithmStatus.Succeeded;
             }
-            visited = 0;
-            statistics = Statistics.Empty;
+            if (value.Path.IsEmpty() && note.ResultStatus != AlgorithmStatus.Interrupted)
+            {
+                note.ResultStatus = AlgorithmStatus.Failed;
+            }
             if (IsStatisticsApplied())
             {
                 messenger.SendData(note.ToString(), Tokens.AppLayout);
             }
             messenger.SendAlgorithmData(value.Process, note, Tokens.History);
+            visited = 0;
+            statistics = Statistics.Empty;
         }
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)

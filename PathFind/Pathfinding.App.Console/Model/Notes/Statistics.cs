@@ -25,23 +25,20 @@ namespace Pathfinding.App.Console.Model.Notes
                 .OrderByOrderAttribute()
                 .Select(prop => prop.GetAttributeOrDefault<DisplayNameSourceAttribute>()?.ResourceName ?? prop.Name)
                 .Select(GetString)
-                .Skip(1).ToList().AsReadOnly();
+                .Skip(1)
+                .ToList()
+                .AsReadOnly();
         }
 
-        [NonDisplayable]
         public Algorithms Algorithm { get; set; }
 
-        [NonDisplayable]
-        public AlgorithmResultStatus ResultStatus { get; set; }
+        public AlgorithmStatus ResultStatus { get; set; }
 
-        [NonDisplayable]
-        public Heuristics? Heuristics { get; set; }
+        public Heuristics? Heuristics { get; set; } = null;
 
-        [NonDisplayable]
-        public StepRules? StepRule { get; set; }
+        public StepRules? StepRule { get; set; } = null;
 
-        [NonDisplayable]
-        public TimeSpan? Elapsed { get; set; } = default;
+        public TimeSpan? Elapsed { get; set; } = null;
 
         [Order(1)]
         [Displayable]
@@ -59,21 +56,6 @@ namespace Pathfinding.App.Console.Model.Notes
         public string Time => Elapsed?.ToString(Parametres.Default.TimeFormat, 
             CultureInfo.InvariantCulture);
 
-        [Order(3)]
-        [Displayable]
-        [DisplayNameSource(nameof(Languages.Visited))]
-        public int? Visited { get; set; } = default;
-
-        [Order(4)]
-        [Displayable]
-        [DisplayNameSource(nameof(Languages.Steps))]
-        public int? Steps { get; set; } = default;
-
-        [Order(5)]
-        [Displayable]
-        [DisplayNameSource(nameof(Languages.Cost))]
-        public double? Cost { get; set; } = default;
-
         [Order(6)]
         [Displayable]
         [DisplayNameSource(nameof(Languages.Rule))]
@@ -84,28 +66,45 @@ namespace Pathfinding.App.Console.Model.Notes
         [DisplayNameSource(nameof(Languages.Heuristics))]
         public string Heuristic => GetString(Heuristics.ToString());
 
+        [Order(3)]
+        [Displayable]
+        [DisplayNameSource(nameof(Languages.Visited))]
+        public int? Visited { get; set; } = null;
+
+        [Order(4)]
+        [Displayable]
+        [DisplayNameSource(nameof(Languages.Steps))]
+        public int? Steps { get; set; } = null;
+
+        [Order(5)]
+        [Displayable]
+        [DisplayNameSource(nameof(Languages.Cost))]
+        public double? Cost { get; set; } = null;
+
         [Order(8)]
         [Displayable]
         [DisplayNameSource(nameof(Languages.Spread))]
-        public int? Spread { get; set; } = default;
+        public int? Spread { get; set; } = null;
 
         private static string GetString(string key)
         {
             return Languages.ResourceManager.GetString(key) ?? key;
         }
 
+        private IEnumerable<(string Name, object Value)> GetNotEmptyValues()
+        {
+            var values = new object[] { Time, Visited, Steps, 
+                Cost, Rule, Heuristic, Spread, Status };
+            return names.Zip(values, (n, v) => (Name: n, Value: v))
+                .Where(x => x.Value is not null and not "");
+        }
+
         public override string ToString()
         {
-            var values = new object[] { Time, Visited, 
-                Steps, Cost, Rule, Heuristic, Spread, Status };
-            var builder = new StringBuilder($" {Name}  ");
-            for (int i = 0; i < values.Length; i++)
+            var builder = new StringBuilder($"{Name}  ");
+            foreach (var value in GetNotEmptyValues())
             {
-                if (values[i] != null && !values[i].Equals(string.Empty))
-                {
-                    string value = values[i].ToString();
-                    builder.Append($"{names[i]}: {value}  ");
-                }
+                builder.Append($"{value.Name}: {value.Value}  ");
             }
             return builder.ToString();
         }

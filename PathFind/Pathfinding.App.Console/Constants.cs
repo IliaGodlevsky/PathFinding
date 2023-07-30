@@ -23,12 +23,12 @@ namespace Pathfinding.App.Console
             VerticesCostRange = new(Settings.MaxCost, Settings.MinCost);
             GraphWidthValueRange = new(Settings.MaxGraphWidth, Settings.MinGraphWidth);
             GraphLengthValueRange = new(Settings.MaxGraphLength, Settings.MinGraphLength);
-            ObstaclesPercentValueRange = new(Settings.MaxObstaclePercentValue, Settings.MinObstaclePercentValue);
-            double maxDelatTimeMilliseconds = Settings.VisualizationDelayMaxValue;
-            double minDelatTimeMilliseconds = Settings.VisualizationDelayMinValue;
+            ObstaclesPercentValueRange = new(
+                Settings.MaxObstaclePercentValue, 
+                Settings.MinObstaclePercentValue);
             AlgorithmDelayTimeValueRange = new(
-                TimeSpan.FromMilliseconds(maxDelatTimeMilliseconds),
-                TimeSpan.FromMilliseconds(minDelatTimeMilliseconds));
+                TimeSpan.FromMilliseconds(Settings.VisualizationDelayMaxValue),
+                TimeSpan.FromMilliseconds(Settings.VisualizationDelayMinValue));
         }
     }
 }
