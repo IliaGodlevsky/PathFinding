@@ -6,12 +6,10 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.App.Console.Model.Notes;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Shared.Extensions;
 using Shared.Primitives;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,7 +47,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
                 .GroupBy(s => s.Value.Algorithm)
                 .SelectMany(s => s.OrderBy(i => i.Value.Steps))
                 .ToDictionary();
-            var table = new Table<Statistics>(statistics.Values);
+            var table = statistics.Values.ToTable();
             string header = Aggregate(table.Headers);
             var rows = table.Rows.Select(Aggregate).ToArray();
             var menuList = rows.Append(Languages.Quit).CreateTable(header);
@@ -114,7 +112,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            var token = Tokens.Bind(IsHistoryApplied, Tokens.History);
             messenger.RegisterData<bool>(this, Tokens.History, SetIsApplied);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }

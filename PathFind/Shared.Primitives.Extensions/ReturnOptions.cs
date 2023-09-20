@@ -12,11 +12,11 @@ namespace Shared.Primitives.Extensions
         internal T ReturnInRange<T>(T value, InclusiveValueRange<T> range)
             where T : IComparable<T>
         {
-            if (value.IsGreater(range.UpperValueOfRange))
+            if (value.IsGreaterThan(range.UpperValueOfRange))
             {
                 return GetIfGreater(range);
             }
-            else if (value.IsLess(range.LowerValueOfRange))
+            else if (value.IsLessThan(range.LowerValueOfRange))
             {
                 return GetIfLess(range);
             }

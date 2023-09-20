@@ -4,25 +4,25 @@ namespace Shared.Extensions
 {
     public static class IGenericComparableExtensions
     {
-        public static bool IsGreater<T>(this T first, T second)
+        public static bool IsGreaterThan<T>(this T first, T second)
             where T : IComparable<T>
         {
             return first.CompareTo(second) > 0;
         }
 
-        public static bool IsLess<T>(this T first, T second)
+        public static bool IsLessThan<T>(this T first, T second)
             where T : IComparable<T>
         {
             return first.CompareTo(second) < 0;
         }
 
-        public static bool IsGreaterOrEqual<T>(this T first, T second)
+        public static bool IsGreaterOrEqualThan<T>(this T first, T second)
             where T : IComparable<T>
         {
             return first.CompareTo(second) >= 0;
         }
 
-        public static bool IsLessOrEqual<T>(this T first, T second)
+        public static bool IsLessOrEqualThan<T>(this T first, T second)
             where T : IComparable<T>
         {
             return first.CompareTo(second) <= 0;
@@ -31,8 +31,8 @@ namespace Shared.Extensions
         public static bool IsBetween<T>(this T value, T upper, T lower)
             where T : IComparable<T>
         {
-            return value.IsLessOrEqual(upper)
-                && value.IsGreaterOrEqual(lower);
+            return value.IsLessOrEqualThan(upper)
+                && value.IsGreaterOrEqualThan(lower);
         }
     }
 }

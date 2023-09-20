@@ -1,10 +1,10 @@
 ﻿using Pathfinding.App.Console.Settings;
 
-namespace Pathfinding.App.Console.Model.Visualizations.Visuals
+namespace Pathfinding.App.Console.Model.Visualizations.Containers
 {
-    internal sealed class VisualizedVisited : VisualizedVertices
+    internal sealed class VisualizedEnqueued : VisualizedVertices
     {
-        protected override string SettingKey { get; } = nameof(Colours.VisitedColor);
+        protected override string SettingKey { get; } = nameof(Colours.EnqueuedColor);
 
         public override void Visualize(Vertex vertex)
         {

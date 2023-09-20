@@ -30,8 +30,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
         {
             var statistics = new Statistics
             {
-                Algorithm = Algorithms.RandomAlgorithm,
-                ResultStatus = AlgorithmStatus.Started
+                Algorithm = nameof(Languages.RandomAlgorithm),
+                ResultStatus = nameof(Languages.Started)
             };
             return (new RandomAlgorithmFactory(random), statistics);
         }

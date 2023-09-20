@@ -12,7 +12,7 @@ namespace Pathfinding.App.Console.Settings {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.7.0.0")]
     public sealed partial class Parametres : global::System.Configuration.ApplicationSettingsBase {
         
         private static Parametres defaultInstance = ((Parametres)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Parametres())));
@@ -25,7 +25,7 @@ namespace Pathfinding.App.Console.Settings {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("90")]
+        [global::System.Configuration.DefaultSettingValueAttribute("99")]
         public int MaxGraphWidth {
             get {
                 return ((int)(this["MaxGraphWidth"]));
@@ -43,7 +43,7 @@ namespace Pathfinding.App.Console.Settings {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("45")]
+        [global::System.Configuration.DefaultSettingValueAttribute("99")]
         public int MaxGraphLength {
             get {
                 return ((int)(this["MaxGraphLength"]));

@@ -14,10 +14,10 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
     [MediumPriority]
     internal sealed class CostGreedyAlgorithmMenuItem : AlgorithmInputMenuItem
     {
-        private readonly IReadOnlyDictionary<StepRules, IStepRule> stepRules;
+        private readonly IReadOnlyDictionary<string, IStepRule> stepRules;
 
         public CostGreedyAlgorithmMenuItem(
-            IReadOnlyDictionary<StepRules, IStepRule> stepRules,
+            IReadOnlyDictionary<string, IStepRule> stepRules,
             IMessenger messenger, 
             IInput<int> intInput) 
             : base(messenger, intInput)
@@ -30,8 +30,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
             var stepRule = InputItem(stepRules, Languages.ChooseStepRuleMsg);
             var statistics = new Statistics()
             {
-                Algorithm = Algorithms.CostGreedyAlgorithm,
-                ResultStatus = AlgorithmStatus.Started,
+                Algorithm = nameof(Languages.CostGreedyAlgorithm),
+                ResultStatus = nameof(Languages.Started),
                 StepRule = stepRule.Key
             };
             var factory = new CostGreedyAlgorithmFactory(stepRule.Value);

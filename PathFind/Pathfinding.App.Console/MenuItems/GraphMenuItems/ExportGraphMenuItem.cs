@@ -17,29 +17,23 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     internal abstract class ExportGraphMenuItem<TPath> : IConditionedMenuItem
     {
-        protected readonly IMessenger messenger;
         protected readonly IInput<TPath> input;
         protected readonly IInput<int> intInput;
         protected readonly ISerializer<GraphsPathfindingHistory> graphSerializer;
-        protected readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         protected readonly GraphsPathfindingHistory history;
         protected readonly ILog log;
 
-        protected ExportGraphMenuItem(IMessenger messenger,
-            IInput<TPath> input,
+        protected ExportGraphMenuItem(IInput<TPath> input,
             IInput<int> intInput,
             GraphsPathfindingHistory history,
             ISerializer<GraphsPathfindingHistory> graphSerializer,
-            IPathfindingRangeBuilder<Vertex> rangeBuilder,
             ILog log)
         {
-            this.messenger = messenger;
             this.input = input;
             this.intInput = intInput;
             this.graphSerializer = graphSerializer;
             this.log = log;
             this.history = history;
-            this.rangeBuilder = rangeBuilder;
         }
 
         public virtual bool CanBeExecuted() => history.Count > 0;

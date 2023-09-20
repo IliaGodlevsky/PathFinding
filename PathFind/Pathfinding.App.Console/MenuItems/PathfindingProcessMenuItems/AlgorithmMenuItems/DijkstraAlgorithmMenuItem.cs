@@ -15,9 +15,9 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     [HighestPriority]
     internal sealed class DijkstraAlgorithmMenuItem : AlgorithmInputMenuItem
     {
-        private readonly IReadOnlyDictionary<StepRules,IStepRule> stepRules;
+        private readonly IReadOnlyDictionary<string, IStepRule> stepRules;
 
-        public DijkstraAlgorithmMenuItem(IReadOnlyDictionary<StepRules, IStepRule> stepRules,
+        public DijkstraAlgorithmMenuItem(IReadOnlyDictionary<string, IStepRule> stepRules,
             IInput<int> input, IMessenger messenger)
             : base(messenger, input)
         {
@@ -34,8 +34,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
             var stepRule = InputItem(stepRules, Languages.ChooseStepRuleMsg);
             var statistics = new Statistics()
             {
-                Algorithm = Algorithms.DijkstraAlgorithm,
-                ResultStatus = AlgorithmStatus.Started,
+                Algorithm = nameof(Languages.DijkstraAlgorithm),
+                ResultStatus = nameof(Languages.Started),
                 StepRule = stepRule.Key
             };
             var factory = new DijkstraAlgorithmFactory(stepRule.Value);

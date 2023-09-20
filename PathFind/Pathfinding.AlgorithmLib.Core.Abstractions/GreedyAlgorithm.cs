@@ -51,7 +51,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         {
             if (CurrentVertex.HasNoNeighbours())
             {
-                CurrentVertex = storage.PopOrDeadEndVertex();
+                CurrentVertex = storage.PopOrThrowDeadEndVertexException();
             }
             else
             {

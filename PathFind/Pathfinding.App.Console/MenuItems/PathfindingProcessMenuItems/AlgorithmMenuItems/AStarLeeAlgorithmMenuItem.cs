@@ -15,9 +15,9 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     [HighPriority]
     internal sealed class AStarLeeAlgorithmMenuItem : AlgorithmInputMenuItem
     {
-        private readonly IReadOnlyDictionary<Heuristics, IHeuristic> heuristics;
+        private readonly IReadOnlyDictionary<string, IHeuristic> heuristics;
 
-        public AStarLeeAlgorithmMenuItem(IReadOnlyDictionary<Heuristics, IHeuristic> heuristics,
+        public AStarLeeAlgorithmMenuItem(IReadOnlyDictionary<string, IHeuristic> heuristics,
             IMessenger messenger,
             IInput<int> intInput) 
             : base(messenger, intInput)
@@ -35,8 +35,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
             var heuristic = InputItem(heuristics, Languages.ChooseHeuristicMsg);
             var statistics = new Statistics
             {
-                Algorithm = Algorithms.AStarLeeAlgorithm,
-                ResultStatus = AlgorithmStatus.Started,
+                Algorithm = nameof(Languages.AStarLeeAlgorithm),
+                ResultStatus = nameof(Languages.Started),
                 Heuristics = heuristic.Key
             };
             var factory = new AStarLeeAlgorithmFactory(heuristic.Value);

@@ -56,23 +56,6 @@ namespace Pathfinding.App.Console.Extensions
             return null;
         }
 
-        private static T? ReadNullableEnum<T>(this BinaryReader reader)
-            where T : struct, Enum
-        {
-            bool hasValue = reader.ReadBoolean();
-            if (hasValue)
-            {
-                return reader.ReadEnum<T>();
-            }
-            return null;
-        }
-
-        private static T ReadEnum<T>(this BinaryReader reader)
-        {
-            string value = reader.ReadString();
-            return (T)Enum.Parse(typeof(T), value);
-        }
-
         private static double? ReadNullableDouble(this BinaryReader reader)
         {
             bool hasValue = reader.ReadBoolean();
@@ -107,14 +90,14 @@ namespace Pathfinding.App.Console.Extensions
         {
             return new()
             {
-                Algorithm = reader.ReadEnum<Algorithms>(),
-                ResultStatus = reader.ReadEnum<AlgorithmStatus>(),
+                Algorithm = reader.ReadString(),
+                ResultStatus = reader.ReadString(),
                 Elapsed = reader.ReadNullableTimeSpan(),
                 Visited = reader.ReadNullableInt32(),
                 Cost = reader.ReadNullableDouble(),
                 Steps = reader.ReadNullableInt32(),
-                StepRule = reader.ReadNullableEnum<StepRules>(),
-                Heuristics = reader.ReadNullableEnum<Heuristics>(),
+                StepRule = reader.ReadNullableString(),
+                Heuristics = reader.ReadNullableString(),
                 Spread = reader.ReadNullableInt32()
             };
         }

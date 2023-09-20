@@ -6,6 +6,7 @@ using Pathfinding.AlgorithmLib.Core.Interface.Extensions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Model.Notes;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace Pathfinding.App.Console.Units
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            var token = Tokens.Bind(IsStatisticsApplied, Tokens.Statistics);
+            var token = Tokens.Statistics.Bind(IsStatisticsApplied);
             messenger.RegisterData<PathfindingProcess>(this, token, SubscribeOnStatistics);
             messenger.RegisterData<Statistics>(this, Tokens.Statistics, SetStatistics);
             messenger.RegisterAlgorithmData<IGraphPath>(this, Tokens.Statistics, OnPathFound);
@@ -53,7 +54,7 @@ namespace Pathfinding.App.Console.Units
 
         private void OnInterrupted(object sender, EventArgs e)
         {
-            statistics.ResultStatus = AlgorithmStatus.Interrupted;
+            statistics.ResultStatus = Languages.Interrupted;
             timer.Stop();
         }
 
@@ -70,13 +71,13 @@ namespace Pathfinding.App.Console.Units
         private void OnPathFound((PathfindingProcess Process, IGraphPath Path) value)
         {
             var note = GetStatistics(value.Path);
-            if (note.ResultStatus != AlgorithmStatus.Interrupted)
+            if (note.ResultStatus != nameof(Languages.Interrupted))
             {
-                note.ResultStatus = AlgorithmStatus.Succeeded;
+                note.ResultStatus = nameof(Languages.Succeeded);
             }
-            if (value.Path.IsEmpty() && note.ResultStatus != AlgorithmStatus.Interrupted)
+            if (value.Path.IsEmpty() && note.ResultStatus != nameof(Languages.Interrupted))
             {
-                note.ResultStatus = AlgorithmStatus.Failed;
+                note.ResultStatus = nameof(Languages.Failed);
             }
             if (IsStatisticsApplied())
             {

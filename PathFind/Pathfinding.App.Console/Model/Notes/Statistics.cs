@@ -24,31 +24,28 @@ namespace Pathfinding.App.Console.Model.Notes
                 .Where(prop => Attribute.IsDefined(prop, typeof(DisplayableAttribute)))
                 .OrderByOrderAttribute()
                 .Select(prop => prop.GetAttributeOrDefault<DisplayNameSourceAttribute>()?.ResourceName ?? prop.Name)
-                .Select(GetString)
-                .Skip(1)
-                .ToList()
-                .AsReadOnly();
+                .Select(GetString).Skip(1).ToList().AsReadOnly();
         }
 
-        public Algorithms Algorithm { get; set; }
+        public string Algorithm { get; set; } = string.Empty;
 
-        public AlgorithmStatus ResultStatus { get; set; }
+        public string ResultStatus { get; set; } = string.Empty;
 
-        public Heuristics? Heuristics { get; set; } = null;
+        public string Heuristics { get; set; } = null;
 
-        public StepRules? StepRule { get; set; } = null;
+        public string StepRule { get; set; } = null;
 
         public TimeSpan? Elapsed { get; set; } = null;
 
         [Order(1)]
         [Displayable]
         [DisplayNameSource(nameof(Languages.Name))]
-        public string Name => GetString(Algorithm.ToString());
+        public string Name => GetString(Algorithm);
 
         [Order(9)]
         [Displayable]
         [DisplayNameSource(nameof(Languages.Status))]
-        public string Status => GetString(ResultStatus.ToString());
+        public string Status => GetString(ResultStatus);
 
         [Order(2)]
         [Displayable]
@@ -59,12 +56,12 @@ namespace Pathfinding.App.Console.Model.Notes
         [Order(6)]
         [Displayable]
         [DisplayNameSource(nameof(Languages.Rule))]
-        public string Rule => GetString(StepRule.ToString());
+        public string Rule => GetString(StepRule);
 
         [Order(7)]
         [Displayable]
         [DisplayNameSource(nameof(Languages.Heuristics))]
-        public string Heuristic => GetString(Heuristics.ToString());
+        public string Heuristic => GetString(Heuristics);
 
         [Order(3)]
         [Displayable]
@@ -88,7 +85,9 @@ namespace Pathfinding.App.Console.Model.Notes
 
         private static string GetString(string key)
         {
-            return Languages.ResourceManager.GetString(key) ?? key;
+            return key is null 
+                ? string.Empty 
+                : Languages.ResourceManager.GetString(key) ?? key;
         }
 
         private IEnumerable<(string Name, object Value)> GetNotEmptyValues()

@@ -1,4 +1,5 @@
-﻿using Pathfinding.AlgorithmLib.Core.NullObjects;
+﻿using Pathfinding.AlgorithmLib.Core.Exceptions;
+using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.NullObjects;
 using System;
@@ -9,14 +10,14 @@ namespace Pathfinding.AlgorithmLib.Extensions
 {
     public static class IEnumerableExtensions
     {
-        public static IVertex PopOrDeadEndVertex(this Stack<IVertex> stack)
+        public static IVertex PopOrThrowDeadEndVertexException(this Stack<IVertex> stack)
         {
-            return stack.Count == 0 ? DeadEndVertex.Interface : stack.Pop();
+            return stack.Count == 0 ? throw new DeadendVertexException() : stack.Pop();
         }
 
         public static IVertex DequeueOrDeadEndVertex(this Queue<IVertex> queue)
         {
-            return queue.Count == 0 ? DeadEndVertex.Interface : queue.Dequeue();
+            return queue.Count == 0 ? throw new DeadendVertexException() : queue.Dequeue();
         }
 
         public static IVertex FirstOrNullVertex(this IEnumerable<IVertex> collection, Func<IVertex, bool> predicate)

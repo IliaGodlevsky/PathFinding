@@ -22,7 +22,7 @@ namespace Shared.Primitives.ValueRange
         /// value are assigned correctly anyway</remarks>
         public InclusiveValueRange(T upperValueOfRange, T lowerValueOfRange = default)
         {
-            if (upperValueOfRange.IsLess(lowerValueOfRange))
+            if (upperValueOfRange.IsLessThan(lowerValueOfRange))
             {
                 UpperValueOfRange = lowerValueOfRange;
                 LowerValueOfRange = upperValueOfRange;

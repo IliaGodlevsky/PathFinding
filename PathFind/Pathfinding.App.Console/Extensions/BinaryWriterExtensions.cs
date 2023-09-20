@@ -28,24 +28,33 @@ namespace Pathfinding.App.Console.Extensions
             history.SmoothHistory.ForEach(writer.WriteIntArray);
         }
 
+        private static void WriteNullableString(this BinaryWriter writer, string value)
+        {
+            bool hasValue = !string.IsNullOrEmpty(value);
+            writer.Write(hasValue);
+            if (hasValue)
+            {
+                writer.Write(value);
+            }
+        }
+
         private static void WriteStatistics(this BinaryWriter writer, Statistics statistics)
         {
-            writer.WriteEnum(statistics.Algorithm);
-            writer.WriteEnum(statistics.ResultStatus);
+            writer.Write(statistics.Algorithm);
+            writer.Write(statistics.ResultStatus);
             writer.WriteNullableTimeSpan(statistics.Elapsed);
             writer.WriteNullableInt32(statistics.Visited);
             writer.WriteNullableDouble(statistics.Cost);
             writer.WriteNullableInt32(statistics.Steps);
-            writer.WriteNullableEnum(statistics.StepRule);
-            writer.WriteNullableEnum(statistics.Heuristics);
+            writer.WriteNullableString(statistics.StepRule);
+            writer.WriteNullableString(statistics.Heuristics);
             writer.WriteNullableInt32(statistics.Spread);
         }
 
         private static void WriteEnum<T>(this BinaryWriter writer, T value)
             where T : struct, Enum
         {
-            string val = value.ToString();
-            writer.Write(val);
+            writer.Write(value.ToString());
         }
 
         public static void WriteNullableEnum<T>(this BinaryWriter writer, T? value)

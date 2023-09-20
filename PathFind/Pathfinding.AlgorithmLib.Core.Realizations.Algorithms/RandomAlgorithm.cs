@@ -1,4 +1,5 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
+using Pathfinding.AlgorithmLib.Core.Exceptions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms.Localization;
 using Pathfinding.GraphLib.Core.Interface;
@@ -41,7 +42,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
                 storage.RemoveAt(index);
                 return vertex;
             }
-            return DeadEndVertex.Interface;
+            throw new DeadendVertexException();
         }
 
         protected override void RelaxVertex(IVertex vertex)

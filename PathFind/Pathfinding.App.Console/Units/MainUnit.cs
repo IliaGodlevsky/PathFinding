@@ -81,7 +81,7 @@ namespace Pathfinding.App.Console.Units
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            var token = Tokens.Bind(IsGraphCreated, Tokens.Main);
+            var token = Tokens.Main.Bind(IsGraphCreated);
             messenger.RegisterGraph(this, Tokens.Main, SetGraph);
             messenger.Register<GraphChangedMessage>(this, token, OnGraphChanged);
         }

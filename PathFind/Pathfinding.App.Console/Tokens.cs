@@ -1,5 +1,7 @@
 ﻿using Pathfinding.App.Console.Interface;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.App.Console
 {
@@ -15,9 +17,9 @@ namespace Pathfinding.App.Console
         public static readonly IToken Visualization = new Token();
         public static readonly IToken Pathfinding = new Token();
 
-        public static IToken Bind(Func<bool> condition, IToken token)
+        public static IToken Bind(this IToken token, Func<bool> condition) 
             => new ConditionToken(condition, token);
-
+        
         private sealed class Token : IToken
         {
             private readonly Guid token;
@@ -51,17 +53,18 @@ namespace Pathfinding.App.Console
         private sealed class ConditionToken : IToken
         {
             private readonly IToken token;
-            private readonly Func<bool> condition;
+            private readonly Lazy<List<Func<bool>>> condition;
 
             public ConditionToken(Func<bool> condition, IToken token)
             {
-                this.condition = condition;
+                this.condition = new(() => Disassemble(condition));
                 this.token = token;
             }
 
             public override bool Equals(object obj)
             {
-                return GetHashCode() == obj.GetHashCode() && condition();
+                return GetHashCode() == obj.GetHashCode() 
+                    && IsValidCondition();
             }
 
             public bool Equals(IToken other)
@@ -77,6 +80,26 @@ namespace Pathfinding.App.Console
             public override string ToString()
             {
                 return token.ToString();
+            }
+
+            private bool IsValidCondition()
+            {
+                return condition.Value.All(c => c.Invoke());
+            }
+
+            private static List<Func<bool>> Disassemble(Func<bool> condition)
+            {
+                var list = condition.GetInvocationList()
+                    .OfType<Func<bool>>()
+                    .ToList();
+                if (list.Count > 1)
+                {
+                    foreach (var del in list)
+                    {
+                        list.AddRange(Disassemble(del));
+                    }
+                }
+                return list;
             }
         }
     }

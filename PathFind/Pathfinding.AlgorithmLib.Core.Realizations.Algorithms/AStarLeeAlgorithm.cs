@@ -30,7 +30,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 
         protected override IVertex GetNextVertex()
         {
-            return storage.TryFirstOrDeadEndVertex();
+            return storage.TryFirstOrThrowDeadEndVertexException();
         }
 
         protected override void DropState()

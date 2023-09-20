@@ -107,7 +107,7 @@ namespace Pathfinding.App.Console.Units
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            var token = Tokens.Bind(IsVisualizationApplied, Tokens.Visualization);
+            var token = Tokens.Visualization.Bind(IsVisualizationApplied);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
             messenger.RegisterData<TimeSpan>(this, token, SetAnimationDelay);
             messenger.RegisterData<bool>(this, Tokens.Visualization, SetIsApplied);

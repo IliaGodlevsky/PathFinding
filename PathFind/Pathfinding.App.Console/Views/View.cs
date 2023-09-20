@@ -43,7 +43,7 @@ namespace Pathfinding.App.Console.Views
             int columnsNumber = (int)Math.Ceiling(menuItems.Count / 4.0);
             var menuList = menuItems.CreateMenuList(columnsNumber);
             var menuRange = new InclusiveValueRange<int>(menuItems.Count, 1);
-            string menu = string.Concat(menuList, Languages.MenuOptionChoiceMsg);
+            string menu = string.Concat(menuList, "\n", Languages.MenuOptionChoiceMsg);
             using (Cursor.UseCurrentPositionWithClean())
             {
                 int index = intInput.Input(menu, menuRange) - 1;

@@ -102,7 +102,7 @@ namespace Pathfinding.App.Console.Units
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            var token = Tokens.Bind(IsHistoryApplied, Tokens.History);
+            var token = Tokens.History.Bind(IsHistoryApplied);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
             messenger.RegisterData<bool>(this, Tokens.History, SetIsApplied);
             messenger.RegisterData<Guid>(this, token, VisualizeHistory);

@@ -67,12 +67,14 @@
     <Compile Include="DependencyInjection\Attributes\OptionalAttribute.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\KeyResolveMiddlware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\CombinedAlgorithmsResolveMiddleware.cs" />
-    <Compile Include="DependencyInjection\ConfigurationMiddlewears\TotalVisualizationMiddleware.cs" />
+    <Compile Include="DependencyInjection\ConfigurationMiddlewears\AllVisualizedVerticesMiddleware.cs" />
     <Compile Include="Extensions\BinaryReaderExtensions.cs" />
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
     <Compile Include="Interface\INeighbourhoodCommand.cs" />
     <Compile Include="Interface\IToken.cs" />
     <Compile Include="Interface\IVisualizedVertices.cs" />
+    <Compile Include="MenuItems\GraphMenuItems\LoadOnlyGraphMenuItem.cs" />
+    <Compile Include="MenuItems\GraphMenuItems\SaveGraphOnlyMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\AlgorithmInputMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\CrossedPathVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\EnqueuedVertexColorMenuItem.cs" />
@@ -104,15 +106,9 @@
     <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\LeeAlgorithmMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\RandomAlgorithmMenuItem.cs" />
     <Compile Include="Model\ApplicationSettingsStore.cs" />
-    <Compile Include="Model\Notes\Algorithms.cs" />
-    <Compile Include="Model\Notes\AlgorithmStatus.cs" />
     <Compile Include="Model\Notes\DisplayableAttribute.cs" />
-    <Compile Include="Model\Notes\Heuristics.cs" />
-    <Compile Include="Model\Notes\Neighbourhoods.cs" />
-    <Compile Include="Model\Notes\NonDisplayableAttribute.cs" />
     <Compile Include="Model\Notes\DisplayNameSourceAttribute.cs" />
     <Compile Include="Model\Notes\Table.cs" />
-    <Compile Include="Model\Notes\StepRules.cs" />
     <Compile Include="Model\VertexActions\ActiveVertex.cs" />
     <Compile Include="Model\VertexActions\NeighbourhoodActions\ActivateVertexCommand.cs" />
     <Compile Include="Model\VertexActions\NeighbourhoodActions\ExcludeVertexCommand.cs" />
@@ -122,17 +118,17 @@
     <Compile Include="Serialization\PathfindingHistorySerializer.cs" />
     <Compile Include="DataAccess\GraphPathfindingHistory.cs" />
     <Compile Include="Serialization\BinaryHistorySerializer.cs" />
-    <Compile Include="Model\Visualizations\Visuals\VisualizedCrossedPath.cs" />
-    <Compile Include="Model\Visualizations\Visuals\VisualizedEnqueued.cs" />
-    <Compile Include="Model\Visualizations\Visuals\NullVisualizedVertices.cs" />
-    <Compile Include="Model\Visualizations\Visuals\VisualizedObstacle.cs" />
-    <Compile Include="Model\Visualizations\Visuals\VisualizedPath.cs" />
-    <Compile Include="Model\Visualizations\Visuals\VisualizedRegular.cs" />
-    <Compile Include="Model\Visualizations\Visuals\VisualizedSource.cs" />
-    <Compile Include="Model\Visualizations\Visuals\VisualizedTarget.cs" />
-    <Compile Include="Model\Visualizations\Visuals\VisualizedTransit.cs" />
-    <Compile Include="Model\Visualizations\Visuals\VisualizedVisited.cs" />
-    <Compile Include="Model\Visualizations\Visuals\VisualizedVertices.cs" />
+    <Compile Include="Model\Visualizations\Containers\VisualizedCrossedPath.cs" />
+    <Compile Include="Model\Visualizations\Containers\VisualizedEnqueued.cs" />
+    <Compile Include="Model\Visualizations\Containers\NullVisualizedVertices.cs" />
+    <Compile Include="Model\Visualizations\Containers\VisualizedObstacle.cs" />
+    <Compile Include="Model\Visualizations\Containers\VisualizedPath.cs" />
+    <Compile Include="Model\Visualizations\Containers\VisualizedRegular.cs" />
+    <Compile Include="Model\Visualizations\Containers\VisualizedSource.cs" />
+    <Compile Include="Model\Visualizations\Containers\VisualizedTarget.cs" />
+    <Compile Include="Model\Visualizations\Containers\VisualizedTransit.cs" />
+    <Compile Include="Model\Visualizations\Containers\VisualizedVisited.cs" />
+    <Compile Include="Model\Visualizations\Containers\VisualizedVertices.cs" />
     <Compile Include="Model\Visualizations\VisualizedType.cs" />
     <Compile Include="Settings\Features.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -150,7 +146,6 @@
       <DependentUpon>Parametres.settings</DependentUpon>
     </Compile>
     <Compile Include="DependencyInjection\AutofacExtensions.cs" />
-    <Compile Include="DependencyInjection\ConfigurationMiddlewears\PathfindingItemResolveMiddleware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\VertexActionResolveMiddlewear.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\VisualizationUnitParametresFactory.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\RangeBuilderResolveMiddlewear.cs" />
@@ -293,7 +288,7 @@
     <Compile Include="Model\VertexActions\ReverseVertexAction.cs" />
     <Compile Include="Model\VertexFactory.cs" />
     <Compile Include="Model\VertexFromInfoFactory.cs" />
-    <Compile Include="Model\Visualizations\TotalVertexVisualization.cs" />
+    <Compile Include="Model\Visualizations\AllVisualizedVertices.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AppLayout.cs" />
@@ -505,5 +500,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,18 +1,19 @@
 ﻿using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Model.Visualizations.Visuals;
+using Pathfinding.App.Console.Model.Visualizations.Containers;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Extensions;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.Model.Visualizations
 {
-    internal sealed class TotalVertexVisualization : ITotalVisualization<Vertex>
+    internal sealed class AllVisualizedVertices : ITotalVisualization<Vertex>
     {
         private readonly IReadOnlyDictionary<VisualizedType, IVisualizedVertices> visuals;
 
-        public TotalVertexVisualization(IReadOnlyDictionary<VisualizedType, IVisualizedVertices> visuals)
+        public AllVisualizedVertices(IReadOnlyDictionary<VisualizedType, IVisualizedVertices> visuals)
         {
             this.visuals = visuals;
+            BindContainers();
         }
 
         public bool IsVisualizedAsPath(Vertex visualizable)
@@ -81,6 +82,18 @@ namespace Pathfinding.App.Console.Model.Visualizations
         private IVisualizedVertices GetOrDefault(VisualizedType type)
         {
             return visuals.GetOrDefault(type, NullVisualizedVertices.Instance);
+        }
+
+        private void BindContainers()
+        {
+            foreach (var outerVisual in visuals.Values)
+            {
+                var except = visuals.Values.Except(outerVisual);
+                foreach (var innerVisual in except)
+                {
+                    outerVisual.VertexVisualized += innerVisual.Remove;
+                }
+            }
         }
     }
 }

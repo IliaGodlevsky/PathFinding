@@ -41,7 +41,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 
         protected override IVertex GetNextVertex()
         {
-            return storage.TryFirstOrDeadEndVertex();
+            return storage.TryFirstOrThrowDeadEndVertexException();
         }
 
         protected override void PrepareForSubPathfinding((IVertex Source, IVertex Target) range)

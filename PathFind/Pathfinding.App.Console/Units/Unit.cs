@@ -1,4 +1,5 @@
 ﻿using Pathfinding.App.Console.Interface;
+using Shared.Extensions;
 using Shared.Primitives.Extensions;
 using System;
 using System.Collections.Generic;

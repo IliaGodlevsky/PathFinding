@@ -1,8 +1,8 @@
 ﻿using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.Notes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace Pathfinding.App.Console.Extensions
 {
@@ -23,6 +23,11 @@ namespace Pathfinding.App.Console.Extensions
             int columnsNumber = 2, string header = null)
         {
             return new(items.Select(descriptionSelector), columnsNumber, header);
+        }
+
+        public static Table<T> ToTable<T>(this IEnumerable<T> items)
+        {
+            return new Table<T>(items);
         }
     }
 }

@@ -14,13 +14,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     [MediumPriority]
     internal sealed class ChooseNeighbourhoodMenuItem : IMenuItem
     {
-        private readonly IReadOnlyDictionary<Neighbourhoods, INeighborhoodFactory> factories;
+        private readonly IReadOnlyDictionary<string, INeighborhoodFactory> factories;
         private readonly IMessenger messenger;
         private readonly IInput<int> intInput;
 
         public ChooseNeighbourhoodMenuItem(IMessenger messenger, 
             IInput<int> intInput,
-            IReadOnlyDictionary<Neighbourhoods, INeighborhoodFactory> factories)
+            IReadOnlyDictionary<string, INeighborhoodFactory> factories)
         {
             this.messenger = messenger;
             this.intInput = intInput;
@@ -36,7 +36,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
             if (factories.Count == 1)
             {
-                messenger.SendData(factories[0], Tokens.Graph);
+                messenger.SendData(factories.ElementAt(0).Value, Tokens.Graph);
                 return;
             }
 

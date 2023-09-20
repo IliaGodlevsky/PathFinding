@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Pathfinding.App.Console.Model.Visualizations.Visuals
+namespace Pathfinding.App.Console.Model.Visualizations.Containers
 {
     internal sealed class NullVisualizedVertices : Singleton<NullVisualizedVertices, IVisualizedVertices>, IVisualizedVertices
     {

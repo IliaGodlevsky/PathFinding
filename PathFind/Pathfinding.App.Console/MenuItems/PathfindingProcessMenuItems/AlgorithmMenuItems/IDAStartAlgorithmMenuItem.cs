@@ -17,13 +17,13 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     [HighPriority]
     internal sealed class IDAStarAlgorithmMenuItem : AlgorithmInputMenuItem
     {
-        private readonly IReadOnlyDictionary<StepRules, IStepRule> stepRules;
-        private readonly IReadOnlyDictionary<Heuristics, IHeuristic> heuristics;
+        private readonly IReadOnlyDictionary<string, IStepRule> stepRules;
+        private readonly IReadOnlyDictionary<string, IHeuristic> heuristics;
         private readonly InclusiveValueRange<int> spreadRange;
 
         public IDAStarAlgorithmMenuItem(
-            IReadOnlyDictionary<StepRules, IStepRule> stepRules,
-            IReadOnlyDictionary<Heuristics, IHeuristic> heuristics,
+            IReadOnlyDictionary<string, IStepRule> stepRules,
+            IReadOnlyDictionary<string, IHeuristic> heuristics,
             IInput<int> input,
             IMessenger messenger)
             : base(messenger, input)
@@ -48,8 +48,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
                 int spread = intInput.Input(message, spreadRange);
                 var statistics = new Statistics
                 {
-                    Algorithm = Algorithms.IDAStarAlgorithm,
-                    ResultStatus = AlgorithmStatus.Started,
+                    Algorithm = nameof(Languages.IDAStarAlgorithm),
+                    ResultStatus = nameof(Languages.Started),
                     StepRule = stepRule.Key,
                     Heuristics = heuristic.Key,
                     Spread = spread

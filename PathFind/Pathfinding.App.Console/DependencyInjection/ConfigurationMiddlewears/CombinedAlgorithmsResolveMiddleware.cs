@@ -23,11 +23,11 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 
         public void Execute(ResolveRequestContext context, Action<ResolveRequestContext> next)
         {
-            var heuristics = context.ResolveWithMetadataKeyed<Heuristics, IHeuristic>(key);
-            var paramTypeHeuristics = typeof(IReadOnlyDictionary<Heuristics, IHeuristic>);
+            var heuristics = context.ResolveWithMetadataKeyed<string, IHeuristic>(key);
+            var paramTypeHeuristics = typeof(IReadOnlyDictionary<string, IHeuristic>);
             var heuristicsParam = new TypedParameter(paramTypeHeuristics, heuristics);
-            var stepRules = context.ResolveWithMetadataKeyed<StepRules, IStepRule>(key);
-            var paramTypeStepRules = typeof(IReadOnlyDictionary<StepRules, IStepRule>);
+            var stepRules = context.ResolveWithMetadataKeyed<string, IStepRule>(key);
+            var paramTypeStepRules = typeof(IReadOnlyDictionary<string, IStepRule>);
             var stepRulesParam = new TypedParameter(paramTypeStepRules, stepRules);
             context.ChangeParametres(heuristicsParam, stepRulesParam);
             next(context);

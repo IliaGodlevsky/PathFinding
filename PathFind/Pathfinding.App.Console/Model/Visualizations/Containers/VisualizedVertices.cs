@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace Pathfinding.App.Console.Model.Visualizations.Visuals
+namespace Pathfinding.App.Console.Model.Visualizations.Containers
 {
     internal abstract class VisualizedVertices : IVisualizedVertices
     {

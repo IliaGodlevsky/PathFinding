@@ -18,12 +18,11 @@ namespace Pathfinding.App.Console.DependencyInjection
     internal static class AutofacExtensions
     {
         public static void RegisterUnits<TExit>(this ContainerBuilder builder, IParametresFactory factory, params Type[] units)
-            where TExit : ExitMenuItem
+            where TExit : IMenuItem
         {
             var resolveMiddleware = new UnitResolveMiddleware(RegistrationConstants.UnitTypeKey, factory, units);
-            builder.RegisterTypes(units).WithMetadata(RegistrationConstants.UnitTypeKey, type => type)
-                .AsSelf().AsImplementedInterfaces().AutoActivate().SingleInstance()
-                .ConfigurePipeline(p => p.Use(resolveMiddleware));
+            builder.RegisterTypes(units).WithMetadata(RegistrationConstants.UnitTypeKey, type => type).AsSelf()
+                .AsImplementedInterfaces().AutoActivate().SingleInstance().ConfigurePipeline(p => p.Use(resolveMiddleware));
             foreach (var unit in units)
             {
                 builder.RegisterType<TExit>().Keyed<IMenuItem>(unit).SingleInstance();
@@ -32,7 +31,7 @@ namespace Pathfinding.App.Console.DependencyInjection
 
         public static void RegisterUnit<TUnit, TExit>(this ContainerBuilder builder, IParametresFactory factory) 
             where TUnit : IUnit
-            where TExit : ExitMenuItem
+            where TExit : IMenuItem
         {
             builder.RegisterUnits<TExit>(factory, typeof(TUnit));
         }
@@ -65,7 +64,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             return builder.OnActivated(Register);
         }
 
-        public static void RegisterVisualizedVertices<T>(this ContainerBuilder builder, VisualizedType type)
+        public static void RegisterVisualizionContainer<T>(this ContainerBuilder builder, VisualizedType type)
             where T : IVisualizedVertices
         {
             builder.RegisterType<T>().As<IVisualizedVertices>()

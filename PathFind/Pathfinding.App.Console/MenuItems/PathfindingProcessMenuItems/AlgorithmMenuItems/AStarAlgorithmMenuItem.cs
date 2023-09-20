@@ -14,12 +14,12 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
     [HighPriority]
     internal sealed class AStarAlgorithmMenuItem : AlgorithmInputMenuItem
     {
-        private readonly IReadOnlyDictionary<StepRules, IStepRule> stepRules;
-        private readonly IReadOnlyDictionary<Heuristics, IHeuristic> heuristics;
+        private readonly IReadOnlyDictionary<string, IStepRule> stepRules;
+        private readonly IReadOnlyDictionary<string, IHeuristic> heuristics;
 
         public AStarAlgorithmMenuItem(
-            IReadOnlyDictionary<StepRules, IStepRule> stepRules,
-            IReadOnlyDictionary<Heuristics, IHeuristic> heuristics,
+            IReadOnlyDictionary<string, IStepRule> stepRules,
+            IReadOnlyDictionary<string, IHeuristic> heuristics,
             IInput<int> input,
             IMessenger messenger)
             : base(messenger, input)
@@ -39,8 +39,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
             var heuristic = InputItem(heuristics, Languages.ChooseHeuristicMsg);
             var statistics = new Statistics
             {
-                Algorithm = Algorithms.AStarAlgorithm,
-                ResultStatus = AlgorithmStatus.Started,
+                Algorithm = nameof(Languages.AStarAlgorithm),
+                ResultStatus = nameof(Languages.Started),
                 StepRule = stepRule.Key,
                 Heuristics = heuristic.Key
             };

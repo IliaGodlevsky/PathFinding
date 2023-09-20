@@ -3,13 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="MaxGraphWidth" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">90</Value>
+      <Value Profile="(Default)">99</Value>
     </Setting>
     <Setting Name="MinGraphWidth" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="MaxGraphLength" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">45</Value>
+      <Value Profile="(Default)">99</Value>
     </Setting>
     <Setting Name="MinGraphLength" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">2</Value>

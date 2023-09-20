@@ -44,17 +44,17 @@ namespace Pathfinding.App.Console.Serialization
             }
         }
 
-        public void SerializeTo(GraphsPathfindingHistory item, Stream stream)
+        public void SerializeTo(GraphsPathfindingHistory graphHistory, Stream stream)
         {
             try
             {
                 using (var writer = new BinaryWriter(stream, Encoding.Default, leaveOpen: true))
                 {
-                    writer.Write(item.Count);
-                    foreach (var (Graph, History) in item)
+                    writer.Write(graphHistory.Count);
+                    foreach (var (graph, history) in graphHistory)
                     {
-                        graphSerializer.SerializeTo(Graph, stream);
-                        historySerializer.SerializeTo(History, stream);
+                        graphSerializer.SerializeTo(graph, stream);
+                        historySerializer.SerializeTo(history, stream);
                     }
                 }
             }
