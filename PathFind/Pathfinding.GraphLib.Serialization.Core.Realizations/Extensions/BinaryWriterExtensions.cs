@@ -24,7 +24,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
         }
 
         public static void WriteCoordinates(this BinaryWriter writer,
-            IReadOnlyList<ICoordinate> neighbourhood)
+            IReadOnlyCollection<ICoordinate> neighbourhood)
         {
             writer.Write(neighbourhood.Count);
             neighbourhood.ForEach(writer.WriteIntArray);

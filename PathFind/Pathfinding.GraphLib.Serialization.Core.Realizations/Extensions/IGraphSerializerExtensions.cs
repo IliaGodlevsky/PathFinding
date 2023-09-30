@@ -26,7 +26,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
 
         public static T DeserializeFromFile<T>(this ISerializer<T> self, string filePath)
         {
-            using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            using (var fileStream = File.OpenRead(filePath))
             {
                 return self.DeserializeFrom(fileStream);
             }

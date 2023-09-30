@@ -7,11 +7,7 @@ namespace Pathfinding.App.Console.DataAccess
 {
     internal sealed class GraphPathfindingHistory
     {
-        public List<Guid> Algorithms { get; } = new();
-
-        public List<ICoordinate> PathfindingRange { get; set; } = new();
-
-        public Stack<IReadOnlyList<int>> SmoothHistory { get; } = new();
+        public HashSet<Guid> Algorithms { get; } = new();
 
         public Dictionary<Guid, List<ICoordinate>> Visited { get; } = new();
 
@@ -24,5 +20,9 @@ namespace Pathfinding.App.Console.DataAccess
         public Dictionary<Guid, List<int>> Costs { get; } = new();
 
         public Dictionary<Guid, Statistics> Statistics { get; } = new();
+
+        public HashSet<ICoordinate> PathfindingRange { get; set; } = new();
+
+        public Stack<IReadOnlyList<int>> SmoothHistory { get; } = new();
     }
 }

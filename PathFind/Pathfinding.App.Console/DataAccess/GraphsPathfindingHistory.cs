@@ -18,10 +18,9 @@ namespace Pathfinding.App.Console.DataAccess
 
         public void Add(Graph2D<Vertex> key, GraphPathfindingHistory value) => history.Add(key, value);
 
-        public void Add((Graph2D<Vertex> Graph, GraphPathfindingHistory History) note)
-        {
-            history.Add(note.Graph, note.History);
-        }
+        public void Add((Graph2D<Vertex> Graph, GraphPathfindingHistory History) note) => Add(note.Graph, note.History);
+
+        public void Add(Graph2D<Vertex> key) => history.Add(key, new());
 
         public void Clear() => history.Clear();
 

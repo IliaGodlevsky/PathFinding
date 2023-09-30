@@ -637,6 +637,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sharing.
+        /// </summary>
+        public static string GraphSharing {
+            get {
+                return ResourceManager.GetString("GraphSharing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input width of graph: .
         /// </summary>
         public static string GraphWidthInputMsg {
@@ -858,6 +867,24 @@ namespace Pathfinding.App.Console.Localization {
         public static string LoadGraph {
             get {
                 return ResourceManager.GetString("LoadGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load graph only.
+        /// </summary>
+        public static string LoadGraphOnly {
+            get {
+                return ResourceManager.GetString("LoadGraphOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load range.
+        /// </summary>
+        public static string LoadRange {
+            get {
+                return ResourceManager.GetString("LoadRange", resourceCulture);
             }
         }
         
@@ -1146,6 +1173,24 @@ namespace Pathfinding.App.Console.Localization {
         public static string SaveGraph {
             get {
                 return ResourceManager.GetString("SaveGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save graph only.
+        /// </summary>
+        public static string SaveGraphOnly {
+            get {
+                return ResourceManager.GetString("SaveGraphOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save range.
+        /// </summary>
+        public static string SaveRange {
+            get {
+                return ResourceManager.GetString("SaveRange", resourceCulture);
             }
         }
         

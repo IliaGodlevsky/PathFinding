@@ -50,12 +50,14 @@ namespace Pathfinding.Visualization.Core.Abstractions
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    range.Transit.Add((TVertex)e.NewItems[0]);
-                    ((TVertex)e.NewItems[0]).VisualizeAsTransit();
+                    var vertex = (TVertex)e.NewItems[0];
+                    range.Transit.Add(vertex);
+                    vertex.VisualizeAsTransit();
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    range.Transit.Remove((TVertex)e.OldItems[0]);
-                    ((TVertex)e.OldItems[0]).VisualizeAsRegular();
+                    vertex = (TVertex)e.OldItems[0];
+                    range.Transit.Remove(vertex);
+                    vertex.VisualizeAsRegular();
                     break;
                 case NotifyCollectionChangedAction.Reset:
                     range.Transit.ForEach(v => v.VisualizeAsRegular());

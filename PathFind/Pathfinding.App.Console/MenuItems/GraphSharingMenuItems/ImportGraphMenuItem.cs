@@ -11,7 +11,7 @@ using Shared.Extensions;
 using System;
 using System.Linq;
 
-namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
+namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 {
     internal abstract class ImportGraphMenuItem<TPath> : IMenuItem
     {
@@ -43,7 +43,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 var path = InputPath();
                 var importedHistory = ImportGraph(path);
                 importedHistory.ForEach(history.Add);
-                if (history.Count == importedHistory.Count)
+                if (history.Count == importedHistory.Count && history.Count > 0)
                 {
                     var graph = importedHistory.Graphs.FirstOrDefault();
                     var costRange = graph.First().Cost.CostRange;

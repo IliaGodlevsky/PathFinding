@@ -15,7 +15,7 @@ namespace Pathfinding.GraphLib.UnitTest.Realizations.TestFactories.Layers
             foreach (var vertex in graph)
             {
                 var neighborhood = factory.CreateNeighborhood(vertex.Position);
-                vertex.Neighbours = neighborhood.GetNeighboursWithinGraph(graph).ToList();
+                vertex.Neighbours = neighborhood.GetNeighboursWithinGraph(graph).ToHashSet();
             }
         }
     }

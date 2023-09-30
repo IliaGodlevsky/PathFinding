@@ -10,7 +10,7 @@ using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
 
-namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
+namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 {
     [LowPriority]
     internal sealed class RecieveGraphMenuItem : ImportGraphMenuItem<int>

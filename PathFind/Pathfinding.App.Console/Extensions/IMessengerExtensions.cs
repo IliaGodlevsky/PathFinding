@@ -27,12 +27,6 @@ namespace Pathfinding.App.Console.Extensions
             messenger.Register<T>(recipient, token, action);
         }
 
-        public static void RegisterAction<T>(this IMessenger messenger, object recipient,
-            IToken token, Action action)
-        {
-            messenger.Register<T>(recipient, token, _ => action());
-        }
-
         public static void RegisterGraph(this IMessenger messenger, object recipient,
             IToken token, Action<Graph2D<Vertex>> action)
         {

@@ -4,41 +4,44 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
+using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
+namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 {
     [LowPriority]
-    internal sealed class SaveGraphOnlyMenuItem : IConditionedMenuItem
+    internal sealed class SavePathfindingRangeMenuItem : IConditionedMenuItem
     {
+        private readonly ISerializer<IEnumerable<ICoordinate>> serializer;
+        private readonly GraphsPathfindingHistory history;
         private readonly IInput<string> stringInput;
         private readonly IInput<int> intInput;
-        private readonly GraphsPathfindingHistory history;
-        private readonly ISerializer<Graph2D<Vertex>> serializer;
         private readonly ILog log;
 
-        public SaveGraphOnlyMenuItem(IFilePathInput input, 
-            IInput<int> intInput, 
+        public SavePathfindingRangeMenuItem(ISerializer<IEnumerable<ICoordinate>> serializer,
             GraphsPathfindingHistory history,
-            ISerializer<Graph2D<Vertex>> serializer, 
+            IFilePathInput stringInput,
+            IInput<int> intInput,
             ILog log)
         {
-            this.stringInput = input;
-            this.intInput = intInput;
-            this.history = history;
             this.serializer = serializer;
             this.log = log;
+            this.history = history;
+            this.stringInput = stringInput;
+            this.intInput = intInput;
         }
 
         public bool CanBeExecuted()
         {
-            return history.Count > 0;
+            return history.Graphs
+                .Select(graph => history.GetFor(graph))
+                .Any(hist => hist.PathfindingRange.Any());
         }
 
         public async void Execute()
@@ -48,17 +51,21 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 if (history.Count == 1)
                 {
                     var path = stringInput.Input();
-                    var graph = history.Graphs.First();
-                    await serializer.SerializeToFileAsync(graph, path);
+                    var range = history.First().History.PathfindingRange.ToArray();
+                    await serializer.SerializeToFileAsync(range, path);
                     return;
                 }
-                var graphs = history.Graphs.ToList();
+                var graphs = history.Graphs
+                    .Where(graph => history.GetFor(graph).PathfindingRange.Any())
+                    .ToArray();
+                var histories = graphs.Select(history.GetFor).ToArray();
                 string menuList = CreateMenuList(graphs);
-                int index = InputIndex(menuList, graphs.Count);
-                if (index != graphs.Count)
+                int index = InputIndex(menuList, histories.Length);
+                if (index != histories.Length)
                 {
                     var path = stringInput.Input();
-                    await serializer.SerializeToFileAsync(graphs[index], path);
+                    var range = histories[index].PathfindingRange.ToArray();
+                    await serializer.SerializeToFileAsync(range, path);
                 }
             }
             catch (Exception ex)
@@ -86,7 +93,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public override string ToString()
         {
-            return "Save only graph";
+            return Languages.SaveRange;
         }
     }
 }

@@ -7,12 +7,12 @@ using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
 using System.Threading.Tasks;
 
-namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
+namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 {
     [LowPriority]
-    internal sealed class SaveGraphMenuItem : ExportGraphMenuItem<string>
+    internal sealed class SendGraphMenuItem : ExportGraphMenuItem<(string Host, int Port)>
     {
-        public SaveGraphMenuItem(IFilePathInput input,
+        public SendGraphMenuItem(IInput<(string Host, int Port)> input,
             IInput<int> intInput,
             GraphsPathfindingHistory history,
             ISerializer<GraphsPathfindingHistory> graphSerializer,
@@ -21,12 +21,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
         }
 
-        public override string ToString() => Languages.SaveGraph;
+        public override string ToString() => Languages.SendGraph;
 
 
-        protected override async Task ExportAsync(GraphsPathfindingHistory info, string path)
+        protected override async Task ExportAsync(GraphsPathfindingHistory graph,
+            (string Host, int Port) path)
         {
-            await graphSerializer.SerializeToFileAsync(info, path);
+            await graphSerializer.SerializeToNetworkAsync(graph, path);
         }
     }
 }

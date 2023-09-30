@@ -4,24 +4,21 @@ namespace Shared.Primitives
 {
     public readonly ref struct Disposable
     {
-        private readonly Action[] actions;
+        private readonly Action action;
 
-        public static Disposable Use(params Action[] actions)
+        public static Disposable Use(Action action)
         {
-            return new(actions);
+            return new(action);
         }
 
-        private Disposable(Action[] actions)
+        private Disposable(Action action)
         {
-            this.actions = actions;
+            this.action = action;
         }
 
         public readonly void Dispose()
         {
-            for (int i = 0; i < actions.Length; i++)
-            {
-                actions[i]?.Invoke();
-            }
+            action?.Invoke();
         }
     }
 }

@@ -2,9 +2,9 @@
 using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
@@ -12,10 +12,10 @@ using Pathfinding.Logging.Interface;
 using System;
 using System.Linq;
 
-namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
+namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 {
     [LowPriority]
-    internal sealed class LoadOnlyGraphMenuItem : IMenuItem
+    internal sealed class LoadGraphOnlyMenuItem : IMenuItem
     {
         private readonly IMessenger messenger;
         private readonly IInput<string> input;
@@ -23,7 +23,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private readonly GraphsPathfindingHistory history;
         private readonly ILog log;
 
-        public LoadOnlyGraphMenuItem(IMessenger messenger,
+        public LoadGraphOnlyMenuItem(IMessenger messenger,
             IFilePathInput input,
             GraphsPathfindingHistory history,
             ISerializer<Graph2D<Vertex>> serializer, ILog log)
@@ -41,7 +41,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             {
                 var path = input.Input();
                 var graph = serializer.DeserializeFromFile(path);
-                history.Add(graph, new GraphPathfindingHistory());
+                history.Add(graph);
                 if (history.Count == 1)
                 {
                     var costRange = graph.First().Cost.CostRange;
@@ -57,7 +57,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public override string ToString()
         {
-            return "Load graph only";
+            return Languages.LoadGraphOnly;
         }
     }
 }

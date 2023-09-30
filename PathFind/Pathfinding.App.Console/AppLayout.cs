@@ -15,10 +15,12 @@ namespace Pathfinding.App.Console
         public const int HeightOfAbscissaView = 2;
         public const int HeightOfGraphParametresView = 1;
 
-        public static readonly int WidthOfOrdinateView = (Constants.GraphLengthValueRange.UpperValueOfRange - 1).GetDigitsNumber() + 1;
+        public static readonly int WidthOfOrdinateView 
+            = (Constants.GraphLengthValueRange.UpperValueOfRange - 1).GetDigitsNumber() + 1;
         public static readonly int YCoordinatePadding = WidthOfOrdinateView - 1;
 
-        private static readonly Point GraphFieldPosition = new(WidthOfOrdinateView, HeightOfAbscissaView + HeightOfGraphParametresView);
+        private static readonly Point GraphFieldPosition 
+            = new(WidthOfOrdinateView, HeightOfAbscissaView + HeightOfGraphParametresView);
 
         private static int CurrentMaxValueOfRange;
         private static Point StatisticsPosition = Point.Empty;

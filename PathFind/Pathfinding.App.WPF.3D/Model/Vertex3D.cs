@@ -38,7 +38,7 @@ namespace Pathfinding.App.WPF._3D.Model
 
         public IVertexCost Cost { get; set; }
 
-        public IList<IVertex> Neighbours { get; set; }
+        public ICollection<IVertex> Neighbours { get; set; }
 
         public ICoordinate Position { get; }
 

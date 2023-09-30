@@ -5,8 +5,8 @@ using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
+using Shared.Extensions;
 using System;
-using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
 {
@@ -35,7 +35,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
             base.Execute();
             var hist = history.GetFor(graph);
             hist.PathfindingRange.Clear();
-            hist.PathfindingRange.AddRange(builder.Range.GetCoordinates());
+            var range = builder.Range.GetCoordinates();
+            hist.PathfindingRange.AddRange(range);
         }
 
         public override string ToString()

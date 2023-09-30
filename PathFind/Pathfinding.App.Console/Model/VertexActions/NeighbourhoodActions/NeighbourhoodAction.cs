@@ -1,5 +1,4 @@
 ﻿using Pathfinding.App.Console.Interface;
-using Pathfinding.GraphLib.Factory.Interface;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,12 +10,12 @@ namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions
 
         private ActiveVertex Active { get; }
 
-        public NeighbourhoodAction(ActiveVertex active, INeighborhoodFactory factory)
+        public NeighbourhoodAction(ActiveVertex active)
         {
             Active = active;
             Commands = new INeighbourhoodCommand[]
             {
-                new ActivateVertexCommand(factory),
+                new ActivateVertexCommand(),
                 new IncludeVertexCommand(),
                 new ExcludeVertexCommand()
             };
@@ -26,11 +25,9 @@ namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions
         {
             using (Cursor.HideCursor())
             {
-                var command = Commands.FirstOrDefault(cmd => cmd.CanExecute(Active, vertex));
-                if (command != null)
-                {
-                    command.Execute(Active, vertex);
-                }
+                Commands
+                    .FirstOrDefault(cmd => cmd.CanExecute(Active, vertex))
+                    ?.Execute(Active, vertex);
             }
         }
     }

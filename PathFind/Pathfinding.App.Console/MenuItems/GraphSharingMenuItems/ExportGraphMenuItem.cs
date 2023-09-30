@@ -1,10 +1,8 @@
-﻿using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.App.Console.DataAccess;
+﻿using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
@@ -13,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
+namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 {
     internal abstract class ExportGraphMenuItem<TPath> : IConditionedMenuItem
     {

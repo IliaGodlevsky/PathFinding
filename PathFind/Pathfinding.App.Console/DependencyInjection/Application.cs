@@ -14,6 +14,7 @@ using Pathfinding.App.Console.MenuItems;
 using Pathfinding.App.Console.MenuItems.ColorMenuItems;
 using Pathfinding.App.Console.MenuItems.EditorMenuItems;
 using Pathfinding.App.Console.MenuItems.GraphMenuItems;
+using Pathfinding.App.Console.MenuItems.GraphSharingMenuItems;
 using Pathfinding.App.Console.MenuItems.KeysMenuItems;
 using Pathfinding.App.Console.MenuItems.MainMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems;
@@ -24,7 +25,6 @@ using Pathfinding.App.Console.MenuItems.PathfindingStatisticsMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.InProcessActions;
-using Pathfinding.App.Console.Model.Notes;
 using Pathfinding.App.Console.Model.PathfindingActions;
 using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.App.Console.Model.Visualizations;
@@ -65,7 +65,6 @@ using System.Configuration;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
-using System.Text;
 using static Pathfinding.App.Console.DependencyInjection.PathfindingUnits;
 using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
 
@@ -102,7 +101,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             var applied = Features.Default.GetType().GetProperties()
                 .Where(prop => Attribute.IsDefined(prop, typeof(FeatureAttribute)))
                 .Select(prop => (prop.Name, Value: prop.GetValue(Features.Default)))
-                .Where(item => item.Value.Equals(true) && optional.ContainsKey(item.Name))
+                .Where(item => item.Value is true && optional.ContainsKey(item.Name))
                 .Select(item => (IFeature)Activator.CreateInstance(optional[item.Name]))
                 .Concat(mandatory).ToList().AsReadOnly();
             return applied;
@@ -236,21 +235,27 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterType<SaveGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
-                builder.RegisterType<LoadGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
-                builder.RegisterType<SendGraphMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
-                builder.RegisterType<RecieveGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
-                builder.RegisterType<SaveGraphOnlyMenuItem>().Keyed<IConditionedMenuItem>(Graph).SingleInstance();
-                builder.RegisterType<LoadOnlyGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
+                builder.RegisterUnit<GraphSharingUnit, ExitMenuItem>(new UnitParamtresFactory());
+                builder.RegisterType<GraphSharingUnitMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main).SingleInstance();
+
+                builder.RegisterType<SaveGraphMenuItem>().Keyed<IConditionedMenuItem>(Sharing).SingleInstance();
+                builder.RegisterType<LoadGraphMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
+                builder.RegisterType<SendGraphMenuItem>().Keyed<IConditionedMenuItem>(Sharing).SingleInstance();
+                builder.RegisterType<RecieveGraphMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
+                builder.RegisterType<SaveGraphOnlyMenuItem>().Keyed<IConditionedMenuItem>(Sharing).SingleInstance();
+                builder.RegisterType<LoadGraphOnlyMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
+                builder.RegisterType<SavePathfindingRangeMenuItem>().Keyed<IConditionedMenuItem>(Sharing).SingleInstance();
+                builder.RegisterType<LoadPathfindingRangeMenuItem>().Keyed<IConditionedMenuItem>(Sharing)
+                    .As<ICanRecieveMessage>().SingleInstance();
 
                 builder.RegisterType<FilePathInput>().As<IFilePathInput>().SingleInstance();
                 builder.RegisterType<AddressInput>().As<IInput<(string, int)>>().SingleInstance();
 
                 builder.RegisterInstance(Aes.Create()).As<SymmetricAlgorithm>().SingleInstance();
 
+                builder.RegisterType<BinaryRangeSerializer>().As<ISerializer<IEnumerable<ICoordinate>>>().SingleInstance();
                 builder.RegisterType<BinaryHistorySerializer>().As<ISerializer<GraphPathfindingHistory>>().SingleInstance();
                 builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>().As<ISerializer<Graph2D<Vertex>>>().SingleInstance();
-
                 builder.RegisterType<PathfindingHistorySerializer>().As<ISerializer<GraphsPathfindingHistory>>().SingleInstance();
 
                 builder.RegisterGenericDecorator(typeof(BufferedSerializer<>), typeof(ISerializer<>));

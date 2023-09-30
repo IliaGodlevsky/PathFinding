@@ -56,7 +56,7 @@ namespace Pathfinding.App.Console.Model
             }
         }
 
-        public IList<IVertex> Neighbours { get; set; } = new List<IVertex>();
+        public ICollection<IVertex> Neighbours { get; set; } = new List<IVertex>();
 
         public ICoordinate Position { get; } = NullCoordinate.Interface;
 

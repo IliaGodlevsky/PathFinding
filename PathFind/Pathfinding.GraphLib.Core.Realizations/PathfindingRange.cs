@@ -18,6 +18,7 @@ namespace Pathfinding.GraphLib.Core.Realizations
         {
             return Transit.Append(Target)
                 .Prepend(Source)
+                .Where(vertex => vertex is not null)
                 .GetEnumerator();
         }
 

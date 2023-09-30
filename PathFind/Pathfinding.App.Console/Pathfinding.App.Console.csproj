@@ -73,8 +73,11 @@
     <Compile Include="Interface\INeighbourhoodCommand.cs" />
     <Compile Include="Interface\IToken.cs" />
     <Compile Include="Interface\IVisualizedVertices.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\LoadOnlyGraphMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\SaveGraphOnlyMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\LoadOnlyGraphMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\LoadPathfindingRangeMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\SaveGraphOnlyMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\SavePathfindingRangeMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\GraphSharingUnitMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\AlgorithmInputMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\CrossedPathVertexColorMenuItem.cs" />
     <Compile Include="MenuItems\ColorMenuItems\EnqueuedVertexColorMenuItem.cs" />
@@ -89,7 +92,6 @@
     <Compile Include="MenuItems\GraphMenuItems\ChooseGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\ChooseNeighbourhoodMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\DeleteGraphMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\EnterNeighbourhoodMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\EditorKeysMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\KeysMenuItem.cs" />
     <Compile Include="MenuItems\KeysMenuItems\PathfindingControlKeysMenuItem.cs" />
@@ -180,21 +182,21 @@
     </Compile>
     <Compile Include="MenuItems\ColorMenuItems\ColorsMenuItem.cs" />
     <Compile Include="MenuItems\ExitMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\ExportGraphMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\ExportGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\GraphCreatingMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\ImportGraphMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\ImportGraphMenuItem.cs" />
     <Compile Include="MenuItems\EditorMenuItems\ChangeCostMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\AssembleGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\EnterCostRangeMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\EnterGraphParametresMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\EnterObstaclePercentMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\LoadGraphMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\LoadGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\GraphMenuItem.cs" />
     <Compile Include="MenuItems\EditorMenuItems\ReverseVertexMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\SaveGraphMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\SaveGraphMenuItem.cs" />
     <Compile Include="MenuItems\EditorMenuItems\SmoothGraphMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\RecieveGraphMenuItem.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\SendGraphMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\RecieveGraphMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\SendGraphMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\ColorsUnitMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\EditorUnitMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\GraphCreateMenuItem.cs" />
@@ -232,6 +234,7 @@
     <Compile Include="Units\AlgorithmChooseUnit.cs" />
     <Compile Include="Units\ColorsUnit.cs" />
     <Compile Include="Units\GraphEditorUnit.cs" />
+    <Compile Include="Units\GraphSharingUnit.cs" />
     <Compile Include="Units\GraphUnit.cs" />
     <Compile Include="Units\KeysUnit.cs" />
     <Compile Include="Units\MainUnit.cs" />

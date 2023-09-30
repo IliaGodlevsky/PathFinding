@@ -51,22 +51,6 @@ namespace Pathfinding.App.Console.Extensions
             writer.WriteNullableInt32(statistics.Spread);
         }
 
-        private static void WriteEnum<T>(this BinaryWriter writer, T value)
-            where T : struct, Enum
-        {
-            writer.Write(value.ToString());
-        }
-
-        public static void WriteNullableEnum<T>(this BinaryWriter writer, T? value)
-            where T : struct, Enum
-        {
-            writer.Write(value.HasValue);
-            if (value.HasValue)
-            {
-                writer.WriteEnum(value.Value);
-            }
-        }
-
         private static void WriteNullableInt32(this BinaryWriter writer, int? value)
         {
             writer.Write(value.HasValue);

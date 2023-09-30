@@ -1,5 +1,6 @@
 ﻿using Pathfinding.GraphLib.Core.Abstractions;
 using Pathfinding.GraphLib.Core.Interface;
+using Shared.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -37,9 +38,9 @@ namespace Pathfinding.GraphLib.Core.Realizations.Neighborhoods
             neighbourhood = new(GetNeighborhood, true);
         }
 
-        private List<ICoordinate> CollectNeighbors(int depth = 0)
+        private HashSet<ICoordinate> CollectNeighbors(int depth = 0)
         {
-            var neighborhood = new List<ICoordinate>();
+            var neighborhood = new HashSet<ICoordinate>();
             for (int offset = -1; offset <= 1; offset++)
             {
                 resultCoordinatesValues[depth] = selfCoordinate[depth] + offset;

@@ -45,7 +45,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             this.assemble = assemble;
         }
 
-
         protected void SetNeighbourhood(INeighborhoodFactory factory) => neighborhoodFactory = factory;
 
         protected void SetCostRange(InclusiveValueRange<int> range) => costRange = range;
@@ -62,7 +61,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             var layers = GetLayers();
             var graph = assemble.AssembleGraph(layers, width, length);
-            history.Add(graph, new GraphPathfindingHistory());
+            history.Add(graph);
             messenger.SendData(costRange, Tokens.AppLayout);
             messenger.SendData(graph, Tokens.AppLayout, Tokens.Main, Tokens.Common);
         }
@@ -76,7 +75,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         protected virtual IEnumerable<ILayer<Graph2D<Vertex>, Vertex>> GetLayers()
         {
-            // The order of the layers shouldn't be changed
             yield return new NeighborhoodLayer<Graph2D<Vertex>, Vertex>(neighborhoodFactory);
             yield return new VertexCostLayer<Graph2D<Vertex>, Vertex>(costFactory, costRange, random);
             yield return new ObstacleLayer<Graph2D<Vertex>, Vertex>(random, obstaclePercent);
@@ -84,8 +82,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public virtual void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterData<INeighborhoodFactory>(this, Tokens.Graph, SetNeighbourhood);
             messenger.RegisterData<int>(this, Tokens.Graph, SetObstaclePercent);
+            messenger.RegisterData<INeighborhoodFactory>(this, Tokens.Graph, SetNeighbourhood);
             messenger.RegisterData<(int Width, int Length)>(this, Tokens.Graph, SetGraphParams);
             messenger.RegisterData<InclusiveValueRange<int>>(this, Tokens.Graph, SetCostRange);
         }
