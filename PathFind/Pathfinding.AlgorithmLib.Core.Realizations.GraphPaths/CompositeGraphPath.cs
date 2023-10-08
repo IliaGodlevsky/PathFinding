@@ -9,7 +9,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths
 {
     public sealed class CompositeGraphPath : IGraphPath
     {
-        private readonly IReadOnlyCollection<IGraphPath> paths;
+        private readonly IEnumerable<IGraphPath> paths;
         private readonly Lazy<IReadOnlyCollection<ICoordinate>> path;
         private readonly Lazy<int> count;
         private readonly Lazy<double> cost;
@@ -20,7 +20,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths
 
         public double Cost => cost.Value;
 
-        public CompositeGraphPath(IReadOnlyCollection<IGraphPath> paths)
+        public CompositeGraphPath(IEnumerable<IGraphPath> paths)
         {
             this.paths = paths;
             this.path = new(GetPath);

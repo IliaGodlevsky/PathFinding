@@ -14,10 +14,5 @@
         public const string VisualizedTypeKey = "VisualType";
         public const string PathfindingAlgorithms = "Algorithms";
         public const string Neighbourhood = "Neighbourhoods";
-
-        public const string Group = "Group";
-        public const int GreedGroup = 0;
-        public const int WaveGroup = 1;
-        public const int BreadthGroup = 2;
     }
 }

@@ -258,10 +258,10 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>().As<ISerializer<Graph2D<Vertex>>>().SingleInstance();
                 builder.RegisterType<PathfindingHistorySerializer>().As<ISerializer<GraphsPathfindingHistory>>().SingleInstance();
 
-                builder.RegisterGenericDecorator(typeof(BufferedSerializer<>), typeof(ISerializer<>));
-                builder.RegisterGenericDecorator(typeof(CompressSerializer<>), typeof(ISerializer<>));
-                builder.RegisterGenericDecorator(typeof(CryptoSerializer<>), typeof(ISerializer<>));
-                builder.RegisterGenericDecorator(typeof(ThreadSafeSerializer<>), typeof(ISerializer<>));
+                builder.RegisterDecorator<BufferedSerializer<GraphsPathfindingHistory>, ISerializer<GraphsPathfindingHistory>>();
+                builder.RegisterDecorator<CompressSerializer<GraphsPathfindingHistory>, ISerializer<GraphsPathfindingHistory>>();
+                builder.RegisterDecorator<CryptoSerializer<GraphsPathfindingHistory>, ISerializer<GraphsPathfindingHistory>>();
+                builder.RegisterDecorator<ThreadSafeSerializer<GraphsPathfindingHistory>, ISerializer<GraphsPathfindingHistory>>();
 
                 builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory<Vertex>>().SingleInstance();
             }

@@ -16,7 +16,7 @@ namespace Pathfinding.GraphLib.Core.Modules
         private readonly IPathfindingRangeCommand<TVertex> replaceCommand;
         private readonly IPathfindingRange<TVertex> range;
 
-        internal IList<TVertex> TransitVerticesToReplace { get; } = new List<TVertex>();
+        internal ICollection<TVertex> TransitVerticesToReplace { get; } = new HashSet<TVertex>();
 
         public ReplaceTransitVerticesModule(IPathfindingRange<TVertex> range)
         {

@@ -26,9 +26,7 @@ namespace Pathfinding.GraphLib.Core.Realizations.Neighborhoods
         private readonly int[] resultCoordinatesValues;
         private readonly Lazy<IReadOnlyCollection<ICoordinate>> neighbourhood;
 
-        private IReadOnlyCollection<ICoordinate> Neighbours => neighbourhood.Value;
-
-        public int Count => Neighbours.Count;
+        public int Count => neighbourhood.Value.Count;
 
         public MooreNeighborhood(ICoordinate coordinate)
         {
@@ -71,7 +69,7 @@ namespace Pathfinding.GraphLib.Core.Realizations.Neighborhoods
 
         public IEnumerator<ICoordinate> GetEnumerator()
         {
-            return Neighbours.GetEnumerator();
+            return neighbourhood.Value.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

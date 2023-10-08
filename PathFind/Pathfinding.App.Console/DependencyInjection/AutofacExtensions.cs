@@ -6,7 +6,6 @@ using Autofac.Features.Metadata;
 using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.MenuItems;
 using Pathfinding.App.Console.Model.Visualizations;
 using Shared.Extensions;
 using System;
@@ -53,15 +52,11 @@ namespace Pathfinding.App.Console.DependencyInjection
         public static IRegistrationBuilder<IMessenger, TActivatorData, SingleRegistrationStyle> RegisterRecievers<TActivatorData>(
             this IRegistrationBuilder<IMessenger, TActivatorData, SingleRegistrationStyle> builder)
         {
-            static void Register(IActivatedEventArgs<IMessenger> args)
+            return builder.OnActivated(e =>
             {
-                var recievers = args.Context.Resolve<ICanRecieveMessage[]>();
-                foreach (var reciever in recievers)
-                {
-                    reciever.RegisterHanlders(args.Instance);
-                }
-            }
-            return builder.OnActivated(Register);
+                var recievers = e.Context.Resolve<ICanRecieveMessage[]>();
+                recievers.ForEach(r => r.RegisterHanlders(e.Instance));
+            });
         }
 
         public static void RegisterVisualizionContainer<T>(this ContainerBuilder builder, VisualizedType type)

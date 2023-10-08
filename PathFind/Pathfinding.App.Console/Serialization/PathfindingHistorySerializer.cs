@@ -14,7 +14,8 @@ namespace Pathfinding.App.Console.Serialization
         private readonly ISerializer<GraphPathfindingHistory> historySerializer;
         private readonly ISerializer<Graph2D<Vertex>> graphSerializer;
 
-        public PathfindingHistorySerializer(ISerializer<GraphPathfindingHistory> historySerializer,
+        public PathfindingHistorySerializer(
+            ISerializer<GraphPathfindingHistory> historySerializer,
             ISerializer<Graph2D<Vertex>> graphSerializer)
         {
             this.historySerializer = historySerializer;

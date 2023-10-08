@@ -29,10 +29,7 @@ namespace Shared.Extensions
     {
         public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> items)
         {
-            foreach (var item in items)
-            {
-                collection.Add(item);
-            }
+            items.ForEach(collection.Add);
         }
 
         public static T AggregateOrDefault<T>(this IEnumerable<T> collection, Func<T, T, T> func)

@@ -45,8 +45,7 @@ namespace Pathfinding.App.Console.Units
 
         private void FindPath((IAlgorithmFactory<PathfindingProcess> Factory, Statistics Statistics) info)
         {
-            var range = rangeBuilder.Range;
-            using (var algorithm = info.Factory.Create(range))
+            using (var algorithm = info.Factory.Create(rangeBuilder.Range))
             {
                 using (Disposable.Use(ClearColors))
                 {
