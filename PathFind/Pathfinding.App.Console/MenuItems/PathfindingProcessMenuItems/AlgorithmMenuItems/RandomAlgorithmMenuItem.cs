@@ -28,9 +28,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 
         protected override (IAlgorithmFactory<PathfindingProcess> Algorithm, Statistics Statistics) GetAlgorithm()
         {
-            var statistics = new Statistics
+            var statistics = new Statistics(nameof(Languages.RandomAlgorithm))
             {
-                Algorithm = nameof(Languages.RandomAlgorithm),
                 ResultStatus = nameof(Languages.Started)
             };
             return (new RandomAlgorithmFactory(random), statistics);

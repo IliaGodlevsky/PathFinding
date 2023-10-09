@@ -46,9 +46,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
             {
                 string message = string.Format(Languages.SpreadLevelMsg, spreadRange);
                 int spread = intInput.Input(message, spreadRange);
-                var statistics = new Statistics
+                var statistics = new Statistics(nameof(Languages.IDAStarAlgorithm))
                 {
-                    Algorithm = nameof(Languages.IDAStarAlgorithm),
                     ResultStatus = nameof(Languages.Started),
                     StepRule = stepRule.Key,
                     Heuristics = heuristic.Key,

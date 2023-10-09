@@ -45,9 +45,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Realizations\XorshiftRandom.cs" />
     <Compile Include="Realizations\CryptoRandom.cs" />
-    <Compile Include="Realizations\DummyRandom.cs" />
     <Compile Include="Realizations\KnuthRandom.cs" />
-    <Compile Include="Realizations\NullRandom.cs" />
     <Compile Include="Realizations\PseudoRandom.cs" />
     <Compile Include="Realizations\ThreadSafeRandom.cs" />
   </ItemGroup>

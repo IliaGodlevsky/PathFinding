@@ -5,15 +5,22 @@ using Shared.Primitives.Attributes;
 using Shared.Primitives.Extensions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+
+namespace System.Runtime.CompilerServices
+{
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    internal record IsExternalInit;
+}
 
 namespace Pathfinding.App.Console.Model.Notes
 {
     internal sealed class Statistics
     {
-        public static readonly Statistics Empty = new();
+        public static readonly Statistics Empty = new(string.Empty);
 
         private static readonly IReadOnlyList<string> names;
 
@@ -27,15 +34,16 @@ namespace Pathfinding.App.Console.Model.Notes
                 .Select(GetString).Skip(1).ToList().AsReadOnly();
         }
 
-        public string Algorithm { get; set; } = string.Empty;
+        public Statistics(string algorithm)
+        {
+            Algorithm = algorithm;
+        }
 
-        public string ResultStatus { get; set; } = string.Empty;
+        public string Algorithm { get; } = string.Empty;
 
-        public string Heuristics { get; set; } = null;
+        public string Heuristics { get; init; } = null;
 
-        public string StepRule { get; set; } = null;
-
-        public TimeSpan? Elapsed { get; set; } = null;
+        public string StepRule { get; init; } = null;
 
         [Order(1)]
         [Displayable]
@@ -68,6 +76,10 @@ namespace Pathfinding.App.Console.Model.Notes
         [DisplayNameSource(nameof(Languages.Visited))]
         public int? Visited { get; set; } = null;
 
+        public string ResultStatus { get; set; } = string.Empty;
+
+        public TimeSpan? Elapsed { get; set; } = null;
+
         [Order(4)]
         [Displayable]
         [DisplayNameSource(nameof(Languages.Steps))]
@@ -83,21 +95,6 @@ namespace Pathfinding.App.Console.Model.Notes
         [DisplayNameSource(nameof(Languages.Spread))]
         public int? Spread { get; set; } = null;
 
-        private static string GetString(string key)
-        {
-            return key is null 
-                ? string.Empty 
-                : Languages.ResourceManager.GetString(key) ?? key;
-        }
-
-        private IEnumerable<(string Name, object Value)> GetNotEmptyValues()
-        {
-            var values = new object[] { Time, Visited, Steps, 
-                Cost, Rule, Heuristic, Spread, Status };
-            return names.Zip(values, (n, v) => (Name: n, Value: v))
-                .Where(x => x.Value is not null and not "");
-        }
-
         public override string ToString()
         {
             var builder = new StringBuilder($"{Name}  ");
@@ -106,6 +103,21 @@ namespace Pathfinding.App.Console.Model.Notes
                 builder.Append($"{value.Name}: {value.Value}  ");
             }
             return builder.ToString();
+        }
+
+        private static string GetString(string key)
+        {
+            return key is null
+                ? string.Empty
+                : Languages.ResourceManager.GetString(key) ?? key;
+        }
+
+        private IEnumerable<(string Name, object Value)> GetNotEmptyValues()
+        {
+            var values = new object[] { Time, Visited, Steps,
+                Cost, Rule, Heuristic, Spread, Status };
+            return names.Zip(values, (n, v) => (Name: n, Value: v))
+                .Where(x => x.Value is not null and not "");
         }
     }
 }

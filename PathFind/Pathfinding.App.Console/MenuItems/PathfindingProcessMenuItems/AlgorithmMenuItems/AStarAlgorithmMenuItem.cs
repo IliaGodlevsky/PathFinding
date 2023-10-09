@@ -37,9 +37,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
         {
             var stepRule = InputItem(stepRules, Languages.ChooseStepRuleMsg);
             var heuristic = InputItem(heuristics, Languages.ChooseHeuristicMsg);
-            var statistics = new Statistics
+            var statistics = new Statistics(nameof(Languages.AStarAlgorithm))
             {
-                Algorithm = nameof(Languages.AStarAlgorithm),
                 ResultStatus = nameof(Languages.Started),
                 StepRule = stepRule.Key,
                 Heuristics = heuristic.Key

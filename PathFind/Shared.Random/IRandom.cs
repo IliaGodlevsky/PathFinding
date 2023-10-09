@@ -1,7 +1,7 @@
 ﻿namespace Shared.Random
 {
     /// <summary>
-    /// Represents and interface of random number generator
+    /// Represents an interface of random number generator
     /// </summary>
     public interface IRandom
     {

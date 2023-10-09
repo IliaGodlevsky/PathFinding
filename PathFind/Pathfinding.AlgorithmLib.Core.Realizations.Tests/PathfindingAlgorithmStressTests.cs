@@ -23,7 +23,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests
     {
         private readonly string wrongPathMsg = "Path was not found";
 
-        private readonly IRandom random = new DummyRandom();
+        private readonly IRandom random = new CongruentialRandom();
         private readonly InclusiveValueRange<int> range = new InclusiveValueRange<int>(5, 1);
         private readonly TestGraphFactory graphFactory = new TestGraphFactory();
         private readonly INeighborhoodFactory neighbourhood = new MooreNeighborhoodFactory();

@@ -96,13 +96,14 @@ namespace Pathfinding.App.Console.Units
 
         private Statistics GetStatistics(IGraphPath path)
         {
-            var stats = new Statistics();
-            stats.Algorithm = statistics.Algorithm;
-            stats.ResultStatus = statistics.ResultStatus;
+            var stats = new Statistics(statistics.Algorithm)
+            {
+                ResultStatus = statistics.ResultStatus,
+                StepRule = statistics.StepRule,
+                Heuristics = statistics.Heuristics
+            };
             if (IsStatisticsApplied())
             {
-                stats.StepRule = statistics.StepRule;
-                stats.Heuristics = statistics.Heuristics;
                 stats.Elapsed = timer.Elapsed;
                 stats.Visited = visited;
                 stats.Spread = statistics.Spread;

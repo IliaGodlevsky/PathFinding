@@ -32,9 +32,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
         protected override (IAlgorithmFactory<PathfindingProcess> Algorithm, Statistics Statistics) GetAlgorithm()
         {
             var stepRule = InputItem(stepRules, Languages.ChooseStepRuleMsg);
-            var statistics = new Statistics()
+            var statistics = new Statistics(nameof(Languages.DijkstraAlgorithm))
             {
-                Algorithm = nameof(Languages.DijkstraAlgorithm),
                 ResultStatus = nameof(Languages.Started),
                 StepRule = stepRule.Key
             };

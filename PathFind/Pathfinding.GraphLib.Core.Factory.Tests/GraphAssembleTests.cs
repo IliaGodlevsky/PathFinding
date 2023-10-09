@@ -68,7 +68,7 @@ namespace Pathfinding.GraphLib.Core.Factory.Tests
         private static Layer[] GetLayers()
         {
             int obstaclePercent = 14;
-            var random = new PseudoRandom();
+            var random = new CongruentialRandom();
             var range = new InclusiveValueRange<int>(9, 1);
             return new Layer[]
             {

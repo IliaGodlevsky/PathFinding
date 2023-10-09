@@ -88,9 +88,8 @@ namespace Pathfinding.App.Console.Extensions
 
         private static Statistics ReadStatisitics(this BinaryReader reader)
         {
-            return new()
+            return new(reader.ReadString())
             {
-                Algorithm = reader.ReadString(),
                 ResultStatus = reader.ReadString(),
                 Elapsed = reader.ReadNullableTimeSpan(),
                 Visited = reader.ReadNullableInt32(),

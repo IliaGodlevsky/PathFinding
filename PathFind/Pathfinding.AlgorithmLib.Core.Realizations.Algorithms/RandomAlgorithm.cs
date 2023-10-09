@@ -1,6 +1,5 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Exceptions;
-using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.AlgorithmLib.Core.Realizations.Algorithms.Localization;
 using Pathfinding.GraphLib.Core.Interface;
 using Shared.Random;
@@ -21,7 +20,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
         }
 
         public RandomAlgorithm(IEnumerable<IVertex> pathfindingRange)
-            : this(pathfindingRange, new PseudoRandom())
+            : this(pathfindingRange, new CongruentialRandom())
         {
 
         }

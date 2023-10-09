@@ -166,7 +166,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
                 builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
-                builder.RegisterType<XorshiftRandom>().As<IRandom>().SingleInstance();
+                builder.RegisterInstance(new ThreadSafeRandom(new XorshiftRandom())).As<IRandom>().SingleInstance();
 
                 builder.RegisterType<PathfindingRange<Vertex>>().As<IPathfindingRange<Vertex>>().SingleInstance();
                 builder.RegisterDecorator<VisualPathfindingRange<Vertex>, IPathfindingRange<Vertex>>();

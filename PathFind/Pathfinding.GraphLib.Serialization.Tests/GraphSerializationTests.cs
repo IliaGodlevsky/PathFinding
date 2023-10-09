@@ -71,7 +71,7 @@ namespace Pathfinding.GraphLib.Serialization.Tests
         private static Layer[] GetLayers()
         {
             int obstaclePercent = 15;
-            var random = new DummyRandom();
+            var random = new CongruentialRandom();
             var range = new InclusiveValueRange<int>(9, 1);
             return new Layer[]
             {

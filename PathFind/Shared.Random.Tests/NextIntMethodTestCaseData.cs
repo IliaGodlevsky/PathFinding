@@ -15,9 +15,9 @@ namespace Shared.Random.Tests
         {
             get
             {
-                yield return GenerateTestCaseData(new PseudoRandom(), 5000, 0, 100, PseudoRandom);
-                yield return GenerateTestCaseData(new PseudoRandom(), 100000, 0, 450, PseudoRandom);
-                yield return GenerateTestCaseData(new PseudoRandom(), 1000000, 0, int.MaxValue, PseudoRandom);
+                yield return GenerateTestCaseData(new CongruentialRandom(), 5000, 0, 100, PseudoRandom);
+                yield return GenerateTestCaseData(new CongruentialRandom(), 100000, 0, 450, PseudoRandom);
+                yield return GenerateTestCaseData(new CongruentialRandom(), 1000000, 0, int.MaxValue, PseudoRandom);
                 yield return GenerateTestCaseData(new KnuthRandom(), 5000, 0, 500, KnuthRandom);
                 yield return GenerateTestCaseData(new KnuthRandom(), 50000, int.MinValue, int.MaxValue, KnuthRandom);
                 yield return GenerateTestCaseData(new KnuthRandom(), 500000, 50, 100, KnuthRandom);

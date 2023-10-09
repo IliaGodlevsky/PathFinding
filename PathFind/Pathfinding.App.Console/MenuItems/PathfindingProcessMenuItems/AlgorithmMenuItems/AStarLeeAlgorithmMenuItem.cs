@@ -33,9 +33,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
         protected override (IAlgorithmFactory<PathfindingProcess> Algorithm, Statistics Statistics) GetAlgorithm()
         {
             var heuristic = InputItem(heuristics, Languages.ChooseHeuristicMsg);
-            var statistics = new Statistics
+            var statistics = new Statistics(nameof(Languages.AStarLeeAlgorithm))
             {
-                Algorithm = nameof(Languages.AStarLeeAlgorithm),
                 ResultStatus = nameof(Languages.Started),
                 Heuristics = heuristic.Key
             };
