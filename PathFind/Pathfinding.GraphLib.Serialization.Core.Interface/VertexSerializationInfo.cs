@@ -1,5 +1,7 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Shared.Extensions;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Interface
@@ -8,28 +10,25 @@ namespace Pathfinding.GraphLib.Serialization.Core.Interface
     {
         public bool IsObstacle { get; }
 
-        public IVertexCost Cost { get; }
-
         public ICoordinate Position { get; }
 
-        public ICoordinate[] Neighbourhood { get; }
+        public IReadOnlyDictionary<ICoordinate, IVertexCost> Neighbourhood { get; }
 
         public VertexSerializationInfo(IVertex vertex)
             : this(vertex.IsObstacle,
-                  vertex.Cost,
                   vertex.Position,
-                  vertex.Neighbours.GetCoordinates().ToArray())
+                  vertex.Neighbours
+                  .ToDictionary(item=>item.Key.Position, item=> item.Value)
+                  .AsReadOnly())
         {
 
         }
 
         public VertexSerializationInfo(bool isObstacle,
-            IVertexCost cost,
             ICoordinate position,
-            ICoordinate[] neighborhood)
+            IReadOnlyDictionary<ICoordinate, IVertexCost> neighborhood)
         {
             IsObstacle = isObstacle;
-            Cost = cost;
             Position = position;
             Neighbourhood = neighborhood;
         }

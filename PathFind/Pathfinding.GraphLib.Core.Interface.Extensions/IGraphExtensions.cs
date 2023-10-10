@@ -17,7 +17,11 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
         {
             foreach (var item in graph.Zip(costs, (v, p) => (Vertex: v, Price: p)))
             {
-                item.Vertex.Cost = item.Vertex.Cost.SetCost(item.Price);
+                foreach (var vertex in item.Vertex.Neighbours.Keys)
+                {
+                    var cost = item.Vertex.Neighbours[vertex];
+                    item.Vertex.Neighbours[vertex] = cost.SetCost(item.Price);
+                }
             }
         }
 

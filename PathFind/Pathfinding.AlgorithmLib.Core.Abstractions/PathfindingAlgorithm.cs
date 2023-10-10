@@ -96,7 +96,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         protected IReadOnlyCollection<IVertex> GetUnvisitedNeighbours(IVertex vertex)
         {
-            return vertex.Neighbours
+            return vertex.Neighbours.Keys
                 .Where(v => !v.IsObstacle && !visited.Contains(v))
                 .ToArray();
         }

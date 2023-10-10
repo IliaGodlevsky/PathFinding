@@ -29,7 +29,11 @@ namespace Pathfinding.GraphLib.Factory.Realizations.Layers
             foreach (var vertex in graph)
             {
                 var costValue = Random.NextInt(CostRange);
-                vertex.Cost = CostFactory.CreateCost(costValue, CostRange);
+                foreach (var vert in vertex.Neighbours.Keys)
+                {
+                    var cost = CostFactory.CreateCost(costValue, CostRange);
+                    vertex.Neighbours[vert] = cost;
+                }
             }
         }
     }

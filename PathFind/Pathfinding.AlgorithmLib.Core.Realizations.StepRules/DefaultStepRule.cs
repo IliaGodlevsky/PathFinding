@@ -9,7 +9,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.StepRules
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public double CalculateStepCost(IVertex neighbour, IVertex current)
         {
-            return neighbour.Cost.CurrentCost;
+            return neighbour.Neighbours[current].CurrentCost;
         }
     }
 }

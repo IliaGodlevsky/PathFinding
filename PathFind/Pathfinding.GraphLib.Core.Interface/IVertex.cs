@@ -7,10 +7,8 @@ namespace Pathfinding.GraphLib.Core.Interface
     {
         bool IsObstacle { get; set; }
 
-        IVertexCost Cost { get; set; }
-
         ICoordinate Position { get; }
 
-        ICollection<IVertex> Neighbours { get; set; }
+        IDictionary<IVertex, IVertexCost> Neighbours { get; set; }
     }
 }

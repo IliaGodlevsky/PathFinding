@@ -8,8 +8,8 @@ namespace Pathfinding.GraphLib.Smoothing.Realizations.MeanCosts
     {
         public int Calculate(IVertex neighbour, IVertex vertex)
         {
-            int neighbourCost = neighbour.Cost.CurrentCost;
-            int vertexCost = vertex.Cost.CurrentCost;
+            int neighbourCost = neighbour.Neighbours[vertex].CurrentCost;
+            int vertexCost = vertex.Neighbours[neighbour].CurrentCost;
             double squareMean = (Math.Pow(vertexCost, 2)
                 + Math.Pow(neighbourCost, 2)) / 2;
             double averageCost = Math.Sqrt(squareMean);

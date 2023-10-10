@@ -10,15 +10,13 @@ namespace Pathfinding.GraphLib.Core.NullObjects
     {
         public bool IsObstacle { get => true; set { } }
 
-        public IVertexCost Cost { get => NullCost.Interface; set { } }
-
-        public ICollection<IVertex> Neighbours { get => new List<IVertex>(); set { } }
-
         public ICoordinate Position => NullCoordinate.Interface;
+
+        public IDictionary<IVertex, IVertexCost> Neighbours { get; set; }
 
         private NullVertex()
         {
-
+            Neighbours = new Dictionary<IVertex, IVertexCost>();
         }
 
         public bool Equals(IVertex other)

@@ -39,10 +39,8 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
                     .ToDictionary(item => item.Position);
                 foreach (var info in graphInfo.VerticesInfo)
                 {
-                    var neighbours = info.Neighbourhood
-                        .Select(coordinate => (IVertex)vertices[coordinate])
-                        .ToList();
-                    vertices[info.Position].Neighbours = neighbours;
+                    vertices[info.Position].Neighbours = info.Neighbourhood
+                        .ToDictionary(item => (IVertex)vertices[item.Key], item => item.Value);
                 }
                 return graphFactory.CreateGraph(vertices.Values,
                     graphInfo.DimensionsSizes);
