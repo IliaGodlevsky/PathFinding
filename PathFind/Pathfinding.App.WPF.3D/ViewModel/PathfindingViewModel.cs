@@ -9,8 +9,8 @@ using Pathfinding.App.WPF._3D.Infrastructure.Commands;
 using Pathfinding.App.WPF._3D.Interface;
 using Pathfinding.App.WPF._3D.Messages.PassValueMessages;
 using Pathfinding.App.WPF._3D.Model;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Modules.Interface;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Models;
 using Shared.Extensions;
@@ -35,7 +35,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel
         private Guid Id { get; set; }
 
         public PathFindingViewModel(IPathfindingRangeBuilder<Vertex3D> rangeBuilder,
-            IEnumerable<IAlgorithmFactory<PathfindingProcess>> algorithmFactories, ILog log, ICache<Graph3D<Vertex3D>> graphCache)
+            IEnumerable<IAlgorithmFactory<PathfindingProcess>> algorithmFactories, ILog log, ICache<IGraph<Vertex3D>> graphCache)
             : base(rangeBuilder.Range, algorithmFactories, graphCache.Cache, log)
         {
             messenger = DI.Container.Resolve<IMessenger>();

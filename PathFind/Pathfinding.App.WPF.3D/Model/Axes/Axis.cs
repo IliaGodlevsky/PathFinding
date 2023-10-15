@@ -1,5 +1,5 @@
 ﻿using Pathfinding.App.WPF._3D.Interface;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
 using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace Pathfinding.App.WPF._3D.Model.Axes
 
         protected abstract int Order { get; }
 
-        protected Axis(Graph3D<Vertex3D> graph)
+        protected Axis(IGraph<Vertex3D> graph)
         {
             dimensionSize = graph.DimensionsSizes.ElementAtOrDefault(Order);
             vertices = graph;

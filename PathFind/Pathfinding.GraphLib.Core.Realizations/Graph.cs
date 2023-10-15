@@ -6,20 +6,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Pathfinding.GraphLib.Core.Abstractions
+namespace Pathfinding.GraphLib.Core.Realizations
 {
-    public abstract class Graph<TVertex> : IGraph<TVertex>
+    public class Graph<TVertex> : IGraph<TVertex>
         where TVertex : IVertex
     {
+        public static readonly Graph<TVertex> Empty = new();
+
         private readonly IReadOnlyDictionary<ICoordinate, TVertex> vertices;
 
         public int Count { get; }
 
         public IReadOnlyList<int> DimensionsSizes { get; }
 
-        protected Graph(int requiredNumberOfDimensions,
-            IReadOnlyCollection<TVertex> vertices,
-            IReadOnlyList<int> dimensionSizes)
+        public Graph(int requiredNumberOfDimensions,
+             IReadOnlyCollection<TVertex> vertices,
+             IReadOnlyList<int> dimensionSizes)
         {
             DimensionsSizes = dimensionSizes
                 .TakeOrDefault(requiredNumberOfDimensions, 1)
@@ -28,6 +30,26 @@ namespace Pathfinding.GraphLib.Core.Abstractions
             this.vertices = vertices.Take(Count)
                 .ToDictionary(vertex => vertex.Position, CoordinateEqualityComparer.Interface)
                 .AsReadOnly();
+        }
+
+        public Graph(IReadOnlyCollection<TVertex> vertices,
+             IReadOnlyList<int> dimensionSizes)
+            : this(dimensionSizes.Count, vertices, dimensionSizes)
+        {
+
+        }
+
+        public Graph(IReadOnlyCollection<TVertex> vertices,
+             params int[] dimensionSizes)
+            : this(vertices, (IReadOnlyList<int>)dimensionSizes)
+        {
+
+        }
+
+        protected Graph() 
+            : this(Array.Empty<TVertex>())
+        {
+
         }
 
         public TVertex Get(ICoordinate coordinate)

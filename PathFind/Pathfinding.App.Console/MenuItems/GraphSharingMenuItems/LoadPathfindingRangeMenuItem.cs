@@ -8,7 +8,7 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
@@ -21,7 +21,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
     [LowPriority]
     internal sealed class LoadPathfindingRangeMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
-        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
+        private IGraph<Vertex> graph = Graph<Vertex>.Empty;
 
         private readonly GraphsPathfindingHistory history;
         private readonly ISerializer<IEnumerable<ICoordinate>> serializer;
@@ -29,10 +29,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
         private readonly IInput<string> pathInput;
         private readonly ILog log;
 
-        public LoadPathfindingRangeMenuItem(GraphsPathfindingHistory history, 
-            ISerializer<IEnumerable<ICoordinate>> serializer, 
+        public LoadPathfindingRangeMenuItem(GraphsPathfindingHistory history,
+            ISerializer<IEnumerable<ICoordinate>> serializer,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
-            IFilePathInput pathInput, 
+            IFilePathInput pathInput,
             ILog log)
         {
             this.history = history;
@@ -70,7 +70,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }
 
-        private void SetGraph(Graph2D<Vertex> graph)
+        private void SetGraph(IGraph<Vertex> graph)
         {
             this.graph = graph;
         }

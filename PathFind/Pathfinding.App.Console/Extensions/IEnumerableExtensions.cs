@@ -8,7 +8,7 @@ namespace Pathfinding.App.Console.Extensions
 {
     internal static class IEnumerableExtensions
     {
-        public static MenuList CreateMenuList<T>(this IEnumerable<T> items, 
+        public static MenuList CreateMenuList<T>(this IEnumerable<T> items,
             int columnsNumber = 2)
         {
             return items.CreateMenuList(item => item.ToString(), columnsNumber, string.Empty);

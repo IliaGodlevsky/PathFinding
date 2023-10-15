@@ -353,10 +353,6 @@
       <Project>{3CEBE00A-5EC9-4904-A20C-10817B0E5318}</Project>
       <Name>Pathfinding.AlgorithmLib.History</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Abstractions\Pathfinding.GraphLib.Core.Abstractions.csproj">
-      <Project>{7112EB01-28F4-438D-945D-87CB69D14B99}</Project>
-      <Name>Pathfinding.GraphLib.Core.Abstractions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface.Extensions\Pathfinding.GraphLib.Core.Interface.Extensions.csproj">
       <Project>{3c13810c-ed74-490b-9303-9ccbfe485f5e}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface.Extensions</Name>
@@ -464,6 +460,9 @@
     </PackageReference>
     <PackageReference Include="MvvmLightLibs">
       <Version>5.4.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Reactive">
+      <Version>6.0.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

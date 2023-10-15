@@ -6,10 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace Pathfinding.GraphLib.Core.Abstractions
+namespace Pathfinding.GraphLib.Core.Realizations
 {
-    public abstract class Coordinate : ICoordinate
+    public class Coordinate : ICoordinate
     {
+        public static readonly Coordinate Empty = new Coordinate();
+
         private readonly string toString;
         private readonly int hashCode;
 
@@ -19,13 +21,25 @@ namespace Pathfinding.GraphLib.Core.Abstractions
 
         public int this[int index] => CoordinatesValues[index];
 
-        protected Coordinate(int numberOfDimensions, IReadOnlyList<int> coordinates)
+        public Coordinate(int numberOfDimensions, IReadOnlyList<int> coordinates)
         {
             CoordinatesValues = coordinates
                 .TakeOrDefault(numberOfDimensions)
                 .ToArray();
             toString = $"({string.Join(",", CoordinatesValues)})";
             hashCode = CoordinatesValues.AggregateOrDefault(HashCode.Combine);
+        }
+
+        public Coordinate(IReadOnlyList<int> coordinates)
+            : this(coordinates.Count, coordinates)
+        {
+
+        }
+
+        public Coordinate(params int[] coordinates)
+            : this((IReadOnlyList<int>)coordinates)
+        {
+
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -43,6 +57,7 @@ namespace Pathfinding.GraphLib.Core.Abstractions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override int GetHashCode() => hashCode;
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override string ToString() => toString;
 
         public IEnumerator<int> GetEnumerator() => CoordinatesValues.GetEnumerator();

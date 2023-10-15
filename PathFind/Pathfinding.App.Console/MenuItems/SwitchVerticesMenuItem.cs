@@ -5,8 +5,9 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Settings;
-using Pathfinding.GraphLib.Core.Realizations.Coordinates;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.GraphLib.Core.Realizations;
 using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
@@ -19,7 +20,7 @@ namespace Pathfinding.App.Console.MenuItems
         protected readonly IInput<ConsoleKey> keyInput;
         protected readonly VertexActions actions;
 
-        protected Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
+        protected IGraph<Vertex> graph = Graph<Vertex>.Empty;
         protected InclusiveValueRange<int> xRange = default;
         protected InclusiveValueRange<int> yRange = default;
 
@@ -32,7 +33,7 @@ namespace Pathfinding.App.Console.MenuItems
 
         public virtual bool CanBeExecuted()
         {
-            return graph != Graph2D<Vertex>.Empty;
+            return graph != Graph<Vertex>.Empty;
         }
 
         public virtual void Execute()
@@ -41,7 +42,7 @@ namespace Pathfinding.App.Console.MenuItems
             ConsoleKey key;
             do
             {
-                var coordinate = new Coordinate2D(x, y);
+                var coordinate = new Coordinate(x, y);
                 var vertex = graph.Get(coordinate);
                 Cursor.SetPosition(vertex.ConsolePosition);
                 key = keyInput.Input();
@@ -71,11 +72,11 @@ namespace Pathfinding.App.Console.MenuItems
             return action;
         }
 
-        private void SetGraph(Graph2D<Vertex> graph)
+        private void SetGraph(IGraph<Vertex> graph)
         {
             this.graph = graph;
-            xRange = new InclusiveValueRange<int>(graph.Width - 1);
-            yRange = new InclusiveValueRange<int>(graph.Length - 1);
+            xRange = new(graph.GetWidth() - 1);
+            yRange = new(graph.GetLength() - 1);
         }
 
         public virtual void RegisterHanlders(IMessenger messenger)

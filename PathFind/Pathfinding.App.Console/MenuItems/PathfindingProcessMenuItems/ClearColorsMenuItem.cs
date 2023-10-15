@@ -4,8 +4,9 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Modules.Interface;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.Visualization.Extensions;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
@@ -15,7 +16,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     {
         private readonly IMessenger messenger;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
-        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
+        private IGraph<Vertex> graph = Graph<Vertex>.Empty;
 
         public ClearColorsMenuItem(IMessenger messenger,
             IPathfindingRangeBuilder<Vertex> rangeBuilder)
@@ -24,7 +25,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
             this.rangeBuilder = rangeBuilder;
         }
 
-        public bool CanBeExecuted() => graph != Graph2D<Vertex>.Empty;
+        public bool CanBeExecuted() => graph != Graph<Vertex>.Empty;
 
         public void Execute()
         {
@@ -33,7 +34,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
             rangeBuilder.Range.RestoreVerticesVisualState();
         }
 
-        private void SetGraph(Graph2D<Vertex> graph)
+        private void SetGraph(IGraph<Vertex> graph)
         {
             this.graph = graph;
         }

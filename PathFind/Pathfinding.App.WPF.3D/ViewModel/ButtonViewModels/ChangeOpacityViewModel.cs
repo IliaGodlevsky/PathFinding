@@ -5,7 +5,8 @@ using Pathfinding.App.WPF._3D.Infrastructure.Commands;
 using Pathfinding.App.WPF._3D.Messages.PassValueMessages;
 using Pathfinding.App.WPF._3D.Model;
 using Pathfinding.App.WPF._3D.View;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 using System.Windows.Input;
 
 namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
@@ -14,7 +15,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
     {
         private readonly IMessenger messenger;
 
-        private Graph3D<Vertex3D> Graph { get; set; } = Graph3D<Vertex3D>.Empty;
+        private IGraph<Vertex3D> Graph { get; set; } = Graph<Vertex3D>.Empty;
 
         public ICommand ChangeVerticesOpacityCommand { get; }
 
@@ -32,7 +33,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
 
         private bool CanExecuteChangeOpacityCommand(object param)
         {
-            return Graph != Graph3D<Vertex3D>.Empty;
+            return Graph != Graph<Vertex3D>.Empty;
         }
 
         private void OnGraphCreated(GraphCreatedMessage message)

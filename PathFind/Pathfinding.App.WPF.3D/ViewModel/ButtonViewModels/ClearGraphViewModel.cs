@@ -5,7 +5,8 @@ using Pathfinding.App.WPF._3D.Infrastructure.Commands;
 using Pathfinding.App.WPF._3D.Messages.ActionMessages;
 using Pathfinding.App.WPF._3D.Messages.PassValueMessages;
 using Pathfinding.App.WPF._3D.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.Visualization.Extensions;
 using Shared.Executable;
 using System.Windows.Input;
@@ -17,7 +18,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
         private readonly IMessenger messenger;
         private readonly IUndo undo;
 
-        private Graph3D<Vertex3D> Graph { get; set; } = Graph3D<Vertex3D>.Empty;
+        private IGraph<Vertex3D> Graph { get; set; } = Graph<Vertex3D>.Empty;
 
         private bool IsAllAlgorithmFinishedPathfinding { get; set; } = true;
 
@@ -41,7 +42,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
 
         private bool CanExecuteClearGraphCommand(object param)
         {
-            return IsAllAlgorithmFinishedPathfinding && Graph != Graph3D<Vertex3D>.Empty;
+            return IsAllAlgorithmFinishedPathfinding && Graph != Graph<Vertex3D>.Empty;
         }
 
         private void OnAllAlgorithmFinishedPathfinding(IsAllAlgorithmsFinishedMessage message)

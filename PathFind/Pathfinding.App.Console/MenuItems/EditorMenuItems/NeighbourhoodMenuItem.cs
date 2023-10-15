@@ -11,7 +11,7 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
     [MediumPriority]
     internal sealed class NeighbourhoodMenuItem : SwitchVerticesMenuItem
     {
-        public NeighbourhoodMenuItem(IInput<ConsoleKey> keyInput) 
+        public NeighbourhoodMenuItem(IInput<ConsoleKey> keyInput)
             : base(GetActions(), keyInput)
         {
 

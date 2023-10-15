@@ -3,7 +3,7 @@ using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.App.WPF._2D.Messages.DataMessages;
 using Pathfinding.App.WPF._2D.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
 using Shared.Primitives.ValueRange;
 using System.Linq;
 using System.Windows.Input;
@@ -18,7 +18,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel
 
         private bool IsAllAlgorithmsFinished { get; set; }
 
-        private Graph2D<Vertex> Graph { get; set; }
+        private IGraph<Vertex> Graph { get; set; }
 
         public ICommand ColorizeCommand { get; }
 

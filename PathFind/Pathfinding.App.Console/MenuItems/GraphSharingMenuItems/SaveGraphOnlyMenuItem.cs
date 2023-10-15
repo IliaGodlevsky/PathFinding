@@ -4,7 +4,7 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
@@ -20,13 +20,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
         private readonly IInput<string> stringInput;
         private readonly IInput<int> intInput;
         private readonly GraphsPathfindingHistory history;
-        private readonly ISerializer<Graph2D<Vertex>> serializer;
+        private readonly ISerializer<IGraph<Vertex>> serializer;
         private readonly ILog log;
 
-        public SaveGraphOnlyMenuItem(IFilePathInput input, 
-            IInput<int> intInput, 
+        public SaveGraphOnlyMenuItem(IFilePathInput input,
+            IInput<int> intInput,
             GraphsPathfindingHistory history,
-            ISerializer<Graph2D<Vertex>> serializer, 
+            ISerializer<IGraph<Vertex>> serializer,
             ILog log)
         {
             this.stringInput = input;
@@ -77,7 +77,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             }
         }
 
-        private string CreateMenuList(IReadOnlyCollection<Graph2D<Vertex>> graphs)
+        private string CreateMenuList(IReadOnlyCollection<IGraph<Vertex>> graphs)
         {
             return graphs.Select(k => k.ToString())
                 .Append(Languages.Quit)

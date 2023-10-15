@@ -3,7 +3,8 @@ using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.App.WPF._2D.Messages.DataMessages;
 using Pathfinding.App.WPF._2D.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Smoothing;
 using Pathfinding.GraphLib.Smoothing.Interface;
 using Shared.Primitives.ValueRange;
@@ -19,7 +20,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
         private readonly IMessenger messenger;
         private readonly IMeanCost meanCost;
 
-        private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
+        private IGraph<Vertex> Graph { get; set; } = Graph<Vertex>.Empty;
 
         public ISmoothLevel SelectSmoothLevel { get; set; }
 

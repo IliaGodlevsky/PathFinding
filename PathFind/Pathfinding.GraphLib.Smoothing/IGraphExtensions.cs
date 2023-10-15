@@ -8,8 +8,8 @@ namespace Pathfinding.GraphLib.Smoothing
         public static void Smooth<TVertex>(this IGraph<TVertex> self, IMeanCost meanCost, int smoothLevel = 1)
             where TVertex : IVertex
         {
-            var layer = new SmoothLayer<IGraph<TVertex>, TVertex>(smoothLevel, meanCost);
-            layer.Overlay(self);
+            var layer = new SmoothLayer(smoothLevel, meanCost);
+            layer.Overlay((IGraph<IVertex>)self);
         }
     }
 }

@@ -1,12 +1,8 @@
 ﻿using Autofac;
 using Autofac.Core.Resolving.Pipeline;
 using Pathfinding.AlgorithmLib.Core.Interface;
-using Pathfinding.App.Console.Model.Notes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 {

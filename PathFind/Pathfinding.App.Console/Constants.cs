@@ -24,7 +24,7 @@ namespace Pathfinding.App.Console
             GraphWidthValueRange = new(Settings.MaxGraphWidth, Settings.MinGraphWidth);
             GraphLengthValueRange = new(Settings.MaxGraphLength, Settings.MinGraphLength);
             ObstaclesPercentValueRange = new(
-                Settings.MaxObstaclePercentValue, 
+                Settings.MaxObstaclePercentValue,
                 Settings.MinObstaclePercentValue);
             AlgorithmDelayTimeValueRange = new(
                 TimeSpan.FromMilliseconds(Settings.VisualizationDelayMaxValue),

@@ -1,6 +1,7 @@
 ﻿using Pathfinding.App.WPF._2D.Attributes;
 using Pathfinding.App.WPF._2D.Infrastructure.EventArguments;
 using Pathfinding.App.WPF._2D.ViewModel;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
 using System;
 using System.Windows;
 
@@ -34,8 +35,8 @@ namespace Pathfinding.App.WPF._2D.View
 
         private void OnGraphCreated(object sender, GraphCreatedEventArgs e)
         {
-            Width = (e.Graph.Width + WidthOffset) * DistanceBetweenVertices;
-            Height = (e.Graph.Length + LengthOffset) * DistanceBetweenVertices;
+            Width = (e.Graph.GetWidth() + WidthOffset) * DistanceBetweenVertices;
+            Height = (e.Graph.GetLength() + LengthOffset) * DistanceBetweenVertices;
         }
     }
 }

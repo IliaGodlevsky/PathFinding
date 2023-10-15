@@ -5,7 +5,8 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private readonly GraphsPathfindingHistory history;
         private readonly IInput<int> input;
 
-        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
+        private IGraph<Vertex> graph = Graph<Vertex>.Empty;
 
-        public DeleteGraphMenuItem(IInput<int>input, 
+        public DeleteGraphMenuItem(IInput<int> input,
             GraphsPathfindingHistory history)
         {
             this.history = history;
@@ -50,7 +51,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             }
         }
 
-        private string GetMenuList(IReadOnlyCollection<Graph2D<Vertex>> graphs)
+        private string GetMenuList(IReadOnlyCollection<IGraph<Vertex>> graphs)
         {
             return graphs.Select(s => s.ToString())
                 .Append(Languages.Quit)
@@ -77,7 +78,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             }
         }
 
-        private void SetGraph(Graph2D<Vertex> graph)
+        private void SetGraph(IGraph<Vertex> graph)
         {
             this.graph = graph;
         }

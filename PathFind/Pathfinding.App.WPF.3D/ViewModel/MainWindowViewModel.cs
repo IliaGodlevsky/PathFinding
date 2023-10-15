@@ -2,16 +2,16 @@
 using Pathfinding.App.WPF._3D.Interface;
 using Pathfinding.App.WPF._3D.Messages.PassValueMessages;
 using Pathfinding.App.WPF._3D.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
 using System;
 
 namespace Pathfinding.App.WPF._3D.ViewModel
 {
-    public class MainWindowViewModel : ICache<Graph3D<Vertex3D>>, IDisposable
+    public class MainWindowViewModel : ICache<IGraph<Vertex3D>>, IDisposable
     {
         private readonly IMessenger messenger;
 
-        public Graph3D<Vertex3D> Cache { get; private set; }
+        public IGraph<Vertex3D> Cache { get; private set; }
 
         public MainWindowViewModel(IMessenger messenger)
         {

@@ -9,7 +9,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     [MediumPriority]
     internal sealed class StatisticsMenuItem : UnitDisplayMenuItem<PathfindingStatisticsUnit>
     {
-        public StatisticsMenuItem(IInput<int> input, PathfindingStatisticsUnit viewModel, ILog log) 
+        public StatisticsMenuItem(IInput<int> input, PathfindingStatisticsUnit viewModel, ILog log)
             : base(input, viewModel, log)
         {
 

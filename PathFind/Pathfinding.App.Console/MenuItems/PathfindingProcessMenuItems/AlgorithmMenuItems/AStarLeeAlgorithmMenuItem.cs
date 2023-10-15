@@ -19,7 +19,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 
         public AStarLeeAlgorithmMenuItem(IReadOnlyDictionary<string, IHeuristic> heuristics,
             IMessenger messenger,
-            IInput<int> intInput) 
+            IInput<int> intInput)
             : base(messenger, intInput)
         {
             this.heuristics = heuristics;

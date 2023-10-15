@@ -6,7 +6,7 @@ using Pathfinding.App.WPF._2D.Messages.DataMessages;
 using Pathfinding.App.WPF._2D.Model;
 using Pathfinding.App.WPF._2D.View;
 using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Realizations;
 using Shared.Executable;
 using System.Windows.Input;
 using WPFVersion.DependencyInjection;
@@ -21,7 +21,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
 
         public ICommand CreateGraphCommand { get; }
 
-        private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
+        private IGraph<Vertex> Graph { get; set; } = Graph<Vertex>.Empty;
 
         private bool IsAllAlgorithmsFinishedPathfinding { get; set; } = true;
 

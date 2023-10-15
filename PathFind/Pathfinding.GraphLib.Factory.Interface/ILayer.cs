@@ -2,10 +2,8 @@
 
 namespace Pathfinding.GraphLib.Factory.Interface
 {
-    public interface ILayer<TGraph, TVertex>
-        where TGraph : IGraph<TVertex>
-        where TVertex : IVertex
+    public interface ILayer
     {
-        void Overlay(TGraph graph);
+        void Overlay(IGraph<IVertex> graph);
     }
 }

@@ -6,7 +6,8 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 {
@@ -17,7 +18,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         private readonly GraphsPathfindingHistory history;
 
         private bool isHistoryApplied = true;
-        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
+        private IGraph<Vertex> graph = Graph<Vertex>.Empty;
 
         public ClearHistoryMenuItem(IMessenger messenger,
             GraphsPathfindingHistory history)
@@ -28,7 +29,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public bool CanBeExecuted()
         {
-            return isHistoryApplied 
+            return isHistoryApplied
                 && history.GetFor(graph).Algorithms.Count > 0;
         }
 
@@ -53,7 +54,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }
 
-        private void SetGraph(Graph2D<Vertex> graph)
+        private void SetGraph(IGraph<Vertex> graph)
         {
             this.graph = graph;
         }

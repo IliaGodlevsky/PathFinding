@@ -17,7 +17,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private readonly IMessenger messenger;
         private readonly IInput<int> intInput;
 
-        public ChooseNeighbourhoodMenuItem(IMessenger messenger, 
+        public ChooseNeighbourhoodMenuItem(IMessenger messenger,
             IInput<int> intInput,
             IReadOnlyDictionary<string, INeighborhoodFactory> factories)
         {

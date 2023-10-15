@@ -1,13 +1,13 @@
 ﻿using Pathfinding.App.WPF._2D.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
 
 namespace Pathfinding.App.WPF._2D.Messages.DataMessages
 {
     internal sealed class GraphCreatedMessage
     {
-        public Graph2D<Vertex> Graph { get; }
+        public IGraph<Vertex> Graph { get; }
 
-        public GraphCreatedMessage(Graph2D<Vertex> graph)
+        public GraphCreatedMessage(IGraph<Vertex> graph)
         {
             Graph = graph;
         }

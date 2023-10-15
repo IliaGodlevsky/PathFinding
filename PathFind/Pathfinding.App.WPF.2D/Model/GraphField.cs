@@ -1,10 +1,9 @@
-﻿using Pathfinding.GraphLib.Core.Realizations.Coordinates;
+﻿using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
-
 using static Pathfinding.App.WPF._2D.Constants;
 
 namespace Pathfinding.App.WPF._2D.Model
@@ -26,10 +25,10 @@ namespace Pathfinding.App.WPF._2D.Model
 
         private void Locate(Vertex vertex)
         {
-            var position = (Coordinate2D)vertex.Position;
+            var position = vertex.Position;
             Children.Add(vertex);
-            SetLeft(vertex, (DistanceBetweenVertices + vertex.Width) * position.X);
-            SetTop(vertex, (DistanceBetweenVertices + vertex.Height) * position.Y);
+            SetLeft(vertex, (DistanceBetweenVertices + vertex.Width) * position.GetX());
+            SetTop(vertex, (DistanceBetweenVertices + vertex.Height) * position.GetY());
         }
     }
 }

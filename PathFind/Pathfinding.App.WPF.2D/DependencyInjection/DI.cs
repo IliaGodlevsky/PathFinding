@@ -15,7 +15,6 @@ using Pathfinding.GraphLib.Core.Modules;
 using Pathfinding.GraphLib.Core.Modules.Commands;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations;
 using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
@@ -46,8 +45,8 @@ namespace WPFVersion.DependencyInjection
 {
     using AlgorithmFactory = IAlgorithmFactory<PathfindingProcess>;
     using Command = IPathfindingRangeCommand<Vertex>;
-    using Graph = Graph2D<Vertex>;
-    using GraphSerializer = ISerializer<Graph2D<Vertex>>;
+    using Graph = IGraph<Vertex>;
+    using GraphSerializer = ISerializer<IGraph<Vertex>>;
 
     internal static class DI
     {
@@ -61,7 +60,7 @@ namespace WPFVersion.DependencyInjection
         {
             var builder = new ContainerBuilder();
             //View and view models registration
-            builder.RegisterType<MainWindowViewModel>().As<ICache<Graph2D<Vertex>>>().AsSelf().SingleInstance();
+            builder.RegisterType<MainWindowViewModel>().As<ICache<IGraph<Vertex>>>().AsSelf().SingleInstance();
             builder.RegisterAssemblyTypes(Assemblies).AssignableTo<IViewModel>().AsSelf().InstancePerDependency().PropertiesAutowired();
             builder.RegisterAssemblyTypes(Assemblies).Where(type => type.IsAppWindow()).AsSelf().InstancePerDependency();
             // Common
@@ -97,20 +96,19 @@ namespace WPFVersion.DependencyInjection
             builder.RegisterType<CryptoRandom>().As<IRandom>().SingleInstance();
             builder.RegisterDecorator<ThreadSafeRandom, IRandom>();
             // Graph registrations
-            builder.RegisterType<GraphAssemble<Graph, Vertex>>().As<IGraphAssemble<Graph, Vertex>>().SingleInstance();
+            builder.RegisterType<GraphAssemble<Vertex>>().As<IGraphAssemble<Vertex>>().SingleInstance();
             builder.RegisterType<VertexFactory>().As<IVertexFactory<Vertex>>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
-            builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
-            builder.RegisterType<Graph2DFactory<Vertex>>().As<IGraphFactory<Graph, Vertex>>().SingleInstance();
-            builder.RegisterDecorator<Graph2dWrapFactory, IGraphFactory<Graph, Vertex>>();
-            builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory<Graph, Vertex, GraphField>>().SingleInstance();
+            builder.RegisterType<CoordinateFactory>().As<ICoordinateFactory>().SingleInstance();
+            builder.RegisterType<GraphFactory<Vertex>>().As<IGraphFactory<Vertex>>().SingleInstance();
+            builder.RegisterDecorator<Graph2dWrapFactory, IGraphFactory<Vertex>>();
+            builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory<Vertex, GraphField>>().SingleInstance();
             builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<VertexVisualization>().As<ITotalVisualization<Vertex>>().SingleInstance();
             // Serialization registrations
-            builder.RegisterType<InFileSerializationModule<Graph, Vertex>>()
-                .As<IGraphSerializationModule<Graph, Vertex>>().SingleInstance();
+            builder.RegisterType<InFileSerializationModule<Vertex>>().As<IGraphSerializationModule<Vertex>>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
-            builder.RegisterType<BinaryGraphSerializer<Graph, Vertex>>().As<GraphSerializer>().SingleInstance();
+            builder.RegisterType<BinaryGraphSerializer<Vertex>>().As<GraphSerializer>().SingleInstance();
             builder.RegisterDecorator<CompressSerializer<Graph>, GraphSerializer>();
             builder.RegisterDecorator<CryptoSerializer<Graph>, GraphSerializer>();
             builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory<Vertex>>().SingleInstance();

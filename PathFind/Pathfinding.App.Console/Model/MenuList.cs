@@ -25,7 +25,7 @@ namespace Pathfinding.App.Console.Model
         private readonly Lazy<string> menuList;
         private readonly Lazy<int> longestNameLength;
 
-        public MenuList(IEnumerable<string> menuItemsNames, int columns = 2, 
+        public MenuList(IEnumerable<string> menuItemsNames, int columns = 2,
             string header = null)
         {
             this.header = header;

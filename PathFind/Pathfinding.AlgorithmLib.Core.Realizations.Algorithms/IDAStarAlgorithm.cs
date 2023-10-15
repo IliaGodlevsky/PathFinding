@@ -26,7 +26,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 
         }
 
-        public IDAStarAlgorithm(IEnumerable<IVertex> pathfindingRange, 
+        public IDAStarAlgorithm(IEnumerable<IVertex> pathfindingRange,
             IStepRule stepRule, IHeuristic function, int stashPercent = 4)
             : base(pathfindingRange, stepRule, function)
         {

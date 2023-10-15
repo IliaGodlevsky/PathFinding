@@ -4,7 +4,8 @@ using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.App.WPF._2D.Messages.ActionMessages;
 using Pathfinding.App.WPF._2D.Messages.DataMessages;
 using Pathfinding.App.WPF._2D.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.Visualization.Extensions;
 using Shared.Executable;
 using System.Windows.Input;
@@ -17,7 +18,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
         private readonly IMessenger messenger;
         private readonly IUndo undo;
 
-        private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
+        private IGraph<Vertex> Graph { get; set; } = Graph<Vertex>.Empty;
 
         private bool IsAllAlgorithmFinishedPathfinding { get; set; } = true;
 
@@ -41,7 +42,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
 
         private bool CanExecuteClearGraphCommand(object param)
         {
-            return IsAllAlgorithmFinishedPathfinding && Graph != Graph2D<Vertex>.Empty;
+            return IsAllAlgorithmFinishedPathfinding && Graph != Graph<Vertex>.Empty;
         }
 
         private void OnAllAlgorithmFinishedPathfinding(IsAllAlgorithmsFinishedMessage message)

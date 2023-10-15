@@ -7,12 +7,11 @@ using System.Text;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
 {
-    public sealed class BinaryGraphSerializer<TGraph, TVertex> : GraphSerializer<TGraph, TVertex>
+    public sealed class BinaryGraphSerializer<TVertex> : GraphSerializer<TVertex>
         where TVertex : IVertex
-        where TGraph : IGraph<TVertex>
     {
         public BinaryGraphSerializer(IVertexFromInfoFactory<TVertex> converter,
-            IGraphFactory<TGraph, TVertex> graphFactory,
+            IGraphFactory<TVertex> graphFactory,
             IVertexCostFactory costFactory,
             ICoordinateFactory coordinateFactory)
             : base(converter, graphFactory, costFactory, coordinateFactory)

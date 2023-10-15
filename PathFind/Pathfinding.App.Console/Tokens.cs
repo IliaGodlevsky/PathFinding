@@ -17,9 +17,9 @@ namespace Pathfinding.App.Console
         public static readonly IToken Visualization = new Token();
         public static readonly IToken Pathfinding = new Token();
 
-        public static IToken Bind(this IToken token, Func<bool> condition) 
+        public static IToken Bind(this IToken token, Func<bool> condition)
             => new ConditionToken(condition, token);
-        
+
         private sealed class Token : IToken
         {
             private readonly Guid token;
@@ -63,7 +63,7 @@ namespace Pathfinding.App.Console
 
             public override bool Equals(object obj)
             {
-                return GetHashCode() == obj.GetHashCode() 
+                return GetHashCode() == obj.GetHashCode()
                     && IsValidCondition();
             }
 

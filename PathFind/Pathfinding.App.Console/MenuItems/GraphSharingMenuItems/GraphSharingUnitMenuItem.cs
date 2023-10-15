@@ -9,7 +9,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
     [LowPriority]
     internal sealed class GraphSharingUnitMenuItem : UnitDisplayMenuItem<GraphSharingUnit>
     {
-        public GraphSharingUnitMenuItem(IInput<int> intInput, GraphSharingUnit unit, ILog log) 
+        public GraphSharingUnitMenuItem(IInput<int> intInput, GraphSharingUnit unit, ILog log)
             : base(intInput, unit, log)
         {
         }

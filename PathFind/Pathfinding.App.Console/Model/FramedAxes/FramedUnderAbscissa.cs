@@ -1,4 +1,5 @@
-﻿using Pathfinding.GraphLib.Core.Realizations.Graphs;
+﻿using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
 
 namespace Pathfinding.App.Console.Model.FramedAxes
 {
@@ -6,8 +7,8 @@ namespace Pathfinding.App.Console.Model.FramedAxes
     {
         protected override string Offset { get; }
 
-        public FramedUnderAbscissa(Graph2D<Vertex> graph)
-            : base(graph.Width)
+        public FramedUnderAbscissa(IGraph<Vertex> graph)
+            : base(graph.GetWidth())
         {
             Offset = string.Empty;
         }

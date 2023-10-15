@@ -2,7 +2,7 @@
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
 using System;
 
 namespace Pathfinding.App.Console.Extensions
@@ -28,7 +28,7 @@ namespace Pathfinding.App.Console.Extensions
         }
 
         public static void RegisterGraph(this IMessenger messenger, object recipient,
-            IToken token, Action<Graph2D<Vertex>> action)
+            IToken token, Action<IGraph<Vertex>> action)
         {
             messenger.RegisterData(recipient, token, action);
         }

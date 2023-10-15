@@ -1,8 +1,12 @@
-﻿using Pathfinding.GraphLib.Core.Realizations.Graphs;
+﻿using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
+using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
 using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
 using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
+using Pathfinding.GraphLib.Factory.Realizations.Layers;
+using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
 using Pathfinding.GraphLib.UnitTest.Realizations;
 using Pathfinding.GraphLib.UnitTest.Realizations.TestFactories;
 using Pathfinding.GraphLib.UnitTest.Realizations.TestFactories.Layers;
@@ -14,17 +18,17 @@ using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests.Realizations
 {
-    using Assemble = GraphAssemble<Graph2D<TestVertex>, TestVertex>;
+    using Assemble = GraphAssemble<TestVertex>;
 
     internal sealed class TestPathfindingRange : Singleton<TestPathfindingRange, IEnumerable<TestVertex>>, IEnumerable<TestVertex>
     {
-        private readonly Lazy<Graph2D<TestVertex>> testGraph;
+        private readonly Lazy<IGraph<TestVertex>> testGraph;
 
-        private Graph2D<TestVertex> TestGraph => testGraph.Value;
+        private IGraph<TestVertex> TestGraph => testGraph.Value;
 
         private TestPathfindingRange()
         {
-            testGraph = new Lazy<Graph2D<TestVertex>>(CreateGraph);
+            testGraph = new Lazy<IGraph<TestVertex>>(CreateGraph);
         }
 
         public IEnumerator<TestVertex> GetEnumerator()
@@ -46,24 +50,24 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests.Realizations
             return GetEnumerator();
         }
 
-        private static Graph2D<TestVertex> CreateGraph()
+        private static IGraph<TestVertex> CreateGraph()
         {
             var vertexFactory = new TestVertexFactory();
-            var coordinateFactory = new TestCoordinateFactory();
-            var graphFactory = new Graph2DFactory<TestVertex>();
+            var coordinateFactory = new CoordinateFactory();
+            var graphFactory = new GraphFactory<TestVertex>();
             var assemble = new Assemble(vertexFactory, coordinateFactory, graphFactory);
-            var layers = new ILayer<Graph2D<TestVertex>, TestVertex>[]
+            var layers = new ILayer[]
             {
-                new ObstacleLayer(),
-                new CostLayer(),
-                new NeighborhoodLayer()
+                new TestObstacleLayer(),
+                new TestCostLayer(),
+                new NeighborhoodLayer(new MooreNeighborhoodFactory())
             };
             return assemble.AssembleGraph(layers, Constants.Width, Constants.Length);
         }
 
         private TestVertex Get(int x, int y)
         {
-            return TestGraph.Get(new TestCoordinate(x, y));
+            return TestGraph.Get(new Coordinate(x, y));
         }
     }
 }

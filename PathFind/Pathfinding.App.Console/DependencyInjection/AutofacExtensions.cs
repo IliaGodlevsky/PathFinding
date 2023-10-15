@@ -28,7 +28,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             }
         }
 
-        public static void RegisterUnit<TUnit, TExit>(this ContainerBuilder builder, IParametresFactory factory) 
+        public static void RegisterUnit<TUnit, TExit>(this ContainerBuilder builder, IParametresFactory factory)
             where TUnit : IUnit
             where TExit : IMenuItem
         {

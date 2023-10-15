@@ -1,5 +1,8 @@
 ﻿using GraphLib.Serialization.Serializers.Decorators;
 using NUnit.Framework;
+using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
+using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decorators;
 using Pathfinding.GraphLib.UnitTest.Realizations.TestFactories;
@@ -32,37 +35,37 @@ namespace Pathfinding.GraphLib.Serialization.Tests
 
         private static TestCaseData GenerateXmlGraphSerializer(params int[] dimensions)
         {
-            var serializer = GetSerializer<XmlGraphSerializer<TestGraph, TestVertex>>();
+            var serializer = GetSerializer<XmlGraphSerializer<TestVertex>>();
             return new TestCaseData(serializer, dimensions);
         }
 
         private static TestCaseData GenerateBinaryGraphSerializer(params int[] dimensions)
         {
-            var serializer = GetSerializer<BinaryGraphSerializer<TestGraph, TestVertex>>();
+            var serializer = GetSerializer<BinaryGraphSerializer<TestVertex>>();
             return new TestCaseData(serializer, dimensions);
         }
 
         private static TestCaseData GenerateBinaryCryptoGraphSerializer(params int[] dimensions)
         {
-            var serializer = GetSerializer<BinaryGraphSerializer<TestGraph, TestVertex>>();
-            var decorator = new CryptoSerializer<TestGraph>(serializer);
+            var serializer = GetSerializer<BinaryGraphSerializer<TestVertex>>();
+            var decorator = new CryptoSerializer<IGraph<TestVertex>>(serializer);
             return new TestCaseData(decorator, dimensions);
         }
 
         private static TestCaseData GenerateBinaryCompressGraphSerializer(params int[] dimensions)
         {
-            var serializer = GetSerializer<BinaryGraphSerializer<TestGraph, TestVertex>>();
-            var decorator = new CompressSerializer<TestGraph>(serializer);
+            var serializer = GetSerializer<BinaryGraphSerializer<TestVertex>>();
+            var decorator = new CompressSerializer<IGraph<TestVertex>>(serializer);
             return new TestCaseData(decorator, dimensions);
         }
 
         private static TSerializer GetSerializer<TSerializer>()
-            where TSerializer : GraphSerializer<TestGraph, TestVertex>
+            where TSerializer : GraphSerializer<TestVertex>
         {
             var vertexFactory = new TestVertexFromInfoFactory();
-            var graphFactory = new TestGraphFactory();
+            var graphFactory = new GraphFactory<TestVertex>();
             var costFactory = new TestCostFactory();
-            var coordinateFactory = new TestCoordinateFactory();
+            var coordinateFactory = new CoordinateFactory();
             return (TSerializer)Activator.CreateInstance(typeof(TSerializer),
                 vertexFactory, graphFactory, costFactory, coordinateFactory);
         }

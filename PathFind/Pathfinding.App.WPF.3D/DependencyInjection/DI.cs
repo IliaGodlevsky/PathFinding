@@ -13,7 +13,6 @@ using Pathfinding.GraphLib.Core.Modules;
 using Pathfinding.GraphLib.Core.Modules.Commands;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations;
 using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
@@ -87,19 +86,19 @@ namespace Pathfinding.App.WPF._3D.DependencyInjection
 
             builder.RegisterType<Vertex3DFactory>().As<IVertexFactory<Vertex3D>>().SingleInstance();
             builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
-            builder.RegisterType<Coordinate3DFactory>().As<ICoordinateFactory>().SingleInstance();
-            builder.RegisterType<Graph3DFactory<Vertex3D>>().As<IGraphFactory<Graph3D<Vertex3D>, Vertex3D>>().SingleInstance();
-            builder.RegisterType<GraphField3DFactory>().As<IGraphFieldFactory<Graph3D<Vertex3D>, Vertex3D, GraphField3D>>().SingleInstance();
+            builder.RegisterType<CoordinateFactory>().As<ICoordinateFactory>().SingleInstance();
+            builder.RegisterType<GraphFactory<Vertex3D>>().As<IGraphFactory<Vertex3D>>().SingleInstance();
+            builder.RegisterType<GraphField3DFactory>().As<IGraphFieldFactory<Vertex3D, GraphField3D>>().SingleInstance();
             builder.RegisterType<VonNeumannNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();
             builder.RegisterType<CubicModel3DFactory>().As<IModel3DFactory>().SingleInstance();
-            builder.RegisterType<GraphAssemble<Graph3D<Vertex3D>, Vertex3D>>().As<IGraphAssemble<Graph3D<Vertex3D>, Vertex3D>>().SingleInstance();
+            builder.RegisterType<GraphAssemble<Vertex3D>>().As<IGraphAssemble<Vertex3D>>().SingleInstance();
             builder.RegisterType<VertexVisualization>().As<ITotalVisualization<Vertex3D>>().SingleInstance();
 
-            builder.RegisterType<InFileSerializationModule<Graph3D<Vertex3D>, Vertex3D>>().As<IGraphSerializationModule<Graph3D<Vertex3D>, Vertex3D>>().SingleInstance();
+            builder.RegisterType<InFileSerializationModule<Vertex3D>>().As<IGraphSerializationModule<Vertex3D>>().SingleInstance();
             builder.RegisterType<PathInput>().As<IPathInput>().SingleInstance();
-            builder.RegisterType<XmlGraphSerializer<Graph3D<Vertex3D>, Vertex3D>>().As<ISerializer<Graph3D<Vertex3D>>>().SingleInstance();
-            builder.RegisterDecorator<CompressSerializer<Graph3D<Vertex3D>>, ISerializer<Graph3D<Vertex3D>>>();
-            builder.RegisterDecorator<CryptoSerializer<Graph3D<Vertex3D>>, ISerializer<Graph3D<Vertex3D>>>();
+            builder.RegisterType<XmlGraphSerializer<Vertex3D>>().As<ISerializer<IGraph<Vertex3D>>>().SingleInstance();
+            builder.RegisterDecorator<CompressSerializer<IGraph<Vertex3D>>, ISerializer<IGraph<Vertex3D>>>();
+            builder.RegisterDecorator<CryptoSerializer<IGraph<Vertex3D>>, ISerializer<IGraph<Vertex3D>>>();
             builder.RegisterType<Vertex3DFromInfoFactory>().As<IVertexFromInfoFactory<Vertex3D>>().SingleInstance();
 
             builder.RegisterAssemblyTypes(Assemblies).AssignableTo<AlgorithmFactory>().As<AlgorithmFactory>().SingleInstance();

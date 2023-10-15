@@ -18,8 +18,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
 
         public CostGreedyAlgorithmMenuItem(
             IReadOnlyDictionary<string, IStepRule> stepRules,
-            IMessenger messenger, 
-            IInput<int> intInput) 
+            IMessenger messenger,
+            IInput<int> intInput)
             : base(messenger, intInput)
         {
             this.stepRules = stepRules;

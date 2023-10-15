@@ -2,7 +2,6 @@
 using Pathfinding.AlgorithmLib.Core.Exceptions;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
-using Pathfinding.AlgorithmLib.History.Interface;
 using Pathfinding.GraphLib.Core.Interface;
 using Shared.Process.EventHandlers;
 using Shared.Process.Interface;

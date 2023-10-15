@@ -3,7 +3,6 @@ using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static Pathfinding.App.Console.DependencyInjection.PathfindingUnits;
 
 namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 {

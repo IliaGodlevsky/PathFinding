@@ -1,4 +1,5 @@
-﻿using Pathfinding.GraphLib.Core.Realizations.Graphs;
+﻿using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
 
 namespace Pathfinding.App.Console.Model.FramedAxes
 {
@@ -10,10 +11,10 @@ namespace Pathfinding.App.Console.Model.FramedAxes
 
         private int OffsetNumber => graphWidth * LateralDistance + AppLayout.WidthOfOrdinateView;
 
-        public FramedToRightOrdinate(Graph2D<Vertex> graph)
-            : base(graph.Length)
+        public FramedToRightOrdinate(IGraph<Vertex> graph)
+            : base(graph.GetLength())
         {
-            graphWidth = graph.Width;
+            graphWidth = graph.GetWidth();
         }
 
         protected override string GetPaddedYCoordinate(int yCoordinate)

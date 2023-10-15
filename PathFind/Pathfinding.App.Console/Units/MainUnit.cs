@@ -3,7 +3,8 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.Logging.Interface;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Executable;
@@ -13,7 +14,7 @@ using System.Drawing;
 
 namespace Pathfinding.App.Console.Units
 {
-    using FieldFactory = IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField>;
+    using FieldFactory = IGraphFieldFactory<Vertex, GraphField>;
 
     internal sealed class MainUnit : Unit, ICanRecieveMessage
     {
@@ -23,7 +24,7 @@ namespace Pathfinding.App.Console.Units
 
         private GraphField GraphField { get; set; } = GraphField.Empty;
 
-        private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
+        private IGraph<Vertex> Graph { get; set; } = Graph<Vertex>.Empty;
 
         public MainUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
@@ -37,7 +38,7 @@ namespace Pathfinding.App.Console.Units
             this.fieldFactory = fieldFactory;
         }
 
-        private bool IsGraphCreated() => Graph != Graph2D<Vertex>.Empty;
+        private bool IsGraphCreated() => Graph != Graph<Vertex>.Empty;
 
         private void DisplayGraph()
         {
@@ -58,7 +59,7 @@ namespace Pathfinding.App.Console.Units
             }
         }
 
-        private void SetGraph(Graph2D<Vertex> graph)
+        private void SetGraph(IGraph<Vertex> graph)
         {
             undo.Undo();
             Graph = graph;

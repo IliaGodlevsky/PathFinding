@@ -20,7 +20,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths
 
         public double Cost => cost.Value;
 
-        public CompositeGraphPath(IEnumerable<IGraphPath> paths)
+        public CompositeGraphPath(IReadOnlyCollection<IGraphPath> paths)
         {
             this.paths = paths;
             this.path = new(GetPath);

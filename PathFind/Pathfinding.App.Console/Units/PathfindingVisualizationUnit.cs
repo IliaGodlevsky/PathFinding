@@ -1,19 +1,20 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
-using Pathfinding.AlgorithmLib.History;
 using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.EventArguments;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Settings;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 using Shared.Extensions;
 using Shared.Process.EventArguments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.Units
@@ -26,7 +27,7 @@ namespace Pathfinding.App.Console.Units
         private readonly IReadOnlyCollection<(string, IAnimationSpeedAction)> animationActions;
 
         private PathfindingProcess algorithm = PathfindingProcess.Idle;
-        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
+        private IGraph<Vertex> graph = Graph<Vertex>.Empty;
         private bool isVisualizationApplied = true;
         private TimeSpan animationDelay = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
 
@@ -54,7 +55,7 @@ namespace Pathfinding.App.Console.Units
             isVisualizationApplied = isApplied;
         }
 
-        private void SetGraph(Graph2D<Vertex> graph)
+        private void SetGraph(IGraph<Vertex> graph)
         {
             this.graph = graph;
         }
@@ -95,7 +96,8 @@ namespace Pathfinding.App.Console.Units
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)
         {
             GetOrDefault(e.PressedKey, pathfindingActions)?.Do(algorithm);
-            animationDelay = GetOrDefault(e.PressedKey, animationActions)?.Do(animationDelay) ?? animationDelay;
+            var action = GetOrDefault(e.PressedKey, animationActions);
+            animationDelay = action?.Do(animationDelay) ?? animationDelay;
         }
 
         private T GetOrDefault<T>(ConsoleKey key, IReadOnlyCollection<(string SourceName, T Action)> actions)

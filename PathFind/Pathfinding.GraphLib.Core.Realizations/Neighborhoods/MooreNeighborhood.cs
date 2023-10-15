@@ -1,5 +1,4 @@
-﻿using Pathfinding.GraphLib.Core.Abstractions;
-using Pathfinding.GraphLib.Core.Interface;
+﻿using Pathfinding.GraphLib.Core.Interface;
 using Shared.Extensions;
 using System;
 using System.Collections;
@@ -12,15 +11,6 @@ namespace Pathfinding.GraphLib.Core.Realizations.Neighborhoods
     [DebuggerDisplay("Count = {Neighbours.Count}")]
     public sealed class MooreNeighborhood : INeighborhood
     {
-        private sealed class NeighborhoodCoordinate : Coordinate
-        {
-            public NeighborhoodCoordinate(int[] coordinates)
-                : base(coordinates.Length, coordinates)
-            {
-
-            }
-        }
-
         private readonly ICoordinate selfCoordinate;
         private readonly int limitDepth;
         private readonly int[] resultCoordinatesValues;
@@ -44,7 +34,7 @@ namespace Pathfinding.GraphLib.Core.Realizations.Neighborhoods
                 resultCoordinatesValues[depth] = selfCoordinate[depth] + offset;
                 var neighbours = IsBottom(depth)
                     ? CollectNeighbors(depth + 1).AsEnumerable()
-                    : GetCoordinate();
+                    : new[] { new Coordinate(resultCoordinatesValues) };
                 neighborhood.AddRange(neighbours);
             }
             return neighborhood;
@@ -53,11 +43,6 @@ namespace Pathfinding.GraphLib.Core.Realizations.Neighborhoods
         private bool IsBottom(int depth)
         {
             return depth < limitDepth - 1;
-        }
-
-        private IEnumerable<NeighborhoodCoordinate> GetCoordinate()
-        {
-            yield return new(resultCoordinatesValues);
         }
 
         private IReadOnlyCollection<ICoordinate> GetNeighborhood()

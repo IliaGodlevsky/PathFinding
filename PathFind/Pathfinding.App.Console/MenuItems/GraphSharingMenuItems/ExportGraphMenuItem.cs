@@ -3,7 +3,7 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
 using System;
@@ -89,7 +89,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             }
         }
 
-        private string CreateMenuList(IReadOnlyCollection<Graph2D<Vertex>> graphs)
+        private string CreateMenuList(IReadOnlyCollection<IGraph<Vertex>> graphs)
         {
             return graphs.Select(k => k.ToString())
                 .Append(Languages.All)

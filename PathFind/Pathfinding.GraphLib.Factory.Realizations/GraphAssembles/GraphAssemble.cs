@@ -9,24 +9,23 @@ using System.Linq;
 
 namespace Pathfinding.GraphLib.Factory.Realizations.GraphAssembles
 {
-    public sealed class GraphAssemble<TGraph, TVertex> : IGraphAssemble<TGraph, TVertex>
+    public sealed class GraphAssemble<TVertex> : IGraphAssemble<TVertex>
         where TVertex : IVertex
-        where TGraph : IGraph<TVertex>
     {
         private readonly ICoordinateFactory coordinateFactory;
         private readonly IVertexFactory<TVertex> vertexFactory;
-        private readonly IGraphFactory<TGraph, TVertex> graphFactory;
+        private readonly IGraphFactory<TVertex> graphFactory;
 
         public GraphAssemble(IVertexFactory<TVertex> vertexFactory,
             ICoordinateFactory coordinateFactory,
-            IGraphFactory<TGraph, TVertex> graphFactory)
+            IGraphFactory<TVertex> graphFactory)
         {
             this.vertexFactory = vertexFactory;
             this.coordinateFactory = coordinateFactory;
             this.graphFactory = graphFactory;
         }
 
-        public TGraph AssembleGraph(IReadOnlyList<int> graphDimensionsSizes)
+        public IGraph<TVertex> AssembleGraph(IReadOnlyList<int> graphDimensionsSizes)
         {
             int graphSize = graphDimensionsSizes.AggregateOrDefault((x, y) => x * y);
             var vertices = new TVertex[graphSize];

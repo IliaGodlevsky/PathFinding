@@ -4,7 +4,6 @@ using Pathfinding.App.WPF._3D.DependencyInjection;
 using Pathfinding.App.WPF._3D.Infrastructure.Commands;
 using Pathfinding.App.WPF._3D.Messages.PassValueMessages;
 using Pathfinding.App.WPF._3D.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
@@ -17,7 +16,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
     {
         private readonly IMessenger messenger;
         private readonly ILog log;
-        private readonly IGraphSerializationModule<Graph3D<Vertex3D>, Vertex3D> module;
+        private readonly IGraphSerializationModule<Vertex3D> module;
 
         private bool IsAllAlgorithmsFinishedPathfinding { get; set; } = true;
 
@@ -27,7 +26,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
         {
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAllAlgorithmFinishedPathfinding);
-            module = DI.Container.Resolve<IGraphSerializationModule<Graph3D<Vertex3D>, Vertex3D>>();
+            module = DI.Container.Resolve<IGraphSerializationModule<Vertex3D>>();
             log = DI.Container.Resolve<ILog>();
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand);
         }

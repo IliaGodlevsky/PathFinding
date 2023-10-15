@@ -5,20 +5,21 @@ using Pathfinding.App.WPF._3D.Messages.ActionMessages;
 using Pathfinding.App.WPF._3D.Messages.PassValueMessages;
 using Pathfinding.App.WPF._3D.Model;
 using Pathfinding.App.WPF._3D.ViewModel.BaseViewModel;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.VisualizationLib.Core.Interface;
 using System.Windows.Media.Media3D;
 
 namespace Pathfinding.App.WPF._3D.ViewModel
 {
-    using FieldFactory = IGraphFieldFactory<Graph3D<Vertex3D>, Vertex3D, GraphField3D>;
+    using FieldFactory = IGraphFieldFactory<Vertex3D, GraphField3D>;
 
     internal class GraphFieldViewModel : NotifyPropertyChanged
     {
         private readonly IMessenger messenger;
 
-        private Graph3D<Vertex3D> graph = Graph3D<Vertex3D>.Empty;
+        private IGraph<Vertex3D> graph = Graph<Vertex3D>.Empty;
         private GraphField3D field;
         private string graphParametres;
         private Point3D fieldPosition;

@@ -3,7 +3,6 @@ using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.App.WPF._2D.Messages.DataMessages;
 using Pathfinding.App.WPF._2D.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
@@ -16,7 +15,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
     internal class LoadGraphViewModel
     {
         private readonly IMessenger messenger;
-        private readonly IGraphSerializationModule<Graph2D<Vertex>, Vertex> module;
+        private readonly IGraphSerializationModule<Vertex> module;
         private readonly ILog log;
 
         public ICommand LoadGraphCommand { get; }
@@ -28,7 +27,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
             messenger = DI.Container.Resolve<IMessenger>();
             messenger.Register<IsAllAlgorithmsFinishedMessage>(this, OnAlgorithmsFinished);
             log = DI.Container.Resolve<ILog>();
-            module = DI.Container.Resolve<IGraphSerializationModule<Graph2D<Vertex>, Vertex>>();
+            module = DI.Container.Resolve<IGraphSerializationModule<Vertex>>();
             LoadGraphCommand = new RelayCommand(ExecuteLoadGraphCommand, CanExecuteLoadGrapgCommand);
         }
 

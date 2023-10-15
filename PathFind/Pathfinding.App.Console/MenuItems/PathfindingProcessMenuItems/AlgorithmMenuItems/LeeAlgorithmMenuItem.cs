@@ -12,7 +12,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     [MediumPriority]
     internal sealed class LeeAlgorithmMenuItem : AlgorithmMenuItem
     {
-        public LeeAlgorithmMenuItem(IMessenger messenger) 
+        public LeeAlgorithmMenuItem(IMessenger messenger)
             : base(messenger)
         {
         }

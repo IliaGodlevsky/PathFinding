@@ -9,17 +9,16 @@ using System.Linq;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
 {
-    public abstract class GraphSerializer<TGraph, TVertex> : ISerializer<TGraph>
+    public abstract class GraphSerializer<TVertex> : ISerializer<IGraph<TVertex>>
         where TVertex : IVertex
-        where TGraph : IGraph<TVertex>
     {
         protected readonly IVertexFromInfoFactory<TVertex> vertexFactory;
-        protected readonly IGraphFactory<TGraph, TVertex> graphFactory;
+        protected readonly IGraphFactory<TVertex> graphFactory;
         protected readonly IVertexCostFactory costFactory;
         protected readonly ICoordinateFactory coordinateFactory;
 
         public GraphSerializer(IVertexFromInfoFactory<TVertex> factory,
-            IGraphFactory<TGraph, TVertex> graphFactory,
+            IGraphFactory<TVertex> graphFactory,
             IVertexCostFactory costFactory,
             ICoordinateFactory coordinateFactory)
         {
@@ -29,7 +28,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
             this.coordinateFactory = coordinateFactory;
         }
 
-        public TGraph DeserializeFrom(Stream stream)
+        public IGraph<TVertex> DeserializeFrom(Stream stream)
         {
             try
             {
@@ -53,7 +52,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
             }
         }
 
-        public void SerializeTo(TGraph graph, Stream stream)
+        public void SerializeTo(IGraph<TVertex> graph, Stream stream)
         {
             try
             {

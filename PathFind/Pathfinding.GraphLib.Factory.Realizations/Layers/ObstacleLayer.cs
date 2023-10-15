@@ -9,9 +9,7 @@ using static System.Linq.Enumerable;
 
 namespace Pathfinding.GraphLib.Factory.Realizations.Layers
 {
-    public sealed class ObstacleLayer<TGraph, TVertex> : ILayer<TGraph, TVertex>
-        where TGraph : IGraph<TVertex>
-        where TVertex : IVertex
+    public sealed class ObstacleLayer : ILayer
     {
         private readonly IRandom random;
         private readonly int obstaclePercent;
@@ -22,7 +20,7 @@ namespace Pathfinding.GraphLib.Factory.Realizations.Layers
             this.obstaclePercent = obstaclePercent;
         }
 
-        public void Overlay(TGraph graph)
+        public void Overlay(IGraph<IVertex> graph)
         {
             int obstaclesCount = graph.Count * obstaclePercent / 100;
             int regularsCount = graph.Count - obstaclesCount;

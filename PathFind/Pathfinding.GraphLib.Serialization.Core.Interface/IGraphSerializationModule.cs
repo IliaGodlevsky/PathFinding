@@ -2,12 +2,11 @@
 
 namespace Pathfinding.GraphLib.Serialization.Core.Interface
 {
-    public interface IGraphSerializationModule<TGraph, TVertex>
-        where TGraph : IGraph<TVertex>
+    public interface IGraphSerializationModule<TVertex>
         where TVertex : IVertex
     {
-        void SaveGraph(TGraph graph);
+        void SaveGraph(IGraph<TVertex> graph);
 
-        TGraph LoadGraph();
+        IGraph<TVertex> LoadGraph();
     }
 }

@@ -2,11 +2,10 @@
 
 namespace Pathfinding.VisualizationLib.Core.Interface
 {
-    public interface IGraphFieldFactory<TGraph, TVertex, TField>
+    public interface IGraphFieldFactory<TVertex, TField>
         where TVertex : IVertex
-        where TGraph : IGraph<TVertex>
         where TField : IGraphField<TVertex>
     {
-        TField CreateGraphField(TGraph graph);
+        TField CreateGraphField(IGraph<TVertex> graph);
     }
 }

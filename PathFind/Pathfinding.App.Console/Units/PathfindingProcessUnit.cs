@@ -8,8 +8,9 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Notes;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Modules.Interface;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Extensions;
 using Shared.Extensions;
@@ -27,7 +28,7 @@ namespace Pathfinding.App.Console.Units
         private readonly IInput<ConsoleKey> input;
         private readonly ILog log;
 
-        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
+        private IGraph<Vertex> graph = Graph<Vertex>.Empty;
 
         public PathfindingProcessUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<IConditionedMenuItem> conditioned,
@@ -87,7 +88,7 @@ namespace Pathfinding.App.Console.Units
             input.Input();
         }
 
-        private void SetGraph(Graph2D<Vertex> graph)
+        private void SetGraph(IGraph<Vertex> graph)
         {
             this.graph = graph;
         }

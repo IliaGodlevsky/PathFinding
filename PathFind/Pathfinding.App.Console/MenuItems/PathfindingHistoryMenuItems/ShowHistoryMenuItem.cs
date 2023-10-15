@@ -6,8 +6,10 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.Notes;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Realizations;
 using Shared.Extensions;
 using Shared.Primitives;
 using System.Collections.Generic;
@@ -24,7 +26,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         private readonly GraphsPathfindingHistory history;
 
         private bool isHistoryApplied = true;
-        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
+        private IGraph<Vertex> graph = Graph<Vertex>.Empty;
 
         public ShowHistoryMenuItem(IMessenger messenger,
             IInput<int> input,
@@ -37,7 +39,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public bool CanBeExecuted()
         {
-            return IsHistoryApplied() 
+            return IsHistoryApplied()
                 && history.GetFor(graph).Algorithms.Count > 0;
         }
 
@@ -47,11 +49,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
                 .GroupBy(s => s.Value.Algorithm)
                 .SelectMany(s => s.OrderBy(i => i.Value.Steps))
                 .ToDictionary();
-            var table = statistics.Values.ToTable();
-            string header = Aggregate(table.Headers);
-            var rows = table.Rows.Select(Aggregate).ToArray();
-            var menuList = rows.Append(Languages.Quit).CreateTable(header);
-            string inputMessage = string.Concat(menuList, Languages.AlgorithmChoiceMsg);
+            string inputMessage = GetInputMessage(statistics.Values);
             using (RememberGraphState())
             {
                 int index = GetAlgorithmId(inputMessage, statistics.Count);
@@ -72,6 +70,15 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             }
         }
 
+        private string GetInputMessage(IReadOnlyCollection<Statistics> statistics)
+        {
+            var table = statistics.ToTable();
+            string header = Aggregate(table.Headers);
+            var rows = table.Rows.Select(Aggregate).ToArray();
+            var menuList = rows.Append(Languages.Quit).CreateTable(header);
+            return string.Concat(menuList, Languages.AlgorithmChoiceMsg);
+        }
+
         private Disposable RememberGraphState()
         {
             var costs = graph.GetCosts();
@@ -85,7 +92,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             });
         }
 
-        private void SetGraph(Graph2D<Vertex> graph)
+        private void SetGraph(IGraph<Vertex> graph)
         {
             this.graph = graph;
         }

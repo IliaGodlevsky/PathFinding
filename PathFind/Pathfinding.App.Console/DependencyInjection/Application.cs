@@ -39,7 +39,6 @@ using Pathfinding.GraphLib.Core.Modules;
 using Pathfinding.GraphLib.Core.Modules.Commands;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations;
 using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
@@ -179,13 +178,13 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<ExcludeSourceVertex<Vertex>>().Keyed<Command>(ExcludeCommand).WithMetadata(Order, 1).SingleInstance();
                 builder.RegisterType<ExcludeTargetVertex<Vertex>>().Keyed<Command>(ExcludeCommand).WithMetadata(Order, 2).SingleInstance();
 
-                builder.RegisterType<GraphAssemble<Graph2D<Vertex>, Vertex>>().As<IGraphAssemble<Graph2D<Vertex>, Vertex>>().SingleInstance();
+                builder.RegisterType<GraphAssemble<Vertex>>().As<IGraphAssemble<Vertex>>().SingleInstance();
                 builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
                 builder.RegisterType<VertexFactory>().As<IVertexFactory<Vertex>>().SingleInstance();
-                builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory<Graph2D<Vertex>, Vertex, GraphField>>().SingleInstance();
-                builder.RegisterType<Coordinate2DFactory>().As<ICoordinateFactory>().SingleInstance();
-                builder.RegisterType<Graph2DFactory<Vertex>>().As<IGraphFactory<Graph2D<Vertex>, Vertex>>().SingleInstance();
-                builder.RegisterDecorator<Graph2DWrapFactory, IGraphFactory<Graph2D<Vertex>, Vertex>>();
+                builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory<Vertex, GraphField>>().SingleInstance();
+                builder.RegisterType<CoordinateFactory>().As<ICoordinateFactory>().SingleInstance();
+                builder.RegisterType<GraphFactory<Vertex>>().As<IGraphFactory<Vertex>>().SingleInstance();
+                builder.RegisterDecorator<Graph2DWrapFactory, IGraphFactory<Vertex>>();
 
                 builder.RegisterType<MooreNeighborhoodFactory>().Keyed<INeighborhoodFactory>(Neighbourhood)
                     .SingleInstance().WithMetadata(Neighbourhood, nameof(Languages.MooreNeighbourhood));
@@ -255,7 +254,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterType<BinaryRangeSerializer>().As<ISerializer<IEnumerable<ICoordinate>>>().SingleInstance();
                 builder.RegisterType<BinaryHistorySerializer>().As<ISerializer<GraphPathfindingHistory>>().SingleInstance();
-                builder.RegisterType<BinaryGraphSerializer<Graph2D<Vertex>, Vertex>>().As<ISerializer<Graph2D<Vertex>>>().SingleInstance();
+                builder.RegisterType<BinaryGraphSerializer<Vertex>>().As<ISerializer<IGraph<Vertex>>>().SingleInstance();
                 builder.RegisterType<PathfindingHistorySerializer>().As<ISerializer<GraphsPathfindingHistory>>().SingleInstance();
 
                 builder.RegisterDecorator<BufferedSerializer<GraphsPathfindingHistory>, ISerializer<GraphsPathfindingHistory>>();

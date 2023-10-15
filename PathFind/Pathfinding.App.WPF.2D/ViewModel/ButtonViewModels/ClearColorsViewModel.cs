@@ -3,9 +3,10 @@ using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.App.WPF._2D.Messages.DataMessages;
 using Pathfinding.App.WPF._2D.Model;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.Visualization.Extensions;
 using System.Windows.Input;
 using WPFVersion.DependencyInjection;
@@ -17,7 +18,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
         private readonly IMessenger messenger;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
 
-        private Graph2D<Vertex> Graph { get; set; } = Graph2D<Vertex>.Empty;
+        private IGraph<Vertex> Graph { get; set; } = Graph<Vertex>.Empty;
 
         private bool IsAllAlgorithmFinishedPathfinding { get; set; } = true;
 
@@ -40,7 +41,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel.ButtonViewModels
 
         private bool CanExecuteClearColorsCommand(object param)
         {
-            return Graph != Graph2D<Vertex>.Empty
+            return Graph != Graph<Vertex>.Empty
                 && rangeBuilder.Range.HasSourceAndTargetSet()
                 && IsAllAlgorithmFinishedPathfinding;
         }

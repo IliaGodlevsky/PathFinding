@@ -33,6 +33,9 @@
     <LangVersion>Latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,22 +46,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Coordinate.cs" />
+    <Compile Include="Graph.cs" />
     <Compile Include="Neighborhoods\MooreNeighborhood.cs" />
     <Compile Include="Neighborhoods\VonNeumannNeighborhood.cs" />
     <Compile Include="PathfindingRange.cs" />
     <Compile Include="VertexCost.cs" />
-    <Compile Include="Coordinates\Coordinate2D.cs" />
-    <Compile Include="Coordinates\Coordinate3D.cs" />
-    <Compile Include="Graphs\Graph2D.cs" />
-    <Compile Include="Graphs\Graph3D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Abstractions\Pathfinding.GraphLib.Core.Abstractions.csproj">
-      <Project>{7112EB01-28F4-438D-945D-87CB69D14B99}</Project>
-      <Name>Pathfinding.GraphLib.Core.Abstractions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface.Extensions\Pathfinding.GraphLib.Core.Interface.Extensions.csproj">
       <Project>{3c13810c-ed74-490b-9303-9ccbfe485f5e}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface.Extensions</Name>

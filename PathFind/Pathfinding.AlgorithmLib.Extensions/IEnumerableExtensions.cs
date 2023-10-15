@@ -1,5 +1,4 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Exceptions;
-using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.NullObjects;
 using System;

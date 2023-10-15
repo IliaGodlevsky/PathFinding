@@ -1,9 +1,25 @@
 ﻿using System;
+using System.Linq;
 
 namespace Pathfinding.GraphLib.Core.Interface.Extensions
 {
     public static class ICoordinateExtensions
     {
+        public static int GetX(this ICoordinate coordinate)
+        {
+            return coordinate.ElementAtOrDefault(0);
+        }
+
+        public static int GetY(this ICoordinate coordinate)
+        {
+            return coordinate.ElementAtOrDefault(1);
+        }
+
+        public static int GetZ(this ICoordinate coordinate)
+        {
+            return coordinate.ElementAtOrDefault(2);
+        }
+
         public static bool IsCardinal(this ICoordinate self, ICoordinate coordinate)
         {
             // Cardinal coordinate differs from the

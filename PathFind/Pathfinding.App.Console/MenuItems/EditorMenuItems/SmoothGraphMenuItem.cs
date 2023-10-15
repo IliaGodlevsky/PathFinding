@@ -6,8 +6,9 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Settings;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Smoothing;
 using Pathfinding.GraphLib.Smoothing.Interface;
 using System;
@@ -26,7 +27,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         private Stack<IReadOnlyList<int>> SmoothHistory => history.GetFor(graph).SmoothHistory;
 
-        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
+        private IGraph<Vertex> graph = Graph<Vertex>.Empty;
 
         public SmoothGraphMenuItem(IMeanCost meanAlgorithm,
             IMessenger messenger, IInput<ConsoleKey> input,
@@ -38,7 +39,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             this.input = input;
         }
 
-        public bool CanBeExecuted() => graph != Graph2D<Vertex>.Empty;
+        public bool CanBeExecuted() => graph != Graph<Vertex>.Empty;
 
         public void Execute()
         {
@@ -82,7 +83,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             }
         }
 
-        private void OnGraphCreated(Graph2D<Vertex> graph)
+        private void OnGraphCreated(IGraph<Vertex> graph)
         {
             this.graph = graph;
         }

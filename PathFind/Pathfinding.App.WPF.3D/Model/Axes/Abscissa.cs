@@ -1,4 +1,4 @@
-﻿using Pathfinding.GraphLib.Core.Realizations.Graphs;
+﻿using Pathfinding.GraphLib.Core.Interface;
 
 namespace Pathfinding.App.WPF._3D.Model.Axes
 {
@@ -6,7 +6,7 @@ namespace Pathfinding.App.WPF._3D.Model.Axes
     {
         protected override int Order => 2;
 
-        public Abscissa(Graph3D<Vertex3D> graph) : base(graph)
+        public Abscissa(IGraph<Vertex3D> graph) : base(graph)
         {
 
         }

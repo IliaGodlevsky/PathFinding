@@ -1,6 +1,6 @@
 ﻿using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Exceptions;
 using System;
@@ -12,11 +12,11 @@ namespace Pathfinding.App.Console.Serialization
     internal sealed class PathfindingHistorySerializer : ISerializer<GraphsPathfindingHistory>
     {
         private readonly ISerializer<GraphPathfindingHistory> historySerializer;
-        private readonly ISerializer<Graph2D<Vertex>> graphSerializer;
+        private readonly ISerializer<IGraph<Vertex>> graphSerializer;
 
         public PathfindingHistorySerializer(
             ISerializer<GraphPathfindingHistory> historySerializer,
-            ISerializer<Graph2D<Vertex>> graphSerializer)
+            ISerializer<IGraph<Vertex>> graphSerializer)
         {
             this.historySerializer = historySerializer;
             this.graphSerializer = graphSerializer;

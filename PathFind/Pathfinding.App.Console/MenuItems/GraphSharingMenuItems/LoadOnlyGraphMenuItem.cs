@@ -5,7 +5,7 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
@@ -19,14 +19,14 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
     {
         private readonly IMessenger messenger;
         private readonly IInput<string> input;
-        private readonly ISerializer<Graph2D<Vertex>> serializer;
+        private readonly ISerializer<IGraph<Vertex>> serializer;
         private readonly GraphsPathfindingHistory history;
         private readonly ILog log;
 
         public LoadGraphOnlyMenuItem(IMessenger messenger,
             IFilePathInput input,
             GraphsPathfindingHistory history,
-            ISerializer<Graph2D<Vertex>> serializer, ILog log)
+            ISerializer<IGraph<Vertex>> serializer, ILog log)
         {
             this.history = history;
             this.serializer = serializer;

@@ -58,7 +58,7 @@ namespace Pathfinding.App.Console.Model.Notes
         [Order(2)]
         [Displayable]
         [DisplayNameSource(nameof(Languages.Time))]
-        public string Time => Elapsed?.ToString(Parametres.Default.TimeFormat, 
+        public string Time => Elapsed?.ToString(Parametres.Default.TimeFormat,
             CultureInfo.InvariantCulture);
 
         [Order(6)]

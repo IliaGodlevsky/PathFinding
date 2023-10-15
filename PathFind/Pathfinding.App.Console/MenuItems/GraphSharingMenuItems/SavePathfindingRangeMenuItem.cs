@@ -5,9 +5,8 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
-using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
+using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
 using System;
 using System.Collections.Generic;
@@ -83,7 +82,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             }
         }
 
-        private string CreateMenuList(IReadOnlyCollection<Graph2D<Vertex>> graphs)
+        private string CreateMenuList(IReadOnlyCollection<IGraph<Vertex>> graphs)
         {
             return graphs.Select(k => k.ToString())
                 .Append(Languages.Quit)

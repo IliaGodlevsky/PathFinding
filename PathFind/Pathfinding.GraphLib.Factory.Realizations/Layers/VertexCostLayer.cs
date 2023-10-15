@@ -6,9 +6,7 @@ using Shared.Random.Extensions;
 
 namespace Pathfinding.GraphLib.Factory.Realizations.Layers
 {
-    public sealed class VertexCostLayer<TGraph, TVertex> : ILayer<TGraph, TVertex>
-        where TVertex : IVertex
-        where TGraph : IGraph<TVertex>
+    public sealed class VertexCostLayer : ILayer
     {
         private IVertexCostFactory CostFactory { get; }
 
@@ -24,7 +22,7 @@ namespace Pathfinding.GraphLib.Factory.Realizations.Layers
             this.Random = random;
         }
 
-        public void Overlay(TGraph graph)
+        public void Overlay(IGraph<IVertex> graph)
         {
             foreach (var vertex in graph)
             {

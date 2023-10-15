@@ -6,9 +6,7 @@ using System.Linq;
 
 namespace Pathfinding.GraphLib.Smoothing
 {
-    public sealed class SmoothLayer<TGraph, TVertex> : ILayer<TGraph, TVertex>
-        where TGraph : IGraph<TVertex>
-        where TVertex : IVertex
+    public sealed class SmoothLayer : ILayer
     {
         private readonly int smoothLevel;
         private readonly IMeanCost meanCost;
@@ -19,7 +17,7 @@ namespace Pathfinding.GraphLib.Smoothing
             this.meanCost = meanCost;
         }
 
-        public void Overlay(TGraph graph)
+        public void Overlay(IGraph<IVertex> graph)
         {
             int level = smoothLevel;
             while (level-- > 0)
@@ -29,7 +27,7 @@ namespace Pathfinding.GraphLib.Smoothing
             }
         }
 
-        private int GetAverageCost(TVertex vertex)
+        private int GetAverageCost(IVertex vertex)
         {
             return (int)vertex.Neighbours
                 .Average(neighbour => meanCost.Calculate(neighbour, vertex));

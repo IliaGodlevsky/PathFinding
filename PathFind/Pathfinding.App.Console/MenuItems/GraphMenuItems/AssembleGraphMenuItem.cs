@@ -3,7 +3,6 @@ using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Interface;
 using Shared.Random;
 
@@ -13,7 +12,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     internal sealed class AssembleGraphMenuItem : GraphCreatingMenuItem
     {
         public AssembleGraphMenuItem(IMessenger messenger,
-            IGraphAssemble<Graph2D<Vertex>, Vertex> assemble,
+            IGraphAssemble<Vertex> assemble,
             IRandom random,
             IVertexCostFactory costFactory,
             GraphsPathfindingHistory history)

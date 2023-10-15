@@ -41,12 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoordinateFactories\Coordinate2DFactory.cs" />
-    <Compile Include="CoordinateFactories\Coordinate3DFactory.cs" />
+    <Compile Include="CoordinateFactories\CoordinateFactory.cs" />
     <Compile Include="CostFactory.cs" />
     <Compile Include="GraphAssembles\GraphAssemble.cs" />
-    <Compile Include="GraphFactories\Graph2DFactory.cs" />
-    <Compile Include="GraphFactories\Graph3DFactory.cs" />
+    <Compile Include="GraphFactories\GraphFactory.cs" />
     <Compile Include="Layers\NeighborhoodLayer.cs" />
     <Compile Include="Layers\ObstacleLayer.cs" />
     <Compile Include="Layers\VertexCostLayer.cs" />
@@ -65,10 +63,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Abstractions\Pathfinding.GraphLib.Core.Abstractions.csproj">
-      <Project>{7112EB01-28F4-438D-945D-87CB69D14B99}</Project>
-      <Name>Pathfinding.GraphLib.Core.Abstractions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface.Extensions\Pathfinding.GraphLib.Core.Interface.Extensions.csproj">
       <Project>{3c13810c-ed74-490b-9303-9ccbfe485f5e}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface.Extensions</Name>
@@ -115,6 +109,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Languages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

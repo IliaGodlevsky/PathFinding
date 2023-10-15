@@ -22,12 +22,11 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
         internal const string Cost = "cost";
     }
 
-    public sealed class XmlGraphSerializer<TGraph, TVertex> : GraphSerializer<TGraph, TVertex>
+    public sealed class XmlGraphSerializer<TVertex> : GraphSerializer<TVertex>
         where TVertex : IVertex
-        where TGraph : IGraph<TVertex>
     {
         public XmlGraphSerializer(IVertexFromInfoFactory<TVertex> converter,
-            IGraphFactory<TGraph, TVertex> graphFactory,
+            IGraphFactory<TVertex> graphFactory,
             IVertexCostFactory costFactory,
             ICoordinateFactory coordinateFactory)
             : base(converter, graphFactory, costFactory, coordinateFactory)

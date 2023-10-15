@@ -47,24 +47,15 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestFactories\Layers\Graph2DLayer.cs" />
-    <Compile Include="TestFactories\Layers\CostLayer.cs" />
-    <Compile Include="TestFactories\Layers\NeighborhoodLayer.cs" />
-    <Compile Include="TestFactories\Layers\ObstacleLayer.cs" />
-    <Compile Include="TestFactories\TestCoordinateFactory.cs" />
+    <Compile Include="TestFactories\Layers\TestCostLayer.cs" />
+    <Compile Include="TestFactories\Layers\TestObstacleLayer.cs" />
     <Compile Include="TestFactories\TestCostFactory.cs" />
-    <Compile Include="TestFactories\TestGraphFactory.cs" />
     <Compile Include="TestFactories\TestVertexFactory.cs" />
     <Compile Include="TestFactories\TestVertexFromInfoFactory.cs" />
-    <Compile Include="TestObjects\TestCoordinate.cs" />
-    <Compile Include="TestObjects\TestGraph.cs" />
     <Compile Include="TestObjects\TestVertex.cs" />
     <Compile Include="TestObjects\TestVertexCost.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Abstractions\Pathfinding.GraphLib.Core.Abstractions.csproj">
-      <Project>{7112EB01-28F4-438D-945D-87CB69D14B99}</Project>
-      <Name>Pathfinding.GraphLib.Core.Abstractions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface.Extensions\Pathfinding.GraphLib.Core.Interface.Extensions.csproj">
       <Project>{3c13810c-ed74-490b-9303-9ccbfe485f5e}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface.Extensions</Name>

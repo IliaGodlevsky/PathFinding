@@ -3,13 +3,12 @@ using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.History;
-using Pathfinding.AlgorithmLib.History.Interface;
 using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.App.WPF._2D.Messages.ActionMessages;
 using Pathfinding.App.WPF._2D.Messages.DataMessages;
 using Pathfinding.App.WPF._2D.Model;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Visualization.Extensions;
 using Shared.Executable;
 using Shared.Executable.Extensions;
@@ -36,7 +35,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel
 
         private Dispatcher Dispatcher => Application.Current.Dispatcher;
 
-        private Graph2D<Vertex> Graph { get; set; }
+        private IGraph<Vertex> Graph { get; set; }
 
         public AlgorithmViewModel SelectedAlgorithm { get; set; }
 

@@ -2,7 +2,7 @@
 
 namespace Pathfinding.GraphLib.UnitTest.Realizations.TestFactories.Layers
 {
-    public sealed class ObstacleLayer : Graph2DLayer<bool>
+    public sealed class TestObstacleLayer : Graph2DLayer<bool>
     {
         private const bool X = true;
         private const bool O = false;

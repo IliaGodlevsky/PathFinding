@@ -3,7 +3,6 @@ using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations.Layers;
@@ -16,7 +15,7 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    using GraphAssemble = IGraphAssemble<Graph2D<Vertex>, Vertex>;
+    using GraphAssemble = IGraphAssemble<Vertex>;
 
     internal abstract class GraphCreatingMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
@@ -73,11 +72,11 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 && neighborhoodFactory != null;
         }
 
-        protected virtual IEnumerable<ILayer<Graph2D<Vertex>, Vertex>> GetLayers()
+        protected virtual IEnumerable<ILayer> GetLayers()
         {
-            yield return new NeighborhoodLayer<Graph2D<Vertex>, Vertex>(neighborhoodFactory);
-            yield return new VertexCostLayer<Graph2D<Vertex>, Vertex>(costFactory, costRange, random);
-            yield return new ObstacleLayer<Graph2D<Vertex>, Vertex>(random, obstaclePercent);
+            yield return new NeighborhoodLayer(neighborhoodFactory);
+            yield return new VertexCostLayer(costFactory, costRange, random);
+            yield return new ObstacleLayer(random, obstaclePercent);
         }
 
         public virtual void RegisterHanlders(IMessenger messenger)

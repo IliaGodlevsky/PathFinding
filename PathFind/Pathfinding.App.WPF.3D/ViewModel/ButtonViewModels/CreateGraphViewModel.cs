@@ -7,7 +7,7 @@ using Pathfinding.App.WPF._3D.Messages.PassValueMessages;
 using Pathfinding.App.WPF._3D.Model;
 using Pathfinding.App.WPF._3D.View;
 using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Realizations;
 using Shared.Executable;
 using System.Windows.Input;
 
@@ -19,7 +19,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel.ButtonViewModels
 
         public ICommand CreateGraphCommand { get; }
 
-        private Graph3D<Vertex3D> Graph { get; set; } = Graph3D<Vertex3D>.Empty;
+        private IGraph<Vertex3D> Graph { get; set; } = Graph<Vertex3D>.Empty;
 
         private bool IsAllAlgorithmsFinishedPathfinding { get; set; } = true;
 

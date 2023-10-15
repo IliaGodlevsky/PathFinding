@@ -9,8 +9,8 @@ using Pathfinding.App.WPF._2D.Interface;
 using Pathfinding.App.WPF._2D.Messages.ActionMessages;
 using Pathfinding.App.WPF._2D.Messages.DataMessages;
 using Pathfinding.App.WPF._2D.Model;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Modules.Interface;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Models;
 using Shared.Extensions;
@@ -36,7 +36,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel
         public ICommand CancelPathFindAlgorithmChoice { get; }
 
         public PathFindingViewModel(IPathfindingRangeBuilder<Vertex> rangeBuilder,
-            IEnumerable<IAlgorithmFactory<PathfindingProcess>> algorithmFactories, ICache<Graph2D<Vertex>> graphCache, ILog log)
+            IEnumerable<IAlgorithmFactory<PathfindingProcess>> algorithmFactories, ICache<IGraph<Vertex>> graphCache, ILog log)
             : base(rangeBuilder.Range, algorithmFactories, graphCache.Cached, log)
         {
             messenger = DI.Container.Resolve<IMessenger>();

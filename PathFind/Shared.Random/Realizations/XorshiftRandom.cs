@@ -16,7 +16,7 @@ namespace Shared.Random.Realizations
             this.seed = seed;
         }
 
-        public XorshiftRandom() 
+        public XorshiftRandom()
             : this((uint)Environment.TickCount)
         {
 

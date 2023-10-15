@@ -193,10 +193,6 @@
       <Project>{3EB7129C-BE34-4ECF-B8C5-65B772184186}</Project>
       <Name>Pathfinding.AlgorithmLib.Core.Realizations.Algorithms</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Abstractions\Pathfinding.GraphLib.Core.Abstractions.csproj">
-      <Project>{7112EB01-28F4-438D-945D-87CB69D14B99}</Project>
-      <Name>Pathfinding.GraphLib.Core.Abstractions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
       <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface</Name>
@@ -241,6 +237,9 @@
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.6.2\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.6.2\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.6.2\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

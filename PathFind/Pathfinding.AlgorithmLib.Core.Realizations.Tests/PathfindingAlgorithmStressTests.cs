@@ -3,7 +3,9 @@ using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
+using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
 using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
+using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
 using Pathfinding.GraphLib.Factory.Realizations.Layers;
 using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
 using Pathfinding.GraphLib.UnitTest.Realizations.TestFactories;
@@ -25,21 +27,21 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests
 
         private readonly IRandom random = new CongruentialRandom();
         private readonly InclusiveValueRange<int> range = new InclusiveValueRange<int>(5, 1);
-        private readonly TestGraphFactory graphFactory = new TestGraphFactory();
+        private readonly GraphFactory<TestVertex> graphFactory = new GraphFactory<TestVertex>();
         private readonly INeighborhoodFactory neighbourhood = new MooreNeighborhoodFactory();
-        private readonly ICoordinateFactory coordinateFactory = new TestCoordinateFactory();
+        private readonly ICoordinateFactory coordinateFactory = new CoordinateFactory();
         private readonly IVertexFactory<TestVertex> vertexFactory = new TestVertexFactory();
         private readonly IVertexCostFactory costFactory = new TestCostFactory();
-        private readonly IGraphAssemble<TestGraph, TestVertex> graphAssemble;
-        private readonly ILayer<TestGraph, TestVertex>[] layers;
+        private readonly IGraphAssemble<TestVertex> graphAssemble;
+        private readonly ILayer[] layers;
 
         public PathfindingAlgorithmStressTests()
         {
-            graphAssemble = new GraphAssemble<TestGraph, TestVertex>(
+            graphAssemble = new GraphAssemble<TestVertex>(
                 vertexFactory, coordinateFactory, graphFactory);
-            var costLayer = new VertexCostLayer<TestGraph, TestVertex>(costFactory, range, random);
-            var neighboursLayer = new NeighborhoodLayer<TestGraph, TestVertex>(neighbourhood);
-            layers = new ILayer<TestGraph, TestVertex>[] { costLayer, neighboursLayer };
+            var costLayer = new VertexCostLayer(costFactory, range, random);
+            var neighboursLayer = new NeighborhoodLayer(neighbourhood);
+            layers = new ILayer[] { costLayer, neighboursLayer };
         }
 
         //[TestCaseSource(typeof(FindPathTestCaseData), nameof(FindPathTestCaseData.Factories))]

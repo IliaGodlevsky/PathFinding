@@ -6,14 +6,15 @@ using Pathfinding.App.WPF._2D.Interface;
 using Pathfinding.App.WPF._2D.Messages.ActionMessages;
 using Pathfinding.App.WPF._2D.Messages.DataMessages;
 using Pathfinding.App.WPF._2D.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 using System;
 using System.Windows.Input;
 using WPFVersion.DependencyInjection;
 
 namespace Pathfinding.App.WPF._2D.ViewModel
 {
-    public class MainWindowViewModel : ICache<Graph2D<Vertex>>, IDisposable
+    public class MainWindowViewModel : ICache<IGraph<Vertex>>, IDisposable
     {
         internal event GraphCreatedEventHandler GraphCreated;
 
@@ -21,7 +22,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel
 
         private bool IsEditorModeEnabled { get; set; } = false;
 
-        public Graph2D<Vertex> Cached { get; private set; } = Graph2D<Vertex>.Empty;
+        public IGraph<Vertex> Cached { get; private set; } = Graph<Vertex>.Empty;
 
         public MainWindowViewModel()
         {

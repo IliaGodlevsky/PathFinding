@@ -1,19 +1,19 @@
-﻿using Pathfinding.GraphLib.Core.Realizations.Graphs;
+﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Factory.Interface;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.Model
 {
-    internal sealed class Graph2DWrapFactory : IGraphFactory<Graph2D<Vertex>, Vertex>
+    internal sealed class Graph2DWrapFactory : IGraphFactory<Vertex>
     {
-        private readonly IGraphFactory<Graph2D<Vertex>, Vertex> factory;
+        private readonly IGraphFactory<Vertex> factory;
 
-        public Graph2DWrapFactory(IGraphFactory<Graph2D<Vertex>, Vertex> factory)
+        public Graph2DWrapFactory(IGraphFactory<Vertex> factory)
         {
             this.factory = factory;
         }
 
-        public Graph2D<Vertex> CreateGraph(IReadOnlyCollection<Vertex> vertices, IReadOnlyList<int> dimensionSizes)
+        public IGraph<Vertex> CreateGraph(IReadOnlyCollection<Vertex> vertices, IReadOnlyList<int> dimensionSizes)
         {
             return new Graph2DWrap(factory.CreateGraph(vertices, dimensionSizes));
         }

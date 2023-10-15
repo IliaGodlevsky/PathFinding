@@ -1,11 +1,11 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Factory.Interface;
-using Pathfinding.GraphLib.UnitTest.Realizations.TestObjects;
 
 namespace Pathfinding.GraphLib.UnitTest.Realizations.TestFactories.Layers
 {
-    public abstract class Graph2DLayer<T> : ILayer<Graph2D<TestVertex>, TestVertex>
+    public abstract class Graph2DLayer<T> : ILayer
     {
         private readonly T[,] matrix;
 
@@ -14,13 +14,13 @@ namespace Pathfinding.GraphLib.UnitTest.Realizations.TestFactories.Layers
             matrix = CreateMatrix();
         }
 
-        public void Overlay(Graph2D<TestVertex> graph)
+        public void Overlay(IGraph<IVertex> graph)
         {
-            for (int x = 0; x < graph.Width; x++)
+            for (int x = 0; x < graph.GetWidth(); x++)
             {
-                for (int y = 0; y < graph.Length; y++)
+                for (int y = 0; y < graph.GetLength(); y++)
                 {
-                    var coordinate = new TestCoordinate(x, y);
+                    var coordinate = new Coordinate(x, y);
                     Assign(graph.Get(coordinate), matrix[x, y]);
                 }
             }

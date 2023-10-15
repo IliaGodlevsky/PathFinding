@@ -4,7 +4,9 @@ using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations;
+using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
 using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
+using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
 using Pathfinding.GraphLib.Factory.Realizations.Layers;
 using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
@@ -18,9 +20,8 @@ using System.Linq;
 
 namespace Pathfinding.GraphLib.Serialization.Tests
 {
-    using Assemble = GraphAssemble<TestGraph, TestVertex>;
-    using Layer = ILayer<TestGraph, TestVertex>;
-    using Serializer = ISerializer<TestGraph>;
+    using Assemble = GraphAssemble<TestVertex>;
+    using Serializer = ISerializer<IGraph<TestVertex>>;
 
     [TestFixture]
     public class GraphSerializationTests
@@ -62,22 +63,22 @@ namespace Pathfinding.GraphLib.Serialization.Tests
 
         private static Assemble GetAssemble()
         {
-            var graphFactory = new TestGraphFactory();
-            var coordinateFactory = new TestCoordinateFactory();
+            var graphFactory = new GraphFactory<TestVertex>();
+            var coordinateFactory = new CoordinateFactory();
             var vertexFactory = new TestVertexFactory();
             return new Assemble(vertexFactory, coordinateFactory, graphFactory);
         }
 
-        private static Layer[] GetLayers()
+        private static ILayer[] GetLayers()
         {
             int obstaclePercent = 15;
             var random = new CongruentialRandom();
             var range = new InclusiveValueRange<int>(9, 1);
-            return new Layer[]
+            return new ILayer[]
             {
-                new NeighborhoodLayer<TestGraph, TestVertex>(new MooreNeighborhoodFactory()),
-                new VertexCostLayer<TestGraph, TestVertex>(new CostFactory(), range, random),
-                new ObstacleLayer<TestGraph, TestVertex>(random, obstaclePercent)
+                new NeighborhoodLayer(new MooreNeighborhoodFactory()),
+                new VertexCostLayer(new CostFactory(), range, random),
+                new ObstacleLayer(random, obstaclePercent)
             };
         }
     }

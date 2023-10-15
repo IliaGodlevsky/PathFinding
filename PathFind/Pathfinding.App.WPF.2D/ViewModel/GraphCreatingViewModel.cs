@@ -4,7 +4,6 @@ using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.App.WPF._2D.Interface;
 using Pathfinding.App.WPF._2D.Messages.DataMessages;
 using Pathfinding.App.WPF._2D.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations.Layers;
@@ -43,9 +42,9 @@ namespace Pathfinding.App.WPF._2D.ViewModel
 
         private InclusiveValueRange<int> CostRange { get; set; }
 
-        public IReadOnlyList<IGraphAssemble<Graph2D<Vertex>, Vertex>> GraphAssembles { get; set; }
+        public IReadOnlyList<IGraphAssemble<Vertex>> GraphAssembles { get; set; }
 
-        public IGraphAssemble<Graph2D<Vertex>, Vertex> SelectedGraphAssemble { get; set; }
+        public IGraphAssemble<Vertex> SelectedGraphAssemble { get; set; }
 
         public GraphCreatingViewModel(ILog log, IRandom random, INeighborhoodFactory neighborhoodFactory,
             IVertexCostFactory costFactory)
@@ -92,13 +91,13 @@ namespace Pathfinding.App.WPF._2D.ViewModel
                 && Constants.GraphLengthValueRange.Contains(Length);
         }
 
-        private IReadOnlyCollection<ILayer<Graph2D<Vertex>, Vertex>> GetLayers()
+        private IReadOnlyCollection<ILayer> GetLayers()
         {
-            return new ILayer<Graph2D<Vertex>, Vertex>[]
+            return new ILayer[]
             {
-                new ObstacleLayer<Graph2D<Vertex>, Vertex>(random, ObstaclePercent),
-                new VertexCostLayer<Graph2D<Vertex>,Vertex>(costFactory, CostRange, random),
-                new NeighborhoodLayer<Graph2D<Vertex>, Vertex>(neighborhoodFactory)
+                new ObstacleLayer(random, ObstaclePercent),
+                new VertexCostLayer(costFactory, CostRange, random),
+                new NeighborhoodLayer(neighborhoodFactory)
             };
         }
 

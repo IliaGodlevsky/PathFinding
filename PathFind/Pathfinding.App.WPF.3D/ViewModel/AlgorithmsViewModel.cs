@@ -8,8 +8,8 @@ using Pathfinding.App.WPF._3D.Infrastructure.Commands;
 using Pathfinding.App.WPF._3D.Messages.ActionMessages;
 using Pathfinding.App.WPF._3D.Messages.PassValueMessages;
 using Pathfinding.App.WPF._3D.Model;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.Visualization.Extensions;
 using Shared.Executable;
 using Shared.Executable.Extensions;
@@ -35,7 +35,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel
 
         private Dispatcher Dispatcher => Application.Current.Dispatcher;
 
-        private Graph3D<Vertex3D> Graph { get; set; }
+        private IGraph<Vertex3D> Graph { get; set; }
 
         public AlgorithmViewModel SelectedAlgorithm { get; set; }
 

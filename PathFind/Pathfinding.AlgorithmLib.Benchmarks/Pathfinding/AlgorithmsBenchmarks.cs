@@ -1,7 +1,9 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
+using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
 using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
+using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
 using Pathfinding.GraphLib.Factory.Realizations.Layers;
 using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
 using Pathfinding.GraphLib.UnitTest.Realizations.TestFactories;
@@ -18,23 +20,23 @@ namespace Pathfinding.AlgorithmLib.Benchmarks.Pathfinding
     {
         protected readonly IRandom random = new CongruentialRandom();
         private readonly InclusiveValueRange<int> range = new InclusiveValueRange<int>(5, 1);
-        private readonly TestGraphFactory graphFactory = new TestGraphFactory();
+        private readonly GraphFactory<TestVertex> graphFactory = new GraphFactory<TestVertex>();
         private readonly INeighborhoodFactory neighbourhood = new MooreNeighborhoodFactory();
-        private readonly ICoordinateFactory coordinateFactory = new TestCoordinateFactory();
+        private readonly ICoordinateFactory coordinateFactory = new CoordinateFactory();
         private readonly IVertexFactory<TestVertex> vertexFactory = new TestVertexFactory();
         private readonly IVertexCostFactory costFactory = new TestCostFactory();
-        private readonly IGraphAssemble<TestGraph, TestVertex> graphAssemble;
-        private readonly ILayer<TestGraph, TestVertex> costLayer;
-        private readonly ILayer<TestGraph, TestVertex> neighboursLayer;
-        private readonly ILayer<TestGraph, TestVertex>[] layers;
+        private readonly IGraphAssemble<TestVertex> graphAssemble;
+        private readonly ILayer costLayer;
+        private readonly ILayer neighboursLayer;
+        private readonly ILayer[] layers;
 
         protected AlgorithmsBenchmarks()
         {
-            graphAssemble = new GraphAssemble<TestGraph, TestVertex>(
+            graphAssemble = new GraphAssemble<TestVertex>(
                     vertexFactory, coordinateFactory, graphFactory);
-            costLayer = new VertexCostLayer<TestGraph, TestVertex>(costFactory, range, random);
-            neighboursLayer = new NeighborhoodLayer<TestGraph, TestVertex>(neighbourhood);
-            layers = new ILayer<TestGraph, TestVertex>[] { costLayer, neighboursLayer };
+            costLayer = new VertexCostLayer(costFactory, range, random);
+            neighboursLayer = new NeighborhoodLayer(neighbourhood);
+            layers = new ILayer[] { costLayer, neighboursLayer };
         }
 
         public IEnumerable<IEnumerable<IVertex>> Ranges()
@@ -48,7 +50,7 @@ namespace Pathfinding.AlgorithmLib.Benchmarks.Pathfinding
             }
         }
 
-        private IEnumerable<IVertex> GetRange(TestGraph graph)
+        private IEnumerable<IVertex> GetRange(IGraph<TestVertex> graph)
         {
             yield return graph.First();
             yield return graph.Last();

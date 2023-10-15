@@ -2,7 +2,8 @@
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.Logging.Interface;
 
 namespace Pathfinding.App.Console.MenuItems.MainMenuItems
@@ -12,7 +13,7 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
     {
         private readonly IMessenger messenger;
 
-        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
+        private IGraph<Vertex> graph = Graph<Vertex>.Empty;
 
         protected MainMenuItem(IInput<int> input, TUnit viewModel, IMessenger messenger, ILog log)
             : base(input, viewModel, log)
@@ -22,7 +23,7 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
 
         public bool CanBeExecuted()
         {
-            return graph != Graph2D<Vertex>.Empty;
+            return graph != Graph<Vertex>.Empty;
         }
 
         public void RegisterHanlders(IMessenger messenger)
@@ -30,7 +31,7 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }
 
-        private void SetGraph(Graph2D<Vertex> graph)
+        private void SetGraph(IGraph<Vertex> graph)
         {
             this.graph = graph;
         }

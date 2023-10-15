@@ -8,9 +8,10 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Notes;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.Visualization.Extensions;
 using Shared.Extensions;
 using System;
@@ -24,7 +25,7 @@ namespace Pathfinding.App.Console.Units
         private readonly GraphsPathfindingHistory history;
         private readonly IPathfindingRangeBuilder<Vertex> builder;
 
-        private Graph2D<Vertex> graph = Graph2D<Vertex>.Empty;
+        private IGraph<Vertex> graph = Graph<Vertex>.Empty;
         private bool isHistoryApplied = true;
 
         public PathfindingHistoryUnit(IReadOnlyCollection<IMenuItem> menuItems,
@@ -53,7 +54,7 @@ namespace Pathfinding.App.Console.Units
             isHistoryApplied = isApplied;
         }
 
-        private void SetGraph(Graph2D<Vertex> graph)
+        private void SetGraph(IGraph<Vertex> graph)
         {
             this.graph = graph;
         }

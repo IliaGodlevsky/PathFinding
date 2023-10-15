@@ -5,7 +5,6 @@ using Pathfinding.App.WPF._3D.Infrastructure.Commands;
 using Pathfinding.App.WPF._3D.Interface;
 using Pathfinding.App.WPF._3D.Messages.PassValueMessages;
 using Pathfinding.App.WPF._3D.Model;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations.Layers;
@@ -20,7 +19,7 @@ using System.Windows.Input;
 
 namespace Pathfinding.App.WPF._3D.ViewModel
 {
-    using GraphAssemble = IGraphAssemble<Graph3D<Vertex3D>, Vertex3D>;
+    using GraphAssemble = IGraphAssemble<Vertex3D>;
 
     public class GraphCreatingViewModel : IViewModel, IDisposable
     {
@@ -90,13 +89,13 @@ namespace Pathfinding.App.WPF._3D.ViewModel
             WindowClosed?.Invoke();
         }
 
-        private IReadOnlyCollection<ILayer<Graph3D<Vertex3D>, Vertex3D>> GetLayers()
+        private IReadOnlyCollection<ILayer> GetLayers()
         {
-            return new ILayer<Graph3D<Vertex3D>, Vertex3D>[]
+            return new ILayer[]
             {
-                new ObstacleLayer<Graph3D<Vertex3D>, Vertex3D>(random, ObstaclePercent),
-                new NeighborhoodLayer<Graph3D<Vertex3D>, Vertex3D>(neighborhoodFactory),
-                new VertexCostLayer<Graph3D<Vertex3D>, Vertex3D>(costFactory, CostRange, random)
+                new ObstacleLayer(random, ObstaclePercent),
+                new NeighborhoodLayer(neighborhoodFactory),
+                new VertexCostLayer(costFactory, CostRange, random)
             };
         }
 

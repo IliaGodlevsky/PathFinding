@@ -5,9 +5,7 @@ using System.Linq;
 
 namespace Pathfinding.GraphLib.Factory.Realizations.Layers
 {
-    public sealed class NeighborhoodLayer<TGraph, TVertex> : ILayer<TGraph, TVertex>
-        where TGraph : IGraph<TVertex>
-        where TVertex : IVertex
+    public sealed class NeighborhoodLayer : ILayer
     {
         private readonly INeighborhoodFactory factory;
 
@@ -16,7 +14,7 @@ namespace Pathfinding.GraphLib.Factory.Realizations.Layers
             this.factory = factory;
         }
 
-        public void Overlay(TGraph graph)
+        public void Overlay(IGraph<IVertex> graph)
         {
             foreach (var vertex in graph)
             {

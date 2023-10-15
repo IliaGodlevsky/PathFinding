@@ -1,11 +1,12 @@
 ﻿using Pathfinding.App.Console.Localization;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.Realizations.Graphs;
+using Pathfinding.GraphLib.Core.Realizations;
 using System.Linq;
 
 namespace Pathfinding.App.Console.Model
 {
-    internal sealed class Graph2DWrap : Graph2D<Vertex>
+    internal sealed class Graph2DWrap : Graph<Vertex>
     {
         private const string LargeSpace = "   ";
 
@@ -13,7 +14,7 @@ namespace Pathfinding.App.Console.Model
 
         private int Obstacles => this.GetObstaclesCount();
 
-        public Graph2DWrap(Graph2D<Vertex> graph)
+        public Graph2DWrap(IGraph<Vertex> graph)
             : base(graph, graph.DimensionsSizes)
         {
 
