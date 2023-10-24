@@ -12,7 +12,7 @@ namespace Pathfinding.App.Console.Model.VertexActions
             this.rangeBuilder = rangeBuilder;
         }
 
-        public void Do(Vertex vertex)
+        public void Invoke(Vertex vertex)
         {
             rangeBuilder.Exclude(vertex);
         }

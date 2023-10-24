@@ -21,7 +21,7 @@ namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions
             };
         }
 
-        public void Do(Vertex vertex)
+        public void Invoke(Vertex vertex)
         {
             using (Cursor.HideCursor())
             {

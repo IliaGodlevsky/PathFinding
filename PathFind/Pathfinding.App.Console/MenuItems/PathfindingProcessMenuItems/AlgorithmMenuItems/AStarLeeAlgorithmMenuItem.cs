@@ -7,39 +7,25 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.AlgorithmMenuItems;
-using Pathfinding.App.Console.Model.Notes;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
-    [HighPriority]
+    [MediumPriority]
     internal sealed class AStarLeeAlgorithmMenuItem : AlgorithmInputMenuItem
     {
-        private readonly IReadOnlyDictionary<string, IHeuristic> heuristics;
+        protected override string LanguageKey { get; } = nameof(Languages.AStarLeeAlgorithm);
 
         public AStarLeeAlgorithmMenuItem(IReadOnlyDictionary<string, IHeuristic> heuristics,
-            IMessenger messenger,
-            IInput<int> intInput)
-            : base(messenger, intInput)
+            IMessenger messenger, IInput<int> intInput)
+            : base(messenger, null, heuristics, intInput)
         {
-            this.heuristics = heuristics;
+
         }
 
-        public override string ToString()
+        protected override IAlgorithmFactory<PathfindingProcess> CreateAlgorithm(IStepRule stepRule, IHeuristic heuristics)
         {
-            return Languages.AStarLeeAlgorithm;
-        }
-
-        protected override (IAlgorithmFactory<PathfindingProcess> Algorithm, Statistics Statistics) GetAlgorithm()
-        {
-            var heuristic = InputItem(heuristics, Languages.ChooseHeuristicMsg);
-            var statistics = new Statistics(nameof(Languages.AStarLeeAlgorithm))
-            {
-                ResultStatus = nameof(Languages.Started),
-                Heuristics = heuristic.Key
-            };
-            var factory = new AStarLeeAlgorithmFactory(heuristic.Value);
-            return (factory, statistics);
+            return new AStarLeeAlgorithmFactory(heuristics);
         }
     }
 }

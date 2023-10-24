@@ -502,6 +502,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Depth.
+        /// </summary>
+        public static string DepthFirstAlgorithm {
+            get {
+                return ResourceManager.GetString("DepthFirstAlgorithm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dijkstra.
         /// </summary>
         public static string DijkstraAlgorithm {

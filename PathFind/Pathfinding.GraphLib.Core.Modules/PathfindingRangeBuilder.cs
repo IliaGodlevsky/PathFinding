@@ -47,9 +47,7 @@ namespace Pathfinding.GraphLib.Core.Modules
 
         private void Execute(IEnumerable<IPathfindingRangeCommand<TVertex>> commands, TVertex vertex)
         {
-            commands
-                .FirstOrDefault(command => command.CanExecute(Range, vertex))
-                ?.Execute(Range, vertex);
+            commands.FirstOrDefault(c => c.CanExecute(Range, vertex))?.Execute(Range, vertex);
         }
     }
 }

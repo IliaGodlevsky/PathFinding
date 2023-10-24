@@ -76,7 +76,8 @@ namespace Pathfinding.App.Console.Model.Notes
         [DisplayNameSource(nameof(Languages.Visited))]
         public int? Visited { get; set; } = null;
 
-        public string ResultStatus { get; set; } = string.Empty;
+        public string ResultStatus { get; set; } 
+            = nameof(Languages.Started);
 
         public TimeSpan? Elapsed { get; set; } = null;
 
@@ -107,9 +108,7 @@ namespace Pathfinding.App.Console.Model.Notes
 
         private static string GetString(string key)
         {
-            return key is null
-                ? string.Empty
-                : Languages.ResourceManager.GetString(key) ?? key;
+            return Languages.ResourceManager.GetString(key ?? string.Empty) ?? key;
         }
 
         private IEnumerable<(string Name, object Value)> GetNotEmptyValues()

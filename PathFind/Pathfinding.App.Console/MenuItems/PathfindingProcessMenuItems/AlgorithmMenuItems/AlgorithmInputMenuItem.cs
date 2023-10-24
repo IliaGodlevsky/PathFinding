@@ -1,8 +1,11 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using Pathfinding.AlgorithmLib.Core.Abstractions;
+using Pathfinding.AlgorithmLib.Core.Interface;
+using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
-using System;
+using Pathfinding.App.Console.Model.Notes;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,18 +14,49 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
     internal abstract class AlgorithmInputMenuItem : AlgorithmMenuItem
     {
         protected readonly IInput<int> intInput;
+        private readonly IReadOnlyDictionary<string, IStepRule> stepRules;
+        private readonly IReadOnlyDictionary<string, IHeuristic> heuristics;
 
-        protected AlgorithmInputMenuItem(IMessenger messenger, IInput<int> intInput)
+        protected abstract string LanguageKey { get; }
+
+        protected AlgorithmInputMenuItem(IMessenger messenger,
+            IReadOnlyDictionary<string, IStepRule> stepRules,
+            IReadOnlyDictionary<string, IHeuristic> heuristics,
+            IInput<int> intInput)
             : base(messenger)
         {
+            this.stepRules = stepRules;
+            this.heuristics = heuristics;
             this.intInput = intInput;
         }
 
-        protected (TKey Key, TValue Value) InputItem<TKey, TValue>(IReadOnlyDictionary<TKey, TValue> items, string inputMessage)
+        public override string ToString()
         {
-            if (items.Count == 0)
+            return Languages.ResourceManager.GetString(LanguageKey);
+        }
+
+        protected abstract IAlgorithmFactory<PathfindingProcess> CreateAlgorithm(IStepRule stepRule, IHeuristic heuristics);
+
+        protected override (IAlgorithmFactory<PathfindingProcess> Algorithm, Statistics Statistics) GetAlgorithm()
+        {
+            var stepRule = InputItem(stepRules, Languages.ChooseStepRuleMsg);
+            var heuristic = InputItem(heuristics, Languages.ChooseHeuristicMsg);
+            var statistics = GetStatistics(heuristic.Key, stepRule.Key);
+            var factory = CreateAlgorithm(stepRule.Value, heuristic.Value);
+            return (factory, statistics);
+        }
+
+        private static string GetString<T>(T key)
+        {
+            string name = key.ToString();
+            return Languages.ResourceManager.GetString(name) ?? name;
+        }
+
+        private (TKey Key, TValue Value) InputItem<TKey, TValue>(IReadOnlyDictionary<TKey, TValue> items, string inputMessage)
+        {
+            if (items == null || items.Count == 0)
             {
-                throw new Exception(Languages.NoItemsMsg);
+                return default;
             }
 
             if (items.Count == 1)
@@ -43,10 +77,13 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
             }
         }
 
-        private static string GetString<T>(T key)
+        private Statistics GetStatistics(string heusristic, string stepRule)
         {
-            string name = key.ToString();
-            return Languages.ResourceManager.GetString(name) ?? name;
+            return new Statistics(LanguageKey)
+            {
+                Heuristics = heusristic,
+                StepRule = stepRule
+            };
         }
     }
 }

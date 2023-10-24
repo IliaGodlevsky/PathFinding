@@ -1,5 +1,7 @@
 ﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Settings;
+using Shared.Extensions;
+using System.Linq;
 
 namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions
 {
@@ -12,19 +14,15 @@ namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions
             Active = active;
         }
 
-        public void Do(Vertex vertex)
+        public void Invoke(Vertex vertex)
         {
-            if (Active.Current != null)
+            if (Active.Current is not null)
             {
                 using (Cursor.HideCursor())
                 {
-                    foreach (Vertex neighbour in Active.Current.Neighbours)
-                    {
-                        if (neighbour.Color == Colours.Default.NeighbourhoodColor)
-                        {
-                            neighbour.VisualizeAsRegular();
-                        }
-                    }
+                    Active.Current.Neighbours.OfType<Vertex>()
+                        .Where(v => v.Color == Colours.Default.NeighbourhoodColor)
+                        .ForEach(v => v.VisualizeAsRegular());
                 }
                 Active.Current = null;
                 Active.Availiable.Clear();

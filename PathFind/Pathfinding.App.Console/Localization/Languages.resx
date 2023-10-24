@@ -264,6 +264,9 @@
   <data name="DeleteGraph" xml:space="preserve">
     <value>Delete graph</value>
   </data>
+  <data name="DepthFirstAlgorithm" xml:space="preserve">
+    <value>Depth</value>
+  </data>
   <data name="DijkstraAlgorithm" xml:space="preserve">
     <value>Dijkstra</value>
   </data>

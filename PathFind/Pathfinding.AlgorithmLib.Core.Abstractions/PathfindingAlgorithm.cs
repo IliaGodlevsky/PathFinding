@@ -28,6 +28,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         protected PathfindingAlgorithm(IEnumerable<IVertex> pathfindingRange)
         {
             this.pathfindingRange = pathfindingRange;
+            CurrentRange = (NullVertex.Instance, NullVertex.Instance);
         }
 
         public sealed override IGraphPath FindPath()

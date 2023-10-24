@@ -15,7 +15,7 @@ namespace Pathfinding.App.Console.Model
 
         public IGraph<Vertex> CreateGraph(IReadOnlyCollection<Vertex> vertices, IReadOnlyList<int> dimensionSizes)
         {
-            return new Graph2DWrap(factory.CreateGraph(vertices, dimensionSizes));
+            return new GraphWrap(factory.CreateGraph(vertices, dimensionSizes));
         }
     }
 }

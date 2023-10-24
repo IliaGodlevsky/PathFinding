@@ -72,11 +72,8 @@ namespace Pathfinding.App.Console.Model
         {
             if (ConsolePosition.HasValue)
             {
-                Cursor.SetPosition(ConsolePosition);
-                using (Cursor.UseColor(Color))
-                {
-                    System.Console.Write(Cost);
-                }
+                Cursor.SetPosition(ConsolePosition.Value);
+                Cursor.Write(Color, Cost);
             }
         }
 

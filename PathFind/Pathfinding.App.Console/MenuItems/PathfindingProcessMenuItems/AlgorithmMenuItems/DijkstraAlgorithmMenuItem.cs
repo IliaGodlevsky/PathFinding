@@ -7,7 +7,6 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.AlgorithmMenuItems;
-using Pathfinding.App.Console.Model.Notes;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
@@ -15,30 +14,18 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     [HighestPriority]
     internal sealed class DijkstraAlgorithmMenuItem : AlgorithmInputMenuItem
     {
-        private readonly IReadOnlyDictionary<string, IStepRule> stepRules;
+        protected override string LanguageKey { get; } = nameof(Languages.DijkstraAlgorithm);
 
         public DijkstraAlgorithmMenuItem(IReadOnlyDictionary<string, IStepRule> stepRules,
             IInput<int> input, IMessenger messenger)
-            : base(messenger, input)
+            : base(messenger, stepRules, null, input)
         {
-            this.stepRules = stepRules;
+
         }
 
-        public override string ToString()
+        protected override IAlgorithmFactory<PathfindingProcess> CreateAlgorithm(IStepRule stepRule, IHeuristic heuristics)
         {
-            return Languages.DijkstraAlgorithm;
-        }
-
-        protected override (IAlgorithmFactory<PathfindingProcess> Algorithm, Statistics Statistics) GetAlgorithm()
-        {
-            var stepRule = InputItem(stepRules, Languages.ChooseStepRuleMsg);
-            var statistics = new Statistics(nameof(Languages.DijkstraAlgorithm))
-            {
-                ResultStatus = nameof(Languages.Started),
-                StepRule = stepRule.Key
-            };
-            var factory = new DijkstraAlgorithmFactory(stepRule.Value);
-            return (factory, statistics);
+            return new DijkstraAlgorithmFactory(stepRule);
         }
     }
 }

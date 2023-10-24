@@ -7,7 +7,7 @@ namespace Pathfinding.App.Console.Model.VertexActions
     {
         protected abstract int Increment { get; }
 
-        public void Do(Vertex vertex)
+        public void Invoke(Vertex vertex)
         {
             var range = vertex.Cost.CostRange;
             int newCost = vertex.Cost.CurrentCost + Increment;

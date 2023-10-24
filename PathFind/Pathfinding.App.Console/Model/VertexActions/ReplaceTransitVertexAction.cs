@@ -12,7 +12,7 @@ namespace Pathfinding.App.Console.Model.VertexActions
             this.module = module;
         }
 
-        public void Do(Vertex vertex)
+        public void Invoke(Vertex vertex)
         {
             module.ReplaceTransitWith(vertex);
         }

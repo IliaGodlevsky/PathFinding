@@ -5,9 +5,8 @@ namespace Pathfinding.App.Console.Units
 {
     internal sealed class GraphEditorUnit : Unit
     {
-        public GraphEditorUnit(IReadOnlyCollection<IMenuItem> menuItems,
-            IReadOnlyCollection<IConditionedMenuItem> conditioned)
-            : base(menuItems, conditioned)
+        public GraphEditorUnit(IReadOnlyCollection<IMenuItem> menuItems)
+            : base(menuItems)
         {
         }
     }

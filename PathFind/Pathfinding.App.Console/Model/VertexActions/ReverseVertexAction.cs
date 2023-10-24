@@ -18,7 +18,7 @@ namespace Pathfinding.App.Console.Model.VertexActions
             this.messenger = messenger;
         }
 
-        public void Do(Vertex vertex)
+        public void Invoke(Vertex vertex)
         {
             if (vertex.IsObstacle)
             {

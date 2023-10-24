@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.AlgorithmMenuItems
 {
     [LowPriority]
-    internal sealed class CostGreedyAlgorithmMenuItem : AlgorithmInputMenuItem
+    internal sealed class DepthFirstAlgorithmMenuItem : AlgorithmInputMenuItem
     {
-        protected override string LanguageKey { get; } = nameof(Languages.CostGreedyAlgorithm);
+        protected override string LanguageKey { get; } = nameof(Languages.DepthFirstAlgorithm);
 
-        public CostGreedyAlgorithmMenuItem(IReadOnlyDictionary<string, IStepRule> stepRules,
-            IMessenger messenger, IInput<int> intInput)
-            : base(messenger, stepRules, null, intInput)
+        public DepthFirstAlgorithmMenuItem(IReadOnlyDictionary<string, IHeuristic> heuristics,
+            IMessenger messenger, IInput<int> intInput) 
+            : base(messenger, null, heuristics, intInput)
         {
 
         }
 
         protected override IAlgorithmFactory<PathfindingProcess> CreateAlgorithm(IStepRule stepRule, IHeuristic heuristics)
         {
-            return new CostGreedyAlgorithmFactory(stepRule);
+            return new DepthFirstAlgorithmFactory(heuristics);
         }
     }
 }

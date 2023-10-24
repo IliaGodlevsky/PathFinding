@@ -1,5 +1,15 @@
-﻿using Pathfinding.App.Console.DependencyInjection.Registrations;
+﻿global using Terminal = System.Console;
+using Pathfinding.App.Console.DependencyInjection.Registrations;
+using System.Text;
 
-System.Console.OutputEncoding = System.Text.Encoding.UTF8;
-
-Application.Start();
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        using (var app = new Application())
+        {
+            app.ApplyFeatures();
+            app.Run(Encoding.UTF8);
+        }
+    }
+}

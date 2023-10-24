@@ -39,7 +39,7 @@ namespace Pathfinding.App.Console
 
         public static void SetCursorPositionUnderGraphField()
         {
-            System.Console.SetCursorPosition(StatisticsPosition.X, StatisticsPosition.Y + 1);
+            Terminal.SetCursorPosition(StatisticsPosition.X, StatisticsPosition.Y + 1);
         }
 
         private void SetGraph(IGraph<Vertex> graph)
@@ -61,7 +61,7 @@ namespace Pathfinding.App.Console
         private void ShowStatistics(string statistics)
         {
             Cursor.SetPosition(StatisticsPosition);
-            System.Console.Write(statistics.PadRight(System.Console.BufferWidth));
+            Terminal.Write(statistics.PadRight(Terminal.BufferWidth));
         }
 
         private static void RecalculateVerticesConsolePosition()

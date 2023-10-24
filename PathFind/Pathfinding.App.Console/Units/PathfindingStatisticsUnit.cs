@@ -24,9 +24,8 @@ namespace Pathfinding.App.Console.Units
         private Statistics statistics = Statistics.Empty;
 
         public PathfindingStatisticsUnit(IReadOnlyCollection<IMenuItem> menuItems,
-            IReadOnlyCollection<IConditionedMenuItem> conditioned,
             IMessenger messenger)
-            : base(menuItems, conditioned)
+            : base(menuItems)
         {
             this.messenger = messenger;
         }

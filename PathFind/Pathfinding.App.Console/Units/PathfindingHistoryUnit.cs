@@ -29,10 +29,8 @@ namespace Pathfinding.App.Console.Units
         private bool isHistoryApplied = true;
 
         public PathfindingHistoryUnit(IReadOnlyCollection<IMenuItem> menuItems,
-            IReadOnlyCollection<IConditionedMenuItem> conditioned,
             IPathfindingRangeBuilder<Vertex> builder,
-            GraphsPathfindingHistory history)
-            : base(menuItems, conditioned)
+            GraphsPathfindingHistory history) : base(menuItems)
         {
             this.history = history;
             this.builder = builder;

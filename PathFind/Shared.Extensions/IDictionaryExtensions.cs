@@ -39,7 +39,11 @@ namespace Shared.Extensions
 
         public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> dictionary)
         {
-            return dictionary.ToDictionary(item => item.Key, item => item.Value);
+            switch (dictionary)
+            {
+                case IDictionary<TKey, TValue> d: return new Dictionary<TKey, TValue>(d);
+                default: return dictionary.ToDictionary(item => item.Key, item => item.Value);
+            }
         }
 
         public static ReadOnlyDictionary<TKey, TValue> AsReadOnly<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)

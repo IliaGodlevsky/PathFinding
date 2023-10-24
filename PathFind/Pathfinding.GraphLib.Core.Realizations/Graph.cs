@@ -46,7 +46,7 @@ namespace Pathfinding.GraphLib.Core.Realizations
 
         }
 
-        protected Graph() 
+        protected Graph()
             : this(Array.Empty<TVertex>())
         {
 

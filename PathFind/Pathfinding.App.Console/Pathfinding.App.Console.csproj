@@ -62,12 +62,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccess\GraphsPathfindingHistory.cs" />
-    <Compile Include="DependencyInjection\Attributes\FeatureAttribute.cs" />
-    <Compile Include="DependencyInjection\Attributes\MandatoryAttribute.cs" />
-    <Compile Include="DependencyInjection\Attributes\OptionalAttribute.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\KeyResolveMiddlware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\CombinedAlgorithmsResolveMiddleware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\AllVisualizedVerticesMiddleware.cs" />
+    <Compile Include="DependencyInjection\Registrations\Application.cs" />
     <Compile Include="Extensions\BinaryReaderExtensions.cs" />
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
     <Compile Include="Interface\INeighbourhoodCommand.cs" />
@@ -100,6 +98,7 @@
     <Compile Include="MenuItems\MainMenuItems\KeysUnitMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\AlgorithmMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\CostGreedyAlgorithmMenuItem.cs" />
+    <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\DepthFirstAlgorithmMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmsUnitMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\AStarAlgorithmMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\AStarLeeAlgorithmMenuItem.cs" />
@@ -132,11 +131,6 @@
     <Compile Include="Model\Visualizations\Containers\VisualizedVisited.cs" />
     <Compile Include="Model\Visualizations\Containers\VisualizedVertices.cs" />
     <Compile Include="Model\Visualizations\VisualizedType.cs" />
-    <Compile Include="Settings\Features.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Features.settings</DependentUpon>
-    </Compile>
     <Compile Include="Settings\Keys.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -265,7 +259,7 @@
     <Compile Include="Model\FramedAxes\FramedToLeftOrdinate.cs" />
     <Compile Include="Model\FramedAxes\FramedToRightOrdinate.cs" />
     <Compile Include="Model\FramedAxes\FramedUnderAbscissa.cs" />
-    <Compile Include="Model\Graph2DWrap.cs" />
+    <Compile Include="Model\GraphWrap.cs" />
     <Compile Include="Model\Graph2DWrapFactory.cs" />
     <Compile Include="Model\GraphField.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
@@ -286,7 +280,6 @@
     <Compile Include="Model\VertexActions\IncludeInRangeAction.cs" />
     <Compile Include="Model\VertexActions\IncreaseCostAction.cs" />
     <Compile Include="Model\VertexActions\MarkTransitToReplaceAction.cs" />
-    <Compile Include="Model\VertexActions\NullVertexAction.cs" />
     <Compile Include="Model\VertexActions\ReplaceTransitVertexAction.cs" />
     <Compile Include="Model\VertexActions\ReverseVertexAction.cs" />
     <Compile Include="Model\VertexFactory.cs" />
@@ -473,10 +466,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Settings\Features.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Features1.Designer.cs</LastGenOutput>
-    </None>
     <None Include="Settings\Keys.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Keys.Designer.cs</LastGenOutput>

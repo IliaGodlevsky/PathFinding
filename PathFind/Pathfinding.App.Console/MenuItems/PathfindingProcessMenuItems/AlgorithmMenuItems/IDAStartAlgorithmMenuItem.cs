@@ -17,45 +17,35 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     [HighPriority]
     internal sealed class IDAStarAlgorithmMenuItem : AlgorithmInputMenuItem
     {
-        private readonly IReadOnlyDictionary<string, IStepRule> stepRules;
-        private readonly IReadOnlyDictionary<string, IHeuristic> heuristics;
         private readonly InclusiveValueRange<int> spreadRange;
+
+        private int Spread { get; set; }
+
+        protected override string LanguageKey { get; } = nameof(Languages.IDAStarAlgorithm);
 
         public IDAStarAlgorithmMenuItem(
             IReadOnlyDictionary<string, IStepRule> stepRules,
             IReadOnlyDictionary<string, IHeuristic> heuristics,
             IInput<int> input,
             IMessenger messenger)
-            : base(messenger, input)
+            : base(messenger, stepRules, heuristics, input)
         {
-            this.stepRules = stepRules;
-            this.heuristics = heuristics;
             spreadRange = new(8, 1);
         }
 
-        public override string ToString()
+        protected override IAlgorithmFactory<PathfindingProcess> CreateAlgorithm(IStepRule stepRule, IHeuristic heuristics)
         {
-            return Languages.IDAStarAlgorithm;
+            return new IDAStarAlgorithmFactory(stepRule, heuristics, Spread);
         }
 
         protected override (IAlgorithmFactory<PathfindingProcess> Algorithm, Statistics Statistics) GetAlgorithm()
         {
-            var stepRule = InputItem(stepRules, Languages.ChooseStepRuleMsg);
-            var heuristic = InputItem(heuristics, Languages.ChooseHeuristicMsg);
             using (Cursor.UseCurrentPositionWithClean())
             {
                 string message = string.Format(Languages.SpreadLevelMsg, spreadRange);
-                int spread = intInput.Input(message, spreadRange);
-                var statistics = new Statistics(nameof(Languages.IDAStarAlgorithm))
-                {
-                    ResultStatus = nameof(Languages.Started),
-                    StepRule = stepRule.Key,
-                    Heuristics = heuristic.Key,
-                    Spread = spread
-                };
-                var factory = new IDAStarAlgorithmFactory(stepRule.Value, heuristic.Value, spread);
-                return (factory, statistics);
+                Spread = intInput.Input(message, spreadRange);
             }
+            return base.GetAlgorithm();
         }
     }
 }

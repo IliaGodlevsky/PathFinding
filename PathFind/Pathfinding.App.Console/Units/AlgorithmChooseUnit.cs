@@ -5,9 +5,8 @@ namespace Pathfinding.App.Console.Units
 {
     internal sealed class AlgorithmChooseUnit : Unit
     {
-        public AlgorithmChooseUnit(IReadOnlyCollection<IMenuItem> menuItems,
-            IReadOnlyCollection<IConditionedMenuItem> conditioned)
-            : base(menuItems, conditioned)
+        public AlgorithmChooseUnit(IReadOnlyCollection<IMenuItem> menuItems)
+            : base(menuItems)
         {
         }
     }

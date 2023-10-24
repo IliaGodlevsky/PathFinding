@@ -12,7 +12,6 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
         public virtual IEnumerable<Parameter> GetParameters(IComponentContext context, Type key)
         {
             yield return GetParameter<IMenuItem>(Resolve<IMenuItem>(context, key));
-            yield return GetParameter<IConditionedMenuItem>(Resolve<IConditionedMenuItem>(context, key));
         }
 
         private static IReadOnlyCollection<TValue> Resolve<TValue>(IComponentContext context, Type key)

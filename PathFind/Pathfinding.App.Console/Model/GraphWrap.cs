@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.Model
 {
-    internal sealed class Graph2DWrap : Graph<Vertex>
+    internal sealed class GraphWrap : Graph<Vertex>
     {
         private const string LargeSpace = "   ";
 
@@ -14,7 +14,7 @@ namespace Pathfinding.App.Console.Model
 
         private int Obstacles => this.GetObstaclesCount();
 
-        public Graph2DWrap(IGraph<Vertex> graph)
+        public GraphWrap(IGraph<Vertex> graph)
             : base(graph, graph.DimensionsSizes)
         {
 

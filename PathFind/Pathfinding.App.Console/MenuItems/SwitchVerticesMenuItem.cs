@@ -44,7 +44,7 @@ namespace Pathfinding.App.Console.MenuItems
             {
                 var coordinate = new Coordinate(x, y);
                 var vertex = graph.Get(coordinate);
-                Cursor.SetPosition(vertex.ConsolePosition);
+                Cursor.SetPosition(vertex.ConsolePosition.Value);
                 key = keyInput.Input();
                 if (key == Keys.Default.VertexUp)
                     y = ReturnInRange(y - 1, yRange);
@@ -55,7 +55,7 @@ namespace Pathfinding.App.Console.MenuItems
                 else if (key == Keys.Default.VertexRight)
                     x = ReturnInRange(x + 1, xRange);
                 else
-                    GetOrDefault(key)?.Do(vertex);
+                    GetOrDefault(key)?.Invoke(vertex);
             } while (key != Keys.Default.ExitVertexSwitching);
         }
 

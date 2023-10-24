@@ -27,11 +27,9 @@ namespace Pathfinding.App.Console.Units
         private IGraph<Vertex> Graph { get; set; } = Graph<Vertex>.Empty;
 
         public MainUnit(IReadOnlyCollection<IMenuItem> menuItems,
-            IReadOnlyCollection<IConditionedMenuItem> conditioned,
             FieldFactory fieldFactory,
             IUndo undo,
-            ILog log)
-            : base(menuItems, conditioned)
+            ILog log) : base(menuItems)
         {
             this.undo = undo;
             this.log = log;

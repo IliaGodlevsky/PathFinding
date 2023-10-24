@@ -32,11 +32,10 @@ namespace Pathfinding.App.Console.Units
         private TimeSpan animationDelay = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
 
         public PathfindingVisualizationUnit(IReadOnlyCollection<IMenuItem> menuItems,
-            IReadOnlyCollection<IConditionedMenuItem> conditioned,
             IReadOnlyCollection<(string, IPathfindingAction)> pathfindingActions,
             IReadOnlyCollection<(string, IAnimationSpeedAction)> animationActions,
             GraphsPathfindingHistory history)
-            : base(menuItems, conditioned)
+            : base(menuItems)
         {
             this.animationActions = animationActions;
             this.pathfindingActions = pathfindingActions;

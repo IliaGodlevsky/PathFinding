@@ -10,7 +10,7 @@ namespace Pathfinding.App.Console
     internal sealed class Cursor
     {
         private static string BufferLengthString
-            => new(' ', System.Console.BufferWidth);
+            => new(' ', Terminal.BufferWidth);
 
         private readonly int cursorLeft;
         private readonly int cursorRight;
@@ -31,7 +31,7 @@ namespace Pathfinding.App.Console
         /// which shows cursor</returns>
         public static Disposable HideCursor()
         {
-            System.Console.CursorVisible = false;
+            Terminal.CursorVisible = false;
             return Disposable.Use(ShowCursor);
         }
 
@@ -42,8 +42,8 @@ namespace Pathfinding.App.Console
         /// the cursor to the remembered position</returns>
         public static Disposable UseCurrentPosition()
         {
-            int cursorLeft = System.Console.CursorLeft;
-            int cursorTop = System.Console.CursorTop;
+            int cursorLeft = Terminal.CursorLeft;
+            int cursorTop = Terminal.CursorTop;
             var cursor = new Cursor(cursorLeft, cursorTop);
             return Disposable.Use(cursor.RestorePosition);
         }
@@ -57,13 +57,18 @@ namespace Pathfinding.App.Console
         /// previous foreground console color</returns>
         public static Disposable UseColor(ConsoleColor color)
         {
-            var currentColor = System.Console.ForegroundColor;
-            void RestoreColor()
-            {
-                System.Console.ForegroundColor = currentColor;
-            }
-            System.Console.ForegroundColor = color;
+            var currentColor = Terminal.ForegroundColor;
+            void RestoreColor() => Terminal.ForegroundColor = currentColor;
+            Terminal.ForegroundColor = color;
             return Disposable.Use(RestoreColor);
+        }
+
+        public static void Write(ConsoleColor color, object text)
+        {
+            using (Cursor.UseColor(color))
+            {
+                Terminal.Write(text);
+            }
         }
 
         /// <summary>
@@ -75,8 +80,8 @@ namespace Pathfinding.App.Console
         /// perfromed after remembering the position </returns>
         public static Disposable UseCurrentPositionWithClean()
         {
-            int left = System.Console.CursorLeft;
-            int top = System.Console.CursorTop;
+            int left = Terminal.CursorLeft;
+            int top = Terminal.CursorTop;
             var position = new Point(left, top);
             return Disposable.Use(() => CleanUpTo(position));
         }
@@ -90,27 +95,24 @@ namespace Pathfinding.App.Console
                 string emptyLine = BufferLengthString;
                 while (limit-- >= 0)
                 {
-                    System.Console.Write(emptyLine);
+                    Terminal.Write(emptyLine);
                 }
             }
         }
 
-        public static void SetPosition(Point? point)
+        public static void SetPosition(Point point)
         {
-            if (point.HasValue)
-            {
-                System.Console.SetCursorPosition(point.Value.X, point.Value.Y);
-            }
+            Terminal.SetCursorPosition(point.X, point.Y);
         }
 
         private void RestorePosition()
         {
-            System.Console.SetCursorPosition(cursorLeft, cursorRight);
+            Terminal.SetCursorPosition(cursorLeft, cursorRight);
         }
 
         private static void ShowCursor()
         {
-            System.Console.CursorVisible = true;
+            Terminal.CursorVisible = true;
         }
     }
 }

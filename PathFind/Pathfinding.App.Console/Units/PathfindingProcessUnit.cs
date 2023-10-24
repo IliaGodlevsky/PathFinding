@@ -31,12 +31,10 @@ namespace Pathfinding.App.Console.Units
         private IGraph<Vertex> graph = Graph<Vertex>.Empty;
 
         public PathfindingProcessUnit(IReadOnlyCollection<IMenuItem> menuItems,
-            IReadOnlyCollection<IConditionedMenuItem> conditioned,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
             IInput<ConsoleKey> input,
             IMessenger messenger,
-            ILog log)
-            : base(menuItems, conditioned)
+            ILog log) : base(menuItems)
         {
             this.messenger = messenger;
             this.log = log;

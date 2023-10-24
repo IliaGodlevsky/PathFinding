@@ -10,8 +10,6 @@ namespace Pathfinding.GraphLib.Core.Realizations
 {
     public class Coordinate : ICoordinate
     {
-        public static readonly Coordinate Empty = new Coordinate();
-
         private readonly string toString;
         private readonly int hashCode;
 

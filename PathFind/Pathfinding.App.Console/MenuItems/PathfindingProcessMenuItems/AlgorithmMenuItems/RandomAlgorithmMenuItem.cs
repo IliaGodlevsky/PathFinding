@@ -10,7 +10,7 @@ using Shared.Random;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
-    [MediumPriority]
+    [LowPriority]
     internal sealed class RandomAlgorithmMenuItem : AlgorithmMenuItem
     {
         private readonly IRandom random;
@@ -28,10 +28,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 
         protected override (IAlgorithmFactory<PathfindingProcess> Algorithm, Statistics Statistics) GetAlgorithm()
         {
-            var statistics = new Statistics(nameof(Languages.RandomAlgorithm))
-            {
-                ResultStatus = nameof(Languages.Started)
-            };
+            var statistics = new Statistics(nameof(Languages.RandomAlgorithm));
             return (new RandomAlgorithmFactory(random), statistics);
         }
     }

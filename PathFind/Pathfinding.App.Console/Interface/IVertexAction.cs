@@ -4,6 +4,6 @@ namespace Pathfinding.App.Console.Interface
 {
     internal interface IVertexAction
     {
-        void Do(Vertex vertex);
+        void Invoke(Vertex vertex);
     }
 }

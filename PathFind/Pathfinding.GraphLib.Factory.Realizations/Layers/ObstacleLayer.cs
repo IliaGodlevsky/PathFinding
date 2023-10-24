@@ -2,7 +2,6 @@
 using Pathfinding.GraphLib.Factory.Interface;
 using Shared.Extensions;
 using Shared.Random;
-using Shared.Random.Extensions;
 using System.Linq;
 
 using static System.Linq.Enumerable;
@@ -26,7 +25,7 @@ namespace Pathfinding.GraphLib.Factory.Realizations.Layers
             int regularsCount = graph.Count - obstaclesCount;
             Repeat(true, obstaclesCount)
                .Concat(Repeat(false, regularsCount))
-               .OrderBy(item => random.NextInt())
+               .OrderBy(item => random.NextUInt()) // shuffle
                .Zip(graph, (o, v) => (Vertex: v, Obstacle: o))
                .ForEach(item => item.Vertex.IsObstacle = item.Obstacle);
         }

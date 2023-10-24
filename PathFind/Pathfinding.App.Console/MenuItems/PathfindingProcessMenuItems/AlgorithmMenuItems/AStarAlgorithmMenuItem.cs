@@ -6,7 +6,6 @@ using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
-using Pathfinding.App.Console.Model.Notes;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.AlgorithmMenuItems
@@ -14,37 +13,20 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
     [HighPriority]
     internal sealed class AStarAlgorithmMenuItem : AlgorithmInputMenuItem
     {
-        private readonly IReadOnlyDictionary<string, IStepRule> stepRules;
-        private readonly IReadOnlyDictionary<string, IHeuristic> heuristics;
+        protected override string LanguageKey { get; } = nameof(Languages.AStarAlgorithm);
 
         public AStarAlgorithmMenuItem(
             IReadOnlyDictionary<string, IStepRule> stepRules,
             IReadOnlyDictionary<string, IHeuristic> heuristics,
             IInput<int> input,
             IMessenger messenger)
-            : base(messenger, input)
+            : base(messenger, stepRules, heuristics, input)
         {
-            this.stepRules = stepRules;
-            this.heuristics = heuristics;
         }
 
-        public override string ToString()
+        protected override IAlgorithmFactory<PathfindingProcess> CreateAlgorithm(IStepRule stepRule, IHeuristic heuristics)
         {
-            return Languages.AStarAlgorithm;
-        }
-
-        protected override (IAlgorithmFactory<PathfindingProcess> Algorithm, Statistics Statistics) GetAlgorithm()
-        {
-            var stepRule = InputItem(stepRules, Languages.ChooseStepRuleMsg);
-            var heuristic = InputItem(heuristics, Languages.ChooseHeuristicMsg);
-            var statistics = new Statistics(nameof(Languages.AStarAlgorithm))
-            {
-                ResultStatus = nameof(Languages.Started),
-                StepRule = stepRule.Key,
-                Heuristics = heuristic.Key
-            };
-            var factory = new AStarAlgorithmFactory(stepRule.Value, heuristic.Value);
-            return (factory, statistics);
+            return new AStarAlgorithmFactory(stepRule, heuristics);
         }
     }
 }

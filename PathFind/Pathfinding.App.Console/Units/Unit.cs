@@ -1,6 +1,5 @@
 ﻿using Pathfinding.App.Console.Interface;
 using Shared.Primitives.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,25 +7,26 @@ namespace Pathfinding.App.Console.Units
 {
     internal abstract class Unit : IUnit
     {
-        private IReadOnlyCollection<IConditionedMenuItem> ConditionedMenuItems { get; }
-
         private IReadOnlyCollection<IMenuItem> MenuItems { get; }
 
-        protected Unit(IReadOnlyCollection<IMenuItem> menuItems,
-            IReadOnlyCollection<IConditionedMenuItem> conditioned)
+        protected Unit(IReadOnlyCollection<IMenuItem> menuItems)
         {
             MenuItems = menuItems;
-            ConditionedMenuItems = conditioned;
         }
 
         public IReadOnlyList<IMenuItem> GetMenuItems()
         {
-            var items = ConditionedMenuItems
-                .Where(item => item.CanBeExecuted())
-                .Concat(MenuItems)
+            return MenuItems
+                .Where(CanBeExecuted)
                 .OrderByOrderAttribute()
-                .ToArray();
-            return Array.AsReadOnly(items);
+                .ToList()
+                .AsReadOnly();
+        }
+
+        private static bool CanBeExecuted(IMenuItem item)
+        {
+            bool canBeExecuted = item is IConditionedMenuItem c && c.CanBeExecuted();
+            return item is not IConditionedMenuItem || canBeExecuted;
         }
     }
 }

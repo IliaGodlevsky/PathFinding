@@ -19,7 +19,9 @@ namespace Pathfinding.GraphLib.Factory.Realizations.Layers
             foreach (var vertex in graph)
             {
                 var neighborhood = factory.CreateNeighborhood(vertex.Position);
-                vertex.Neighbours = neighborhood.GetNeighboursWithinGraph(graph).ToHashSet();
+                vertex.Neighbours = neighborhood
+                    .GetNeighboursWithinGraph(graph)
+                    .ToHashSet();
             }
         }
     }

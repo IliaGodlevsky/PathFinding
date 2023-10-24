@@ -6,19 +6,10 @@ namespace Shared.Primitives
     {
         private readonly Action action;
 
-        public static Disposable Use(Action action)
-        {
-            return new(action);
-        }
+        public static Disposable Use(Action action) => new(action);
 
-        private Disposable(Action action)
-        {
-            this.action = action;
-        }
+        private Disposable(Action action) => this.action = action;
 
-        public readonly void Dispose()
-        {
-            action?.Invoke();
-        }
+        public readonly void Dispose() => action?.Invoke();
     }
 }

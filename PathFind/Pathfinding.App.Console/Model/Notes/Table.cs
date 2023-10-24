@@ -31,9 +31,7 @@ namespace Pathfinding.App.Console.Model.Notes
             properties = typeof(T)
                 .GetProperties()
                 .Where(prop => Attribute.IsDefined(prop, typeof(DisplayableAttribute)))
-                .OrderByOrderAttribute()
-                .ToList()
-                .AsReadOnly();
+                .OrderByOrderAttribute().ToList().AsReadOnly();
             this.values = values.ToList().AsReadOnly();
         }
 

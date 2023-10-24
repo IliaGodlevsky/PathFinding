@@ -55,11 +55,8 @@ namespace Pathfinding.App.Console.Loggers
             AppLayout.SetCursorPositionUnderGraphField();
             using (Cursor.UseCurrentPositionWithClean())
             {
-                using (Cursor.UseColor(color))
-                {
-                    System.Console.Write(message);
-                    System.Console.ReadKey();
-                }
+                Cursor.Write(color, message);
+                Terminal.ReadKey();
             }
         }
     }
