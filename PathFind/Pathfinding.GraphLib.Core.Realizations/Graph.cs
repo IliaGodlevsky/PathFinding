@@ -17,9 +17,9 @@ namespace Pathfinding.GraphLib.Core.Realizations
 
         public Guid Id { get; private set; } = Guid.NewGuid();
 
-        public int Count { get; }
-
         public IReadOnlyList<int> DimensionsSizes { get; }
+
+        public int Count { get; }
 
         public Graph(int requiredNumberOfDimensions,
              IReadOnlyCollection<TVertex> vertices,
