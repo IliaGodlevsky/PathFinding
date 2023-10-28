@@ -14,7 +14,7 @@ namespace Pathfinding.AlgorithmLib.Extensions
             return stack.Count == 0 ? throw new DeadendVertexException() : stack.Pop();
         }
 
-        public static IVertex DequeueOrDeadEndVertex(this Queue<IVertex> queue)
+        public static IVertex DequeueOrThrowDeadEndVertexException(this Queue<IVertex> queue)
         {
             return queue.Count == 0 ? throw new DeadendVertexException() : queue.Dequeue();
         }

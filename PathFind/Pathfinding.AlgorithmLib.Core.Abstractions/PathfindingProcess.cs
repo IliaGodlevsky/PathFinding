@@ -3,6 +3,7 @@ using Pathfinding.AlgorithmLib.Core.Exceptions;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.GraphLib.Core.Interface;
+using Shared.Primitives.Single;
 using Shared.Process.EventHandlers;
 using Shared.Process.Interface;
 using System;
@@ -14,7 +15,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
     {
         private sealed class NullProcess : PathfindingProcess
         {
-            public override Guid Id => Guid.Empty;
+            public override Guid Id { get; } = Guid.Empty;
 
             public override IGraphPath FindPath() => NullGraphPath.Instance;
 
@@ -23,6 +24,8 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             public override void Pause() { }
 
             public override void Resume() { }
+
+            protected override void WaitUntilResumed() { }
         }
 
         public static readonly PathfindingProcess Idle = new NullProcess();

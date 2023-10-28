@@ -71,14 +71,14 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
     internal sealed partial class Application : IDisposable
     {
-        private static IEnumerable<IFeature> GetFeatures()
+        private static IEnumerable<IComponent> GetComponents()
         {
             return typeof(Application).GetNestedTypes(BindingFlags.NonPublic)
-                .Where(member => typeof(IFeature).IsAssignableFrom(member))
-                .Select(member => (IFeature)Activator.CreateInstance(member));
+                .Where(member => typeof(IComponent).IsAssignableFrom(member))
+                .Select(member => (IComponent)Activator.CreateInstance(member));
         }
 
-        private sealed class Main : IFeature
+        private sealed class Main : IComponent
         {
             public void Apply(ContainerBuilder builder)
             {
@@ -176,7 +176,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        private sealed class UserInput : IFeature
+        private sealed class UserInput : IComponent
         {
             public void Apply(ContainerBuilder builder)
             {
@@ -188,7 +188,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        private sealed class BreadthAlgorithms : IFeature
+        private sealed class BreadthAlgorithms : IComponent
         {
             public void Apply(ContainerBuilder builder)
             {
@@ -198,7 +198,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        private sealed class GraphSharing : IFeature
+        private sealed class GraphSharing : IComponent
         {
             public void Apply(ContainerBuilder builder)
             {
@@ -218,8 +218,6 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<FilePathInput>().As<IFilePathInput>().SingleInstance();
                 builder.RegisterType<AddressInput>().As<IInput<(string, int)>>().SingleInstance();
 
-                builder.RegisterInstance(Aes.Create()).As<SymmetricAlgorithm>().SingleInstance();
-
                 builder.RegisterType<BinaryRangeSerializer>().As<ISerializer<IEnumerable<ICoordinate>>>().SingleInstance();
                 builder.RegisterType<BinaryHistorySerializer>().As<ISerializer<GraphPathfindingHistory>>().SingleInstance();
                 builder.RegisterType<BinaryGraphSerializer<Vertex>>().As<ISerializer<IGraph<Vertex>>>().SingleInstance();
@@ -234,7 +232,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        private sealed class GraphEditor : IFeature
+        private sealed class GraphEditor : IComponent
         {
             public void Apply(ContainerBuilder builder)
             {
@@ -254,7 +252,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        private sealed class ColorEditor : IFeature
+        private sealed class ColorEditor : IComponent
         {
             public void Apply(ContainerBuilder builder)
             {
@@ -270,7 +268,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        private sealed class TransitVertices : IFeature
+        private sealed class TransitVertices : IComponent
         {
             public void Apply(ContainerBuilder builder)
             {
@@ -286,7 +284,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        private sealed class WaveAlgorithms : IFeature
+        private sealed class WaveAlgorithms : IComponent
         {
             public void Apply(ContainerBuilder builder)
             {
@@ -304,7 +302,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        private sealed class GreedyAlgorithms : IFeature
+        private sealed class GreedyAlgorithms : IComponent
         {
             public void Apply(ContainerBuilder builder)
             {
@@ -315,7 +313,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        private sealed class PathfindingVisualization : IFeature
+        private sealed class PathfindingVisualization : IComponent
         {
             public void Apply(ContainerBuilder builder)
             {
@@ -330,7 +328,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        private sealed class PathfindingHistory : IFeature
+        private sealed class PathfindingHistory : IComponent
         {
             public void Apply(ContainerBuilder builder)
             {
@@ -342,7 +340,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        private sealed class VisualizationControl : IFeature
+        private sealed class VisualizationControl : IComponent
         {
             public void Apply(ContainerBuilder builder)
             {
@@ -356,7 +354,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        private sealed class PathfindingStatistics : IFeature
+        private sealed class PathfindingStatistics : IComponent
         {
             public void Apply(ContainerBuilder builder)
             {
@@ -366,7 +364,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        private sealed class KeysEditor : IFeature
+        private sealed class KeysEditor : IComponent
         {
             public void Apply(ContainerBuilder builder)
             {

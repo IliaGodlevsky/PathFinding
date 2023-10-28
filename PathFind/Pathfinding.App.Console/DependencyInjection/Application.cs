@@ -18,19 +18,18 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             scope = new(() => builder.Build());
         }
 
-        public void ApplyFeatures()
+        public void ApplyComponents()
         {
-            foreach (var feature in GetFeatures())
+            foreach (var component in GetComponents())
             {
-                feature.Apply(builder);
+                component.Apply(builder);
             }
         }
 
         public void Run(Encoding outputEncoding)
         {
             Terminal.OutputEncoding = outputEncoding;
-            var main = Scope.Resolve<MainUnitMenuItem>();
-            main.Execute();
+            Scope.Resolve<MainUnitMenuItem>().Execute();
         }
 
         public void Dispose()

@@ -22,7 +22,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 
         protected override IVertex GetNextVertex()
         {
-            return storage.DequeueOrDeadEndVertex();
+            return storage.DequeueOrThrowDeadEndVertexException();
         }
 
         protected override void RelaxVertex(IVertex vertex)

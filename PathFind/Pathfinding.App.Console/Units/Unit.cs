@@ -25,7 +25,7 @@ namespace Pathfinding.App.Console.Units
 
         private static bool CanBeExecuted(IMenuItem item)
         {
-            bool canBeExecuted = item is IConditionedMenuItem c && c.CanBeExecuted();
+            bool canBeExecuted = item is IConditionedMenuItem m && m.CanBeExecuted();
             return item is not IConditionedMenuItem || canBeExecuted;
         }
     }

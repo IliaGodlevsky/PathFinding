@@ -223,7 +223,7 @@
     <Compile Include="Messages\ClearColorsMessage.cs" />
     <Compile Include="Messages\ClearHistoryMessage.cs" />
     <Compile Include="Messages\GraphChangedMessage.cs" />
-    <Compile Include="DependencyInjection\Registrations\IFeature.cs" />
+    <Compile Include="DependencyInjection\Registrations\IComponent.cs" />
     <Compile Include="DependencyInjection\Application.cs" />
     <Compile Include="Units\AlgorithmChooseUnit.cs" />
     <Compile Include="Units\ColorsUnit.cs" />

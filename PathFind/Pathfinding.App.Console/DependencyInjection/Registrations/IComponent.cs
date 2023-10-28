@@ -2,7 +2,7 @@
 
 namespace Pathfinding.App.Console.DependencyInjection.Registrations
 {
-    internal interface IFeature
+    internal interface IComponent
     {
         void Apply(ContainerBuilder builder);
     }

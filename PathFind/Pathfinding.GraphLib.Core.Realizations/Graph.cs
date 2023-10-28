@@ -11,9 +11,11 @@ namespace Pathfinding.GraphLib.Core.Realizations
     public class Graph<TVertex> : IGraph<TVertex>
         where TVertex : IVertex
     {
-        public static readonly Graph<TVertex> Empty = new();
+        public static readonly Graph<TVertex> Empty = new() { Id = Guid.Empty };
 
         private readonly IReadOnlyDictionary<ICoordinate, TVertex> vertices;
+
+        public Guid Id { get; private set; } = Guid.NewGuid();
 
         public int Count { get; }
 

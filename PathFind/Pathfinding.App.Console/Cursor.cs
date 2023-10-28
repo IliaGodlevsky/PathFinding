@@ -16,7 +16,7 @@ namespace Pathfinding.App.Console
         private readonly int cursorRight;
 
         public static Point CurrentPosition
-            => new(System.Console.CursorLeft, System.Console.CursorTop);
+            => new(Terminal.CursorLeft, Terminal.CursorTop);
 
         private Cursor(int left, int right)
         {
@@ -80,9 +80,7 @@ namespace Pathfinding.App.Console
         /// perfromed after remembering the position </returns>
         public static Disposable UseCurrentPositionWithClean()
         {
-            int left = Terminal.CursorLeft;
-            int top = Terminal.CursorTop;
-            var position = new Point(left, top);
+            var position = CurrentPosition;
             return Disposable.Use(() => CleanUpTo(position));
         }
 

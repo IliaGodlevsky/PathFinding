@@ -21,7 +21,6 @@ namespace GraphLib.Serialization.Serializers.Decorators
             this.serializer = serializer;
             this.algorithm = algorithm;
             this.crypto = crypto;
-            algorithm.Padding = PaddingMode.PKCS7;
         }
 
         public CryptoSerializer(

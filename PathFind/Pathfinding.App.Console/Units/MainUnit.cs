@@ -42,9 +42,9 @@ namespace Pathfinding.App.Console.Units
         {
             try
             {
-                System.Console.Clear();
-                System.Console.ForegroundColor = ConsoleColor.White;
-                System.Console.WriteLine(Graph);
+                Terminal.Clear();
+                Terminal.ForegroundColor = ConsoleColor.White;
+                Terminal.WriteLine(Graph);
                 GraphField.Display();
             }
             catch (ArgumentOutOfRangeException ex)
@@ -71,10 +71,10 @@ namespace Pathfinding.App.Console.Units
             {
                 var position = new Point(0, 0);
                 Cursor.SetPosition(position);
-                System.Console.Write(new string(' ',
-                    System.Console.BufferWidth));
+                Terminal.Write(new string(' ',
+                    Terminal.BufferWidth));
                 Cursor.SetPosition(position);
-                System.Console.WriteLine(Graph);
+                Terminal.WriteLine(Graph);
             }
         }
 

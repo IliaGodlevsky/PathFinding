@@ -30,8 +30,8 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 
         protected override IGraphPath GetSubPath()
         {
-            var traces = this.traces.ToDictionary();
-            return new GraphPath(traces, CurrentRange.Target, stepRule);
+            return new GraphPath(traces.ToDictionary(), 
+                CurrentRange.Target, stepRule);
         }
 
         protected override double CalculateHeuristic(IVertex vertex)
