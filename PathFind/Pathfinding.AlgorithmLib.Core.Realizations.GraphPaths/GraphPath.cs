@@ -6,6 +6,7 @@ using Shared.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths
 {
@@ -79,7 +80,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths
 
         private static bool AreNeighbours(IVertex self, IVertex candidate)
         {
-            return self.Neighbours.Contains(candidate);
+            return self.Neighbours.Any(candidate.Equals);
         }
 
         public IEnumerator<ICoordinate> GetEnumerator()

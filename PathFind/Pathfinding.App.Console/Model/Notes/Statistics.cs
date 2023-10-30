@@ -1,7 +1,8 @@
-﻿using Pathfinding.App.Console.Localization;
+﻿#nullable enable
+using Autofac;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Settings;
 using Shared.Extensions;
-using Shared.Primitives.Attributes;
 using Shared.Primitives.Extensions;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,8 @@ namespace Pathfinding.App.Console.Model.Notes
 {
     internal sealed class Statistics
     {
+        private const string Missing = "**********";
+
         public static readonly Statistics Empty = new(string.Empty);
 
         private static readonly IReadOnlyList<string> names;
@@ -31,48 +34,43 @@ namespace Pathfinding.App.Console.Model.Notes
                 .Where(prop => Attribute.IsDefined(prop, typeof(DisplayableAttribute)))
                 .OrderByOrderAttribute()
                 .Select(prop => prop.GetAttributeOrDefault<DisplayNameSourceAttribute>()?.ResourceName ?? prop.Name)
-                .Select(GetString).Skip(1).ToList().AsReadOnly();
+                .Select(name => GetString(name) ?? Missing)
+                .Skip(1).ToList().AsReadOnly();
         }
 
         public Statistics(string algorithm)
         {
-            Algorithm = algorithm;
+            Algorithm = algorithm!;
         }
 
         public string Algorithm { get; } = string.Empty;
 
-        public string Heuristics { get; init; } = null;
+        public string? Heuristics { get; init; } = null;
 
-        public string StepRule { get; init; } = null;
+        public string? StepRule { get; init; } = null;
 
-        [Order(1)]
-        [Displayable]
+        [Displayable(1)]
         [DisplayNameSource(nameof(Languages.Name))]
-        public string Name => GetString(Algorithm);
+        public string Name => GetString(Algorithm) ?? Missing;
 
-        [Order(9)]
-        [Displayable]
+        [Displayable(9)]
         [DisplayNameSource(nameof(Languages.Status))]
-        public string Status => GetString(ResultStatus);
+        public string Status => GetString(ResultStatus) ?? Missing;
 
-        [Order(2)]
-        [Displayable]
+        [Displayable(2)]
         [DisplayNameSource(nameof(Languages.Time))]
-        public string Time => Elapsed?.ToString(Parametres.Default.TimeFormat,
+        public string? Time => Elapsed?.ToString(Parametres.Default.TimeFormat,
             CultureInfo.InvariantCulture);
 
-        [Order(6)]
-        [Displayable]
+        [Displayable(6)]
         [DisplayNameSource(nameof(Languages.Rule))]
-        public string Rule => GetString(StepRule);
+        public string? Rule => GetString(StepRule);
 
-        [Order(7)]
-        [Displayable]
+        [Displayable(7)]
         [DisplayNameSource(nameof(Languages.Heuristics))]
-        public string Heuristic => GetString(Heuristics);
+        public string? Heuristic => GetString(Heuristics);
 
-        [Order(3)]
-        [Displayable]
+        [Displayable(3)]
         [DisplayNameSource(nameof(Languages.Visited))]
         public int? Visited { get; set; } = null;
 
@@ -81,42 +79,34 @@ namespace Pathfinding.App.Console.Model.Notes
 
         public TimeSpan? Elapsed { get; set; } = null;
 
-        [Order(4)]
-        [Displayable]
+        [Displayable(4)]
         [DisplayNameSource(nameof(Languages.Steps))]
         public int? Steps { get; set; } = null;
 
-        [Order(5)]
-        [Displayable]
+        [Displayable(5)]
         [DisplayNameSource(nameof(Languages.Cost))]
         public double? Cost { get; set; } = null;
 
-        [Order(8)]
-        [Displayable]
+        [Displayable(8)]
         [DisplayNameSource(nameof(Languages.Spread))]
         public int? Spread { get; set; } = null;
 
         public override string ToString()
         {
+            var values = new object?[] { Time, Visited, Steps,
+                Cost, Rule, Heuristic, Spread, Status };
             var builder = new StringBuilder($"{Name}  ");
-            foreach (var value in GetNotEmptyValues())
-            {
-                builder.Append($"{value.Name}: {value.Value}  ");
-            }
+            names.Zip(values, (n, v) => (Name: n, Value: v))
+                .Where(x => x.Value is not null and not "")
+                .Select(x => $"{x.Name}: {x.Value}  ")
+                .ForEach(x => builder.Append(x));
             return builder.ToString();
         }
 
-        private static string GetString(string key)
+        private static string? GetString(string? key)
         {
             return Languages.ResourceManager.GetString(key ?? string.Empty) ?? key;
         }
-
-        private IEnumerable<(string Name, object Value)> GetNotEmptyValues()
-        {
-            var values = new object[] { Time, Visited, Steps,
-                Cost, Rule, Heuristic, Spread, Status };
-            return names.Zip(values, (n, v) => (Name: n, Value: v))
-                .Where(x => x.Value is not null and not "");
-        }
     }
 }
+#nullable disable

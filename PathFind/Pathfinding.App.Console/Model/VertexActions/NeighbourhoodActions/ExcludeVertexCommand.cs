@@ -8,8 +8,8 @@ namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions
         public bool CanExecute(ActiveVertex active, Vertex vertex)
         {
             return active.Availiable.Contains(vertex.Position)
-                && active.Current?.Neighbours.Contains(vertex) == true
-                && active.Current?.Neighbours.Count > 1;
+                && active.Current?.Neighbours.Count > 1
+                && active.Current?.Neighbours.Contains(vertex) == true;
         }
 
         public void Execute(ActiveVertex active, Vertex vertex)

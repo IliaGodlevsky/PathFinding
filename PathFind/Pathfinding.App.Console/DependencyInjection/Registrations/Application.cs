@@ -155,7 +155,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory<Vertex, GraphField>>().SingleInstance();
                 builder.RegisterType<CoordinateFactory>().As<ICoordinateFactory>().SingleInstance();
                 builder.RegisterType<GraphFactory<Vertex>>().As<IGraphFactory<Vertex>>().SingleInstance();
-                builder.RegisterDecorator<Graph2DWrapFactory, IGraphFactory<Vertex>>();
+                builder.RegisterDecorator<GraphWrapFactory, IGraphFactory<Vertex>>();
 
                 builder.RegisterType<MooreNeighborhoodFactory>().Keyed<INeighborhoodFactory>(Neighbourhood)
                     .SingleInstance().WithMetadata(Neighbourhood, nameof(Languages.MooreNeighbourhood));

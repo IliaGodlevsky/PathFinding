@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.Model
 {
-    internal sealed class Graph2DWrapFactory : IGraphFactory<Vertex>
+    internal sealed class GraphWrapFactory : IGraphFactory<Vertex>
     {
         private readonly IGraphFactory<Vertex> factory;
 
-        public Graph2DWrapFactory(IGraphFactory<Vertex> factory)
+        public GraphWrapFactory(IGraphFactory<Vertex> factory)
         {
             this.factory = factory;
         }

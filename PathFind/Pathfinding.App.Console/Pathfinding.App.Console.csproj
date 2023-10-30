@@ -107,6 +107,8 @@
     <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\LeeAlgorithmMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\RandomAlgorithmMenuItem.cs" />
     <Compile Include="Model\ApplicationSettingsStore.cs" />
+    <Compile Include="Model\GraphWrapFactory.cs" />
+    <Compile Include="Model\GraphWrap.cs" />
     <Compile Include="Model\Notes\DisplayableAttribute.cs" />
     <Compile Include="Model\Notes\DisplayNameSourceAttribute.cs" />
     <Compile Include="Model\Notes\Table.cs" />
@@ -259,8 +261,6 @@
     <Compile Include="Model\FramedAxes\FramedToLeftOrdinate.cs" />
     <Compile Include="Model\FramedAxes\FramedToRightOrdinate.cs" />
     <Compile Include="Model\FramedAxes\FramedUnderAbscissa.cs" />
-    <Compile Include="Model\GraphWrap.cs" />
-    <Compile Include="Model\Graph2DWrapFactory.cs" />
     <Compile Include="Model\GraphField.cs" />
     <Compile Include="Model\GraphFieldFactory.cs" />
     <Compile Include="Model\PathfindingActions\NullAnimationAction.cs" />

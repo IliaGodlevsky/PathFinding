@@ -58,11 +58,7 @@ namespace Pathfinding.App.Console.Model.Notes
                 {
                     string name = GetName(property);
                     object value = property.GetValue(item);
-                    string str = string.Empty;
-                    if (value != null)
-                    {
-                        str = value.ToString();
-                    }
+                    string str = value?.ToString() ?? string.Empty;
                     int padding = Widths[name] + additionalPadding;
                     string padded = str.PadRight(padding);
                     row.Add(padded);
