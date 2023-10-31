@@ -121,5 +121,32 @@ namespace Pathfinding.App.Console.Settings {
                 return ((string)(this["TimeFormat"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("|")]
+        public string VerticalFrameComponent {
+            get {
+                return ((string)(this["VerticalFrameComponent"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("+")]
+        public string CoordinateDelimiter {
+            get {
+                return ((string)(this["CoordinateDelimiter"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-")]
+        public char FrameComponent {
+            get {
+                return ((char)(this["FrameComponent"]));
+            }
+        }
     }
 }

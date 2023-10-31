@@ -1,71 +1,53 @@
-﻿using Pathfinding.App.Console.Extensions;
-using System;
-using System.Text;
+﻿using Pathfinding.App.Console.Settings;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace Pathfinding.App.Console.Model.FramedAxes
 {
     internal abstract class FramedAbscissa : FramedAxis
     {
-        private const string CoordinateDelimiter = "+";
-        private const char FrameComponent = '-';
-
-        protected const char Endl = '\n';
-        protected const string NewLine = "\n";
-
-        private static readonly string LargeSpace = new string(Space, AppLayout.WidthOfOrdinateView);
-
+        private readonly string CoordinateDelimiter;
+        private readonly char FrameComponent;
         private readonly int graphWidth;
 
-        protected FramedAbscissa(int graphWidth) : base()
+        protected FramedAbscissa(int graphWidth)
         {
+            CoordinateDelimiter = Parametres.Default.CoordinateDelimiter;
+            FrameComponent = Parametres.Default.FrameComponent;
             this.graphWidth = graphWidth;
         }
 
-        public override void Display()
+        protected override IEnumerable<Fracture> GetCoordinates()
         {
-            System.Console.SetCursorPosition(0, AppLayout.HeightOfGraphParametresView);
-            System.Console.Write(GetFramedAxis());
-        }
-
-        protected string GetAbscissa()
-        {
-            var stringBuilder = new StringBuilder(LargeSpace);
+            int x = AppLayout.WidthOfOrdinateView;
+            int y = AppLayout.HeightOfGraphParametresView 
+                + AppLayout.HeightOfAbscissaView - 2 + ValueOffset;
+            var start = new Point(x, y);
             for (int i = 0; i < graphWidth; i++)
             {
-                string line = GetAbscissaFragment(i);
-                stringBuilder.Append(line);
+                var increment = LateralDistance * i;
+                var coordinate = new Point(start.X + increment, start.Y);
+                yield return new (Value: i.ToString(), Coordinate: coordinate);
             }
-            return stringBuilder.Append(LargeSpace).ToString();
         }
 
-        protected string GetHorizontalFrame()
+        protected override IEnumerable<Fracture> GetFrames()
         {
-            var stringBuilder = new StringBuilder(LargeSpace);
-            string fragment = GetHorizontalFrameFragment();
-            int times = graphWidth;
-            while (times-- > 0)
+            int x = AppLayout.WidthOfOrdinateView;
+            int y = AppLayout.HeightOfGraphParametresView 
+                + AppLayout.HeightOfAbscissaView - 1 + FrameOffset;
+            var start = new Point(x, y);
+            var fracture = new string(FrameComponent, LateralDistance - 1);
+            var frame = string.Concat(CoordinateDelimiter, fracture);
+            for (int i = 0; i < graphWidth; i++)
             {
-                stringBuilder.Append(fragment);
+                var increment = LateralDistance * i;
+                var coord = new Point(start.X + increment, start.Y);
+                yield return new (Value: frame, Coordinate: coord);
             }
-            return stringBuilder.Append(CoordinateDelimiter).ToString();
-        }
-
-        private string GetAbscissaFragment(int index)
-        {
-            return string.Concat(index, GetSpace(index));
-        }
-
-        private string GetHorizontalFrameFragment()
-        {
-            var frameComponent = new string(FrameComponent, LateralDistance - 1);
-            return string.Concat(CoordinateDelimiter, frameComponent);
-        }
-
-        private string GetSpace(int index)
-        {
-            int numberLength = index.GetDigitsNumber();
-            int count = Math.Abs(LateralDistance - numberLength);
-            return new string(Space, count);
+            x = start.X + LateralDistance * graphWidth;
+            var coordinate = new Point(x, start.Y);
+            yield return new (Value: CoordinateDelimiter, Coordinate: coordinate);
         }
     }
 }

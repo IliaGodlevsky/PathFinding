@@ -1,17 +1,33 @@
 ﻿using Pathfinding.App.Console.Interface;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 
 namespace Pathfinding.App.Console.Model.FramedAxes
 {
-    internal abstract class FramedAxis : IFramedAxis, IDisplayable
+    internal abstract class FramedAxis : IDisplayable
     {
+        protected readonly record struct Fracture(string Value, Point Coordinate);
+
         protected static int LateralDistance => AppLayout.LateralDistanceBetweenVertices;
 
-        protected const char Space = ' ';
+        protected abstract int ValueOffset { get; }
 
-        protected abstract string Offset { get; }
+        protected abstract int FrameOffset { get; }
 
-        public abstract string GetFramedAxis();
+        public void Display()
+        {
+            var values = GetCoordinates()
+                .Concat(GetFrames()).ToArray();
+            foreach (var value in values)
+            {
+                Cursor.SetPosition(value.Coordinate);
+                Terminal.Write(value.Value);
+            }
+        }
 
-        public abstract void Display();
+        protected abstract IEnumerable<Fracture> GetCoordinates();
+
+        protected abstract IEnumerable<Fracture> GetFrames();
     }
 }

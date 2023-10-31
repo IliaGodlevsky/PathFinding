@@ -7,25 +7,22 @@ namespace Pathfinding.App.Console.Model.FramedAxes
     {
         private readonly int graphWidth;
 
-        protected override string Offset => new string(Space, OffsetNumber);
+        protected override int FrameOffset { get; }
 
-        private int OffsetNumber => graphWidth * LateralDistance + AppLayout.WidthOfOrdinateView;
+        protected override int ValueOffset { get; }
 
         public FramedToRightOrdinate(IGraph<Vertex> graph)
             : base(graph.GetLength())
         {
             graphWidth = graph.GetWidth();
+            FrameOffset = graphWidth * LateralDistance 
+                + AppLayout.WidthOfOrdinateView - yCoordinatePadding;
+            ValueOffset = FrameOffset + AppLayout.WidthOfOrdinateView;
         }
 
-        protected override string GetPaddedYCoordinate(int yCoordinate)
+        protected override string GetPaddedIndex(int index)
         {
-            return yCoordinate.ToString().PadRight(yCoordinatePadding);
-        }
-
-        protected override string GetStringToAppend(int yCoordinate)
-        {
-            string paddedCoordinate = GetPaddedYCoordinate(yCoordinate);
-            return string.Concat(Offset, VerticalFrameComponent, paddedCoordinate);
+            return index.ToString();
         }
     }
 }

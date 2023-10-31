@@ -13,7 +13,9 @@ namespace Pathfinding.App.Console.Model
     {
         public static readonly GraphField Empty = new(Graph<Vertex>.Empty);
 
-        public IReadOnlyCollection<Vertex> Vertices { get; }
+        IReadOnlyCollection<Vertex> IGraphField<Vertex>.Vertices => Vertices;
+
+        public IGraph<Vertex> Vertices { get; }
 
         private IDisplayable[] Displayables { get; }
 

@@ -20,7 +20,7 @@ namespace Pathfinding.App.Console
             = (Constants.GraphLengthValueRange.UpperValueOfRange - 1).GetDigitsNumber() + 1;
         public static readonly int YCoordinatePadding = WidthOfOrdinateView - 1;
 
-        private static readonly Point GraphFieldPosition
+        public static readonly Point GraphFieldPosition
             = new(WidthOfOrdinateView, HeightOfAbscissaView + HeightOfGraphParametresView);
 
         private static int CurrentMaxValueOfRange;
@@ -45,7 +45,7 @@ namespace Pathfinding.App.Console
         private void SetGraph(IGraph<Vertex> graph)
         {
             Graph = graph;
-            int pathFindingStatisticsOffset = Graph.GetLength() + HeightOfAbscissaView * 2 + HeightOfGraphParametresView;
+            int pathFindingStatisticsOffset = Graph.GetLength() + HeightOfAbscissaView + 2 + HeightOfGraphParametresView;
             StatisticsPosition = new(0, pathFindingStatisticsOffset);
             RecalculateVerticesConsolePosition();
         }

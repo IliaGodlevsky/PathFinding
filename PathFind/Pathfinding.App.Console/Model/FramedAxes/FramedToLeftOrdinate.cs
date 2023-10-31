@@ -5,23 +5,19 @@ namespace Pathfinding.App.Console.Model.FramedAxes
 {
     internal sealed class FramedToLeftOrdinate : FramedOrdinate
     {
-        protected override string Offset { get; }
+        protected override int FrameOffset { get; } = 0;
+
+        protected override int ValueOffset { get; } = 0;
 
         public FramedToLeftOrdinate(IGraph<Vertex> graph)
             : base(graph.GetLength())
         {
-            Offset = string.Empty;
+            
         }
 
-        protected override string GetPaddedYCoordinate(int yCoordinate)
+        protected override string GetPaddedIndex(int index)
         {
-            return yCoordinate.ToString().PadLeft(yCoordinatePadding);
-        }
-
-        protected override string GetStringToAppend(int yCoordinate)
-        {
-            string paddedCoordinate = GetPaddedYCoordinate(yCoordinate);
-            return string.Concat(paddedCoordinate, VerticalFrameComponent);
+            return index.ToString().PadLeft(yCoordinatePadding);
         }
     }
 }

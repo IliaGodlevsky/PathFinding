@@ -35,5 +35,14 @@
     <Setting Name="TimeFormat" Type="System.String" Scope="Application">
       <Value Profile="(Default)">mm\:ss\.fff</Value>
     </Setting>
+    <Setting Name="VerticalFrameComponent" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">|</Value>
+    </Setting>
+    <Setting Name="CoordinateDelimiter" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">+</Value>
+    </Setting>
+    <Setting Name="FrameComponent" Type="System.Char" Scope="Application">
+      <Value Profile="(Default)">-</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

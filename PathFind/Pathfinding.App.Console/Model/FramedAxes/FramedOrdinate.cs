@@ -1,40 +1,47 @@
-﻿using System.Text;
+﻿using Pathfinding.App.Console.Settings;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace Pathfinding.App.Console.Model.FramedAxes
 {
     internal abstract class FramedOrdinate : FramedAxis
     {
-        protected const string VerticalFrameComponent = "|";
+        private readonly string VerticalFrameComponent;
 
         protected readonly int graphLength;
         protected readonly int yCoordinatePadding;
 
         protected FramedOrdinate(int graphLength)
-            : base()
         {
+            VerticalFrameComponent = Parametres.Default.VerticalFrameComponent;
             this.graphLength = graphLength;
             yCoordinatePadding = AppLayout.YCoordinatePadding;
         }
 
-        public override void Display()
+        protected override IEnumerable<Fracture> GetCoordinates()
         {
-            System.Console.SetCursorPosition(0, AppLayout.HeightOfAbscissaView + 1);
-            System.Console.Write(GetFramedAxis());
-        }
-
-        public override string GetFramedAxis()
-        {
-            var stringBuilder = new StringBuilder();
+            int x = 0 + ValueOffset;
+            int y = AppLayout.HeightOfAbscissaView + AppLayout.HeightOfGraphParametresView;
+            var start = new Point(x, y);
             for (int i = 0; i < graphLength; i++)
             {
-                string line = GetStringToAppend(i);
-                stringBuilder.AppendLine(line);
+                var coord = new Point(start.X, start.Y + i);
+                string index = GetPaddedIndex(i);
+                yield return new(Value: index, Coordinate: coord);
             }
-            return stringBuilder.ToString();
         }
 
-        protected abstract string GetStringToAppend(int yCoordinate);
+        protected override IEnumerable<Fracture> GetFrames()
+        {
+            int y = AppLayout.HeightOfAbscissaView + AppLayout.HeightOfGraphParametresView;
+            var start = new Point(yCoordinatePadding + FrameOffset, y);
+            for (int i = 0; i < graphLength; i++)
+            {
+                var coord = new Point(start.X, start.Y + i);
+                yield return new (VerticalFrameComponent, coord);
+            }
+        }
 
-        protected abstract string GetPaddedYCoordinate(int yCoordinate);
+        protected abstract string GetPaddedIndex(int index);
     }
 }

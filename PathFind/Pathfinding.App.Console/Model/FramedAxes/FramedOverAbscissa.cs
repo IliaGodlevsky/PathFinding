@@ -1,26 +1,22 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 
 namespace Pathfinding.App.Console.Model.FramedAxes
 {
     internal sealed class FramedOverAbscissa : FramedAbscissa
     {
-        private readonly int graphLength;
+        protected override int ValueOffset { get; } = 0;
 
-        protected override string Offset { get; }
+        protected override int FrameOffset { get; } = 0;
+            
 
         public FramedOverAbscissa(IGraph<Vertex> graph)
             : base(graph.GetWidth())
         {
-            graphLength = graph.GetLength();
-            Offset = new string(Endl, graphLength + 1);
-        }
-
-        public override string GetFramedAxis()
-        {
-            string frame = GetHorizontalFrame();
-            string abscissa = GetAbscissa();
-            return string.Join(NewLine, Offset, frame, abscissa);
         }
     }
 }
