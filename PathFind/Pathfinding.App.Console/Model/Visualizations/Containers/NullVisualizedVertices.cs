@@ -10,33 +10,30 @@ namespace Pathfinding.App.Console.Model.Visualizations.Containers
     internal sealed class NullVisualizedVertices : Singleton<NullVisualizedVertices, IVisualizedVertices>, IVisualizedVertices
     {
 #pragma warning disable CS0067
-        public event Action<Vertex> VertexVisualized;
+        public event Action<int, Vertex> VertexVisualized;
 #pragma warning restore CS0067
 
-        public bool Contains(Vertex vertex)
+        public bool Contains(int id, Vertex vertex)
         {
             return false;
         }
 
-        public void Remove(Vertex vertex)
+        public bool Add(int id, Vertex vertex)
         {
-
+            return false;
         }
 
-        public void Visualize(Vertex vertex)
+        public void Remove(int id, Vertex vertex)
         {
-
+            
         }
 
-        public IEnumerator<Vertex> GetEnumerator()
+        public IReadOnlyCollection<Vertex> GetVertices(int id)
         {
-            return Enumerable.Empty<Vertex>().GetEnumerator();
+            return Array.Empty<Vertex>();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        public void Clear(int id) { }
 
         private NullVisualizedVertices()
         {

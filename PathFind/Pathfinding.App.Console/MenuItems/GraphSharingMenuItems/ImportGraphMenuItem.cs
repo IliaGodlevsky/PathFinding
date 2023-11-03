@@ -48,7 +48,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                     var graph = importedHistory.Graphs.FirstOrDefault();
                     var costRange = graph.First().Cost.CostRange;
                     messenger.SendData(costRange, Tokens.AppLayout);
-                    messenger.SendData(graph, Tokens.AppLayout, Tokens.Main, Tokens.Common);
+                    messenger.SendData(graph, Tokens.Visual, 
+                        Tokens.AppLayout, Tokens.Main, Tokens.Common);
                     var range = importedHistory.GetFor(graph).PathfindingRange;
                     rangeBuilder.Undo();
                     rangeBuilder.Include(range, graph);

@@ -39,7 +39,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 
         protected override GraphsPathfindingHistory ImportGraph(int port)
         {
-            System.Console.Write(Languages.WaitingForConnection);
+            Terminal.Write(Languages.WaitingForConnection);
             return serializer.DeserializeFromNetwork(port);
         }
     }

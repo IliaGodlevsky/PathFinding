@@ -4,14 +4,13 @@ namespace Pathfinding.App.Console.Model.Visualizations.Containers
 {
     internal sealed class VisualizedVisited : VisualizedVertices
     {
-        protected override string SettingKey { get; } = nameof(Colours.VisitedColor);
-
-        public override void Visualize(Vertex vertex)
+        public override bool Add(int id, Vertex vertex)
         {
             if (!vertex.IsVisualizedAsRange() && !vertex.IsVisualizedAsPath())
             {
-                base.Visualize(vertex);
+                return base.Add(id, vertex);
             }
+            return false;
         }
     }
 }

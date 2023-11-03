@@ -23,7 +23,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 
         public override string ToString() => Languages.SaveGraph;
 
-
         protected override async Task ExportAsync(GraphsPathfindingHistory info, string path)
         {
             await graphSerializer.SerializeToFileAsync(info, path);

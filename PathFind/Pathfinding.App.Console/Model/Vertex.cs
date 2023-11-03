@@ -15,26 +15,10 @@ namespace Pathfinding.App.Console.Model
     {
         private readonly ITotalVisualization<Vertex> visualization;
 
-        private bool isObstacle;
         private IVertexCost cost = NullCost.Instance;
         private ConsoleColor color;
 
-        public bool IsObstacle
-        {
-            get => isObstacle;
-            set
-            {
-                isObstacle = value;
-                if (isObstacle)
-                {
-                    VisualizeAsObstacle();
-                }
-                else
-                {
-                    VisualizeAsRegular();
-                }
-            }
-        }
+        public bool IsObstacle { get; set; }
 
         public IVertexCost Cost
         {

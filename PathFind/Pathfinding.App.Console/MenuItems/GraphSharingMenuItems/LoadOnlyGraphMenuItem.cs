@@ -46,7 +46,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 {
                     var costRange = graph.First().Cost.CostRange;
                     messenger.SendData(costRange, Tokens.AppLayout);
-                    messenger.SendData(graph, Tokens.AppLayout, Tokens.Main, Tokens.Common);
+                    messenger.SendData(graph, Tokens.Visual, 
+                        Tokens.AppLayout, Tokens.Main, Tokens.Common);
                 }
             }
             catch (Exception ex)

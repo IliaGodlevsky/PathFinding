@@ -4,14 +4,18 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.Interface
 {
-    internal interface IVisualizedVertices : IEnumerable<Vertex>
+    internal interface IVisualizedVertices
     {
-        event Action<Vertex> VertexVisualized;
+        event Action<int, Vertex> VertexVisualized;
 
-        bool Contains(Vertex vertex);
+        bool Contains(int id, Vertex vertex);
 
-        void Visualize(Vertex vertex);
+        bool Add(int id, Vertex vertex);
 
-        void Remove(Vertex vertex);
+        void Remove(int id, Vertex vertex);
+
+        void Clear(int id);
+
+        IReadOnlyCollection<Vertex> GetVertices(int id);
     }
 }

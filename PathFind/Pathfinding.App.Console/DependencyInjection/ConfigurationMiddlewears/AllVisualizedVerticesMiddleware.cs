@@ -15,8 +15,8 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 
         public void Execute(ResolveRequestContext context, Action<ResolveRequestContext> next)
         {
-            var resolved = context.ResolveWithMetadata<VisualizedType, IVisualizedVertices>(VisualizedTypeKey);
-            var paramType = typeof(IReadOnlyDictionary<VisualizedType, IVisualizedVertices>);
+            var resolved = context.ResolveWithMetadata<string, IVisualizedVertices>(VisualizedTypeKey);
+            var paramType = typeof(IReadOnlyDictionary<string, IVisualizedVertices>);
             var parameter = new TypedParameter(paramType, resolved);
             context.ChangeParametres(parameter);
             next(context);

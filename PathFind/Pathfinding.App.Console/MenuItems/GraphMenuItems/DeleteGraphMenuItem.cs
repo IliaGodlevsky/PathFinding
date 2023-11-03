@@ -4,6 +4,7 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
+using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
@@ -17,14 +18,17 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     internal sealed class DeleteGraphMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         private readonly GraphsPathfindingHistory history;
+        private readonly IMessenger messenger;
         private readonly IInput<int> input;
 
         private IGraph<Vertex> graph = Graph<Vertex>.Empty;
 
         public DeleteGraphMenuItem(IInput<int> input,
-            GraphsPathfindingHistory history)
+            GraphsPathfindingHistory history,
+            IMessenger messenger)
         {
             this.history = history;
+            this.messenger = messenger;
             this.input = input;
         }
 
@@ -42,6 +46,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             {
                 history.Remove(graphs[index]);
                 graphs.RemoveAt(index);
+                messenger.Send(new GraphDeletedMessage(graph), Tokens.Common);
                 if (graphs.Count == 0)
                 {
                     break;

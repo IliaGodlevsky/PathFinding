@@ -13,6 +13,7 @@ namespace Pathfinding.App.Console
         public static readonly IToken AppLayout = new Token();
         public static readonly IToken Common = new Token();
         public static readonly IToken History = new Token();
+        public static readonly IToken Visual = new Token();
         public static readonly IToken Statistics = new Token();
         public static readonly IToken Visualization = new Token();
         public static readonly IToken Pathfinding = new Token();

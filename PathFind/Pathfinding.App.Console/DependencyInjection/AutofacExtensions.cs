@@ -59,11 +59,11 @@ namespace Pathfinding.App.Console.DependencyInjection
             });
         }
 
-        public static void RegisterVisualizionContainer<T>(this ContainerBuilder builder, VisualizedType type)
+        public static void RegisterVisualizionContainer<T>(this ContainerBuilder builder, string colorKey)
             where T : IVisualizedVertices
         {
             builder.RegisterType<T>().As<IVisualizedVertices>()
-                .WithMetadata(RegistrationConstants.VisualizedTypeKey, type).SingleInstance();
+                .WithMetadata(RegistrationConstants.VisualizedTypeKey, colorKey).SingleInstance();
         }
 
         public static void ChangeParametres(this ResolveRequestContext context,

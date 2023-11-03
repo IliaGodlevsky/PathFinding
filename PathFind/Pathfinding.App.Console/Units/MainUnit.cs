@@ -45,6 +45,7 @@ namespace Pathfinding.App.Console.Units
                 Terminal.Clear();
                 Terminal.ForegroundColor = ConsoleColor.White;
                 Terminal.WriteLine(Graph);
+                Graph.Visualize();
                 GraphField.Display();
             }
             catch (ArgumentOutOfRangeException ex)

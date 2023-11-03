@@ -1,4 +1,5 @@
-﻿using Pathfinding.App.Console.Settings;
+﻿using Pathfinding.App.Console.Localization;
+using Pathfinding.App.Console.Settings;
 using Shared.Primitives.ValueRange;
 using System;
 
@@ -7,6 +8,16 @@ namespace Pathfinding.App.Console
     internal static class Constants
     {
         private static readonly Parametres Settings = Parametres.Default;
+
+        public const string ObstacleColorKey = nameof(Languages.ObstacleColor);
+        public const string ReguularColorKey = nameof(Languages.RegularColor);
+        public const string SourceColorKey = nameof(Languages.SourceColor);
+        public const string TargetColorKey = nameof(Languages.TargetColor);
+        public const string TransitColorKey = nameof(Languages.TransitColor);
+        public const string PathColorKey = nameof(Languages.PathColor);
+        public const string CrossedPathColorKey = nameof(Languages.CrossedPathColor);
+        public const string VisitedColorKey = nameof(Languages.VisitedColor);
+        public const string EnqueuedColorKey = nameof(Languages.EnqueuedColor);
 
         public static InclusiveValueRange<int> GraphWidthValueRange { get; }
 

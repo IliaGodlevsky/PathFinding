@@ -1,63 +1,41 @@
 ﻿using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Settings;
+using Shared.Extensions;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace Pathfinding.App.Console.Model.Visualizations.Containers
 {
     internal abstract class VisualizedVertices : IVisualizedVertices
     {
-        public event Action<Vertex> VertexVisualized;
+        public event Action<int, Vertex> VertexVisualized;
 
-        private readonly HashSet<Vertex> vertices = new();
+        private readonly Dictionary<int, HashSet<Vertex>> vertices = new();
 
-        private ConsoleColor Color => (ConsoleColor)Colours.Default[SettingKey];
-
-        protected abstract string SettingKey { get; }
-
-        protected VisualizedVertices()
+        public virtual bool Contains(int id, Vertex vertex)
         {
-            Colours.Default.PropertyChanged += OnSettingsChaged;
+            return vertices.GetOrEmpty(id).Contains(vertex);
         }
 
-        public virtual bool Contains(Vertex vertex)
+        public virtual bool Add(int id, Vertex vertex)
         {
-            return vertices.Contains(vertex);
+            bool added = vertices.TryGetOrAddNew(id).Add(vertex);
+            VertexVisualized?.Invoke(id, vertex);
+            return added;
         }
 
-        public virtual void Visualize(Vertex vertex)
+        public void Remove(int id, Vertex vertex)
         {
-            vertex.Color = Color;
-            vertices.Add(vertex);
-            VertexVisualized?.Invoke(vertex);
+            vertices.GetOrEmpty(id).Remove(vertex);
         }
 
-        public void Remove(Vertex vertex)
+        public IReadOnlyCollection<Vertex> GetVertices(int id)
         {
-            vertices.Remove(vertex);
+            return vertices.GetOrEmpty(id);
         }
 
-        private void OnSettingsChaged(object sender, PropertyChangedEventArgs e)
+        public void Clear(int id)
         {
-            if (e.PropertyName.Equals(SettingKey))
-            {
-                foreach (var vertex in vertices)
-                {
-                    vertex.Color = Color;
-                }
-            }
-        }
-
-        public IEnumerator<Vertex> GetEnumerator()
-        {
-            return vertices.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
+            vertices.Remove(id);
         }
     }
 }

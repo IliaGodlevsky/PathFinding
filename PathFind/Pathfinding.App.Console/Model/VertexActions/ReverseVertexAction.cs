@@ -23,10 +23,12 @@ namespace Pathfinding.App.Console.Model.VertexActions
             if (vertex.IsObstacle)
             {
                 vertex.IsObstacle = false;
+                vertex.VisualizeAsRegular();
             }
             else if (!range.IsInRange(vertex))
             {
                 vertex.IsObstacle = true;
+                vertex.VisualizeAsObstacle();
             }
             messenger.Send(new GraphChangedMessage(), Tokens.Main);
         }

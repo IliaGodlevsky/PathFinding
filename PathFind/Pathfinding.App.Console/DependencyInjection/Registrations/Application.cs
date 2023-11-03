@@ -98,14 +98,14 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main)
                     .As<ICanRecieveMessage>().SingleInstance();
 
-                builder.RegisterType<AllVisualizedVertices>().As<ITotalVisualization<Vertex>>().SingleInstance()
+                builder.RegisterType<VisualizationContainer>().AsImplementedInterfaces().SingleInstance()
                     .ConfigurePipeline(p => p.Use(new AllVisualizedVerticesMiddleware()));
-                builder.RegisterVisualizionContainer<VisualizedTarget>(VisualizedType.Target);
-                builder.RegisterVisualizionContainer<VisualizedSource>(VisualizedType.Source);
-                builder.RegisterVisualizionContainer<VisualizedRegular>(VisualizedType.Regular);
-                builder.RegisterVisualizionContainer<VisualizedPath>(VisualizedType.Path);
-                builder.RegisterVisualizionContainer<VisualizedObstacle>(VisualizedType.Obstacle);
-                builder.RegisterVisualizionContainer<VisualizedCrossedPath>(VisualizedType.Crossed);
+                builder.RegisterVisualizionContainer<VisualizedTarget>(Constants.TargetColorKey);
+                builder.RegisterVisualizionContainer<VisualizedSource>(Constants.SourceColorKey);
+                builder.RegisterVisualizionContainer<VisualizedRegular>(Constants.ReguularColorKey);
+                builder.RegisterVisualizionContainer<VisualizedPath>(Constants.PathColorKey);
+                builder.RegisterVisualizionContainer<VisualizedObstacle>(Constants.ObstacleColorKey);
+                builder.RegisterVisualizionContainer<VisualizedCrossedPath>(Constants.CrossedPathColorKey);
 
                 builder.RegisterUnit<AlgorithmChooseUnit, ExitMenuItem>(new UnitParamtresFactory());
                 builder.RegisterType<AlgorithmsUnitMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
@@ -280,7 +280,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<ReplaceTransitIsolatedVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 1).SingleInstance();
                 builder.RegisterType<IncludeTransitVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 6).SingleInstance();
                 builder.RegisterType<TransitVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
-                builder.RegisterVisualizionContainer<VisualizedTransit>(VisualizedType.Transit);
+                builder.RegisterVisualizionContainer<VisualizedTransit>(Constants.TransitColorKey);
             }
         }
 
@@ -323,8 +323,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<EnterAnimationDelayMenuItem>().Keyed<IMenuItem>(Visual).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<VisitedVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
                 builder.RegisterType<EnqueuedVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
-                builder.RegisterVisualizionContainer<VisualizedVisited>(VisualizedType.Visited);
-                builder.RegisterVisualizionContainer<VisualizedEnqueued>(VisualizedType.Enqueued);
+                builder.RegisterVisualizionContainer<VisualizedVisited>(Constants.VisitedColorKey);
+                builder.RegisterVisualizionContainer<VisualizedEnqueued>(Constants.EnqueuedColorKey);
             }
         }
 
