@@ -61,7 +61,7 @@ namespace Pathfinding.App.Console
         private void ShowStatistics(string statistics)
         {
             Cursor.SetPosition(StatisticsPosition);
-            Terminal.Write(statistics.PadRight(Terminal.BufferWidth));
+            Terminal.Write(statistics.PadRight(Terminal.WindowWidth));
         }
 
         private static void RecalculateVerticesConsolePosition()

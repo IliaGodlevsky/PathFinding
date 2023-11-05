@@ -10,7 +10,7 @@ namespace Pathfinding.App.Console.Extensions
     {
         public static T Input<T>(this IInput<T> self, string msg)
         {
-            System.Console.Write(msg);
+            Terminal.Write(msg);
             return self.Input();
         }
 

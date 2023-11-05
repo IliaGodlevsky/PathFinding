@@ -78,8 +78,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             using (Cursor.UseCurrentPositionWithClean())
             {
-                int index = input.Input(message, count + 1, 1) - 1;
-                return index;
+                return input.Input(message, count + 1, 1) - 1;
             }
         }
 

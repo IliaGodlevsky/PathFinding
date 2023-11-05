@@ -46,7 +46,7 @@
     <Compile Include="Realizations\XorshiftRandom.cs" />
     <Compile Include="Realizations\CryptoRandom.cs" />
     <Compile Include="Realizations\KnuthRandom.cs" />
-    <Compile Include="Realizations\PseudoRandom.cs" />
+    <Compile Include="Realizations\CongruentialRandom.cs" />
     <Compile Include="Realizations\ThreadSafeRandom.cs" />
   </ItemGroup>
   <ItemGroup>

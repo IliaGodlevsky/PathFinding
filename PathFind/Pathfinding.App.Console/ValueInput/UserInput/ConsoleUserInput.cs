@@ -8,11 +8,11 @@ namespace Pathfinding.App.Console.ValueInput.UserInput
         public TOutput Input()
         {
             TInner result;
-            string userInput = System.Console.ReadLine();
+            string userInput = Terminal.ReadLine();
             while (!TryParse(userInput, out result))
             {
-                System.Console.Write(Languages.BadInputMsg);
-                userInput = System.Console.ReadLine();
+                Terminal.Write(Languages.BadInputMsg);
+                userInput = Terminal.ReadLine();
             }
             return Interpret(result);
         }

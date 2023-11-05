@@ -47,7 +47,7 @@ namespace Pathfinding.App.Console.Model.FramedAxes
             }
             x = start.X + LateralDistance * graphWidth;
             var coordinate = new Point(x, start.Y);
-            yield return new (Value: CoordinateDelimiter, Coordinate: coordinate);
+            yield return new (CoordinateDelimiter, coordinate);
         }
     }
 }

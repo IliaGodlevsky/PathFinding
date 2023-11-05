@@ -12,6 +12,6 @@ namespace Pathfinding.App.Console.ValueInput.UserInput
             this.intercept = intercept;
         }
 
-        public ConsoleKey Input() => System.Console.ReadKey(intercept).Key;
+        public ConsoleKey Input() => Terminal.ReadKey(intercept).Key;
     }
 }

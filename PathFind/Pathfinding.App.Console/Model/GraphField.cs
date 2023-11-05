@@ -3,7 +3,6 @@ using Pathfinding.App.Console.Model.FramedAxes;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.VisualizationLib.Core.Interface;
-using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,14 +30,17 @@ namespace Pathfinding.App.Console.Model
         private GraphField(IGraph<Vertex> graph, params FramedAxis[] axes)
         {
             Vertices = graph;
-            Displayables = axes.Concat<IDisplayable>(graph).ToArray();
+            Displayables = graph.Concat<IDisplayable>(axes).ToArray();
         }
 
         public void Display()
         {
             using (Cursor.HideCursor())
             {
-                Displayables.ForEach(d => d.Display());
+                foreach (var element in Displayables)
+                {
+                    element.Display();
+                }
             }
         }
     }
