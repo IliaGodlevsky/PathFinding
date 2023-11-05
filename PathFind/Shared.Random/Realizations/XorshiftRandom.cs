@@ -24,12 +24,10 @@ namespace Shared.Random.Realizations
 
         public uint NextUInt()
         {
-            uint x = seed;
-            x ^= x << 13;
-            x ^= x >> 17;
-            x ^= x << 5;
-            seed = x;
-            return x;
+            seed ^= seed << 13;
+            seed ^= seed >> 17;
+            seed ^= seed << 5;
+            return seed;
         }
     }
 }

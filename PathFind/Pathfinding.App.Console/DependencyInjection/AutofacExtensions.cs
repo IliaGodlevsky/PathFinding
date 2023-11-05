@@ -6,7 +6,9 @@ using Autofac.Features.Metadata;
 using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Visualizations;
+using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
@@ -64,6 +66,20 @@ namespace Pathfinding.App.Console.DependencyInjection
         {
             builder.RegisterType<T>().As<IVisualizedVertices>()
                 .WithMetadata(RegistrationConstants.VisualizedTypeKey, colorKey).SingleInstance();
+        }
+
+        public static IRegistrationBuilder<ITotalVisualization<Vertex>, TActivatorData, SingleRegistrationStyle> CommunicateContainers<TActivatorData>(
+             this IRegistrationBuilder<ITotalVisualization<Vertex>, TActivatorData, SingleRegistrationStyle> builder)
+        {
+            return builder.OnActivated(e =>
+            {
+                var containers = e.Context.Resolve<IVisualizedVertices[]>();
+                foreach (var container in containers)
+                {
+                    var except = containers.Except(container);
+                    container.Containers.AddRange(except);
+                }
+            });
         }
 
         public static void ChangeParametres(this ResolveRequestContext context,

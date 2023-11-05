@@ -10,7 +10,7 @@ namespace Pathfinding.App.Console
         private static readonly Parametres Settings = Parametres.Default;
 
         public const string ObstacleColorKey = nameof(Languages.ObstacleColor);
-        public const string ReguularColorKey = nameof(Languages.RegularColor);
+        public const string RegularColorKey = nameof(Languages.RegularColor);
         public const string SourceColorKey = nameof(Languages.SourceColor);
         public const string TargetColorKey = nameof(Languages.TargetColor);
         public const string TransitColorKey = nameof(Languages.TransitColor);
@@ -18,6 +18,16 @@ namespace Pathfinding.App.Console
         public const string CrossedPathColorKey = nameof(Languages.CrossedPathColor);
         public const string VisitedColorKey = nameof(Languages.VisitedColor);
         public const string EnqueuedColorKey = nameof(Languages.EnqueuedColor);
+
+        public static readonly string[] RangeColorKeys = new[]
+        {
+            SourceColorKey, TargetColorKey, TransitColorKey
+        };
+
+        public static readonly string[] PathColorKeys = new[]
+        {
+            PathColorKey, CrossedPathColorKey
+        };
 
         public static InclusiveValueRange<int> GraphWidthValueRange { get; }
 

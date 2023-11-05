@@ -61,7 +61,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography;
 using static Pathfinding.App.Console.DependencyInjection.PathfindingUnits;
 using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
 
@@ -98,11 +97,11 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main)
                     .As<ICanRecieveMessage>().SingleInstance();
 
-                builder.RegisterType<VisualizationContainer>().AsImplementedInterfaces().SingleInstance()
-                    .ConfigurePipeline(p => p.Use(new AllVisualizedVerticesMiddleware()));
+                builder.RegisterType<VisualizationContainer>().CommunicateContainers().SingleInstance()
+                    .AsImplementedInterfaces().ConfigurePipeline(p => p.Use(new AllVisualizedVerticesMiddleware()));
                 builder.RegisterVisualizionContainer<VisualizedTarget>(Constants.TargetColorKey);
                 builder.RegisterVisualizionContainer<VisualizedSource>(Constants.SourceColorKey);
-                builder.RegisterVisualizionContainer<VisualizedRegular>(Constants.ReguularColorKey);
+                builder.RegisterVisualizionContainer<VisualizedRegular>(Constants.RegularColorKey);
                 builder.RegisterVisualizionContainer<VisualizedPath>(Constants.PathColorKey);
                 builder.RegisterVisualizionContainer<VisualizedObstacle>(Constants.ObstacleColorKey);
                 builder.RegisterVisualizionContainer<VisualizedCrossedPath>(Constants.CrossedPathColorKey);
@@ -136,7 +135,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
                 builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
-                builder.RegisterInstance(new ThreadSafeRandom(new XorshiftRandom())).As<IRandom>().SingleInstance();
+                builder.RegisterType<XorshiftRandom>().As<IRandom>().SingleInstance();
 
                 builder.RegisterType<PathfindingRange<Vertex>>().As<IPathfindingRange<Vertex>>().SingleInstance();
                 builder.RegisterDecorator<VisualPathfindingRange<Vertex>, IPathfindingRange<Vertex>>();

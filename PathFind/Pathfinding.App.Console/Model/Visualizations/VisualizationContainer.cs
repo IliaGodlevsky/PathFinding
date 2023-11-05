@@ -14,7 +14,8 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.Model.Visualizations
 {
-    internal sealed class VisualizationContainer : ITotalVisualization<Vertex>, ICanRecieveMessage, IDisposable
+    internal sealed class VisualizationContainer 
+        : ITotalVisualization<Vertex>, ICanRecieveMessage, IDisposable
     {
         private readonly IReadOnlyDictionary<string, IVisualizedVertices> containers;
 
@@ -25,51 +26,37 @@ namespace Pathfinding.App.Console.Model.Visualizations
         public VisualizationContainer(IReadOnlyDictionary<string, IVisualizedVertices> containers)
         {
             this.containers = containers;
-            CommunicateContainers(containers.Values);
             Colors.PropertyChanged += OnPropertyChanged;
         }
 
-        public bool IsVisualizedAsPath(Vertex visualizable)
-        {
-            return GetOrDefault(Constants.CrossedPathColorKey).Contains(CurrentGraph, visualizable)
-                || GetOrDefault(Constants.PathColorKey).Contains(CurrentGraph, visualizable);
-        }
+        public bool IsVisualizedAsPath(Vertex vertex) => Contains(Constants.PathColorKeys, vertex);
 
-        public bool IsVisualizedAsRange(Vertex visualizable)
-        {
-            return GetOrDefault(Constants.SourceColorKey).Contains(CurrentGraph, visualizable)
-                || GetOrDefault(Constants.TargetColorKey).Contains(CurrentGraph, visualizable)
-                || GetOrDefault(Constants.TransitColorKey).Contains(CurrentGraph, visualizable);
-        }
+        public bool IsVisualizedAsRange(Vertex vertex) => Contains(Constants.RangeColorKeys, vertex);
 
-        public void VisualizeAsPath(Vertex visualizable)
-        {
-            if (!IsVisualizedAsRange(visualizable))
-            {
-                if (!IsVisualizedAsPath(visualizable))
-                {
-                    Visualize(visualizable, Constants.PathColorKey);
-                }
-                else
-                {
-                    Visualize(visualizable, Constants.CrossedPathColorKey);
-                }
-            }
-        }
+        public void VisualizeAsSource(Vertex vertex) => Visualize(vertex, Constants.SourceColorKey);
 
-        public void VisualizeAsSource(Vertex visualizable) => Visualize(visualizable, Constants.SourceColorKey);
+        public void VisualizeAsTarget(Vertex vertex) => Visualize(vertex, Constants.TargetColorKey);
 
-        public void VisualizeAsTarget(Vertex visualizable) => Visualize(visualizable, Constants.TargetColorKey);
-
-        public void VisualizeAsTransit(Vertex visualizable) => Visualize(visualizable, Constants.TransitColorKey);
+        public void VisualizeAsTransit(Vertex vertex) => Visualize(vertex, Constants.TransitColorKey);
 
         public void VisualizeAsObstacle(Vertex vertex) => Visualize(vertex, Constants.ObstacleColorKey);
 
-        public void VisualizeAsRegular(Vertex vertex) => Visualize(vertex, Constants.ReguularColorKey);
+        public void VisualizeAsRegular(Vertex vertex) => Visualize(vertex, Constants.RegularColorKey);
 
         public void VisualizeAsVisited(Vertex vertex) => Visualize(vertex, Constants.VisitedColorKey);
 
         public void VisualizeAsEnqueued(Vertex vertex) => Visualize(vertex, Constants.EnqueuedColorKey);
+
+        public void VisualizeAsPath(Vertex vertex)
+        {
+            if (!IsVisualizedAsRange(vertex))
+            {
+                string key = IsVisualizedAsPath(vertex)
+                    ? Constants.CrossedPathColorKey
+                    : Constants.PathColorKey;
+                Visualize(vertex, key);
+            }
+        }
 
         public void RegisterHanlders(IMessenger messenger)
         {
@@ -96,8 +83,7 @@ namespace Pathfinding.App.Console.Model.Visualizations
         {
             if (GetOrDefault(colorKey).Add(CurrentGraph, vertex))
             {
-                var color = (ConsoleColor)Colors[colorKey];
-                vertex.Color = color;
+                vertex.Color = (ConsoleColor)Colors[colorKey];
             }
         }
 
@@ -116,16 +102,10 @@ namespace Pathfinding.App.Console.Model.Visualizations
             }
         }
 
-        private static void CommunicateContainers(IEnumerable<IVisualizedVertices> containers)
+        private bool Contains(string[] keys, Vertex vertex)
         {
-            foreach (var outerVisual in containers)
-            {
-                var except = containers.Except(outerVisual);
-                foreach (var innerVisual in except)
-                {
-                    outerVisual.VertexVisualized += innerVisual.Remove;
-                }
-            }
+            return keys.Select(GetOrDefault)
+                .Any(vert => vert.Contains(CurrentGraph, vertex));
         }
     }
 }

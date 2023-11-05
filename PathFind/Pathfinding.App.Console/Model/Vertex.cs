@@ -65,7 +65,7 @@ namespace Pathfinding.App.Console.Model
 
         public override bool Equals(object obj) => obj is IVertex vertex && Equals(vertex);
 
-        public override int GetHashCode() => HashCode.Combine(Cost, Position);
+        public override int GetHashCode() => HashCode.Combine(Cost, Position, IsObstacle);
 
         public bool IsVisualizedAsPath() => visualization.IsVisualizedAsPath(this);
 

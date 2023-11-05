@@ -5,22 +5,33 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.Model.Visualizations.Containers
 {
-    internal abstract class VisualizedVertices : IVisualizedVertices
+    internal abstract class VisualizedVertices : IVisualizedVertices, IDisposable
     {
-        public event Action<int, Vertex> VertexVisualized;
-
         private readonly Dictionary<int, HashSet<Vertex>> vertices = new();
+
+        public ICollection<IVisualizedVertices> Containers { get; }
 
         public virtual bool Contains(int id, Vertex vertex)
         {
             return vertices.GetOrEmpty(id).Contains(vertex);
         }
 
+        protected VisualizedVertices()
+        {
+            Containers = new HashSet<IVisualizedVertices>();
+        }
+
         public virtual bool Add(int id, Vertex vertex)
         {
-            bool added = vertices.TryGetOrAddNew(id).Add(vertex);
-            VertexVisualized?.Invoke(id, vertex);
-            return added;
+            if (vertices.TryGetOrAddNew(id).Add(vertex))
+            {
+                foreach (var container in Containers)
+                {
+                    container.Remove(id, vertex);
+                }
+                return true;
+            }
+            return false;
         }
 
         public void Remove(int id, Vertex vertex)
@@ -36,6 +47,11 @@ namespace Pathfinding.App.Console.Model.Visualizations.Containers
         public void Clear(int id)
         {
             vertices.Remove(id);
+        }
+
+        public void Dispose()
+        {
+            Containers.Clear();
         }
     }
 }

@@ -9,9 +9,8 @@ namespace Pathfinding.App.Console.Model.Visualizations.Containers
 {
     internal sealed class NullVisualizedVertices : Singleton<NullVisualizedVertices, IVisualizedVertices>, IVisualizedVertices
     {
-#pragma warning disable CS0067
-        public event Action<int, Vertex> VertexVisualized;
-#pragma warning restore CS0067
+        public ICollection<IVisualizedVertices> Containers { get; }
+            = new List<IVisualizedVertices>();
 
         public bool Contains(int id, Vertex vertex)
         {

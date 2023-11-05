@@ -6,7 +6,7 @@ namespace Pathfinding.App.Console.Interface
 {
     internal interface IVisualizedVertices
     {
-        event Action<int, Vertex> VertexVisualized;
+        ICollection<IVisualizedVertices> Containers { get; }
 
         bool Contains(int id, Vertex vertex);
 
