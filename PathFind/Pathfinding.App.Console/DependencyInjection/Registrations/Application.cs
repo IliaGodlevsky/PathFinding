@@ -151,7 +151,6 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<GraphAssemble<Vertex>>().As<IGraphAssemble<Vertex>>().SingleInstance();
                 builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
                 builder.RegisterType<VertexFactory>().As<IVertexFactory<Vertex>>().SingleInstance();
-                builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory<Vertex, GraphField>>().SingleInstance();
                 builder.RegisterType<CoordinateFactory>().As<ICoordinateFactory>().SingleInstance();
                 builder.RegisterType<GraphFactory<Vertex>>().As<IGraphFactory<Vertex>>().SingleInstance();
                 builder.RegisterDecorator<GraphWrapFactory, IGraphFactory<Vertex>>();

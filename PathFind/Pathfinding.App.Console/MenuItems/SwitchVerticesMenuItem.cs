@@ -24,6 +24,8 @@ namespace Pathfinding.App.Console.MenuItems
         protected InclusiveValueRange<int> xRange = default;
         protected InclusiveValueRange<int> yRange = default;
 
+        private Keys Keys { get; } = Keys.Default;
+
         protected SwitchVerticesMenuItem(VertexActions actions,
             IInput<ConsoleKey> keyInput)
         {
@@ -44,19 +46,19 @@ namespace Pathfinding.App.Console.MenuItems
             {
                 var coordinate = new Coordinate(x, y);
                 var vertex = graph.Get(coordinate);
-                Cursor.SetPosition(vertex.ConsolePosition.Value);
+                Cursor.SetPosition(vertex.ConsolePosition);
                 key = keyInput.Input();
-                if (key == Keys.Default.VertexUp)
+                if (key == Keys.VertexUp)
                     y = ReturnInRange(y - 1, yRange);
-                else if (key == Keys.Default.VertexDown)
+                else if (key == Keys.VertexDown)
                     y = ReturnInRange(y + 1, yRange);
-                else if (key == Keys.Default.VertexLeft)
+                else if (key == Keys.VertexLeft)
                     x = ReturnInRange(x - 1, xRange);
-                else if (key == Keys.Default.VertexRight)
+                else if (key == Keys.VertexRight)
                     x = ReturnInRange(x + 1, xRange);
                 else
                     GetOrDefault(key)?.Invoke(vertex);
-            } while (key != Keys.Default.ExitVertexSwitching);
+            } while (key != Keys.ExitVertexSwitching);
         }
 
         private static int ReturnInRange(int coordinate, InclusiveValueRange<int> range)

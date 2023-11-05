@@ -42,9 +42,9 @@ namespace Pathfinding.App.Console.Extensions
         private static void SendMessage<TMessage>(this IMessenger messenger,
             TMessage msg, params IToken[] tokens)
         {
-            for (int i = 0; i < tokens.Length; i++)
+            foreach (var token in tokens)
             {
-                messenger.Send(msg, tokens[i]);
+                messenger.Send(msg, token);
             }
         }
     }

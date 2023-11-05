@@ -11,20 +11,5 @@ namespace Pathfinding.App.Console.Extensions
         {
             return graph.Select(vertex => vertex.Cost.CurrentCost).ToArray();
         }
-
-        public static void Visualize(this IGraph<Vertex> graph)
-        {
-            foreach (var vertex in graph)
-            {
-                if (vertex.IsObstacle)
-                {
-                    vertex.VisualizeAsObstacle();
-                }
-                else
-                {
-                    vertex.VisualizeAsRegular();
-                }
-            }
-        }
     }
 }

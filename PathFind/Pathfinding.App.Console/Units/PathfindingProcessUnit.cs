@@ -13,8 +13,6 @@ using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Extensions;
-using Shared.Extensions;
-using Shared.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,22 +42,22 @@ namespace Pathfinding.App.Console.Units
 
         private void FindPath((IAlgorithmFactory<PathfindingProcess> Factory, Statistics Statistics) info)
         {
-            using (var algorithm = info.Factory.Create(rangeBuilder.Range))
+            using (Cursor.HideCursor())
             {
-                using (Disposable.Use(ClearColors))
+                var algorithm = info.Factory.Create(rangeBuilder.Range);
+                try
                 {
-                    using (Cursor.HideCursor())
-                    {
-                        try
-                        {
-                            PrepareForPathfinding((algorithm, info.Statistics));
-                            FindPath(algorithm);
-                        }
-                        catch (PathfindingException ex)
-                        {
-                            log.Warn(ex.Message);
-                        }
-                    }
+                    PrepareForPathfinding((algorithm, info.Statistics));
+                    FindPath(algorithm);
+                }
+                catch (PathfindingException ex)
+                {
+                    log.Warn(ex.Message);
+                }
+                finally
+                {
+                    ClearColors();
+                    algorithm.Dispose();
                 }
             }
         }
@@ -74,16 +72,17 @@ namespace Pathfinding.App.Console.Units
         private void FindPath(PathfindingProcess algorithm)
         {
             var path = NullGraphPath.Interface;
-            void Summarize()
-            {
-                messenger.SendData((algorithm, path), Tokens.Statistics, Tokens.History);
-            }
-            using (Disposable.Use(Summarize))
+            try
             {
                 path = algorithm.FindPath();
-                path.Select(graph.Get).ForEach(v => v.VisualizeAsPath());
+                path.Select(graph.Get).VisualizeAsPath();
             }
-            input.Input();
+            finally
+            {
+                messenger.SendData((algorithm, path), 
+                    Tokens.Statistics, Tokens.History);
+                input.Input();
+            }
         }
 
         private void SetGraph(IGraph<Vertex> graph)
@@ -94,7 +93,8 @@ namespace Pathfinding.App.Console.Units
         private void PrepareForPathfinding((PathfindingProcess Algorithm, Statistics Statistics) info)
         {
             messenger.SendData(info.Statistics.Name, Tokens.AppLayout);
-            messenger.SendData(info.Algorithm, Tokens.Visualization, Tokens.Statistics, Tokens.History);
+            messenger.SendData(info.Algorithm, Tokens.Visualization, 
+                Tokens.Statistics, Tokens.History);
             messenger.SendAlgorithmData(info.Algorithm, info.Statistics, Tokens.History);
             messenger.SendData(info.Statistics, Tokens.Statistics);
         }

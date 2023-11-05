@@ -6,7 +6,7 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.Logging.Interface;
-using Pathfinding.VisualizationLib.Core.Interface;
+using Pathfinding.Visualization.Extensions;
 using Shared.Executable;
 using System;
 using System.Collections.Generic;
@@ -14,26 +14,21 @@ using System.Drawing;
 
 namespace Pathfinding.App.Console.Units
 {
-    using FieldFactory = IGraphFieldFactory<Vertex, GraphField>;
-
     internal sealed class MainUnit : Unit, ICanRecieveMessage
     {
-        private readonly FieldFactory fieldFactory;
         private readonly IUndo undo;
         private readonly ILog log;
 
-        private GraphField GraphField { get; set; } = GraphField.Empty;
+        private GraphField Field { get; set; } = GraphField.Empty;
 
         private IGraph<Vertex> Graph { get; set; } = Graph<Vertex>.Empty;
 
         public MainUnit(IReadOnlyCollection<IMenuItem> menuItems,
-            FieldFactory fieldFactory,
             IUndo undo,
             ILog log) : base(menuItems)
         {
             this.undo = undo;
             this.log = log;
-            this.fieldFactory = fieldFactory;
         }
 
         private bool IsGraphCreated() => Graph != Graph<Vertex>.Empty;
@@ -42,11 +37,14 @@ namespace Pathfinding.App.Console.Units
         {
             try
             {
-                Terminal.Clear();
-                Terminal.ForegroundColor = ConsoleColor.White;
-                Terminal.WriteLine(Graph);
-                Graph.Visualize();
-                GraphField.Display();
+                using (Cursor.HideCursor())
+                {
+                    Terminal.Clear();
+                    Terminal.ForegroundColor = ConsoleColor.White;
+                    Terminal.WriteLine(Graph);
+                    Graph.RestoreVerticesVisualState();
+                    Field.Display();
+                }
             }
             catch (ArgumentOutOfRangeException ex)
             {
@@ -62,7 +60,7 @@ namespace Pathfinding.App.Console.Units
         {
             undo.Undo();
             Graph = graph;
-            GraphField = fieldFactory.CreateGraphField(Graph);
+            Field = new(graph);
             DisplayGraph();
         }
 
@@ -73,7 +71,7 @@ namespace Pathfinding.App.Console.Units
                 var position = new Point(0, 0);
                 Cursor.SetPosition(position);
                 Terminal.Write(new string(' ',
-                    Terminal.BufferWidth));
+                    Terminal.WindowWidth));
                 Cursor.SetPosition(position);
                 Terminal.WriteLine(Graph);
             }

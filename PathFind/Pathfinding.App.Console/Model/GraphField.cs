@@ -2,19 +2,16 @@
 using Pathfinding.App.Console.Model.FramedAxes;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
-using Pathfinding.VisualizationLib.Core.Interface;
-using System.Collections.Generic;
+using Shared.Extensions;
 using System.Linq;
 
 namespace Pathfinding.App.Console.Model
 {
-    internal sealed class GraphField : IGraphField<Vertex>, IDisplayable
+    internal sealed class GraphField : IDisplayable
     {
         public static readonly GraphField Empty = new(Graph<Vertex>.Empty);
 
-        IReadOnlyCollection<Vertex> IGraphField<Vertex>.Vertices => Vertices;
-
-        public IGraph<Vertex> Vertices { get; }
+        private IGraph<Vertex> Vertices { get; }
 
         private IDisplayable[] Displayables { get; }
 
@@ -35,13 +32,7 @@ namespace Pathfinding.App.Console.Model
 
         public void Display()
         {
-            using (Cursor.HideCursor())
-            {
-                foreach (var element in Displayables)
-                {
-                    element.Display();
-                }
-            }
+            Displayables.ForEach(element => element.Display());
         }
     }
 }

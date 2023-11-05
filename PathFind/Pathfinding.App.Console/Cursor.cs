@@ -98,9 +98,12 @@ namespace Pathfinding.App.Console
             }
         }
 
-        public static void SetPosition(Point point)
+        public static void SetPosition(Point? point)
         {
-            Terminal.SetCursorPosition(point.X, point.Y);
+            if (point.HasValue)
+            {
+                Terminal.SetCursorPosition(point.Value.X, point.Value.Y);
+            }
         }
 
         private void RestorePosition()

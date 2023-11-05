@@ -261,7 +261,6 @@
     <Compile Include="Model\FramedAxes\FramedToRightOrdinate.cs" />
     <Compile Include="Model\FramedAxes\FramedUnderAbscissa.cs" />
     <Compile Include="Model\GraphField.cs" />
-    <Compile Include="Model\GraphFieldFactory.cs" />
     <Compile Include="Model\PathfindingActions\NullAnimationAction.cs" />
     <Compile Include="Model\PathfindingActions\SpeedUpAnimation.cs" />
     <Compile Include="Model\PathfindingActions\SlowDownAnimation.cs" />
