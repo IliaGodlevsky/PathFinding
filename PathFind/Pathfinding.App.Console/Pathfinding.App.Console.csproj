@@ -61,13 +61,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\AlgorithmInMemoryStorage.cs" />
+    <Compile Include="DataAccess\CostsInMemoryStorage.cs" />
+    <Compile Include="DataAccess\Entities\AlgorithmEntity.cs" />
+    <Compile Include="DataAccess\Entities\CostsEntity.cs" />
+    <Compile Include="DataAccess\Entities\GraphEntity.cs" />
+    <Compile Include="DataAccess\Entities\GraphRangeEntity.cs" />
+    <Compile Include="DataAccess\GraphInMemoryStorage.cs" />
+    <Compile Include="DataAccess\GraphRangeInMemoryStorage.cs" />
+    <Compile Include="DataAccess\IHistory.cs" />
+    <Compile Include="DataAccess\InMemoryStorage.cs" />
+    <Compile Include="DataAccess\Entities\IEntity.cs" />
+    <Compile Include="DataAccess\Entities\ObstacleVerticesEntity.cs" />
+    <Compile Include="DataAccess\Entities\PathEntity.cs" />
+    <Compile Include="DataAccess\Entities\StatisticEntity.cs" />
+    <Compile Include="DataAccess\Entities\UsedRangeEntity.cs" />
+    <Compile Include="DataAccess\Entities\VisitedVerticesEntity.cs" />
     <Compile Include="DataAccess\GraphsPathfindingHistory.cs" />
+    <Compile Include="DataAccess\IStorage.cs" />
+    <Compile Include="DataAccess\ObstaclesInMemoryStorage.cs" />
+    <Compile Include="DataAccess\PathfindingModel.cs" />
+    <Compile Include="DataAccess\PathInMemoryStorage.cs" />
+    <Compile Include="DataAccess\StatisticsInMemoryStorage.cs" />
+    <Compile Include="DataAccess\UsedRangeInMemoryStorage.cs" />
+    <Compile Include="DataAccess\VisitedVerticesInMemoryStorage.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\KeyResolveMiddlware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\CombinedAlgorithmsResolveMiddleware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\AllVisualizedVerticesMiddleware.cs" />
     <Compile Include="DependencyInjection\Registrations\Application.cs" />
     <Compile Include="Extensions\BinaryReaderExtensions.cs" />
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
+    <Compile Include="InMemoryHistory.cs" />
     <Compile Include="Interface\INeighbourhoodCommand.cs" />
     <Compile Include="Interface\IToken.cs" />
     <Compile Include="Interface\IVisualizedVertices.cs" />
