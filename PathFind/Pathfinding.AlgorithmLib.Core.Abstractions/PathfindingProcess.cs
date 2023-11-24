@@ -3,7 +3,6 @@ using Pathfinding.AlgorithmLib.Core.Exceptions;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.GraphLib.Core.Interface;
-using Shared.Primitives.Single;
 using Shared.Process.EventHandlers;
 using Shared.Process.Interface;
 using System;

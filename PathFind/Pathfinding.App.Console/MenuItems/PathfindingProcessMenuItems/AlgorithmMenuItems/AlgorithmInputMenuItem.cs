@@ -37,13 +37,13 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
 
         protected abstract IAlgorithmFactory<PathfindingProcess> CreateAlgorithm(IStepRule stepRule, IHeuristic heuristics);
 
-        protected override (IAlgorithmFactory<PathfindingProcess> Algorithm, Statistics Statistics) GetAlgorithm()
+        protected override AlgorithmInfo GetAlgorithm()
         {
             var stepRule = InputItem(stepRules, Languages.ChooseStepRuleMsg);
             var heuristic = InputItem(heuristics, Languages.ChooseHeuristicMsg);
             var statistics = GetStatistics(heuristic.Key, stepRule.Key);
             var factory = CreateAlgorithm(stepRule.Value, heuristic.Value);
-            return (factory, statistics);
+            return new(factory, statistics);
         }
 
         private static string GetString<T>(T key)

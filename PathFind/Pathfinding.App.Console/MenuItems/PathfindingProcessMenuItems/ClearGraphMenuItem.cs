@@ -3,6 +3,7 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
+using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
@@ -30,12 +31,13 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
         {
             graph.RestoreVerticesVisualState();
             undo.Undo();
-            messenger.SendData(string.Empty, Tokens.AppLayout);
+            var msg = new StatisticsLineMessage(string.Empty);
+            messenger.Send(msg, Tokens.AppLayout);
         }
 
-        private void SetGraph(IGraph<Vertex> graph)
+        private void SetGraph(GraphMessage msg)
         {
-            this.graph = graph;
+            graph = msg.Graph;
         }
 
         public override string ToString()

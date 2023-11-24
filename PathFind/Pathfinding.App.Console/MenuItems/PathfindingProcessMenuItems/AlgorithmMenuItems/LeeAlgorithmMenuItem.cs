@@ -22,10 +22,10 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
             return Languages.LeeAlgorithm;
         }
 
-        protected override (IAlgorithmFactory<PathfindingProcess> Algorithm, Statistics Statistics) GetAlgorithm()
+        protected override AlgorithmInfo GetAlgorithm()
         {
             var statistics = new Statistics(nameof(Languages.LeeAlgorithm));
-            return (new LeeAlgorithmFactory(), statistics);
+            return new (new LeeAlgorithmFactory(), statistics);
         }
     }
 }

@@ -3,6 +3,7 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
+using Pathfinding.App.Console.Messages;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
@@ -18,8 +19,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             using (Cursor.UseCurrentPositionWithClean())
             {
-                int obstaclePercent = input.Input(Languages.ObstaclePercentInputMsg, Constants.ObstaclesPercentValueRange);
-                messenger.SendData(obstaclePercent, Tokens.Graph);
+                int obstaclePercent = input.Input(Languages.ObstaclePercentInputMsg, 
+                    Constants.ObstaclesPercentValueRange);
+                var msg = new ObstaclePercentMessage(obstaclePercent);
+                messenger.Send(msg, Tokens.Graph);
             }
         }
 

@@ -2,7 +2,6 @@
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Exceptions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
-using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
@@ -40,14 +39,14 @@ namespace Pathfinding.App.Console.Units
             this.input = input;
         }
 
-        private void FindPath((IAlgorithmFactory<PathfindingProcess> Factory, Statistics Statistics) info)
+        private void FindPath(AlgorithmStartInfoMessage msg)
         {
             using (Cursor.HideCursor())
             {
-                var algorithm = info.Factory.Create(rangeBuilder.Range);
+                var algorithm = msg.Factory.Create(rangeBuilder.Range);
                 try
                 {
-                    PrepareForPathfinding((algorithm, info.Statistics));
+                    PrepareForPathfinding(algorithm, msg.InitStatistics);
                     FindPath(algorithm);
                 }
                 catch (PathfindingException ex)
@@ -66,7 +65,8 @@ namespace Pathfinding.App.Console.Units
         {
             graph.RestoreVerticesVisualState();
             rangeBuilder.Range.RestoreVerticesVisualState();
-            messenger.SendData(string.Empty, Tokens.AppLayout);
+            var msg = new StatisticsLineMessage(string.Empty);
+            messenger.Send(msg, Tokens.AppLayout);
         }
 
         private void FindPath(PathfindingProcess algorithm)
@@ -79,29 +79,34 @@ namespace Pathfinding.App.Console.Units
             }
             finally
             {
-                messenger.SendData((algorithm, path), 
-                    Tokens.Statistics, Tokens.History);
+                var msg = new PathFoundMessage(path);
+                messenger.SendMany(msg, Tokens.Statistics, Tokens.History);
                 input.Input();
             }
         }
 
-        private void SetGraph(IGraph<Vertex> graph)
+        private void SetGraph(GraphMessage msg)
         {
-            this.graph = graph;
+            graph = msg.Graph;
         }
 
-        private void PrepareForPathfinding((PathfindingProcess Algorithm, Statistics Statistics) info)
+        private void PrepareForPathfinding(PathfindingProcess algorithm, 
+            Statistics statistics)
         {
-            messenger.SendData(info.Statistics.Name, Tokens.AppLayout);
-            messenger.SendData(info.Algorithm, Tokens.Visualization, 
+            var lineMsg = new StatisticsLineMessage(statistics.Name);
+            messenger.Send(lineMsg, Tokens.AppLayout);
+            var algorithmMsg = new AlgorithmMessage(algorithm);
+            messenger.SendMany(algorithmMsg, Tokens.Visualization, 
                 Tokens.Statistics, Tokens.History);
-            messenger.SendAlgorithmData(info.Algorithm, info.Statistics, Tokens.History);
-            messenger.SendData(info.Statistics, Tokens.Statistics);
+            var algoStatMsg = new StatisticsMessage(statistics);
+            messenger.Send(algoStatMsg, Tokens.History);
+            var statMsg = new StatisticsMessage(statistics);
+            messenger.Send(statMsg, Tokens.Statistics);
         }
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterData<(IAlgorithmFactory<PathfindingProcess>, Statistics)>(this, Tokens.Pathfinding, FindPath);
+            messenger.Register<AlgorithmStartInfoMessage>(this, Tokens.Pathfinding, FindPath);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
             messenger.Register<ClearColorsMessage>(this, _ => ClearColors());
         }

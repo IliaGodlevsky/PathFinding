@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
@@ -31,9 +32,9 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }
 
-        private void SetGraph(IGraph<Vertex> graph)
+        private void SetGraph(GraphMessage msg)
         {
-            this.graph = graph;
+            graph = msg.Graph;
         }
     }
 }

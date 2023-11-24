@@ -8,28 +8,54 @@ namespace Pathfinding.App.Console.DataAccess
 {
     internal class GraphsPathfindingHistory : IEnumerable<(IGraph<Vertex> Graph, GraphPathfindingHistory History)>
     {
-        private readonly Dictionary<IGraph<Vertex>, GraphPathfindingHistory> history = new();
+        private readonly Dictionary<int, IGraph<Vertex>> graphs = new();
+        private readonly Dictionary<int, GraphPathfindingHistory> history = new();
 
-        public GraphPathfindingHistory GetFor(IGraph<Vertex> key) => history[key];
+        public IReadOnlyCollection<int> Keys => graphs.Keys;
 
-        public IReadOnlyCollection<IGraph<Vertex>> Graphs => history.Keys;
+        public GraphPathfindingHistory GetFor(IGraph<Vertex> key)
+        {
+            int id = key.GetHashCode();
+            return history[id];
+        }
+
+        public GraphPathfindingHistory GetFor(int hashCode)
+        {
+            return history[hashCode];
+        }
+
+        public IReadOnlyCollection<IGraph<Vertex>> Graphs => graphs.Values;
 
         public int Count => history.Count;
 
-        public void Add(IGraph<Vertex> key, GraphPathfindingHistory value) => history.Add(key, value);
+        public void Add(IGraph<Vertex> key, GraphPathfindingHistory value)
+        {
+            int id = key.GetHashCode();
+            history.Add(id, value);
+            graphs.Add(id, key);
+        }
 
-        public void Add((IGraph<Vertex> Graph, GraphPathfindingHistory History) note) => Add(note.Graph, note.History);
+        public void Add((IGraph<Vertex> Graph, GraphPathfindingHistory History) note) 
+            => Add(note.Graph, note.History);
 
-        public void Add(IGraph<Vertex> key) => history.Add(key, new());
+        public void Add(IGraph<Vertex> key) => Add(key, new());
 
         public void Clear() => history.Clear();
 
-        public bool Remove(IGraph<Vertex> key) => history.Remove(key);
+        public bool Remove(IGraph<Vertex> key)
+        {
+            return Remove(key.GetHashCode());
+        }
+
+        public bool Remove(int hashCode)
+        {
+            graphs.Remove(hashCode);
+            return history.Remove(hashCode);
+        }
 
         public IEnumerator<(IGraph<Vertex> Graph, GraphPathfindingHistory History)> GetEnumerator()
         {
-            return history
-                .Select(pair => (Graph: pair.Key, History: pair.Value))
+            return graphs.Zip(history, (g, h) => (graphs[g.Key], history[g.Key]))
                 .GetEnumerator();
         }
 

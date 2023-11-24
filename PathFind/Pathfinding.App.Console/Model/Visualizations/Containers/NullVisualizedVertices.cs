@@ -10,7 +10,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.Containers
     internal sealed class NullVisualizedVertices : Singleton<NullVisualizedVertices, IVisualizedVertices>, IVisualizedVertices
     {
         public ICollection<IVisualizedVertices> Containers { get; }
-            = new List<IVisualizedVertices>();
+            = Array.Empty<IVisualizedVertices>();
 
         public bool Contains(int id, Vertex vertex)
         {

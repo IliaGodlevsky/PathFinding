@@ -51,6 +51,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
@@ -61,13 +62,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\Entities\AlgorithmEntity.cs" />
+    <Compile Include="DataAccess\Entities\GraphEntity.cs" />
+    <Compile Include="DataAccess\Entities\IEntity.cs" />
+    <Compile Include="DataAccess\Entities\NeighboursEntity.cs" />
+    <Compile Include="DataAccess\Entities\VertexCostEntity.cs" />
+    <Compile Include="DataAccess\Entities\VertexEntity.cs" />
     <Compile Include="DataAccess\GraphsPathfindingHistory.cs" />
+    <Compile Include="DataAccess\ReadDto\AlgorithmReadDto.cs" />
+    <Compile Include="DataAccess\ReadDto\GraphReadDto.cs" />
+    <Compile Include="DataAccess\ReadDto\VertexReadDto.cs" />
+    <Compile Include="DataAccess\Repo\IDbContext.cs" />
+    <Compile Include="DataAccess\Repo\IRepo.cs" />
+    <Compile Include="DataAccess\Repo\LiteDbContext.cs" />
+    <Compile Include="DataAccess\Repo\LiteDbRepo.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\KeyResolveMiddlware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\CombinedAlgorithmsResolveMiddleware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\AllVisualizedVerticesMiddleware.cs" />
     <Compile Include="DependencyInjection\Registrations\Application.cs" />
     <Compile Include="Extensions\BinaryReaderExtensions.cs" />
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
+    <Compile Include="Extensions\IContextExtensions.cs" />
     <Compile Include="Interface\INeighbourhoodCommand.cs" />
     <Compile Include="Interface\IToken.cs" />
     <Compile Include="Interface\IVisualizedVertices.cs" />
@@ -106,7 +121,28 @@
     <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\IDAStartAlgorithmMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\LeeAlgorithmMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\RandomAlgorithmMenuItem.cs" />
+    <Compile Include="Messages\AlgorithmDelayMessage.cs" />
+    <Compile Include="Messages\AlgorithmKeyMessage.cs" />
+    <Compile Include="Messages\AlgorithmMessage.cs" />
+    <Compile Include="Messages\AlgorithmStartInfoMessage.cs" />
+    <Compile Include="Messages\AlgorithmStatisticsMessage.cs" />
+    <Compile Include="Messages\CostRangeChangedMessage.cs" />
+    <Compile Include="Messages\CostRangeMessage.cs" />
+    <Compile Include="Messages\GetAlgorithmsMessage.cs" />
+    <Compile Include="Messages\GetAllGraphsMessage.cs" />
+    <Compile Include="Messages\GetGraphMessage.cs" />
     <Compile Include="Messages\GraphDeletedMessage.cs" />
+    <Compile Include="Messages\GraphMessage.cs" />
+    <Compile Include="Messages\GraphParamsMessage.cs" />
+    <Compile Include="Messages\IsAppliedMessage.cs" />
+    <Compile Include="Messages\NeighbourAdded.cs" />
+    <Compile Include="Messages\NeighbourDeletedMessage.cs" />
+    <Compile Include="Messages\NeighbourhoodMessage.cs" />
+    <Compile Include="Messages\ObstaclePercentMessage.cs" />
+    <Compile Include="Messages\PathFoundMessage.cs" />
+    <Compile Include="Messages\StatisticsLineMessage.cs" />
+    <Compile Include="Messages\StatisticsMessage.cs" />
+    <Compile Include="Messages\VertexChangedMessage.cs" />
     <Compile Include="Model\ApplicationSettingsStore.cs" />
     <Compile Include="Model\GraphWrapFactory.cs" />
     <Compile Include="Model\GraphWrap.cs" />
@@ -207,7 +243,6 @@
     <Compile Include="MenuItems\PathfindingHistoryMenuItems\ApplyHistoryMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingHistoryMenuItems\ClearHistoryMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingHistoryMenuItems\ShowHistoryMenuItem.cs" />
-    <Compile Include="MenuItems\PathfindingProcessMenuItems\PathfindingAlgorithmMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\ClearColorsMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\ClearGraphMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\HistoryMenuItem.cs" />
@@ -228,6 +263,7 @@
     <Compile Include="DependencyInjection\Application.cs" />
     <Compile Include="Units\AlgorithmChooseUnit.cs" />
     <Compile Include="Units\ColorsUnit.cs" />
+    <Compile Include="Units\DataUnit.cs" />
     <Compile Include="Units\GraphEditorUnit.cs" />
     <Compile Include="Units\GraphSharingUnit.cs" />
     <Compile Include="Units\GraphUnit.cs" />
@@ -449,11 +485,14 @@
     <PackageReference Include="Autofac">
       <Version>7.0.1</Version>
     </PackageReference>
+    <PackageReference Include="LiteDB">
+      <Version>5.0.17</Version>
+    </PackageReference>
     <PackageReference Include="MvvmLightLibs">
       <Version>5.4.1.1</Version>
     </PackageReference>
-    <PackageReference Include="System.Reactive">
-      <Version>6.0.0</Version>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

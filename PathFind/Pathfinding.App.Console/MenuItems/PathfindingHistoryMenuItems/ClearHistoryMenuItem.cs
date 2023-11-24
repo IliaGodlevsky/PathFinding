@@ -35,12 +35,12 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void Execute()
         {
-            messenger.SendData(new ClearHistoryMessage(), Tokens.History);
+            messenger.SendMany(new ClearHistoryMessage(), Tokens.History);
         }
 
-        private void SetIsApplied(bool isApplied)
+        private void SetIsApplied(IsAppliedMessage msg)
         {
-            isHistoryApplied = isApplied;
+            isHistoryApplied = msg.IsApplied;
         }
 
         public override string ToString()
@@ -50,13 +50,13 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterData<bool>(this, Tokens.History, SetIsApplied);
+            messenger.Register<IsAppliedMessage>(this, Tokens.History, SetIsApplied);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }
 
-        private void SetGraph(IGraph<Vertex> graph)
+        private void SetGraph(GraphMessage msg)
         {
-            this.graph = graph;
+            graph = msg.Graph;
         }
     }
 }

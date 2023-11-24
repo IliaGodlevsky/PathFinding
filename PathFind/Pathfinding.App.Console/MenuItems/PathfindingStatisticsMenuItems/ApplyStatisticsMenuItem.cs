@@ -3,6 +3,7 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
+using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingStatisticsMenuItems
@@ -25,7 +26,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingStatisticsMenuItems
             {
                 string message = MessagesTexts.ApplyStatisticsMsg;
                 bool isApplied = answerInput.Input(message, Answer.Range);
-                messenger.SendData(isApplied, Tokens.Statistics);
+                var msg = new IsAppliedMessage(isApplied);
+                messenger.Send(msg, Tokens.Statistics);
             }
         }
 

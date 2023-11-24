@@ -38,7 +38,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
             return new IDAStarAlgorithmFactory(stepRule, heuristics, Spread);
         }
 
-        protected override (IAlgorithmFactory<PathfindingProcess> Algorithm, Statistics Statistics) GetAlgorithm()
+        protected override AlgorithmInfo GetAlgorithm()
         {
             using (Cursor.UseCurrentPositionWithClean())
             {

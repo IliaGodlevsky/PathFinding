@@ -2,6 +2,7 @@
 using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
@@ -47,9 +48,11 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 {
                     var graph = importedHistory.Graphs.FirstOrDefault();
                     var costRange = graph.First().Cost.CostRange;
-                    messenger.SendData(costRange, Tokens.AppLayout);
-                    messenger.SendData(graph, Tokens.Visual, 
-                        Tokens.AppLayout, Tokens.Main, Tokens.Common);
+                    var costMsg = new CostRangeChangedMessage(costRange);
+                    messenger.Send(costMsg, Tokens.AppLayout);
+                    var graphMsg = new GraphMessage(graph);
+                    messenger.SendMany(graphMsg, Tokens.Visual, Tokens.AppLayout, 
+                        Tokens.Main, Tokens.Common);
                     var range = importedHistory.GetFor(graph).PathfindingRange;
                     rangeBuilder.Undo();
                     rangeBuilder.Include(range, graph);

@@ -1,12 +1,11 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Interface.Extensions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
-using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
+using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model.Notes;
 using System;
 using System.Collections.Generic;
@@ -33,16 +32,17 @@ namespace Pathfinding.App.Console.Units
         public void RegisterHanlders(IMessenger messenger)
         {
             var token = Tokens.Statistics.Bind(IsStatisticsApplied);
-            messenger.RegisterData<PathfindingProcess>(this, token, SubscribeOnStatistics);
-            messenger.RegisterData<Statistics>(this, Tokens.Statistics, SetStatistics);
-            messenger.RegisterAlgorithmData<IGraphPath>(this, Tokens.Statistics, OnPathFound);
-            messenger.RegisterData<bool>(this, Tokens.Statistics, SetIsApplied);
+            messenger.Register<AlgorithmMessage>(this, token, SubscribeOnStatistics);
+            messenger.Register<StatisticsMessage>(this, Tokens.Statistics, SetStatistics);
+            messenger.Register<PathFoundMessage>(this, Tokens.Statistics, OnPathFound);
+            messenger.Register<IsAppliedMessage>(this, Tokens.Statistics, SetIsApplied);
         }
 
         private bool IsStatisticsApplied() => isStatisticsApplied;
 
-        private void SubscribeOnStatistics(PathfindingProcess algorithm)
+        private void SubscribeOnStatistics(AlgorithmMessage msg)
         {
+            var algorithm = msg.Algorithm;
             algorithm.VertexVisited += OnVertexVisited;
             algorithm.Interrupted += OnInterrupted;
             algorithm.Finished += (s, e) => timer.Stop();
@@ -57,32 +57,35 @@ namespace Pathfinding.App.Console.Units
             timer.Stop();
         }
 
-        private void SetIsApplied(bool isApplied)
+        private void SetIsApplied(IsAppliedMessage msg)
         {
-            isStatisticsApplied = isApplied;
+            isStatisticsApplied = msg.IsApplied;
         }
 
-        private void SetStatistics(Statistics stats)
+        private void SetStatistics(StatisticsMessage msg)
         {
-            statistics = stats;
+            statistics = msg.Statistics;
         }
 
-        private void OnPathFound((PathfindingProcess Process, IGraphPath Path) value)
+        private void OnPathFound(PathFoundMessage message)
         {
-            var note = GetStatistics(value.Path);
+            var note = GetStatistics(message.Path);
             if (note.ResultStatus != nameof(Languages.Interrupted))
             {
                 note.ResultStatus = nameof(Languages.Succeeded);
             }
-            if (value.Path.IsEmpty() && note.ResultStatus != nameof(Languages.Interrupted))
+            if (message.Path.IsEmpty() 
+                && note.ResultStatus != nameof(Languages.Interrupted))
             {
                 note.ResultStatus = nameof(Languages.Failed);
             }
             if (IsStatisticsApplied())
             {
-                messenger.SendData(note.ToString(), Tokens.AppLayout);
+                var statLineMsg = new StatisticsLineMessage(note.ToString());
+                messenger.Send(statLineMsg, Tokens.AppLayout);
             }
-            messenger.SendAlgorithmData(value.Process, note, Tokens.History);
+            var msg = new StatisticsMessage(note);
+            messenger.Send(msg, Tokens.History);
             visited = 0;
             statistics = Statistics.Empty;
         }
@@ -90,7 +93,9 @@ namespace Pathfinding.App.Console.Units
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
         {
             visited++;
-            messenger.SendData(GetStatistics().ToString(), Tokens.AppLayout);
+            string line = GetStatistics().ToString();
+            var msg = new StatisticsLineMessage(line);
+            messenger.Send(msg, Tokens.AppLayout);
         }
 
         private Statistics GetStatistics(IGraphPath path)

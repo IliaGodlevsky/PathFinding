@@ -3,6 +3,7 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
+using Pathfinding.App.Console.Messages;
 using Pathfinding.GraphLib.Factory.Interface;
 using System;
 using System.Collections.Generic;
@@ -32,10 +33,11 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             {
                 throw new Exception(Languages.NoItemsMsg);
             }
-
+            
             if (factories.Count == 1)
             {
-                messenger.SendData(factories.ElementAt(0).Value, Tokens.Graph);
+                var msg = new NeighbourhoodMessage(factories.ElementAt(0).Value);
+                messenger.Send(msg, Tokens.Graph);
                 return;
             }
 
@@ -44,8 +46,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 .CreateMenuList(1)
                 .ToString();
             int index = InputIndex(menu + Languages.ChooseNeighbourhoodMsg, factories.Count);
-            var factory = factories.ElementAt(index).Value;
-            messenger.SendData(factory, Tokens.Graph);
+            var message = new NeighbourhoodMessage(factories.ElementAt(index).Value);
+            messenger.Send(message, Tokens.Graph);
         }
 
         private int InputIndex(string menu, int limit)

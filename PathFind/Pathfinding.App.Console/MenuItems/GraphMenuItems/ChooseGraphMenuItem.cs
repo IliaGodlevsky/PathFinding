@@ -4,6 +4,7 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
+using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
@@ -47,9 +48,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             {
                 var graph = graphs[index];
                 var costRange = graph.First().Cost.CostRange;
-                messenger.SendData(graph, Tokens.Visual, 
+                messenger.SendMany(new GraphMessage(graph), Tokens.Visual,
                     Tokens.AppLayout, Tokens.Main, Tokens.Common);
-                messenger.SendData(costRange, Tokens.AppLayout);
+                messenger.Send(new CostRangeChangedMessage(costRange), Tokens.AppLayout);
                 var pathfindingRange = history.GetFor(graph).PathfindingRange;
                 builder.Undo();
                 builder.Include(pathfindingRange, graph);

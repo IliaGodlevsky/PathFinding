@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using System;
@@ -9,16 +10,10 @@ namespace Pathfinding.App.Console.Extensions
 {
     internal static class IMessengerExtensions
     {
-        public static void SendData<T>(this IMessenger messenger,
+        public static void SendMany<T>(this IMessenger messenger,
             T data, params IToken[] tokens)
         {
             messenger.SendMessage(data, tokens);
-        }
-
-        public static void SendAlgorithmData<T>(this IMessenger messenger,
-            PathfindingProcess algorithm, T data, params IToken[] tokens)
-        {
-            messenger.SendMessage((algorithm, data), tokens);
         }
 
         public static void RegisterData<T>(this IMessenger messenger, object recipient,
@@ -28,7 +23,7 @@ namespace Pathfinding.App.Console.Extensions
         }
 
         public static void RegisterGraph(this IMessenger messenger, object recipient,
-            IToken token, Action<IGraph<Vertex>> action)
+            IToken token, Action<GraphMessage> action)
         {
             messenger.RegisterData(recipient, token, action);
         }

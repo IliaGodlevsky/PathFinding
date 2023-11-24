@@ -2,6 +2,7 @@
 using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
@@ -44,16 +45,19 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             this.assemble = assemble;
         }
 
-        protected void SetNeighbourhood(INeighborhoodFactory factory) => neighborhoodFactory = factory;
+        protected void SetNeighbourhood(NeighbourhoodMessage msg) 
+            => neighborhoodFactory = msg.Factory;
 
-        protected void SetCostRange(InclusiveValueRange<int> range) => costRange = range;
+        protected void SetCostRange(CostRangeMessage msg) 
+            => costRange = msg.Range;
 
-        protected void SetObstaclePercent(int percent) => obstaclePercent = percent;
+        protected void SetObstaclePercent(ObstaclePercentMessage msg) 
+            => obstaclePercent = msg.ObstaclePercent;
 
-        protected void SetGraphParams((int Width, int Length) parametres)
+        protected void SetGraphParams(GraphParamsMessage msg)
         {
-            width = parametres.Width;
-            length = parametres.Length;
+            width = msg.Width;
+            length = msg.Length;
         }
 
         public void Execute()
@@ -61,9 +65,11 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             var layers = GetLayers();
             var graph = assemble.AssembleGraph(layers, width, length);
             history.Add(graph);
-            messenger.SendData(costRange, Tokens.AppLayout);
-            messenger.SendData(graph, Tokens.Visual, Tokens.AppLayout, 
-                Tokens.Main, Tokens.Common);
+            var costRangeMsg = new CostRangeChangedMessage(costRange);
+            messenger.Send(costRangeMsg, Tokens.AppLayout);
+            var graphMsg = new GraphMessage(graph);
+            messenger.SendMany(graphMsg, Tokens.Visual, 
+                Tokens.AppLayout, Tokens.Main, Tokens.Common);
         }
 
         public virtual bool CanBeExecuted()
@@ -82,10 +88,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public virtual void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterData<int>(this, Tokens.Graph, SetObstaclePercent);
-            messenger.RegisterData<INeighborhoodFactory>(this, Tokens.Graph, SetNeighbourhood);
-            messenger.RegisterData<(int Width, int Length)>(this, Tokens.Graph, SetGraphParams);
-            messenger.RegisterData<InclusiveValueRange<int>>(this, Tokens.Graph, SetCostRange);
+            messenger.Register<ObstaclePercentMessage>(this, Tokens.Graph, SetObstaclePercent);
+            messenger.Register<NeighbourhoodMessage>(this, Tokens.Graph, SetNeighbourhood);
+            messenger.Register<GraphParamsMessage>(this, Tokens.Graph, SetGraphParams);
+            messenger.Register<CostRangeMessage>(this, Tokens.Graph, SetCostRange);
         }
     }
 }

@@ -40,10 +40,7 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
             }
             if (index != allColors.Count)
             {
-                using (Cursor.HideCursor())
-                {
-                    Colours.Default[SettingKey] = allColors[index];
-                }
+                Colours.Default[SettingKey] = allColors[index];
             }
         }
     }

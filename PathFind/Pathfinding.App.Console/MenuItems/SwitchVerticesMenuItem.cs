@@ -3,6 +3,7 @@
 using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Settings;
 using Pathfinding.GraphLib.Core.Interface;
@@ -74,9 +75,9 @@ namespace Pathfinding.App.Console.MenuItems
             return action;
         }
 
-        private void SetGraph(IGraph<Vertex> graph)
+        private void SetGraph(GraphMessage msg)
         {
-            this.graph = graph;
+            graph = msg.Graph;
             xRange = new(graph.GetWidth() - 1);
             yRange = new(graph.GetLength() - 1);
         }

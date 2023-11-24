@@ -26,10 +26,10 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
             return Languages.RandomAlgorithm;
         }
 
-        protected override (IAlgorithmFactory<PathfindingProcess> Algorithm, Statistics Statistics) GetAlgorithm()
+        protected override AlgorithmInfo GetAlgorithm()
         {
             var statistics = new Statistics(nameof(Languages.RandomAlgorithm));
-            return (new RandomAlgorithmFactory(random), statistics);
+            return new(new RandomAlgorithmFactory(random), statistics);
         }
     }
 }

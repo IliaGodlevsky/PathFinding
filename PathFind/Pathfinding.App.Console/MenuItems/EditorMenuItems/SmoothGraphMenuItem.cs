@@ -4,6 +4,7 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
+using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Settings;
 using Pathfinding.GraphLib.Core.Interface;
@@ -25,7 +26,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private readonly IInput<ConsoleKey> input;
         private readonly GraphsPathfindingHistory history;
 
-        private Stack<IReadOnlyList<int>> SmoothHistory => history.GetFor(graph).SmoothHistory;
+        private Stack<IReadOnlyList<int>> SmoothHistory 
+            => history.GetFor(graph).SmoothHistory;
 
         private IGraph<Vertex> graph = Graph<Vertex>.Empty;
 
@@ -83,9 +85,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             }
         }
 
-        private void OnGraphCreated(IGraph<Vertex> graph)
+        private void OnGraphCreated(GraphMessage msg)
         {
-            this.graph = graph;
+            graph = msg.Graph;
         }
 
         public override string ToString()

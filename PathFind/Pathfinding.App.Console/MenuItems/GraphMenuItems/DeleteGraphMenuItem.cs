@@ -82,9 +82,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             }
         }
 
-        private void SetGraph(IGraph<Vertex> graph)
+        private void SetGraph(GraphMessage msg)
         {
-            this.graph = graph;
+            graph = msg.Graph;
         }
     }
 }

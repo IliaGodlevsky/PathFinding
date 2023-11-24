@@ -3,6 +3,7 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
+using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
@@ -25,7 +26,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             {
                 string message = MessagesTexts.ApplyHistoryMsg;
                 bool isApplied = answerInput.Input(message, Answer.Range);
-                messenger.SendData(isApplied, Tokens.History);
+                var isAppliedMsg = new IsAppliedMessage(isApplied);
+                messenger.Send(isAppliedMsg, Tokens.History);
             }
         }
 

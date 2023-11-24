@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using Autofac;
+using Newtonsoft.Json;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Settings;
 using Shared.Extensions;
@@ -21,10 +22,13 @@ namespace Pathfinding.App.Console.Model.Notes
 {
     internal sealed class Statistics
     {
+        [JsonIgnore]
         private const string Missing = "**********";
 
+        [JsonIgnore]
         public static readonly Statistics Empty = new(string.Empty);
 
+        [JsonIgnore]
         private static readonly IReadOnlyList<string> names;
 
         static Statistics()
@@ -45,29 +49,34 @@ namespace Pathfinding.App.Console.Model.Notes
 
         public string Algorithm { get; } = string.Empty;
 
-        public string? Heuristics { get; init; } = null;
+        public string? Heuristics { get; set; } = null;
 
-        public string? StepRule { get; init; } = null;
+        public string? StepRule { get; set; } = null;
 
         [Displayable(1)]
         [DisplayNameSource(nameof(Languages.Name))]
+        [JsonIgnore]
         public string Name => GetString(Algorithm) ?? Missing;
 
         [Displayable(9)]
         [DisplayNameSource(nameof(Languages.Status))]
+        [JsonIgnore]
         public string Status => GetString(ResultStatus) ?? Missing;
 
         [Displayable(2)]
         [DisplayNameSource(nameof(Languages.Time))]
+        [JsonIgnore]
         public string? Time => Elapsed?.ToString(Parametres.Default.TimeFormat,
             CultureInfo.InvariantCulture);
 
         [Displayable(6)]
         [DisplayNameSource(nameof(Languages.Rule))]
+        [JsonIgnore]
         public string? Rule => GetString(StepRule);
 
         [Displayable(7)]
         [DisplayNameSource(nameof(Languages.Heuristics))]
+        [JsonIgnore]
         public string? Heuristic => GetString(Heuristics);
 
         [Displayable(3)]

@@ -60,9 +60,11 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
                     {
                         using (Cursor.HideCursor())
                         {
-                            messenger.SendData(page.Key, Tokens.History);
+                            var keyMsg = new AlgorithmKeyMessage(page.Key);
+                            messenger.Send(keyMsg, Tokens.History);
                             string data = $"{index + 1} {page.Value}";
-                            messenger.SendData(data, Tokens.AppLayout);
+                            var lineMsg = new StatisticsLineMessage(data);
+                            messenger.Send(lineMsg, Tokens.AppLayout);
                         }
                     }
                     index = GetAlgorithmId(inputMessage, statistics.Count);
@@ -92,9 +94,9 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             });
         }
 
-        private void SetGraph(IGraph<Vertex> graph)
+        private void SetGraph(GraphMessage msg)
         {
-            this.graph = graph;
+            graph = msg.Graph;
         }
 
         private int GetAlgorithmId(string message, int count)
@@ -107,9 +109,9 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         private bool IsHistoryApplied() => isHistoryApplied;
 
-        private void SetIsApplied(bool isApplied)
+        private void SetIsApplied(IsAppliedMessage msg)
         {
-            isHistoryApplied = isApplied;
+            isHistoryApplied = msg.IsApplied;
         }
 
         public override string ToString()
@@ -119,7 +121,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.RegisterData<bool>(this, Tokens.History, SetIsApplied);
+            messenger.Register<IsAppliedMessage>(this, Tokens.History, SetIsApplied);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }
 

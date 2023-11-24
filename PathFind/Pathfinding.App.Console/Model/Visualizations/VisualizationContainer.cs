@@ -4,7 +4,6 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model.Visualizations.Containers;
 using Pathfinding.App.Console.Settings;
-using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Extensions;
 using System;
@@ -47,7 +46,7 @@ namespace Pathfinding.App.Console.Model.Visualizations
 
         public void VisualizeAsEnqueued(Vertex vertex) => Visualize(vertex, Constants.EnqueuedColorKey);
 
-        public void VisualizeAsPath(Vertex vertex)
+        public void VisualizeAsPath(Vertex vertex)     
         {
             if (!IsVisualizedAsRange(vertex))
             {
@@ -74,9 +73,9 @@ namespace Pathfinding.App.Console.Model.Visualizations
             containers.Values.ForEach(c => c.Clear(msg.Id));
         }
 
-        private void OnGraphCreated(IGraph<Vertex> graph)
+        private void OnGraphCreated(GraphMessage msg)
         {
-            CurrentGraph = graph.GetHashCode();
+            CurrentGraph = msg.Graph.GetHashCode();
         }
 
         private void Visualize(Vertex vertex, string colorKey)
@@ -96,9 +95,12 @@ namespace Pathfinding.App.Console.Model.Visualizations
         {
             var container = GetOrDefault(e.PropertyName);
             var vertices = container.GetVertices(CurrentGraph);
-            foreach (var vertex in vertices)
+            using (Cursor.HideCursor())
             {
-                vertex.Color = (ConsoleColor)Colors[e.PropertyName];
+                foreach (var vertex in vertices)
+                {
+                    vertex.Color = (ConsoleColor)Colors[e.PropertyName];
+                }
             }
         }
 

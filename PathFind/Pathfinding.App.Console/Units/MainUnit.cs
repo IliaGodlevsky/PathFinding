@@ -56,11 +56,11 @@ namespace Pathfinding.App.Console.Units
             }
         }
 
-        private void SetGraph(IGraph<Vertex> graph)
+        private void SetGraph(GraphMessage msg)
         {
             undo.Undo();
-            Graph = graph;
-            Field = new(graph);
+            Graph = msg.Graph;
+            Field = new(Graph);
             DisplayGraph();
         }
 
