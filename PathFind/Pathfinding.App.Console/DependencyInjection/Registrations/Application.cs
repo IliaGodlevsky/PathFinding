@@ -90,7 +90,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterUnit<MainUnit, AnswerExitMenuItem>(new UnitParamtresFactory());
                 builder.RegisterUnits<ExitMenuItem>(new UnitParamtresFactory(), Graph, Process, Range);
 
-                builder.RegisterType<GraphsPathfindingHistory>().AsSelf().SingleInstance();
+                //builder.RegisterType<GraphsPathfindingHistory>().AsSelf().SingleInstance();
 
                 builder.RegisterType<MainUnitMenuItem>().AsSelf().InstancePerDependency();
                 builder.RegisterType<GraphCreateMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main).SingleInstance();

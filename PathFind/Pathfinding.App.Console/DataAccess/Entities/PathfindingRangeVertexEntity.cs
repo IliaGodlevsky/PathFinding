@@ -2,7 +2,7 @@
 
 namespace Pathfinding.App.Console.DataAccess.Entities
 {
-    internal class CostRangeEntity : IEntity
+    internal class PathfindingRangeVertexEntity : IEntity
     {
         [Key]
         [Required]
@@ -15,9 +15,6 @@ namespace Pathfinding.App.Console.DataAccess.Entities
         public int GraphId { get; set; }
 
         [Required]
-        public int UpperValueOfRange { get; set; }
-
-        [Required]
-        public int LowerValueOfRange { get; set; }
+        public int Order { get; set; }
     }
 }

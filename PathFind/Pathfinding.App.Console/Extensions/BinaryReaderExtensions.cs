@@ -16,10 +16,9 @@ namespace Pathfinding.App.Console.Extensions
         {
             var history = new GraphPathfindingHistory();
             int keyCount = reader.ReadInt32();
-            history.PathfindingRange.AddRange(reader.ReadCoordinates(factory));
             for (int i = 0; i < keyCount; i++)
             {
-                var key = reader.ReadGuid();
+                var key = reader.ReadInt32();
                 history.Algorithms.Add(key);
                 history.Obstacles.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates(factory));
                 history.Visited.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates(factory));
@@ -28,7 +27,6 @@ namespace Pathfinding.App.Console.Extensions
                 history.Costs.TryGetOrAddNew(key).AddRange(reader.ReadIntArray());
                 history.Statistics.Add(key, reader.ReadStatisitics());
             }
-            reader.ReadSmoothHistory().Reverse().ForEach(history.SmoothHistory.Push);
             return history;
         }
 

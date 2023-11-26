@@ -66,15 +66,19 @@
     <Compile Include="DataAccess\Entities\GraphEntity.cs" />
     <Compile Include="DataAccess\Entities\IEntity.cs" />
     <Compile Include="DataAccess\Entities\NeighboursEntity.cs" />
+    <Compile Include="DataAccess\Entities\PathfindingRangeVertexEntity.cs" />
     <Compile Include="DataAccess\Entities\VertexCostEntity.cs" />
     <Compile Include="DataAccess\Entities\VertexEntity.cs" />
     <Compile Include="DataAccess\GraphsPathfindingHistory.cs" />
+    <Compile Include="DataAccess\ReadDto\AlgorithmCreateDto.cs" />
     <Compile Include="DataAccess\ReadDto\AlgorithmReadDto.cs" />
     <Compile Include="DataAccess\ReadDto\GraphReadDto.cs" />
     <Compile Include="DataAccess\ReadDto\VertexReadDto.cs" />
     <Compile Include="DataAccess\Repo\IDbContext.cs" />
+    <Compile Include="DataAccess\Repo\IDbContextService.cs" />
     <Compile Include="DataAccess\Repo\IRepo.cs" />
     <Compile Include="DataAccess\Repo\LiteDbContext.cs" />
+    <Compile Include="DataAccess\Repo\LiteDbContextService.cs" />
     <Compile Include="DataAccess\Repo\LiteDbRepo.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\KeyResolveMiddlware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\CombinedAlgorithmsResolveMiddleware.cs" />
@@ -149,6 +153,8 @@
     <Compile Include="Model\Notes\DisplayableAttribute.cs" />
     <Compile Include="Model\Notes\DisplayNameSourceAttribute.cs" />
     <Compile Include="Model\Notes\Table.cs" />
+    <Compile Include="Model\DbServicePathfindingRange.cs" />
+    <Compile Include="Model\RangeBuilder.cs" />
     <Compile Include="Model\VertexActions\ActiveVertex.cs" />
     <Compile Include="Model\VertexActions\NeighbourhoodActions\ActivateVertexCommand.cs" />
     <Compile Include="Model\VertexActions\NeighbourhoodActions\ExcludeVertexCommand.cs" />
@@ -263,7 +269,6 @@
     <Compile Include="DependencyInjection\Application.cs" />
     <Compile Include="Units\AlgorithmChooseUnit.cs" />
     <Compile Include="Units\ColorsUnit.cs" />
-    <Compile Include="Units\DataUnit.cs" />
     <Compile Include="Units\GraphEditorUnit.cs" />
     <Compile Include="Units\GraphSharingUnit.cs" />
     <Compile Include="Units\GraphUnit.cs" />

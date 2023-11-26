@@ -4,6 +4,10 @@
     {
         public int Id { get; set; }
 
-        public int[] Parametres { get; set; }
+        public int ObstaclesCount { get; set; }
+
+        public int Width { get; set; }
+
+        public int Length { get; set; }
     }
 }

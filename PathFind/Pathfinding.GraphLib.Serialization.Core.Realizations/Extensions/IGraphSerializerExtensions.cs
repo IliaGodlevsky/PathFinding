@@ -1,14 +1,36 @@
-﻿using Pathfinding.GraphLib.Serialization.Core.Interface;
+﻿using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Shared.Primitives;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
 {
     public static class IGraphSerializerExtensions
     {
+        public static T DeserializeFromString<T>(this ISerializer<T> serializer, string value)
+        {
+            var asBytes = Encoding.UTF8.GetBytes(value);
+            using (var stream = new MemoryStream(asBytes))
+            {
+                return serializer.DeserializeFrom(stream);
+            }
+        }
+
+        public static string SerializeToString<T>(this ISerializer<T> serializer, T value)
+        {
+            using (var stream = new MemoryStream())
+            {
+                serializer.SerializeTo(value, stream);
+                var bytes = stream.ToArray();
+                return Encoding.UTF8.GetString(bytes);
+            }
+        }
+
         public static async Task SerializeToFileAsync<T>(this ISerializer<T> self,
             T value, string filePath)
         {

@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.DataAccess;
+using Pathfinding.App.Console.DataAccess.Repo;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -8,6 +9,7 @@ using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
+using Pathfinding.Visualization.Extensions;
 using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
@@ -17,41 +19,47 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     {
         private readonly IMessenger messenger;
         private readonly IInput<int> input;
-        private readonly GraphsPathfindingHistory history;
+        private readonly IDbContextService service;
         private readonly IPathfindingRangeBuilder<Vertex> builder;
 
         public ChooseGraphMenuItem(IMessenger messenger,
             IPathfindingRangeBuilder<Vertex> builder,
             IInput<int> input,
-            GraphsPathfindingHistory history)
+            IDbContextService service)
         {
             this.messenger = messenger;
             this.input = input;
-            this.history = history;
+            this.service = service;
             this.builder = builder;
         }
 
         public bool CanBeExecuted()
         {
-            return history.Count > 1;
+            return service.GetAllGraphsInfo().Count > 1;
         }
 
         public void Execute()
         {
-            var graphs = history.Graphs.ToList();
+            var graphs = service.GetAllGraphsInfo().ToArray();
+            var names = graphs.Select(x =>
+            {
+                return $"Width: {x.Width}\t Length: {x.Length}\t Obstacles: {x.ObstaclesCount}";
+            }).ToArray();
+            int count = graphs.Length;
             var menuList = graphs.Select(s => s.ToString())
                 .Append(Languages.Quit)
                 .CreateMenuList(1)
                 .ToString();
-            int index = GetIndex(menuList, graphs.Count);
-            if (index != graphs.Count)
+            int index = GetIndex(menuList, count);
+            if (index != count)
             {
-                var graph = graphs[index];
+                int id = graphs[index].Id;
+                var graph = service.GetGraph(id);
                 var costRange = graph.First().Cost.CostRange;
                 messenger.SendMany(new GraphMessage(graph), Tokens.Visual,
                     Tokens.AppLayout, Tokens.Main, Tokens.Common);
                 messenger.Send(new CostRangeChangedMessage(costRange), Tokens.AppLayout);
-                var pathfindingRange = history.GetFor(graph).PathfindingRange;
+                var pathfindingRange = service.GetPathfindingRange(id);
                 builder.Undo();
                 builder.Include(pathfindingRange, graph);
             }

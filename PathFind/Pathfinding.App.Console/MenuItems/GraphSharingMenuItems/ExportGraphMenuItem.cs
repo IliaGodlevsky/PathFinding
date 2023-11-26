@@ -1,4 +1,5 @@
 ﻿using Pathfinding.App.Console.DataAccess;
+using Pathfinding.App.Console.DataAccess.Repo;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -18,12 +19,12 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
         protected readonly IInput<TPath> input;
         protected readonly IInput<int> intInput;
         protected readonly ISerializer<GraphsPathfindingHistory> graphSerializer;
-        protected readonly GraphsPathfindingHistory history;
+        protected readonly IDbContextService service;
         protected readonly ILog log;
 
         protected ExportGraphMenuItem(IInput<TPath> input,
             IInput<int> intInput,
-            GraphsPathfindingHistory history,
+            IDbContextService service,
             ISerializer<GraphsPathfindingHistory> graphSerializer,
             ILog log)
         {
@@ -31,10 +32,14 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             this.intInput = intInput;
             this.graphSerializer = graphSerializer;
             this.log = log;
-            this.history = history;
+            this.service = service;
         }
 
-        public virtual bool CanBeExecuted() => history.Count > 0;
+        public virtual bool CanBeExecuted()
+        {
+            var graphs = service.GetAllGraphsInfo();
+            return graphs.Count > 0;
+        }
 
         public virtual async void Execute()
         {

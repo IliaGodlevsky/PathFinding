@@ -12,6 +12,9 @@ namespace Pathfinding.App.Console.DataAccess.Entities
         public int VertexId { get; set; }
 
         [Required]
+        public int GraphId { get; set; }
+
+        [Required]
         public int NeighbourId { get; set; }
     }
 }

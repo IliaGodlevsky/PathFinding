@@ -13,5 +13,8 @@ namespace Pathfinding.App.Console.DataAccess.Entities
 
         [Required]
         public int Length { get; set; }
+
+        [Required]
+        public int Obstacles { get; set; }
     }
 }

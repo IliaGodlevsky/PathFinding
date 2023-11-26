@@ -1,64 +1,85 @@
 ﻿using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.DataAccess
 {
-    internal class GraphsPathfindingHistory : IEnumerable<(IGraph<Vertex> Graph, GraphPathfindingHistory History)>
+    internal sealed class GraphsPathfindingHistory
     {
+        private sealed class RangeVertexEqualityComparer : IEqualityComparer<(int, ICoordinate)>
+        {
+            public bool Equals((int, ICoordinate) x, (int, ICoordinate) y)
+            {
+                return x.Item2.Equals(y.Item2);
+            }
+
+            public int GetHashCode((int, ICoordinate) obj)
+            {
+                return obj.Item2.GetHashCode();
+            }
+        }
+
         private readonly Dictionary<int, IGraph<Vertex>> graphs = new();
-        private readonly Dictionary<int, GraphPathfindingHistory> history = new();
-
-        public IReadOnlyCollection<int> Keys => graphs.Keys;
-
-        public GraphPathfindingHistory GetFor(IGraph<Vertex> key)
-        {
-            int id = key.GetHashCode();
-            return history[id];
-        }
-
-        public GraphPathfindingHistory GetFor(int hashCode)
-        {
-            return history[hashCode];
-        }
+        private readonly Dictionary<int, GraphPathfindingHistory> histories = new();
+        private readonly Dictionary<int, HashSet<(int, ICoordinate)>> pathfindingRanges = new();
 
         public IReadOnlyCollection<IGraph<Vertex>> Graphs => graphs.Values;
 
-        public int Count => history.Count;
+        public IReadOnlyCollection<int> Ids => graphs.Keys;
 
-        public void Add(IGraph<Vertex> key, GraphPathfindingHistory value)
+        public int Count => histories.Count;
+
+        public IGraph<Vertex> GetGraph(int id)
         {
-            int id = key.GetHashCode();
-            history.Add(id, value);
-            graphs.Add(id, key);
+            return graphs[id];
         }
 
-        public void Add((IGraph<Vertex> Graph, GraphPathfindingHistory History) note) 
-            => Add(note.Graph, note.History);
-
-        public void Add(IGraph<Vertex> key) => Add(key, new());
-
-        public void Clear() => history.Clear();
-
-        public bool Remove(IGraph<Vertex> key)
+        public GraphPathfindingHistory GetHistory(int id)
         {
-            return Remove(key.GetHashCode());
+            return histories[id];
         }
 
-        public bool Remove(int hashCode)
+        public HashSet<(int, ICoordinate)> GetRange(int id)
         {
-            graphs.Remove(hashCode);
-            return history.Remove(hashCode);
+            return pathfindingRanges[id];
         }
 
-        public IEnumerator<(IGraph<Vertex> Graph, GraphPathfindingHistory History)> GetEnumerator()
+        public void Add(int id, IGraph<Vertex> graph)
         {
-            return graphs.Zip(history, (g, h) => (graphs[g.Key], history[g.Key]))
-                .GetEnumerator();
+            graphs.Add(id, graph);
+            histories[id] = new();
+            pathfindingRanges[id] = new(new RangeVertexEqualityComparer());
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        public void Add(int id, GraphPathfindingHistory history)
+        {
+            histories[id] = history;
+        }
+
+        public void Clear() => histories.Clear();
+
+        public bool Remove(IGraph<Vertex> graph)
+        {
+            var pair = graphs.FirstOrDefault(g => g.Value == graph);
+            return Remove(pair.Key);
+        }
+
+        public bool Remove(int graphsId)
+        {
+            return graphs.Remove(graphsId)
+                && pathfindingRanges.Remove(graphsId)
+                && histories.Remove(graphsId);
+        }
+
+        public bool TryGetGraph(int id, out IGraph<Vertex> graph)
+        {
+            return graphs.TryGetValue(id, out graph);
+        }
+
+        public bool TryGetHistory(int id, out GraphPathfindingHistory history)
+        {
+            return histories.TryGetValue(id, out history);
+        }
     }
 }

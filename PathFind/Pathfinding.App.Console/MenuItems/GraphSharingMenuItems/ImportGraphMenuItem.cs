@@ -1,16 +1,13 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.DataAccess;
-using Pathfinding.App.Console.Extensions;
+using Pathfinding.App.Console.DataAccess.ReadDto;
+using Pathfinding.App.Console.DataAccess.Repo;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
-using Shared.Extensions;
 using System;
-using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 {
@@ -20,16 +17,16 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
         protected readonly IInput<TPath> input;
         protected readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         protected readonly ISerializer<GraphsPathfindingHistory> serializer;
-        protected readonly GraphsPathfindingHistory history;
+        protected readonly IDbContextService service;
         protected readonly ILog log;
 
         protected ImportGraphMenuItem(IMessenger messenger,
             IInput<TPath> input,
-            GraphsPathfindingHistory history,
+            IDbContextService service,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
             ISerializer<GraphsPathfindingHistory> serializer, ILog log)
         {
-            this.history = history;
+            this.service = service;
             this.rangeBuilder = rangeBuilder;
             this.serializer = serializer;
             this.messenger = messenger;
@@ -43,19 +40,30 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             {
                 var path = InputPath();
                 var importedHistory = ImportGraph(path);
-                importedHistory.ForEach(history.Add);
-                if (history.Count == importedHistory.Count && history.Count > 0)
+                foreach (int id in importedHistory.Ids)
                 {
-                    var graph = importedHistory.Graphs.FirstOrDefault();
-                    var costRange = graph.First().Cost.CostRange;
-                    var costMsg = new CostRangeChangedMessage(costRange);
-                    messenger.Send(costMsg, Tokens.AppLayout);
-                    var graphMsg = new GraphMessage(graph);
-                    messenger.SendMany(graphMsg, Tokens.Visual, Tokens.AppLayout, 
-                        Tokens.Main, Tokens.Common);
-                    var range = importedHistory.GetFor(graph).PathfindingRange;
-                    rangeBuilder.Undo();
-                    rangeBuilder.Include(range, graph);
+                    var graph = importedHistory.GetGraph(id);
+                    int graphId = service.AddGraph(graph);
+                    foreach (var range in importedHistory.GetRange(id))
+                    {
+                        var vertex = graph.Get(range.Item2);
+                        service.AddRangeVertex(vertex, range.Item1);
+                    }
+                    var history = importedHistory.GetHistory(id);
+                    foreach (var algo in history.Algorithms)
+                    {
+                        var create = new AlgorithmCreateDto()
+                        {
+                            GraphId = graphId,
+                            Costs = history.Costs[id],
+                            Range = history.Ranges[id],
+                            Obstacles = history.Obstacles[id],
+                            Visited = history.Visited[id],
+                            Statistics = history.Statistics[id],
+                            Path = history.Paths[id],
+                        };
+                        service.AddAlgorithm(create);
+                    }
                 }
             }
             catch (Exception ex)

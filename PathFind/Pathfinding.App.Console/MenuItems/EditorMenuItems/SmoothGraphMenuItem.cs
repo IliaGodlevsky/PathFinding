@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Pathfinding.App.Console.DataAccess;
+using Pathfinding.App.Console.DataAccess.Repo;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -24,20 +25,16 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private readonly IMeanCost meanAlgorithm;
         private readonly IMessenger messenger;
         private readonly IInput<ConsoleKey> input;
-        private readonly GraphsPathfindingHistory history;
 
-        private Stack<IReadOnlyList<int>> SmoothHistory 
-            => history.GetFor(graph).SmoothHistory;
+        private Stack<IReadOnlyList<int>> SmoothHistory { get; }
 
         private IGraph<Vertex> graph = Graph<Vertex>.Empty;
-
+        
         public SmoothGraphMenuItem(IMeanCost meanAlgorithm,
-            IMessenger messenger, IInput<ConsoleKey> input,
-            GraphsPathfindingHistory history)
+            IMessenger messenger, IInput<ConsoleKey> input)
         {
             this.meanAlgorithm = meanAlgorithm;
             this.messenger = messenger;
-            this.history = history;
             this.input = input;
         }
 

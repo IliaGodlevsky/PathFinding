@@ -1,4 +1,5 @@
-﻿using Pathfinding.App.Console.Interface;
+﻿using Pathfinding.App.Console.DataAccess.Repo;
+using Pathfinding.App.Console.Interface;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,14 +11,14 @@ namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions
 
         private ActiveVertex Active { get; }
 
-        public NeighbourhoodAction(ActiveVertex active)
+        public NeighbourhoodAction(ActiveVertex active, IDbContextService service)
         {
             Active = active;
             Commands = new INeighbourhoodCommand[]
             {
                 new ActivateVertexCommand(),
-                new IncludeVertexCommand(),
-                new ExcludeVertexCommand()
+                new IncludeVertexCommand(service),
+                new ExcludeVertexCommand(service)
             };
         }
 

@@ -20,6 +20,8 @@ namespace Pathfinding.App.Console.Model
 
         public int Id { get; set; }
 
+        public int GraphId { get; set; }
+
         public bool IsObstacle { get; set; }
 
         public IVertexCost Cost
