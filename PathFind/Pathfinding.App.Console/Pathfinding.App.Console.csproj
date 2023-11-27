@@ -62,27 +62,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccess\Entities\AlgorithmEntity.cs" />
-    <Compile Include="DataAccess\Entities\GraphEntity.cs" />
-    <Compile Include="DataAccess\Entities\IEntity.cs" />
-    <Compile Include="DataAccess\Entities\NeighboursEntity.cs" />
-    <Compile Include="DataAccess\Entities\VertexCostEntity.cs" />
-    <Compile Include="DataAccess\Entities\VertexEntity.cs" />
     <Compile Include="DataAccess\GraphsPathfindingHistory.cs" />
-    <Compile Include="DataAccess\ReadDto\AlgorithmReadDto.cs" />
-    <Compile Include="DataAccess\ReadDto\GraphReadDto.cs" />
-    <Compile Include="DataAccess\ReadDto\VertexReadDto.cs" />
-    <Compile Include="DataAccess\Repo\IDbContext.cs" />
-    <Compile Include="DataAccess\Repo\IRepo.cs" />
-    <Compile Include="DataAccess\Repo\LiteDbContext.cs" />
-    <Compile Include="DataAccess\Repo\LiteDbRepo.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\KeyResolveMiddlware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\CombinedAlgorithmsResolveMiddleware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\AllVisualizedVerticesMiddleware.cs" />
     <Compile Include="DependencyInjection\Registrations\Application.cs" />
     <Compile Include="Extensions\BinaryReaderExtensions.cs" />
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
-    <Compile Include="Extensions\IContextExtensions.cs" />
+    <Compile Include="Extensions\GraphsPathfindingHistoryExtensions.cs" />
     <Compile Include="Interface\INeighbourhoodCommand.cs" />
     <Compile Include="Interface\IToken.cs" />
     <Compile Include="Interface\IVisualizedVertices.cs" />
@@ -128,9 +115,6 @@
     <Compile Include="Messages\AlgorithmStatisticsMessage.cs" />
     <Compile Include="Messages\CostRangeChangedMessage.cs" />
     <Compile Include="Messages\CostRangeMessage.cs" />
-    <Compile Include="Messages\GetAlgorithmsMessage.cs" />
-    <Compile Include="Messages\GetAllGraphsMessage.cs" />
-    <Compile Include="Messages\GetGraphMessage.cs" />
     <Compile Include="Messages\GraphDeletedMessage.cs" />
     <Compile Include="Messages\GraphMessage.cs" />
     <Compile Include="Messages\GraphParamsMessage.cs" />
@@ -263,7 +247,6 @@
     <Compile Include="DependencyInjection\Application.cs" />
     <Compile Include="Units\AlgorithmChooseUnit.cs" />
     <Compile Include="Units\ColorsUnit.cs" />
-    <Compile Include="Units\DataUnit.cs" />
     <Compile Include="Units\GraphEditorUnit.cs" />
     <Compile Include="Units\GraphSharingUnit.cs" />
     <Compile Include="Units\GraphUnit.cs" />

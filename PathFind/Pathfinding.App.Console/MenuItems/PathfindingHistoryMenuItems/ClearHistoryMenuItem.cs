@@ -30,7 +30,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         public bool CanBeExecuted()
         {
             return isHistoryApplied
-                && history.GetFor(graph).Algorithms.Count > 0;
+                && history.GetHistory(graph.GetHashCode()).Algorithms.Count > 0;
         }
 
         public void Execute()

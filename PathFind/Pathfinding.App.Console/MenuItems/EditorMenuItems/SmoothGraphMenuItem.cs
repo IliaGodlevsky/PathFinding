@@ -26,8 +26,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private readonly IInput<ConsoleKey> input;
         private readonly GraphsPathfindingHistory history;
 
-        private Stack<IReadOnlyList<int>> SmoothHistory 
-            => history.GetFor(graph).SmoothHistory;
+        private Stack<IReadOnlyList<int>> SmoothHistory
+            => history.GetSmoothHistory(graph.GetHashCode());
 
         private IGraph<Vertex> graph = Graph<Vertex>.Empty;
 

@@ -41,7 +41,7 @@ namespace Pathfinding.App.Console.Units
         {
             var key = msg.AlgorithmKey;
             graph.RestoreVerticesVisualState();
-            var currentHistory = history.GetFor(graph);
+            var currentHistory = history.GetHistory(graph.GetHashCode());
             graph.ApplyCosts(currentHistory.Costs[key]);
             var obstacles = currentHistory.Obstacles[key].Select(graph.Get);
             obstacles.ForEach(vertex => vertex.VisualizeAsObstacle());
@@ -63,7 +63,7 @@ namespace Pathfinding.App.Console.Units
 
         private void ClearHistory(ClearHistoryMessage msg)
         {
-            var hist = history.GetFor(graph);
+            var hist = history.GetHistory(graph.GetHashCode());
             hist.Obstacles.Clear();
             hist.Paths.Clear();
             hist.Ranges.Clear();
@@ -79,20 +79,21 @@ namespace Pathfinding.App.Console.Units
 
         private void OnFinished(object sender, EventArgs args)
         {
-            var visited = history.GetFor(graph).Visited;
-            visited.TryGetOrAddNew(algorithm.Id).AddRange(visitedVertices);
+            var visited = history.GetHistory(graph.GetHashCode()).Visited;
+            visited.TryGetOrAddNew(algorithm.GetHashCode()).AddRange(visitedVertices);
             visitedVertices.Clear();
         }
 
         private void OnStarted(object sender, EventArgs args)
         {
-            var hist = history.GetFor(graph);
-            hist.Algorithms.Add(algorithm.Id);
-            var obstacles = hist.Obstacles.TryGetOrAddNew(algorithm.Id);
+            int algorithmId = algorithm.GetHashCode();
+            var hist = history.GetHistory(graph.GetHashCode());
+            hist.Algorithms.Add(algorithmId);
+            var obstacles = hist.Obstacles.TryGetOrAddNew(algorithmId);
             obstacles.AddRange(graph.GetObstaclesCoordinates());
-            var costs = hist.Costs.TryGetOrAddNew(algorithm.Id);
+            var costs = hist.Costs.TryGetOrAddNew(algorithmId);
             costs.AddRange(graph.GetCosts());
-            var ranges = hist.Ranges.TryGetOrAddNew(algorithm.Id);
+            var ranges = hist.Ranges.TryGetOrAddNew(algorithmId);
             ranges.AddRange(builder.Range.GetCoordinates());
         }
 
@@ -106,12 +107,14 @@ namespace Pathfinding.App.Console.Units
 
         private void SetStatistics(StatisticsMessage msg)
         {
-            history.GetFor(graph).Statistics[algorithm.Id] = msg.Statistics;
+            history.GetHistory(graph.GetHashCode())
+                .Statistics[algorithm.GetHashCode()] = msg.Statistics;
         }
 
         private void OnPathFound(PathFoundMessage msg)
         {
-            history.GetFor(graph).Paths.TryGetOrAddNew(algorithm.Id).AddRange(msg.Path);
+            history.GetHistory(graph.GetHashCode()).Paths
+                .TryGetOrAddNew(algorithm.GetHashCode()).AddRange(msg.Path);
         }
 
         private bool IsHistoryApplied() => isHistoryApplied;

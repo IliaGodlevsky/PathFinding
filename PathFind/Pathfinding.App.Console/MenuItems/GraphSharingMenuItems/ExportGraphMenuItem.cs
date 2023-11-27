@@ -6,6 +6,7 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
+using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,17 +51,17 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 var toExport = new GraphsPathfindingHistory();
                 string menuList = CreateMenuList(keys);
                 int index = InputIndex(menuList, keys.Count);
+                var ids = new List<int>();
                 while (index != keys.Count + 1)
                 {
                     if (index == keys.Count)
                     {
-                        toExport = history;
+                        ids.AddRange(history.Ids);
                         break;
                     }
-                    var key = keys[index];
-                    var toAdd = history.GetFor(key);
-                    keys.Remove(key);
-                    toExport.Add(key, toAdd);
+                    int key = keys[index].GetHashCode();
+                    keys.RemoveAt(index);
+                    ids.Add(key);
                     if (keys.Count == 0)
                     {
                         break;
@@ -68,9 +69,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                     menuList = CreateMenuList(keys);
                     index = InputIndex(menuList, keys.Count);
                 }
-                if (toExport.Count > 0)
+                if (ids.Count > 0)
                 {
                     var path = input.Input();
+                    toExport.Merge(history, ids);
                     await ExportAsync(toExport, path);
                 }
             }
@@ -94,6 +96,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             return graphs.Select(k => k.ToString())
                 .Append(Languages.All)
                 .Append(Languages.Quit)
+                .Append(Languages.ChooseGraph)
                 .CreateMenuList(1)
                 .ToString();
         }

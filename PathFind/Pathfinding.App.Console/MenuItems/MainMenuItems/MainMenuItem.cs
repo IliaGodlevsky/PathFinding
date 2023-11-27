@@ -9,14 +9,16 @@ using Pathfinding.Logging.Interface;
 
 namespace Pathfinding.App.Console.MenuItems.MainMenuItems
 {
-    internal abstract class MainMenuItem<TUnit> : UnitDisplayMenuItem<TUnit>, IConditionedMenuItem, ICanRecieveMessage
+    internal abstract class MainMenuItem<TUnit> 
+        : UnitDisplayMenuItem<TUnit>, IConditionedMenuItem, ICanRecieveMessage
         where TUnit : IUnit
     {
         private readonly IMessenger messenger;
 
         private IGraph<Vertex> graph = Graph<Vertex>.Empty;
 
-        protected MainMenuItem(IInput<int> input, TUnit viewModel, IMessenger messenger, ILog log)
+        protected MainMenuItem(IInput<int> input, TUnit viewModel, 
+            IMessenger messenger, ILog log)
             : base(input, viewModel, log)
         {
             this.messenger = messenger;

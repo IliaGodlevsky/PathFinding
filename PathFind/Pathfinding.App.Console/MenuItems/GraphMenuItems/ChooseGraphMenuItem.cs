@@ -51,7 +51,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 messenger.SendMany(new GraphMessage(graph), Tokens.Visual,
                     Tokens.AppLayout, Tokens.Main, Tokens.Common);
                 messenger.Send(new CostRangeChangedMessage(costRange), Tokens.AppLayout);
-                var pathfindingRange = history.GetFor(graph).PathfindingRange;
+                var pathfindingRange = history.GetRange(graph.GetHashCode());
                 builder.Undo();
                 builder.Include(pathfindingRange, graph);
             }

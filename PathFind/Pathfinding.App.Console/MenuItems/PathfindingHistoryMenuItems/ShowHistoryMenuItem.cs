@@ -40,12 +40,12 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         public bool CanBeExecuted()
         {
             return IsHistoryApplied()
-                && history.GetFor(graph).Algorithms.Count > 0;
+                && history.GetHistory(graph.GetHashCode()).Algorithms.Count > 0;
         }
 
         public void Execute()
         {
-            var statistics = history.GetFor(graph).Statistics
+            var statistics = history.GetHistory(graph.GetHashCode()).Statistics
                 .GroupBy(s => s.Value.Algorithm)
                 .SelectMany(s => s.OrderBy(i => i.Value.Steps))
                 .ToDictionary();

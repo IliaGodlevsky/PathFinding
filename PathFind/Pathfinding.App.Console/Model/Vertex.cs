@@ -18,8 +18,6 @@ namespace Pathfinding.App.Console.Model
         private IVertexCost cost = NullCost.Instance;
         private ConsoleColor color;
 
-        public int Id { get; set; }
-
         public bool IsObstacle { get; set; }
 
         public IVertexCost Cost

@@ -1,46 +1,66 @@
 ﻿using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Pathfinding.App.Console.DataAccess
 {
-    internal class GraphsPathfindingHistory : IEnumerable<(IGraph<Vertex> Graph, GraphPathfindingHistory History)>
+    internal sealed class GraphsPathfindingHistory
     {
         private readonly Dictionary<int, IGraph<Vertex>> graphs = new();
-        private readonly Dictionary<int, GraphPathfindingHistory> history = new();
-
-        public IReadOnlyCollection<int> Keys => graphs.Keys;
-
-        public GraphPathfindingHistory GetFor(IGraph<Vertex> key)
-        {
-            int id = key.GetHashCode();
-            return history[id];
-        }
-
-        public GraphPathfindingHistory GetFor(int hashCode)
-        {
-            return history[hashCode];
-        }
+        private readonly Dictionary<int, GraphPathfindingHistory> histories = new();
+        private readonly Dictionary<int, List<ICoordinate>> pathfindingRange = new();
+        private readonly Dictionary<int, Stack<IReadOnlyList<int>>> smoothHistory = new();
 
         public IReadOnlyCollection<IGraph<Vertex>> Graphs => graphs.Values;
 
-        public int Count => history.Count;
+        public IReadOnlyCollection<int> Ids => graphs.Keys;
 
-        public void Add(IGraph<Vertex> key, GraphPathfindingHistory value)
+        public int Count => histories.Count;
+
+        public Stack<IReadOnlyList<int>> GetSmoothHistory(int key)
         {
-            int id = key.GetHashCode();
-            history.Add(id, value);
-            graphs.Add(id, key);
+            return smoothHistory[key];
         }
 
-        public void Add((IGraph<Vertex> Graph, GraphPathfindingHistory History) note) 
-            => Add(note.Graph, note.History);
+        public GraphPathfindingHistory GetHistory(int key)
+        {
+            return histories[key];
+        }
 
-        public void Add(IGraph<Vertex> key) => Add(key, new());
+        public IGraph<Vertex> GetGraph(int key)
+        {
+            return graphs[key];
+        }
 
-        public void Clear() => history.Clear();
+        public List<ICoordinate> GetRange(int key)
+        {
+            return pathfindingRange[key];
+        }
+
+        public int Add(IGraph<Vertex> graph)
+        {
+            int key = graph.GetHashCode();
+            graphs.Add(key, graph);
+            if (!histories.ContainsKey(key))
+            {
+                histories.Add(key, new());
+            }
+            if (!pathfindingRange.ContainsKey(key))
+            {
+                pathfindingRange.Add(key, new());
+            }
+            if (!smoothHistory.ContainsKey(key))
+            {
+                smoothHistory.Add(key, new());
+            }
+
+            return key;
+        }
+
+        public void Add(int key, GraphPathfindingHistory history)
+        {
+            histories[key] = history;
+        }
 
         public bool Remove(IGraph<Vertex> key)
         {
@@ -49,16 +69,9 @@ namespace Pathfinding.App.Console.DataAccess
 
         public bool Remove(int hashCode)
         {
-            graphs.Remove(hashCode);
-            return history.Remove(hashCode);
+            return graphs.Remove(hashCode)
+                && pathfindingRange.Remove(hashCode)
+                && histories.Remove(hashCode);
         }
-
-        public IEnumerator<(IGraph<Vertex> Graph, GraphPathfindingHistory History)> GetEnumerator()
-        {
-            return graphs.Zip(history, (g, h) => (graphs[g.Key], history[g.Key]))
-                .GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

@@ -12,10 +12,9 @@ namespace Pathfinding.App.Console.Extensions
         public static void WriteHistory(this BinaryWriter writer, GraphPathfindingHistory history)
         {
             writer.Write(history.Algorithms.Count);
-            writer.WriteCoordinates(history.PathfindingRange);
             foreach (var key in history.Algorithms)
             {
-                writer.WriteGuid(key);
+                writer.Write(key);
                 writer.WriteCoordinates(history.Obstacles.TryGetOrAddNew(key));
                 writer.WriteCoordinates(history.Visited.TryGetOrAddNew(key));
                 writer.WriteCoordinates(history.Ranges.TryGetOrAddNew(key));
@@ -24,8 +23,6 @@ namespace Pathfinding.App.Console.Extensions
                 var statistics = history.Statistics.GetOrDefault(key, Statistics.Empty);
                 writer.WriteStatistics(statistics);
             }
-            writer.Write(history.SmoothHistory.Count);
-            history.SmoothHistory.ForEach(writer.WriteIntArray);
         }
 
         private static void WriteNullableString(this BinaryWriter writer, string value)

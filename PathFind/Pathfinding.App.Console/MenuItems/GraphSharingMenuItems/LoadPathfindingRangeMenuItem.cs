@@ -56,9 +56,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 var range = serializer.DeserializeFromFile(path);
                 rangeBuilder.Undo();
                 rangeBuilder.Include(range, graph);
-                var current = history.GetFor(graph);
-                current.PathfindingRange.Clear();
-                current.PathfindingRange.AddRange(range);
+                var current = history.GetRange(graph.GetHashCode());
+                current.Clear();
+                current.AddRange(range);
             }
             catch (Exception ex)
             {

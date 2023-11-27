@@ -33,10 +33,9 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
         public override void Execute()
         {
             base.Execute();
-            var hist = history.GetFor(graph);
-            hist.PathfindingRange.Clear();
-            var range = builder.Range.GetCoordinates();
-            hist.PathfindingRange.AddRange(range);
+            var range = history.GetRange(graph.GetHashCode());
+            range.Clear();
+            range.AddRange(builder.Range.GetCoordinates());
         }
 
         public override string ToString()

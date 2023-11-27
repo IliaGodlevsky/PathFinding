@@ -8,7 +8,6 @@ using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
-using Shared.Extensions;
 using System;
 using System.Linq;
 
@@ -43,17 +42,17 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             {
                 var path = InputPath();
                 var importedHistory = ImportGraph(path);
-                importedHistory.ForEach(history.Add);
+                history.Merge(importedHistory);
                 if (history.Count == importedHistory.Count && history.Count > 0)
                 {
-                    var graph = importedHistory.Graphs.FirstOrDefault();
+                    var graph = history.Graphs.FirstOrDefault();
                     var costRange = graph.First().Cost.CostRange;
                     var costMsg = new CostRangeChangedMessage(costRange);
                     messenger.Send(costMsg, Tokens.AppLayout);
                     var graphMsg = new GraphMessage(graph);
                     messenger.SendMany(graphMsg, Tokens.Visual, Tokens.AppLayout, 
                         Tokens.Main, Tokens.Common);
-                    var range = importedHistory.GetFor(graph).PathfindingRange;
+                    var range = history.GetRange(graph.GetHashCode());
                     rangeBuilder.Undo();
                     rangeBuilder.Include(range, graph);
                 }

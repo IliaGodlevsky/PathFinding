@@ -38,9 +38,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 
         public bool CanBeExecuted()
         {
-            return history.Graphs
-                .Select(graph => history.GetFor(graph))
-                .Any(hist => hist.PathfindingRange.Any());
+            return history.Ids
+                .Select(id => history.GetRange(id))
+                .Any(range => range.Count > 0);
         }
 
         public async void Execute()
@@ -50,20 +50,26 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 if (history.Count == 1)
                 {
                     var path = stringInput.Input();
-                    var range = history.First().History.PathfindingRange.ToArray();
+                    int id = history.Ids.First();
+                    var range = history.GetRange(id);
                     await serializer.SerializeToFileAsync(range, path);
                     return;
                 }
-                var graphs = history.Graphs
-                    .Where(graph => history.GetFor(graph).PathfindingRange.Any())
+                var ids = history.Ids
+                    .Where(id => history.GetRange(id).Count > 0)
                     .ToArray();
-                var histories = graphs.Select(history.GetFor).ToArray();
+                var ranges = ids
+                    .Select(id => history.GetRange(id))
+                    .ToArray();
+                var graphs = ids
+                    .Select(id => history.GetGraph(id))
+                    .ToArray();
                 string menuList = CreateMenuList(graphs);
-                int index = InputIndex(menuList, histories.Length);
-                if (index != histories.Length)
+                int index = InputIndex(menuList, ranges.Length);
+                if (index != ranges.Length)
                 {
                     var path = stringInput.Input();
-                    var range = histories[index].PathfindingRange.ToArray();
+                    var range = ranges[index];
                     await serializer.SerializeToFileAsync(range, path);
                 }
             }
