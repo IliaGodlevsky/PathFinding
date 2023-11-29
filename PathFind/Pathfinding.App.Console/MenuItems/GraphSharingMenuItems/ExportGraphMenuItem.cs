@@ -49,11 +49,12 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 }
                 var keys = history.Graphs.ToList();
                 var toExport = new GraphsPathfindingHistory();
-                string menuList = CreateMenuList(keys);
-                int index = InputIndex(menuList, keys.Count);
+                int index = 0;
                 var ids = new List<int>();
-                while (index != keys.Count + 1)
+                do
                 {
+                    string menuList = CreateMenuList(keys);
+                    index = InputIndex(menuList, keys.Count);
                     if (index == keys.Count)
                     {
                         ids.AddRange(history.Ids);
@@ -62,13 +63,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                     int key = keys[index].GetHashCode();
                     keys.RemoveAt(index);
                     ids.Add(key);
-                    if (keys.Count == 0)
-                    {
-                        break;
-                    }
-                    menuList = CreateMenuList(keys);
-                    index = InputIndex(menuList, keys.Count);
                 }
+                while (index != keys.Count + 1 && keys.Count > 0);
                 if (ids.Count > 0)
                 {
                     var path = input.Input();

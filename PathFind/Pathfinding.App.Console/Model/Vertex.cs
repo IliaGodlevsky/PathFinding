@@ -18,9 +18,9 @@ namespace Pathfinding.App.Console.Model
         private IVertexCost cost = NullCost.Instance;
         private ConsoleColor color;
 
-        public bool IsObstacle { get; set; }
+        public virtual bool IsObstacle { get; set; }
 
-        public IVertexCost Cost
+        public virtual IVertexCost Cost
         {
             get => cost;
             set
@@ -40,9 +40,9 @@ namespace Pathfinding.App.Console.Model
             }
         }
 
-        public ICollection<IVertex> Neighbours { get; set; } = new List<IVertex>();
+        public virtual ICollection<IVertex> Neighbours { get; set; } = new HashSet<IVertex>();
 
-        public ICoordinate Position { get; } = NullCoordinate.Interface;
+        public virtual ICoordinate Position { get; } = NullCoordinate.Interface;
 
         public Point? ConsolePosition { get; set; } = null;
 
@@ -50,6 +50,12 @@ namespace Pathfinding.App.Console.Model
         {
             this.visualization = visualization;
             Position = coordinate;
+        }
+
+        protected Vertex(Vertex vertex)
+            : this(vertex.Position, vertex.visualization)
+        {
+
         }
 
         public void Display()

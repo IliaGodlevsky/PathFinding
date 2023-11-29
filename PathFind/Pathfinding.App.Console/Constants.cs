@@ -9,8 +9,6 @@ namespace Pathfinding.App.Console
     {
         private static readonly Parametres Settings = Parametres.Default;
 
-        public const string LiteDbConnectionString = "Pathfining.db";
-
         public const string ObstacleColorKey = nameof(Languages.ObstacleColor);
         public const string RegularColorKey = nameof(Languages.RegularColor);
         public const string SourceColorKey = nameof(Languages.SourceColor);

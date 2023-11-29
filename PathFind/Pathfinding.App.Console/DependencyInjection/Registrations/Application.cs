@@ -52,7 +52,6 @@ using Pathfinding.GraphLib.Smoothing.Realizations.MeanCosts;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Logging.Loggers;
 using Pathfinding.Visualization.Core.Abstractions;
-using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Executable;
 using Shared.Random;
 using Shared.Random.Realizations;

@@ -1,8 +1,11 @@
-﻿using Pathfinding.App.Console.DataAccess;
+﻿using Pathfinding.AlgorithmLib.History;
+using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Model.Notes;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Shared.Extensions;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Pathfinding.App.Console.Extensions
@@ -15,14 +18,20 @@ namespace Pathfinding.App.Console.Extensions
             foreach (var key in history.Algorithms)
             {
                 writer.Write(key);
-                writer.WriteCoordinates(history.Obstacles.TryGetOrAddNew(key));
-                writer.WriteCoordinates(history.Visited.TryGetOrAddNew(key));
-                writer.WriteCoordinates(history.Ranges.TryGetOrAddNew(key));
-                writer.WriteCoordinates(history.Paths.TryGetOrAddNew(key));
+                writer.WriteCoordinates(history.Obstacles, key);
+                writer.WriteCoordinates(history.Visited, key);
+                writer.WriteCoordinates(history.Ranges, key);
+                writer.WriteCoordinates(history.Paths, key);
                 writer.WriteIntArray(history.Costs.TryGetOrAddNew(key));
                 var statistics = history.Statistics.GetOrDefault(key, Statistics.Empty);
                 writer.WriteStatistics(statistics);
             }
+        }
+
+        private static void WriteCoordinates(this BinaryWriter writer, 
+            Dictionary<int, List<ICoordinate>> dict, int key)
+        {
+            writer.WriteCoordinates(dict.TryGetOrAddNew(key));
         }
 
         private static void WriteNullableString(this BinaryWriter writer, string value)
