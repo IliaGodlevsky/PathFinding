@@ -11,6 +11,8 @@ namespace Pathfinding.GraphLib.Core.Realizations
     public class Graph<TVertex> : IGraph<TVertex>
         where TVertex : IVertex
     {
+        public static readonly Graph<TVertex> Empty = new();
+
         private readonly IReadOnlyDictionary<ICoordinate, TVertex> vertices;
 
         public IReadOnlyList<int> DimensionsSizes { get; }

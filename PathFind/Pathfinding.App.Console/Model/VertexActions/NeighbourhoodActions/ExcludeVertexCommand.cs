@@ -15,7 +15,7 @@ namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions
         public void Execute(ActiveVertex active, Vertex vertex)
         {
             active.Current.Neighbours.Remove(vertex);
-            if (vertex.Color == Colours.Default.NeighbourhoodColor)
+            if (vertex.Color == Colours.Default.VisitedColor)
             {
                 vertex.VisualizeAsRegular();
             }

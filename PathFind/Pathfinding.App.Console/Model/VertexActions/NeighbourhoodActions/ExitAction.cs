@@ -21,7 +21,7 @@ namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions
                 using (Cursor.HideCursor())
                 {
                     Active.Current.Neighbours.OfType<Vertex>()
-                        .Where(v => v.Color == Colours.Default.NeighbourhoodColor)
+                        .Where(v => v.Color == Colours.Default.VisitedColor)
                         .ForEach(v => v.VisualizeAsRegular());
                 }
                 Active.Current = null;

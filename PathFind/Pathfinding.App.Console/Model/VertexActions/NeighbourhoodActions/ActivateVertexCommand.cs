@@ -23,7 +23,7 @@ namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions
             {
                 if (!neighbour.IsObstacle && !neighbour.IsVisualizedAsRange())
                 {
-                    neighbour.Color = Colours.Default.NeighbourhoodColor;
+                    neighbour.VisualizeAsVisited();
                 }
             }
         }
