@@ -216,6 +216,9 @@
   <data name="ColorsUnitMenuItem" xml:space="preserve">
     <value>Colors</value>
   </data>
+  <data name="CosDistance" xml:space="preserve">
+    <value>Cosine</value>
+  </data>
   <data name="Cost" xml:space="preserve">
     <value>Cost</value>
   </data>

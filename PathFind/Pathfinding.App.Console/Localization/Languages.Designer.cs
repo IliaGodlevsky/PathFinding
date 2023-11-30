@@ -358,6 +358,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cosine.
+        /// </summary>
+        public static string CosDistance {
+            get {
+                return ResourceManager.GetString("CosDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cost.
         /// </summary>
         public static string Cost {

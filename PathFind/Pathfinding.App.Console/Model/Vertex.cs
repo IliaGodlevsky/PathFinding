@@ -63,7 +63,7 @@ namespace Pathfinding.App.Console.Model
             if (ConsolePosition != null)
             {
                 Cursor.SetPosition(ConsolePosition);
-                Cursor.Write(Color, Cost);
+                Cursor.Write(Color, Cost.CurrentCost);
             }
         }
 

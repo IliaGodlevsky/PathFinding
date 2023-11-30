@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Angle.cs" />
+    <Compile Include="CosineDistance.cs" />
     <Compile Include="ChebyshevDistance.cs" />
     <Compile Include="Distance.cs" />
     <Compile Include="EuclidianDistance.cs" />
