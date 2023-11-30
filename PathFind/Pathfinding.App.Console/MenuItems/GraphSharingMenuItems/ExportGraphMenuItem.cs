@@ -49,12 +49,16 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 }
                 var keys = history.Graphs.ToList();
                 var toExport = new GraphsPathfindingHistory();
-                int index = 0;
+                string menu = CreateMenuList(keys);
+                string menuList = string.Concat(menu, "\n", Languages.ChooseGraph + ": ");
+                int index = InputIndex(menuList, keys.Count);
                 var ids = new List<int>();
-                do
+                while (true)
                 {
-                    string menuList = CreateMenuList(keys);
-                    index = InputIndex(menuList, keys.Count);
+                    if (index == keys.Count + 1)
+                    {
+                        break;
+                    }
                     if (index == keys.Count)
                     {
                         ids.AddRange(history.Ids);
@@ -63,8 +67,15 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                     int key = keys[index].GetHashCode();
                     keys.RemoveAt(index);
                     ids.Add(key);
+                    if (keys.Count > 0)
+                    {
+                        menu = CreateMenuList(keys);
+                        menuList = string.Concat(menu, "\n", Languages.ChooseGraph + ": ");
+                        index = InputIndex(menuList, keys.Count);
+                        break;
+                    }
                 }
-                while (index != keys.Count + 1 && keys.Count > 0);
+                
                 if (ids.Count > 0)
                 {
                     var path = input.Input();
@@ -92,7 +103,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             return graphs.Select(k => k.ToString())
                 .Append(Languages.All)
                 .Append(Languages.Quit)
-                .Append(Languages.ChooseGraph)
                 .CreateMenuList(1)
                 .ToString();
         }

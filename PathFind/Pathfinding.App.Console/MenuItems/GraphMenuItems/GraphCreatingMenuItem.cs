@@ -22,7 +22,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     {
         protected readonly IMessenger messenger;
         protected readonly IRandom random;
-        protected readonly IVertexCostFactory costFactory;
         protected readonly GraphAssemble assemble;
         protected readonly GraphsPathfindingHistory history;
 
@@ -35,13 +34,11 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected GraphCreatingMenuItem(IMessenger messenger,
             GraphAssemble assemble,
             IRandom random,
-            IVertexCostFactory costFactory,
             GraphsPathfindingHistory history)
         {
             this.history = history;
             this.messenger = messenger;
             this.random = random;
-            this.costFactory = costFactory;
             this.assemble = assemble;
         }
 
@@ -82,7 +79,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected virtual IEnumerable<ILayer> GetLayers()
         {
             yield return new NeighborhoodLayer(neighborhoodFactory);
-            yield return new VertexCostLayer(costFactory, costRange, random);
+            yield return new VertexCostLayer(costRange, random);
             yield return new ObstacleLayer(random, obstaclePercent);
         }
 

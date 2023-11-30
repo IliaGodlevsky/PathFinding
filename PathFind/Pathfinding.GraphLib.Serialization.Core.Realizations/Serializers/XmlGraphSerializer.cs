@@ -17,7 +17,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
         internal const string Value = "value-{0}";
         internal const string Obstacle = "obstacle";
         internal const string Neighbours = "neighbours";
-        internal const string Coordinate = "coordinate";
+        internal const string Position = "coordinate";
         internal const string Graph = "graph";
         internal const string Cost = "cost";
     }
@@ -26,17 +26,15 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
         where TVertex : IVertex
     {
         public XmlGraphSerializer(IVertexFromInfoFactory<TVertex> converter,
-            IGraphFactory<TVertex> graphFactory,
-            IVertexCostFactory costFactory,
-            ICoordinateFactory coordinateFactory)
-            : base(converter, graphFactory, costFactory, coordinateFactory)
+            IGraphFactory<TVertex> graphFactory)
+            : base(converter, graphFactory)
         {
 
         }
 
         protected override GraphSerializationInfo DeserializeInternal(Stream stream)
         {
-            return XDocument.Load(stream).Root.GetGraphInfo(costFactory, coordinateFactory);
+            return XDocument.Load(stream).Root.GetGraphInfo();
         }
 
         protected override void SerializeInternal(GraphSerializationInfo info, Stream stream)

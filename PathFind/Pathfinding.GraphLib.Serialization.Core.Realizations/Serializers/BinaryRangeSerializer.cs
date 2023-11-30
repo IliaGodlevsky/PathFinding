@@ -1,5 +1,4 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Exceptions;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
@@ -13,20 +12,13 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
 {
     public sealed class BinaryRangeSerializer : ISerializer<IEnumerable<ICoordinate>>
     {
-        private readonly ICoordinateFactory coordinateFactory;
-
-        public BinaryRangeSerializer(ICoordinateFactory coordinateFactory)
-        {
-            this.coordinateFactory = coordinateFactory;
-        }
-
         public IEnumerable<ICoordinate> DeserializeFrom(Stream stream)
         {
             try
             {
                 using (var reader = new BinaryReader(stream, Encoding.Default, leaveOpen: true))
                 {
-                    return reader.ReadCoordinates(coordinateFactory);
+                    return reader.ReadCoordinates();
                 }
             }
             catch (Exception ex)

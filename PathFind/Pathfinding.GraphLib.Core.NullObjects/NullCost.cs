@@ -8,9 +8,17 @@ namespace Pathfinding.GraphLib.Core.NullObjects
     [DebuggerDisplay("Null")]
     public sealed class NullCost : Singleton<NullCost, IVertexCost>, IVertexCost
     {
-        public int CurrentCost => default;
+        public int CurrentCost
+        {
+            get => default;
+            set { }
+        }
 
-        public InclusiveValueRange<int> CostRange => default;
+        public InclusiveValueRange<int> CostRange
+        {
+            get => default;
+            set { }
+        }
 
         private NullCost()
         {

@@ -1,4 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Shared.Primitives.ValueRange;
@@ -12,37 +13,35 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
 {
     internal static class XDocumentExtensions
     {
-        public static GraphSerializationInfo GetGraphInfo(this XElement root,
-            IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory)
+        public static GraphSerializationInfo GetGraphInfo(this XElement root)
         {
             var dimensions = root.Element(Dimensions).Attributes<int>();
             var vertices = root.Element(Vertices)
                 .Elements()
-                .Select(element => element.GetVertex(costFactory, coordinateFactory))
+                .Select(element => element.GetVertex())
                 .ToArray();
             return new(dimensions, vertices);
         }
 
-        private static VertexSerializationInfo GetVertex(this XElement element,
-            IVertexCostFactory costFactory, ICoordinateFactory factory)
+        private static VertexSerializationInfo GetVertex(this XElement element)
         {
             bool isObstacle = element.Element(Obstacle).Attributes<bool>().Single();
             int costValue = element.Element(Cost).Attributes<int>().Single();
             var range = element.Element(Range).Attributes<int>().ToRange();
-            var cost = costFactory.CreateCost(costValue, range);
-            var coordinate = element.Element(Coordinate).Attributes<int>().Create(factory);
+            var cost = new VertexCost(costValue, range);
+            var coordinate = element.Element(Position).Attributes<int>().Create();
             var neighbours = element.Element(Neighbours)
                 .Elements()
                 .Select(Attributes<int>)
-                .Select(factory.CreateCoordinate)
+                .Select(ar=> new Coordinate(ar))
                 .ToArray();
 
             return new(isObstacle, cost, coordinate, neighbours);
         }
 
-        private static ICoordinate Create(this int[] values, ICoordinateFactory factory)
+        private static ICoordinate Create(this int[] values)
         {
-            return factory.CreateCoordinate(values);
+            return new Coordinate(values);
         }
 
         private static InclusiveValueRange<int> ToRange(this int[] values)

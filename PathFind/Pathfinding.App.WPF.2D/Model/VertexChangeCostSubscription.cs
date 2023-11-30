@@ -30,7 +30,7 @@ namespace Pathfinding.App.WPF._2D.Model
                 var range = vertex.Cost.CostRange;
                 int delta = (e.Delta > 0 ? 1 : -1);
                 int newCost = range.ReturnInRange(vertex.Cost.CurrentCost + delta);
-                vertex.Cost = vertex.Cost.SetCost(newCost);
+                vertex.Cost.CurrentCost = newCost;
             }
         }
     }

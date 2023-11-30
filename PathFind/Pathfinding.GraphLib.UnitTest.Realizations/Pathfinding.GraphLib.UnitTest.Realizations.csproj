@@ -49,11 +49,9 @@
     <Compile Include="TestFactories\Layers\Graph2DLayer.cs" />
     <Compile Include="TestFactories\Layers\TestCostLayer.cs" />
     <Compile Include="TestFactories\Layers\TestObstacleLayer.cs" />
-    <Compile Include="TestFactories\TestCostFactory.cs" />
     <Compile Include="TestFactories\TestVertexFactory.cs" />
     <Compile Include="TestFactories\TestVertexFromInfoFactory.cs" />
     <Compile Include="TestObjects\TestVertex.cs" />
-    <Compile Include="TestObjects\TestVertexCost.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface.Extensions\Pathfinding.GraphLib.Core.Interface.Extensions.csproj">

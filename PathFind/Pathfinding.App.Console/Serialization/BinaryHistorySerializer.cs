@@ -9,18 +9,11 @@ namespace Pathfinding.App.Console.Serialization
 {
     internal sealed class BinaryHistorySerializer : ISerializer<GraphPathfindingHistory>
     {
-        private readonly ICoordinateFactory factory;
-
-        public BinaryHistorySerializer(ICoordinateFactory factory)
-        {
-            this.factory = factory;
-        }
-
         public GraphPathfindingHistory DeserializeFrom(Stream stream)
         {
             using (var reader = new BinaryReader(stream, Encoding.Default, leaveOpen: true))
             {
-                return reader.ReadHistory(factory);
+                return reader.ReadHistory();
             }
         }
 

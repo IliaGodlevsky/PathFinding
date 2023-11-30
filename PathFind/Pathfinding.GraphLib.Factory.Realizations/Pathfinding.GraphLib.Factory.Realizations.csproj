@@ -41,8 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoordinateFactories\CoordinateFactory.cs" />
-    <Compile Include="CostFactory.cs" />
     <Compile Include="GraphAssembles\GraphAssemble.cs" />
     <Compile Include="GraphFactories\GraphFactory.cs" />
     <Compile Include="Layers\NeighborhoodLayer.cs" />

@@ -1,4 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Shared.Primitives.ValueRange;
@@ -8,33 +9,30 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
 {
     public static class BinaryReaderExtensions
     {
-        public static GraphSerializationInfo ReadGraph(this BinaryReader reader,
-            IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory)
+        public static GraphSerializationInfo ReadGraph(this BinaryReader reader)
         {
             var dimensionsSizes = reader.ReadIntArray();
-            var verticesInfo = reader.ReadVertices(costFactory, coordinateFactory);
+            var verticesInfo = reader.ReadVertices();
             return new(dimensionsSizes, verticesInfo);
         }
 
-        private static VertexSerializationInfo[] ReadVertices(this BinaryReader reader,
-            IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory)
+        private static VertexSerializationInfo[] ReadVertices(this BinaryReader reader)
         {
             int verticesCount = reader.ReadInt32();
             var vertices = new VertexSerializationInfo[verticesCount];
             for (int i = 0; i < verticesCount; i++)
             {
-                vertices[i] = reader.ReadVertex(costFactory, coordinateFactory);
+                vertices[i] = reader.ReadVertex();
             }
             return vertices;
         }
 
-        private static VertexSerializationInfo ReadVertex(this BinaryReader reader,
-            IVertexCostFactory costFactory, ICoordinateFactory coordinateFactory)
+        private static VertexSerializationInfo ReadVertex(this BinaryReader reader)
         {
             bool isObstacle = reader.ReadBoolean();
-            var cost = reader.ReadCost(costFactory);
-            var neighbourhood = reader.ReadCoordinates(coordinateFactory);
-            var position = reader.ReadCoordinate(coordinateFactory);
+            var cost = reader.ReadCost();
+            var neighbourhood = reader.ReadCoordinates();
+            var position = reader.ReadCoordinate();
             return new(isObstacle, cost, position, neighbourhood);
         }
 
@@ -56,30 +54,28 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             return new(upperValueOfCostRange, lowerValueOfCostRange);
         }
 
-        public static ICoordinate[] ReadCoordinates(this BinaryReader reader,
-            ICoordinateFactory factory)
+        public static ICoordinate[] ReadCoordinates(this BinaryReader reader)
         {
             int count = reader.ReadInt32();
             var neighborhood = new ICoordinate[count];
             for (int i = 0; i < count; i++)
             {
-                neighborhood[i] = reader.ReadCoordinate(factory);
+                neighborhood[i] = reader.ReadCoordinate();
             }
             return neighborhood;
         }
 
-        private static IVertexCost ReadCost(this BinaryReader reader, IVertexCostFactory factory)
+        private static IVertexCost ReadCost(this BinaryReader reader)
         {
             int cost = reader.ReadInt32();
             var range = reader.ReadRange();
-            return factory.CreateCost(cost, range);
+            return new VertexCost(cost, range);
         }
 
-        private static ICoordinate ReadCoordinate(this BinaryReader reader,
-            ICoordinateFactory factory)
+        private static ICoordinate ReadCoordinate(this BinaryReader reader)
         {
             var coordinates = reader.ReadIntArray();
-            return factory.CreateCoordinate(coordinates);
+            return new Coordinate(coordinates);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Pathfinding.App.Console.Model.VertexActions
             var range = vertex.Cost.CostRange;
             int newCost = vertex.Cost.CurrentCost + Increment;
             newCost = range.ReturnInRange(newCost);
-            vertex.Cost = vertex.Cost.SetCost(newCost);
+            vertex.Cost.CurrentCost = newCost;
         }
     }
 }

@@ -27,7 +27,6 @@ namespace Pathfinding.App.WPF._3D.ViewModel
 
         private readonly IRandom random;
         private readonly INeighborhoodFactory neighborhoodFactory;
-        private readonly IVertexCostFactory costFactory;
         private readonly ILog log;
         private readonly IMessenger messenger;
 
@@ -47,13 +46,12 @@ namespace Pathfinding.App.WPF._3D.ViewModel
 
         public GraphAssemble SelectedGraphAssemble { get; set; }
 
-        public GraphCreatingViewModel(IRandom random, INeighborhoodFactory neighborhoodFactory,
-            IVertexCostFactory costFactory, ILog log)
+        public GraphCreatingViewModel(IRandom random, 
+            INeighborhoodFactory neighborhoodFactory, ILog log)
         {
             this.messenger = DI.Container.Resolve<IMessenger>();
             this.random = random;
             this.neighborhoodFactory = neighborhoodFactory;
-            this.costFactory = costFactory;
             this.log = log;
             CreateGraphCommand = new RelayCommand(ExecuteCreateGraphCommand, CanExecuteCreateGraphCommand);
             CancelCreateGraphCommand = new RelayCommand(obj => CloseWindow());
@@ -95,7 +93,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel
             {
                 new ObstacleLayer(random, ObstaclePercent),
                 new NeighborhoodLayer(neighborhoodFactory),
-                new VertexCostLayer(costFactory, CostRange, random)
+                new VertexCostLayer(CostRange, random)
             };
         }
 

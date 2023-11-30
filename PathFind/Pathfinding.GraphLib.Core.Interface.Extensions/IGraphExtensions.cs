@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared.Primitives.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -32,7 +33,9 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
         {
             foreach (var item in graph.Zip(costs, (v, p) => (Vertex: v, Price: p)))
             {
-                item.Vertex.Cost = item.Vertex.Cost.SetCost(item.Price);
+                var range = item.Vertex.Cost.CostRange;
+                int cost = range.ReturnInRange(item.Price);
+                item.Vertex.Cost.CurrentCost = cost;
             }
         }
 

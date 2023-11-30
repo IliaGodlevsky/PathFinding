@@ -5,7 +5,6 @@ using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
-using Shared.Extensions;
 using System;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems

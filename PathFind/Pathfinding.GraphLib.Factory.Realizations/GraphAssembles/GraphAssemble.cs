@@ -1,4 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations.Localizations;
 using Shared.Extensions;
@@ -12,16 +13,13 @@ namespace Pathfinding.GraphLib.Factory.Realizations.GraphAssembles
     public sealed class GraphAssemble<TVertex> : IGraphAssemble<TVertex>
         where TVertex : IVertex
     {
-        private readonly ICoordinateFactory coordinateFactory;
         private readonly IVertexFactory<TVertex> vertexFactory;
         private readonly IGraphFactory<TVertex> graphFactory;
 
         public GraphAssemble(IVertexFactory<TVertex> vertexFactory,
-            ICoordinateFactory coordinateFactory,
             IGraphFactory<TVertex> graphFactory)
         {
             this.vertexFactory = vertexFactory;
-            this.coordinateFactory = coordinateFactory;
             this.graphFactory = graphFactory;
         }
 
@@ -32,7 +30,7 @@ namespace Pathfinding.GraphLib.Factory.Realizations.GraphAssembles
             for (int i = 0; i < graphSize; i++)
             {
                 var coordinates = ToCoordinates(graphDimensionsSizes, i);
-                var coordinate = coordinateFactory.CreateCoordinate(coordinates);
+                var coordinate = new Coordinate(coordinates);
                 vertices[i] = vertexFactory.CreateVertex(coordinate);
             }
             return graphFactory.CreateGraph(vertices, graphDimensionsSizes);

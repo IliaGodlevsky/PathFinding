@@ -1,4 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.UnitTest.Realizations.TestObjects;
 
 namespace Pathfinding.GraphLib.UnitTest.Realizations.TestFactories.Layers
@@ -7,7 +8,7 @@ namespace Pathfinding.GraphLib.UnitTest.Realizations.TestFactories.Layers
     {
         protected override void Assign(IVertex vertex, int value)
         {
-            vertex.Cost = new TestVertexCost(value);
+            vertex.Cost = new VertexCost(value, default);
         }
 
         protected override int[,] CreateMatrix()

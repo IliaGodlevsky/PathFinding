@@ -36,14 +36,14 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
         {
             yield return document.CreateElement(Obstacle).WithAttributes(vertex.IsObstacle);
             yield return document.CreateElement(Neighbours).WithChildren(document.CreateNodes(vertex.Neighbourhood));
-            yield return document.CreateElement(Coordinate).WithAttributes(vertex.Position.AsEnumerable());
+            yield return document.CreateElement(Position).WithAttributes(vertex.Position.AsEnumerable());
             yield return document.CreateElement(Cost).WithAttributes(vertex.Cost.CurrentCost);
             yield return document.CreateElement(Range).WithAttributes(vertex.Cost.CostRange.LowerValueOfRange, vertex.Cost.CostRange.UpperValueOfRange);
         }
 
         private static IEnumerable<XmlNode> CreateNodes(this XmlDocument document, IEnumerable<ICoordinate> neighborhood)
         {
-            return neighborhood.Select(neighbour => document.CreateElement(Coordinate).WithAttributes(neighbour.AsEnumerable()));
+            return neighborhood.Select(neighbour => document.CreateElement(Position).WithAttributes(neighbour.AsEnumerable()));
         }
 
         private static XmlNode WithAttributes<T>(this XmlNode node, params T[] array)

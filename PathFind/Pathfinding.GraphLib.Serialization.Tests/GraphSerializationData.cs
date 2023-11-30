@@ -1,7 +1,6 @@
 ﻿using GraphLib.Serialization.Serializers.Decorators;
 using NUnit.Framework;
 using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
 using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decorators;
@@ -64,10 +63,8 @@ namespace Pathfinding.GraphLib.Serialization.Tests
         {
             var vertexFactory = new TestVertexFromInfoFactory();
             var graphFactory = new GraphFactory<TestVertex>();
-            var costFactory = new TestCostFactory();
-            var coordinateFactory = new CoordinateFactory();
             return (TSerializer)Activator.CreateInstance(typeof(TSerializer),
-                vertexFactory, graphFactory, costFactory, coordinateFactory);
+                vertexFactory, graphFactory);
         }
     }
 }

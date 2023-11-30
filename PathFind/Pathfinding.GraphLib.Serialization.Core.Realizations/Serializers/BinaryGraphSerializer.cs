@@ -11,10 +11,8 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
         where TVertex : IVertex
     {
         public BinaryGraphSerializer(IVertexFromInfoFactory<TVertex> converter,
-            IGraphFactory<TVertex> graphFactory,
-            IVertexCostFactory costFactory,
-            ICoordinateFactory coordinateFactory)
-            : base(converter, graphFactory, costFactory, coordinateFactory)
+            IGraphFactory<TVertex> graphFactory)
+            : base(converter, graphFactory)
         {
 
         }
@@ -23,7 +21,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
         {
             using (var reader = new BinaryReader(stream, Encoding.Default, leaveOpen: true))
             {
-                return reader.ReadGraph(costFactory, coordinateFactory);
+                return reader.ReadGraph();
             }
         }
 

@@ -14,18 +14,12 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
     {
         protected readonly IVertexFromInfoFactory<TVertex> vertexFactory;
         protected readonly IGraphFactory<TVertex> graphFactory;
-        protected readonly IVertexCostFactory costFactory;
-        protected readonly ICoordinateFactory coordinateFactory;
 
         public GraphSerializer(IVertexFromInfoFactory<TVertex> factory,
-            IGraphFactory<TVertex> graphFactory,
-            IVertexCostFactory costFactory,
-            ICoordinateFactory coordinateFactory)
+            IGraphFactory<TVertex> graphFactory)
         {
             this.vertexFactory = factory;
             this.graphFactory = graphFactory;
-            this.costFactory = costFactory;
-            this.coordinateFactory = coordinateFactory;
         }
 
         public IGraph<TVertex> DeserializeFrom(Stream stream)

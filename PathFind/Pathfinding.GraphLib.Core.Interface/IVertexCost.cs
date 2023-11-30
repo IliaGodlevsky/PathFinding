@@ -4,10 +4,8 @@ namespace Pathfinding.GraphLib.Core.Interface
 {
     public interface IVertexCost
     {
-        InclusiveValueRange<int> CostRange { get; }
+        InclusiveValueRange<int> CostRange { get; set; }
 
-        int CurrentCost { get; }
-
-        IVertexCost SetCost(int cost);
+        int CurrentCost { get; set; }
     }
 }

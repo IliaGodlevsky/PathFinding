@@ -1,7 +1,6 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
-using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
 using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
 using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
 using Pathfinding.GraphLib.Factory.Realizations.Layers;
@@ -22,9 +21,7 @@ namespace Pathfinding.AlgorithmLib.Benchmarks.Pathfinding
         private readonly InclusiveValueRange<int> range = new InclusiveValueRange<int>(5, 1);
         private readonly GraphFactory<TestVertex> graphFactory = new GraphFactory<TestVertex>();
         private readonly INeighborhoodFactory neighbourhood = new MooreNeighborhoodFactory();
-        private readonly ICoordinateFactory coordinateFactory = new CoordinateFactory();
         private readonly IVertexFactory<TestVertex> vertexFactory = new TestVertexFactory();
-        private readonly IVertexCostFactory costFactory = new TestCostFactory();
         private readonly IGraphAssemble<TestVertex> graphAssemble;
         private readonly ILayer costLayer;
         private readonly ILayer neighboursLayer;
@@ -33,8 +30,8 @@ namespace Pathfinding.AlgorithmLib.Benchmarks.Pathfinding
         protected AlgorithmsBenchmarks()
         {
             graphAssemble = new GraphAssemble<TestVertex>(
-                    vertexFactory, coordinateFactory, graphFactory);
-            costLayer = new VertexCostLayer(costFactory, range, random);
+                    vertexFactory, graphFactory);
+            costLayer = new VertexCostLayer(range, random);
             neighboursLayer = new NeighborhoodLayer(neighbourhood);
             layers = new ILayer[] { costLayer, neighboursLayer };
         }

@@ -2,7 +2,6 @@
 using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
-using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
 using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
 using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
 using Pathfinding.GraphLib.Factory.Realizations.Layers;
@@ -53,9 +52,8 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests.Realizations
         private static IGraph<TestVertex> CreateGraph()
         {
             var vertexFactory = new TestVertexFactory();
-            var coordinateFactory = new CoordinateFactory();
             var graphFactory = new GraphFactory<TestVertex>();
-            var assemble = new Assemble(vertexFactory, coordinateFactory, graphFactory);
+            var assemble = new Assemble(vertexFactory, graphFactory);
             var layers = new ILayer[]
             {
                 new TestObstacleLayer(),

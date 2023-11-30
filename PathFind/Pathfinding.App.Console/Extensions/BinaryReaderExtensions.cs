@@ -12,7 +12,7 @@ namespace Pathfinding.App.Console.Extensions
 {
     internal static class BinaryReaderExtensions
     {
-        public static GraphPathfindingHistory ReadHistory(this BinaryReader reader, ICoordinateFactory factory)
+        public static GraphPathfindingHistory ReadHistory(this BinaryReader reader)
         {
             var history = new GraphPathfindingHistory();
             int keyCount = reader.ReadInt32();
@@ -20,10 +20,10 @@ namespace Pathfinding.App.Console.Extensions
             {
                 var key = reader.ReadInt32();
                 history.Algorithms.Add(key);
-                history.Obstacles.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates(factory));
-                history.Visited.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates(factory));
-                history.Ranges.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates(factory));
-                history.Paths.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates(factory));
+                history.Obstacles.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates());
+                history.Visited.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates());
+                history.Ranges.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates());
+                history.Paths.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates());
                 history.Costs.TryGetOrAddNew(key).AddRange(reader.ReadIntArray());
                 history.Statistics.Add(key, reader.ReadStatisitics());
             }
@@ -37,11 +37,6 @@ namespace Pathfinding.App.Console.Extensions
             {
                 yield return reader.ReadIntArray();
             }
-        }
-
-        private static Guid ReadGuid(this BinaryReader reader)
-        {
-            return new(reader.ReadBytes(16));
         }
 
         private static int? ReadNullableInt32(this BinaryReader reader)

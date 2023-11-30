@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
-using GraphLib.Serialization.Serializers.Decorators;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.App.WPF._3D.Extensions;
@@ -15,14 +14,12 @@ using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations;
-using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
 using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
 using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
 using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Modules;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers;
-using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decorators;
 using Pathfinding.GraphLib.Subscriptions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Logging.Loggers;
@@ -85,8 +82,6 @@ namespace Pathfinding.App.WPF._3D.DependencyInjection
             builder.RegisterDecorator<ThreadSafeRandom, IRandom>();
 
             builder.RegisterType<Vertex3DFactory>().As<IVertexFactory<Vertex3D>>().SingleInstance();
-            builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
-            builder.RegisterType<CoordinateFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<GraphFactory<Vertex3D>>().As<IGraphFactory<Vertex3D>>().SingleInstance();
             builder.RegisterType<GraphField3DFactory>().As<IGraphFieldFactory<Vertex3D, GraphField3D>>().SingleInstance();
             builder.RegisterType<VonNeumannNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance();

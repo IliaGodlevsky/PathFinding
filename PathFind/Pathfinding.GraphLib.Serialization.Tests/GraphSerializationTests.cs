@@ -4,7 +4,6 @@ using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations;
-using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
 using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
 using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
 using Pathfinding.GraphLib.Factory.Realizations.Layers;
@@ -64,9 +63,8 @@ namespace Pathfinding.GraphLib.Serialization.Tests
         private static Assemble GetAssemble()
         {
             var graphFactory = new GraphFactory<TestVertex>();
-            var coordinateFactory = new CoordinateFactory();
             var vertexFactory = new TestVertexFactory();
-            return new Assemble(vertexFactory, coordinateFactory, graphFactory);
+            return new Assemble(vertexFactory, graphFactory);
         }
 
         private static ILayer[] GetLayers()
@@ -77,7 +75,7 @@ namespace Pathfinding.GraphLib.Serialization.Tests
             return new ILayer[]
             {
                 new NeighborhoodLayer(new MooreNeighborhoodFactory()),
-                new VertexCostLayer(new CostFactory(), range, random),
+                new VertexCostLayer(range, random),
                 new ObstacleLayer(random, obstaclePercent)
             };
         }

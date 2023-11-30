@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using GalaSoft.MvvmLight.Messaging;
-using GraphLib.Serialization.Serializers.Decorators;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
@@ -17,14 +16,12 @@ using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations;
-using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
 using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
 using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
 using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Modules;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers;
-using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decorators;
 using Pathfinding.GraphLib.Smoothing.Interface;
 using Pathfinding.GraphLib.Smoothing.Realizations.MeanCosts;
 using Pathfinding.GraphLib.Subscriptions;
@@ -45,7 +42,6 @@ namespace WPFVersion.DependencyInjection
 {
     using AlgorithmFactory = IAlgorithmFactory<PathfindingProcess>;
     using Command = IPathfindingRangeCommand<Vertex>;
-    using Graph = IGraph<Vertex>;
     using GraphSerializer = ISerializer<IGraph<Vertex>>;
 
     internal static class DI
@@ -98,8 +94,6 @@ namespace WPFVersion.DependencyInjection
             // Graph registrations
             builder.RegisterType<GraphAssemble<Vertex>>().As<IGraphAssemble<Vertex>>().SingleInstance();
             builder.RegisterType<VertexFactory>().As<IVertexFactory<Vertex>>().SingleInstance();
-            builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
-            builder.RegisterType<CoordinateFactory>().As<ICoordinateFactory>().SingleInstance();
             builder.RegisterType<GraphFactory<Vertex>>().As<IGraphFactory<Vertex>>().SingleInstance();
             builder.RegisterDecorator<Graph2dWrapFactory, IGraphFactory<Vertex>>();
             builder.RegisterType<GraphFieldFactory>().As<IGraphFieldFactory<Vertex, GraphField>>().SingleInstance();

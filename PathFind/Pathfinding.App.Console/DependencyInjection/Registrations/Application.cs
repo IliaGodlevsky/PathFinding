@@ -40,7 +40,6 @@ using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations;
-using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
 using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
 using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
 using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
@@ -148,9 +147,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<ExcludeTargetVertex<Vertex>>().Keyed<Command>(ExcludeCommand).WithMetadata(Order, 2).SingleInstance();
 
                 builder.RegisterType<GraphAssemble<Vertex>>().As<IGraphAssemble<Vertex>>().SingleInstance();
-                builder.RegisterType<CostFactory>().As<IVertexCostFactory>().SingleInstance();
                 builder.RegisterType<VertexFactory>().As<IVertexFactory<Vertex>>().SingleInstance();
-                builder.RegisterType<CoordinateFactory>().As<ICoordinateFactory>().SingleInstance();
                 builder.RegisterType<GraphFactory<Vertex>>().As<IGraphFactory<Vertex>>().SingleInstance();
                 builder.RegisterDecorator<GraphWrapFactory, IGraphFactory<Vertex>>();
 

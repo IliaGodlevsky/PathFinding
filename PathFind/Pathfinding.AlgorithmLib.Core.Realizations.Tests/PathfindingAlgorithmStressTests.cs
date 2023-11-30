@@ -3,7 +3,6 @@ using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
-using Pathfinding.GraphLib.Factory.Realizations.CoordinateFactories;
 using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
 using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
 using Pathfinding.GraphLib.Factory.Realizations.Layers;
@@ -29,17 +28,15 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests
         private readonly InclusiveValueRange<int> range = new InclusiveValueRange<int>(5, 1);
         private readonly GraphFactory<TestVertex> graphFactory = new GraphFactory<TestVertex>();
         private readonly INeighborhoodFactory neighbourhood = new MooreNeighborhoodFactory();
-        private readonly ICoordinateFactory coordinateFactory = new CoordinateFactory();
         private readonly IVertexFactory<TestVertex> vertexFactory = new TestVertexFactory();
-        private readonly IVertexCostFactory costFactory = new TestCostFactory();
         private readonly IGraphAssemble<TestVertex> graphAssemble;
         private readonly ILayer[] layers;
 
         public PathfindingAlgorithmStressTests()
         {
             graphAssemble = new GraphAssemble<TestVertex>(
-                vertexFactory, coordinateFactory, graphFactory);
-            var costLayer = new VertexCostLayer(costFactory, range, random);
+                vertexFactory, graphFactory);
+            var costLayer = new VertexCostLayer(range, random);
             var neighboursLayer = new NeighborhoodLayer(neighbourhood);
             layers = new ILayer[] { costLayer, neighboursLayer };
         }

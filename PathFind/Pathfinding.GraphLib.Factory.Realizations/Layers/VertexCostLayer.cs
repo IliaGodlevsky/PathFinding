@@ -1,4 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Factory.Interface;
 using Shared.Primitives.ValueRange;
 using Shared.Random;
@@ -8,16 +9,12 @@ namespace Pathfinding.GraphLib.Factory.Realizations.Layers
 {
     public sealed class VertexCostLayer : ILayer
     {
-        private IVertexCostFactory CostFactory { get; }
-
         private InclusiveValueRange<int> CostRange { get; }
 
         private IRandom Random { get; }
 
-        public VertexCostLayer(IVertexCostFactory costFactory,
-            InclusiveValueRange<int> costRange, IRandom random)
+        public VertexCostLayer(InclusiveValueRange<int> costRange, IRandom random)
         {
-            this.CostFactory = costFactory;
             this.CostRange = costRange;
             this.Random = random;
         }
@@ -27,7 +24,7 @@ namespace Pathfinding.GraphLib.Factory.Realizations.Layers
             foreach (var vertex in graph)
             {
                 var costValue = Random.NextInt(CostRange);
-                vertex.Cost = CostFactory.CreateCost(costValue, CostRange);
+                vertex.Cost = new VertexCost(costValue, CostRange);
             }
         }
     }

@@ -14,9 +14,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         public AssembleGraphMenuItem(IMessenger messenger,
             IGraphAssemble<Vertex> assemble,
             IRandom random,
-            IVertexCostFactory costFactory,
             GraphsPathfindingHistory history)
-            : base(messenger, assemble, random, costFactory, history)
+            : base(messenger, assemble, random, history)
         {
 
         }

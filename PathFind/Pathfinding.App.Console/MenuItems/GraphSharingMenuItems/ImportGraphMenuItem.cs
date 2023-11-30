@@ -50,8 +50,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                     var costMsg = new CostRangeChangedMessage(costRange);
                     messenger.Send(costMsg, Tokens.AppLayout);
                     var graphMsg = new GraphMessage(graph);
-                    messenger.SendMany(graphMsg, Tokens.Visual, Tokens.AppLayout, 
-                        Tokens.Main, Tokens.Common);
+                    messenger.SendMany(graphMsg, Tokens.Visual, 
+                        Tokens.AppLayout, Tokens.Main, Tokens.Common);
                     var range = history.GetRange(graph.GetHashCode());
                     rangeBuilder.Undo();
                     rangeBuilder.Include(range, graph);
