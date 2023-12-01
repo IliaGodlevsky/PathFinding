@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
@@ -81,7 +81,7 @@ namespace Pathfinding.App.Console.Units
         {
             var token = Tokens.Main.Bind(IsGraphCreated);
             messenger.RegisterGraph(this, Tokens.Main, SetGraph);
-            messenger.Register<GraphChangedMessage>(this, token, OnGraphChanged);
+            messenger.Register<MainUnit, GraphChangedMessage>(this, token, OnGraphChanged);
         }
     }
 }

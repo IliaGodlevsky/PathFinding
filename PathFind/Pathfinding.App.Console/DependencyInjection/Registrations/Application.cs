@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using GraphLib.Serialization.Serializers.Decorators;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
@@ -56,7 +56,6 @@ using Shared.Random.Realizations;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using static Pathfinding.App.Console.DependencyInjection.PathfindingUnits;
@@ -81,7 +80,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             {
                 builder.RegisterType<ApplicationSettingsStore>().SingleInstance().AutoActivate();
 
-                builder.RegisterType<Messenger>().As<IMessenger>().SingleInstance().RegisterRecievers();
+                builder.RegisterType<WeakReferenceMessenger>().As<IMessenger>().SingleInstance().RegisterRecievers();
 
                 builder.RegisterType<AppLayout>().As<ICanRecieveMessage>().SingleInstance().AutoActivate();
 

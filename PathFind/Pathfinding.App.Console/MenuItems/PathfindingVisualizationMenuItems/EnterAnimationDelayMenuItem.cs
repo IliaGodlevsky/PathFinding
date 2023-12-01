@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -50,7 +50,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.Register<IsAppliedMessage>(this, Tokens.Visualization, SetApplied);
+            messenger.Register<EnterAnimationDelayMenuItem, IsAppliedMessage>(this, Tokens.Visualization, SetApplied);
         }
     }
 }

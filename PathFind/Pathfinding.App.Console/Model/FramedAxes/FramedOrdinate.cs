@@ -38,7 +38,7 @@ namespace Pathfinding.App.Console.Model.FramedAxes
             for (int i = 0; i < graphLength; i++)
             {
                 var coord = new Point(start.X, start.Y + i);
-                yield return new (VerticalFrameComponent, coord);
+                yield return new(VerticalFrameComponent, coord);
             }
         }
 

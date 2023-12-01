@@ -1,9 +1,7 @@
 ﻿using Pathfinding.App.Console.Interface;
 using Shared.Primitives.Single;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Pathfinding.App.Console.Model.Visualizations.Containers
 {
@@ -24,7 +22,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.Containers
 
         public void Remove(int id, Vertex vertex)
         {
-            
+
         }
 
         public IReadOnlyCollection<Vertex> GetVertices(int id)

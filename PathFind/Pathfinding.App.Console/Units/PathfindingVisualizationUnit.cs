@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.App.Console.DataAccess;
@@ -109,9 +109,9 @@ namespace Pathfinding.App.Console.Units
         {
             var token = Tokens.Visualization.Bind(IsVisualizationApplied);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
-            messenger.Register<AlgorithmDelayMessage>(this, token, SetAnimationDelay);
-            messenger.Register<IsAppliedMessage>(this, Tokens.Visualization, SetIsApplied);
-            messenger.Register<AlgorithmMessage>(this, token, SubscribeOnVisualization);
+            messenger.Register<PathfindingVisualizationUnit, AlgorithmDelayMessage>(this, token, SetAnimationDelay);
+            messenger.Register<PathfindingVisualizationUnit, IsAppliedMessage>(this, Tokens.Visualization, SetIsApplied);
+            messenger.Register<PathfindingVisualizationUnit, AlgorithmMessage>(this, token, SubscribeOnVisualization);
         }
     }
 }

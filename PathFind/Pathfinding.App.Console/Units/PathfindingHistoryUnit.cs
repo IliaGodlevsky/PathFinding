@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.App.Console.DataAccess;
@@ -123,12 +123,12 @@ namespace Pathfinding.App.Console.Units
         {
             var token = Tokens.History.Bind(IsHistoryApplied);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
-            messenger.Register<IsAppliedMessage>(this, Tokens.History, SetIsApplied);
-            messenger.Register<AlgorithmKeyMessage>(this, token, VisualizeHistory);
-            messenger.Register<AlgorithmMessage>(this, token, PrepareForPathfinding);
-            messenger.Register<PathFoundMessage>(this, token, OnPathFound);
-            messenger.Register<StatisticsMessage>(this, token, SetStatistics);
-            messenger.Register<ClearHistoryMessage>(this, Tokens.History, ClearHistory);
+            messenger.Register<PathfindingHistoryUnit, IsAppliedMessage>(this, Tokens.History, SetIsApplied);
+            messenger.Register<PathfindingHistoryUnit, AlgorithmKeyMessage>(this, token, VisualizeHistory);
+            messenger.Register<PathfindingHistoryUnit, AlgorithmMessage>(this, token, PrepareForPathfinding);
+            messenger.Register<PathfindingHistoryUnit, PathFoundMessage>(this, token, OnPathFound);
+            messenger.Register<PathfindingHistoryUnit, StatisticsMessage>(this, token, SetStatistics);
+            messenger.Register<PathfindingHistoryUnit, ClearHistoryMessage>(this, Tokens.History, ClearHistory);
         }
     }
 }

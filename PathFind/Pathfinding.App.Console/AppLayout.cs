@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
@@ -6,7 +6,6 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations;
-using Shared.Primitives.ValueRange;
 using System;
 using System.Drawing;
 
@@ -33,9 +32,9 @@ namespace Pathfinding.App.Console
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.Register<CostRangeChangedMessage>(this, Tokens.AppLayout, SetRange);
-            messenger.Register<StatisticsLineMessage>(this, Tokens.AppLayout, ShowStatistics);
-            messenger.RegisterGraph(this, Tokens.AppLayout, SetGraph);
+            messenger.Register<AppLayout, CostRangeChangedMessage, IToken>(this, Tokens.AppLayout, SetRange);
+            messenger.Register<AppLayout, StatisticsLineMessage, IToken>(this, Tokens.AppLayout, ShowStatistics);
+            messenger.RegisterGraph<AppLayout>(this, Tokens.AppLayout, SetGraph);
         }
 
         public static void SetCursorPositionUnderGraphField()
@@ -46,22 +45,22 @@ namespace Pathfinding.App.Console
         private void SetGraph(GraphMessage msg)
         {
             Graph = msg.Graph;
-            int pathFindingStatisticsOffset = Graph.GetLength() 
+            int pathFindingStatisticsOffset = Graph.GetLength()
                 + HeightOfAbscissaView + 2 + HeightOfGraphParametresView;
             StatisticsPosition = new(0, pathFindingStatisticsOffset);
             RecalculateVerticesConsolePosition();
         }
 
-        private void SetRange(CostRangeChangedMessage msg)
+        private void SetRange(AppLayout th, CostRangeChangedMessage msg)
         {
             int upperValueRange = msg.CostRange.UpperValueOfRange;
             int lowerValueRange = msg.CostRange.LowerValueOfRange;
-            CurrentMaxValueOfRange = Math.Max(Math.Abs(upperValueRange), 
+            CurrentMaxValueOfRange = Math.Max(Math.Abs(upperValueRange),
                 Math.Abs(lowerValueRange));
             RecalculateVerticesConsolePosition();
         }
 
-        private void ShowStatistics(StatisticsLineMessage msg)
+        private void ShowStatistics(AppLayout th, StatisticsLineMessage msg)
         {
             Cursor.SetPosition(StatisticsPosition);
             Terminal.Write(msg.Value.PadRight(Terminal.WindowWidth));
@@ -72,7 +71,7 @@ namespace Pathfinding.App.Console
             int costWidth = CurrentMaxValueOfRange.GetDigitsNumber();
             int costUpperValue = Constants.GraphWidthValueRange.UpperValueOfRange - 1;
             int width = costUpperValue.GetDigitsNumber();
-            LateralDistanceBetweenVertices = costWidth >= width 
+            LateralDistanceBetweenVertices = costWidth >= width
                 ? costWidth + 2 : width * 2 - costWidth;
             foreach (var vertex in Graph)
             {

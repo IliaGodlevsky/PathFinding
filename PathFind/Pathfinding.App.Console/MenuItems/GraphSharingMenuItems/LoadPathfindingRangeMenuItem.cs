@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
@@ -13,9 +13,9 @@ using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
-using Shared.Extensions;
 using System;
 using System.Collections.Generic;
+using Shared.Extensions;
 
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 {

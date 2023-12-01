@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Exceptions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
@@ -55,13 +55,13 @@ namespace Pathfinding.App.Console.Units
                 }
                 finally
                 {
-                    ClearColors();
+                    ClearColors(null, null);
                     algorithm.Dispose();
                 }
             }
         }
 
-        private void ClearColors()
+        private void ClearColors(PathfindingProcessUnit unit, ClearColorsMessage m)
         {
             graph.RestoreVerticesVisualState();
             rangeBuilder.Range.RestoreVerticesVisualState();
@@ -90,13 +90,13 @@ namespace Pathfinding.App.Console.Units
             graph = msg.Graph;
         }
 
-        private void PrepareForPathfinding(PathfindingProcess algorithm, 
+        private void PrepareForPathfinding(PathfindingProcess algorithm,
             Statistics statistics)
         {
             var lineMsg = new StatisticsLineMessage(statistics.Name);
             messenger.Send(lineMsg, Tokens.AppLayout);
             var algorithmMsg = new AlgorithmMessage(algorithm);
-            messenger.SendMany(algorithmMsg, Tokens.Visualization, 
+            messenger.SendMany(algorithmMsg, Tokens.Visualization,
                 Tokens.Statistics, Tokens.History);
             var algoStatMsg = new StatisticsMessage(statistics);
             messenger.Send(algoStatMsg, Tokens.History);
@@ -106,9 +106,9 @@ namespace Pathfinding.App.Console.Units
 
         public void RegisterHanlders(IMessenger messenger)
         {
-            messenger.Register<AlgorithmStartInfoMessage>(this, Tokens.Pathfinding, FindPath);
+            messenger.Register<PathfindingProcessUnit, AlgorithmStartInfoMessage>(this, Tokens.Pathfinding, FindPath);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
-            messenger.Register<ClearColorsMessage>(this, _ => ClearColors());
+            messenger.Register<PathfindingProcessUnit, ClearColorsMessage>(this,  ClearColors);
         }
     }
 }

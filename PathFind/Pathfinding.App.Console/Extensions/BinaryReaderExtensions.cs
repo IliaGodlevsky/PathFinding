@@ -1,7 +1,5 @@
-﻿using Pathfinding.AlgorithmLib.History;
-using Pathfinding.App.Console.DataAccess;
+﻿using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Model.Notes;
-using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Shared.Extensions;
 using System;

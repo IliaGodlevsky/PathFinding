@@ -1,8 +1,9 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Interface.Extensions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messages;
@@ -32,10 +33,10 @@ namespace Pathfinding.App.Console.Units
         public void RegisterHanlders(IMessenger messenger)
         {
             var token = Tokens.Statistics.Bind(IsStatisticsApplied);
-            messenger.Register<AlgorithmMessage>(this, token, SubscribeOnStatistics);
-            messenger.Register<StatisticsMessage>(this, Tokens.Statistics, SetStatistics);
-            messenger.Register<PathFoundMessage>(this, Tokens.Statistics, OnPathFound);
-            messenger.Register<IsAppliedMessage>(this, Tokens.Statistics, SetIsApplied);
+            messenger.Register<PathfindingStatisticsUnit, AlgorithmMessage>(this, token, SubscribeOnStatistics);
+            messenger.Register<PathfindingStatisticsUnit, StatisticsMessage>(this, Tokens.Statistics, SetStatistics);
+            messenger.Register<PathfindingStatisticsUnit, PathFoundMessage>(this, Tokens.Statistics, OnPathFound);
+            messenger.Register<PathfindingStatisticsUnit, IsAppliedMessage>(this, Tokens.Statistics, SetIsApplied);
         }
 
         private bool IsStatisticsApplied() => isStatisticsApplied;
@@ -74,7 +75,7 @@ namespace Pathfinding.App.Console.Units
             {
                 note.ResultStatus = nameof(Languages.Succeeded);
             }
-            if (message.Path.IsEmpty() 
+            if (message.Path.IsEmpty()
                 && note.ResultStatus != nameof(Languages.Interrupted))
             {
                 note.ResultStatus = nameof(Languages.Failed);

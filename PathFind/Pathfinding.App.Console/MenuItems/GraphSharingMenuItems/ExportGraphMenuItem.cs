@@ -6,7 +6,6 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
-using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,7 +74,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                         break;
                     }
                 }
-                
+
                 if (ids.Count > 0)
                 {
                     var path = input.Input();

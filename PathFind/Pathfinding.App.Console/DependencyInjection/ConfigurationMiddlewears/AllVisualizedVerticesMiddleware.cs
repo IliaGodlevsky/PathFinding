@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using Autofac.Core.Resolving.Pipeline;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Model.Visualizations;
 using System;
 using System.Collections.Generic;
 

@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
@@ -50,7 +50,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                     var costMsg = new CostRangeChangedMessage(costRange);
                     messenger.Send(costMsg, Tokens.AppLayout);
                     var graphMsg = new GraphMessage(graph);
-                    messenger.SendMany(graphMsg, Tokens.Visual, 
+                    messenger.SendMany(graphMsg, Tokens.Visual,
                         Tokens.AppLayout, Tokens.Main, Tokens.Common);
                     var range = history.GetRange(graph.GetHashCode());
                     rangeBuilder.Undo();

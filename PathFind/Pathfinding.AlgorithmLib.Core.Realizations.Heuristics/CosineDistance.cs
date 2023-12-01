@@ -21,7 +21,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Heuristics
             return Math.Round(Radians * Math.Acos(cosine), digits: 10);
         }
 
-        private static double GetScalarProduct(IReadOnlyList<int> self, 
+        private static double GetScalarProduct(IReadOnlyList<int> self,
             IReadOnlyList<int> coordinate)
         {
             double result = default;

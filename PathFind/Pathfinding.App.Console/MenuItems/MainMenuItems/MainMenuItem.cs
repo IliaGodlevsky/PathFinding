@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
@@ -9,7 +9,7 @@ using Pathfinding.Logging.Interface;
 
 namespace Pathfinding.App.Console.MenuItems.MainMenuItems
 {
-    internal abstract class MainMenuItem<TUnit> 
+    internal abstract class MainMenuItem<TUnit>
         : UnitDisplayMenuItem<TUnit>, IConditionedMenuItem, ICanRecieveMessage
         where TUnit : IUnit
     {
@@ -17,7 +17,7 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
 
         private IGraph<Vertex> graph = Graph<Vertex>.Empty;
 
-        protected MainMenuItem(IInput<int> input, TUnit viewModel, 
+        protected MainMenuItem(IInput<int> input, TUnit viewModel,
             IMessenger messenger, ILog log)
             : base(input, viewModel, log)
         {

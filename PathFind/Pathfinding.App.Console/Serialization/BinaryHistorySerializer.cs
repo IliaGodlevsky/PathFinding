@@ -1,6 +1,5 @@
 ﻿using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
-using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using System.IO;
 using System.Text;

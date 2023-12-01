@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -19,7 +19,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             using (Cursor.UseCurrentPositionWithClean())
             {
-                int obstaclePercent = input.Input(Languages.ObstaclePercentInputMsg, 
+                int obstaclePercent = input.Input(Languages.ObstaclePercentInputMsg,
                     Constants.ObstaclesPercentValueRange);
                 var msg = new ObstaclePercentMessage(obstaclePercent);
                 messenger.Send(msg, Tokens.Graph);

@@ -26,7 +26,7 @@ namespace Pathfinding.App.Console.Model
                 Languages.LengthDimensionName };
             var zipped = dimnsNames.Zip(DimensionsSizes, (n, s) => $"{n}: {s}");
             string joined = string.Join(LargeSpace, zipped);
-            string graphParams = string.Format(Languages.GraphFormat, 
+            string graphParams = string.Format(Languages.GraphFormat,
                 ObstaclesPercent, Obstacles, Count);
             return string.Join(LargeSpace, joined, graphParams);
         }

@@ -46,7 +46,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel
 
         public GraphAssemble SelectedGraphAssemble { get; set; }
 
-        public GraphCreatingViewModel(IRandom random, 
+        public GraphCreatingViewModel(IRandom random,
             INeighborhoodFactory neighborhoodFactory, ILog log)
         {
             this.messenger = DI.Container.Resolve<IMessenger>();

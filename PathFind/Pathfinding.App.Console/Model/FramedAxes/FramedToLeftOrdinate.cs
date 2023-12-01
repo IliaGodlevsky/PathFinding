@@ -12,7 +12,7 @@ namespace Pathfinding.App.Console.Model.FramedAxes
         public FramedToLeftOrdinate(IGraph<Vertex> graph)
             : base(graph.GetLength())
         {
-            
+
         }
 
         protected override string GetPaddedIndex(int index)

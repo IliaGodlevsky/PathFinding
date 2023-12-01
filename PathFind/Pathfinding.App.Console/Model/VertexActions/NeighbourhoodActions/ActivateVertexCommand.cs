@@ -1,5 +1,4 @@
 ﻿using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Settings;
 using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
 using Shared.Extensions;
 

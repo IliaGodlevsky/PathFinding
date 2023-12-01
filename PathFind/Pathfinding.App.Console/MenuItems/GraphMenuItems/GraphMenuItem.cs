@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.Interface;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems

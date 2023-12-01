@@ -15,7 +15,7 @@ namespace Pathfinding.App.Console.Model.FramedAxes
             : base(graph.GetLength())
         {
             graphWidth = graph.GetWidth();
-            FrameOffset = graphWidth * LateralDistance 
+            FrameOffset = graphWidth * LateralDistance
                 + AppLayout.WidthOfOrdinateView - yCoordinatePadding;
             ValueOffset = FrameOffset + AppLayout.WidthOfOrdinateView;
         }

@@ -6,6 +6,7 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using System;
+using Shared.Extensions;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
 {

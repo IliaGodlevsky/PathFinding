@@ -1,6 +1,5 @@
 ﻿using Pathfinding.App.Console.Model.Notes;
 using Pathfinding.GraphLib.Core.Interface;
-using System;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DataAccess

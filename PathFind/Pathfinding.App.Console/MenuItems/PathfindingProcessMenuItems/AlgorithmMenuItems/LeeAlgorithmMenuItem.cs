@@ -1,7 +1,5 @@
-﻿using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.AlgorithmLib.Core.Abstractions;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Factory;
-using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.AlgorithmMenuItems;
@@ -25,7 +23,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
         protected override AlgorithmInfo GetAlgorithm()
         {
             var statistics = new Statistics(nameof(Languages.LeeAlgorithm));
-            return new (new LeeAlgorithmFactory(), statistics);
+            return new(new LeeAlgorithmFactory(), statistics);
         }
     }
 }

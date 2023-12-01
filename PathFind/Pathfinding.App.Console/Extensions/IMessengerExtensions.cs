@@ -1,9 +1,6 @@
-﻿using GalaSoft.MvvmLight.Messaging;
-using Pathfinding.AlgorithmLib.Core.Abstractions;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
-using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Interface;
 using System;
 
 namespace Pathfinding.App.Console.Extensions
@@ -12,30 +9,29 @@ namespace Pathfinding.App.Console.Extensions
     {
         public static void SendMany<T>(this IMessenger messenger,
             T data, params IToken[] tokens)
+            where T : class
         {
             messenger.SendMessage(data, tokens);
         }
 
-        public static void RegisterData<T>(this IMessenger messenger, object recipient,
-            IToken token, Action<T> action)
+        public static void Register<TRecipient, TMessage>(this IMessenger messenger,
+            TRecipient recipient, IToken token, Action<TMessage> action)
+            where TRecipient : class
+            where TMessage : class
         {
-            messenger.Register<T>(recipient, token, action);
+            messenger.Register<TRecipient, TMessage, IToken>(recipient, token, (r, m) => action(m));
         }
 
-        public static void RegisterGraph(this IMessenger messenger, object recipient,
+        public static void RegisterGraph<TRecipient>(this IMessenger messenger, TRecipient recipient,
             IToken token, Action<GraphMessage> action)
+            where TRecipient : class
         {
-            messenger.RegisterData(recipient, token, action);
-        }
-
-        public static void RegisterAlgorithmData<T>(this IMessenger messenger, object recipient,
-            IToken token, Action<(PathfindingProcess, T)> action)
-        {
-            messenger.Register<(PathfindingProcess, T)>(recipient, token, action);
+            messenger.Register<TRecipient, GraphMessage, IToken>(recipient, token, (r, m) => action(m));
         }
 
         private static void SendMessage<TMessage>(this IMessenger messenger,
             TMessage msg, params IToken[] tokens)
+            where TMessage : class
         {
             foreach (var token in tokens)
             {

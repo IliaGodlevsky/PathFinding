@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.Model.Visualizations
 {
-    internal sealed class VisualizationContainer 
+    internal sealed class VisualizationContainer
         : ITotalVisualization<Vertex>, ICanRecieveMessage, IDisposable
     {
         private readonly IReadOnlyDictionary<string, IVisualizedVertices> containers;
@@ -46,7 +46,7 @@ namespace Pathfinding.App.Console.Model.Visualizations
 
         public void VisualizeAsEnqueued(Vertex vertex) => Visualize(vertex, Constants.EnqueuedColorKey);
 
-        public void VisualizeAsPath(Vertex vertex)     
+        public void VisualizeAsPath(Vertex vertex)
         {
             if (!IsVisualizedAsRange(vertex))
             {
@@ -60,7 +60,7 @@ namespace Pathfinding.App.Console.Model.Visualizations
         public void RegisterHanlders(IMessenger messenger)
         {
             messenger.RegisterGraph(this, Tokens.Visual, OnGraphCreated);
-            messenger.Register<GraphDeletedMessage>(this, Tokens.Common, OnGraphDeleted);
+            messenger.Register<VisualizationContainer, GraphDeletedMessage>(this, Tokens.Common, OnGraphDeleted);
         }
 
         public void Dispose()

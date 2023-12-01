@@ -30,7 +30,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 
         protected override IGraphPath GetSubPath()
         {
-            return new GraphPath(traces.ToDictionary(), 
+            return new GraphPath(traces.ToDictionary(),
                 CurrentRange.Target, stepRule);
         }
 

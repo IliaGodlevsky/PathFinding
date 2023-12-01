@@ -1,6 +1,4 @@
-﻿using Pathfinding.App.Console.Settings;
-
-namespace Pathfinding.App.Console.Model.Visualizations.Containers
+﻿namespace Pathfinding.App.Console.Model.Visualizations.Containers
 {
     internal sealed class VisualizedCrossedPath : VisualizedVertices
     {

@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Factory;
@@ -16,7 +16,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
         protected override string LanguageKey { get; } = nameof(Languages.DepthFirstAlgorithm);
 
         public DepthFirstAlgorithmMenuItem(IReadOnlyDictionary<string, IHeuristic> heuristics,
-            IMessenger messenger, IInput<int> intInput) 
+            IMessenger messenger, IInput<int> intInput)
             : base(messenger, null, heuristics, intInput)
         {
 

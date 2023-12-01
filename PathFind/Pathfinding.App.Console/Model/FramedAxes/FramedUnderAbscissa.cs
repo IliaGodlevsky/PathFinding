@@ -1,8 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 
 namespace Pathfinding.App.Console.Model.FramedAxes
 {

@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
@@ -42,13 +42,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             this.assemble = assemble;
         }
 
-        protected void SetNeighbourhood(NeighbourhoodMessage msg) 
+        protected void SetNeighbourhood(NeighbourhoodMessage msg)
             => neighborhoodFactory = msg.Factory;
 
-        protected void SetCostRange(CostRangeMessage msg) 
+        protected void SetCostRange(CostRangeMessage msg)
             => costRange = msg.Range;
 
-        protected void SetObstaclePercent(ObstaclePercentMessage msg) 
+        protected void SetObstaclePercent(ObstaclePercentMessage msg)
             => obstaclePercent = msg.ObstaclePercent;
 
         protected void SetGraphParams(GraphParamsMessage msg)
@@ -65,7 +65,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             var costRangeMsg = new CostRangeChangedMessage(costRange);
             messenger.Send(costRangeMsg, Tokens.AppLayout);
             var graphMsg = new GraphMessage(graph);
-            messenger.SendMany(graphMsg, Tokens.Visual, 
+            messenger.SendMany(graphMsg, Tokens.Visual,
                 Tokens.AppLayout, Tokens.Main, Tokens.Common);
         }
 
@@ -85,10 +85,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public virtual void RegisterHanlders(IMessenger messenger)
         {
-            messenger.Register<ObstaclePercentMessage>(this, Tokens.Graph, SetObstaclePercent);
-            messenger.Register<NeighbourhoodMessage>(this, Tokens.Graph, SetNeighbourhood);
-            messenger.Register<GraphParamsMessage>(this, Tokens.Graph, SetGraphParams);
-            messenger.Register<CostRangeMessage>(this, Tokens.Graph, SetCostRange);
+            messenger.Register<GraphCreatingMenuItem, ObstaclePercentMessage>(this, Tokens.Graph, SetObstaclePercent);
+            messenger.Register<GraphCreatingMenuItem, NeighbourhoodMessage>(this, Tokens.Graph, SetNeighbourhood);
+            messenger.Register<GraphCreatingMenuItem, GraphParamsMessage>(this, Tokens.Graph, SetGraphParams);
+            messenger.Register<GraphCreatingMenuItem, CostRangeMessage>(this, Tokens.Graph, SetCostRange);
         }
     }
 }

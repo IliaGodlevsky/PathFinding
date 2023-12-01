@@ -1,6 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
-using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Shared.Primitives.ValueRange;
 using System;
@@ -33,7 +32,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             var neighbours = element.Element(Neighbours)
                 .Elements()
                 .Select(Attributes<int>)
-                .Select(ar=> new Coordinate(ar))
+                .Select(ar => new Coordinate(ar))
                 .ToArray();
 
             return new(isObstacle, cost, coordinate, neighbours);

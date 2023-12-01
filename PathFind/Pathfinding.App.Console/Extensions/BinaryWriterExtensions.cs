@@ -1,5 +1,4 @@
-﻿using Pathfinding.AlgorithmLib.History;
-using Pathfinding.App.Console.DataAccess;
+﻿using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Model.Notes;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
@@ -28,7 +27,7 @@ namespace Pathfinding.App.Console.Extensions
             }
         }
 
-        private static void WriteCoordinates(this BinaryWriter writer, 
+        private static void WriteCoordinates(this BinaryWriter writer,
             Dictionary<int, List<ICoordinate>> dict, int key)
         {
             writer.WriteCoordinates(dict.TryGetOrAddNew(key));

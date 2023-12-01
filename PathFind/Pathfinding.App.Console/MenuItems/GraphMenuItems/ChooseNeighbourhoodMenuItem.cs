@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -33,7 +33,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             {
                 throw new Exception(Languages.NoItemsMsg);
             }
-            
+
             if (factories.Count == 1)
             {
                 var msg = new NeighbourhoodMessage(factories.ElementAt(0).Value);

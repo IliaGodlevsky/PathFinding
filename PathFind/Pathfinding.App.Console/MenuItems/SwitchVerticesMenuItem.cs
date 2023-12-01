@@ -1,6 +1,5 @@
 ﻿global using VertexActions = System.Collections.Generic.IReadOnlyCollection<(string ResourceName, Pathfinding.App.Console.Interface.IVertexAction Action)>;
-
-using GalaSoft.MvvmLight.Messaging;
+using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
@@ -12,6 +11,7 @@ using Pathfinding.GraphLib.Core.Realizations;
 using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems
