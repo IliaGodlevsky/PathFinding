@@ -18,12 +18,5 @@ namespace Pathfinding.Visualization.Extensions
                 self.VisualizeAsRegular();
             }
         }
-
-        public static void Initialize<TVertex>(this TVertex self)
-            where TVertex : IVertex, ITotallyVisualizable
-        {
-            self.InitializeComponents();
-            self.RestoreDefaultVisualState();
-        }
     }
 }

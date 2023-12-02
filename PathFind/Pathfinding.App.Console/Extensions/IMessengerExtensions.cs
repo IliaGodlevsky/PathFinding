@@ -8,10 +8,13 @@ namespace Pathfinding.App.Console.Extensions
     internal static class IMessengerExtensions
     {
         public static void SendMany<T>(this IMessenger messenger,
-            T data, params IToken[] tokens)
+            T message, params IToken[] tokens)
             where T : class
         {
-            messenger.SendMessage(data, tokens);
+            foreach (var token in tokens)
+            {
+                messenger.Send(message, token);
+            }
         }
 
         public static void Register<TRecipient, TMessage>(this IMessenger messenger,
@@ -27,16 +30,6 @@ namespace Pathfinding.App.Console.Extensions
             where TRecipient : class
         {
             messenger.Register<TRecipient, GraphMessage, IToken>(recipient, token, (r, m) => action(m));
-        }
-
-        private static void SendMessage<TMessage>(this IMessenger messenger,
-            TMessage msg, params IToken[] tokens)
-            where TMessage : class
-        {
-            foreach (var token in tokens)
-            {
-                messenger.Send(msg, token);
-            }
         }
     }
 }

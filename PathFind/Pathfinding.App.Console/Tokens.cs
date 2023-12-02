@@ -8,13 +8,11 @@ namespace Pathfinding.App.Console
     internal static class Tokens
     {
         public static readonly IToken Main = new Token();
-        public static readonly IToken Path = new Token();
         public static readonly IToken Graph = new Token();
         public static readonly IToken AppLayout = new Token();
         public static readonly IToken Common = new Token();
         public static readonly IToken History = new Token();
         public static readonly IToken Visual = new Token();
-        public static readonly IToken Data = new Token();
         public static readonly IToken Statistics = new Token();
         public static readonly IToken Visualization = new Token();
         public static readonly IToken Pathfinding = new Token();

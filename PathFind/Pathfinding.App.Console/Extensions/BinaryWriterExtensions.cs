@@ -21,7 +21,7 @@ namespace Pathfinding.App.Console.Extensions
                 writer.WriteCoordinates(history.Visited, key);
                 writer.WriteCoordinates(history.Ranges, key);
                 writer.WriteCoordinates(history.Paths, key);
-                writer.WriteIntArray(history.Costs.TryGetOrAddNew(key));
+                writer.WriteIntArray(history.Costs.GetOrEmpty(key));
                 var statistics = history.Statistics.GetOrDefault(key, Statistics.Empty);
                 writer.WriteStatistics(statistics);
             }
@@ -30,7 +30,7 @@ namespace Pathfinding.App.Console.Extensions
         private static void WriteCoordinates(this BinaryWriter writer,
             Dictionary<int, List<ICoordinate>> dict, int key)
         {
-            writer.WriteCoordinates(dict.TryGetOrAddNew(key));
+            writer.WriteCoordinates(dict.GetOrEmpty(key));
         }
 
         private static void WriteNullableString(this BinaryWriter writer, string value)

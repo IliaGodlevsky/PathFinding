@@ -1,6 +1,4 @@
-﻿using Pathfinding.GraphLib.Core.NullObjects;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Pathfinding.GraphLib.Core.Interface.Extensions
 {
@@ -15,12 +13,6 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
         public static bool HasNoNeighbours(this IVertex vertex)
         {
             return vertex.Neighbours.Count == 0;
-        }
-
-        public static void InitializeComponents(this IVertex self)
-        {
-            self.Cost = NullCost.Interface;
-            self.Neighbours = new List<IVertex>();
         }
 
         public static bool IsEqual(this IVertex self, IVertex vertex)

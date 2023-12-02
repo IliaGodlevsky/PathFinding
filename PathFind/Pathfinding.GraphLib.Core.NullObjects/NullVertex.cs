@@ -1,5 +1,6 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Shared.Primitives.Single;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -12,7 +13,7 @@ namespace Pathfinding.GraphLib.Core.NullObjects
 
         public IVertexCost Cost { get => NullCost.Interface; set { } }
 
-        public ICollection<IVertex> Neighbours { get => new List<IVertex>(); set { } }
+        public ICollection<IVertex> Neighbours { get; } = Array.Empty<IVertex>();
 
         public ICoordinate Position => NullCoordinate.Interface;
 

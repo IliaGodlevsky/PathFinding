@@ -40,7 +40,7 @@ namespace Pathfinding.App.Console.Model
             }
         }
 
-        public virtual ICollection<IVertex> Neighbours { get; set; } = new HashSet<IVertex>();
+        public virtual ICollection<IVertex> Neighbours { get; } = new HashSet<IVertex>();
 
         public virtual ICoordinate Position { get; } = NullCoordinate.Interface;
 

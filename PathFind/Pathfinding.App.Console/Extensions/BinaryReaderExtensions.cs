@@ -1,5 +1,6 @@
 ﻿using Pathfinding.App.Console.DataAccess;
 using Pathfinding.App.Console.Model.Notes;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Shared.Extensions;
 using System;

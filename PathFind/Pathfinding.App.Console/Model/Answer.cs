@@ -4,7 +4,7 @@ using System;
 
 namespace Pathfinding.App.Console.Model
 {
-    internal sealed record class Answer : IComparable<Answer>
+    internal sealed record Answer : IComparable<Answer>
     {
         public static readonly Answer Yes = new(1, Languages.Yes);
         public static readonly Answer No = new(0, Languages.No);

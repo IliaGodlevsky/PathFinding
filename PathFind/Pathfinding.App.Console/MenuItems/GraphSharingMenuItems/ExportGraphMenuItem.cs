@@ -6,6 +6,7 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
+using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,9 +50,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 var keys = history.Graphs.ToList();
                 var toExport = new GraphsPathfindingHistory();
                 string menu = CreateMenuList(keys);
-                string menuList = string.Concat(menu, "\n", Languages.ChooseGraph + ": ");
+                string menuList = string.Concat(menu, "\n", Languages.MenuOptionChoiceMsg);
                 int index = InputIndex(menuList, keys.Count);
-                var ids = new List<int>();
+                var ids = new HashSet<int>();
                 while (true)
                 {
                     if (index == keys.Count + 1)
@@ -69,7 +70,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                     if (keys.Count > 0)
                     {
                         menu = CreateMenuList(keys);
-                        menuList = string.Concat(menu, "\n", Languages.ChooseGraph + ": ");
+                        menuList = string.Concat(menu, "\n", Languages.MenuOptionChoiceMsg);
                         index = InputIndex(menuList, keys.Count);
                         break;
                     }

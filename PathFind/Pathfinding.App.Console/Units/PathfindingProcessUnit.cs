@@ -43,7 +43,8 @@ namespace Pathfinding.App.Console.Units
         {
             using (Cursor.HideCursor())
             {
-                var algorithm = msg.Factory.Create(rangeBuilder.Range);
+                var range = rangeBuilder.Range.ToArray();
+                var algorithm = msg.Factory.Create(range);
                 try
                 {
                     PrepareForPathfinding(algorithm, msg.InitStatistics);

@@ -34,6 +34,16 @@ namespace Shared.Primitives.ValueRange
             }
         }
 
+        public static implicit operator (T UpperValueRange, T LowerValueRange)(InclusiveValueRange<T> range)
+        {
+            return (range.UpperValueOfRange, range.LowerValueOfRange);
+        }
+
+        public static implicit operator InclusiveValueRange<T>((T UpperValueRange, T LowerValueRange) range)
+        {
+            return new(range.UpperValueRange, range.LowerValueRange);
+        }
+
         public override string ToString()
         {
             return $"[{LowerValueOfRange},{UpperValueOfRange}]";

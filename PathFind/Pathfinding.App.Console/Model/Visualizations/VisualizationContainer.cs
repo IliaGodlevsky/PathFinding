@@ -95,12 +95,10 @@ namespace Pathfinding.App.Console.Model.Visualizations
         {
             var container = GetOrDefault(e.PropertyName);
             var vertices = container.GetVertices(CurrentGraph);
+            var color = (ConsoleColor)Colors[e.PropertyName];
             using (Cursor.HideCursor())
             {
-                foreach (var vertex in vertices)
-                {
-                    vertex.Color = (ConsoleColor)Colors[e.PropertyName];
-                }
+                vertices.ForEach(vertex => vertex.Color = color);
             }
         }
 

@@ -1,7 +1,7 @@
 ﻿using Pathfinding.App.WPF._3D.Interface;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.Visualization.Extensions;
+using Pathfinding.GraphLib.Core.NullObjects;
 using Pathfinding.VisualizationLib.Core.Interface;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -36,9 +36,9 @@ namespace Pathfinding.App.WPF._3D.Model
 
         public TranslateTransform3D FieldPosition => (TranslateTransform3D)Transform;
 
-        public IVertexCost Cost { get; set; }
+        public IVertexCost Cost { get; set; } = NullCost.Instance;
 
-        public ICollection<IVertex> Neighbours { get; set; }
+        public ICollection<IVertex> Neighbours { get; } = new HashSet<IVertex>();
 
         public ICoordinate Position { get; }
 
@@ -68,7 +68,6 @@ namespace Pathfinding.App.WPF._3D.Model
             Position = coordinate;
             Transform = new TranslateTransform3D();
             Size = Constants.InitialVertexSize;
-            this.Initialize();
         }
 
         static Vertex3D()

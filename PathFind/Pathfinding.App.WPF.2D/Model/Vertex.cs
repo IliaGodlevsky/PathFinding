@@ -1,5 +1,6 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.GraphLib.Core.NullObjects;
 using Pathfinding.Visualization.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace Pathfinding.App.WPF._2D.Model
 
         private readonly VertexVisualization visualization;
 
-        private IVertexCost cost;
+        private IVertexCost cost = NullCost.Instance;
         private bool isObstacle;
         private ICoordinate position;
 
@@ -48,6 +49,10 @@ namespace Pathfinding.App.WPF._2D.Model
                 if (isObstacle)
                 {
                     VisualizeAsObstacle();
+                }
+                else
+                {
+                    VisualizeAsRegular();
                 }
             }
         }
@@ -89,7 +94,7 @@ namespace Pathfinding.App.WPF._2D.Model
             }
         }
 
-        public ICollection<IVertex> Neighbours { get; set; }
+        public ICollection<IVertex> Neighbours { get; } = new HashSet<IVertex>();
 
         public Vertex(ICoordinate coordinate, ITotalVisualization<Vertex> visualization) : base()
         {
@@ -99,7 +104,6 @@ namespace Pathfinding.App.WPF._2D.Model
             Width = Height = VertexSize;
             Template = (ControlTemplate)TryFindResource("VertexTemplate");
             Position = coordinate;
-            this.Initialize();
         }
 
         static Vertex()

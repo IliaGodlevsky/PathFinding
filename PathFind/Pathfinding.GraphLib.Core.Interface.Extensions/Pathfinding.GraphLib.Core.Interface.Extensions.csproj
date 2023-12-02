@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="IGraphExtensions.cs" />
     <Compile Include="ICoordinateExtensions.cs" />
-    <Compile Include="INeighbourhoodExtensions.cs" />
     <Compile Include="IPathfindingRangeBuilderExtensions.cs" />
     <Compile Include="IPathfindingRangeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

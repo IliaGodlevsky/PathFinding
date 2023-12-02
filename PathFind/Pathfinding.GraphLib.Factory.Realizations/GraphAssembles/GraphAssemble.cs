@@ -26,17 +26,15 @@ namespace Pathfinding.GraphLib.Factory.Realizations.GraphAssembles
         public IGraph<TVertex> AssembleGraph(IReadOnlyList<int> graphDimensionsSizes)
         {
             int graphSize = graphDimensionsSizes.AggregateOrDefault((x, y) => x * y);
-            var vertices = new TVertex[graphSize];
-            for (int i = 0; i < graphSize; i++)
+            var vertices = Enumerable.Range(0, graphSize).Select(i =>
             {
-                var coordinates = ToCoordinates(graphDimensionsSizes, i);
-                var coordinate = new Coordinate(coordinates);
-                vertices[i] = vertexFactory.CreateVertex(coordinate);
-            }
+                var coordinate = ToCoordinates(graphDimensionsSizes, i);
+                return vertexFactory.CreateVertex(coordinate);
+            }).ToArray();
             return graphFactory.CreateGraph(vertices, graphDimensionsSizes);
         }
 
-        private static IReadOnlyList<int> ToCoordinates(IReadOnlyList<int> dimensionSizes, int index)
+        private static ICoordinate ToCoordinates(IReadOnlyList<int> dimensionSizes, int index)
         {
             var range = new InclusiveValueRange<int>(dimensionSizes.Count - 1);
             int Coordinate(int i)
@@ -45,7 +43,8 @@ namespace Pathfinding.GraphLib.Factory.Realizations.GraphAssembles
                 index /= dimensionSizes[i];
                 return coordinate;
             }
-            return range.Iterate().Select(Coordinate).ToArray();
+            var coordinates = range.Iterate().Select(Coordinate).ToArray();
+            return new Coordinate(coordinates);
         }
 
         public override string ToString()

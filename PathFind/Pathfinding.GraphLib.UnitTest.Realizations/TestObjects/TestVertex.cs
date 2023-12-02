@@ -19,7 +19,7 @@ namespace Pathfinding.GraphLib.UnitTest.Realizations.TestObjects
 
         public IVertexCost Cost { get; set; } = NullCost.Instance;
 
-        public ICollection<IVertex> Neighbours { get; set; } = new HashSet<IVertex>();
+        public ICollection<IVertex> Neighbours { get; } = new HashSet<IVertex>();
 
         public ICoordinate Position { get; }
 

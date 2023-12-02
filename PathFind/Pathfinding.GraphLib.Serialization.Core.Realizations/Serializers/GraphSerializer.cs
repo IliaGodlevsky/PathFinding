@@ -35,7 +35,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
                     var neighbours = info.Neighbourhood
                         .Select(coordinate => (IVertex)vertices[coordinate])
                         .ToList();
-                    vertices[info.Position].Neighbours = neighbours;
+                    vertices[info.Position].Neighbours.AddRange(neighbours);
                 }
                 return graphFactory.CreateGraph(vertices.Values,
                     graphInfo.DimensionsSizes);
