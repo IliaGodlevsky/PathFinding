@@ -3,15 +3,15 @@ using Pathfinding.App.Console.Model.FramedAxes;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
 using Shared.Extensions;
+using System;
 using System.Linq;
 
 namespace Pathfinding.App.Console.Model
 {
     internal sealed class GraphField : IDisplayable
     {
-        public static readonly GraphField Empty = new(Graph<Vertex>.Empty);
-
-        private IGraph<Vertex> Vertices { get; }
+        public static readonly GraphField Empty 
+            = new(Graph<Vertex>.Empty, Array.Empty<FramedAxis>());
 
         private IDisplayable[] Displayables { get; }
 
@@ -26,7 +26,6 @@ namespace Pathfinding.App.Console.Model
 
         private GraphField(IGraph<Vertex> graph, params FramedAxis[] axes)
         {
-            Vertices = graph;
             Displayables = graph.Concat<IDisplayable>(axes).ToArray();
         }
 

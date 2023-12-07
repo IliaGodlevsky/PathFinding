@@ -1,4 +1,5 @@
-﻿using Shared.Primitives;
+﻿using NLog.Targets;
+using Shared.Primitives;
 using System;
 using System.Drawing;
 
@@ -58,14 +59,14 @@ namespace Pathfinding.App.Console
         public static Disposable UseColor(ConsoleColor color)
         {
             var currentColor = Terminal.ForegroundColor;
-            void RestoreColor() => Terminal.ForegroundColor = currentColor;
             Terminal.ForegroundColor = color;
+            void RestoreColor() => Terminal.ForegroundColor = currentColor;
             return Disposable.Use(RestoreColor);
         }
 
         public static void Write(ConsoleColor color, object text)
         {
-            using (Cursor.UseColor(color))
+            using (UseColor(color))
             {
                 Terminal.Write(text);
             }
@@ -98,12 +99,9 @@ namespace Pathfinding.App.Console
             }
         }
 
-        public static void SetPosition(Point? point)
+        public static void SetPosition(Point point)
         {
-            if (point.HasValue)
-            {
-                Terminal.SetCursorPosition(point.Value.X, point.Value.Y);
-            }
+            Terminal.SetCursorPosition(point.X, point.Y);
         }
 
         private void RestorePosition()

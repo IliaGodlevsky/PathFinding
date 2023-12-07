@@ -47,9 +47,15 @@ namespace Pathfinding.App.Console.Units
             algorithm.VertexVisited += OnVertexVisited;
             algorithm.Interrupted += OnInterrupted;
             algorithm.Finished += (s, e) => timer.Stop();
-            algorithm.Started += (s, e) => timer.Restart();
+            algorithm.Started += OnStarted;
             algorithm.Paused += (s, e) => timer.Stop();
             algorithm.Resumed += (s, e) => timer.Start();
+        }
+
+        private void OnStarted(object sender, EventArgs e)
+        {
+            statistics.ResultStatus = nameof(Languages.Started);
+            timer.Restart();
         }
 
         private void OnInterrupted(object sender, EventArgs e)

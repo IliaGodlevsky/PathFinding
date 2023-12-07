@@ -11,7 +11,7 @@ using Shared.Extensions;
 namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
 {
     [HighestPriority]
-    internal sealed class EnterPathfindingRangeMenuItem : SwitchVerticesMenuItem
+    internal sealed class EnterPathfindingRangeMenuItem : NavigateThroughVerticesMenuItem
     {
         private readonly GraphsPathfindingHistory history;
         private readonly IPathfindingRangeBuilder<Vertex> builder;

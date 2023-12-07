@@ -12,6 +12,7 @@ using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Smoothing;
 using Pathfinding.GraphLib.Smoothing.Interface;
+using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,23 +23,28 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     internal sealed class SmoothGraphMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         private readonly IMeanCost meanAlgorithm;
-        private readonly IMessenger messenger;
         private readonly IInput<ConsoleKey> input;
         private readonly GraphsPathfindingHistory history;
+        private readonly Dictionary<ConsoleKey, Action> actions;
 
         private Stack<IReadOnlyList<int>> SmoothHistory
             => history.GetSmoothHistory(graph.GetHashCode());
 
         private IGraph<Vertex> graph = Graph<Vertex>.Empty;
 
-        public SmoothGraphMenuItem(IMeanCost meanAlgorithm,
-            IMessenger messenger, IInput<ConsoleKey> input,
+        public SmoothGraphMenuItem(IMeanCost meanAlgorithm, 
+            IInput<ConsoleKey> input,
             GraphsPathfindingHistory history)
         {
             this.meanAlgorithm = meanAlgorithm;
-            this.messenger = messenger;
             this.history = history;
             this.input = input;
+            actions = new Dictionary<ConsoleKey, Action>()
+            {
+                { Keys.Default.SubmitSmooth, Smooth },
+                { Keys.Default.UndoSmooth, Undo },
+                { Keys.Default.ResetSmooth, Cancel }
+            };
         }
 
         public bool CanBeExecuted() => graph != Graph<Vertex>.Empty;
@@ -50,12 +56,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 var key = input.Input();
                 while (key != Keys.Default.SubmitSmooth)
                 {
-                    if (key == Keys.Default.SmoothGraph)
-                        Smooth();
-                    else if (key == Keys.Default.UndoSmooth)
-                        Undo();
-                    else if (key == Keys.Default.ResetSmooth)
-                        Cancel();
+                    actions.GetOrDefault(key)?.Invoke();
                     key = input.Input();
                 }
             }

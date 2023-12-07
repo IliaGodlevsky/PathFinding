@@ -12,7 +12,7 @@ namespace Pathfinding.App.Console.Settings {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.7.0.0")]
     internal sealed partial class Keys : global::System.Configuration.ApplicationSettingsBase {
         
         private static Keys defaultInstance = ((Keys)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Keys())));
@@ -278,36 +278,36 @@ namespace Pathfinding.App.Console.Settings {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Enter")]
-        public global::System.ConsoleKey NeighbourhoodAction {
+        public global::System.ConsoleKey DoNeighbourhoodAction {
             get {
-                return ((global::System.ConsoleKey)(this["NeighbourhoodAction"]));
+                return ((global::System.ConsoleKey)(this["DoNeighbourhoodAction"]));
             }
             set {
-                this["NeighbourhoodAction"] = value;
+                this["DoNeighbourhoodAction"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Spacebar")]
-        public global::System.ConsoleKey ExitVertexAction {
+        public global::System.ConsoleKey LeaveVertexAction {
             get {
-                return ((global::System.ConsoleKey)(this["ExitVertexAction"]));
+                return ((global::System.ConsoleKey)(this["LeaveVertexAction"]));
             }
             set {
-                this["ExitVertexAction"] = value;
+                this["LeaveVertexAction"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Escape")]
-        public global::System.ConsoleKey ExitVertexSwitching {
+        public global::System.ConsoleKey ExitVerticesNavigating {
             get {
-                return ((global::System.ConsoleKey)(this["ExitVertexSwitching"]));
+                return ((global::System.ConsoleKey)(this["ExitVerticesNavigating"]));
             }
             set {
-                this["ExitVertexSwitching"] = value;
+                this["ExitVerticesNavigating"] = value;
             }
         }
     }

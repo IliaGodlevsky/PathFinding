@@ -234,7 +234,7 @@
     <Compile Include="MenuItems\PathfindingStatisticsMenuItems\ApplyStatisticsMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingVisualizationMenuItems\ApplyVisualizationMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingVisualizationMenuItems\EnterAnimationDelayMenuItem.cs" />
-    <Compile Include="MenuItems\SwitchVerticesMenuItem.cs" />
+    <Compile Include="MenuItems\NavigateThroughVerticesMenuItem.cs" />
     <Compile Include="MenuItems\UnitDisplayMenuItem.cs" />
     <Compile Include="Messages\ClearColorsMessage.cs" />
     <Compile Include="Messages\ClearHistoryMessage.cs" />

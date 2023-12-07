@@ -9,7 +9,7 @@ using System;
 namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
 {
     [MediumPriority]
-    internal sealed class NeighbourhoodMenuItem : SwitchVerticesMenuItem
+    internal sealed class NeighbourhoodMenuItem : NavigateThroughVerticesMenuItem
     {
         public NeighbourhoodMenuItem(IInput<ConsoleKey> keyInput)
             : base(GetActions(), keyInput)
@@ -24,9 +24,9 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
             var neighbourhoodAction = new NeighbourhoodAction(activeVertex);
             var actions = new (string, IVertexAction)[]
             {
-                (nameof(Keys.NeighbourhoodAction), neighbourhoodAction),
-                (nameof(Keys.ExitVertexSwitching), exitAction),
-                (nameof(Keys.ExitVertexAction), exitAction)
+                (nameof(Keys.DoNeighbourhoodAction), neighbourhoodAction),
+                (nameof(Keys.ExitVerticesNavigating), exitAction),
+                (nameof(Keys.LeaveVertexAction), exitAction)
             };
             return Array.AsReadOnly(actions);
         }

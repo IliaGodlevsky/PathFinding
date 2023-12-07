@@ -74,8 +74,7 @@ namespace Pathfinding.App.Console.Model.Notes
         [DisplayNameSource(nameof(Languages.Visited))]
         public int? Visited { get; set; } = null;
 
-        public string ResultStatus { get; set; }
-            = nameof(Languages.Started);
+        public string ResultStatus { get; set; } = string.Empty;
 
         public TimeSpan? Elapsed { get; set; } = null;
 

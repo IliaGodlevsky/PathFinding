@@ -104,11 +104,11 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterVisualizionContainer<VisualizedCrossedPath>(Constants.CrossedPathColorKey);
 
                 builder.RegisterUnit<AlgorithmChooseUnit, ExitMenuItem>(new UnitParamtresFactory());
-                builder.RegisterType<AlgorithmsUnitMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Process).SingleInstance();
+                builder.RegisterType<AlgorithmsUnitMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
 
-                builder.RegisterType<PathfindingRangeMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Process).SingleInstance();
-                builder.RegisterType<ClearColorsMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Process).As<ICanRecieveMessage>().SingleInstance();
-                builder.RegisterType<ClearGraphMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Process).As<ICanRecieveMessage>().SingleInstance();
+                builder.RegisterType<PathfindingRangeMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
+                builder.RegisterType<ClearColorsMenuItem>().Keyed<IMenuItem>(Process).As<ICanRecieveMessage>().SingleInstance();
+                builder.RegisterType<ClearGraphMenuItem>().Keyed<IMenuItem>(Process).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ClearPathfindingRangeMenuItem>().Keyed<IMenuItem>(Range).SingleInstance();
                 builder.RegisterType<EnterPathfindingRangeMenuItem>().Keyed<IMenuItem>(Range).As<ICanRecieveMessage>().SingleInstance()
                     .ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(PathfindingRange)));
@@ -134,8 +134,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
                 builder.RegisterType<XorshiftRandom>().As<IRandom>().SingleInstance();
 
-                builder.RegisterType<PathfindingRange<Vertex>>().As<IPathfindingRange<Vertex>>().SingleInstance();
-                builder.RegisterDecorator<VisualPathfindingRange<Vertex>, IPathfindingRange<Vertex>>();
+                builder.RegisterType<PathfindingRange<Vertex>>().Named<IPathfindingRange<Vertex>>(PathfindingRange).SingleInstance();
+                builder.RegisterDecorator<IPathfindingRange<Vertex>>((с, inner) => new VisualPathfindingRange<Vertex>(inner), PathfindingRange).SingleInstance();
                 builder.RegisterType<PathfindingRangeBuilder<Vertex>>().As<IPathfindingRangeBuilder<Vertex>>().As<IUndo>()
                     .SingleInstance().ConfigurePipeline(p => p.Use(new RangeBuilderResolveMiddlewear(Order)));
                 builder.RegisterType<IncludeSourceVertex<Vertex>>().Keyed<Command>(IncludeCommand).WithMetadata(Order, 2).SingleInstance();

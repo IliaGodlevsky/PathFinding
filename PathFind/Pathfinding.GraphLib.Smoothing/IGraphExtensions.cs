@@ -5,11 +5,16 @@ namespace Pathfinding.GraphLib.Smoothing
 {
     public static class IGraphExtensions
     {
-        public static void Smooth<TVertex>(this IGraph<TVertex> self, IMeanCost meanCost, int smoothLevel = 1)
+        public static void Smooth<TVertex>(this IGraph<TVertex> self, 
+            IMeanCost meanCost, int smoothLevel = 1)
             where TVertex : IVertex
         {
-            var layer = new SmoothLayer(smoothLevel, meanCost);
-            layer.Overlay((IGraph<IVertex>)self);
+            var layer = new SmoothLayer(meanCost);
+            var graph = (IGraph<IVertex>)self;
+            while (smoothLevel-- > 0)
+            {
+                layer.Overlay(graph);
+            }
         }
     }
 }
