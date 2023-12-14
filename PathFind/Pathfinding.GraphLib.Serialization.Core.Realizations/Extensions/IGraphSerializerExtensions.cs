@@ -3,12 +3,32 @@ using Shared.Primitives;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
 {
     public static class IGraphSerializerExtensions
     {
+        public static string SerializeToString<T>(this ISerializer<T> serializer, T item)
+        {
+            using (var memory = new MemoryStream())
+            {
+                serializer.SerializeTo(item, memory);
+                var bytes = memory.ToArray();
+                return Encoding.Default.GetString(bytes);
+            }
+        }
+
+        public static T DeserializeFromString<T>(this ISerializer<T> serializer, string item)
+        {
+            var bytes = Encoding.Default.GetBytes(item);
+            using (var memory = new MemoryStream(bytes))
+            {
+                return serializer.DeserializeFrom(memory);
+            }
+        }
+
         public static async Task SerializeToFileAsync<T>(this ISerializer<T> self,
             T value, string filePath)
         {

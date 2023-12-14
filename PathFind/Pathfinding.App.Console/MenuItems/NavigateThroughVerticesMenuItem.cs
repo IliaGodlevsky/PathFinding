@@ -1,5 +1,6 @@
 ﻿global using VertexActions = System.Collections.Generic.IReadOnlyCollection<(string ResourceName, Pathfinding.App.Console.Interface.IVertexAction Action)>;
 using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.App.Console.DataAccess.Services;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
@@ -13,26 +14,33 @@ using Shared.Primitives.ValueRange;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Pathfinding.App.Console.MenuItems
 {
     internal abstract class NavigateThroughVerticesMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         protected readonly IInput<ConsoleKey> keyInput;
-        protected readonly VertexActions actions;
+        protected readonly IService service;
+        protected readonly Lazy<VertexActions> actions;
 
+        protected readonly HashSet<Vertex> processed = new();
+
+        protected int id;
         protected IGraph<Vertex> graph = Graph<Vertex>.Empty;
         protected InclusiveValueRange<int> xRange = default;
         protected InclusiveValueRange<int> yRange = default;
 
         private Keys Keys { get; } = Keys.Default;
 
-        protected NavigateThroughVerticesMenuItem(VertexActions actions,
-            IInput<ConsoleKey> keyInput)
+        private VertexActions Actions => actions.Value;
+
+        protected NavigateThroughVerticesMenuItem(
+            IInput<ConsoleKey> keyInput, 
+            IService service)
         {
             this.keyInput = keyInput;
-            this.actions = actions;
+            this.service = service;
+            this.actions = new(GetActions);
         }
 
         public virtual bool CanBeExecuted()
@@ -65,20 +73,32 @@ namespace Pathfinding.App.Console.MenuItems
                         else if (key == Keys.VertexRight)
                             x = ReturnInRange(x + 1, xRange);
                         else
-                            GetOrDefault(key)?.Invoke(vertex);
+                            Do(vertex, key);
                     } while (key != Keys.ExitVerticesNavigating);
                 }
             }
         }
+
+        protected abstract VertexActions GetActions();
 
         private static int ReturnInRange(int coordinate, InclusiveValueRange<int> range)
         {
             return range.ReturnInRange(coordinate, ReturnOptions.Cycle);
         }
 
+        protected virtual void Do(Vertex vertex, ConsoleKey key)
+        {
+            var action = GetOrDefault(key);
+            if (action is not null)
+            {
+                action.Invoke(vertex);
+                processed.Add(vertex);
+            }
+        }
+
         private IVertexAction GetOrDefault(ConsoleKey key)
         {
-            var action = actions
+            var action = Actions
                 .FirstOrDefault(action => Keys.Default[action.ResourceName].Equals(key))
                 .Action;
             return action;
@@ -89,6 +109,7 @@ namespace Pathfinding.App.Console.MenuItems
             graph = msg.Graph;
             xRange = new(graph.GetWidth() - 1);
             yRange = new(graph.GetLength() - 1);
+            id = msg.Id;
         }
 
         public virtual void RegisterHanlders(IMessenger messenger)
@@ -106,34 +127,16 @@ namespace Pathfinding.App.Console.MenuItems
                 (nameof(Keys.VertexRight), Keys.VertexRight),
                 (nameof(Keys.ExitVerticesNavigating), Keys.ExitVerticesNavigating),
             };
-            foreach (var action in actions)
+            foreach (var action in Actions)
             {
                 legend.Add((action.ResourceName, (ConsoleKey)Keys[action.ResourceName]));
             }
             return legend
-                .Select(l => $"{ConvertCamelCaseToRegular(l.Descriptin)} - {l.Key}")
+                .Select(l => $"{l.Descriptin.ConvertCamelCaseToRegular()} - {l.Key}")
                 .Distinct()
+                .OrderByDescending(x => x.Length)
                 .CreateMenuList(columnsNumber: 3)
                 .ToString();
-        }
-
-        private static string ConvertCamelCaseToRegular(string input)
-        {
-            var result = new StringBuilder();
-            result.Append(input[0]);
-            foreach (char c in input.Skip(1))
-            {
-                if (char.IsUpper(c))
-                {
-                    result.Append(' ');
-                    result.Append(char.ToLower(c));
-                }
-                else
-                {
-                    result.Append(c);
-                }
-            }
-            return result.ToString().Trim();
         }
     }
 }

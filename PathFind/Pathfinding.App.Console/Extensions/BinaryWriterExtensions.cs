@@ -1,8 +1,6 @@
-﻿using Pathfinding.App.Console.DataAccess;
+﻿using Pathfinding.App.Console.DataAccess.Dto;
 using Pathfinding.App.Console.Model.Notes;
-using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
-using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,26 +9,19 @@ namespace Pathfinding.App.Console.Extensions
 {
     internal static class BinaryWriterExtensions
     {
-        public static void WriteHistory(this BinaryWriter writer, GraphPathfindingHistory history)
+        public static void WriteHistory(this BinaryWriter writer,
+            IReadOnlyCollection<AlgorithmSerializationDto> algorithms)
         {
-            writer.Write(history.Algorithms.Count);
-            foreach (var key in history.Algorithms)
+            writer.Write(algorithms.Count);
+            foreach (var algorithm in algorithms)
             {
-                writer.Write(key);
-                writer.WriteCoordinates(history.Obstacles, key);
-                writer.WriteCoordinates(history.Visited, key);
-                writer.WriteCoordinates(history.Ranges, key);
-                writer.WriteCoordinates(history.Paths, key);
-                writer.WriteIntArray(history.Costs.GetOrEmpty(key));
-                var statistics = history.Statistics.GetOrDefault(key, Statistics.Empty);
-                writer.WriteStatistics(statistics);
+                writer.WriteCoordinates(algorithm.Obstacles);
+                writer.WriteCoordinates(algorithm.Visited);
+                writer.WriteCoordinates(algorithm.Range);
+                writer.WriteCoordinates(algorithm.Path);
+                writer.WriteIntArray(algorithm.Costs);
+                writer.WriteStatistics(algorithm.Statistics);
             }
-        }
-
-        private static void WriteCoordinates(this BinaryWriter writer,
-            Dictionary<int, List<ICoordinate>> dict, int key)
-        {
-            writer.WriteCoordinates(dict.GetOrEmpty(key));
         }
 
         private static void WriteNullableString(this BinaryWriter writer, string value)
@@ -81,11 +72,6 @@ namespace Pathfinding.App.Console.Extensions
             {
                 writer.Write(value.Value);
             }
-        }
-
-        private static void WriteGuid(this BinaryWriter writer, Guid guid)
-        {
-            writer.Write(guid.ToByteArray());
         }
     }
 }

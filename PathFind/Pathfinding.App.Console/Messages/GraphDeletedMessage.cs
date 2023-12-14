@@ -7,11 +7,6 @@ namespace Pathfinding.App.Console.Messages
     {
         public int Id { get; }
 
-        public GraphDeletedMessage(IGraph<Vertex> graph)
-            : this(graph.GetHashCode())
-        {
-        }
-
         public GraphDeletedMessage(int id)
         {
             Id = id;

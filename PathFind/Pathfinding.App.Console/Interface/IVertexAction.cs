@@ -1,4 +1,5 @@
 ﻿using Pathfinding.App.Console.Model;
+using System;
 
 namespace Pathfinding.App.Console.Interface
 {

@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DataAccess;
+using Pathfinding.App.Console.DataAccess.Services;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -21,15 +21,15 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
         private readonly IMessenger messenger;
         private readonly IInput<string> input;
         private readonly ISerializer<IGraph<Vertex>> serializer;
-        private readonly GraphsPathfindingHistory history;
+        private readonly IService service;
         private readonly ILog log;
 
         public LoadGraphOnlyMenuItem(IMessenger messenger,
             IFilePathInput input,
-            GraphsPathfindingHistory history,
+            IService service,
             ISerializer<IGraph<Vertex>> serializer, ILog log)
         {
-            this.history = history;
+            this.service = service;
             this.serializer = serializer;
             this.messenger = messenger;
             this.input = input;
@@ -42,13 +42,14 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             {
                 var path = input.Input();
                 var graph = serializer.DeserializeFromFile(path);
-                history.Add(graph);
-                if (history.Count == 1)
+                int id = service.AddGraph(graph);
+                var count = service.GetGraphIds().Count;
+                if (count == 1)
                 {
                     var costRange = graph.First().Cost.CostRange;
                     var costMsg = new CostRangeChangedMessage(costRange);
                     messenger.Send(costMsg, Tokens.AppLayout);
-                    var graphMsg = new GraphMessage(graph);
+                    var graphMsg = new GraphMessage(graph, id);
                     messenger.SendMany(graphMsg, Tokens.Visual,
                         Tokens.AppLayout, Tokens.Main, Tokens.Common);
                 }

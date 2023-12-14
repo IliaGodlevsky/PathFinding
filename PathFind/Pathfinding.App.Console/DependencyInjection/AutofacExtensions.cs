@@ -3,7 +3,9 @@ using Autofac.Builder;
 using Autofac.Core;
 using Autofac.Core.Resolving.Pipeline;
 using Autofac.Features.Metadata;
+using AutoMapper;
 using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.App.Console.DataAccess.Mappers;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
@@ -79,6 +81,18 @@ namespace Pathfinding.App.Console.DependencyInjection
                     container.Containers.AddRange(except);
                 }
             });
+        }
+
+        public static void RegisterAutoMapper<TProfile>(this ContainerBuilder builder)
+            where TProfile : Profile
+        {
+            builder.RegisterType<TProfile>().As<Profile>().SingleInstance();
+            builder.Register(ctx =>
+            {
+                var profile = ctx.Resolve<Profile>();
+                var config = new MapperConfiguration(cfg => cfg.AddProfile(profile));
+                return config.CreateMapper(ctx.Resolve);
+            }).As<IMapper>().SingleInstance();
         }
 
         public static void ChangeParametres(this ResolveRequestContext context,

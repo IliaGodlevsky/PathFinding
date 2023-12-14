@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
 {
-    public sealed class BinaryRangeSerializer : ISerializer<IEnumerable<ICoordinate>>
+    public sealed class BinaryCoordinatesSerializer : ISerializer<IEnumerable<ICoordinate>>
     {
         public IEnumerable<ICoordinate> DeserializeFrom(Stream stream)
         {

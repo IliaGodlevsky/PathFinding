@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DataAccess;
+using Pathfinding.App.Console.DataAccess.Services;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -23,32 +23,36 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
     {
         private readonly IMessenger messenger;
         private readonly IInput<int> input;
-        private readonly GraphsPathfindingHistory history;
+        private readonly IService service;
 
         private bool isHistoryApplied = true;
+
+        private int Id { get; set; }
+
         private IGraph<Vertex> graph = Graph<Vertex>.Empty;
 
         public ShowHistoryMenuItem(IMessenger messenger,
             IInput<int> input,
-            GraphsPathfindingHistory history)
+            IService service)
         {
-            this.history = history;
+            this.service = service;
             this.input = input;
             this.messenger = messenger;
         }
 
         public bool CanBeExecuted()
         {
-            return IsHistoryApplied()
-                && history.GetHistory(graph.GetHashCode()).Algorithms.Count > 0;
+            var history = service.GetGraphPathfindingHistory(Id);
+            return IsHistoryApplied() && history.Count > 0;
         }
 
         public void Execute()
         {
-            var statistics = history.GetHistory(graph.GetHashCode()).Statistics
-                .GroupBy(s => s.Value.Algorithm)
-                .SelectMany(s => s.OrderBy(i => i.Value.Steps))
-                .ToDictionary();
+            var statistics = service.GetGraphPathfindingHistory(Id)
+                .Select(x => (Id: x.Id, Statistics: x.Statistics))
+                .GroupBy(x => x.Statistics.Algorithm)
+                .SelectMany(x => x.OrderBy(x => x.Statistics.Steps))
+                .ToDictionary(x => x.Id, x => x.Statistics);
             string inputMessage = GetInputMessage(statistics.Values);
             using (RememberGraphState())
             {
@@ -97,6 +101,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         private void SetGraph(GraphMessage msg)
         {
             graph = msg.Graph;
+            Id = msg.Id;
         }
 
         private int GetAlgorithmId(string message, int count)

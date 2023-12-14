@@ -1,4 +1,5 @@
-﻿using Pathfinding.App.Console.DataAccess;
+﻿using Pathfinding.App.Console.DataAccess.Entities;
+using Pathfinding.App.Console.DataAccess.Services;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -19,46 +20,47 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
     {
         private readonly IInput<string> stringInput;
         private readonly IInput<int> intInput;
-        private readonly GraphsPathfindingHistory history;
+        private readonly IService service;
         private readonly ISerializer<IGraph<Vertex>> serializer;
         private readonly ILog log;
 
         public SaveGraphOnlyMenuItem(IFilePathInput input,
             IInput<int> intInput,
-            GraphsPathfindingHistory history,
+            IService service,
             ISerializer<IGraph<Vertex>> serializer,
             ILog log)
         {
             this.stringInput = input;
             this.intInput = intInput;
-            this.history = history;
+            this.service = service;
             this.serializer = serializer;
             this.log = log;
         }
 
         public bool CanBeExecuted()
         {
-            return history.Count > 0;
+            return service.GetGraphIds().Count > 0;
         }
 
         public async void Execute()
         {
             try
             {
-                if (history.Count == 1)
+                var info = service.GetAllGraphInfo();
+                if (info.Count == 1)
                 {
                     var path = stringInput.Input();
-                    var graph = history.Graphs.First();
+                    int id = info[0].Id;
+                    var graph = service.GetGraph(id);
                     await serializer.SerializeToFileAsync(graph, path);
                     return;
                 }
-                var graphs = history.Graphs.ToArray();
-                string menuList = CreateMenuList(graphs);
-                int index = InputIndex(menuList, graphs.Length);
-                if (index != graphs.Length)
+                string menuList = CreateMenuList(info);
+                int index = InputIndex(menuList, info.Count);
+                if (index != info.Count)
                 {
                     var path = stringInput.Input();
-                    var graph = graphs[index];
+                    var graph = service.GetGraph(info[index].Id);
                     await serializer.SerializeToFileAsync(graph, path);
                 }
             }
@@ -77,12 +79,19 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             }
         }
 
-        private string CreateMenuList(IReadOnlyCollection<IGraph<Vertex>> graphs)
+        private string CreateMenuList(IReadOnlyCollection<GraphEntity> graphs)
         {
-            return graphs.Select(k => k.ToString())
+            return graphs.Select(k => k.ConvertToString())
                 .Append(Languages.Quit)
                 .CreateMenuList(1)
                 .ToString();
+        }
+
+        private string GetString(int width, int length, int obstacles)
+        {
+            int count = width * length;
+            int obstaclePercent = obstacles / count;
+            return $"Width: {width} Length: {length} Obstacle percent: {obstaclePercent}({obstacles}/{count})";
         }
 
         public override string ToString()

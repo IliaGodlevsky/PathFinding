@@ -7,9 +7,12 @@ namespace Pathfinding.App.Console.Messages
     {
         public IGraph<Vertex> Graph { get; }
 
-        public GraphMessage(IGraph<Vertex> graph)
+        public int Id { get; }
+
+        public GraphMessage(IGraph<Vertex> graph, int id)
         {
             Graph = graph;
+            Id = id;
         }
     }
 }

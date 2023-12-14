@@ -8,6 +8,8 @@ namespace Shared.Primitives
 
         public static Disposable Use(Action action) => new(action);
 
+        public static Disposable Empty() => new(() => { });
+
         private Disposable(Action action) => this.action = action;
 
         public readonly void Dispose() => action?.Invoke();

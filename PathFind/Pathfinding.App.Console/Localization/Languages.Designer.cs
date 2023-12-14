@@ -655,6 +655,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Width: {0} Length: {1} Obstacle percent: {2} ({3}/{4}).
+        /// </summary>
+        public static string GraphParametes {
+            get {
+                return ResourceManager.GetString("GraphParametes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sharing.
         /// </summary>
         public static string GraphSharing {

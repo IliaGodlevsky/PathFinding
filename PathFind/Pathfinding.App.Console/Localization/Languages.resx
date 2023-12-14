@@ -315,6 +315,9 @@
   <data name="GraphHeightInputMsg" xml:space="preserve">
     <value>Input height of graph: </value>
   </data>
+  <data name="GraphParametes" xml:space="preserve">
+    <value>Width: {0} Length: {1} Obstacle percent: {2} ({3}/{4})</value>
+  </data>
   <data name="GraphSharing" xml:space="preserve">
     <value>Sharing</value>
   </data>

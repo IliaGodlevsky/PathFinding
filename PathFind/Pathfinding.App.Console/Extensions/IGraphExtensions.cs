@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.Extensions
 {
-    internal static class GraphExtensions
+    internal static class IGraphExtensions
     {
         public static IReadOnlyList<int> GetCosts(this IGraph<Vertex> graph)
         {

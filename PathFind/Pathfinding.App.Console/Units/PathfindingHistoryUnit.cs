@@ -1,7 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
-using Pathfinding.App.Console.DataAccess;
+using Pathfinding.App.Console.DataAccess.Dto;
+using Pathfinding.App.Console.DataAccess.Services;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
@@ -20,10 +21,12 @@ namespace Pathfinding.App.Console.Units
 {
     internal sealed class PathfindingHistoryUnit : Unit, ICanRecieveMessage
     {
-        private readonly GraphsPathfindingHistory history;
+        private readonly IService service;
         private readonly IPathfindingRangeBuilder<Vertex> builder;
-        private readonly List<ICoordinate> visitedVertices = new();
+        private readonly HashSet<ICoordinate> visitedVertices = new();
+        private AlgorithmCreateDto history = new();
 
+        private int graphId;
         private IGraph<Vertex> graph = Graph<Vertex>.Empty;
         private PathfindingProcess algorithm = PathfindingProcess.Idle;
 
@@ -31,9 +34,9 @@ namespace Pathfinding.App.Console.Units
 
         public PathfindingHistoryUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IPathfindingRangeBuilder<Vertex> builder,
-            GraphsPathfindingHistory history) : base(menuItems)
+            IService service) : base(menuItems)
         {
-            this.history = history;
+            this.service = service;
             this.builder = builder;
         }
 
@@ -41,14 +44,14 @@ namespace Pathfinding.App.Console.Units
         {
             var key = msg.AlgorithmKey;
             graph.RestoreVerticesVisualState();
-            var currentHistory = history.GetHistory(graph.GetHashCode());
-            graph.ApplyCosts(currentHistory.Costs[key]);
-            var obstacles = currentHistory.Obstacles[key].Select(graph.Get);
+            var currentHistory = service.GetGraphPathfindingHistory(graphId).ToDictionary(x => x.Id);
+            graph.ApplyCosts(currentHistory[key].Costs);
+            var obstacles = currentHistory[key].Obstacles.Select(graph.Get);
             obstacles.ForEach(vertex => vertex.VisualizeAsObstacle());
-            var visited = currentHistory.Visited[key].Select(graph.Get);
+            var visited = currentHistory[key].Visited.Select(graph.Get);
             visited.ForEach(vertex => vertex.VisualizeAsVisited());
-            currentHistory.Ranges[key].Select(graph.Get).Reverse().VisualizeAsRange();
-            currentHistory.Paths[key].Select(graph.Get).VisualizeAsPath();
+            currentHistory[key].Range.Select(graph.Get).Reverse().VisualizeAsRange();
+            currentHistory[key].Path.Select(graph.Get).VisualizeAsPath();
         }
 
         private void SetIsApplied(IsAppliedMessage msg)
@@ -59,42 +62,30 @@ namespace Pathfinding.App.Console.Units
         private void SetGraph(GraphMessage msg)
         {
             graph = msg.Graph;
+            graphId = msg.Id;
         }
 
-        private void ClearHistory(ClearHistoryMessage msg)
-        {
-            var hist = history.GetHistory(graph.GetHashCode());
-            hist.Obstacles.Clear();
-            hist.Paths.Clear();
-            hist.Ranges.Clear();
-            hist.Costs.Clear();
-            hist.Visited.Clear();
-            hist.Algorithms.Clear();
-        }
+        //private void ClearHistory(ClearHistoryMessage msg)
+        //{
+        //    var hist = history.GetHistory(graph.GetHashCode());
+        //    hist.Obstacles.Clear();
+        //    hist.Paths.Clear();
+        //    hist.Ranges.Clear();
+        //    hist.Costs.Clear();
+        //    hist.Visited.Clear();
+        //    hist.Algorithms.Clear();
+        //}
 
         private void OnVertexVisited(object sender, PathfindingEventArgs args)
         {
             visitedVertices.Add(args.Current);
         }
 
-        private void OnFinished(object sender, EventArgs args)
-        {
-            var visited = history.GetHistory(graph.GetHashCode()).Visited;
-            visited.TryGetOrAddNew(algorithm.GetHashCode()).AddRange(visitedVertices);
-            visitedVertices.Clear();
-        }
-
         private void OnStarted(object sender, EventArgs args)
         {
-            int algorithmId = algorithm.GetHashCode();
-            var hist = history.GetHistory(graph.GetHashCode());
-            hist.Algorithms.Add(algorithmId);
-            var obstacles = hist.Obstacles.TryGetOrAddNew(algorithmId);
-            obstacles.AddRange(graph.GetObstaclesCoordinates());
-            var costs = hist.Costs.TryGetOrAddNew(algorithmId);
-            costs.AddRange(graph.GetCosts());
-            var ranges = hist.Ranges.TryGetOrAddNew(algorithmId);
-            ranges.AddRange(builder.Range.GetCoordinates());
+            history.Obstacles = Array.AsReadOnly(graph.GetObstaclesCoordinates().ToArray());
+            history.Costs = graph.GetCosts();
+            history.Range = Array.AsReadOnly(builder.Range.GetCoordinates().ToArray());
         }
 
         private void PrepareForPathfinding(AlgorithmMessage msg)
@@ -102,19 +93,21 @@ namespace Pathfinding.App.Console.Units
             algorithm = msg.Algorithm;
             algorithm.Started += OnStarted;
             algorithm.VertexVisited += OnVertexVisited;
-            algorithm.Finished += OnFinished;
         }
 
         private void SetStatistics(StatisticsMessage msg)
         {
-            history.GetHistory(graph.GetHashCode())
-                .Statistics[algorithm.GetHashCode()] = msg.Statistics;
+            history.Statistics = msg.Statistics;
         }
 
         private void OnPathFound(PathFoundMessage msg)
         {
-            history.GetHistory(graph.GetHashCode()).Paths
-                .TryGetOrAddNew(algorithm.GetHashCode()).AddRange(msg.Path);
+            history.Path = Array.AsReadOnly(msg.Path.ToArray());
+            history.Visited = visitedVertices.ToList().AsReadOnly();
+            history.GraphId = graphId;
+            service.AddAlgorithm(history);
+            history = new();
+            visitedVertices.Clear();
         }
 
         private bool IsHistoryApplied() => isHistoryApplied;
@@ -128,7 +121,7 @@ namespace Pathfinding.App.Console.Units
             messenger.Register<PathfindingHistoryUnit, AlgorithmMessage>(this, token, PrepareForPathfinding);
             messenger.Register<PathfindingHistoryUnit, PathFoundMessage>(this, token, OnPathFound);
             messenger.Register<PathfindingHistoryUnit, StatisticsMessage>(this, token, SetStatistics);
-            messenger.Register<PathfindingHistoryUnit, ClearHistoryMessage>(this, Tokens.History, ClearHistory);
+            //messenger.Register<PathfindingHistoryUnit, ClearHistoryMessage>(this, Tokens.History, ClearHistory);
         }
     }
 }

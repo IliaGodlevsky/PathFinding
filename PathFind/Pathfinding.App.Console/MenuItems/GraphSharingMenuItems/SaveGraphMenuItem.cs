@@ -1,10 +1,14 @@
-﻿using Pathfinding.App.Console.DataAccess;
+﻿using AutoMapper;
+using Pathfinding.App.Console.DataAccess.Dto;
+using Pathfinding.App.Console.DataAccess.Mappers;
+using Pathfinding.App.Console.DataAccess.Services;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
@@ -14,16 +18,17 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
     {
         public SaveGraphMenuItem(IFilePathInput input,
             IInput<int> intInput,
-            GraphsPathfindingHistory history,
-            ISerializer<GraphsPathfindingHistory> graphSerializer,
+            IService service,
+            IMapper mapper,
+            ISerializer<IEnumerable<PathfindingHistorySerializationDto>> graphSerializer,
             ILog log)
-            : base(input, intInput, history, graphSerializer, log)
+            : base(input, intInput, service, mapper, graphSerializer, log)
         {
         }
 
         public override string ToString() => Languages.SaveGraph;
 
-        protected override async Task ExportAsync(GraphsPathfindingHistory info, string path)
+        protected override async Task ExportAsync(string path, params PathfindingHistorySerializationDto[] info)
         {
             await graphSerializer.SerializeToFileAsync(info, path);
         }

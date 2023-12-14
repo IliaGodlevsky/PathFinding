@@ -1,8 +1,6 @@
-﻿using Pathfinding.App.Console.DataAccess;
+﻿using Pathfinding.App.Console.DataAccess.Dto;
 using Pathfinding.App.Console.Model.Notes;
-using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
-using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,31 +9,23 @@ namespace Pathfinding.App.Console.Extensions
 {
     internal static class BinaryReaderExtensions
     {
-        public static GraphPathfindingHistory ReadHistory(this BinaryReader reader)
+        public static IReadOnlyCollection<AlgorithmSerializationDto> ReadAlgorithm(this BinaryReader reader)
         {
-            var history = new GraphPathfindingHistory();
-            int keyCount = reader.ReadInt32();
-            for (int i = 0; i < keyCount; i++)
+            int algorithmsCount = reader.ReadInt32();
+            var algorithms = new AlgorithmSerializationDto[algorithmsCount];
+            for (int algorithm = 0; algorithm < algorithmsCount; algorithm++)
             {
-                var key = reader.ReadInt32();
-                history.Algorithms.Add(key);
-                history.Obstacles.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates());
-                history.Visited.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates());
-                history.Ranges.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates());
-                history.Paths.TryGetOrAddNew(key).AddRange(reader.ReadCoordinates());
-                history.Costs.TryGetOrAddNew(key).AddRange(reader.ReadIntArray());
-                history.Statistics.Add(key, reader.ReadStatisitics());
+                algorithms[algorithm] = new()
+                {
+                    Obstacles = Array.AsReadOnly(reader.ReadCoordinates()),
+                    Visited = Array.AsReadOnly(reader.ReadCoordinates()),
+                    Range = Array.AsReadOnly(reader.ReadCoordinates()),
+                    Path = Array.AsReadOnly(reader.ReadCoordinates()),
+                    Costs = Array.AsReadOnly(reader.ReadIntArray()),
+                    Statistics = reader.ReadStatisitics()
+                };
             }
-            return history;
-        }
-
-        public static IEnumerable<IReadOnlyList<int>> ReadSmoothHistory(this BinaryReader reader)
-        {
-            int count = reader.ReadInt32();
-            while (count-- > 0)
-            {
-                yield return reader.ReadIntArray();
-            }
+            return Array.AsReadOnly(algorithms);
         }
 
         private static int? ReadNullableInt32(this BinaryReader reader)

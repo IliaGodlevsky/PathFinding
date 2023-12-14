@@ -51,7 +51,7 @@ namespace Pathfinding.Visualization.Core.Abstractions
             {
                 case NotifyCollectionChangedAction.Add:
                     var vertex = (TVertex)e.NewItems[0];
-                    range.Transit.Add(vertex);
+                    range.Transit.Insert(e.NewStartingIndex, vertex);
                     vertex.VisualizeAsTransit();
                     break;
                 case NotifyCollectionChangedAction.Remove:

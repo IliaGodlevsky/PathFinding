@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.DataAccess;
+using Pathfinding.App.Console.DataAccess.Services;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
@@ -23,7 +24,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected readonly IMessenger messenger;
         protected readonly IRandom random;
         protected readonly GraphAssemble assemble;
-        protected readonly GraphsPathfindingHistory history;
+        protected readonly IService service;
 
         protected InclusiveValueRange<int> costRange = new(9, 1);
         protected int width = 0;
@@ -34,9 +35,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected GraphCreatingMenuItem(IMessenger messenger,
             GraphAssemble assemble,
             IRandom random,
-            GraphsPathfindingHistory history)
+            IService service)
         {
-            this.history = history;
+            this.service = service;
             this.messenger = messenger;
             this.random = random;
             this.assemble = assemble;
@@ -61,10 +62,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             var layers = GetLayers();
             var graph = assemble.AssembleGraph(layers, width, length);
-            history.Add(graph);
+            int id = service.AddGraph(graph);
             var costRangeMsg = new CostRangeChangedMessage(costRange);
             messenger.Send(costRangeMsg, Tokens.AppLayout);
-            var graphMsg = new GraphMessage(graph);
+            var graphMsg = new GraphMessage(graph, id);
             messenger.SendMany(graphMsg, Tokens.Visual,
                 Tokens.AppLayout, Tokens.Main, Tokens.Common);
         }

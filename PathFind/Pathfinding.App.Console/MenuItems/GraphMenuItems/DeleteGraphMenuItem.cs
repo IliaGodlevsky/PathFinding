@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DataAccess;
+using Pathfinding.App.Console.DataAccess.Entities;
+using Pathfinding.App.Console.DataAccess.Services;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -8,7 +9,6 @@ using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
-using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,36 +17,41 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     [LowPriority]
     internal sealed class DeleteGraphMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
-        private readonly GraphsPathfindingHistory history;
+        private readonly IService service;
         private readonly IMessenger messenger;
         private readonly IInput<int> input;
 
+        private int id;
         private IGraph<Vertex> graph = Graph<Vertex>.Empty;
 
         public DeleteGraphMenuItem(IInput<int> input,
-            GraphsPathfindingHistory history,
+            IService service,
             IMessenger messenger)
         {
-            this.history = history;
+            this.service = service;
             this.messenger = messenger;
             this.input = input;
         }
 
         public bool CanBeExecuted()
         {
-            return history.Count > 1;
+            return service.GetAllGraphInfo()
+                .Where(x => x.Id != id).Any();
         }
 
         public void Execute()
         {
-            var graphs = history.Graphs.Except(graph).ToList();
+            var graphs = service.GetAllGraphInfo()
+                .Where(x => x.Id != id).ToList();
             string menuList = GetMenuList(graphs);
             int index = GetIndex(menuList, graphs.Count);
             while (index != graphs.Count)
             {
-                history.Remove(graphs[index]);
+                int id = graphs[index].Id;
+                service.DeleteGraph(id);
                 graphs.RemoveAt(index);
-                messenger.Send(new GraphDeletedMessage(graph), Tokens.Common);
+                var message = new GraphDeletedMessage(id);
+                messenger.Send(message, Tokens.Common);
                 if (graphs.Count == 0)
                 {
                     break;
@@ -56,9 +61,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             }
         }
 
-        private string GetMenuList(IReadOnlyCollection<IGraph<Vertex>> graphs)
+        private string GetMenuList(IReadOnlyCollection<GraphEntity> graphs)
         {
-            return graphs.Select(s => s.ToString())
+            return graphs.Select(s => s.ConvertToString())
                 .Append(Languages.Quit)
                 .CreateMenuList(1)
                 .ToString();
@@ -85,6 +90,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private void SetGraph(GraphMessage msg)
         {
             graph = msg.Graph;
+            id = msg.Id;
         }
     }
 }

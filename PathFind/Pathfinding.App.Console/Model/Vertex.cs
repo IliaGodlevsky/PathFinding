@@ -18,6 +18,8 @@ namespace Pathfinding.App.Console.Model
         private IVertexCost cost = NullCost.Instance;
         private ConsoleColor color;
 
+        public int Id { get; set; }
+
         public virtual bool IsObstacle { get; set; }
 
         public virtual IVertexCost Cost
@@ -52,17 +54,11 @@ namespace Pathfinding.App.Console.Model
             Position = coordinate;
         }
 
-        protected Vertex(Vertex vertex)
-            : this(vertex.Position, vertex.visualization)
-        {
-
-        }
-
         public void Display()
         {
-            if (ConsolePosition != null)
+            if (ConsolePosition is not null)
             {
-                Cursor.SetPosition(ConsolePosition);
+                Cursor.SetPosition(ConsolePosition.Value);
                 Cursor.Write(Color, Cost.CurrentCost);
             }
         }
@@ -71,7 +67,7 @@ namespace Pathfinding.App.Console.Model
 
         public override bool Equals(object obj) => obj is IVertex vertex && Equals(vertex);
 
-        public override int GetHashCode() => HashCode.Combine(Cost, Position, IsObstacle);
+        public override int GetHashCode() => Position.GetHashCode();
 
         public bool IsVisualizedAsPath() => visualization.IsVisualizedAsPath(this);
 

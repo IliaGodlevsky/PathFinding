@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DataAccess;
+using Pathfinding.App.Console.DataAccess.Services;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -12,48 +12,50 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
-    [HighPriority]
+    [LowPriority]
     internal sealed class ChooseGraphMenuItem : IConditionedMenuItem
     {
         private readonly IMessenger messenger;
         private readonly IInput<int> input;
-        private readonly GraphsPathfindingHistory history;
+        private readonly IService service;
         private readonly IPathfindingRangeBuilder<Vertex> builder;
 
         public ChooseGraphMenuItem(IMessenger messenger,
             IPathfindingRangeBuilder<Vertex> builder,
             IInput<int> input,
-            GraphsPathfindingHistory history)
+            IService service)
         {
             this.messenger = messenger;
             this.input = input;
-            this.history = history;
+            this.service = service;
             this.builder = builder;
         }
 
         public bool CanBeExecuted()
         {
-            return history.Count > 1;
+            var count = service.GetGraphIds().Count;
+            return count > 0;
         }
 
         public void Execute()
         {
-            var graphs = history.Graphs.ToList();
-            var menuList = graphs.Select(s => s.ToString())
+            var graphs = service.GetAllGraphInfo();
+            var menuList = graphs.Select(k => k.ConvertToString())
                 .Append(Languages.Quit)
                 .CreateMenuList(1)
                 .ToString();
             int index = GetIndex(menuList, graphs.Count);
             if (index != graphs.Count)
             {
-                var graph = graphs[index];
+                int id = graphs[index].Id;
+                var graph = service.GetGraph(id);
                 var costRange = graph.First().Cost.CostRange;
-                messenger.SendMany(new GraphMessage(graph), Tokens.Visual,
+                messenger.SendMany(new GraphMessage(graph, id), Tokens.Visual,
                     Tokens.AppLayout, Tokens.Main, Tokens.Common);
                 messenger.Send(new CostRangeChangedMessage(costRange), Tokens.AppLayout);
-                var pathfindingRange = history.GetRange(graph.GetHashCode());
+                var range = service.GetRange(id);
                 builder.Undo();
-                builder.Include(pathfindingRange, graph);
+                builder.Include(range, graph);
             }
         }
 

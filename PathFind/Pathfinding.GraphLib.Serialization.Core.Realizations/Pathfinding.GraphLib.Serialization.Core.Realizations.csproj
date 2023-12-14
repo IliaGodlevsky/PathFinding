@@ -66,7 +66,7 @@
     <Compile Include="Serializers\Decorators\CryptoSerializer.cs" />
     <Compile Include="Serializers\Decorators\ThreadSafeSerializer.cs" />
     <Compile Include="Serializers\GraphSerializer.cs" />
-    <Compile Include="Serializers\BinaryRangeSerializer.cs" />
+    <Compile Include="Serializers\BinaryCoordinatesSerializer.cs" />
     <Compile Include="Serializers\XmlGraphSerializer.cs" />
   </ItemGroup>
   <ItemGroup>

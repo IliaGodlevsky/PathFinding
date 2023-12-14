@@ -10,7 +10,6 @@ using Pathfinding.Visualization.Extensions;
 using Shared.Executable;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace Pathfinding.App.Console.Units
 {
@@ -41,7 +40,6 @@ namespace Pathfinding.App.Console.Units
                 {
                     Terminal.Clear();
                     Terminal.ForegroundColor = ConsoleColor.White;
-                    Terminal.WriteLine(Graph);
                     Graph.RestoreVerticesVisualState();
                     Field.Display();
                 }
@@ -64,24 +62,10 @@ namespace Pathfinding.App.Console.Units
             DisplayGraph();
         }
 
-        private void OnGraphChanged(GraphChangedMessage msg)
-        {
-            using (Cursor.UseCurrentPosition())
-            {
-                var position = new Point(0, 0);
-                Cursor.SetPosition(position);
-                Terminal.Write(new string(' ',
-                    Terminal.WindowWidth));
-                Cursor.SetPosition(position);
-                Terminal.WriteLine(Graph);
-            }
-        }
-
         public void RegisterHanlders(IMessenger messenger)
         {
             var token = Tokens.Main.Bind(IsGraphCreated);
             messenger.RegisterGraph(this, Tokens.Main, SetGraph);
-            messenger.Register<MainUnit, GraphChangedMessage>(this, token, OnGraphChanged);
         }
     }
 }

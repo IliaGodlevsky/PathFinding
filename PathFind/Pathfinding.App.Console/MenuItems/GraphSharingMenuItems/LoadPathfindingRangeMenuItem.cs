@@ -16,27 +16,31 @@ using Pathfinding.Logging.Interface;
 using System;
 using System.Collections.Generic;
 using Shared.Extensions;
+using Pathfinding.App.Console.DataAccess.Services;
+using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 {
     [LowPriority]
     internal sealed class LoadPathfindingRangeMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
-        private IGraph<Vertex> graph = Graph<Vertex>.Empty;
-
-        private readonly GraphsPathfindingHistory history;
         private readonly ISerializer<IEnumerable<ICoordinate>> serializer;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         private readonly IInput<string> pathInput;
+        private readonly IService service;
         private readonly ILog log;
 
-        public LoadPathfindingRangeMenuItem(GraphsPathfindingHistory history,
-            ISerializer<IEnumerable<ICoordinate>> serializer,
+        private int Id { get; set; }
+
+        private IGraph<Vertex> graph = Graph<Vertex>.Empty;
+
+        public LoadPathfindingRangeMenuItem(ISerializer<IEnumerable<ICoordinate>> serializer,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
+            IService service,
             IFilePathInput pathInput,
             ILog log)
         {
-            this.history = history;
+            this.service = service;
             this.serializer = serializer;
             this.pathInput = pathInput;
             this.rangeBuilder = rangeBuilder;
@@ -45,7 +49,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 
         public bool CanBeExecuted()
         {
-            return history.Count > 0;
+            return graph != Graph<Vertex>.Empty;
         }
 
         public void Execute()
@@ -53,12 +57,14 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             try
             {
                 string path = pathInput.Input();
-                var range = serializer.DeserializeFromFile(path);
+                var range = serializer.DeserializeFromFile(path).ToList();
+                for (int i = 0; i < range.Count; i++)
+                {
+                    var vertex = graph.Get(range[i]);
+                    service.AddRange(vertex, i, Id);
+                }
                 rangeBuilder.Undo();
                 rangeBuilder.Include(range, graph);
-                var current = history.GetRange(graph.GetHashCode());
-                current.Clear();
-                current.AddRange(range);
             }
             catch (Exception ex)
             {
@@ -74,6 +80,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
         private void SetGraph(GraphMessage msg)
         {
             graph = msg.Graph;
+            Id = msg.Id;
         }
 
         public override string ToString()

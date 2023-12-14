@@ -1,5 +1,8 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DataAccess;
+﻿using AutoMapper;
+using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.App.Console.DataAccess.Dto;
+using Pathfinding.App.Console.DataAccess.Mappers;
+using Pathfinding.App.Console.DataAccess.Services;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
@@ -8,6 +11,8 @@ using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 {
@@ -15,16 +20,18 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
     internal sealed class LoadGraphMenuItem : ImportGraphMenuItem<string>
     {
         public LoadGraphMenuItem(IMessenger messenger,
-            IFilePathInput input, GraphsPathfindingHistory history,
+            IFilePathInput input, IService service,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
-            ISerializer<GraphsPathfindingHistory> serializer, ILog log)
-            : base(messenger, input, history, rangeBuilder, serializer, log)
+            IMapper mapper,
+            ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer,
+            ILog log)
+            : base(messenger, input, service, mapper, rangeBuilder, serializer, log)
         {
         }
 
-        protected override GraphsPathfindingHistory ImportGraph(string path)
+        protected override IReadOnlyCollection<PathfindingHistorySerializationDto> ImportGraph(string path)
         {
-            return serializer.DeserializeFromFile(path);
+            return serializer.DeserializeFromFile(path).ToArray();
         }
 
         protected override string InputPath()

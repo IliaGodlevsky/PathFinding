@@ -1,9 +1,9 @@
-﻿using Pathfinding.App.Console.DataAccess;
+﻿using Pathfinding.App.Console.DataAccess.Entities;
+using Pathfinding.App.Console.DataAccess.Services;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
-using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
@@ -18,51 +18,50 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
     internal sealed class SavePathfindingRangeMenuItem : IConditionedMenuItem
     {
         private readonly ISerializer<IEnumerable<ICoordinate>> serializer;
-        private readonly GraphsPathfindingHistory history;
+        private readonly IService service;
         private readonly IInput<string> stringInput;
         private readonly IInput<int> intInput;
         private readonly ILog log;
 
         public SavePathfindingRangeMenuItem(ISerializer<IEnumerable<ICoordinate>> serializer,
-            GraphsPathfindingHistory history,
+            IService service,
             IFilePathInput stringInput,
             IInput<int> intInput,
             ILog log)
         {
             this.serializer = serializer;
             this.log = log;
-            this.history = history;
+            this.service = service;
             this.stringInput = stringInput;
             this.intInput = intInput;
         }
 
         public bool CanBeExecuted()
         {
-            return history.Ids
-                .Select(id => history.GetRange(id))
-                .Any(range => range.Count > 0);
+            var ids = service.GetGraphIds();
+            return ids.Select(id => service.GetRange(id)).Any(r => r.Count > 0);
         }
 
         public async void Execute()
         {
             try
             {
-                if (history.Count == 1)
+                var ids = service.GetGraphIds();
+                if (ids.Count == 1)
                 {
                     var path = stringInput.Input();
-                    int id = history.Ids.First();
-                    var range = history.GetRange(id);
+                    var range = service.GetRange(ids.First());
                     await serializer.SerializeToFileAsync(range, path);
                     return;
                 }
-                var ids = history.Ids
-                    .Where(id => history.GetRange(id).Count > 0)
+                var graphsWithPath = ids
+                    .Where(id => service.GetRange(id).Count > 0)
                     .ToArray();
                 var ranges = ids
-                    .Select(id => history.GetRange(id))
+                    .Select(id => service.GetRange(id))
                     .ToArray();
-                var graphs = ids
-                    .Select(id => history.GetGraph(id))
+                var graphs = service.GetAllGraphInfo()
+                    .Where(x => ids.Contains(x.Id))
                     .ToArray();
                 string menuList = CreateMenuList(graphs);
                 int index = InputIndex(menuList, ranges.Length);
@@ -88,9 +87,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             }
         }
 
-        private string CreateMenuList(IReadOnlyCollection<IGraph<Vertex>> graphs)
+        private string CreateMenuList(IReadOnlyCollection<GraphEntity> graphs)
         {
-            return graphs.Select(k => k.ToString())
+            return graphs.Select(k => k.ConvertToString())
                 .Append(Languages.Quit)
                 .CreateMenuList(1)
                 .ToString();

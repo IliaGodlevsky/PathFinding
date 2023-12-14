@@ -1,5 +1,8 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DataAccess;
+﻿using AutoMapper;
+using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.App.Console.DataAccess.Dto;
+using Pathfinding.App.Console.DataAccess.Mappers;
+using Pathfinding.App.Console.DataAccess.Services;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messages;
@@ -8,7 +11,9 @@ using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
+using Shared.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
@@ -18,22 +23,25 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
         protected readonly IMessenger messenger;
         protected readonly IInput<TPath> input;
         protected readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
-        protected readonly ISerializer<GraphsPathfindingHistory> serializer;
-        protected readonly GraphsPathfindingHistory history;
+        protected readonly ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer;
+        protected readonly IService service;
         protected readonly ILog log;
+        protected readonly IMapper mapper;
 
         protected ImportGraphMenuItem(IMessenger messenger,
             IInput<TPath> input,
-            GraphsPathfindingHistory history,
+            IService service,
+            IMapper mapper,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
-            ISerializer<GraphsPathfindingHistory> serializer, ILog log)
+            ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer, ILog log)
         {
-            this.history = history;
+            this.service = service;
             this.rangeBuilder = rangeBuilder;
             this.serializer = serializer;
             this.messenger = messenger;
             this.input = input;
             this.log = log;
+            this.mapper = mapper;
         }
 
         public virtual void Execute()
@@ -41,18 +49,20 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             try
             {
                 var path = InputPath();
-                var importedHistory = ImportGraph(path);
-                history.Merge(importedHistory);
-                if (history.Count == importedHistory.Count && history.Count > 0)
+                var importedHistory = Array.AsReadOnly(mapper.Map<PathfindingHistoryCreateDto[]>(ImportGraph(path)));
+                importedHistory.ForEach(x => service.AddPathfindingHistory(x));
+                var ids = service.GetGraphIds().ToList();
+                if (ids.Count == importedHistory.Count && ids.Count > 0)
                 {
-                    var graph = history.Graphs.FirstOrDefault();
+                    int id = ids[0];
+                    var graph = service.GetGraph(id);
                     var costRange = graph.First().Cost.CostRange;
                     var costMsg = new CostRangeChangedMessage(costRange);
                     messenger.Send(costMsg, Tokens.AppLayout);
-                    var graphMsg = new GraphMessage(graph);
+                    var graphMsg = new GraphMessage(graph, id);
                     messenger.SendMany(graphMsg, Tokens.Visual,
                         Tokens.AppLayout, Tokens.Main, Tokens.Common);
-                    var range = history.GetRange(graph.GetHashCode());
+                    var range = service.GetRange(id);
                     rangeBuilder.Undo();
                     rangeBuilder.Include(range, graph);
                 }
@@ -65,6 +75,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 
         protected abstract TPath InputPath();
 
-        protected abstract GraphsPathfindingHistory ImportGraph(TPath path);
+        protected abstract IReadOnlyCollection<PathfindingHistorySerializationDto> ImportGraph(TPath path);
     }
 }

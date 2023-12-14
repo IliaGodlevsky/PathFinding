@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.DataAccess;
+using Pathfinding.App.Console.DataAccess.Services;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
@@ -14,8 +15,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         public AssembleGraphMenuItem(IMessenger messenger,
             IGraphAssemble<Vertex> assemble,
             IRandom random,
-            GraphsPathfindingHistory history)
-            : base(messenger, assemble, random, history)
+            IService service)
+            : base(messenger, assemble, random, service)
         {
 
         }
