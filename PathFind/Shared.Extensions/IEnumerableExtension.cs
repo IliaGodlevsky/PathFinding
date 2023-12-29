@@ -1,6 +1,7 @@
 ﻿using Shared.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Shared.Extensions
@@ -27,6 +28,15 @@ namespace Shared.Extensions
 
     public static class IEnumerableExtension
     {
+        public static IReadOnlyCollection<T> ToReadOnly<T>(this IEnumerable<T> collection)
+        {
+            switch (collection)
+            {
+                case IList<T> list: return new ReadOnlyCollection<T>(list);
+                default: return Array.AsReadOnly(collection.ToArray());
+            }
+        }
+
         public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> items)
         {
             items.ForEach(collection.Add);

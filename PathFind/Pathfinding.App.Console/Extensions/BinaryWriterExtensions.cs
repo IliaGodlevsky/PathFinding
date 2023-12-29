@@ -1,6 +1,8 @@
 ﻿using Pathfinding.App.Console.DataAccess.Dto;
 using Pathfinding.App.Console.Model.Notes;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
+using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,6 +23,15 @@ namespace Pathfinding.App.Console.Extensions
                 writer.WriteCoordinates(algorithm.Path);
                 writer.WriteIntArray(algorithm.Costs);
                 writer.WriteStatistics(algorithm.Statistics);
+            }
+        }
+
+        public static void WriteNeighbours(this BinaryWriter writer, IReadOnlyDictionary<ICoordinate, IReadOnlyCollection<ICoordinate>> neighbours)
+        {
+            writer.WriteCoordinates(neighbours.Keys.ToReadOnly());
+            foreach(var neighbour in neighbours.Values)
+            {
+                writer.WriteCoordinates(neighbour);
             }
         }
 

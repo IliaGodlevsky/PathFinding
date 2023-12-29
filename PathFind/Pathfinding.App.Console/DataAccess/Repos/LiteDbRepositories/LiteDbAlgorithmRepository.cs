@@ -27,8 +27,8 @@ namespace Pathfinding.App.Console.DataAccess.Repos.LiteDbRepositories
 
         public bool DeleteByGraphId(int graphId)
         {
-            collection.DeleteMany(x => x.GraphId == graphId);
-            return collection.Count() > 0;
+            int count = collection.DeleteMany(x => x.GraphId == graphId);
+            return count > 0;
         }
 
         public IEnumerable<AlgorithmEntity> GetByGraphId(int graphId)

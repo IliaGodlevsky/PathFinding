@@ -1,5 +1,6 @@
 ﻿using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
+using Shared.Extensions;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Pathfinding.App.Console.Serialization
         {
             using(var writer = new BinaryWriter(stream, Encoding.Default, leaveOpen: true))
             {
-                writer.WriteIntArray(item.ToArray());
+                writer.WriteIntArray(item.ToReadOnly());
             }
         }
     }

@@ -8,7 +8,6 @@ using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
-using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
 {

@@ -1,6 +1,8 @@
 ﻿using Pathfinding.App.Console.DataAccess.Dto;
 using Pathfinding.App.Console.Model.Notes;
+using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
+using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,6 +28,18 @@ namespace Pathfinding.App.Console.Extensions
                 };
             }
             return Array.AsReadOnly(algorithms);
+        }
+
+        public static IReadOnlyDictionary<ICoordinate, IReadOnlyCollection<ICoordinate>> ReadNeighbours(this BinaryReader reader)
+        {
+            var result = new Dictionary<ICoordinate, IReadOnlyCollection<ICoordinate>>();
+            var coordinates = reader.ReadCoordinates();
+            foreach (var coordinate in coordinates)
+            {
+                var neighbours = reader.ReadCoordinates().ToReadOnly();
+                result.Add(coordinate, neighbours);
+            }
+            return result.AsReadOnly();
         }
 
         private static int? ReadNullableInt32(this BinaryReader reader)

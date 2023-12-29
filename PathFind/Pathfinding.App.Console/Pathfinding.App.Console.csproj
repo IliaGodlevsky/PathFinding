@@ -62,6 +62,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\BsonTableAttribute.cs" />
+    <Compile Include="DataAccess\DbTables.cs" />
     <Compile Include="DataAccess\Dto\AlgorithmCreateDto.cs" />
     <Compile Include="DataAccess\Dto\AlgorithmReadDto.cs" />
     <Compile Include="DataAccess\Dto\AlgorithmSerializationDto.cs" />
@@ -70,28 +72,44 @@
     <Compile Include="DataAccess\Dto\PathfindingHistoryReadDto.cs" />
     <Compile Include="DataAccess\Dto\PathfindingHistorySerializationDto.cs" />
     <Compile Include="DataAccess\Dto\VertexReadDto.cs" />
+    <Compile Include="DataAccess\Entities\NeighborEntity.cs" />
     <Compile Include="DataAccess\Entities\AlgorithmEntity.cs" />
     <Compile Include="DataAccess\Entities\GraphEntity.cs" />
     <Compile Include="DataAccess\Entities\IEntity.cs" />
-    <Compile Include="DataAccess\Entities\NeighbourEntity.cs" />
     <Compile Include="DataAccess\Entities\RangeEntity.cs" />
     <Compile Include="DataAccess\Entities\VertexEntity.cs" />
+    <Compile Include="DataAccess\IndexFieldAttribute.cs" />
     <Compile Include="DataAccess\Mappers\DbProfile.cs" />
     <Compile Include="DataAccess\Repos\IAlgorithmsRepository.cs" />
-    <Compile Include="DataAccess\Repos\IGraphRepository.cs" />
     <Compile Include="DataAccess\Repos\INeighborsRepository.cs" />
+    <Compile Include="DataAccess\Repos\IGraphRepository.cs" />
+    <Compile Include="DataAccess\Repos\InMemoryRepositories\InMemoryAlgorithmRepository.cs" />
+    <Compile Include="DataAccess\Repos\InMemoryRepositories\InMemoryGraphRepository.cs" />
+    <Compile Include="DataAccess\Repos\InMemoryRepositories\InMemoryNeighborsRepository.cs" />
+    <Compile Include="DataAccess\Repos\InMemoryRepositories\InMemoryRangeRepository.cs" />
+    <Compile Include="DataAccess\Repos\InMemoryRepositories\InMemoryRepository.cs" />
+    <Compile Include="DataAccess\Repos\InMemoryRepositories\InMemoryVertexRepository.cs" />
     <Compile Include="DataAccess\Repos\IVerticesRepository.cs" />
     <Compile Include="DataAccess\Repos\IRangeRepository.cs" />
+    <Compile Include="DataAccess\Repos\LiteDbRepositories\LiteDbNeighborsRepository.cs" />
     <Compile Include="DataAccess\Repos\LiteDbRepositories\LiteDbRangeRepository.cs" />
     <Compile Include="DataAccess\Repos\LiteDbRepositories\LiteDbAlgorithmRepository.cs" />
     <Compile Include="DataAccess\Repos\LiteDbRepositories\LiteDbGraphRepository.cs" />
-    <Compile Include="DataAccess\Repos\LiteDbRepositories\LiteDbNeighborRepository.cs" />
     <Compile Include="DataAccess\Repos\LiteDbRepositories\LiteDbVerticesRepository.cs" />
+    <Compile Include="DataAccess\Repos\SqliteRepositories\SqliteAlgorithmRepository.cs" />
+    <Compile Include="DataAccess\Repos\SqliteRepositories\SqliteGraphRepository.cs" />
+    <Compile Include="DataAccess\Repos\SqliteRepositories\SqliteNeighborRepository.cs" />
+    <Compile Include="DataAccess\Repos\SqliteRepositories\SqliteRangeRepository.cs" />
+    <Compile Include="DataAccess\Repos\SqliteRepositories\SqliteRepository.cs" />
+    <Compile Include="DataAccess\Repos\SqliteRepositories\SqliteVertexRepository.cs" />
     <Compile Include="DataAccess\Services\IService.cs" />
     <Compile Include="DataAccess\Services\CacheService.cs" />
     <Compile Include="DataAccess\Services\Service.cs" />
+    <Compile Include="DataAccess\UnitOfWorks\InMemoryUnitOfWork.cs" />
     <Compile Include="DataAccess\UnitOfWorks\IUnitOfWork.cs" />
     <Compile Include="DataAccess\UnitOfWorks\LiteDbUnitOfWork.cs" />
+    <Compile Include="DataAccess\UnitOfWorks\SqliteUnitOfWork.cs" />
+    <Compile Include="DependencyInjection\ConfigurationMiddlewears\UnitOfWorkResolveMiddleware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\KeyResolveMiddlware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\CombinedAlgorithmsResolveMiddleware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\AllVisualizedVerticesMiddleware.cs" />
@@ -500,8 +518,14 @@
     <PackageReference Include="CommunityToolkit.Mvvm">
       <Version>8.2.2</Version>
     </PackageReference>
+    <PackageReference Include="Dapper">
+      <Version>2.1.24</Version>
+    </PackageReference>
     <PackageReference Include="LiteDB">
       <Version>5.0.17</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Data.Sqlite">
+      <Version>8.0.0</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>

@@ -148,5 +148,23 @@ namespace Pathfinding.App.Console.Settings {
                 return ((char)(this["FrameComponent"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("litedbgraph.db")]
+        public string LiteDbConnectionString {
+            get {
+                return ((string)(this["LiteDbConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("sqlitegraph.db")]
+        public string SqliteConnectionString {
+            get {
+                return ((string)(this["SqliteConnectionString"]));
+            }
+        }
     }
 }

@@ -1,10 +1,9 @@
 ﻿using Pathfinding.App.Console.DataAccess.Dto;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
-using System;
+using Shared.Extensions;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace Pathfinding.App.Console.Serialization
@@ -23,7 +22,7 @@ namespace Pathfinding.App.Console.Serialization
         {
             using (var writer = new BinaryWriter(stream, Encoding.Default, leaveOpen: true))
             {
-                writer.WriteHistory(Array.AsReadOnly(algorithms.ToArray()));
+                writer.WriteHistory(algorithms.ToReadOnly());
             }
         }
     }

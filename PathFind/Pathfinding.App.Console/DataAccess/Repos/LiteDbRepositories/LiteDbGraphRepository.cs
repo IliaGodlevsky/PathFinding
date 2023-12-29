@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DataAccess.Repos.LiteDbRepositories
 {
-    internal sealed class LiteDbGraphRepository : IGraphRepository
+    internal sealed class LiteDbGraphRepository : IGraphParametresRepository
     {
         private readonly ILiteCollection<GraphEntity> collection;
 

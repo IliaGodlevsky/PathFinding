@@ -2,31 +2,30 @@
 using Pathfinding.App.Console.DataAccess.Entities;
 using Pathfinding.App.Console.Extensions;
 using Shared.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.DataAccess.Repos.LiteDbRepositories
 {
-    internal sealed class LiteDbNeighborRepository : INeighborsRepository
+    internal sealed class LiteDbNeighborsRepository : INeighborsRepository
     {
-        private readonly ILiteCollection<NeighbourEntity> collection;
+        private readonly ILiteCollection<NeighborEntity> collection;
         private readonly ILiteCollection<VertexEntity> vertices;
 
-        public LiteDbNeighborRepository(ILiteDatabase db) 
+        public LiteDbNeighborsRepository(ILiteDatabase db)
         {
             vertices = db.GetNamedCollection<VertexEntity>();
-            collection = db.GetNamedCollection<NeighbourEntity>();
+            collection = db.GetNamedCollection<NeighborEntity>();
             collection.EnsureIndex(x => x.VertexId);
         }
 
-        public NeighbourEntity AddNeighbour(NeighbourEntity neighbour)
+        public NeighborEntity AddNeighbour(NeighborEntity neighbour)
         {
             collection.Insert(neighbour);
             return neighbour;
         }
 
-        public IEnumerable<NeighbourEntity> AddNeighbours(IEnumerable<NeighbourEntity> neighbours)
+        public IEnumerable<NeighborEntity> AddNeighbours(IEnumerable<NeighborEntity> neighbours)
         {
             collection.Insert(neighbours);
             return neighbours;
@@ -36,25 +35,25 @@ namespace Pathfinding.App.Console.DataAccess.Repos.LiteDbRepositories
         {
             var bsonIds = vertices.Find(x => x.GraphId == graphId)
                 .Select(x => new BsonValue(x.Id)).ToArray();
-            var query = Query.In(nameof(NeighbourEntity.VertexId), bsonIds);
+            var query = Query.In(nameof(NeighborEntity.VertexId), bsonIds);
             int deleted = collection.DeleteMany(query);
             return deleted > 0;
         }
 
         public bool DeleteNeighbour(int vertexId, int neighbourId)
         {
-            int deleted = collection.DeleteMany(x => x.VertexId == vertexId 
-                          && x.NeighbourId == neighbourId);
+            int deleted = collection.DeleteMany(x => x.VertexId == vertexId
+                          && x.NeighborId == neighbourId);
             return deleted == 1;
         }
 
-        public IReadOnlyDictionary<int, IReadOnlyCollection<NeighbourEntity>> GetNeighboursForVertices(IEnumerable<int> verticesIds)
+        public IReadOnlyDictionary<int, IReadOnlyCollection<NeighborEntity>> GetNeighboursForVertices(IEnumerable<int> verticesIds)
         {
             var bsonIds = verticesIds.Select(x => new BsonValue(x)).ToArray();
-            var query = Query.In(nameof(NeighbourEntity.VertexId), bsonIds);
+            var query = Query.In(nameof(NeighborEntity.VertexId), bsonIds);
             return collection.Find(query)
                 .GroupBy(x => x.VertexId)
-                .ToDictionary(x => x.Key, x => (IReadOnlyCollection<NeighbourEntity>)Array.AsReadOnly(x.ToArray()))
+                .ToDictionary(x => x.Key, x => x.ToReadOnly())
                 .AsReadOnly();
         }
     }

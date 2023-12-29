@@ -1,51 +1,45 @@
-﻿using AutoMapper;
-using LiteDB;
-using Pathfinding.App.Console.DataAccess.Dto;
+﻿using Pathfinding.App.Console.DataAccess.Dto;
 using Pathfinding.App.Console.DataAccess.Entities;
-using Pathfinding.App.Console.DataAccess.Mappers;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations;
+using Pathfinding.GraphLib.Factory.Interface;
 using Shared.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.DataAccess.Services
 {
-    internal sealed class CacheService : IService
+    internal sealed class CacheService : Service
     {
-        private readonly IService service;
-        private readonly IMapper mapper;
-
         private bool areAllGraphsFetched = false;
-        private readonly Dictionary<int, bool> areAllAlgorithmsFetched = new();
-
+        private readonly HashSet<int> areAllAlgorithmsFetched = new();
         private readonly Dictionary<int, IGraph<Vertex>> graphs = new();
         private readonly Dictionary<int, List<AlgorithmReadDto>> algorithms = new();
         private readonly Dictionary<int, List<ICoordinate>> range = new();
         private readonly Dictionary<int, GraphEntity> graphEntities = new();
+        private readonly Dictionary<int, Dictionary<ICoordinate, List<ICoordinate>>> addedNeighbours = new();
+        private readonly Dictionary<int, Dictionary<ICoordinate, List<ICoordinate>>> deletedNeighbours = new();
 
-        public CacheService(IMapper mapper, IService service = null)
+        public CacheService(Service service)
+            : base(service) 
         {
-            this.service = service;
-            this.mapper = mapper;
         }
 
-        public int AddAlgorithm(AlgorithmCreateDto algorithm)
+        public override int AddAlgorithm(AlgorithmCreateDto algorithm)
         {
             int graphId = algorithm.GraphId;
-            int id = service.AddAlgorithm(algorithm);
+            int id = base.AddAlgorithm(algorithm);
             var readDto = mapper.Map<AlgorithmReadDto>(algorithm);
             readDto.Id = id;
             algorithms.TryGetOrAddNew(graphId).Add(readDto);
             return id;
         }
 
-        public int AddGraph(IGraph<Vertex> graph)
+        public override int AddGraph(IGraph<Vertex> graph)
         {
-            int id = service.AddGraph(graph);
+            int id = base.AddGraph(graph);
             graphEntities.Add(id, new()
             {
                 Id = id,
@@ -57,32 +51,25 @@ namespace Pathfinding.App.Console.DataAccess.Services
             return id;
         }
 
-        public bool AddNeighbor(Vertex vertex, Vertex neighbor)
+        public override PathfindingHistoryReadDto AddPathfindingHistory(PathfindingHistoryCreateDto history)
         {
-            return service.AddNeighbor(vertex, neighbor);
-        }
-
-        public int AddPathfindingHistory(PathfindingHistoryCreateDto history)
-        {
-            int graphId = AddGraph(history.Graph);
-            history.Algorithms.ForEach(x =>
+            var dto = base.AddPathfindingHistory(history);
+            graphs[dto.Id] = dto.Graph;
+            graphEntities.Add(dto.Id, new()
             {
-                x.GraphId = graphId;
-                AddAlgorithm(x);
+                Id = dto.Id,
+                Width = dto.Graph.GetWidth(),
+                Length = dto.Graph.GetLength(),
+                ObstaclesCount = dto.Graph.GetObstaclesCount()
             });
-            int i = 0;
-            foreach (var range in history.Range)
-            {
-                var vertex = history.Graph.Get(range);
-                AddRange(vertex, i, graphId);
-                i++;
-            }
-            return graphId;
+            algorithms.TryGetOrAddNew(dto.Id).AddRange(dto.Algorithms);
+            range.TryGetOrAddNew(dto.Id).AddRange(history.Range);
+            return dto;
         }
 
-        public bool AddRange(Vertex vertex, int order, int graphId)
+        public override bool AddRange(Vertex vertex, int order, int graphId)
         {
-            bool added = service.AddRange(vertex, order, graphId);
+            bool added = base.AddRange(vertex, order, graphId);
             if (added)
             {
                 range.TryGetOrAddNew(graphId).Insert(order, vertex.Position);
@@ -90,9 +77,9 @@ namespace Pathfinding.App.Console.DataAccess.Services
             return added;
         }
 
-        public bool DeleteGraph(int graphId)
+        public override bool DeleteGraph(int graphId)
         {
-            bool deleted = service.DeleteGraph(graphId);
+            bool deleted = base.DeleteGraph(graphId);
             if (deleted)
             {
                 graphs.Remove(graphId);
@@ -104,79 +91,77 @@ namespace Pathfinding.App.Console.DataAccess.Services
             return deleted;
         }
 
-        public IReadOnlyList<GraphEntity> GetAllGraphInfo()
+        public override IReadOnlyList<GraphEntity> GetAllGraphInfo()
         {
             if (areAllGraphsFetched)
             {
-                return Array.AsReadOnly(graphEntities.Values.ToArray());
+                return graphEntities.Values.ToList().AsReadOnly();
             }
-            var entities = Array.AsReadOnly(service.GetAllGraphInfo().ToArray());
-            var toSave = entities.ToDictionary(x => x.Id);
-            graphEntities.AddRange(toSave);
+            var entities = base.GetAllGraphInfo();
+            foreach (var value in entities)
+            {
+                graphEntities[value.Id] = value;
+            }
             areAllGraphsFetched = true;
             return entities;
         }
 
-        public IGraph<Vertex> GetGraph(int id)
+        public override IGraph<Vertex> GetGraph(int id)
         {
             var graph = graphs.GetOrDefault(id, Graph<Vertex>.Empty);
             if (graph == Graph<Vertex>.Empty)
             {
-                graph = service.GetGraph(id);
+                graph = base.GetGraph(id);
                 graphs[id] = graph;
             }
             return graph;
         }
 
-        public IReadOnlyCollection<int> GetGraphIds()
+        public override IReadOnlyCollection<int> GetGraphIds()
         {
-            return Array.AsReadOnly(GetAllGraphInfo().Select(x => x.Id).ToArray());
+            return GetAllGraphInfo().Select(x => x.Id).ToReadOnly();
         }
 
-        public IReadOnlyCollection<AlgorithmReadDto> GetGraphPathfindingHistory(int graphId)
+        public override IReadOnlyCollection<AlgorithmReadDto> GetGraphPathfindingHistory(int graphId)
         {
-            if (areAllAlgorithmsFetched.ContainsKey(graphId))
+            if (areAllAlgorithmsFetched.Contains(graphId))
             {
                 return algorithms.GetOrEmpty(graphId);
             }
-            var history = service.GetGraphPathfindingHistory(graphId);
-            areAllAlgorithmsFetched[graphId] = true;
+            var history = base.GetGraphPathfindingHistory(graphId);
+            areAllAlgorithmsFetched.Add(graphId);
             algorithms[graphId] = history.ToList();
             return history;
         }
 
-        public PathfindingHistoryReadDto GetPathfindingHistory(int graphId)
+        public override PathfindingHistoryReadDto GetPathfindingHistory(int graphId)
         {
             var graph = GetGraph(graphId);
             var algorithms = GetGraphPathfindingHistory(graphId);
             var range = GetRange(graphId);
             return new PathfindingHistoryReadDto()
             {
+                Id = graphId,
                 Graph = graph,
                 Algorithms = algorithms,
                 Range = range
             };
         }
 
-        public IReadOnlyCollection<ICoordinate> GetRange(int graphId)
+        public override IReadOnlyCollection<ICoordinate> GetRange(int graphId)
         {
             var pathfindingRange = range.TryGetOrAddNew(graphId);
             if (pathfindingRange.Count == 0)
             {
-                pathfindingRange = service.GetRange(graphId).ToList();
+                pathfindingRange = base.GetRange(graphId).ToList();
                 range[graphId] = pathfindingRange;
             }
             return pathfindingRange.AsReadOnly();
         }
 
-        public bool RemoveNeighbor(Vertex vertex, Vertex neighbor)
+        public override bool RemoveRange(Vertex vertex, int graphId)
         {
-            return service.RemoveNeighbor(vertex, neighbor);
-        }
-
-        public bool RemoveRange(Vertex vertex, int graphId)
-        {
-            bool isDeleted = service.RemoveRange(vertex, graphId);
+            bool isDeleted = base.RemoveRange(vertex, graphId);
             if(isDeleted)
             {
                 range.TryGetOrAddNew(graphId).Remove(vertex.Position);
@@ -184,9 +169,9 @@ namespace Pathfinding.App.Console.DataAccess.Services
             return isDeleted;
         }
 
-        public bool RemoveRange(int graphId)
+        public override bool RemoveRange(int graphId)
         {
-            bool isDeleted = service.RemoveRange(graphId);
+            bool isDeleted = base.RemoveRange(graphId);
             if (isDeleted)
             {
                 range.Remove(graphId);
@@ -194,9 +179,9 @@ namespace Pathfinding.App.Console.DataAccess.Services
             return isDeleted;
         }
 
-        public bool UpdateRange(Vertex vertex, int order, int graphId)
+        public override bool UpdateRange(Vertex vertex, int order, int graphId)
         {
-            bool updated = service.UpdateRange(vertex, order, graphId);
+            bool updated = base.UpdateRange(vertex, order, graphId);
             if (updated)
             {
                 range.TryGetOrAddNew(graphId).Remove(vertex.Position);
@@ -205,20 +190,30 @@ namespace Pathfinding.App.Console.DataAccess.Services
             return updated;
         }
 
-        public bool UpdateVertex(Vertex vertex, int graphId)
-        {
-            return service.UpdateVertex(vertex, graphId);
-        }
-
-        public bool UpdateVertices(IEnumerable<Vertex> vertices, int graphId)
-        {
-            return service.UpdateVertices(vertices, graphId);
-        }
-
-        public bool UpdateObstaclesCount(int newCount, int graphId)
+        public override bool UpdateObstaclesCount(int newCount, int graphId)
         {
             graphEntities[graphId].ObstaclesCount = newCount;
-            return service.UpdateObstaclesCount(newCount, graphId);
+            return base.UpdateObstaclesCount(newCount, graphId);
+        }
+
+        public override bool AddNeighbor(Vertex vertex, Vertex neighbor)
+        {
+            bool added = base.AddNeighbor(vertex, neighbor);
+            if (added)
+            {
+                
+            }
+            return added;
+        }
+
+        public override bool RemoveNeighbor(Vertex vertex, Vertex neighbor)
+        {
+            bool isDeleted = base.RemoveNeighbor(vertex, neighbor);
+            if (isDeleted)
+            {
+
+            }
+            return isDeleted;
         }
     }
 }

@@ -1,8 +1,11 @@
 ﻿using Pathfinding.App.Console.DataAccess.Dto;
+using Pathfinding.App.Console.DataAccess.Entities;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Exceptions;
+using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,8 +43,8 @@ namespace Pathfinding.App.Console.Serialization
                         histories[history] = new()
                         {
                             Graph = graphSerializer.DeserializeFrom(stream),
-                            Algorithms = historySerializer.DeserializeFrom(stream).ToArray(),
-                            Range = rangeSerializer.DeserializeFrom(stream).ToArray()
+                            Algorithms = historySerializer.DeserializeFrom(stream).ToReadOnly(),
+                            Range = rangeSerializer.DeserializeFrom(stream).ToReadOnly()
                         };
                     }
                     return Array.AsReadOnly(histories);

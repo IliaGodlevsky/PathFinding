@@ -1,11 +1,12 @@
-﻿using Pathfinding.App.Console.DataAccess.Repos;
+﻿using Pathfinding.App.Console.DataAccess.Entities;
+using Pathfinding.App.Console.DataAccess.Repos;
 using System;
 
 namespace Pathfinding.App.Console.DataAccess.UnitOfWorks
 {
     internal interface IUnitOfWork : IDisposable
     {
-        IGraphRepository GraphRepository { get; }
+        IGraphParametresRepository GraphRepository { get; }
 
         IAlgorithmsRepository AlgorithmsRepository { get; }
 

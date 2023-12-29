@@ -4,20 +4,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pathfinding.App.Console.DataAccess.Entities
 {
-    [Table("Neighbors")]
-    internal class NeighbourEntity : IEntity
+    [Table(DbTables.Neighbors)]
+    [BsonTable(DbTables.Neighbors)]
+    internal class NeighborEntity : IEntity
     {
         [Key]
         [BsonId]
         [Required]
+        [IndexField]
         public int Id { get; set; }
 
         [Required]
-        [ForeignKey(nameof(VertexEntity))]
-        public int NeighbourId { get; set; }
+        public int NeighborId { get; set; }
 
         [Required]
-        [ForeignKey(nameof(VertexEntity))]
         public int VertexId { get; set; }
     }
 }

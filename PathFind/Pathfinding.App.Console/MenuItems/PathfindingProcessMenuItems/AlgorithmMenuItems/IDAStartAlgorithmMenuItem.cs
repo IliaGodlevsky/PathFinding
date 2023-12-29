@@ -8,6 +8,7 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.AlgorithmMenuItems;
+using Pathfinding.App.Console.Model.Notes;
 using Shared.Primitives.ValueRange;
 using System.Collections.Generic;
 
@@ -45,6 +46,13 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
                 Spread = intInput.Input(message, spreadRange);
             }
             return base.GetAlgorithm();
+        }
+
+        protected override Statistics GetStatistics(string heusristic, string stepRule)
+        {
+            var stats = base.GetStatistics(heusristic, stepRule);
+            stats.Spread = Spread;
+            return stats;
         }
     }
 }

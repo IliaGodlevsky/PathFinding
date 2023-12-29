@@ -5,7 +5,7 @@ using System.Runtime.InteropServices.ComTypes;
 
 namespace Pathfinding.App.Console.DataAccess.Repos
 {
-    internal interface IGraphRepository
+    internal interface IGraphParametresRepository
     {
         GraphEntity GetGraph(int graphId);
 

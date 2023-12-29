@@ -1,6 +1,6 @@
 ﻿using LiteDB;
+using Pathfinding.App.Console.DataAccess;
 using Shared.Extensions;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pathfinding.App.Console.Extensions
 {
@@ -8,7 +8,7 @@ namespace Pathfinding.App.Console.Extensions
     {
         public static ILiteCollection<T> GetNamedCollection<T>(this ILiteDatabase database)
         {
-            string collectionName = typeof(T).GetAttributeOrDefault<TableAttribute>().Name;
+            string collectionName = typeof(T).GetAttributeOrDefault<BsonTableAttribute>().Name;
             return database.GetCollection<T>(collectionName, BsonAutoId.Int32);
         }
     }

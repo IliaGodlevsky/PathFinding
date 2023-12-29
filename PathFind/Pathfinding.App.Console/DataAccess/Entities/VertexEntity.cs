@@ -4,15 +4,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pathfinding.App.Console.DataAccess.Entities
 {
-    [Table("Vertices")]
+    [Table(DbTables.Vertices)]
+    [BsonTable(DbTables.Vertices)]
     internal class VertexEntity : IEntity
     {
         [Key]
         [BsonId]
         [Required]
+        [IndexField]
         public int Id { get; set; }
 
         [Required]
+        [IndexField]
         [ForeignKey(nameof(GraphEntity))]
         public int GraphId { get; set; }
 

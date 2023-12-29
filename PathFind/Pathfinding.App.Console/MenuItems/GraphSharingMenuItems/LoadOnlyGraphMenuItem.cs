@@ -42,16 +42,17 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             {
                 var path = input.Input();
                 var graph = serializer.DeserializeFromFile(path);
-                int id = service.AddGraph(graph);
+                // TODO: Save neighbourhood with graph
+                //int id = service.AddGraph(graph);
                 var count = service.GetGraphIds().Count;
                 if (count == 1)
                 {
                     var costRange = graph.First().Cost.CostRange;
                     var costMsg = new CostRangeChangedMessage(costRange);
                     messenger.Send(costMsg, Tokens.AppLayout);
-                    var graphMsg = new GraphMessage(graph, id);
-                    messenger.SendMany(graphMsg, Tokens.Visual,
-                        Tokens.AppLayout, Tokens.Main, Tokens.Common);
+                    //var graphMsg = new GraphMessage(graph, id);
+                    //messenger.SendMany(graphMsg, Tokens.Visual,
+                    //    Tokens.AppLayout, Tokens.Main, Tokens.Common);
                 }
             }
             catch (Exception ex)

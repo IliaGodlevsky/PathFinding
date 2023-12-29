@@ -50,7 +50,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 {
                     var path = input.Input();
                     int id = keys[0].Id;
-                    var history = mapper.Map<PathfindingHistorySerializationDto>(service.GetPathfindingHistory(id));
+                    var dto = service.GetPathfindingHistory(id);
+                    var history = mapper.Map<PathfindingHistorySerializationDto>(dto);
                     await ExportAsync(path, history);
                     return;
                 }
@@ -67,7 +68,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                     if (index == keys.Count)
                     {
                         var toSave = keys.Select(x => service.GetPathfindingHistory(x.Id))
-                            .Select(x => mapper.Map<PathfindingHistorySerializationDto>(x)).ToArray();
+                            .Select(mapper.Map<PathfindingHistorySerializationDto>).ToArray();
                         toExport.AddRange(toSave);
                         break;
                     }

@@ -92,10 +92,9 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterUnit<MainUnit, AnswerExitMenuItem>(new UnitParamtresFactory());
                 builder.RegisterUnits<ExitMenuItem>(new UnitParamtresFactory(), Graph, PathfindingUnits.Process, Range);
 
-                builder.RegisterType<Service>().As<IService>().SingleInstance();
-                builder.RegisterDecorator<CacheService, IService>();
-                builder.RegisterType<LiteDbUnitOfWork>().As<IUnitOfWork>().SingleInstance();                
-                builder.RegisterAutoMapper<DbProfile>();
+                builder.RegisterType<Service>().As<IService>().UseSqlite().Cache().SingleInstance();
+
+                builder.RegisterMapper();
 
                 builder.RegisterType<MainUnitMenuItem>().AsSelf().InstancePerDependency();
                 builder.RegisterType<GraphCreateMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main).SingleInstance();

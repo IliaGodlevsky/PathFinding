@@ -40,9 +40,9 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
         protected override AlgorithmInfo GetAlgorithm()
         {
             var stepRule = InputItem(stepRules, Languages.ChooseStepRuleMsg);
-            var heuristic = InputItem(heuristics, Languages.ChooseHeuristicMsg);
-            var statistics = GetStatistics(heuristic.Key, stepRule.Key);
+            var heuristic = InputItem(heuristics, Languages.ChooseHeuristicMsg);           
             var factory = CreateAlgorithm(stepRule.Value, heuristic.Value);
+            var statistics = GetStatistics(heuristic.Key, stepRule.Key);
             return new(factory, statistics);
         }
 
@@ -77,7 +77,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
             }
         }
 
-        private Statistics GetStatistics(string heusristic, string stepRule)
+        protected virtual Statistics GetStatistics(string heusristic, string stepRule)
         {
             return new Statistics(LanguageKey)
             {

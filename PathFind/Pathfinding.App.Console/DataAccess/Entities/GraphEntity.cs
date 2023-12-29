@@ -4,12 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pathfinding.App.Console.DataAccess.Entities
 {
-    [Table("Graphs")]
+    [Table(DbTables.Graphs)]
+    [BsonTable(DbTables.Graphs)]
     internal class GraphEntity : IEntity
     {
-        [BsonId]
         [Key]
+        [BsonId]
         [Required]
+        [IndexField]
         public int Id { get; set; }
 
         [Required]

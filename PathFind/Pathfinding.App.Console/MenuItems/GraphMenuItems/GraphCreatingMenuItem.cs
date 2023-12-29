@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.DataAccess;
+using Pathfinding.App.Console.DataAccess.Dto;
+using Pathfinding.App.Console.DataAccess.Entities;
 using Pathfinding.App.Console.DataAccess.Services;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
@@ -8,6 +10,7 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations.Layers;
+using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
 using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 using Shared.Random;

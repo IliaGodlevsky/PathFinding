@@ -4,7 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pathfinding.App.Console.DataAccess.Entities
 {
-    [Table("Ranges")]
+    [Table(DbTables.Ranges)]
+    [BsonTable(DbTables.Ranges)]
     internal class RangeEntity : IEntity
     {
         [Key]
@@ -13,6 +14,7 @@ namespace Pathfinding.App.Console.DataAccess.Entities
         public int Id { get; set; }
 
         [Required]
+        [IndexField]
         [ForeignKey(nameof(GraphEntity))]
         public int GraphId { get; set; }
 
@@ -21,6 +23,6 @@ namespace Pathfinding.App.Console.DataAccess.Entities
         public int VertexId { get; set; }
 
         [Required]
-        public int Order { get; set; }
+        public int Position { get; set; }
     }
 }

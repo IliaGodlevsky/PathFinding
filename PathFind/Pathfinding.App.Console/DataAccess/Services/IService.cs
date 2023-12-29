@@ -22,7 +22,7 @@ namespace Pathfinding.App.Console.DataAccess.Services
 
         bool UpdateObstaclesCount(int newCount, int graphId);
 
-        int AddPathfindingHistory(PathfindingHistoryCreateDto history);
+        PathfindingHistoryReadDto AddPathfindingHistory(PathfindingHistoryCreateDto history);
 
         int AddGraph(IGraph<Vertex> graph);
 
