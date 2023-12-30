@@ -32,15 +32,21 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
             }
             var neighbors = graph.ToDictionary(x => x.Position, GetNeighbors);
             base.Execute();
+            var addedNeighbors = new Dictionary<int, int[]>();
+            var removedNeighbors = new Dictionary<int, int[]>();
             foreach (var vertex in processed)
             {
                 var areNeighbours = vertex.Neighbours.GetCoordinates().ToHashSet();
                 var wereNeighbours = neighbors[vertex.Position];
-                var added = areNeighbours.Except(wereNeighbours);
-                var removed = wereNeighbours.Except(areNeighbours);
-                added.ForEach(x => service.AddNeighbor(vertex, graph.Get(x)));
-                removed.ForEach(x => service.RemoveNeighbor(vertex, graph.Get(x)));
+                var added = areNeighbours.Except(wereNeighbours)
+                    .Select(x => graph.Get(x).Id);
+                var removed = wereNeighbours.Except(areNeighbours)
+                    .Select(x => graph.Get(x).Id);
+                addedNeighbors.Add(vertex.Id, added.ToArray());
+                removedNeighbors.Add(vertex.Id, removed.ToArray());
             }
+            service.AddNeighbors(addedNeighbors);
+            service.RemoveNeighbors(removedNeighbors);
         }
 
         public override string ToString()

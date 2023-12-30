@@ -18,12 +18,12 @@ namespace Pathfinding.App.Console.DataAccess.Repos.InMemoryRepositories
 
         public IEnumerable<GraphEntity> GetAll()
         {
-            return repository.Values;
+            return Repository.Values;
         }
 
         public GraphEntity GetGraph(int graphId)
         {
-            if (repository.TryGetValue(graphId, out var graph))
+            if (Repository.TryGetValue(graphId, out var graph))
             {
                 return graph;
             }

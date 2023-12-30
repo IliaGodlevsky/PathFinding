@@ -1,4 +1,5 @@
 ﻿using Pathfinding.App.Console.DataAccess.Entities;
+using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,7 +26,7 @@ namespace Pathfinding.App.Console.DataAccess.Repos.InMemoryRepositories
 
         public bool DeleteByGraphId(int graphId)
         {
-            var algorithm = repository.Values.FirstOrDefault(x => x.GraphId == graphId);
+            var algorithm = Repository.Values.FirstOrDefault(x => x.GraphId == graphId);
             if (algorithm is not null)
             {
                 return Delete(algorithm.Id);
@@ -35,7 +36,7 @@ namespace Pathfinding.App.Console.DataAccess.Repos.InMemoryRepositories
 
         public IEnumerable<AlgorithmEntity> GetByGraphId(int graphId)
         {
-            return repository.Values.Where(x => x.GraphId == graphId);
+            return Repository.Values.Where(x => x.GraphId == graphId);
         }
     }
 }

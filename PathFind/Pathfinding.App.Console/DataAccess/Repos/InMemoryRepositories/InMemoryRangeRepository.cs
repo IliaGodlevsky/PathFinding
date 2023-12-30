@@ -21,7 +21,7 @@ namespace Pathfinding.App.Console.DataAccess.Repos.InMemoryRepositories
 
         public bool DeleteByGraphId(int graphId)
         {
-            var values = repository.Values.Where(x => x.GraphId == graphId).ToReadOnly();
+            var values = Repository.Values.Where(x => x.GraphId == graphId).ToReadOnly();
             foreach (var entity in values)
             {
                 Delete(entity.Id); ;
@@ -31,7 +31,7 @@ namespace Pathfinding.App.Console.DataAccess.Repos.InMemoryRepositories
 
         public bool DeleteByVertexId(int vertexId)
         {
-            var vertex = repository.Values.FirstOrDefault(x => x.VertexId == vertexId);
+            var vertex = Repository.Values.FirstOrDefault(x => x.VertexId == vertexId);
             if(vertex is not null)
             {
                 return Delete(vertex.Id);
@@ -41,12 +41,12 @@ namespace Pathfinding.App.Console.DataAccess.Repos.InMemoryRepositories
 
         public IEnumerable<RangeEntity> GetByGraphId(int graphId)
         {
-            return repository.Values.Where(x => x.GraphId == graphId);
+            return Repository.Values.Where(x => x.GraphId == graphId);
         }
 
         public RangeEntity GetByVertexId(int vertexId)
         {
-            return repository.Values.First(x => x.VertexId == vertexId);
+            return Repository.Values.First(x => x.VertexId == vertexId);
         }
     }
 }

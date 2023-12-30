@@ -1,4 +1,5 @@
 ﻿using Pathfinding.App.Console.DataAccess.Entities;
+using Shared.Extensions;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DataAccess.Repos.InMemoryRepositories
@@ -7,20 +8,18 @@ namespace Pathfinding.App.Console.DataAccess.Repos.InMemoryRepositories
     {
         protected static int Id = 0;
 
-        protected readonly Dictionary<int, T> repository = new();
-
-        public IReadOnlyDictionary<int, T> Repos => repository;
+        public IDictionary<int, T> Repository { get; } = new Dictionary<int, T>();
 
         public T Create(T entity)
         {
             entity.Id = ++Id;
-            repository[Id] = entity;
+            Repository[Id] = entity;
             return entity;
         }
 
         public T Read(int id)
         {
-            if (repository.TryGetValue(id, out T entity))
+            if (Repository.TryGetValue(id, out T entity))
             {
                 return entity;
             }
@@ -29,9 +28,9 @@ namespace Pathfinding.App.Console.DataAccess.Repos.InMemoryRepositories
 
         public bool Update(T entity)
         {
-            if (repository.ContainsKey(entity.Id))
+            if (Repository.ContainsKey(entity.Id))
             {
-                repository[entity.Id] = entity;
+                Repository[entity.Id] = entity;
                 return true;
             }
             return false;
@@ -39,7 +38,12 @@ namespace Pathfinding.App.Console.DataAccess.Repos.InMemoryRepositories
 
         public bool Delete(int id)
         {
-            return repository.Remove(id);
+            return Repository.Remove(id);
+        }
+
+        public virtual IReadOnlyDictionary<int, T> GetSnapshot()
+        {
+            return Repository.ToDictionary();
         }
     }
 }

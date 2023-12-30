@@ -28,19 +28,17 @@ namespace Pathfinding.App.Console.DataAccess.Services
 
         int AddAlgorithm(AlgorithmCreateDto algorithm);
 
-        bool AddNeighbor(Vertex vertex, Vertex neighbor);
-
-        bool AddRange(Vertex vertex, int order, int graphId);
-
-        bool UpdateVertex(Vertex vertex, int graphId);
+        bool AddNeighbors(IReadOnlyDictionary<int, int[]> neighborhoods);
 
         bool UpdateVertices(IEnumerable<Vertex> vertices, int graphId);
 
-        bool UpdateRange(Vertex vertex, int order, int graphId);
+        bool AddRange((int Order, Vertex Vertex)[] vertices, int graphId);
 
-        bool RemoveNeighbor(Vertex vertex, Vertex neighbor);
+        bool RemoveNeighbors(IReadOnlyDictionary<int, int[]> neighborhoods);
 
-        bool RemoveRange(Vertex vertex, int graphId);
+        bool UpdateRange((int Order, Vertex Vertex)[] vertices, int graphId);
+
+        bool RemoveRange(IEnumerable<Vertex> vertices, int graphId);
 
         bool RemoveRange(int graphId);
 

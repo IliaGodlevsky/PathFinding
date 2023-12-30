@@ -41,15 +41,6 @@ namespace Pathfinding.App.Console.Extensions
                 Neighborhood = neighbors.ToDictionary(x => x.Key, x => mapper.Map<VertexReadDto[]>(x.Value).ToReadOnly())
             };
             return mapper.Map<IGraph<Vertex>>(readDto);
-            //var vertices = mapper.Map<Vertex[]>(graphInfo.Vertices);
-            //var parametres = new[] { graphInfo.Width, graphInfo.Length };
-            //var graph = graphFactory.CreateGraph(vertices, parametres);
-            //graph.ForEach(vertex =>
-            //{
-            //    var coordinates = graphInfo.Neighborhood[vertex.Id].Select(i => i.Coordinate);
-            //    vertex.Neighbours.AddRange(coordinates.Select(graph.Get));
-            //});
-            //return graph;
         }
 
         public static IReadOnlyCollection<ICoordinate> GetRange(this IUnitOfWork unitOfWork, int graphId)

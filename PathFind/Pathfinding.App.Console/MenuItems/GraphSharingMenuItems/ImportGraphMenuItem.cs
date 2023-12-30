@@ -49,10 +49,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             try
             {
                 var path = InputPath();
-                var importedHistory = mapper.Map<PathfindingHistoryCreateDto[]>(ImportGraph(path)).ToReadOnly();
+                var importedHistory = mapper.Map<PathfindingHistoryCreateDto[]>(ImportGraph(path));
                 importedHistory.ForEach(x => service.AddPathfindingHistory(x));
                 var ids = service.GetGraphIds().ToList();
-                if (ids.Count == importedHistory.Count && ids.Count > 0)
+                if (ids.Count == importedHistory.Length && ids.Count > 0)
                 {
                     int id = ids[0];
                     var graph = service.GetGraph(id);

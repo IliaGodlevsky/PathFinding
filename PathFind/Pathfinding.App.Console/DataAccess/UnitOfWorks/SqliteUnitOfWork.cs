@@ -1,5 +1,4 @@
 ﻿using Microsoft.Data.Sqlite;
-using Pathfinding.App.Console.DataAccess.Entities;
 using Pathfinding.App.Console.DataAccess.Repos;
 using Pathfinding.App.Console.DataAccess.Repos.SqliteRepositories;
 using Pathfinding.App.Console.Settings;
@@ -11,6 +10,8 @@ namespace Pathfinding.App.Console.DataAccess.UnitOfWorks
 {
     internal sealed class SqliteUnitOfWork : IUnitOfWork
     {
+        private static readonly string ConnectionString;
+
         private readonly SqliteConnection connection;
         private IDbTransaction transaction;
 
@@ -31,9 +32,14 @@ namespace Pathfinding.App.Console.DataAccess.UnitOfWorks
 
         public SqliteUnitOfWork()
         {
-            connection = new SqliteConnection(GetConnectionString());
+            connection = new SqliteConnection(ConnectionString);
             connection.Open();
             transaction = connection.BeginTransaction();
+        }
+
+        static SqliteUnitOfWork()
+        {
+            ConnectionString = GetConnectionString();
         }
 
         public void BeginTransaction()

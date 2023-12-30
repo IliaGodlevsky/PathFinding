@@ -18,7 +18,7 @@ namespace Pathfinding.App.Console.DataAccess.Repos.InMemoryRepositories
 
         public bool DeleteVerticesByGraphId(int graphId)
         {
-            var vertices = repository.Values.Where(x => x.GraphId == graphId);
+            var vertices = Repository.Values.Where(x => x.GraphId == graphId);
             foreach (var vertex in vertices)
             {
                 Delete(vertex.Id);
@@ -33,7 +33,7 @@ namespace Pathfinding.App.Console.DataAccess.Repos.InMemoryRepositories
 
         public IEnumerable<VertexEntity> GetVerticesByGraphId(int graphId)
         {
-            return repository.Values.Where(x => x.GraphId == graphId);
+            return Repository.Values.Where(x => x.GraphId == graphId);
         }
 
         public bool UpdateVertex(VertexEntity vertex)

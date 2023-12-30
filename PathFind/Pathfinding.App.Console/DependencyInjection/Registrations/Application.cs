@@ -92,7 +92,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterUnit<MainUnit, AnswerExitMenuItem>(new UnitParamtresFactory());
                 builder.RegisterUnits<ExitMenuItem>(new UnitParamtresFactory(), Graph, PathfindingUnits.Process, Range);
 
-                builder.RegisterType<Service>().As<IService>().UseSqlite().Cache().SingleInstance();
+                builder.RegisterType<Service>().As<IService>().Cache().UseInMemory().SingleInstance();
 
                 builder.RegisterMapper();
 

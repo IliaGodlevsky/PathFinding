@@ -58,11 +58,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             {
                 string path = pathInput.Input();
                 var range = serializer.DeserializeFromFile(path).ToList();
-                for (int i = 0; i < range.Count; i++)
-                {
-                    var vertex = graph.Get(range[i]);
-                    service.AddRange(vertex, i, Id);
-                }
+                var vertices = range
+                    .Select((x, i) => (Order: i, Id: graph.Get(x)))
+                    .ToArray();
+                service.AddRange(vertices, Id);
                 rangeBuilder.Undo();
                 rangeBuilder.Include(range, graph);
             }

@@ -8,6 +8,7 @@ using System;
 using Shared.Extensions;
 using Pathfinding.App.Console.DataAccess.Services;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
 {
@@ -43,12 +44,16 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
                 .Select((x, i) => (Order: i, Coordinate: x))
                 .ToDictionary(x => x.Coordinate, x => x.Order);
 
+            var added = new List<(int Order, Vertex Vertex)>();
+            var updated = new List<(int Order, Vertex Vertex)>();
+            var deleted = new List<Vertex>();
+
             foreach (var item in newRange)
             {
                 if (!currentRange.TryGetValue(item.Key, out var order))
                 {
                     var vertex = graph.Get(item.Key);
-                    service.AddRange(vertex, item.Value, id);
+                    added.Add((item.Value, vertex));
                 }
 
                 if (currentRange.TryGetValue(item.Key, out order))
@@ -56,7 +61,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
                     if (item.Value != order)
                     {
                         var vertex = graph.Get(item.Key);
-                        service.UpdateRange(vertex, item.Value, id);
+                        updated.Add((item.Value, vertex));
                     }
                 }
             }
@@ -66,9 +71,13 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
                 if (!newRange.TryGetValue(item.Key, out var order))
                 {
                     var vertex = graph.Get(item.Key);
-                    service.RemoveRange(vertex, id);
+                    deleted.Add(vertex);
                 }
             }
+
+            service.AddRange(added.ToArray(), id);
+            service.UpdateRange(updated.ToArray(), id);
+            service.RemoveRange(deleted, id);
         }
 
         public override string ToString()

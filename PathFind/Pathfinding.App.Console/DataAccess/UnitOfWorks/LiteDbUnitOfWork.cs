@@ -1,5 +1,4 @@
 ﻿using LiteDB;
-using Pathfinding.App.Console.DataAccess.Entities;
 using Pathfinding.App.Console.DataAccess.Repos;
 using Pathfinding.App.Console.DataAccess.Repos.LiteDbRepositories;
 using Pathfinding.App.Console.Settings;
@@ -10,6 +9,8 @@ namespace Pathfinding.App.Console.DataAccess.UnitOfWorks
 {
     internal sealed class LiteDbUnitOfWork : IUnitOfWork
     {
+        private static readonly string ConnectionString;
+
         private readonly ILiteDatabase database;
 
         public IGraphParametresRepository GraphRepository { get; }
@@ -24,12 +25,17 @@ namespace Pathfinding.App.Console.DataAccess.UnitOfWorks
 
         public LiteDbUnitOfWork()
         {
-            database = new LiteDatabase(GetConnectionString());
+            database = new LiteDatabase(ConnectionString);
             GraphRepository = new LiteDbGraphRepository(database);
             AlgorithmsRepository = new LiteDbAlgorithmRepository(database);
             VerticesRepository = new LiteDbVerticesRepository(database);
             NeighborsRepository = new LiteDbNeighborsRepository(database);
             RangeRepository = new LiteDbRangeRepository(database);
+        }
+
+        static LiteDbUnitOfWork()
+        {
+            ConnectionString = GetConnectionString();
         }
 
         public void BeginTransaction()

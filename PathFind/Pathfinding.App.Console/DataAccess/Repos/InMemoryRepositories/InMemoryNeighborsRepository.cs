@@ -8,9 +8,9 @@ namespace Pathfinding.App.Console.DataAccess.Repos.InMemoryRepositories
     internal sealed class InMemoryNeighborsRepository
         : InMemoryRepository<NeighborEntity>, INeighborsRepository
     {
-        private readonly IReadOnlyDictionary<int, VertexEntity> vertices;
+        private readonly IDictionary<int, VertexEntity> vertices;
 
-        public InMemoryNeighborsRepository(IReadOnlyDictionary<int, VertexEntity> vertices)
+        public InMemoryNeighborsRepository(IDictionary<int, VertexEntity> vertices)
         {
             this.vertices = vertices;
         }
@@ -29,7 +29,7 @@ namespace Pathfinding.App.Console.DataAccess.Repos.InMemoryRepositories
         {
             var vertex = vertices.Values.Where(x => x.GraphId == graphId)
                 .Select(x => x.Id).ToHashSet();
-            var neighbors = repository.Values.Where(x => vertex.Contains(x.VertexId));
+            var neighbors = Repository.Values.Where(x => vertex.Contains(x.VertexId));
             foreach (var neighbor in neighbors)
             {
                 Delete(neighbor.Id);
@@ -39,7 +39,7 @@ namespace Pathfinding.App.Console.DataAccess.Repos.InMemoryRepositories
 
         public bool DeleteNeighbour(int vertexId, int neighbourId)
         {
-            var value = repository.Values
+            var value = Repository.Values
                 .FirstOrDefault(x => x.VertexId == vertexId && x.NeighborId == neighbourId);
             if (value is not null)
             {
@@ -50,7 +50,7 @@ namespace Pathfinding.App.Console.DataAccess.Repos.InMemoryRepositories
 
         public IReadOnlyDictionary<int, IReadOnlyCollection<NeighborEntity>> GetNeighboursForVertices(IEnumerable<int> verticesIds)
         {
-            return repository.Values
+            return Repository.Values
                 .GroupBy(x => x.VertexId)
                 .ToDictionary(x => x.Key, x => x.ToReadOnly())
                 .AsReadOnly();

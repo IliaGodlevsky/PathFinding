@@ -2,6 +2,7 @@
 using Pathfinding.App.Console.DataAccess.Dto;
 using Pathfinding.App.Console.DataAccess.Entities;
 using Pathfinding.App.Console.DataAccess.UnitOfWorks;
+using Pathfinding.App.Console.DataAccess.UnitOfWorks.Factories;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
@@ -15,21 +16,22 @@ namespace Pathfinding.App.Console.DataAccess.Services
     internal class Service : IService
     {
         protected readonly IMapper mapper;
-        protected readonly IUnitOfWork unitOfWork;
+        protected readonly IUnitOfWorkFactory factory;
 
-        public Service(IUnitOfWork unitOfWork, IMapper mapper)
+        public Service(IMapper mapper, IUnitOfWorkFactory factory = null)
         {
-            this.unitOfWork = unitOfWork ?? new InMemoryUnitOfWork();
             this.mapper = mapper;
+            this.factory = factory ?? new InMemoryUnitOfWorkFactory();
         }
 
-        public Service(Service  service): this(service.unitOfWork, service.mapper)
+        public Service(Service  service) 
+            : this(service.mapper, service.factory)
         {
         }
 
         public virtual int AddAlgorithm(AlgorithmCreateDto algorithm)
         {
-            return Transaction<int>(() =>
+            return Transaction<int>(unitOfWork =>
             {
                 var entity = mapper.Map<AlgorithmEntity>(algorithm);
                 unitOfWork.AlgorithmsRepository.AddOne(entity);
@@ -39,26 +41,12 @@ namespace Pathfinding.App.Console.DataAccess.Services
 
         public virtual int AddGraph(IGraph<Vertex> dto)
         {
-            return Transaction<int>(() => unitOfWork.AddGraph(mapper, dto));
-        }
-
-        public virtual bool AddNeighbor(Vertex vertex, Vertex neighbor)
-        {
-            return Transaction<bool>(() =>
-            {
-                var addedEntity = new NeighborEntity
-                {
-                    VertexId = vertex.Id,
-                    NeighborId = neighbor.Id
-                };
-                unitOfWork.NeighborsRepository.AddNeighbour(addedEntity);
-                return addedEntity.Id > 0;
-            });
+            return Transaction<int>(unitOfWork => unitOfWork.AddGraph(mapper, dto));
         }
 
         public virtual PathfindingHistoryReadDto AddPathfindingHistory(PathfindingHistoryCreateDto history)
         {
-            return Transaction<PathfindingHistoryReadDto>(() =>
+            return Transaction<PathfindingHistoryReadDto>(unitOfWork =>
             {
                 var graph = history.Graph;
                 int id = unitOfWork.AddGraph(mapper, graph);
@@ -80,24 +68,29 @@ namespace Pathfinding.App.Console.DataAccess.Services
             });
         }
 
-        public virtual bool AddRange(Vertex vertex, int order, int graphId)
+        public virtual bool AddRange((int Order, Vertex Vertex)[] vertices, int graphId)
         {
-            return Transaction<bool>(() =>
+            return Transaction<bool>(unitOfWork =>
             {
-                var entity = new RangeEntity
+                var list = new List<RangeEntity>();
+                foreach (var vertex in vertices)
                 {
-                    GraphId = graphId,
-                    VertexId = vertex.Id,
-                    Position = order
-                };
-                unitOfWork.RangeRepository.AddRange(entity);
+                    var entity = new RangeEntity
+                    {
+                        GraphId = graphId,
+                        VertexId = vertex.Vertex.Id,
+                        Position = vertex.Order
+                    };
+                    list.Add(entity);
+                }
+                unitOfWork.RangeRepository.AddRange(list);
                 return true;
             });
         }
 
         public virtual bool DeleteGraph(int graphId)
         {
-            return Transaction<bool>(() =>
+            return Transaction<bool>(unitOfWork =>
             {
                 unitOfWork.NeighborsRepository.DeleteByGraphId(graphId);
                 unitOfWork.GraphRepository.DeleteGraph(graphId);
@@ -110,90 +103,101 @@ namespace Pathfinding.App.Console.DataAccess.Services
 
         public virtual IReadOnlyList<GraphEntity> GetAllGraphInfo()
         {
-            return unitOfWork.GraphRepository.GetAll().ToList().AsReadOnly();
+            return Transaction<IReadOnlyList<GraphEntity>>(
+                unitOfWork => unitOfWork.GraphRepository.GetAll().ToList().AsReadOnly());
         }
 
         public virtual IGraph<Vertex> GetGraph(int id)
         {
-            var graphEntity = unitOfWork.GraphRepository.GetGraph(id);
-            var vertexEntities = unitOfWork.VerticesRepository
-                .GetVerticesByGraphId(id)
-                .ToDictionary(x => x.Id);
-            var ids = vertexEntities.Select(x => x.Key).ToArray();
-            var neighbors = unitOfWork.NeighborsRepository
-                .GetNeighboursForVertices(ids)
-                .ToDictionary(x => x.Key, x => x.Value.Select(i => vertexEntities[i.NeighborId]));
-            return unitOfWork.CreateGraph(id, mapper);
+            return Transaction<IGraph<Vertex>>(unitOfWork =>
+            {
+                var graphEntity = unitOfWork.GraphRepository.GetGraph(id);
+                var vertexEntities = unitOfWork.VerticesRepository
+                    .GetVerticesByGraphId(id)
+                    .ToDictionary(x => x.Id);
+                var ids = vertexEntities.Select(x => x.Key).ToArray();
+                var neighbors = unitOfWork.NeighborsRepository
+                    .GetNeighboursForVertices(ids)
+                    .ToDictionary(x => x.Key, x => x.Value.Select(i => vertexEntities[i.NeighborId]));
+                return unitOfWork.CreateGraph(id, mapper);
+            });
         }
 
         public virtual IReadOnlyCollection<int> GetGraphIds()
         {
-            return unitOfWork.GraphRepository.GetAll()
-                .Select(x => x.Id).ToReadOnly();
+            return Transaction<IReadOnlyCollection<int>>(unitOfWork =>
+            {
+                return unitOfWork.GraphRepository.GetAll().Select(x => x.Id).ToReadOnly();
+            });
         }
 
         public virtual IReadOnlyCollection<AlgorithmReadDto> GetGraphPathfindingHistory(int graphId)
         {
-            return unitOfWork.GetAlgorithms(graphId, mapper);
+            return Transaction<IReadOnlyCollection<AlgorithmReadDto>>(
+                unitOfWork => unitOfWork.GetAlgorithms(graphId, mapper));
         }
 
         public virtual IReadOnlyCollection<ICoordinate> GetRange(int graphId)
         {
-            return unitOfWork.GetRange(graphId);
+            return Transaction<IReadOnlyCollection<ICoordinate>>(
+                unitOfWork => unitOfWork.GetRange(graphId));
         }
 
-        public virtual bool RemoveNeighbor(Vertex vertex, Vertex neighbor)
+        public virtual bool RemoveNeighbors(IReadOnlyDictionary<int, int[]> neighborhoods)
         {
-            return Transaction<bool>(() => unitOfWork.NeighborsRepository.DeleteNeighbour(vertex.Id, neighbor.Id));
+            return Transaction<bool>(unitOfWork =>
+            {
+                foreach (var neighborhood in neighborhoods)
+                {
+                    foreach (var neighbor in neighborhoods[neighborhood.Key])
+                    {
+                        unitOfWork.NeighborsRepository.DeleteNeighbour(neighborhood.Key, neighbor);
+                    }
+                }
+                return true;
+            });
         }
 
-        public virtual bool RemoveRange(Vertex vertex, int graphId)
+        public virtual bool UpdateRange((int Order, Vertex Vertex)[] vertices, int graphId)
         {
-            return Transaction<bool>(() => unitOfWork.RangeRepository.DeleteByVertexId(vertex.Id));
+            return Transaction<bool>(unitOfWork =>
+            {
+                foreach (var vertex in vertices)
+                {
+                    var entity = unitOfWork.RangeRepository.GetByVertexId(vertex.Vertex.Id);
+                    entity.Position = vertex.Order;
+                    unitOfWork.RangeRepository.Update(entity);
+                }
+                return true;
+            });
         }
 
         public virtual bool RemoveRange(int graphId)
         {
-            return Transaction<bool>(() => unitOfWork.RangeRepository.DeleteByGraphId(graphId)); ;
-        }
-
-        public virtual bool UpdateRange(Vertex vertex, int order, int graphId)
-        {
-            return Transaction<bool>(() =>
-            {
-                var entity = unitOfWork.RangeRepository.GetByVertexId(vertex.Id);
-                entity.Position = order;
-                return unitOfWork.RangeRepository.Update(entity);
-            });
+            return Transaction<bool>(unitOfWork 
+                => unitOfWork.RangeRepository.DeleteByGraphId(graphId)); 
         }
 
         public virtual PathfindingHistoryReadDto GetPathfindingHistory(int graphId)
         {
-            var graph = unitOfWork.CreateGraph(graphId, mapper);
-            var algorithms = unitOfWork.GetAlgorithms(graphId, mapper);
-            var range = unitOfWork.GetRange(graphId);
-            return new PathfindingHistoryReadDto()
+            return Transaction<PathfindingHistoryReadDto>(unitOfWork =>
             {
-                Id = graphId,
-                Graph = graph,
-                Algorithms = algorithms,
-                Range = range
-            };
-        }
-
-        public virtual bool UpdateVertex(Vertex vertex, int graphId)
-        {
-            return Transaction<bool>(() =>
-            {
-                var entity = mapper.Map<VertexEntity>(vertex);
-                entity.GraphId = graphId;
-                return unitOfWork.VerticesRepository.UpdateVertex(entity);
+                var graph = unitOfWork.CreateGraph(graphId, mapper);
+                var algorithms = unitOfWork.GetAlgorithms(graphId, mapper);
+                var range = unitOfWork.GetRange(graphId);
+                return new PathfindingHistoryReadDto()
+                {
+                    Id = graphId,
+                    Graph = graph,
+                    Algorithms = algorithms,
+                    Range = range
+                };
             });
         }
 
         public virtual bool UpdateVertices(IEnumerable<Vertex> vertices, int graphId)
         {
-            return Transaction<bool>(() =>
+            return Transaction<bool>(unitOfWork =>
             {
                 var entities = mapper.Map<VertexEntity[]>(vertices);
                 entities.ForEach(x => x.GraphId = graphId);
@@ -203,7 +207,7 @@ namespace Pathfinding.App.Console.DataAccess.Services
 
         public virtual bool UpdateObstaclesCount(int newCount, int graphId)
         {
-            return Transaction<bool>(() =>
+            return Transaction<bool>(unitOfWork =>
             {
                 var entity = unitOfWork.GraphRepository.GetGraph(graphId);
                 entity.ObstaclesCount = newCount;
@@ -211,20 +215,57 @@ namespace Pathfinding.App.Console.DataAccess.Services
             });
         }
 
-        private T Transaction<T>(Func<T> action)
+        public virtual bool AddNeighbors(IReadOnlyDictionary<int, int[]> neighborhoods)
         {
-            try
+            return Transaction<bool>(unitOfWork =>
             {
-                unitOfWork.BeginTransaction();
-                var result = action();
-                unitOfWork.SaveChanges();
-                unitOfWork.CommitTransaction();
-                return result;
-            }
-            catch (Exception)
+                var list = new List<NeighborEntity>();
+                foreach (var neighborhood in neighborhoods)
+                {
+                    foreach (var neighbor in neighborhoods[neighborhood.Key])
+                    {
+                        var entity = new NeighborEntity()
+                        {
+                            VertexId = neighborhood.Key,
+                            NeighborId = neighbor
+                        };
+                        list.Add(entity);
+                    }
+                }
+                unitOfWork.NeighborsRepository.AddNeighbours(list);
+                return true;
+            });
+        }
+
+        public virtual bool RemoveRange(IEnumerable<Vertex> vertices, int graphId)
+        {
+            return Transaction<bool>(unitOfWork =>
             {
-                unitOfWork.RollbackTransaction();
-                throw;
+                foreach (var vertex in vertices)
+                {
+                    unitOfWork.RangeRepository.DeleteByVertexId(vertex.Id);
+                }
+                return true;
+            });
+        }
+
+        private T Transaction<T>(Func<IUnitOfWork, T> action)
+        {
+            using (var unitOfWork = factory.Create())
+            {
+                try
+                {
+                    unitOfWork.BeginTransaction();
+                    var result = action(unitOfWork);
+                    unitOfWork.SaveChanges();
+                    unitOfWork.CommitTransaction();
+                    return result;
+                }
+                catch (Exception)
+                {
+                    unitOfWork.RollbackTransaction();
+                    throw;
+                }
             }
         }
     }

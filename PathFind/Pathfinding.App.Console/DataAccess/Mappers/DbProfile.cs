@@ -13,8 +13,6 @@ using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Factory.Interface;
 using Shared.Extensions;
-using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
-using System;
 using System.Linq;
 
 namespace Pathfinding.App.Console.DataAccess.Mappers
@@ -42,10 +40,10 @@ namespace Pathfinding.App.Console.DataAccess.Mappers
                 .ConvertUsing(x => this.coordinateSerializer.SerializeToBytes(x));
             CreateMap<AlgorithmEntity, AlgorithmReadDto>()
                 .ForMember(x => x.Costs, opt => opt.MapFrom(x => FromBytesToCosts(x.Costs)))
-                .ForMember(x => x.Statistics, opt => opt.MapFrom(x => FromStringToStatistics(x.Statistics)));
+                .ForMember(x => x.Statistics, opt => opt.MapFrom(x => JsonConvert.DeserializeObject<Statistics>(x.Statistics)));
             CreateMap<AlgorithmCreateDto, AlgorithmEntity>()
                 .ForMember(x => x.Costs, opt => opt.MapFrom(x => FromCostsToBytes(x.Costs)))
-                .ForMember(x => x.Statistics, opt => opt.MapFrom(x => FromStatisticsToString(x.Statistics)));
+                .ForMember(x => x.Statistics, opt => opt.MapFrom(x => JsonConvert.SerializeObject(x.Statistics)));
             CreateMap<ICoordinate, ICoordinate>().ConvertUsing(x => x);
             CreateMap<IGraph<Vertex>, IGraph<Vertex>>().ConvertUsing(x => x);
             CreateMap<VertexReadDto, Vertex>().ConstructUsing(x => vertexFactory.CreateVertex(x.Coordinate));
@@ -77,8 +75,9 @@ namespace Pathfinding.App.Console.DataAccess.Mappers
                 var graph = graphFactory.CreateGraph(vertices, paramemters);
                 graph.ForEach(vertex =>
                 {
-                    var coordinates = x.Neighborhood[vertex.Id].Select(i => i.Coordinate);
-                    vertex.Neighbours.AddRange(coordinates.Select(graph.Get));
+                    var coordinates = x.Neighborhood[vertex.Id]
+                        .Select(i => graph.Get(i.Coordinate));
+                    vertex.Neighbours.AddRange(coordinates);
                 });
                 return graph;
             });
@@ -89,19 +88,9 @@ namespace Pathfinding.App.Console.DataAccess.Mappers
             return arraySerializer.DeserializeFromBytes(str).ToReadOnly();
         }
 
-        private Statistics FromStringToStatistics(string str)
-        {
-            return JsonConvert.DeserializeObject<Statistics>(str);
-        }
-
         private byte[] FromCostsToBytes(IEnumerable<int> costs)
         {
             return arraySerializer.SerializeToBytes(costs);
-        }
-
-        private string FromStatisticsToString(Statistics statistics)
-        {
-            return JsonConvert.SerializeObject(statistics);
         }
     }
 }

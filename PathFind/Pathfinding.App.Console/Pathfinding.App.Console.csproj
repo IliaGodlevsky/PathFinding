@@ -105,6 +105,7 @@
     <Compile Include="DataAccess\Services\IService.cs" />
     <Compile Include="DataAccess\Services\CacheService.cs" />
     <Compile Include="DataAccess\Services\Service.cs" />
+    <Compile Include="DataAccess\UnitOfWorks\Factories\IUnitOfWorkFactory.cs" />
     <Compile Include="DataAccess\UnitOfWorks\InMemoryUnitOfWork.cs" />
     <Compile Include="DataAccess\UnitOfWorks\IUnitOfWork.cs" />
     <Compile Include="DataAccess\UnitOfWorks\LiteDbUnitOfWork.cs" />

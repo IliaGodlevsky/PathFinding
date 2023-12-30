@@ -7,7 +7,7 @@ using AutoMapper;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.DataAccess.Mappers;
 using Pathfinding.App.Console.DataAccess.Services;
-using Pathfinding.App.Console.DataAccess.UnitOfWorks;
+using Pathfinding.App.Console.DataAccess.UnitOfWorks.Factories;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
@@ -16,7 +16,6 @@ using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Service = Pathfinding.App.Console.DataAccess.Services.Service;
 
 namespace Pathfinding.App.Console.DependencyInjection
@@ -89,7 +88,7 @@ namespace Pathfinding.App.Console.DependencyInjection
 
         private static IRegistrationBuilder<Service, TActivatorData, SingleRegistrationStyle> UseUnitOfWork<TActivatorData, T>(
             this IRegistrationBuilder<Service, TActivatorData, SingleRegistrationStyle> builder)
-            where T : IUnitOfWork, new()
+            where T : IUnitOfWorkFactory, new()
         {
             return builder.ConfigurePipeline(p => p.Use(new UnitOfWorkResolveMiddleware<T>()));
         }
@@ -107,19 +106,19 @@ namespace Pathfinding.App.Console.DependencyInjection
         public static IRegistrationBuilder<Service, TActivatorData, SingleRegistrationStyle> UseInMemory<TActivatorData>(
              this IRegistrationBuilder<Service, TActivatorData, SingleRegistrationStyle> builder)
         {
-            return builder.UseUnitOfWork<TActivatorData, InMemoryUnitOfWork>();
+            return builder.UseUnitOfWork<TActivatorData, InMemoryUnitOfWorkFactory>();
         }
 
         public static IRegistrationBuilder<Service, TActivatorData, SingleRegistrationStyle> UseSqlite<TActivatorData>(
             this IRegistrationBuilder<Service, TActivatorData, SingleRegistrationStyle> builder)
         {
-            return builder.UseUnitOfWork<TActivatorData, SqliteUnitOfWork>();
+            return builder.UseUnitOfWork<TActivatorData, SqliteUnitOfWorkFactory>();
         }
 
         public static IRegistrationBuilder<Service, TActivatorData, SingleRegistrationStyle> UseLiteDb<TActivatorData>(
             this IRegistrationBuilder<Service, TActivatorData, SingleRegistrationStyle> builder)
         {
-            return builder.UseUnitOfWork<TActivatorData, LiteDbUnitOfWork>();
+            return builder.UseUnitOfWork<TActivatorData, LiteDbUnitOfWorkFactory>();
         }
 
         public static void RegisterMapper(this ContainerBuilder builder)
