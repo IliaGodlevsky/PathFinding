@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
-using Pathfinding.App.Console.DataAccess.Dto;
-using Pathfinding.App.Console.DataAccess.Entities;
-using Pathfinding.App.Console.DataAccess.UnitOfWorks;
+using Pathfinding.App.Console.DAL.Interface;
+using Pathfinding.App.Console.DAL.Models.Entities;
+using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
-using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
 using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;

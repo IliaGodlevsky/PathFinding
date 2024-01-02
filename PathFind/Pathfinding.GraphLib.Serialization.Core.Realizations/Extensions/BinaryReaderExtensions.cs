@@ -64,14 +64,14 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             return neighborhood;
         }
 
-        private static IVertexCost ReadCost(this BinaryReader reader)
+        public static IVertexCost ReadCost(this BinaryReader reader)
         {
             int cost = reader.ReadInt32();
             var range = reader.ReadRange();
             return new VertexCost(cost, range);
         }
 
-        private static ICoordinate ReadCoordinate(this BinaryReader reader)
+        public static ICoordinate ReadCoordinate(this BinaryReader reader)
         {
             var coordinates = reader.ReadIntArray();
             return new Coordinate(coordinates);

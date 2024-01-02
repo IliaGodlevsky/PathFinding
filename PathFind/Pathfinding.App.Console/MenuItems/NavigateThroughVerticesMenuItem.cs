@@ -1,9 +1,10 @@
 ﻿global using VertexActions = System.Collections.Generic.IReadOnlyCollection<(string ResourceName, Pathfinding.App.Console.Interface.IVertexAction Action)>;
 using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DataAccess.Services;
+using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Messaging;
+using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Settings;
 using Pathfinding.GraphLib.Core.Interface;
@@ -35,7 +36,7 @@ namespace Pathfinding.App.Console.MenuItems
         private VertexActions Actions => actions.Value;
 
         protected NavigateThroughVerticesMenuItem(
-            IInput<ConsoleKey> keyInput, 
+            IInput<ConsoleKey> keyInput,
             IService service)
         {
             this.keyInput = keyInput;
@@ -120,7 +121,7 @@ namespace Pathfinding.App.Console.MenuItems
         private string GetLegend()
         {
             var legend = new List<(string Descriptin, ConsoleKey Key)>()
-            {                
+            {
                 (nameof(Keys.VertexUp), Keys.VertexUp),
                 (nameof(Keys.VertexDown), Keys.VertexDown),
                 (nameof(Keys.VertexLeft), Keys.VertexLeft),

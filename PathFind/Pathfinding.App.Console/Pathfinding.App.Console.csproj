@@ -54,6 +54,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -62,54 +63,52 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataAccess\BsonTableAttribute.cs" />
-    <Compile Include="DataAccess\DbTables.cs" />
-    <Compile Include="DataAccess\Dto\AlgorithmCreateDto.cs" />
-    <Compile Include="DataAccess\Dto\AlgorithmReadDto.cs" />
-    <Compile Include="DataAccess\Dto\AlgorithmSerializationDto.cs" />
-    <Compile Include="DataAccess\Dto\GraphReadDto.cs" />
-    <Compile Include="DataAccess\Dto\PathfindingHistoryCreateDto.cs" />
-    <Compile Include="DataAccess\Dto\PathfindingHistoryReadDto.cs" />
-    <Compile Include="DataAccess\Dto\PathfindingHistorySerializationDto.cs" />
-    <Compile Include="DataAccess\Dto\VertexReadDto.cs" />
-    <Compile Include="DataAccess\Entities\NeighborEntity.cs" />
-    <Compile Include="DataAccess\Entities\AlgorithmEntity.cs" />
-    <Compile Include="DataAccess\Entities\GraphEntity.cs" />
-    <Compile Include="DataAccess\Entities\IEntity.cs" />
-    <Compile Include="DataAccess\Entities\RangeEntity.cs" />
-    <Compile Include="DataAccess\Entities\VertexEntity.cs" />
-    <Compile Include="DataAccess\IndexFieldAttribute.cs" />
-    <Compile Include="DataAccess\Mappers\DbProfile.cs" />
-    <Compile Include="DataAccess\Repos\IAlgorithmsRepository.cs" />
-    <Compile Include="DataAccess\Repos\INeighborsRepository.cs" />
-    <Compile Include="DataAccess\Repos\IGraphRepository.cs" />
-    <Compile Include="DataAccess\Repos\InMemoryRepositories\InMemoryAlgorithmRepository.cs" />
-    <Compile Include="DataAccess\Repos\InMemoryRepositories\InMemoryGraphRepository.cs" />
-    <Compile Include="DataAccess\Repos\InMemoryRepositories\InMemoryNeighborsRepository.cs" />
-    <Compile Include="DataAccess\Repos\InMemoryRepositories\InMemoryRangeRepository.cs" />
-    <Compile Include="DataAccess\Repos\InMemoryRepositories\InMemoryRepository.cs" />
-    <Compile Include="DataAccess\Repos\InMemoryRepositories\InMemoryVertexRepository.cs" />
-    <Compile Include="DataAccess\Repos\IVerticesRepository.cs" />
-    <Compile Include="DataAccess\Repos\IRangeRepository.cs" />
-    <Compile Include="DataAccess\Repos\LiteDbRepositories\LiteDbNeighborsRepository.cs" />
-    <Compile Include="DataAccess\Repos\LiteDbRepositories\LiteDbRangeRepository.cs" />
-    <Compile Include="DataAccess\Repos\LiteDbRepositories\LiteDbAlgorithmRepository.cs" />
-    <Compile Include="DataAccess\Repos\LiteDbRepositories\LiteDbGraphRepository.cs" />
-    <Compile Include="DataAccess\Repos\LiteDbRepositories\LiteDbVerticesRepository.cs" />
-    <Compile Include="DataAccess\Repos\SqliteRepositories\SqliteAlgorithmRepository.cs" />
-    <Compile Include="DataAccess\Repos\SqliteRepositories\SqliteGraphRepository.cs" />
-    <Compile Include="DataAccess\Repos\SqliteRepositories\SqliteNeighborRepository.cs" />
-    <Compile Include="DataAccess\Repos\SqliteRepositories\SqliteRangeRepository.cs" />
-    <Compile Include="DataAccess\Repos\SqliteRepositories\SqliteRepository.cs" />
-    <Compile Include="DataAccess\Repos\SqliteRepositories\SqliteVertexRepository.cs" />
-    <Compile Include="DataAccess\Services\IService.cs" />
-    <Compile Include="DataAccess\Services\CacheService.cs" />
-    <Compile Include="DataAccess\Services\Service.cs" />
-    <Compile Include="DataAccess\UnitOfWorks\Factories\IUnitOfWorkFactory.cs" />
-    <Compile Include="DataAccess\UnitOfWorks\InMemoryUnitOfWork.cs" />
-    <Compile Include="DataAccess\UnitOfWorks\IUnitOfWork.cs" />
-    <Compile Include="DataAccess\UnitOfWorks\LiteDbUnitOfWork.cs" />
-    <Compile Include="DataAccess\UnitOfWorks\SqliteUnitOfWork.cs" />
+    <Compile Include="DAL\Attributes\BsonTableAttribute.cs" />
+    <Compile Include="DAL\DbTables.cs" />
+    <Compile Include="DAL\Models\TransferObjects\AlgorithmCreateDto.cs" />
+    <Compile Include="DAL\Models\TransferObjects\AlgorithmReadDto.cs" />
+    <Compile Include="DAL\Models\TransferObjects\AlgorithmSerializationDto.cs" />
+    <Compile Include="DAL\Models\TransferObjects\GraphReadDto.cs" />
+    <Compile Include="DAL\Models\TransferObjects\GraphSerializationDto.cs" />
+    <Compile Include="DAL\Models\TransferObjects\PathfindingHistoryCreateDto.cs" />
+    <Compile Include="DAL\Models\TransferObjects\PathfindingHistoryReadDto.cs" />
+    <Compile Include="DAL\Models\TransferObjects\PathfindingHistorySerializationDto.cs" />
+    <Compile Include="DAL\Models\TransferObjects\VertexReadDto.cs" />
+    <Compile Include="DAL\Models\Entities\NeighborEntity.cs" />
+    <Compile Include="DAL\Models\Entities\AlgorithmEntity.cs" />
+    <Compile Include="DAL\Models\Entities\GraphEntity.cs" />
+    <Compile Include="DAL\Interface\IEntity.cs" />
+    <Compile Include="DAL\Models\Entities\RangeEntity.cs" />
+    <Compile Include="DAL\Models\Entities\VertexEntity.cs" />
+    <Compile Include="DAL\Attributes\IndexFieldAttribute.cs" />
+    <Compile Include="DAL\Models\Mappers\AlgorithmsMappingProfile.cs" />
+    <Compile Include="DAL\Models\Mappers\HistoryMappingProfile.cs" />
+    <Compile Include="DAL\Models\Mappers\GraphMappingProfile.cs" />
+    <Compile Include="DAL\Models\Mappers\VerticesMappingProfile.cs" />
+    <Compile Include="DAL\Interface\IAlgorithmsRepository.cs" />
+    <Compile Include="DAL\Interface\INeighborsRepository.cs" />
+    <Compile Include="DAL\Interface\IGraphRepository.cs" />
+    <Compile Include="DAL\Models\TransferObjects\VertexSerializationDto.cs" />
+    <Compile Include="DAL\Interface\IVerticesRepository.cs" />
+    <Compile Include="DAL\Interface\IRangeRepository.cs" />
+    <Compile Include="DAL\Repositories\LiteDbRepositories\LiteDbNeighborsRepository.cs" />
+    <Compile Include="DAL\Repositories\LiteDbRepositories\LiteDbRangeRepository.cs" />
+    <Compile Include="DAL\Repositories\LiteDbRepositories\LiteDbAlgorithmRepository.cs" />
+    <Compile Include="DAL\Repositories\LiteDbRepositories\LiteDbGraphRepository.cs" />
+    <Compile Include="DAL\Repositories\LiteDbRepositories\LiteDbVerticesRepository.cs" />
+    <Compile Include="DAL\Repositories\SqliteRepositories\SqliteAlgorithmRepository.cs" />
+    <Compile Include="DAL\Repositories\SqliteRepositories\SqliteGraphRepository.cs" />
+    <Compile Include="DAL\Repositories\SqliteRepositories\SqliteNeighborRepository.cs" />
+    <Compile Include="DAL\Repositories\SqliteRepositories\SqliteRangeRepository.cs" />
+    <Compile Include="DAL\Repositories\SqliteRepositories\SqliteRepository.cs" />
+    <Compile Include="DAL\Repositories\SqliteRepositories\SqliteVertexRepository.cs" />
+    <Compile Include="DAL\Interface\IService.cs" />
+    <Compile Include="DAL\Services\CacheService.cs" />
+    <Compile Include="DAL\Services\Service.cs" />
+    <Compile Include="DAL\Interface\IUnitOfWorkFactory.cs" />
+    <Compile Include="DAL\Interface\IUnitOfWork.cs" />
+    <Compile Include="DAL\UOF\LiteDbUnitOfWork.cs" />
+    <Compile Include="DAL\UOF\SqliteUnitOfWork.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\UnitOfWorkResolveMiddleware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\KeyResolveMiddlware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\CombinedAlgorithmsResolveMiddleware.cs" />
@@ -122,7 +121,7 @@
     <Compile Include="Extensions\IUnitOfWorkExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Interface\INeighbourhoodCommand.cs" />
-    <Compile Include="Interface\IToken.cs" />
+    <Compile Include="Messaging\IToken.cs" />
     <Compile Include="Interface\IVisualizedVertices.cs" />
     <Compile Include="MenuItems\GraphSharingMenuItems\LoadOnlyGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphSharingMenuItems\LoadPathfindingRangeMenuItem.cs" />
@@ -159,21 +158,21 @@
     <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\IDAStartAlgorithmMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\LeeAlgorithmMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\RandomAlgorithmMenuItem.cs" />
-    <Compile Include="Messages\AlgorithmDelayMessage.cs" />
-    <Compile Include="Messages\AlgorithmKeyMessage.cs" />
-    <Compile Include="Messages\AlgorithmMessage.cs" />
-    <Compile Include="Messages\AlgorithmStartInfoMessage.cs" />
-    <Compile Include="Messages\CostRangeChangedMessage.cs" />
-    <Compile Include="Messages\CostRangeMessage.cs" />
-    <Compile Include="Messages\GraphDeletedMessage.cs" />
-    <Compile Include="Messages\GraphMessage.cs" />
-    <Compile Include="Messages\GraphParamsMessage.cs" />
-    <Compile Include="Messages\IsAppliedMessage.cs" />
-    <Compile Include="Messages\NeighbourhoodMessage.cs" />
-    <Compile Include="Messages\ObstaclePercentMessage.cs" />
-    <Compile Include="Messages\PathFoundMessage.cs" />
-    <Compile Include="Messages\StatisticsLineMessage.cs" />
-    <Compile Include="Messages\StatisticsMessage.cs" />
+    <Compile Include="Messaging\Messages\AlgorithmDelayMessage.cs" />
+    <Compile Include="Messaging\Messages\AlgorithmKeyMessage.cs" />
+    <Compile Include="Messaging\Messages\AlgorithmMessage.cs" />
+    <Compile Include="Messaging\Messages\AlgorithmStartInfoMessage.cs" />
+    <Compile Include="Messaging\Messages\CostRangeChangedMessage.cs" />
+    <Compile Include="Messaging\Messages\CostRangeMessage.cs" />
+    <Compile Include="Messaging\Messages\GraphDeletedMessage.cs" />
+    <Compile Include="Messaging\Messages\GraphMessage.cs" />
+    <Compile Include="Messaging\Messages\GraphParamsMessage.cs" />
+    <Compile Include="Messaging\Messages\IsAppliedMessage.cs" />
+    <Compile Include="Messaging\Messages\NeighbourhoodMessage.cs" />
+    <Compile Include="Messaging\Messages\ObstaclePercentMessage.cs" />
+    <Compile Include="Messaging\Messages\PathFoundMessage.cs" />
+    <Compile Include="Messaging\Messages\StatisticsLineMessage.cs" />
+    <Compile Include="Messaging\Messages\StatisticsMessage.cs" />
     <Compile Include="Model\ApplicationSettingsStore.cs" />
     <Compile Include="Model\Notes\DisplayableAttribute.cs" />
     <Compile Include="Model\Notes\DisplayNameSourceAttribute.cs" />
@@ -184,6 +183,7 @@
     <Compile Include="Model\VertexActions\NeighbourhoodActions\ExitAction.cs" />
     <Compile Include="Model\VertexActions\NeighbourhoodActions\IncludeVertexCommand.cs" />
     <Compile Include="Model\VertexActions\NeighbourhoodActions\NeighbourhoodAction.cs" />
+    <Compile Include="Serialization\BinaryGraphSerializer.cs" />
     <Compile Include="Serialization\BinaryIntArraySerializer.cs" />
     <Compile Include="Serialization\PathfindingHistorySerializer.cs" />
     <Compile Include="Serialization\BinaryAlgorithmSerializer.cs" />
@@ -285,9 +285,9 @@
     <Compile Include="MenuItems\PathfindingVisualizationMenuItems\EnterAnimationDelayMenuItem.cs" />
     <Compile Include="MenuItems\NavigateThroughVerticesMenuItem.cs" />
     <Compile Include="MenuItems\UnitDisplayMenuItem.cs" />
-    <Compile Include="Messages\ClearColorsMessage.cs" />
-    <Compile Include="Messages\ClearHistoryMessage.cs" />
-    <Compile Include="Messages\GraphChangedMessage.cs" />
+    <Compile Include="Messaging\Messages\ClearColorsMessage.cs" />
+    <Compile Include="Messaging\Messages\ClearHistoryMessage.cs" />
+    <Compile Include="Messaging\Messages\GraphChangedMessage.cs" />
     <Compile Include="DependencyInjection\Registrations\IComponent.cs" />
     <Compile Include="DependencyInjection\Application.cs" />
     <Compile Include="Units\AlgorithmChooseUnit.cs" />
@@ -311,7 +311,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Colours.settings</DependentUpon>
     </Compile>
-    <Compile Include="Tokens.cs" />
+    <Compile Include="Messaging\Tokens.cs" />
     <Compile Include="MessegesTexts.cs" />
     <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\ConsoleKeystrokesHook.cs" />
@@ -565,6 +565,8 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DAL\Extensions\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,13 +1,12 @@
-﻿using AutoMapper;
-using Pathfinding.App.Console.DataAccess.Dto;
-using Pathfinding.App.Console.DataAccess.Entities;
-using Pathfinding.App.Console.DataAccess.Mappers;
-using Pathfinding.App.Console.DataAccess.Services;
+﻿using Pathfinding.App.Console.DAL.Interface;
+using Pathfinding.App.Console.DAL.Models.Entities;
+using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
+using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,12 +21,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
         protected readonly ISerializer<IEnumerable<PathfindingHistorySerializationDto>> graphSerializer;
         protected readonly IService service;
         protected readonly ILog log;
-        protected readonly IMapper mapper;
 
         protected ExportGraphMenuItem(IInput<TPath> input,
             IInput<int> intInput,
             IService service,
-            IMapper mapper,
             ISerializer<IEnumerable<PathfindingHistorySerializationDto>> graphSerializer,
             ILog log)
         {
@@ -36,7 +33,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             this.graphSerializer = graphSerializer;
             this.log = log;
             this.service = service;
-            this.mapper = mapper;
         }
 
         public virtual bool CanBeExecuted() => service.GetGraphIds().Count > 0;
@@ -50,8 +46,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 {
                     var path = input.Input();
                     int id = keys[0].Id;
-                    var dto = service.GetPathfindingHistory(id);
-                    var history = mapper.Map<PathfindingHistorySerializationDto>(dto);
+                    var history = service.GetSerializationHistory(id);
                     await ExportAsync(path, history);
                     return;
                 }
@@ -67,15 +62,16 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                     }
                     if (index == keys.Count)
                     {
-                        var toSave = keys.Select(x => service.GetPathfindingHistory(x.Id))
-                            .Select(mapper.Map<PathfindingHistorySerializationDto>).ToArray();
+                        var toSave = keys
+                            .Select(x => service.GetSerializationHistory(x.Id))
+                            .ToReadOnly();
                         toExport.AddRange(toSave);
                         break;
                     }
                     int id = keys[index].Id;
                     keys.RemoveAt(index);
-                    var history = service.GetPathfindingHistory(id);
-                    toExport.Add(mapper.Map<PathfindingHistorySerializationDto>(history));
+                    var history = service.GetSerializationHistory(id);
+                    toExport.Add(history);
                     if (keys.Count > 0)
                     {
                         menu = CreateMenuList(keys);

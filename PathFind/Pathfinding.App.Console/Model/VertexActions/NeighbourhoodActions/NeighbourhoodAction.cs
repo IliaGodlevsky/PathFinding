@@ -1,6 +1,4 @@
-﻿using Pathfinding.App.Console.DataAccess.Services;
-using Pathfinding.App.Console.Interface;
-using System;
+﻿using Pathfinding.App.Console.Interface;
 using System.Collections.Generic;
 using System.Linq;
 

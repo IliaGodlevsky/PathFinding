@@ -1,4 +1,4 @@
-﻿using Pathfinding.App.Console.DataAccess.Dto;
+﻿using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Model.Notes;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
@@ -19,27 +19,15 @@ namespace Pathfinding.App.Console.Extensions
             {
                 algorithms[algorithm] = new()
                 {
-                    Obstacles = Array.AsReadOnly(reader.ReadCoordinates()),
-                    Visited = Array.AsReadOnly(reader.ReadCoordinates()),
-                    Range = Array.AsReadOnly(reader.ReadCoordinates()),
-                    Path = Array.AsReadOnly(reader.ReadCoordinates()),
-                    Costs = Array.AsReadOnly(reader.ReadIntArray()),
+                    Obstacles = reader.ReadCoordinates().ToReadOnly(),
+                    Visited = reader.ReadCoordinates().ToReadOnly(),
+                    Range = reader.ReadCoordinates().ToReadOnly(),
+                    Path = reader.ReadCoordinates().ToReadOnly(),
+                    Costs = reader.ReadIntArray().ToReadOnly(),
                     Statistics = reader.ReadStatisitics()
                 };
             }
             return Array.AsReadOnly(algorithms);
-        }
-
-        public static IReadOnlyDictionary<ICoordinate, IReadOnlyCollection<ICoordinate>> ReadNeighbours(this BinaryReader reader)
-        {
-            var result = new Dictionary<ICoordinate, IReadOnlyCollection<ICoordinate>>();
-            var coordinates = reader.ReadCoordinates();
-            foreach (var coordinate in coordinates)
-            {
-                var neighbours = reader.ReadCoordinates().ToReadOnly();
-                result.Add(coordinate, neighbours);
-            }
-            return result.AsReadOnly();
         }
 
         private static int? ReadNullableInt32(this BinaryReader reader)

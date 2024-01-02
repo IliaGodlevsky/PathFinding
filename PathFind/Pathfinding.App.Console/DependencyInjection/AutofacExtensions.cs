@@ -5,9 +5,7 @@ using Autofac.Core.Resolving.Pipeline;
 using Autofac.Features.Metadata;
 using AutoMapper;
 using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DataAccess.Mappers;
-using Pathfinding.App.Console.DataAccess.Services;
-using Pathfinding.App.Console.DataAccess.UnitOfWorks.Factories;
+using Pathfinding.App.Console.DAL.Models.Mappers;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
@@ -16,7 +14,6 @@ using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Service = Pathfinding.App.Console.DataAccess.Services.Service;
 
 namespace Pathfinding.App.Console.DependencyInjection
 {
@@ -86,48 +83,17 @@ namespace Pathfinding.App.Console.DependencyInjection
             });
         }
 
-        private static IRegistrationBuilder<Service, TActivatorData, SingleRegistrationStyle> UseUnitOfWork<TActivatorData, T>(
-            this IRegistrationBuilder<Service, TActivatorData, SingleRegistrationStyle> builder)
-            where T : IUnitOfWorkFactory, new()
-        {
-            return builder.ConfigurePipeline(p => p.Use(new UnitOfWorkResolveMiddleware<T>()));
-        }
-
-        public static IRegistrationBuilder<Service, TActivatorData, SingleRegistrationStyle> Cache<TActivatorData>(
-            this IRegistrationBuilder<Service, TActivatorData, SingleRegistrationStyle> builder)
-        {
-            return builder.OnActivating(args =>
-            {
-                var cache = new CacheService(args.Instance);
-                args.ReplaceInstance(cache);
-            });
-        }
-
-        public static IRegistrationBuilder<Service, TActivatorData, SingleRegistrationStyle> UseInMemory<TActivatorData>(
-             this IRegistrationBuilder<Service, TActivatorData, SingleRegistrationStyle> builder)
-        {
-            return builder.UseUnitOfWork<TActivatorData, InMemoryUnitOfWorkFactory>();
-        }
-
-        public static IRegistrationBuilder<Service, TActivatorData, SingleRegistrationStyle> UseSqlite<TActivatorData>(
-            this IRegistrationBuilder<Service, TActivatorData, SingleRegistrationStyle> builder)
-        {
-            return builder.UseUnitOfWork<TActivatorData, SqliteUnitOfWorkFactory>();
-        }
-
-        public static IRegistrationBuilder<Service, TActivatorData, SingleRegistrationStyle> UseLiteDb<TActivatorData>(
-            this IRegistrationBuilder<Service, TActivatorData, SingleRegistrationStyle> builder)
-        {
-            return builder.UseUnitOfWork<TActivatorData, LiteDbUnitOfWorkFactory>();
-        }
-
         public static void RegisterMapper(this ContainerBuilder builder)
         {
-            builder.RegisterType<DbProfile>().As<Profile>().SingleInstance();
+            builder.RegisterType<HistoryMappingProfile>().As<Profile>().SingleInstance();
+            builder.RegisterType<AlgorithmsMappingProfile>().As<Profile>().SingleInstance();
+            builder.RegisterType<GraphMappingProfile>().As<Profile>().SingleInstance();
+            builder.RegisterType<VerticesMappingProfile>().As<Profile>().SingleInstance();
+
             builder.Register(ctx =>
             {
-                var profile = ctx.Resolve<Profile>();
-                var config = new MapperConfiguration(cfg => cfg.AddProfile(profile));
+                var profiles = ctx.Resolve<Profile[]>();
+                var config = new MapperConfiguration(c => c.AddProfiles(profiles));
                 return config.CreateMapper(ctx.Resolve);
             }).As<IMapper>().SingleInstance();
         }

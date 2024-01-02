@@ -27,7 +27,7 @@ namespace Pathfinding.GraphLib.Factory.Realizations.Layers
             }
         }
 
-        private static IReadOnlyCollection<IVertex> GetNeighboursWithinGraph(INeighborhood self, 
+        private static IReadOnlyCollection<IVertex> GetNeighboursWithinGraph(INeighborhood self,
             IGraph<IVertex> graph)
         {
             bool IsWithin(int coordinate, int graphDimension)

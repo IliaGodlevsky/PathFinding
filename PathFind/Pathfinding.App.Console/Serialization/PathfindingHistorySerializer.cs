@@ -1,7 +1,4 @@
-﻿using Pathfinding.App.Console.DataAccess.Dto;
-using Pathfinding.App.Console.DataAccess.Entities;
-using Pathfinding.App.Console.Extensions;
-using Pathfinding.App.Console.Model;
+﻿using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Exceptions;
@@ -16,13 +13,13 @@ namespace Pathfinding.App.Console.Serialization
 {
     internal sealed class PathfindingHistorySerializer : ISerializer<IEnumerable<PathfindingHistorySerializationDto>>
     {
-        private readonly ISerializer<IGraph<Vertex>> graphSerializer;
+        private readonly ISerializer<GraphSerializationDto> graphSerializer;
         private readonly ISerializer<IEnumerable<AlgorithmSerializationDto>> historySerializer;
         private readonly ISerializer<IEnumerable<ICoordinate>> rangeSerializer;
 
         public PathfindingHistorySerializer(
             ISerializer<IEnumerable<AlgorithmSerializationDto>> historySerializer,
-            ISerializer<IGraph<Vertex>> graphSerializer,
+            ISerializer<GraphSerializationDto> graphSerializer,
             ISerializer<IEnumerable<ICoordinate>> rangeSerializer)
         {
             this.historySerializer = historySerializer;
@@ -56,7 +53,7 @@ namespace Pathfinding.App.Console.Serialization
             }
         }
 
-        public void SerializeTo(IEnumerable<PathfindingHistorySerializationDto> graphHistory, 
+        public void SerializeTo(IEnumerable<PathfindingHistorySerializationDto> graphHistory,
             Stream stream)
         {
             try

@@ -1,7 +1,6 @@
 ﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Settings;
 using Shared.Extensions;
-using System;
 using System.Linq;
 
 namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions

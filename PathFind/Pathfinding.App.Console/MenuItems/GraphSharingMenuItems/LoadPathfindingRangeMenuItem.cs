@@ -1,10 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DataAccess;
+using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
-using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Messaging;
+using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
@@ -15,8 +16,6 @@ using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
 using System;
 using System.Collections.Generic;
-using Shared.Extensions;
-using Pathfinding.App.Console.DataAccess.Services;
 using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems

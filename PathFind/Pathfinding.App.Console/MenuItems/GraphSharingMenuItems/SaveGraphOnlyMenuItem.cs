@@ -1,5 +1,7 @@
-﻿using Pathfinding.App.Console.DataAccess.Entities;
-using Pathfinding.App.Console.DataAccess.Services;
+﻿using AutoMapper;
+using Pathfinding.App.Console.DAL.Interface;
+using Pathfinding.App.Console.DAL.Models.Entities;
+using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -21,13 +23,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
         private readonly IInput<string> stringInput;
         private readonly IInput<int> intInput;
         private readonly IService service;
-        private readonly ISerializer<IGraph<Vertex>> serializer;
+        private readonly ISerializer<GraphSerializationDto> serializer;
         private readonly ILog log;
 
         public SaveGraphOnlyMenuItem(IFilePathInput input,
             IInput<int> intInput,
             IService service,
-            ISerializer<IGraph<Vertex>> serializer,
+            ISerializer<GraphSerializationDto> serializer,
             ILog log)
         {
             this.stringInput = input;
@@ -51,7 +53,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 {
                     var path = stringInput.Input();
                     int id = info[0].Id;
-                    var graph = service.GetGraph(id);
+                    var graph = service.GetSerializationGraph(id);
                     await serializer.SerializeToFileAsync(graph, path);
                     return;
                 }
@@ -60,7 +62,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 if (index != info.Count)
                 {
                     var path = stringInput.Input();
-                    var graph = service.GetGraph(info[index].Id);
+                    var graph = service.GetSerializationGraph(info[index].Id);
                     await serializer.SerializeToFileAsync(graph, path);
                 }
             }

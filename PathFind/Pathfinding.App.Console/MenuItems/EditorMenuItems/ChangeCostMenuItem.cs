@@ -1,4 +1,4 @@
-﻿using Pathfinding.App.Console.DataAccess.Services;
+﻿using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
@@ -11,7 +11,7 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
     [LowPriority]
     internal sealed class ChangeCostMenuItem : NavigateThroughVerticesMenuItem
     {
-        public ChangeCostMenuItem(IInput<ConsoleKey> keyInput, 
+        public ChangeCostMenuItem(IInput<ConsoleKey> keyInput,
             IService service)
             : base(keyInput, service)
         {

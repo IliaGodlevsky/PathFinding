@@ -1,4 +1,4 @@
-﻿using Pathfinding.App.Console.DataAccess.Dto;
+﻿using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Shared.Extensions;

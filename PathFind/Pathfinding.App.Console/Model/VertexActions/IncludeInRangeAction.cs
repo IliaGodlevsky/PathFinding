@@ -1,6 +1,5 @@
 ﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.GraphLib.Core.Modules.Interface;
-using System;
 
 namespace Pathfinding.App.Console.Model.VertexActions
 {

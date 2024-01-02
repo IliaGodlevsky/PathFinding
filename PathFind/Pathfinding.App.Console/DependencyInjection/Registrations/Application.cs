@@ -1,15 +1,11 @@
 ﻿using Autofac;
-using AutoMapper;
 using CommunityToolkit.Mvvm.Messaging;
-using GraphLib.Serialization.Serializers.Decorators;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
-using Pathfinding.App.Console.DataAccess;
-using Pathfinding.App.Console.DataAccess.Dto;
-using Pathfinding.App.Console.DataAccess.Mappers;
-using Pathfinding.App.Console.DataAccess.Services;
-using Pathfinding.App.Console.DataAccess.UnitOfWorks;
+using Pathfinding.App.Console.DAL.Interface;
+using Pathfinding.App.Console.DAL.Models.TransferObjects;
+using Pathfinding.App.Console.DAL.Services;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -92,7 +88,9 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterUnit<MainUnit, AnswerExitMenuItem>(new UnitParamtresFactory());
                 builder.RegisterUnits<ExitMenuItem>(new UnitParamtresFactory(), Graph, PathfindingUnits.Process, Range);
 
-                builder.RegisterType<Service>().As<IService>().Cache().UseInMemory().SingleInstance();
+                builder.RegisterType<Service>().As<IService>().SingleInstance();
+                builder.RegisterDecorator<CacheService, IService>();
+                builder.RegisterType<InMemoryUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
 
                 builder.RegisterMapper();
 
@@ -223,7 +221,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<BinaryCoordinatesSerializer>().As<ISerializer<IEnumerable<ICoordinate>>>().SingleInstance();
                 builder.RegisterType<BinaryIntArraySerializer>().As<ISerializer<IEnumerable<int>>>().SingleInstance();
                 builder.RegisterType<BinaryAlgorithmSerializer>().As<ISerializer<IEnumerable<AlgorithmSerializationDto>>>().SingleInstance();
-                builder.RegisterType<BinaryGraphSerializer<Vertex>>().As<ISerializer<IGraph<Vertex>>>().SingleInstance();
+                builder.RegisterType<BinaryGraphSerializer>().As<ISerializer<GraphSerializationDto>>().SingleInstance();
                 builder.RegisterType<PathfindingHistorySerializer>().As<ISerializer<IEnumerable<PathfindingHistorySerializationDto>>>().SingleInstance();
 
                 builder.RegisterDecorator<BufferedSerializer<IEnumerable<PathfindingHistorySerializationDto>>, ISerializer<IEnumerable<PathfindingHistorySerializationDto>>>();

@@ -1,11 +1,10 @@
-﻿using AutoMapper;
-using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DataAccess.Dto;
-using Pathfinding.App.Console.DataAccess.Mappers;
-using Pathfinding.App.Console.DataAccess.Services;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.App.Console.DAL.Interface;
+using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Messaging;
+using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
@@ -26,12 +25,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
         protected readonly ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer;
         protected readonly IService service;
         protected readonly ILog log;
-        protected readonly IMapper mapper;
 
         protected ImportGraphMenuItem(IMessenger messenger,
             IInput<TPath> input,
             IService service,
-            IMapper mapper,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
             ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer, ILog log)
         {
@@ -41,7 +38,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             this.messenger = messenger;
             this.input = input;
             this.log = log;
-            this.mapper = mapper;
         }
 
         public virtual void Execute()
@@ -49,10 +45,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             try
             {
                 var path = InputPath();
-                var importedHistory = mapper.Map<PathfindingHistoryCreateDto[]>(ImportGraph(path));
-                importedHistory.ForEach(x => service.AddPathfindingHistory(x));
+                var imported = ImportGraph(path);
+                imported.ForEach(x => service.AddPathfindingHistory(x));
                 var ids = service.GetGraphIds().ToList();
-                if (ids.Count == importedHistory.Length && ids.Count > 0)
+                if (ids.Count == imported.Count && ids.Count > 0)
                 {
                     int id = ids[0];
                     var graph = service.GetGraph(id);

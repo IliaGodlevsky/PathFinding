@@ -4,16 +4,17 @@ using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
 using Shared.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.Model
 {
     internal sealed class GraphField : IDisplayable
     {
-        public static readonly GraphField Empty 
+        public static readonly GraphField Empty
             = new(Graph<Vertex>.Empty, Array.Empty<FramedAxis>());
 
-        private IDisplayable[] Displayables { get; }
+        private IReadOnlyCollection<IDisplayable> Displayables { get; }
 
         public GraphField(IGraph<Vertex> graph)
             : this(graph, new FramedOverAbscissa(graph),
@@ -26,7 +27,7 @@ namespace Pathfinding.App.Console.Model
 
         private GraphField(IGraph<Vertex> graph, params FramedAxis[] axes)
         {
-            Displayables = graph.Concat<IDisplayable>(axes).ToArray();
+            Displayables = graph.Concat<IDisplayable>(axes).ToReadOnly();
         }
 
         public void Display()

@@ -3,7 +3,6 @@ using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Shared.Extensions;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace Pathfinding.App.Console.Serialization
@@ -20,7 +19,7 @@ namespace Pathfinding.App.Console.Serialization
 
         public void SerializeTo(IEnumerable<int> item, Stream stream)
         {
-            using(var writer = new BinaryWriter(stream, Encoding.Default, leaveOpen: true))
+            using (var writer = new BinaryWriter(stream, Encoding.Default, leaveOpen: true))
             {
                 writer.WriteIntArray(item.ToReadOnly());
             }

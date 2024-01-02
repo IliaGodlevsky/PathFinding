@@ -1,14 +1,14 @@
-﻿using Pathfinding.App.Console.Interface;
+﻿using Pathfinding.App.Console.DAL.Interface;
+using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
-using System;
 using Shared.Extensions;
-using Pathfinding.App.Console.DataAccess.Services;
-using System.Linq;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
 {
@@ -19,7 +19,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
         private readonly VertexActions rangeActions;
 
         public EnterPathfindingRangeMenuItem(VertexActions actions,
-            IInput<ConsoleKey> keyInput, 
+            IInput<ConsoleKey> keyInput,
             IPathfindingRangeBuilder<Vertex> builder,
             IService service)
             : base(keyInput, service)
@@ -53,7 +53,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
                 if (!currentRange.TryGetValue(item.Key, out var order))
                 {
                     var vertex = graph.Get(item.Key);
-                    added.Add((item.Value, vertex));
+                    added.Add((order, vertex));
                 }
 
                 if (currentRange.TryGetValue(item.Key, out order))

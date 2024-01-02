@@ -40,7 +40,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
         protected override AlgorithmInfo GetAlgorithm()
         {
             var stepRule = InputItem(stepRules, Languages.ChooseStepRuleMsg);
-            var heuristic = InputItem(heuristics, Languages.ChooseHeuristicMsg);           
+            var heuristic = InputItem(heuristics, Languages.ChooseHeuristicMsg);
             var factory = CreateAlgorithm(stepRule.Value, heuristic.Value);
             var statistics = GetStatistics(heuristic.Key, stepRule.Key);
             return new(factory, statistics);

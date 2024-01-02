@@ -1,5 +1,5 @@
-﻿using Pathfinding.App.Console.DataAccess.Entities;
-using Pathfinding.App.Console.DataAccess.Services;
+﻿using Pathfinding.App.Console.DAL.Interface;
+using Pathfinding.App.Console.DAL.Models.Entities;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;

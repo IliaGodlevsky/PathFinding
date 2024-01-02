@@ -1,5 +1,4 @@
-﻿using NLog.Targets;
-using Shared.Primitives;
+﻿using Shared.Primitives;
 using System;
 using System.Drawing;
 

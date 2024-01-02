@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using Pathfinding.App.Console.DataAccess.Dto;
-using Pathfinding.App.Console.DataAccess.Mappers;
-using Pathfinding.App.Console.DataAccess.Services;
+﻿using Pathfinding.App.Console.DAL.Interface;
+using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
@@ -17,10 +15,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
     internal sealed class SendGraphMenuItem : ExportGraphMenuItem<(string Host, int Port)>
     {
         public SendGraphMenuItem(IInput<(string Host, int Port)> input,
-            IInput<int> intInput, IService service, IMapper mapper,
+            IInput<int> intInput, IService service,
             ISerializer<IEnumerable<PathfindingHistorySerializationDto>> graphSerializer,
             ILog log)
-            : base(input, intInput, service, mapper, graphSerializer, log)
+            : base(input, intInput, service, graphSerializer, log)
         {
         }
 

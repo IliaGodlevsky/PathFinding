@@ -1,4 +1,4 @@
-﻿using Pathfinding.App.Console.DataAccess.Services;
+﻿using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;

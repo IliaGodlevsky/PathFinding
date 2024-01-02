@@ -4,7 +4,8 @@ using Pathfinding.AlgorithmLib.Core.Exceptions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Messages;
+using Pathfinding.App.Console.Messaging;
+using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Notes;
 using Pathfinding.GraphLib.Core.Interface;
@@ -109,7 +110,7 @@ namespace Pathfinding.App.Console.Units
         {
             messenger.Register<PathfindingProcessUnit, AlgorithmStartInfoMessage>(this, Tokens.Pathfinding, FindPath);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
-            messenger.Register<PathfindingProcessUnit, ClearColorsMessage>(this,  ClearColors);
+            messenger.Register<PathfindingProcessUnit, ClearColorsMessage>(this, ClearColors);
         }
     }
 }

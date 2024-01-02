@@ -30,7 +30,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             neighbourhood.ForEach(writer.WriteIntArray);
         }
 
-        private static void WriteRange(this BinaryWriter writer,
+        public static void WriteRange(this BinaryWriter writer,
             InclusiveValueRange<int> range)
         {
             writer.Write(range.UpperValueOfRange);

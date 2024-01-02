@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using Autofac.Core.Resolving.Pipeline;
-using Pathfinding.App.Console.DataAccess.UnitOfWorks;
-using Pathfinding.App.Console.DataAccess.UnitOfWorks.Factories;
+using Pathfinding.App.Console.DAL.Interface;
 using System;
 
 namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears

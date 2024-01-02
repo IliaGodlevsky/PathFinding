@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DataAccess;
-using Pathfinding.App.Console.DataAccess.Dto;
-using Pathfinding.App.Console.DataAccess.Mappers;
-using Pathfinding.App.Console.DataAccess.Services;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.App.Console.DAL.Interface;
+using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -22,13 +19,12 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
     internal sealed class RecieveGraphMenuItem : ImportGraphMenuItem<int>
     {
         public RecieveGraphMenuItem(IMessenger messenger,
-            IInput<int> input, 
+            IInput<int> input,
             IService service,
-            IMapper mapper,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
             ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer,
             ILog log)
-            : base(messenger, input, service, mapper, rangeBuilder, serializer, log)
+            : base(messenger, input, service, rangeBuilder, serializer, log)
         {
         }
 

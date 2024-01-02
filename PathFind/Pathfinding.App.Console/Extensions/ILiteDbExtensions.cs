@@ -1,5 +1,5 @@
 ﻿using LiteDB;
-using Pathfinding.App.Console.DataAccess;
+using Pathfinding.App.Console.DAL.Attributes;
 using Shared.Extensions;
 
 namespace Pathfinding.App.Console.Extensions

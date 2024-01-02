@@ -1,5 +1,4 @@
-﻿using Pathfinding.App.Console.DataAccess.Services;
-using Pathfinding.App.Console.Interface;
+﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Settings;
 
 namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions

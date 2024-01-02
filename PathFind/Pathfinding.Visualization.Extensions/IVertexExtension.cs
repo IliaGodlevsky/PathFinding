@@ -1,5 +1,4 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.VisualizationLib.Core.Interface;
 
 namespace Pathfinding.Visualization.Extensions
