@@ -6,6 +6,7 @@ using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.DAL.Services;
+using Pathfinding.App.Console.DAL.UOF.Factories;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -52,6 +53,7 @@ using Pathfinding.Logging.Interface;
 using Pathfinding.Logging.Loggers;
 using Pathfinding.Visualization.Core.Abstractions;
 using Shared.Executable;
+using Shared.Extensions;
 using Shared.Random;
 using Shared.Random.Realizations;
 using System;
@@ -68,11 +70,12 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
     internal sealed partial class Application : IDisposable
     {
-        private static IEnumerable<IComponent> GetComponents()
+        private static IReadOnlyCollection<IComponent> GetComponents()
         {
             return typeof(Application).GetNestedTypes(BindingFlags.NonPublic)
                 .Where(member => typeof(IComponent).IsAssignableFrom(member))
-                .Select(member => (IComponent)Activator.CreateInstance(member));
+                .Select(member => (IComponent)Activator.CreateInstance(member))
+                .ToReadOnly();
         }
 
         private sealed class Main : IComponent
@@ -227,8 +230,6 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterDecorator<BufferedSerializer<IEnumerable<PathfindingHistorySerializationDto>>, ISerializer<IEnumerable<PathfindingHistorySerializationDto>>>();
                 builder.RegisterDecorator<CompressSerializer<IEnumerable<PathfindingHistorySerializationDto>>, ISerializer<IEnumerable<PathfindingHistorySerializationDto>>>();
                 builder.RegisterDecorator<ThreadSafeSerializer<IEnumerable<PathfindingHistorySerializationDto>>, ISerializer<IEnumerable<PathfindingHistorySerializationDto>>>();
-
-                builder.RegisterType<VertexFromInfoFactory>().As<IVertexFromInfoFactory<Vertex>>().SingleInstance();
             }
         }
 
@@ -242,7 +243,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<ReverseVertexMenuItem>().Keyed<IMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<NeighbourhoodMenuItem>().Keyed<IMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ChangeCostMenuItem>().Keyed<IMenuItem>(Editor).SingleInstance().As<ICanRecieveMessage>();
-                builder.RegisterType<SmoothGraphMenuItem>().Keyed<IMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
+                //builder.RegisterType<SmoothGraphMenuItem>().Keyed<IMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<MeanCost>().As<IMeanCost>().SingleInstance();
             }
         }

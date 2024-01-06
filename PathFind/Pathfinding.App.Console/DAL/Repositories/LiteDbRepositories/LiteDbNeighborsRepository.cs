@@ -28,7 +28,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 
         public IEnumerable<NeighborEntity> AddNeighbours(IEnumerable<NeighborEntity> neighbours)
         {
-            collection.Insert(neighbours);
+            collection.InsertBulk(neighbours);
             return neighbours;
         }
 

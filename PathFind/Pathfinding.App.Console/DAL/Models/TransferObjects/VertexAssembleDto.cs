@@ -2,11 +2,9 @@
 
 namespace Pathfinding.App.Console.DAL.Models.TransferObjects
 {
-    internal class VertexReadDto
+    internal class VertexAssembleDto
     {
         public int Id { get; set; }
-
-        public int GraphId { get; set; }
 
         public bool IsObstacle { get; set; }
 

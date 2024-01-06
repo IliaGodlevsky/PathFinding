@@ -1,4 +1,7 @@
-﻿using Pathfinding.App.Console.DAL.Interface;
+﻿using Org.BouncyCastle.Asn1.Pkcs;
+using Org.BouncyCastle.Utilities.Collections;
+using Pathfinding.AlgorithmLib.Core.NullObjects;
+using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
 using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Extensions;
@@ -9,7 +12,9 @@ using Pathfinding.Logging.Interface;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
@@ -41,55 +46,30 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
         {
             try
             {
-                var keys = service.GetAllGraphInfo().ToList();
-                if (keys.Count == 1)
+                var toExport = GetHistoriesToSave();
+                if (toExport.Count > 0)
                 {
                     var path = input.Input();
-                    int id = keys[0].Id;
-                    var history = service.GetSerializationHistory(id);
-                    await ExportAsync(path, history);
-                    return;
-                }
-                var toExport = new List<PathfindingHistorySerializationDto>();
-                string menu = CreateMenuList(keys);
-                string menuList = string.Concat(menu, "\n", Languages.MenuOptionChoiceMsg);
-                int index = InputIndex(menuList, keys.Count);
-                while (true)
-                {
-                    if (index == keys.Count + 1)
-                    {
-                        break;
-                    }
-                    if (index == keys.Count)
-                    {
-                        var toSave = keys
-                            .Select(x => service.GetSerializationHistory(x.Id))
-                            .ToReadOnly();
-                        toExport.AddRange(toSave);
-                        break;
-                    }
-                    int id = keys[index].Id;
-                    keys.RemoveAt(index);
-                    var history = service.GetSerializationHistory(id);
-                    toExport.Add(history);
-                    if (keys.Count > 0)
-                    {
-                        menu = CreateMenuList(keys);
-                        menuList = string.Concat(menu, "\n", Languages.MenuOptionChoiceMsg);
-                        index = InputIndex(menuList, keys.Count);
-                    }
-                }
-
-                if (keys.Count > 0)
-                {
-                    var path = input.Input();
-                    await ExportAsync(path, toExport.ToArray());
+                    await ExportAsync(path, toExport);
                 }
             }
             catch (Exception ex)
             {
                 log.Error(ex);
             }
+        }
+
+        protected abstract Task ExportAsync(TPath path, 
+            IEnumerable<PathfindingHistorySerializationDto> histories);
+
+        private string CreateMenuList(IReadOnlyCollection<GraphEntity> graphs)
+        {
+            var menu = graphs.Select(k => k.ConvertToString())
+                .Append(Languages.All)
+                .Append(Languages.Quit)
+                .CreateMenuList(1)
+                .ToString();
+            return string.Concat(menu, "\n", Languages.MenuOptionChoiceMsg);
         }
 
         private int InputIndex(string message, int count)
@@ -101,15 +81,35 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             }
         }
 
-        private string CreateMenuList(IReadOnlyCollection<GraphEntity> graphs)
+        private IReadOnlyCollection<PathfindingHistorySerializationDto> GetHistoriesToSave()
         {
-            return graphs.Select(k => k.ConvertToString())
-                .Append(Languages.All)
-                .Append(Languages.Quit)
-                .CreateMenuList(1)
-                .ToString();
+            var toExport = new List<PathfindingHistorySerializationDto>();
+            var keys = service.GetAllGraphInfo().ToList();
+            int index = 1;
+            do
+            {
+                if (index == keys.Count)
+                {
+                    var histories = keys
+                        .Select(x => service.GetSerializationHistory(x.Id))
+                        .ToReadOnly();
+                    toExport.AddRange(histories);
+                    break;
+                }
+                if (keys.Count > 0)
+                {
+                    string menuList = CreateMenuList(keys);
+                    index = InputIndex(menuList, keys.Count);
+                }
+                if (index < keys.Count)
+                {
+                    int id = keys[index].Id;
+                    var history = service.GetSerializationHistory(id);
+                    toExport.Add(history);
+                    keys.RemoveAt(index);
+                }
+            } while (index != keys.Count + 1 && keys.Count > 0);
+            return toExport.AsReadOnly();
         }
-
-        protected abstract Task ExportAsync(TPath path, params PathfindingHistorySerializationDto[] histories);
     }
 }

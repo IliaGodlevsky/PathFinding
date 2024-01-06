@@ -19,11 +19,11 @@ namespace Pathfinding.App.Console.Extensions
             {
                 algorithms[algorithm] = new()
                 {
-                    Obstacles = reader.ReadCoordinates().ToReadOnly(),
-                    Visited = reader.ReadCoordinates().ToReadOnly(),
-                    Range = reader.ReadCoordinates().ToReadOnly(),
-                    Path = reader.ReadCoordinates().ToReadOnly(),
-                    Costs = reader.ReadIntArray().ToReadOnly(),
+                    Obstacles = reader.ReadCoordinates(),
+                    Visited = reader.ReadCoordinates(),
+                    Range = reader.ReadCoordinates(),
+                    Path = reader.ReadCoordinates(),
+                    Costs = reader.ReadIntArray(),
                     Statistics = reader.ReadStatisitics()
                 };
             }

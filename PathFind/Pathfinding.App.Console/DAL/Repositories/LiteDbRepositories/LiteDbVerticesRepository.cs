@@ -19,7 +19,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 
         public IEnumerable<VertexEntity> AddVertices(IEnumerable<VertexEntity> vertices)
         {
-            collection.Insert(vertices);
+            collection.InsertBulk(vertices);
             return vertices;
         }
 

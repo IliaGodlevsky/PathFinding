@@ -21,7 +21,7 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
             this.vertexFactory = vertexFactory;
 
             CreateMap<ICoordinate, ICoordinate>().ConvertUsing(x => x);
-            CreateMap<VertexReadDto, Vertex>()
+            CreateMap<VertexAssembleDto, Vertex>()
                 .ConstructUsing(x => vertexFactory.CreateVertex(x.Coordinate));
             CreateMap<Vertex, VertexEntity>()
                 .ForMember(x => x.X, opt => opt.MapFrom(x => x.Position.GetX()))
@@ -31,7 +31,7 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => x.Cost.CurrentCost));
             CreateMap<VertexEntity, Vertex>().ConstructUsing(x => vertexFactory.CreateVertex(new Coordinate(x.X, x.Y)))
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => new VertexCost(x.Cost, new(x.UpperValueRange, x.LowerValueRange))));
-            CreateMap<VertexEntity, VertexReadDto>()
+            CreateMap<VertexEntity, VertexAssembleDto>()
                 .ForMember(x => x.Coordinate, opt => opt.MapFrom(x => new Coordinate(x.X, x.Y)))
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => new VertexCost(x.Cost, new(x.UpperValueRange, x.LowerValueRange))));
             CreateMap<Vertex, VertexSerializationDto>()

@@ -41,10 +41,11 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         public void Execute()
         {
             var graphs = service.GetAllGraphInfo();
-            var menuList = graphs.Select(k => k.ConvertToString())
+            string menu = graphs.Select(k => k.ConvertToString())
                 .Append(Languages.Quit)
                 .CreateMenuList(1)
                 .ToString();
+            string menuList = string.Concat(menu, "\n", Languages.MenuOptionChoiceMsg);
             int index = GetIndex(menuList, graphs.Count);
             if (index != graphs.Count)
             {

@@ -2,6 +2,7 @@
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.App.Console.DAL.Interface;
+using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.EventArguments;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
@@ -9,8 +10,6 @@ using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Settings;
-using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Realizations;
 using Shared.Extensions;
 using Shared.Process.EventArguments;
 using System;
@@ -28,7 +27,7 @@ namespace Pathfinding.App.Console.Units
         private readonly IReadOnlyCollection<(string, IAnimationSpeedAction)> animationActions;
 
         private PathfindingProcess algorithm = PathfindingProcess.Idle;
-        private IGraph<Vertex> graph = Graph<Vertex>.Empty;
+        private GraphReadDto graph = GraphReadDto.Empty;
         private bool isVisualizationApplied = true;
         private TimeSpan animationDelay = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
 
@@ -63,16 +62,16 @@ namespace Pathfinding.App.Console.Units
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
         {
             animationDelay.Wait();
-            graph.Get(e.Current).VisualizeAsVisited();
+            graph.Graph.Get(e.Current).VisualizeAsVisited();
         }
 
         private void OnVertexEnqueued(object sender, PathfindingEventArgs e)
         {
-            graph.Get(e.Current).VisualizeAsEnqueued();
+            graph.Graph.Get(e.Current).VisualizeAsEnqueued();
         }
 
         private void OnAlgorithmStarted(object sender, ProcessEventArgs e)
-        {
+        {            
             keyStrokeHook.KeyPressed += OnConsoleKeyPressed;
             Task.Run(keyStrokeHook.Start);
         }

@@ -32,7 +32,7 @@ namespace Pathfinding.App.Console.Model.Notes
                 .GetProperties()
                 .Where(prop => Attribute.IsDefined(prop, typeof(DisplayableAttribute)))
                 .OrderByOrderAttribute().ToList().AsReadOnly();
-            this.values = values.ToList().AsReadOnly();
+            this.values = values.ToReadOnly();
         }
 
         private IReadOnlyList<string> GetHeaders()

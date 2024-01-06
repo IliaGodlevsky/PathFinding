@@ -58,7 +58,7 @@ namespace Pathfinding.App.Console.Units
         private void SetGraph(GraphMessage msg)
         {
             undo.Undo();
-            Graph = msg.Graph;
+            Graph = msg.Graph.Graph;
             Field = new(Graph);
             DisplayGraph();
         }

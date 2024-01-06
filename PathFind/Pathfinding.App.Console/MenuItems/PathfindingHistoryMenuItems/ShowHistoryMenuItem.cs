@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.DAL.Interface;
+using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -28,9 +29,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         private bool isHistoryApplied = true;
 
-        private int Id { get; set; }
-
-        private IGraph<Vertex> graph = Graph<Vertex>.Empty;
+        private GraphReadDto graph = GraphReadDto.Empty;
 
         public ShowHistoryMenuItem(IMessenger messenger,
             IInput<int> input,
@@ -43,13 +42,13 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public bool CanBeExecuted()
         {
-            var history = service.GetGraphPathfindingHistory(Id);
+            var history = service.GetGraphPathfindingHistory(graph.Id);
             return IsHistoryApplied() && history.Count > 0;
         }
 
         public void Execute()
         {
-            var grouped = service.GetGraphPathfindingHistory(Id)
+            var grouped = service.GetGraphPathfindingHistory(graph.Id)
                 .OrderBy(x => x.Statistics.Algorithm)
                 .Select(x => (Id: x.Id, Statistics: x.Statistics))
                 .GroupBy(x => x.Statistics.Algorithm);
@@ -89,12 +88,12 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         private Disposable RememberGraphState()
         {
-            var costs = graph.GetCosts();
+            var costs = graph.Graph.GetCosts();
             return Disposable.Use(() =>
             {
                 using (Cursor.HideCursor())
                 {
-                    graph.ApplyCosts(costs);
+                    graph.Graph.ApplyCosts(costs);
                     messenger.Send(new ClearColorsMessage());
                 }
             });
@@ -103,7 +102,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
         private void SetGraph(GraphMessage msg)
         {
             graph = msg.Graph;
-            Id = msg.Id;
         }
 
         private int GetAlgorithmId(string message, int count)

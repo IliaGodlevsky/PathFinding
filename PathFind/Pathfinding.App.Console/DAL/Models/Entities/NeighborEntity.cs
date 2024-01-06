@@ -13,13 +13,13 @@ namespace Pathfinding.App.Console.DAL.Models.Entities
         [Key]
         [BsonId]
         [Required]
-        [IndexField]
         public int Id { get; set; }
 
         [Required]
         public int NeighborId { get; set; }
 
         [Required]
+        [IndexField]
         public int VertexId { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
         private readonly IService storage;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
 
-        private int id;
+        private int Id { get; set; }
 
         public ClearPathfindingRangeMenuItem(IService storage,
             IPathfindingRangeBuilder<Vertex> rangeBuilder)
@@ -29,12 +29,12 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
 
         public bool CanBeExecuted()
         {
-            return rangeBuilder.Range.HasSourceAndTargetSet() && id != 0;
+            return rangeBuilder.Range.HasSourceAndTargetSet() && Id != 0;
         }
 
         public void Execute()
         {
-            storage.RemoveRange(id);
+            storage.RemoveRange(Id);
             rangeBuilder.Undo();
         }
 
@@ -50,7 +50,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
 
         private void SetGraph(GraphMessage msg)
         {
-            id = msg.Id;
+            Id = msg.Graph.Id;
         }
     }
 }

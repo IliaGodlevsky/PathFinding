@@ -15,13 +15,11 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
     {
         private static IReadOnlyDictionary<Type, string> CSharpToSQLiteTypeMap { get; }
 
-        private static bool IsTableCreated { get; set; }
-
-        protected static string TableName { get; }
-
-        protected static string InsertQuery { get; }
-
-        protected static string UpdateQuery { get; }
+        protected readonly static string TableName;
+        protected readonly static string InsertQuery;
+        protected readonly static string UpdateQuery;
+        protected readonly static string CreateTableScript;
+        protected readonly static string CreateIndexScript;
 
         protected readonly IDbConnection connection;
         protected readonly IDbTransaction transaction;
@@ -31,21 +29,12 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
         {
             this.connection = connection;
             this.transaction = transaction;
-            if (!IsTableCreated)
-            {
-                string createTable = GetCreateTableScript();
-                connection.Execute(createTable, transaction: this.transaction);
-                string createIndex = GetCreateIndexScript();
-                connection.Execute(createIndex, transaction: this.transaction);
-                IsTableCreated = true;
-            }
+            connection.Execute(CreateTableScript, transaction: this.transaction);
+            connection.Execute(CreateIndexScript, transaction: this.transaction);
         }
 
         static SqliteRepository()
         {
-            TableName = typeof(T).GetAttributeOrDefault<TableAttribute>().Name;
-            InsertQuery = GetInsertQuery();
-            UpdateQuery = GetUpdateQuery();
             CSharpToSQLiteTypeMap = new Dictionary<Type, string>
             {
                 { typeof(int), "INTEGER" },
@@ -65,6 +54,12 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
                 { typeof(DateTime), "TEXT" },
                 { typeof(byte[]), "BLOB" }
             }.AsReadOnly();
+
+            TableName = typeof(T).GetAttributeOrDefault<TableAttribute>().Name;
+            InsertQuery = GetInsertQuery();
+            UpdateQuery = GetUpdateQuery();
+            CreateTableScript = GetCreateTableScript();
+            CreateIndexScript = GetCreateIndexScript();
         }
 
         public T Insert(T entity)
@@ -75,27 +70,24 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 
         public IEnumerable<T> Insert(IEnumerable<T> entities)
         {
-            foreach (var entity in entities)
-            {
-                Insert(entity);
-            }
-            return entities;
+            return entities.ForEach(x => Insert(x));
         }
 
         public bool Update(T entity)
         {
-            connection.Query<T>(UpdateQuery, entity, transaction);
+            connection.Query(UpdateQuery, entity, transaction);
             return true;
         }
 
-        private static IEnumerable<string> GetPropertiesNames()
+        private static IReadOnlyCollection<string> GetPropertiesNames()
         {
             return typeof(T).GetProperties()
                 .Where(p => !Attribute.IsDefined(p, typeof(KeyAttribute)))
-                .Select(p => p.Name);
+                .Select(p => p.Name)
+                .ToReadOnly();
         }
 
-        protected string GetCreateTableScript()
+        private static string GetCreateTableScript()
         {
             var properties = typeof(T).GetProperties()
                 .Select(p =>
@@ -112,7 +104,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
             return query;
         }
 
-        protected string GetCreateIndexScript()
+        private static string GetCreateIndexScript()
         {
             var properties = typeof(T).GetProperties()
                 .Where(p => Attribute.IsDefined(p, typeof(IndexFieldAttribute)))
@@ -127,21 +119,21 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 
         private static string GetInsertQuery()
         {
-            var properties = GetPropertiesNames().ToArray();
+            var properties = GetPropertiesNames();
             string props = string.Join(", ", properties);
             var values = string.Join(", ", properties.Select(p => $"@{p}"));
             string query = $"INSERT INTO {TableName} ({props}) " +
-                $"VALUES ({values}); SELECT last_insert_rowid()";
+                $"VALUES ({values}); SELECT LAST_INSERT_ROWID()";
             return query;
         }
 
         private static string GetUpdateQuery()
         {
-            var properties = GetPropertiesNames().ToArray();
-            var props = properties.Select(p => $"{p} = @{p}").ToArray();
+            var properties = GetPropertiesNames();
+            var props = properties.Select(p => $"{p} = @{p}");
             var values = string.Join(", ", props);
             string query = $"UPDATE {TableName} SET " +
-                $"{values} WHERE {nameof(IEntity.Id)} = Id";
+                $"{values} WHERE {nameof(IEntity.Id)} = @{nameof(IEntity.Id)}";
             return query;
         }
     }

@@ -18,7 +18,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 
         public int AddMany(IEnumerable<AlgorithmEntity> entity)
         {
-            return collection.Insert(entity);
+            return collection.InsertBulk(entity);
         }
 
         public void AddOne(AlgorithmEntity entity)

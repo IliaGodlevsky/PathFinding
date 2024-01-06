@@ -1,17 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 
 namespace Pathfinding.App.Console.DAL.Models.TransferObjects
 {
     internal class GraphReadDto
     {
+        public static readonly GraphReadDto Empty = new()
+        {
+            Id = 0,
+            Graph = Graph<Vertex>.Empty
+        };
+
         public int Id { get; set; }
 
-        public int Width { get; set; }
-
-        public int Length { get; set; }
-
-        public IReadOnlyCollection<VertexReadDto> Vertices { get; set; }
-
-        public IReadOnlyDictionary<int, IReadOnlyCollection<VertexReadDto>> Neighborhood { get; set; }
+        public IGraph<Vertex> Graph { get; set; }
     }
 }

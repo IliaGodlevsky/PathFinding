@@ -15,7 +15,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
     internal sealed class SendGraphMenuItem : ExportGraphMenuItem<(string Host, int Port)>
     {
         public SendGraphMenuItem(IInput<(string Host, int Port)> input,
-            IInput<int> intInput, IService service,
+            IInput<int> intInput,
+            IService service,
             ISerializer<IEnumerable<PathfindingHistorySerializationDto>> graphSerializer,
             ILog log)
             : base(input, intInput, service, graphSerializer, log)
@@ -24,7 +25,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 
         public override string ToString() => Languages.SendGraph;
 
-        protected override async Task ExportAsync((string Host, int Port) path, params PathfindingHistorySerializationDto[] graph)
+        protected override async Task ExportAsync((string Host, int Port) path, IEnumerable<PathfindingHistorySerializationDto> graph)
         {
             await graphSerializer.SerializeToNetworkAsync(graph, path);
         }

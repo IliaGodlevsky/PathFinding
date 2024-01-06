@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.DAL.Interface;
+using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -29,9 +30,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
         private readonly IService service;
         private readonly ILog log;
 
-        private int Id { get; set; }
-
-        private IGraph<Vertex> graph = Graph<Vertex>.Empty;
+        private GraphReadDto graph = GraphReadDto.Empty;
 
         public LoadPathfindingRangeMenuItem(ISerializer<IEnumerable<ICoordinate>> serializer,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
@@ -48,7 +47,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 
         public bool CanBeExecuted()
         {
-            return graph != Graph<Vertex>.Empty;
+            return graph != GraphReadDto.Empty;
         }
 
         public void Execute()
@@ -58,11 +57,11 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 string path = pathInput.Input();
                 var range = serializer.DeserializeFromFile(path).ToList();
                 var vertices = range
-                    .Select((x, i) => (Order: i, Id: graph.Get(x)))
+                    .Select((x, i) => (Order: i, Id: graph.Graph.Get(x)))
                     .ToArray();
-                service.AddRange(vertices, Id);
+                service.AddRange(vertices, graph.Id);
                 rangeBuilder.Undo();
-                rangeBuilder.Include(range, graph);
+                rangeBuilder.Include(range, graph.Graph);
             }
             catch (Exception ex)
             {
@@ -78,7 +77,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
         private void SetGraph(GraphMessage msg)
         {
             graph = msg.Graph;
-            Id = msg.Id;
         }
 
         public override string ToString()

@@ -55,6 +55,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -68,12 +69,13 @@
     <Compile Include="DAL\Models\TransferObjects\AlgorithmCreateDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\AlgorithmReadDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\AlgorithmSerializationDto.cs" />
+    <Compile Include="DAL\Models\TransferObjects\GraphAssembleDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\GraphReadDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\GraphSerializationDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\PathfindingHistoryCreateDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\PathfindingHistoryReadDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\PathfindingHistorySerializationDto.cs" />
-    <Compile Include="DAL\Models\TransferObjects\VertexReadDto.cs" />
+    <Compile Include="DAL\Models\TransferObjects\VertexAssembleDto.cs" />
     <Compile Include="DAL\Models\Entities\NeighborEntity.cs" />
     <Compile Include="DAL\Models\Entities\AlgorithmEntity.cs" />
     <Compile Include="DAL\Models\Entities\GraphEntity.cs" />
@@ -107,9 +109,10 @@
     <Compile Include="DAL\Services\Service.cs" />
     <Compile Include="DAL\Interface\IUnitOfWorkFactory.cs" />
     <Compile Include="DAL\Interface\IUnitOfWork.cs" />
+    <Compile Include="DAL\UOF\Factories\InMemoryUnitOfWorkFactory.cs" />
+    <Compile Include="DAL\UOF\Factories\SqliteUnitOfWorkFactory.cs" />
     <Compile Include="DAL\UOF\LiteDbUnitOfWork.cs" />
     <Compile Include="DAL\UOF\SqliteUnitOfWork.cs" />
-    <Compile Include="DependencyInjection\ConfigurationMiddlewears\UnitOfWorkResolveMiddleware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\KeyResolveMiddlware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\CombinedAlgorithmsResolveMiddleware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\AllVisualizedVerticesMiddleware.cs" />
@@ -345,7 +348,6 @@
     <Compile Include="Model\VertexActions\ReplaceTransitVertexAction.cs" />
     <Compile Include="Model\VertexActions\ReverseVertexAction.cs" />
     <Compile Include="Model\VertexFactory.cs" />
-    <Compile Include="Model\VertexFromInfoFactory.cs" />
     <Compile Include="Model\Visualizations\VisualizationContainer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -565,8 +567,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DAL\Extensions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

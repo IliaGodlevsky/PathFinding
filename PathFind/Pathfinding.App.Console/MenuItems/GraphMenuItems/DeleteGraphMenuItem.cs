@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
+using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -22,8 +23,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private readonly IMessenger messenger;
         private readonly IInput<int> input;
 
-        private int id;
-        private IGraph<Vertex> graph = Graph<Vertex>.Empty;
+        private GraphReadDto graph = GraphReadDto.Empty;
 
         public DeleteGraphMenuItem(IInput<int> input,
             IService service,
@@ -37,13 +37,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         public bool CanBeExecuted()
         {
             return service.GetAllGraphInfo()
-                .Where(x => x.Id != id).Any();
+                .Where(x => x.Id != graph.Id).Any();
         }
 
         public void Execute()
         {
             var graphs = service.GetAllGraphInfo()
-                .Where(x => x.Id != id).ToList();
+                .Where(x => x.Id != graph.Id).ToList();
             string menuList = GetMenuList(graphs);
             int index = GetIndex(menuList, graphs.Count);
             while (index != graphs.Count)
@@ -64,10 +64,11 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         private string GetMenuList(IReadOnlyCollection<GraphEntity> graphs)
         {
-            return graphs.Select(s => s.ConvertToString())
+            string menu = graphs.Select(s => s.ConvertToString())
                 .Append(Languages.Quit)
                 .CreateMenuList(1)
                 .ToString();
+            return string.Concat(menu, "\n", Languages.MenuOptionChoiceMsg);
         }
 
         public override string ToString()
@@ -91,7 +92,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private void SetGraph(GraphMessage msg)
         {
             graph = msg.Graph;
-            id = msg.Id;
         }
     }
 }

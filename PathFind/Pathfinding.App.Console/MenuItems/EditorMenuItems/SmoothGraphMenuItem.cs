@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.DAL.Interface;
+using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -29,10 +30,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private readonly Dictionary<ConsoleKey, Action> actions;
         private readonly IService service;
 
-        private Stack<IReadOnlyList<int>> SmoothHistory => smoothes.TryGetOrAddNew(id);
+        private Stack<IReadOnlyList<int>> SmoothHistory 
+            => smoothes.TryGetOrAddNew(GraphDto.Id);
 
-        private int id;
-        private IGraph<Vertex> graph = Graph<Vertex>.Empty;
+        private GraphReadDto GraphDto = GraphReadDto.Empty;
 
         public SmoothGraphMenuItem(IMeanCost meanAlgorithm,
             IInput<ConsoleKey> input,
@@ -49,7 +50,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             };
         }
 
-        public bool CanBeExecuted() => graph != Graph<Vertex>.Empty;
+        public bool CanBeExecuted() => GraphDto != GraphReadDto.Empty;
 
         public void Execute()
         {
@@ -63,13 +64,14 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 }
                 if (SmoothHistory.Count > 0)
                 {
-                    service.UpdateVertices(graph, id);
+                    service.UpdateVertices(GraphDto.Graph, GraphDto.Id);
                 }
             }
         }
 
         private void Smooth()
         {
+            var graph = GraphDto.Graph;
             SmoothHistory.Push(graph.GetCosts());
             graph.Smooth(meanAlgorithm);
             graph.ForEach(v => v.Display());
@@ -77,6 +79,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         private void Undo()
         {
+            var graph = GraphDto.Graph;
             if (SmoothHistory.Count > 0)
             {
                 graph.Reverse().ApplyCosts(SmoothHistory.Pop().Reverse());
@@ -86,6 +89,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         private void Cancel()
         {
+            var graph = GraphDto.Graph;
             if (SmoothHistory.Count > 0)
             {
                 var initPrices = SmoothHistory.Last().Reverse();
@@ -97,8 +101,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         private void OnGraphCreated(GraphMessage msg)
         {
-            graph = msg.Graph;
-            id = msg.Id;
+            GraphDto = msg.Graph;
         }
 
         public override string ToString()

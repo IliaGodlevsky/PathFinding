@@ -3,7 +3,6 @@ using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Repositories.SqliteRepositories;
 using Pathfinding.App.Console.Settings;
 using System;
-using System.Data;
 using System.IO;
 
 namespace Pathfinding.App.Console.DAL.UOF
@@ -11,7 +10,7 @@ namespace Pathfinding.App.Console.DAL.UOF
     internal sealed class SqliteUnitOfWork : IUnitOfWork
     {
         private readonly SqliteConnection connection;
-        private IDbTransaction transaction;
+        private SqliteTransaction transaction;
 
         public IGraphParametresRepository GraphRepository
             => new SqliteGraphRepository(connection, transaction);
@@ -30,7 +29,7 @@ namespace Pathfinding.App.Console.DAL.UOF
 
         public SqliteUnitOfWork()
         {
-            connection = new SqliteConnection(GetConnectionString());
+            connection = new(GetConnectionString());
             connection.Open();
             transaction = connection.BeginTransaction();
         }

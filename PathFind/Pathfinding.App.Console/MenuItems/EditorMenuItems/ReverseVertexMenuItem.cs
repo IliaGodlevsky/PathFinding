@@ -20,10 +20,10 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
         public override void Execute()
         {
             base.Execute();
-            service.UpdateVertices(processed, id);
+            service.UpdateVertices(processed, graph.Id);
             processed.Clear();
-            int obstacles = graph.GetObstaclesCount();
-            service.UpdateObstaclesCount(obstacles, id);
+            int obstacles = graph.Graph.GetObstaclesCount();
+            service.UpdateObstaclesCount(obstacles, graph.Id);
         }
 
         protected override VertexActions GetActions()

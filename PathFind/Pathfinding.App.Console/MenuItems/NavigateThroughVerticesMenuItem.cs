@@ -1,13 +1,13 @@
 ﻿global using VertexActions = System.Collections.Generic.IReadOnlyCollection<(string ResourceName, Pathfinding.App.Console.Interface.IVertexAction Action)>;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.DAL.Interface;
+using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Settings;
-using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations;
 using Shared.Primitives.Extensions;
@@ -26,8 +26,7 @@ namespace Pathfinding.App.Console.MenuItems
 
         protected readonly HashSet<Vertex> processed = new();
 
-        protected int id;
-        protected IGraph<Vertex> graph = Graph<Vertex>.Empty;
+        protected GraphReadDto graph = GraphReadDto.Empty;
         protected InclusiveValueRange<int> xRange = default;
         protected InclusiveValueRange<int> yRange = default;
 
@@ -46,7 +45,7 @@ namespace Pathfinding.App.Console.MenuItems
 
         public virtual bool CanBeExecuted()
         {
-            return graph != Graph<Vertex>.Empty;
+            return graph != GraphReadDto.Empty;
         }
 
         public virtual void Execute()
@@ -62,7 +61,7 @@ namespace Pathfinding.App.Console.MenuItems
                     do
                     {
                         var coordinate = new Coordinate(x, y);
-                        var vertex = graph.Get(coordinate);
+                        var vertex = graph.Graph.Get(coordinate);
                         Cursor.SetPosition(vertex.ConsolePosition.Value);
                         key = keyInput.Input();
                         if (key == Keys.VertexUp)
@@ -108,9 +107,8 @@ namespace Pathfinding.App.Console.MenuItems
         private void SetGraph(GraphMessage msg)
         {
             graph = msg.Graph;
-            xRange = new(graph.GetWidth() - 1);
-            yRange = new(graph.GetLength() - 1);
-            id = msg.Id;
+            xRange = new(graph.Graph.GetWidth() - 1);
+            yRange = new(graph.Graph.GetLength() - 1);
         }
 
         public virtual void RegisterHanlders(IMessenger messenger)

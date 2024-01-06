@@ -45,7 +45,7 @@ namespace Pathfinding.App.Console
 
         private void SetGraph(GraphMessage msg)
         {
-            Graph = msg.Graph;
+            Graph = msg.Graph.Graph;
             int pathFindingStatisticsOffset = Graph.GetLength()
                 + HeightOfAbscissaView + 2 + HeightOfGraphParametresView;
             StatisticsPosition = new(0, pathFindingStatisticsOffset);

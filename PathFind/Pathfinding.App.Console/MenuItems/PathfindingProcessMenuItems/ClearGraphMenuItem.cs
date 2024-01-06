@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -18,7 +19,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     {
         private readonly IMessenger messenger;
         private readonly IUndo undo;
-        private IGraph<Vertex> graph = Graph<Vertex>.Empty;
+        private GraphReadDto graph = GraphReadDto.Empty;
 
         public ClearGraphMenuItem(IMessenger messenger, IUndo undo)
         {
@@ -26,11 +27,11 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
             this.undo = undo;
         }
 
-        public bool CanBeExecuted() => graph != Graph<Vertex>.Empty;
+        public bool CanBeExecuted() => graph != GraphReadDto.Empty;
 
         public void Execute()
         {
-            graph.RestoreVerticesVisualState();
+            graph.Graph.RestoreVerticesVisualState();
             undo.Undo();
             var msg = new StatisticsLineMessage(string.Empty);
             messenger.Send(msg, Tokens.AppLayout);

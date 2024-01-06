@@ -20,7 +20,7 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
         public override void Execute()
         {
             base.Execute();
-            service.UpdateVertices(processed, id);
+            service.UpdateVertices(processed, graph.Id);
             processed.Clear();
         }
 

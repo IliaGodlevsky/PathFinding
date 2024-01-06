@@ -30,14 +30,14 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
 
         public override bool CanBeExecuted()
         {
-            return graph.GetNumberOfNotIsolatedVertices() > 1;
+            return graph.Graph.GetNumberOfNotIsolatedVertices() > 1;
         }
 
         public override void Execute()
         {
             base.Execute();
 
-            var currentRange = service.GetRange(id)
+            var currentRange = service.GetRange(graph.Id)
                 .Select((x, i) => (Order: i, Coordinate: x))
                 .ToDictionary(x => x.Coordinate, x => x.Order);
             var newRange = builder.Range.GetCoordinates()
@@ -46,38 +46,28 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
 
             var added = new List<(int Order, Vertex Vertex)>();
             var updated = new List<(int Order, Vertex Vertex)>();
-            var deleted = new List<Vertex>();
 
             foreach (var item in newRange)
             {
+                var vertex = graph.Graph.Get(item.Key);
+                var value = (item.Value, vertex);
                 if (!currentRange.TryGetValue(item.Key, out var order))
                 {
-                    var vertex = graph.Get(item.Key);
-                    added.Add((order, vertex));
+                    added.Add(value);
                 }
-
-                if (currentRange.TryGetValue(item.Key, out order))
+                else if (item.Value != order)
                 {
-                    if (item.Value != order)
-                    {
-                        var vertex = graph.Get(item.Key);
-                        updated.Add((item.Value, vertex));
-                    }
+                    updated.Add(value);
                 }
             }
 
-            foreach (var item in currentRange)
-            {
-                if (!newRange.TryGetValue(item.Key, out var order))
-                {
-                    var vertex = graph.Get(item.Key);
-                    deleted.Add(vertex);
-                }
-            }
+            var deleted = currentRange.Where(x => !newRange.ContainsKey(x.Key))
+                .Select(x => graph.Graph.Get(x.Key))
+                .ToReadOnly();
 
-            service.AddRange(added.ToArray(), id);
-            service.UpdateRange(updated.ToArray(), id);
-            service.RemoveRange(deleted, id);
+            service.AddRange(added.ToArray(), graph.Id);
+            service.UpdateRange(updated.ToArray(), graph.Id);
+            service.RemoveRange(deleted, graph.Id);
         }
 
         public override string ToString()

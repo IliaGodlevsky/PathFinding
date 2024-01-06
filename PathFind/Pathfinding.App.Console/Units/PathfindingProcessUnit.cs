@@ -2,6 +2,7 @@
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Exceptions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
+using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messaging;
@@ -13,6 +14,7 @@ using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Extensions;
+using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +28,7 @@ namespace Pathfinding.App.Console.Units
         private readonly IInput<ConsoleKey> input;
         private readonly ILog log;
 
-        private IGraph<Vertex> graph = Graph<Vertex>.Empty;
+        private GraphReadDto graph = GraphReadDto.Empty;
 
         public PathfindingProcessUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
@@ -44,7 +46,7 @@ namespace Pathfinding.App.Console.Units
         {
             using (Cursor.HideCursor())
             {
-                var range = rangeBuilder.Range.ToArray();
+                var range = rangeBuilder.Range.ToReadOnly();
                 var algorithm = msg.Factory.Create(range);
                 try
                 {
@@ -65,7 +67,7 @@ namespace Pathfinding.App.Console.Units
 
         private void ClearColors(PathfindingProcessUnit unit, ClearColorsMessage m)
         {
-            graph.RestoreVerticesVisualState();
+            graph.Graph.RestoreVerticesVisualState();
             rangeBuilder.Range.RestoreVerticesVisualState();
             var msg = new StatisticsLineMessage(string.Empty);
             messenger.Send(msg, Tokens.AppLayout);
@@ -77,7 +79,7 @@ namespace Pathfinding.App.Console.Units
             try
             {
                 path = algorithm.FindPath();
-                path.Select(graph.Get).VisualizeAsPath();
+                path.Select(graph.Graph.Get).VisualizeAsPath();
             }
             finally
             {

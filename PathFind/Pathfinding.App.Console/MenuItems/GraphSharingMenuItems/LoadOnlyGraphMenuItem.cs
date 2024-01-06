@@ -46,7 +46,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             {
                 var path = input.Input();
                 var dto = serializer.DeserializeFromFile(path);
-                // TODO: Save neighbourhood with graph
                 int id = service.AddGraph(dto);
                 var count = service.GetGraphIds().Count;
                 if (count == 1)

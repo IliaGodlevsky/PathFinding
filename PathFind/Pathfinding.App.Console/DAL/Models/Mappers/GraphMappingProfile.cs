@@ -24,7 +24,7 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
                 .ForMember(x => x.Width, opt => opt.MapFrom(x => x.GetWidth()))
                 .ForMember(x => x.Length, opt => opt.MapFrom(x => x.GetLength()))
                 .ForMember(x => x.ObstaclesCount, opt => opt.MapFrom(x => x.GetObstaclesCount()));
-            CreateMap<GraphReadDto, IGraph<Vertex>>().ConstructUsing((x, context) =>
+            CreateMap<GraphAssembleDto, IGraph<Vertex>>().ConstructUsing((x, context) =>
             {
                 var vertices = context.Mapper.Map<Vertex[]>(x.Vertices);
                 var paramemters = new[] { x.Width, x.Length };

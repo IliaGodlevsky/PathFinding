@@ -2,6 +2,7 @@
 using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
 using Pathfinding.App.Console.DAL.Models.TransferObjects;
+using Pathfinding.App.Console.DAL.UOF.Factories;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
@@ -23,11 +24,6 @@ namespace Pathfinding.App.Console.DAL.Services
             this.factory = factory ?? new InMemoryUnitOfWorkFactory();
         }
 
-        public Service(Service service)
-            : this(service.mapper, service.factory)
-        {
-        }
-
         public int AddAlgorithm(AlgorithmCreateDto algorithm)
         {
             return Transaction(unitOfWork =>
@@ -47,13 +43,12 @@ namespace Pathfinding.App.Console.DAL.Services
         {
             return Transaction(unitOfWork =>
             {
-                var graph = history.Graph;
-                int id = unitOfWork.AddGraph(mapper, graph);
+                int id = unitOfWork.AddGraph(mapper, history.Graph);
                 var algorithms = mapper.Map<AlgorithmEntity[]>(history.Algorithms);
                 algorithms.ForEach(a => a.GraphId = id);
                 unitOfWork.AlgorithmsRepository.AddMany(algorithms);
                 var entities = history.Range
-                    .Select(graph.Get)
+                    .Select(history.Graph.Get)
                     .Select((x, i) => new RangeEntity
                     {
                         VertexId = x.Id,

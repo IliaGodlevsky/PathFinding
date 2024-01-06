@@ -31,13 +31,12 @@ namespace Pathfinding.App.Console.Extensions
             var neighbors = unitOfWork.NeighborsRepository
                 .GetNeighboursForVertices(ids)
                 .ToDictionary(x => x.Key, x => x.Value.Select(i => vertexEntities[i.NeighborId]));
-            var readDto = new GraphReadDto()
+            var readDto = new GraphAssembleDto()
             {
-                Id = graphEntity.Id,
                 Width = graphEntity.Width,
                 Length = graphEntity.Length,
-                Vertices = mapper.Map<VertexReadDto[]>(vertexEntities.Values).ToReadOnly(),
-                Neighborhood = neighbors.ToDictionary(x => x.Key, x => mapper.Map<VertexReadDto[]>(x.Value).ToReadOnly())
+                Vertices = mapper.Map<VertexAssembleDto[]>(vertexEntities.Values).ToReadOnly(),
+                Neighborhood = neighbors.ToDictionary(x => x.Key, x => mapper.Map<VertexAssembleDto[]>(x.Value).ToReadOnly())
             };
             return mapper.Map<IGraph<Vertex>>(readDto);
         }

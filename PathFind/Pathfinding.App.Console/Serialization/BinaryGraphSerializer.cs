@@ -21,16 +21,12 @@ namespace Pathfinding.App.Console.Serialization
                     var vertices = new VertexSerializationDto[count];
                     for (int vertex = 0; vertex < count; vertex++)
                     {
-                        var coordinate = reader.ReadCoordinate();
-                        var cost = reader.ReadCost();
-                        var isObstacle = reader.ReadBoolean();
-                        var neighbors = reader.ReadCoordinates();
                         vertices[vertex] = new()
                         {
-                            Position = coordinate,
-                            Cost = cost,
-                            IsObstacle = isObstacle,
-                            Neighbors = Array.AsReadOnly(neighbors)
+                            Position = reader.ReadCoordinate(),
+                            Cost = reader.ReadCost(),
+                            IsObstacle = reader.ReadBoolean(),
+                            Neighbors = reader.ReadCoordinates()
                         };
                     }
                     return new() { DimensionSizes = dimensions, Vertices = vertices };

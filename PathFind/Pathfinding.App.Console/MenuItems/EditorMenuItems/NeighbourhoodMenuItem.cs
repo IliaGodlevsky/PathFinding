@@ -30,18 +30,19 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
             {
                 return vertex.Neighbours.GetCoordinates().ToHashSet();
             }
-            var neighbors = graph.ToDictionary(x => x.Position, GetNeighbors);
+            var neighbors = graph.Graph.ToDictionary(x => x.Position, GetNeighbors);
             base.Execute();
             var addedNeighbors = new Dictionary<int, int[]>();
             var removedNeighbors = new Dictionary<int, int[]>();
             foreach (var vertex in processed)
             {
-                var areNeighbours = vertex.Neighbours.GetCoordinates().ToHashSet();
+                var areNeighbours = vertex.Neighbours
+                    .GetCoordinates().ToHashSet();
                 var wereNeighbours = neighbors[vertex.Position];
                 var added = areNeighbours.Except(wereNeighbours)
-                    .Select(x => graph.Get(x).Id);
+                    .Select(x => graph.Graph.Get(x).Id);
                 var removed = wereNeighbours.Except(areNeighbours)
-                    .Select(x => graph.Get(x).Id);
+                    .Select(x => graph.Graph.Get(x).Id);
                 addedNeighbors.Add(vertex.Id, added.ToArray());
                 removedNeighbors.Add(vertex.Id, removed.ToArray());
             }
