@@ -1,7 +1,6 @@
 ﻿using LiteDB;
 using Pathfinding.App.Console.DAL.Attributes;
 using Pathfinding.App.Console.DAL.Interface;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pathfinding.App.Console.DAL.Models.Entities
@@ -10,33 +9,35 @@ namespace Pathfinding.App.Console.DAL.Models.Entities
     [BsonTable(DbTables.Vertices)]
     internal class VertexEntity : IEntity
     {
-        [Key]
         [BsonId]
-        [Required]
+        [NotNull]
+        [Identity]
         [IndexField]
+        [Autoincrement]
         public int Id { get; set; }
 
-        [Required]
+        [NotNull]
         [IndexField]
-        [ForeignKey(nameof(GraphEntity))]
+        [OnDeleteCascade]
+        [Reference(DbTables.Graphs, nameof(GraphEntity.Id))]
         public int GraphId { get; set; }
 
-        [Required]
+        [NotNull]
         public int X { get; set; }
 
-        [Required]
+        [NotNull]
         public int Y { get; set; }
 
-        [Required]
+        [NotNull]
         public int Cost { get; set; }
 
-        [Required]
+        [NotNull]
         public int UpperValueRange { get; set; }
 
-        [Required]
+        [NotNull]
         public int LowerValueRange { get; set; }
 
-        [Required]
+        [NotNull]
         public bool IsObstacle { get; set; }
     }
 }

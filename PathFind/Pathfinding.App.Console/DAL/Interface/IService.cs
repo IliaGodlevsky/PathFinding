@@ -22,9 +22,9 @@ namespace Pathfinding.App.Console.DAL.Interface
 
         bool UpdateObstaclesCount(int newCount, int graphId);
 
-        PathfindingHistoryReadDto AddPathfindingHistory(PathfindingHistoryCreateDto history);
+        IReadOnlyCollection<PathfindingHistoryReadDto> AddPathfindingHistory(IEnumerable<PathfindingHistoryCreateDto> histories);
 
-        PathfindingHistoryReadDto AddPathfindingHistory(PathfindingHistorySerializationDto history);
+        IReadOnlyCollection<PathfindingHistoryReadDto> AddPathfindingHistory(IEnumerable<PathfindingHistorySerializationDto> histories);
 
         PathfindingHistorySerializationDto GetSerializationHistory(int graphId);
 
@@ -50,6 +50,6 @@ namespace Pathfinding.App.Console.DAL.Interface
 
         bool RemoveRange(int graphId);
 
-        bool DeleteGraph(int graphId);
+        bool DeleteGraph(int graphId); // should be cascade
     }
 }

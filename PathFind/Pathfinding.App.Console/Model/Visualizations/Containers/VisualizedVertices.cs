@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.Model.Visualizations.Containers
 {
-    internal abstract class VisualizedVertices : IVisualizedVertices, IDisposable
+    internal class VisualizedVertices : IVisualizedVertices, IDisposable
     {
         private readonly Dictionary<int, HashSet<Vertex>> vertices = new();
 
@@ -16,7 +16,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.Containers
             return vertices.GetOrEmpty(id).Contains(vertex);
         }
 
-        protected VisualizedVertices()
+        public VisualizedVertices()
         {
             Containers = new HashSet<IVisualizedVertices>();
         }
@@ -41,7 +41,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.Containers
 
         public IReadOnlyCollection<Vertex> GetVertices(int id)
         {
-            return vertices.GetOrEmpty(id);
+            return vertices.GetOrEmpty(id).ToReadOnly();
         }
 
         public void Clear(int id)

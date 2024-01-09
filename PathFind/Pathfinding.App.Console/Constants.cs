@@ -7,6 +7,8 @@ namespace Pathfinding.App.Console
 {
     internal static class Constants
     {
+        public const string Title = "Pathfinding";
+
         private static readonly Parametres Settings = Parametres.Default;
 
         public const string ObstacleColorKey = nameof(Languages.ObstacleColor);

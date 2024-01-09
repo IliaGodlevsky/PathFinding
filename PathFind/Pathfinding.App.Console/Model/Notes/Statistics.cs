@@ -100,12 +100,11 @@ namespace Pathfinding.App.Console.Model.Notes
         {
             var values = new object?[] { Time, Visited, Steps,
                 Cost, Rule, Heuristic, Spread, Status };
-            var builder = new StringBuilder($"{Name}  ");
-            names.Zip(values, (n, v) => (Name: n, Value: v))
+            return names.Zip(values, (n, v) => (Name: n, Value: v))
                 .Where(x => x.Value is not null and not "")
-                .Select(x => $"{x.Name}: {x.Value}  ")
-                .ForEach(x => builder.Append(x));
-            return builder.ToString();
+                .Select(x => $"{x.Name}: {x.Value}")
+                .Prepend(Name)
+                .To(lines => string.Join(" ", lines));
         }
 
         private static string? GetString(string? key)

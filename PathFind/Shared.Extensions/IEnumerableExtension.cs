@@ -84,5 +84,10 @@ namespace Shared.Extensions
                 yield return defaultValue;
             }
         }
+
+        public static T To<T>(this IEnumerable<T> items, Func<IEnumerable<T>, T> selector)
+        {
+            return selector(items);
+        }
     }
 }

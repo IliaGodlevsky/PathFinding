@@ -46,19 +46,19 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             {
                 var path = InputPath();
                 var imported = ImportGraph(path);
-                imported.ForEach(x => service.AddPathfindingHistory(x));
-                var ids = service.GetGraphIds().ToList();
+                var dtos = service.AddPathfindingHistory(imported);
+                var ids = service.GetAllGraphInfo().Select(x => x.Id).ToReadOnly();
                 if (ids.Count == imported.Count && ids.Count > 0)
                 {
-                    int id = ids[0];
-                    var graph = service.GetGraph(id);
+                    int id = ids.First();
+                    var graph = dtos.First().Graph;
                     var costRange = graph.First().Cost.CostRange;
                     var costMsg = new CostRangeChangedMessage(costRange);
                     messenger.Send(costMsg, Tokens.AppLayout);
                     var graphMsg = new GraphMessage(graph, id);
                     messenger.SendMany(graphMsg, Tokens.Visual,
                         Tokens.AppLayout, Tokens.Main, Tokens.Common);
-                    var range = service.GetRange(id);
+                    var range = dtos.First().Range;
                     rangeBuilder.Undo();
                     rangeBuilder.Include(range, graph);
                 }

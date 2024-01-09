@@ -18,14 +18,12 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 
         public NeighborEntity AddNeighbour(NeighborEntity neighbour)
         {
-            Insert(neighbour);
-            return neighbour;
+            return Insert(neighbour);
         }
 
         public IEnumerable<NeighborEntity> AddNeighbours(IEnumerable<NeighborEntity> neighbours)
         {
-            Insert(neighbours);
-            return neighbours;
+            return Insert(neighbours);
         }
 
         public bool DeleteByGraphId(int graphId)

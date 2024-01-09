@@ -4,18 +4,25 @@ using Pathfinding.App.Console.DAL.Interface;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 
 namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 {
     internal abstract class SqliteRepository<T> where T : class, IEntity
     {
+        private const string Id = nameof(IEntity.Id);
+
+        private static readonly Type Type = typeof(T);
+
         private static IReadOnlyDictionary<Type, string> CSharpToSQLiteTypeMap { get; }
 
         protected readonly static string TableName;
+        protected readonly static string DeleteQuery;
+        protected readonly static string SelectAllQuery;
+        protected readonly static string SelectQuery;
         protected readonly static string InsertQuery;
         protected readonly static string UpdateQuery;
         protected readonly static string CreateTableScript;
@@ -55,11 +62,14 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
                 { typeof(byte[]), "BLOB" }
             }.AsReadOnly();
 
-            TableName = typeof(T).GetAttributeOrDefault<TableAttribute>().Name;
+            TableName = Type.GetAttributeOrDefault<TableAttribute>().Name;
             InsertQuery = GetInsertQuery();
             UpdateQuery = GetUpdateQuery();
             CreateTableScript = GetCreateTableScript();
             CreateIndexScript = GetCreateIndexScript();
+            SelectAllQuery = $"SELECT * FROM {TableName}";
+            SelectQuery = $"SELECT * FROM {TableName} WHERE {Id} = @{Id}";
+            DeleteQuery = $"DELETE FROM {TableName} WHERE {Id} = @{Id}";
         }
 
         public T Insert(T entity)
@@ -68,53 +78,60 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
             return entity;
         }
 
-        public IEnumerable<T> Insert(IEnumerable<T> entities)
-        {
-            return entities.ForEach(x => Insert(x));
-        }
-
         public bool Update(T entity)
         {
             connection.Query(UpdateQuery, entity, transaction);
             return true;
         }
 
+        public bool Delete(int id)
+        {
+            connection.Query(DeleteQuery, new { Id = id }, transaction);
+            return true;
+        }
+
+        public T Read(int id)
+        {
+            return connection.QuerySingle<T>(SelectQuery, new { Id = id }, transaction);
+        }
+
+        public IEnumerable<T> Insert(IEnumerable<T> entities)
+        {
+            return entities.ForEach(x => Insert(x));
+        }
+
+        public IEnumerable<T> GetAll()
+        {
+            return connection.Query<T>(SelectAllQuery, transaction: transaction);
+        }
+
         private static IReadOnlyCollection<string> GetPropertiesNames()
         {
-            return typeof(T).GetProperties()
-                .Where(p => !Attribute.IsDefined(p, typeof(KeyAttribute)))
+            return Type.GetProperties()
+                .Where(p => !Attribute.IsDefined(p, typeof(IdentityAttribute)))
                 .Select(p => p.Name)
                 .ToReadOnly();
         }
 
         private static string GetCreateTableScript()
         {
-            var properties = typeof(T).GetProperties()
-                .Select(p =>
-                {
-                    var keyAttribute = p.GetAttributeOrDefault<KeyAttribute>();
-                    var requiredAttribute = p.GetAttributeOrDefault<RequiredAttribute>();
-                    var propertyName = p.Name + " " + CSharpToSQLiteTypeMap[p.PropertyType];
-                    propertyName += requiredAttribute is not null ? " NOT NULL" : string.Empty;
-                    propertyName += keyAttribute is not null ? " PRIMARY KEY AUTOINCREMENT" : string.Empty;
-                    return propertyName;
-                });
-            string query = $"CREATE TABLE IF NOT EXISTS {TableName}" +
-                $" ({string.Join(", ", properties)});";
-            return query;
+            return Type.GetProperties().Select(p =>
+            {
+                return p.GetCustomAttributes<SqliteBuildAttribute>()
+                    .OrderBy(p => p.Order)
+                    .Select(x => x.Line)
+                    .Prepend(CSharpToSQLiteTypeMap[p.PropertyType])
+                    .Prepend(p.Name)
+                    .To(lines => string.Join(" ", lines));
+            }).To(props => $"CREATE TABLE IF NOT EXISTS {TableName} \n({string.Join(",\n", props)});");
         }
 
         private static string GetCreateIndexScript()
         {
-            var properties = typeof(T).GetProperties()
+            return Type.GetProperties()
                 .Where(p => Attribute.IsDefined(p, typeof(IndexFieldAttribute)))
-                .Select(p => p.Name)
-                .ToArray();
-            var indexName = $"idx_{string.Concat(properties)}";
-            var fields = string.Join(",", properties);
-            string query = $"CREATE INDEX IF NOT EXISTS " +
-                $"{indexName} ON {TableName}({fields});";
-            return query;
+                .Select(x => $"CREATE INDEX IF NOT EXISTS idx_{TableName}_{x.Name} ON {TableName}({x.Name})")
+                .To(lines => string.Join(";\n", lines));
         }
 
         private static string GetInsertQuery()
@@ -130,11 +147,9 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
         private static string GetUpdateQuery()
         {
             var properties = GetPropertiesNames();
-            var props = properties.Select(p => $"{p} = @{p}");
+            var props = properties.Select(p => $"{p} = @{p}").ToReadOnly();
             var values = string.Join(", ", props);
-            string query = $"UPDATE {TableName} SET " +
-                $"{values} WHERE {nameof(IEntity.Id)} = @{nameof(IEntity.Id)}";
-            return query;
+            return $"UPDATE {TableName} SET {values} WHERE {Id} = @{Id}";
         }
     }
 }

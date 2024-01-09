@@ -16,27 +16,17 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 
         public GraphEntity AddGraph(GraphEntity graph)
         {
-            Insert(graph);
-            return graph;
+            return Insert(graph);
         }
 
         public bool DeleteGraph(int graphId)
         {
-            string query = $"DELETE FROM {TableName} WHERE {nameof(GraphEntity.Id)} = @Id";
-            connection.Query(query, new { Id = graphId }, transaction);
-            return true;
-        }
-
-        public IEnumerable<GraphEntity> GetAll()
-        {
-            string query = $"SELECT * FROM {TableName}";
-            return connection.Query<GraphEntity>(query, transaction: transaction);
+            return Delete(graphId);
         }
 
         public GraphEntity GetGraph(int graphId)
         {
-            string query = $"SELECT * FROM {TableName} WHERE {nameof(GraphEntity.Id)} = @Id";
-            return connection.QuerySingle<GraphEntity>(query, new { Id = graphId }, transaction: transaction);
+            return Read(graphId);
         }
     }
 }

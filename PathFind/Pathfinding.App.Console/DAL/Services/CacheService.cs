@@ -50,16 +50,19 @@ namespace Pathfinding.App.Console.DAL.Services
             return id;
         }
 
-        public PathfindingHistoryReadDto AddPathfindingHistory(PathfindingHistoryCreateDto history)
+        public IReadOnlyCollection<PathfindingHistoryReadDto> AddPathfindingHistory(IEnumerable<PathfindingHistoryCreateDto> histories)
         {
-            var dto = service.AddPathfindingHistory(history);
-            graphs[dto.Id] = dto.Graph;
-            var entity = mapper.Map<GraphEntity>(dto.Graph);
-            entity.Id = dto.Id;
-            graphEntities.Add(dto.Id, entity);
-            algorithms.TryGetOrAddNew(dto.Id).AddRange(dto.Algorithms);
-            range.TryGetOrAddNew(dto.Id).AddRange(history.Range);
-            return dto;
+            var dtos = service.AddPathfindingHistory(histories);
+            foreach (var dto in dtos)
+            {
+                graphs[dto.Id] = dto.Graph;
+                var entity = mapper.Map<GraphEntity>(dto.Graph);
+                entity.Id = dto.Id;
+                graphEntities.Add(dto.Id, entity);
+                algorithms.TryGetOrAddNew(dto.Id).AddRange(dto.Algorithms);
+                range.TryGetOrAddNew(dto.Id).AddRange(dto.Range);
+            }
+            return dtos;
         }
 
         public bool DeleteGraph(int graphId)
@@ -202,10 +205,10 @@ namespace Pathfinding.App.Console.DAL.Services
             return service.UpdateObstaclesCount(newCount, graphId);
         }
 
-        public PathfindingHistoryReadDto AddPathfindingHistory(PathfindingHistorySerializationDto history)
+        public IReadOnlyCollection<PathfindingHistoryReadDto> AddPathfindingHistory(IEnumerable<PathfindingHistorySerializationDto> histories)
         {
-            var dto = mapper.Map<PathfindingHistoryCreateDto>(history);
-            return AddPathfindingHistory(dto);
+            var dtos = mapper.Map<PathfindingHistoryCreateDto[]>(histories);
+            return AddPathfindingHistory(dtos);
         }
 
         public PathfindingHistorySerializationDto GetSerializationHistory(int graphId)

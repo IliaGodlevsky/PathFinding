@@ -1,7 +1,6 @@
 ﻿using LiteDB;
 using Pathfinding.App.Console.DAL.Attributes;
 using Pathfinding.App.Console.DAL.Interface;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pathfinding.App.Console.DAL.Models.Entities
@@ -10,19 +9,20 @@ namespace Pathfinding.App.Console.DAL.Models.Entities
     [BsonTable(DbTables.Graphs)]
     internal class GraphEntity : IEntity
     {
-        [Key]
         [BsonId]
-        [Required]
+        [NotNull]
+        [Identity]
         [IndexField]
+        [Autoincrement]
         public int Id { get; set; }
 
-        [Required]
+        [NotNull]
         public int Width { get; set; }
 
-        [Required]
+        [NotNull]
         public int Length { get; set; }
 
-        [Required]
+        [NotNull]
         public int ObstaclesCount { get; set; }
     }
 }

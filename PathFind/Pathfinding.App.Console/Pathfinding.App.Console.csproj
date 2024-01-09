@@ -64,7 +64,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\Attributes\AutoincrementAttribute.cs" />
     <Compile Include="DAL\Attributes\BsonTableAttribute.cs" />
+    <Compile Include="DAL\Attributes\IdentityAttribute.cs" />
+    <Compile Include="DAL\Attributes\NotNullAttribute.cs" />
+    <Compile Include="DAL\Attributes\OnDeleteCascadeAttribute.cs" />
+    <Compile Include="DAL\Attributes\ReferenseAttribute.cs" />
+    <Compile Include="DAL\Attributes\SqliteBuildAttribute.cs" />
     <Compile Include="DAL\DbTables.cs" />
     <Compile Include="DAL\Models\TransferObjects\AlgorithmCreateDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\AlgorithmReadDto.cs" />
@@ -190,15 +196,8 @@
     <Compile Include="Serialization\BinaryIntArraySerializer.cs" />
     <Compile Include="Serialization\PathfindingHistorySerializer.cs" />
     <Compile Include="Serialization\BinaryAlgorithmSerializer.cs" />
-    <Compile Include="Model\Visualizations\Containers\VisualizedCrossedPath.cs" />
     <Compile Include="Model\Visualizations\Containers\VisualizedEnqueued.cs" />
     <Compile Include="Model\Visualizations\Containers\NullVisualizedVertices.cs" />
-    <Compile Include="Model\Visualizations\Containers\VisualizedObstacle.cs" />
-    <Compile Include="Model\Visualizations\Containers\VisualizedPath.cs" />
-    <Compile Include="Model\Visualizations\Containers\VisualizedRegular.cs" />
-    <Compile Include="Model\Visualizations\Containers\VisualizedSource.cs" />
-    <Compile Include="Model\Visualizations\Containers\VisualizedTarget.cs" />
-    <Compile Include="Model\Visualizations\Containers\VisualizedTransit.cs" />
     <Compile Include="Model\Visualizations\Containers\VisualizedVisited.cs" />
     <Compile Include="Model\Visualizations\Containers\VisualizedVertices.cs" />
     <Compile Include="Settings\Keys.Designer.cs">

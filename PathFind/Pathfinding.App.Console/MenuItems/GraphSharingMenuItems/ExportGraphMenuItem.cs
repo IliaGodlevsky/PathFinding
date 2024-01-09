@@ -96,11 +96,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                     toExport.AddRange(histories);
                     break;
                 }
-                if (keys.Count > 0)
-                {
-                    string menuList = CreateMenuList(keys);
-                    index = InputIndex(menuList, keys.Count);
-                }
+                string menuList = CreateMenuList(keys);
+                index = InputIndex(menuList, keys.Count);
                 if (index < keys.Count)
                 {
                     int id = keys[index].Id;
@@ -108,6 +105,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                     toExport.Add(history);
                     keys.RemoveAt(index);
                 }
+                index = 0;
             } while (index != keys.Count + 1 && keys.Count > 0);
             return toExport.AsReadOnly();
         }

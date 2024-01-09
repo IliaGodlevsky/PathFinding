@@ -1,7 +1,6 @@
 ﻿using LiteDB;
 using Pathfinding.App.Console.DAL.Attributes;
 using Pathfinding.App.Console.DAL.Interface;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pathfinding.App.Console.DAL.Models.Entities
@@ -10,21 +9,23 @@ namespace Pathfinding.App.Console.DAL.Models.Entities
     [BsonTable(DbTables.Ranges)]
     internal class RangeEntity : IEntity
     {
-        [Key]
         [BsonId]
-        [Required]
+        [NotNull]
+        [Identity]
+        [Autoincrement]
         public int Id { get; set; }
 
-        [Required]
+        [NotNull]
         [IndexField]
-        [ForeignKey(nameof(GraphEntity))]
+        [OnDeleteCascade]
+        [Reference(DbTables.Graphs, nameof(GraphEntity.Id))]
         public int GraphId { get; set; }
 
-        [Required]
-        [ForeignKey(nameof(VertexEntity))]
+        [NotNull]
+        [Reference(DbTables.Vertices, nameof(VertexEntity.Id))]
         public int VertexId { get; set; }
 
-        [Required]
+        [NotNull]
         public int Position { get; set; }
     }
 }

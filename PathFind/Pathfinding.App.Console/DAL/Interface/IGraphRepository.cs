@@ -9,7 +9,7 @@ namespace Pathfinding.App.Console.DAL.Interface
 
         GraphEntity AddGraph(GraphEntity graph);
 
-        bool DeleteGraph(int graphId);
+        bool DeleteGraph(int graphId); // should be cascade
 
         bool Update(GraphEntity graph);
 

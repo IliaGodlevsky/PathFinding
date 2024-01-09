@@ -7,7 +7,8 @@ namespace Shared.Primitives.Extensions
     {
         public static int GetOrder(this object self)
         {
-            return self.GetAttributeOrDefault<OrderAttribute>().Order;
+            int order = self.GetAttributeOrDefault<OrderAttribute>().Order;
+            return order;
         }
     }
 }
