@@ -27,6 +27,8 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
                 .ConvertUsing(x => this.coordinateSerializer.DeserializeFromBytes(x).ToReadOnly());
             CreateMap<IReadOnlyCollection<ICoordinate>, byte[]>()
                 .ConvertUsing(x => this.coordinateSerializer.SerializeToBytes(x));
+            CreateMap<AlgorithmSerializationDto, AlgorithmJsonSerializationDto>();
+            CreateMap<AlgorithmJsonSerializationDto, AlgorithmSerializationDto>();
             CreateMap<AlgorithmEntity, AlgorithmReadDto>()
                 .ForMember(x => x.Costs, opt => opt.MapFrom(x => FromBytesToCosts(x.Costs)))
                 .ForMember(x => x.Statistics, opt => opt.MapFrom(x => JsonConvert.DeserializeObject<Statistics>(x.Statistics)));

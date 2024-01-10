@@ -1,7 +1,5 @@
-﻿using Dapper;
-using Pathfinding.App.Console.DAL.Interface;
+﻿using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
-using System.Collections.Generic;
 using System.Data;
 
 namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories

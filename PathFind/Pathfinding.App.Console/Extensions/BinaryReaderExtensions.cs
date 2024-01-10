@@ -1,8 +1,6 @@
 ﻿using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Model.Notes;
-using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
-using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;

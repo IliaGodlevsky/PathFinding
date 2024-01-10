@@ -73,12 +73,16 @@
     <Compile Include="DAL\Attributes\SqliteBuildAttribute.cs" />
     <Compile Include="DAL\DbTables.cs" />
     <Compile Include="DAL\Models\TransferObjects\AlgorithmCreateDto.cs" />
+    <Compile Include="DAL\Models\TransferObjects\AlgorithmJsonSerializationDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\AlgorithmReadDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\AlgorithmSerializationDto.cs" />
+    <Compile Include="DAL\Models\TransferObjects\CoordinateDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\GraphAssembleDto.cs" />
+    <Compile Include="DAL\Models\TransferObjects\GraphJsonSerializationDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\GraphReadDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\GraphSerializationDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\PathfindingHistoryCreateDto.cs" />
+    <Compile Include="DAL\Models\TransferObjects\PathfindingHistoryJsonSerializationDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\PathfindingHistoryReadDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\PathfindingHistorySerializationDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\VertexAssembleDto.cs" />
@@ -96,6 +100,8 @@
     <Compile Include="DAL\Interface\IAlgorithmsRepository.cs" />
     <Compile Include="DAL\Interface\INeighborsRepository.cs" />
     <Compile Include="DAL\Interface\IGraphRepository.cs" />
+    <Compile Include="DAL\Models\TransferObjects\VertexCostDto.cs" />
+    <Compile Include="DAL\Models\TransferObjects\VertexJsonSerializationDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\VertexSerializationDto.cs" />
     <Compile Include="DAL\Interface\IVerticesRepository.cs" />
     <Compile Include="DAL\Interface\IRangeRepository.cs" />
@@ -194,6 +200,7 @@
     <Compile Include="Model\VertexActions\NeighbourhoodActions\NeighbourhoodAction.cs" />
     <Compile Include="Serialization\BinaryGraphSerializer.cs" />
     <Compile Include="Serialization\BinaryIntArraySerializer.cs" />
+    <Compile Include="Serialization\JsonPathfindingHistorySerializer.cs" />
     <Compile Include="Serialization\PathfindingHistorySerializer.cs" />
     <Compile Include="Serialization\BinaryAlgorithmSerializer.cs" />
     <Compile Include="Model\Visualizations\Containers\VisualizedEnqueued.cs" />

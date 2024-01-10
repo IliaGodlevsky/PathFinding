@@ -20,6 +20,18 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
         {
             this.vertexFactory = vertexFactory;
 
+            CreateMap<ICoordinate, CoordinateDto>()
+                .ForMember(x => x.Coordinate, opt => opt.MapFrom(x => x.ToReadOnly()));
+            CreateMap<CoordinateDto, ICoordinate>()
+                .ConvertUsing(x => new Coordinate(x.Coordinate.ToArray()));
+            CreateMap<VertexSerializationDto, VertexJsonSerializationDto>();
+            CreateMap<VertexJsonSerializationDto, VertexSerializationDto>();
+            CreateMap<IVertexCost, VertexCostDto>()
+                .ForMember(x => x.Cost, opt => opt.MapFrom(x => x.CurrentCost))
+                .ForMember(x => x.UpperValueOfRange, opt => opt.MapFrom(x => x.CostRange.UpperValueOfRange))
+                .ForMember(x => x.LowerValueOfRange, opt => opt.MapFrom(x => x.CostRange.LowerValueOfRange));
+            CreateMap<VertexCostDto, IVertexCost>()
+                .ConvertUsing(x => new VertexCost(x.Cost, new(x.UpperValueOfRange, x.LowerValueOfRange)));
             CreateMap<ICoordinate, ICoordinate>().ConvertUsing(x => x);
             CreateMap<VertexAssembleDto, Vertex>()
                 .ConstructUsing(x => vertexFactory.CreateVertex(x.Coordinate));
@@ -41,7 +53,7 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
                 .ConstructUsing((x, context) => ToVertices(x, context));
         }
 
-        private IEnumerable<Vertex> ToVertices(IEnumerable<VertexSerializationDto> dtos, 
+        private IEnumerable<Vertex> ToVertices(IEnumerable<VertexSerializationDto> dtos,
             ResolutionContext context)
         {
             var vertices = dtos

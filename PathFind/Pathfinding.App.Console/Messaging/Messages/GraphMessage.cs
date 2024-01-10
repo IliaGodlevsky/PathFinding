@@ -9,7 +9,7 @@ namespace Pathfinding.App.Console.Messaging.Messages
         public GraphReadDto Graph { get; set; }
 
         public GraphMessage(IGraph<Vertex> graph, int id)
-            : this(new() { Id = id, Graph = graph})
+            : this(new() { Id = id, Graph = graph })
         {
         }
 

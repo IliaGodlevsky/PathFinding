@@ -1,5 +1,4 @@
-﻿using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Interface;
+﻿using Pathfinding.GraphLib.Core.Interface;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DAL.Models.TransferObjects

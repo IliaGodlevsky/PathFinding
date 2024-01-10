@@ -7,11 +7,8 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
-using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Settings;
-using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Smoothing;
 using Pathfinding.GraphLib.Smoothing.Interface;
 using Shared.Extensions;
@@ -30,7 +27,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private readonly Dictionary<ConsoleKey, Action> actions;
         private readonly IService service;
 
-        private Stack<IReadOnlyList<int>> SmoothHistory 
+        private Stack<IReadOnlyList<int>> SmoothHistory
             => smoothes.TryGetOrAddNew(GraphDto.Id);
 
         private GraphReadDto GraphDto = GraphReadDto.Empty;

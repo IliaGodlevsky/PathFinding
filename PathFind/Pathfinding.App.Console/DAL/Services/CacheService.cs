@@ -229,7 +229,7 @@ namespace Pathfinding.App.Console.DAL.Services
             return AddGraph(add);
         }
 
-        public bool AddNeighbors(IReadOnlyDictionary<int, int[]> neighborhoods)
+        public bool AddNeighbors(IReadOnlyDictionary<Vertex, IReadOnlyCollection<Vertex>> neighborhoods)
         {
             return service.AddNeighbors(neighborhoods);
         }
@@ -239,7 +239,7 @@ namespace Pathfinding.App.Console.DAL.Services
             return service.UpdateVertices(vertices, graphId);
         }
 
-        public bool RemoveNeighbors(IReadOnlyDictionary<int, int[]> neighborhoods)
+        public bool RemoveNeighbors(IReadOnlyDictionary<Vertex, IReadOnlyCollection<Vertex>> neighborhoods)
         {
             return service.RemoveNeighbors(neighborhoods);
         }

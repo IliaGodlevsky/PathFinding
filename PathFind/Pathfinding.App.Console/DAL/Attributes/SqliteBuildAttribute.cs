@@ -1,5 +1,4 @@
 ﻿using Shared.Primitives.Attributes;
-using System;
 
 namespace Pathfinding.App.Console.DAL.Attributes
 {

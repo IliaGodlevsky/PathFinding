@@ -100,7 +100,7 @@ namespace Pathfinding.App.Console.DAL.Services
             return Transaction(unitOfWork => unitOfWork.GetRange(graphId));
         }
 
-        public bool RemoveNeighbors(IReadOnlyDictionary<int, int[]> neighborhoods)
+        public bool RemoveNeighbors(IReadOnlyDictionary<Vertex, IReadOnlyCollection<Vertex>> neighborhoods)
         {
             return Transaction(unitOfWork =>
             {
@@ -108,7 +108,7 @@ namespace Pathfinding.App.Console.DAL.Services
                 {
                     foreach (var neighbor in neighborhoods[neighborhood.Key])
                     {
-                        unitOfWork.NeighborsRepository.DeleteNeighbour(neighborhood.Key, neighbor);
+                        unitOfWork.NeighborsRepository.DeleteNeighbour(neighborhood.Key.Id, neighbor.Id);
                     }
                 }
                 return true;
@@ -172,23 +172,16 @@ namespace Pathfinding.App.Console.DAL.Services
             });
         }
 
-        public bool AddNeighbors(IReadOnlyDictionary<int, int[]> neighborhoods)
+        public bool AddNeighbors(IReadOnlyDictionary<Vertex, IReadOnlyCollection<Vertex>> neighborhoods)
         {
             return Transaction(unitOfWork =>
             {
-                var list = new List<NeighborEntity>();
-                foreach (var neighborhood in neighborhoods)
-                {
-                    foreach (var neighbor in neighborhoods[neighborhood.Key])
+                var list = neighborhoods.SelectMany(neighborhood =>
+                    neighborhood.Value.Select(neighbor => new NeighborEntity
                     {
-                        var entity = new NeighborEntity()
-                        {
-                            VertexId = neighborhood.Key,
-                            NeighborId = neighbor
-                        };
-                        list.Add(entity);
-                    }
-                }
+                        VertexId = neighborhood.Key.Id,
+                        NeighborId = neighbor.Id
+                    })).ToReadOnly();
                 unitOfWork.NeighborsRepository.AddNeighbours(list);
                 return true;
             });
@@ -198,10 +191,7 @@ namespace Pathfinding.App.Console.DAL.Services
         {
             return Transaction(unitOfWork =>
             {
-                foreach (var vertex in vertices)
-                {
-                    unitOfWork.RangeRepository.DeleteByVertexId(vertex.Id);
-                }
+                vertices.ForEach(x => unitOfWork.RangeRepository.DeleteByVertexId(x.Id));
                 return true;
             });
         }

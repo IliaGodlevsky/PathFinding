@@ -19,7 +19,7 @@ namespace Pathfinding.App.Console.DAL.UOF
 
         public INeighborsRepository NeighborsRepository { get; }
 
-        public LiteDbUnitOfWork(string connectionString) 
+        public LiteDbUnitOfWork(string connectionString)
             : this(new LiteDatabase(connectionString))
         {
         }

@@ -10,6 +10,8 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
             CreateMap<PathfindingHistoryReadDto, PathfindingHistorySerializationDto>();
             CreateMap<PathfindingHistorySerializationDto, PathfindingHistoryCreateDto>();
             CreateMap<PathfindingHistoryCreateDto, PathfindingHistoryReadDto>();
+            CreateMap<PathfindingHistoryJsonSerializationDto, PathfindingHistorySerializationDto>();
+            CreateMap<PathfindingHistorySerializationDto, PathfindingHistoryJsonSerializationDto>();
         }
     }
 }

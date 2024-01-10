@@ -19,7 +19,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             IService service,
             ISerializer<IEnumerable<PathfindingHistorySerializationDto>> graphSerializer,
             ILog log)
-            : base(input, intInput, service,graphSerializer, log)
+            : base(input, intInput, service, graphSerializer, log)
         {
         }
 

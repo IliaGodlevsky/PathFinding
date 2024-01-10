@@ -17,16 +17,17 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 
         private static readonly Type Type = typeof(T);
 
+        private readonly static string DeleteQuery;
+        private readonly static string SelectAllQuery;
+        private readonly static string SelectQuery;
+        private readonly static string InsertQuery;
+        private readonly static string UpdateQuery;
+        private readonly static string CreateTableScript;
+        private readonly static string CreateIndexScript;
+
         private static IReadOnlyDictionary<Type, string> CSharpToSQLiteTypeMap { get; }
 
         protected readonly static string TableName;
-        protected readonly static string DeleteQuery;
-        protected readonly static string SelectAllQuery;
-        protected readonly static string SelectQuery;
-        protected readonly static string InsertQuery;
-        protected readonly static string UpdateQuery;
-        protected readonly static string CreateTableScript;
-        protected readonly static string CreateIndexScript;
 
         protected readonly IDbConnection connection;
         protected readonly IDbTransaction transaction;

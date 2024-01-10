@@ -32,19 +32,19 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
             }
             var neighbors = graph.Graph.ToDictionary(x => x.Position, GetNeighbors);
             base.Execute();
-            var addedNeighbors = new Dictionary<int, int[]>();
-            var removedNeighbors = new Dictionary<int, int[]>();
+            var addedNeighbors = new Dictionary<Vertex, IReadOnlyCollection<Vertex>>();
+            var removedNeighbors = new Dictionary<Vertex, IReadOnlyCollection<Vertex>>();
             foreach (var vertex in processed)
             {
                 var areNeighbours = vertex.Neighbours
                     .GetCoordinates().ToHashSet();
                 var wereNeighbours = neighbors[vertex.Position];
                 var added = areNeighbours.Except(wereNeighbours)
-                    .Select(x => graph.Graph.Get(x).Id);
+                    .Select(graph.Graph.Get);
                 var removed = wereNeighbours.Except(areNeighbours)
-                    .Select(x => graph.Graph.Get(x).Id);
-                addedNeighbors.Add(vertex.Id, added.ToArray());
-                removedNeighbors.Add(vertex.Id, removed.ToArray());
+                    .Select(graph.Graph.Get);
+                addedNeighbors.Add(vertex, added.ToReadOnly());
+                removedNeighbors.Add(vertex, removed.ToReadOnly());
             }
             service.AddNeighbors(addedNeighbors);
             service.RemoveNeighbors(removedNeighbors);

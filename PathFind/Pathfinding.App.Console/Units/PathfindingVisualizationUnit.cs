@@ -71,7 +71,7 @@ namespace Pathfinding.App.Console.Units
         }
 
         private void OnAlgorithmStarted(object sender, ProcessEventArgs e)
-        {            
+        {
             keyStrokeHook.KeyPressed += OnConsoleKeyPressed;
             Task.Run(keyStrokeHook.Start);
         }

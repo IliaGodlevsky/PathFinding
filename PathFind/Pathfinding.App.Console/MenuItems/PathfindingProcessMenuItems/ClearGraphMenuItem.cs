@@ -6,9 +6,6 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
-using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.Visualization.Extensions;
 using Shared.Executable;
 

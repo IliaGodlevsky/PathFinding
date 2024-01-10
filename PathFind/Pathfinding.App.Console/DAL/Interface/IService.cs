@@ -36,13 +36,13 @@ namespace Pathfinding.App.Console.DAL.Interface
 
         int AddAlgorithm(AlgorithmCreateDto algorithm);
 
-        bool AddNeighbors(IReadOnlyDictionary<int, int[]> neighborhoods);
+        bool AddNeighbors(IReadOnlyDictionary<Vertex, IReadOnlyCollection<Vertex>> neighborhoods);
 
         bool UpdateVertices(IEnumerable<Vertex> vertices, int graphId);
 
         bool AddRange((int Order, Vertex Vertex)[] vertices, int graphId);
 
-        bool RemoveNeighbors(IReadOnlyDictionary<int, int[]> neighborhoods);
+        bool RemoveNeighbors(IReadOnlyDictionary<Vertex, IReadOnlyCollection<Vertex>> neighborhoods);
 
         bool UpdateRange((int Order, Vertex Vertex)[] vertices, int graphId);
 

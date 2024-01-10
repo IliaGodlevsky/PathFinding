@@ -2,7 +2,7 @@
 
 namespace Pathfinding.App.Console.DAL.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class)]
     internal sealed class BsonTableAttribute : Attribute
     {
         public string Name { get; }

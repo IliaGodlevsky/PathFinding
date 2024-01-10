@@ -5,7 +5,7 @@ namespace Pathfinding.App.Console.DAL.Attributes
     [AttributeUsage(AttributeTargets.Property)]
     internal sealed class NotNullAttribute : SqliteBuildAttribute
     {
-        public NotNullAttribute() 
+        public NotNullAttribute()
             : base("NOT NULL", 1)
         {
         }

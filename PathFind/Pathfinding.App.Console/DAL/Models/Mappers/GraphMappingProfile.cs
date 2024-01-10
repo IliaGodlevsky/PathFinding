@@ -50,6 +50,8 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
                         .ToReadOnly();
                     return graphFactory.CreateGraph(vertices, x.DimensionSizes);
                 });
+            CreateMap<GraphSerializationDto, GraphJsonSerializationDto>();
+            CreateMap<GraphJsonSerializationDto, GraphSerializationDto>();
         }
     }
 }
