@@ -43,8 +43,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
 
         protected override void Enqueue(IVertex vertex, double value)
         {
-            double cost = default;
-            if (!heuristics.TryGetValue(vertex.Position, out cost))
+            if (!heuristics.TryGetValue(vertex.Position, out double cost))
             {
                 cost = CalculateHeuristic(vertex);
                 heuristics[vertex.Position] = cost;

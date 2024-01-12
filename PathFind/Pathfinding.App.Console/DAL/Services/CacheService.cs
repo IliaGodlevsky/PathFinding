@@ -4,6 +4,7 @@ using Pathfinding.App.Console.DAL.Models.Entities;
 using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations;
 using Shared.Extensions;
 using System.Collections.Generic;
@@ -176,10 +177,7 @@ namespace Pathfinding.App.Console.DAL.Services
             bool removed = service.RemoveRange(vertices, graphId);
             if (removed)
             {
-                foreach (var vertex in vertices)
-                {
-                    range.TryGetOrAddNew(graphId).Remove(vertex.Position);
-                }
+                range.TryGetOrAddNew(graphId).RemoveMany(vertices.GetCoordinates());
             }
             return removed;
         }

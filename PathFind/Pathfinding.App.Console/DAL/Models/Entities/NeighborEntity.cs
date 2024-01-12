@@ -11,17 +11,16 @@ namespace Pathfinding.App.Console.DAL.Models.Entities
     {
         [BsonId]
         [NotNull]
-        [Identity]
-        [Autoincrement]
+        [Identity(true)]
         public int Id { get; set; }
 
         [NotNull]
+        [Reference(DbTables.Vertices, nameof(VertexEntity.Id))]
         public int NeighborId { get; set; }
 
         [NotNull]
-        [IndexField]
-        [OnDeleteCascade]
-        [Reference(DbTables.Vertices, nameof(VertexEntity.Id))]
+        [Index]
+        [Reference(DbTables.Vertices, nameof(VertexEntity.Id), OnDelete.Cascade)]
         public int VertexId { get; set; }
     }
 }

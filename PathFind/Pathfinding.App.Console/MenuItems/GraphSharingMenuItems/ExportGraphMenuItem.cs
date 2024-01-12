@@ -99,8 +99,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                     var history = service.GetSerializationHistory(id);
                     toExport.Add(history);
                     keys.RemoveAt(index);
+                    index = 0;
                 }
-                index = 0;
             } while (index != keys.Count + 1 && keys.Count > 0);
             return toExport.AsReadOnly();
         }

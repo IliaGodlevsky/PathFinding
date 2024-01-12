@@ -24,8 +24,8 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
                 .ForMember(x => x.Coordinate, opt => opt.MapFrom(x => x.ToReadOnly()));
             CreateMap<CoordinateDto, ICoordinate>()
                 .ConvertUsing(x => new Coordinate(x.Coordinate.ToArray()));
-            CreateMap<VertexSerializationDto, VertexJsonSerializationDto>();
-            CreateMap<VertexJsonSerializationDto, VertexSerializationDto>();
+            CreateMap<VertexSerializationDto, VertexSerializationDto>();
+            CreateMap<VertexSerializationDto, VertexSerializationDto>();
             CreateMap<IVertexCost, VertexCostDto>()
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => x.CurrentCost))
                 .ForMember(x => x.UpperValueOfRange, opt => opt.MapFrom(x => x.CostRange.UpperValueOfRange))
@@ -48,7 +48,7 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => new VertexCost(x.Cost, new(x.UpperValueRange, x.LowerValueRange))));
             CreateMap<Vertex, VertexSerializationDto>()
                 .ForMember(x => x.Neighbors, opt => opt.MapFrom(x => x.Neighbours.GetCoordinates().ToReadOnly()));
-            CreateMap<VertexSerializationDto, Vertex>().ConstructUsing(x => vertexFactory.CreateVertex(x.Position));
+            CreateMap<VertexSerializationDto, Vertex>().ConstructUsing(x => vertexFactory.CreateVertex(new Coordinate(x.Position.Coordinate.ToArray())));
             CreateMap<IEnumerable<VertexSerializationDto>, IEnumerable<Vertex>>()
                 .ConstructUsing((x, context) => ToVertices(x, context));
         }
@@ -61,8 +61,12 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
                 .ToDictionary(x => x.Position);
             foreach (var dto in dtos)
             {
-                var vertex = vertices[dto.Position];
-                var neighbors = dto.Neighbors.Select(x => vertices[x]);
+                var position = context.Mapper.Map<ICoordinate>(dto.Position);
+                var vertex = vertices[position];
+                var neighbors = context.Mapper
+                    .Map<ICoordinate[]>(dto.Neighbors)
+                    .Select(x => vertices[x])
+                    .ToReadOnly();
                 vertex.Neighbours.AddRange(neighbors);
             }
             return vertices.Values;

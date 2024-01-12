@@ -89,7 +89,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<AppLayout>().As<ICanRecieveMessage>().SingleInstance().AutoActivate();
 
                 builder.RegisterUnit<MainUnit, AnswerExitMenuItem>(new UnitParamtresFactory());
-                builder.RegisterUnits<ExitMenuItem>(new UnitParamtresFactory(), Graph, PathfindingUnits.Process, Range);
+                builder.RegisterUnits<ExitMenuItem>(new UnitParamtresFactory(), Graph, Process, Range);
 
                 builder.RegisterType<Service>().As<IService>().SingleInstance();
                 builder.RegisterDecorator<CacheService, IService>();
@@ -102,7 +102,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main)
                     .As<ICanRecieveMessage>().SingleInstance();
 
-                builder.RegisterType<VisualizationContainer>().CommunicateContainers().SingleInstance()
+                builder.RegisterType<VertexVisualizations>().CommunicateContainers().SingleInstance()
                     .AsImplementedInterfaces().ConfigurePipeline(p => p.Use(new AllVisualizedVerticesMiddleware()));
                 builder.RegisterVisualizionContainer<VisualizedVertices>(Constants.TargetColorKey);
                 builder.RegisterVisualizionContainer<VisualizedVertices>(Constants.SourceColorKey);
@@ -221,15 +221,15 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<FilePathInput>().As<IFilePathInput>().SingleInstance();
                 builder.RegisterType<AddressInput>().As<IInput<(string, int)>>().SingleInstance();
 
-                builder.RegisterType<BinaryCoordinatesSerializer>().As<ISerializer<IEnumerable<ICoordinate>>>().SingleInstance();
-                builder.RegisterType<BinaryIntArraySerializer>().As<ISerializer<IEnumerable<int>>>().SingleInstance();
-                builder.RegisterType<BinaryAlgorithmSerializer>().As<ISerializer<IEnumerable<AlgorithmSerializationDto>>>().SingleInstance();
-                builder.RegisterType<BinaryGraphSerializer>().As<ISerializer<GraphSerializationDto>>().SingleInstance();
-                builder.RegisterType<PathfindingHistorySerializer>().As<ISerializer<IEnumerable<PathfindingHistorySerializationDto>>>().SingleInstance();
+                builder.RegisterType<JsonSerializer<IEnumerable<CoordinateDto>>>().As<ISerializer<IEnumerable<CoordinateDto>>>().SingleInstance();
+                builder.RegisterType<JsonSerializer<IEnumerable<int>>>().As<ISerializer<IEnumerable<int>>>().SingleInstance();
+                builder.RegisterType<JsonSerializer<GraphSerializationDto>>().As<ISerializer<GraphSerializationDto>>().SingleInstance();
+                builder.RegisterType<JsonSerializer<IEnumerable<PathfindingHistorySerializationDto>>>()
+                    .As<ISerializer<IEnumerable<PathfindingHistorySerializationDto>>>().SingleInstance();
 
-                builder.RegisterDecorator<BufferedSerializer<IEnumerable<PathfindingHistorySerializationDto>>, ISerializer<IEnumerable<PathfindingHistorySerializationDto>>>();
-                builder.RegisterDecorator<CompressSerializer<IEnumerable<PathfindingHistorySerializationDto>>, ISerializer<IEnumerable<PathfindingHistorySerializationDto>>>();
-                builder.RegisterDecorator<ThreadSafeSerializer<IEnumerable<PathfindingHistorySerializationDto>>, ISerializer<IEnumerable<PathfindingHistorySerializationDto>>>();
+                builder.RegisterGenericDecorator(typeof(BufferedSerializer<>), typeof(ISerializer<>));
+                builder.RegisterGenericDecorator(typeof(CompressSerializer<>), typeof(ISerializer<>));
+                builder.RegisterGenericDecorator(typeof(ThreadSafeSerializer<>), typeof(ISerializer<>));
             }
         }
 

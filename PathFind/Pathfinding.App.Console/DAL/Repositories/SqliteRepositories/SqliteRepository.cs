@@ -13,6 +13,55 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 {
     internal abstract class SqliteRepository<T> where T : class, IEntity
     {
+        private sealed class PropertyName : ISqliteBuildAttribute
+        {
+            public int Order { get; } = 2;
+
+            public string Text { get; }
+
+            public PropertyName(string text)
+            {
+                Text = text;
+            }
+        }
+
+        private sealed class PropertyType : ISqliteBuildAttribute
+        {
+            private static readonly IReadOnlyDictionary<Type, string> CSharpToSQLiteTypeMap;
+
+            public int Order { get; } = 3;
+
+            public string Text { get; }
+
+            public PropertyType(Type type)
+            {
+                Text = CSharpToSQLiteTypeMap[type];
+            }
+
+            static PropertyType()
+            {
+                CSharpToSQLiteTypeMap = new Dictionary<Type, string>
+                {
+                    { typeof(int), "INTEGER" },
+                    { typeof(long), "INTEGER" },
+                    { typeof(short), "INTEGER" },
+                    { typeof(byte), "INTEGER" },
+                    { typeof(uint), "INTEGER" },
+                    { typeof(ulong), "INTEGER" },
+                    { typeof(ushort), "INTEGER" },
+                    { typeof(sbyte), "INTEGER" },
+                    { typeof(float), "REAL" },
+                    { typeof(double), "REAL" },
+                    { typeof(decimal), "NUMERIC" },
+                    { typeof(bool), "INTEGER" },
+                    { typeof(string), "TEXT" },
+                    { typeof(char), "TEXT" },
+                    { typeof(DateTime), "TEXT" },
+                    { typeof(byte[]), "BLOB" }
+                }.AsReadOnly();
+            }
+        }
+
         private const string Id = nameof(IEntity.Id);
 
         private static readonly Type Type = typeof(T);
@@ -24,8 +73,6 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
         private readonly static string UpdateQuery;
         private readonly static string CreateTableScript;
         private readonly static string CreateIndexScript;
-
-        private static IReadOnlyDictionary<Type, string> CSharpToSQLiteTypeMap { get; }
 
         protected readonly static string TableName;
 
@@ -43,26 +90,6 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 
         static SqliteRepository()
         {
-            CSharpToSQLiteTypeMap = new Dictionary<Type, string>
-            {
-                { typeof(int), "INTEGER" },
-                { typeof(long), "INTEGER" },
-                { typeof(short), "INTEGER" },
-                { typeof(byte), "INTEGER" },
-                { typeof(uint), "INTEGER" },
-                { typeof(ulong), "INTEGER" },
-                { typeof(ushort), "INTEGER" },
-                { typeof(sbyte), "INTEGER" },
-                { typeof(float), "REAL" },
-                { typeof(double), "REAL" },
-                { typeof(decimal), "NUMERIC" },
-                { typeof(bool), "INTEGER" },
-                { typeof(string), "TEXT" },
-                { typeof(char), "TEXT" },
-                { typeof(DateTime), "TEXT" },
-                { typeof(byte[]), "BLOB" }
-            }.AsReadOnly();
-
             TableName = Type.GetAttributeOrDefault<TableAttribute>().Name;
             InsertQuery = GetInsertQuery();
             UpdateQuery = GetUpdateQuery();
@@ -116,23 +143,25 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 
         private static string GetCreateTableScript()
         {
-            return Type.GetProperties().Select(p =>
+            var attributes = Type.GetProperties().Select(p =>
             {
                 return p.GetCustomAttributes<SqliteBuildAttribute>()
-                    .OrderBy(p => p.Order)
-                    .Select(x => x.Line)
-                    .Prepend(CSharpToSQLiteTypeMap[p.PropertyType])
-                    .Prepend(p.Name)
-                    .To(lines => string.Join(" ", lines));
-            }).To(props => $"CREATE TABLE IF NOT EXISTS {TableName} \n({string.Join(",\n", props)});");
+                    .OfType<ISqliteBuildAttribute>()
+                    .Append(new PropertyName(p.Name))
+                    .Append(new PropertyType(p.PropertyType))
+                    .OrderBy(x => x.Order)
+                    .Select(x => x.Text)
+                    .To(texts => string.Join(" ", texts));
+            }).To(props => string.Join(",\n", props));
+            return $"CREATE TABLE IF NOT EXISTS {TableName} \n({attributes})";
         }
 
         private static string GetCreateIndexScript()
         {
             return Type.GetProperties()
-                .Where(p => Attribute.IsDefined(p, typeof(IndexFieldAttribute)))
-                .Select(x => $"CREATE INDEX IF NOT EXISTS idx_{TableName}_{x.Name} ON {TableName}({x.Name})")
-                .To(lines => string.Join(";\n", lines));
+                .Where(p => Attribute.IsDefined(p, typeof(IndexAttribute)))
+                .Select(p => $"CREATE INDEX IF NOT EXISTS idx_{TableName}_{p.Name} ON {TableName}({p.Name})")
+                .To(lines => string.Join(",\n", lines));
         }
 
         private static string GetInsertQuery()

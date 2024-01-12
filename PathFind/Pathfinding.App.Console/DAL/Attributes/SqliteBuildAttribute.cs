@@ -1,15 +1,18 @@
-﻿using Shared.Primitives.Attributes;
+﻿using Pathfinding.App.Console.DAL.Interface;
+using System;
 
 namespace Pathfinding.App.Console.DAL.Attributes
 {
-    internal abstract class SqliteBuildAttribute : OrderAttribute
+    internal abstract class SqliteBuildAttribute : Attribute, ISqliteBuildAttribute
     {
-        public string Line { get; }
+        public int Order { get; }
 
-        protected SqliteBuildAttribute(string line, int order)
-            : base(order)
+        public string Text { get; }
+
+        protected SqliteBuildAttribute(string text, int order)
         {
-            Line = line;
+            Text = text;
+            Order = order;
         }
     }
 }

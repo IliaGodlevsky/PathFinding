@@ -19,7 +19,7 @@ namespace System.Runtime.CompilerServices
 
 namespace Pathfinding.App.Console.Model.Notes
 {
-    internal sealed class Statistics
+    internal sealed class Statistics(string algorithm)
     {
         private const string Missing = "**********";
 
@@ -38,12 +38,7 @@ namespace Pathfinding.App.Console.Model.Notes
                 .Skip(1).ToList().AsReadOnly();
         }
 
-        public Statistics(string algorithm)
-        {
-            Algorithm = algorithm!;
-        }
-
-        public string Algorithm { get; } = string.Empty;
+        public string Algorithm { get; } = algorithm!;
 
         public string? Heuristics { get; init; } = null;
 

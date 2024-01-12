@@ -35,7 +35,7 @@ namespace Pathfinding.App.Console
         {
             messenger.Register<AppLayout, CostRangeChangedMessage, IToken>(this, Tokens.AppLayout, SetRange);
             messenger.Register<AppLayout, StatisticsLineMessage, IToken>(this, Tokens.AppLayout, ShowStatistics);
-            messenger.RegisterGraph<AppLayout>(this, Tokens.AppLayout, SetGraph);
+            messenger.RegisterGraph(this, Tokens.AppLayout, SetGraph);
         }
 
         public static void SetCursorPositionUnderGraphField()

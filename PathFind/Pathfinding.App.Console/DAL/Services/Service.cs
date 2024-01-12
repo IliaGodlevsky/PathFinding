@@ -104,13 +104,8 @@ namespace Pathfinding.App.Console.DAL.Services
         {
             return Transaction(unitOfWork =>
             {
-                foreach (var neighborhood in neighborhoods)
-                {
-                    foreach (var neighbor in neighborhoods[neighborhood.Key])
-                    {
-                        unitOfWork.NeighborsRepository.DeleteNeighbour(neighborhood.Key.Id, neighbor.Id);
-                    }
-                }
+                var repo = unitOfWork.NeighborsRepository;
+                neighborhoods.ForEach(x => x.Value.ForEach(i => repo.DeleteNeighbour(x.Key.Id, i.Id)));
                 return true;
             });
         }
@@ -131,24 +126,17 @@ namespace Pathfinding.App.Console.DAL.Services
 
         public bool RemoveRange(int graphId)
         {
-            return Transaction(unitOfWork
-                => unitOfWork.RangeRepository.DeleteByGraphId(graphId));
+            return Transaction(unitOfWork => unitOfWork.RangeRepository.DeleteByGraphId(graphId));
         }
 
         public PathfindingHistoryReadDto GetPathfindingHistory(int graphId)
         {
-            return Transaction(unitOfWork =>
+            return Transaction(unitOfWork => new PathfindingHistoryReadDto()
             {
-                var graph = unitOfWork.CreateGraph(graphId, mapper);
-                var algorithms = unitOfWork.GetAlgorithms(graphId, mapper);
-                var range = unitOfWork.GetRange(graphId);
-                return new PathfindingHistoryReadDto()
-                {
-                    Id = graphId,
-                    Graph = graph,
-                    Algorithms = algorithms,
-                    Range = range
-                };
+                Id = graphId,
+                Graph = unitOfWork.CreateGraph(graphId, mapper),
+                Algorithms = unitOfWork.GetAlgorithms(graphId, mapper),
+                Range = unitOfWork.GetRange(graphId)
             });
         }
 

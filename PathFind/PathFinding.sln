@@ -117,6 +117,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BenchmarkingLayer", "Benchm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.AlgorithmLib.Benchmarks", "Pathfinding.AlgorithmLib.Benchmarks\Pathfinding.AlgorithmLib.Benchmarks.csproj", "{3D299543-0B1D-4991-B56D-A40DA8504DF8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataAccessLayer", "DataAccessLayer", "{365D55BC-480B-4CAE-B352-7F9FCBDCE037}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

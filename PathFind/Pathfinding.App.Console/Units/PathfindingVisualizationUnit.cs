@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
-using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.EventArguments;
 using Pathfinding.App.Console.Extensions;
@@ -21,7 +20,6 @@ namespace Pathfinding.App.Console.Units
 {
     internal sealed class PathfindingVisualizationUnit : Unit, ICanRecieveMessage
     {
-        private readonly IService service;
         private readonly ConsoleKeystrokesHook keyStrokeHook = new();
         private readonly IReadOnlyCollection<(string, IPathfindingAction)> pathfindingActions;
         private readonly IReadOnlyCollection<(string, IAnimationSpeedAction)> animationActions;
@@ -33,13 +31,11 @@ namespace Pathfinding.App.Console.Units
 
         public PathfindingVisualizationUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<(string, IPathfindingAction)> pathfindingActions,
-            IReadOnlyCollection<(string, IAnimationSpeedAction)> animationActions,
-            IService service)
+            IReadOnlyCollection<(string, IAnimationSpeedAction)> animationActions)
             : base(menuItems)
         {
             this.animationActions = animationActions;
             this.pathfindingActions = pathfindingActions;
-            this.service = service;
         }
 
         private void SetAnimationDelay(AlgorithmDelayMessage msg)

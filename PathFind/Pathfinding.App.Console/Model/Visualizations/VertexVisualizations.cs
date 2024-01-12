@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.Model.Visualizations
 {
-    internal sealed class VisualizationContainer
+    internal sealed class VertexVisualizations
         : ITotalVisualization<Vertex>, ICanRecieveMessage, IDisposable
     {
         private readonly IReadOnlyDictionary<string, IVisualizedVertices> containers;
@@ -23,7 +23,7 @@ namespace Pathfinding.App.Console.Model.Visualizations
 
         private Colours Colors { get; } = Colours.Default;
 
-        public VisualizationContainer(IReadOnlyDictionary<string, IVisualizedVertices> containers)
+        public VertexVisualizations(IReadOnlyDictionary<string, IVisualizedVertices> containers)
         {
             this.containers = containers;
             Colors.PropertyChanged += OnPropertyChanged;
@@ -61,7 +61,7 @@ namespace Pathfinding.App.Console.Model.Visualizations
         public void RegisterHanlders(IMessenger messenger)
         {
             messenger.RegisterGraph(this, Tokens.Visual, OnGraphCreated);
-            messenger.Register<VisualizationContainer, GraphDeletedMessage>(this, Tokens.Common, OnGraphDeleted);
+            messenger.Register<VertexVisualizations, GraphDeletedMessage>(this, Tokens.Common, OnGraphDeleted);
         }
 
         public void Dispose()

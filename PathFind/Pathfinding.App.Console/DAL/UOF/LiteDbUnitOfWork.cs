@@ -31,7 +31,7 @@ namespace Pathfinding.App.Console.DAL.UOF
 
         public LiteDbUnitOfWork(ILiteDatabase db)
         {
-            this.database = db;
+            database = db;
             GraphRepository = new LiteDbGraphRepository(database);
             AlgorithmsRepository = new LiteDbAlgorithmRepository(database);
             VerticesRepository = new LiteDbVerticesRepository(database);

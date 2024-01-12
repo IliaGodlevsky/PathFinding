@@ -151,7 +151,7 @@ namespace Pathfinding.App.Console.Settings {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("litedbgraph.db")]
+        [global::System.Configuration.DefaultSettingValueAttribute("pathfinding.ldb")]
         public string LiteDbConnectionString {
             get {
                 return ((string)(this["LiteDbConnectionString"]));
@@ -160,7 +160,7 @@ namespace Pathfinding.App.Console.Settings {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("sqlitegraph.db")]
+        [global::System.Configuration.DefaultSettingValueAttribute("pathfinding.db")]
         public string SqliteConnectionString {
             get {
                 return ((string)(this["SqliteConnectionString"]));
