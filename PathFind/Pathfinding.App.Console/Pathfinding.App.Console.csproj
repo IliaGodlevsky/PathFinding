@@ -301,8 +301,8 @@
     <Compile Include="Units\PathfindingStatisticsUnit.cs" />
     <Compile Include="Units\PathfindingVisualizationUnit.cs" />
     <Compile Include="Units\Unit.cs" />
-    <Compile Include="ValueInput\AddressInput.cs" />
-    <Compile Include="ValueInput\FilePathInput.cs" />
+    <Compile Include="ValueInput\UserInput\AddressInput.cs" />
+    <Compile Include="ValueInput\UserInput\FilePathInput.cs" />
     <Compile Include="Model\Notes\Statistics.cs" />
     <Compile Include="Settings\Colours.Designer.cs">
       <AutoGen>True</AutoGen>

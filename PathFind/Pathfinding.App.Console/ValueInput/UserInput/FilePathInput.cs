@@ -2,7 +2,7 @@
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 
-namespace Pathfinding.App.Console.ValueInput
+namespace Pathfinding.App.Console.ValueInput.UserInput
 {
     internal sealed class FilePathInput : IFilePathInput
     {

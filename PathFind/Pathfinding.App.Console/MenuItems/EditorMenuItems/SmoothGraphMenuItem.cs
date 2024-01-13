@@ -19,6 +19,7 @@ using System.Linq;
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     [HighestPriority]
+    [Obsolete("Has no point")]
     internal sealed class SmoothGraphMenuItem : IConditionedMenuItem, ICanRecieveMessage
     {
         private readonly IMeanCost meanAlgorithm;

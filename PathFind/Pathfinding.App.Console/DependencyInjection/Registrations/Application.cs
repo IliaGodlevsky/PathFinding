@@ -33,7 +33,6 @@ using Pathfinding.App.Console.Model.Visualizations.Containers;
 using Pathfinding.App.Console.Serialization;
 using Pathfinding.App.Console.Settings;
 using Pathfinding.App.Console.Units;
-using Pathfinding.App.Console.ValueInput;
 using Pathfinding.App.Console.ValueInput.UserInput;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Modules;
