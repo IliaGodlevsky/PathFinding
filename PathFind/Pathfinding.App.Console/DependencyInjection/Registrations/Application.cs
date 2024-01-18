@@ -30,7 +30,6 @@ using Pathfinding.App.Console.Model.PathfindingActions;
 using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.App.Console.Model.Visualizations;
 using Pathfinding.App.Console.Model.Visualizations.Containers;
-using Pathfinding.App.Console.Serialization;
 using Pathfinding.App.Console.Settings;
 using Pathfinding.App.Console.Units;
 using Pathfinding.App.Console.ValueInput.UserInput;
@@ -87,8 +86,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterType<AppLayout>().As<ICanRecieveMessage>().SingleInstance().AutoActivate();
 
-                builder.RegisterUnit<MainUnit, AnswerExitMenuItem>(new UnitParamtresFactory());
-                builder.RegisterUnits<ExitMenuItem>(new UnitParamtresFactory(), Graph, Process, Range);
+                builder.RegisterUnits(new UnitParamtresFactory(), PathfindingUnits.Main, Graph, Process, Range, Algorithms);
 
                 builder.RegisterType<Service>().As<IService>().SingleInstance();
                 builder.RegisterDecorator<CacheService, IService>();
@@ -110,7 +108,6 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterVisualizionContainer<VisualizedVertices>(Constants.ObstacleColorKey);
                 builder.RegisterVisualizionContainer<VisualizedVertices>(Constants.CrossedPathColorKey);
 
-                builder.RegisterUnit<AlgorithmChooseUnit, ExitMenuItem>(new UnitParamtresFactory());
                 builder.RegisterType<AlgorithmsUnitMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
 
                 builder.RegisterType<PathfindingRangeMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
@@ -203,7 +200,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterUnit<GraphSharingUnit, ExitMenuItem>(new UnitParamtresFactory());
+                builder.RegisterUnit<GraphSharingUnit>(new UnitParamtresFactory());
                 builder.RegisterType<GraphSharingUnitMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main).SingleInstance();
 
                 builder.RegisterType<SaveGraphMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
@@ -236,7 +233,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterUnit<GraphEditorUnit, ExitMenuItem>(new UnitParamtresFactory());
+                builder.RegisterUnit<GraphEditorUnit>(new UnitParamtresFactory());
                 builder.RegisterType<EditorKeysMenuItem>().Keyed<IMenuItem>(PathfindingUnits.KeysUnit).SingleInstance();
                 builder.RegisterType<EditorUnitMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ReverseVertexMenuItem>().Keyed<IMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
@@ -251,7 +248,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterUnit<ColorsUnit, ExitMenuItem>(new UnitParamtresFactory());
+                builder.RegisterUnit<ColorsUnit>(new UnitParamtresFactory());
                 builder.RegisterInstance(Colours.Default).As<SettingsBase>().SingleInstance();
                 builder.RegisterType<ColorsUnitMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main).SingleInstance();
                 builder.RegisterType<RegularVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
@@ -312,8 +309,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterUnit<PathfindingVisualizationUnit, ExitMenuItem>(new VisualizationUnitParametresFactory());
-                builder.RegisterType<VisualizationMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Process).SingleInstance();
+                builder.RegisterUnit<PathfindingVisualizationUnit>(new VisualizationUnitParametresFactory());
+                builder.RegisterType<VisualizationMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
                 builder.RegisterType<ApplyVisualizationMenuItem>().Keyed<IMenuItem>(Visual).SingleInstance();
                 builder.RegisterType<EnterAnimationDelayMenuItem>().Keyed<IMenuItem>(Visual).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<VisitedVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
@@ -327,8 +324,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterUnit<PathfindingHistoryUnit, ExitMenuItem>(new UnitParamtresFactory());
-                builder.RegisterType<HistoryMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Process).SingleInstance();
+                builder.RegisterUnit<PathfindingHistoryUnit>(new UnitParamtresFactory());
+                builder.RegisterType<HistoryMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
                 builder.RegisterType<ApplyHistoryMenuItem>().Keyed<IMenuItem>(History).SingleInstance();
                 //builder.RegisterType<ClearHistoryMenuItem>().Keyed<IMenuItem>(History).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ShowHistoryMenuItem>().Keyed<IMenuItem>(History).As<ICanRecieveMessage>().SingleInstance();
@@ -353,9 +350,9 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterUnit<PathfindingStatisticsUnit, ExitMenuItem>(new UnitParamtresFactory());
-                builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Process).SingleInstance();
-                builder.RegisterType<ApplyStatisticsMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Statistics).SingleInstance();
+                builder.RegisterUnit<PathfindingStatisticsUnit>(new UnitParamtresFactory());
+                builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
+                builder.RegisterType<ApplyStatisticsMenuItem>().Keyed<IMenuItem>(Statistics).SingleInstance();
             }
         }
 
@@ -363,7 +360,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterUnit<KeysUnit, ExitMenuItem>(new UnitParamtresFactory());
+                builder.RegisterUnit<KeysUnit>(new UnitParamtresFactory());
                 builder.RegisterInstance(Keys.Default).As<SettingsBase>().SingleInstance();
                 builder.RegisterType<KeysUnitMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main).SingleInstance();
                 builder.RegisterType<RegularKeysMenuItem>().Keyed<IMenuItem>(PathfindingUnits.KeysUnit).SingleInstance();

@@ -36,7 +36,7 @@ namespace Pathfinding.App.Console.Extensions
                 Width = graphEntity.Width,
                 Length = graphEntity.Length,
                 Vertices = mapper.Map<VertexAssembleDto[]>(vertexEntities.Values).ToReadOnly(),
-                Neighborhood = neighbors.ToDictionary(x => x.Key, x => mapper.Map<VertexAssembleDto[]>(x.Value).ToReadOnly())
+                Neighborhood = neighbors.ToDictionary(x => x.Key, x => (IReadOnlyCollection<VertexAssembleDto>)mapper.Map<VertexAssembleDto[]>(x.Value).ToReadOnly())
             };
             return mapper.Map<IGraph<Vertex>>(readDto);
         }

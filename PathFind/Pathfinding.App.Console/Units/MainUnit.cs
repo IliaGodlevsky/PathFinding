@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.MenuItems;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
@@ -14,22 +15,21 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.Units
 {
-    internal sealed class MainUnit : Unit, ICanRecieveMessage
+    internal sealed class MainUnit(IReadOnlyCollection<IMenuItem> menuItems,
+        IInput<Answer> input,
+        IUndo undo,
+        ILog log) : Unit(menuItems), ICanRecieveMessage
     {
-        private readonly IUndo undo;
-        private readonly ILog log;
+        private readonly IUndo undo = undo;
+        private readonly ILog log = log;
+        private readonly Lazy<IMenuItem> exit 
+            = new(() => new AnswerExitMenuItem(input));
+
+        protected override IMenuItem ExitMenuItem => exit.Value;
 
         private GraphField Field { get; set; } = GraphField.Empty;
 
         private IGraph<Vertex> Graph { get; set; } = Graph<Vertex>.Empty;
-
-        public MainUnit(IReadOnlyCollection<IMenuItem> menuItems,
-            IUndo undo,
-            ILog log) : base(menuItems)
-        {
-            this.undo = undo;
-            this.log = log;
-        }
 
         private bool IsGraphCreated() => Graph != Graph<Vertex>.Empty;
 

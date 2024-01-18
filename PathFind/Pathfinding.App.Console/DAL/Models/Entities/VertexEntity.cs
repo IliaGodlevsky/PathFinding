@@ -9,15 +9,16 @@ namespace Pathfinding.App.Console.DAL.Models.Entities
     [BsonTable(DbTables.Vertices)]
     internal class VertexEntity : IEntity
     {
+        [Index]
         [BsonId]
         [NotNull]
-        [Index]
-        [Identity(true)]
+        [Identity]
         public int Id { get; set; }
 
-        [NotNull]
         [Index]
-        [Reference(DbTables.Graphs, nameof(GraphEntity.Id), OnDelete.Cascade)]
+        [NotNull]
+        [Reference(DbTables.Graphs, nameof(GraphEntity.Id),
+            ReferenceAttribute.OnDeleteCascade)]
         public int GraphId { get; set; }
 
         [NotNull]

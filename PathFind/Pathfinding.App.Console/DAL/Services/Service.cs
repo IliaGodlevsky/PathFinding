@@ -57,7 +57,7 @@ namespace Pathfinding.App.Console.DAL.Services
             }).ToReadOnly());
         }
 
-        public bool AddRange((int Order, Vertex Vertex)[] vertices, int graphId)
+        public bool AddRange(IEnumerable<(int Order, Vertex Vertex)> vertices, int graphId)
         {
             return Transaction(unitOfWork =>
             {
@@ -110,7 +110,7 @@ namespace Pathfinding.App.Console.DAL.Services
             });
         }
 
-        public bool UpdateRange((int Order, Vertex Vertex)[] vertices, int graphId)
+        public bool UpdateRange(IEnumerable<(int Order, Vertex Vertex)> vertices, int graphId)
         {
             return Transaction(unitOfWork =>
             {

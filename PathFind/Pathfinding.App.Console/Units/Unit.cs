@@ -1,4 +1,6 @@
 ﻿using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.MenuItems;
+using Shared.Extensions;
 using Shared.Primitives.Extensions;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,9 @@ namespace Pathfinding.App.Console.Units
     {
         private IReadOnlyCollection<IMenuItem> MenuItems { get; }
 
+        protected virtual IMenuItem ExitMenuItem { get; } 
+            = new ExitMenuItem();
+
         protected Unit(IReadOnlyCollection<IMenuItem> menuItems)
         {
             MenuItems = menuItems;
@@ -18,14 +23,15 @@ namespace Pathfinding.App.Console.Units
         {
             return MenuItems
                 .Where(CanBeExecuted)
+                .Append(ExitMenuItem)
                 .OrderByOrderAttribute()
-                .ToList()
-                .AsReadOnly();
+                .ToReadOnly();
         }
 
         private static bool CanBeExecuted(IMenuItem item)
         {
-            bool canBeExecuted = item is IConditionedMenuItem m && m.CanBeExecuted();
+            bool canBeExecuted = item is IConditionedMenuItem m 
+                && m.CanBeExecuted();
             return item is not IConditionedMenuItem || canBeExecuted;
         }
     }

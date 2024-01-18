@@ -11,8 +11,8 @@ namespace Pathfinding.App.Console.DAL.Models.Entities
     {
         [BsonId]
         [NotNull]
-        [Identity(true)]
         [Index]
+        [Identity]
         public int Id { get; set; }
 
         [NotNull]

@@ -65,10 +65,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL\Attributes\BsonTableAttribute.cs" />
+    <Compile Include="DAL\Attributes\DefaultAttribute.cs" />
     <Compile Include="DAL\Attributes\IdentityAttribute.cs" />
     <Compile Include="DAL\Attributes\NotNullAttribute.cs" />
     <Compile Include="DAL\Attributes\ReferenseAttribute.cs" />
     <Compile Include="DAL\Attributes\SqliteBuildAttribute.cs" />
+    <Compile Include="DAL\Attributes\UniqueAttribute.cs" />
     <Compile Include="DAL\DbTables.cs" />
     <Compile Include="DAL\Interface\ISqliteBuildAttribute.cs" />
     <Compile Include="DAL\Models\TransferObjects\AlgorithmCreateDto.cs" />
@@ -191,7 +193,6 @@
     <Compile Include="Model\VertexActions\NeighbourhoodActions\ExitAction.cs" />
     <Compile Include="Model\VertexActions\NeighbourhoodActions\IncludeVertexCommand.cs" />
     <Compile Include="Model\VertexActions\NeighbourhoodActions\NeighbourhoodAction.cs" />
-    <Compile Include="Serialization\JsonSerializer.cs" />
     <Compile Include="Model\Visualizations\Containers\VisualizedEnqueued.cs" />
     <Compile Include="Model\Visualizations\Containers\NullVisualizedVertices.cs" />
     <Compile Include="Model\Visualizations\Containers\VisualizedVisited.cs" />

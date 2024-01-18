@@ -50,7 +50,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
             var neighbours = connection.Query<NeighborEntity>(query, transaction: transaction);
             return neighbours
                 .GroupBy(x => x.VertexId)
-                .ToDictionary(x => x.Key, x => x.ToReadOnly())
+                .ToDictionary(x => x.Key, x => (IReadOnlyCollection<NeighborEntity>)x.ToReadOnly())
                 .AsReadOnly();
         }
     }

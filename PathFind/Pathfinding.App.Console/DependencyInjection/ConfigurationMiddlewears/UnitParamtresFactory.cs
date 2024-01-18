@@ -1,9 +1,9 @@
 ﻿using Autofac;
 using Autofac.Core;
 using Pathfinding.App.Console.Interface;
+using Shared.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 {
@@ -16,7 +16,7 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 
         private static IReadOnlyCollection<TValue> Resolve<TValue>(IComponentContext context, Type key)
         {
-            return context.ResolveKeyed<IReadOnlyCollection<TValue>>(key).ToArray();
+            return context.ResolveKeyed<IReadOnlyCollection<TValue>>(key).ToReadOnly();
         }
 
         private static TypedParameter GetParameter<TValue>(object value)

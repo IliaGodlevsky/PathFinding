@@ -19,23 +19,21 @@ namespace Pathfinding.App.Console.DependencyInjection
 {
     internal static class AutofacExtensions
     {
-        public static void RegisterUnits<TExit>(this ContainerBuilder builder, IParametresFactory factory, params Type[] units)
-            where TExit : IMenuItem
+        public static void RegisterUnits(this ContainerBuilder builder, 
+            IParametresFactory factory, params Type[] units)
         {
-            var resolveMiddleware = new UnitResolveMiddleware(RegistrationConstants.UnitTypeKey, factory, units);
-            builder.RegisterTypes(units).WithMetadata(RegistrationConstants.UnitTypeKey, type => type).AsSelf()
-                .AsImplementedInterfaces().AutoActivate().SingleInstance().ConfigurePipeline(p => p.Use(resolveMiddleware));
-            foreach (var unit in units)
-            {
-                builder.RegisterType<TExit>().Keyed<IMenuItem>(unit).SingleInstance();
-            }
+            string key = RegistrationConstants.UnitTypeKey;
+            var resolveMiddleware = new UnitResolveMiddleware(key, factory, units);
+            builder.RegisterTypes(units).WithMetadata(key, type => type)
+                .AsSelf().AsImplementedInterfaces().AutoActivate().SingleInstance()
+                .ConfigurePipeline(p => p.Use(resolveMiddleware));
         }
 
-        public static void RegisterUnit<TUnit, TExit>(this ContainerBuilder builder, IParametresFactory factory)
+        public static void RegisterUnit<TUnit>(this ContainerBuilder builder,
+            IParametresFactory factory)
             where TUnit : IUnit
-            where TExit : IMenuItem
         {
-            builder.RegisterUnits<TExit>(factory, typeof(TUnit));
+            builder.RegisterUnits(factory, typeof(TUnit));
         }
 
         public static IReadOnlyDictionary<TKey, TValue> ResolveWithMetadata<TKey, TValue>(this IComponentContext context, string key)

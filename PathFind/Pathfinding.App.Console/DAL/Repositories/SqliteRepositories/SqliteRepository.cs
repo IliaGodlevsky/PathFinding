@@ -13,30 +13,20 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 {
     internal abstract class SqliteRepository<T> where T : class, IEntity
     {
-        private sealed class PropertyName : ISqliteBuildAttribute
+        private sealed class PropertyName(string text) : ISqliteBuildAttribute
         {
             public int Order { get; } = 2;
 
-            public string Text { get; }
-
-            public PropertyName(string text)
-            {
-                Text = text;
-            }
+            public string Text { get; } = text;
         }
 
-        private sealed class PropertyType : ISqliteBuildAttribute
+        private sealed class PropertyType(Type type) : ISqliteBuildAttribute
         {
             private static readonly IReadOnlyDictionary<Type, string> CSharpToSQLiteTypeMap;
 
             public int Order { get; } = 3;
 
-            public string Text { get; }
-
-            public PropertyType(Type type)
-            {
-                Text = CSharpToSQLiteTypeMap[type];
-            }
+            public string Text { get; } = CSharpToSQLiteTypeMap[type];
 
             static PropertyType()
             {
@@ -80,7 +70,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
         protected readonly IDbTransaction transaction;
 
         protected SqliteRepository(IDbConnection connection,
-            IDbTransaction transaction)
+                                   IDbTransaction transaction)
         {
             this.connection = connection;
             this.transaction = transaction;
@@ -114,8 +104,10 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 
         public bool Delete(int id)
         {
-            connection.Query(DeleteQuery, new { Id = id }, transaction);
-            return true;
+            var parametres = new { Id = id };
+            connection.Query(DeleteQuery, parametres, transaction);
+            var result = connection.Query<T>(SelectQuery, parametres, transaction);
+            return !result.Any();
         }
 
         public T Read(int id)
@@ -143,16 +135,15 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 
         private static string GetCreateTableScript()
         {
-            var attributes = Type.GetProperties().Select(p =>
-            {
-                return p.GetCustomAttributes<SqliteBuildAttribute>()
+            string attributes = Type.GetProperties().Select(p => 
+                    p.GetCustomAttributes<SqliteBuildAttribute>()
                     .OfType<ISqliteBuildAttribute>()
                     .Append(new PropertyName(p.Name))
                     .Append(new PropertyType(p.PropertyType))
                     .OrderBy(x => x.Order)
                     .Select(x => x.Text)
-                    .To(texts => string.Join(" ", texts));
-            }).To(props => string.Join(",\n", props));
+                    .To(texts => string.Join(" ", texts)))
+                .To(props => string.Join(",\n", props));
             return $"CREATE TABLE IF NOT EXISTS {TableName} \n({attributes})";
         }
 
@@ -161,14 +152,14 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
             return Type.GetProperties()
                 .Where(p => Attribute.IsDefined(p, typeof(IndexAttribute)))
                 .Select(p => $"CREATE INDEX IF NOT EXISTS idx_{TableName}_{p.Name} ON {TableName}({p.Name})")
-                .To(lines => string.Join(",\n", lines));
+                .To(lines => string.Join(";\n", lines));
         }
 
         private static string GetInsertQuery()
         {
             var properties = GetPropertiesNames();
             string props = string.Join(", ", properties);
-            var values = string.Join(", ", properties.Select(p => $"@{p}"));
+            string values = string.Join(", ", properties.Select(p => $"@{p}"));
             string query = $"INSERT INTO {TableName} ({props}) " +
                 $"VALUES ({values}); SELECT LAST_INSERT_ROWID()";
             return query;

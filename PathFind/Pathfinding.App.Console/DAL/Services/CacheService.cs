@@ -158,7 +158,7 @@ namespace Pathfinding.App.Console.DAL.Services
             return isDeleted;
         }
 
-        public bool AddRange((int Order, Vertex Vertex)[] vertices, int graphId)
+        public bool AddRange(IEnumerable<(int Order, Vertex Vertex)> vertices, int graphId)
         {
             bool added = service.AddRange(vertices, graphId);
             if (added)
@@ -182,7 +182,7 @@ namespace Pathfinding.App.Console.DAL.Services
             return removed;
         }
 
-        public bool UpdateRange((int Order, Vertex Vertex)[] vertices, int graphId)
+        public bool UpdateRange(IEnumerable<(int Order, Vertex Vertex)> vertices, int graphId)
         {
             bool updated = service.UpdateRange(vertices, graphId);
             if (updated)

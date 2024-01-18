@@ -40,11 +40,11 @@ namespace Pathfinding.App.Console.DAL.Interface
 
         bool UpdateVertices(IEnumerable<Vertex> vertices, int graphId);
 
-        bool AddRange((int Order, Vertex Vertex)[] vertices, int graphId);
+        bool AddRange(IEnumerable<(int Order, Vertex Vertex)> vertices, int graphId);
 
         bool RemoveNeighbors(IReadOnlyDictionary<Vertex, IReadOnlyCollection<Vertex>> neighborhoods);
 
-        bool UpdateRange((int Order, Vertex Vertex)[] vertices, int graphId);
+        bool UpdateRange(IEnumerable<(int Order, Vertex Vertex)> vertices, int graphId);
 
         bool RemoveRange(IEnumerable<Vertex> vertices, int graphId);
 

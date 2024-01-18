@@ -28,13 +28,14 @@ namespace Shared.Extensions
 
     public static class IEnumerableExtension
     {
-        public static IReadOnlyCollection<T> ToReadOnly<T>(this IEnumerable<T> collection)
+        public static IReadOnlyList<T> ToReadOnly<T>(this IEnumerable<T> collection)
         {
-            switch (collection)
+            return collection switch
             {
-                case IList<T> list: return new ReadOnlyCollection<T>(list);
-                default: return Array.AsReadOnly(collection.ToArray());
-            }
+                ReadOnlyCollection<T> readOnly => readOnly,
+                IList<T> list => new ReadOnlyCollection<T>(list),
+                _ => Array.AsReadOnly(collection.ToArray()),
+            };
         }
 
         public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> items)

@@ -11,12 +11,13 @@ namespace Pathfinding.App.Console.DAL.Models.Entities
     {
         [BsonId]
         [NotNull]
-        [Identity(true)]
+        [Identity]
         public int Id { get; set; }
 
-        [NotNull]
         [Index]
-        [Reference(DbTables.Graphs, nameof(GraphEntity.Id), OnDelete.Cascade)]
+        [NotNull]
+        [Reference(DbTables.Graphs, nameof(GraphEntity.Id),
+            ReferenceAttribute.OnDeleteCascade)]
         public int GraphId { get; set; }
 
         public string Statistics { get; set; }

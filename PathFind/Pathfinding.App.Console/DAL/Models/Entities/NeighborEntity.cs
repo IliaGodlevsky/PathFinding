@@ -11,7 +11,7 @@ namespace Pathfinding.App.Console.DAL.Models.Entities
     {
         [BsonId]
         [NotNull]
-        [Identity(true)]
+        [Identity]
         public int Id { get; set; }
 
         [NotNull]
@@ -20,7 +20,8 @@ namespace Pathfinding.App.Console.DAL.Models.Entities
 
         [NotNull]
         [Index]
-        [Reference(DbTables.Vertices, nameof(VertexEntity.Id), OnDelete.Cascade)]
+        [Reference(DbTables.Vertices, nameof(VertexEntity.Id), 
+            ReferenceAttribute.OnDeleteCascade)]
         public int VertexId { get; set; }
     }
 }

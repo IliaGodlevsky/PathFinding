@@ -6,14 +6,9 @@ using Pathfinding.App.Console.Model;
 namespace Pathfinding.App.Console.MenuItems
 {
     [LowestPriority]
-    internal sealed class AnswerExitMenuItem : ExitMenuItem
+    internal sealed class AnswerExitMenuItem(IInput<Answer> input) : ExitMenuItem
     {
-        private readonly IInput<Answer> input;
-
-        public AnswerExitMenuItem(IInput<Answer> input)
-        {
-            this.input = input;
-        }
+        private readonly IInput<Answer> input = input;
 
         public override void Execute()
         {

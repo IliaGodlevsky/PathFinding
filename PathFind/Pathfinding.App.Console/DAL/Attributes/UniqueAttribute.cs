@@ -3,10 +3,10 @@
 namespace Pathfinding.App.Console.DAL.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
-    internal sealed class NotNullAttribute : SqliteBuildAttribute
+    internal sealed class UniqueAttribute : SqliteBuildAttribute
     {
-        public NotNullAttribute() 
-            : base("NOT NULL", 4)
+        public UniqueAttribute() 
+            : base("UNIQUE", 5)
         {
         }
     }

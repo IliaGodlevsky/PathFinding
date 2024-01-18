@@ -54,7 +54,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
             var query = Query.In(nameof(NeighborEntity.VertexId), bsonIds);
             return collection.Find(query)
                 .GroupBy(x => x.VertexId)
-                .ToDictionary(x => x.Key, x => x.ToReadOnly())
+                .ToDictionary(x => x.Key, x => (IReadOnlyCollection<NeighborEntity>)x.ToReadOnly())
                 .AsReadOnly();
         }
     }

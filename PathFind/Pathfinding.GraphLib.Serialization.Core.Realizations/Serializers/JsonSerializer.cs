@@ -5,9 +5,9 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Pathfinding.App.Console.Serialization
+namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers
 {
-    internal sealed class JsonSerializer<T> : ISerializer<T>
+    public sealed class JsonSerializer<T> : ISerializer<T>
     {
         public T DeserializeFrom(Stream stream)
         {
