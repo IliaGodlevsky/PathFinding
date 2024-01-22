@@ -20,13 +20,13 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
             collection.EnsureIndex(x => x.VertexId);
         }
 
-        public NeighborEntity AddNeighbour(NeighborEntity neighbour)
+        public NeighborEntity Insert(NeighborEntity neighbour)
         {
             collection.Insert(neighbour);
             return neighbour;
         }
 
-        public IEnumerable<NeighborEntity> AddNeighbours(IEnumerable<NeighborEntity> neighbours)
+        public IEnumerable<NeighborEntity> Insert(IEnumerable<NeighborEntity> neighbours)
         {
             collection.InsertBulk(neighbours);
             return neighbours;

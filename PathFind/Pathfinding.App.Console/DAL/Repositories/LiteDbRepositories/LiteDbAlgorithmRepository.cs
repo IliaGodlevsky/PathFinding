@@ -16,14 +16,16 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
             collection.EnsureIndex(x => x.GraphId);
         }
 
-        public int AddMany(IEnumerable<AlgorithmEntity> entity)
+        public IEnumerable<AlgorithmEntity> Insert(IEnumerable<AlgorithmEntity> entity)
         {
-            return collection.InsertBulk(entity);
+            collection.InsertBulk(entity);
+            return entity;
         }
 
-        public void AddOne(AlgorithmEntity entity)
+        public AlgorithmEntity Insert(AlgorithmEntity entity)
         {
             collection.Insert(entity);
+            return entity;
         }
 
         public bool DeleteByGraphId(int graphId)

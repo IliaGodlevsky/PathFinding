@@ -7,14 +7,14 @@ namespace Pathfinding.App.Console.DAL.Interface
     {
         IEnumerable<VertexEntity> GetVerticesByGraphId(int graphId);
 
-        IEnumerable<VertexEntity> AddVertices(IEnumerable<VertexEntity> vertices);
+        IEnumerable<VertexEntity> Insert(IEnumerable<VertexEntity> vertices);
 
         bool DeleteVerticesByGraphId(int graphId);
 
-        bool UpdateVertex(VertexEntity vertex);
+        bool Update(VertexEntity vertex);
 
         bool UpdateVertices(IEnumerable<VertexEntity> vertices);
 
-        VertexEntity GetVertexById(int vertexId);
+        VertexEntity Read(int vertexId);
     }
 }

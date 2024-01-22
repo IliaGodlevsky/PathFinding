@@ -14,18 +14,6 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
         {
         }
 
-        public RangeEntity AddRange(RangeEntity entity)
-        {
-            Insert(entity);
-            return entity;
-        }
-
-        public IEnumerable<RangeEntity> AddRange(IEnumerable<RangeEntity> entities)
-        {
-            Insert(entities);
-            return entities;
-        }
-
         public bool DeleteByGraphId(int graphId)
         {
             string query = $"DELETE FROM {TableName} WHERE {nameof(RangeEntity.GraphId)} = @GraphId";

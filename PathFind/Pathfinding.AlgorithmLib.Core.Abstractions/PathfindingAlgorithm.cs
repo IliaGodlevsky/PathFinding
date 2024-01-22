@@ -49,7 +49,9 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
                         CurrentVertex = GetNextVertex();
                         VisitCurrentVertex();
                     }
-                    subPaths.Add(GetSubPath());
+                    var subPath = GetSubPath();
+                    subPaths.Add(subPath);
+                    RaiseSubPathFound(subPath);
                     DropState();
                 }
             }

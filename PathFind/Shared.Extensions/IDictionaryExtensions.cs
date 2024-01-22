@@ -46,9 +46,9 @@ namespace Shared.Extensions
             }
         }
 
-        public static ReadOnlyDictionary<TKey, TValue> AsReadOnly<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
+        public static IReadOnlyDictionary<TKey, TValue> AsReadOnly<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
         {
-            return new(dictionary);
+            return new ReadOnlyDictionary<TKey, TValue>(dictionary);
         }
     }
 }

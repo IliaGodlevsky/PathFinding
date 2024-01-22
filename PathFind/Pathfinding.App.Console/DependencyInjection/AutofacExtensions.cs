@@ -5,7 +5,6 @@ using Autofac.Core.Resolving.Pipeline;
 using Autofac.Features.Metadata;
 using AutoMapper;
 using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DAL.Models.Mappers;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
@@ -19,21 +18,31 @@ namespace Pathfinding.App.Console.DependencyInjection
 {
     internal static class AutofacExtensions
     {
-        public static void RegisterUnits(this ContainerBuilder builder, 
-            IParametresFactory factory, params Type[] units)
+        public static void RegisterUnits(this ContainerBuilder builder, params Type[] units)
         {
-            string key = RegistrationConstants.UnitTypeKey;
-            var resolveMiddleware = new UnitResolveMiddleware(key, factory, units);
-            builder.RegisterTypes(units).WithMetadata(key, type => type)
-                .AsSelf().AsImplementedInterfaces().AutoActivate().SingleInstance()
-                .ConfigurePipeline(p => p.Use(resolveMiddleware));
+            units.ForEach(unit => builder.RegisterUnit(new UnitParamtresFactory(), unit));
         }
 
         public static void RegisterUnit<TUnit>(this ContainerBuilder builder,
             IParametresFactory factory)
             where TUnit : IUnit
         {
-            builder.RegisterUnits(factory, typeof(TUnit));
+            builder.RegisterUnit(factory, typeof(TUnit));
+        }
+
+        public static void RegisterUnit<TUnit>(this ContainerBuilder builder)
+            where TUnit : IUnit
+        {
+            builder.RegisterUnits(typeof(TUnit));
+        }
+
+        public static void RegisterUnit(this ContainerBuilder builder,
+            IParametresFactory factory, Type unit)
+        {
+            var resolveMiddleware 
+                = new UnitResolveMiddleware(RegistrationConstants.UnitTypeKey, unit, factory);
+            builder.RegisterType(unit).AsSelf().AsImplementedInterfaces().AutoActivate()
+                .SingleInstance().ConfigurePipeline(p => p.Use(resolveMiddleware));
         }
 
         public static IReadOnlyDictionary<TKey, TValue> ResolveWithMetadata<TKey, TValue>(this IComponentContext context, string key)
@@ -83,10 +92,11 @@ namespace Pathfinding.App.Console.DependencyInjection
 
         public static void RegisterMapper(this ContainerBuilder builder)
         {
-            builder.RegisterType<HistoryMappingProfile>().As<Profile>().SingleInstance();
-            builder.RegisterType<AlgorithmsMappingProfile>().As<Profile>().SingleInstance();
-            builder.RegisterType<GraphMappingProfile>().As<Profile>().SingleInstance();
-            builder.RegisterType<VerticesMappingProfile>().As<Profile>().SingleInstance();
+            var profileTypes = typeof(Program).Assembly.GetTypes()
+                .Where(t => typeof(Profile).IsAssignableFrom(t))
+                .ToArray();
+
+            builder.RegisterTypes(profileTypes).As<Profile>().SingleInstance();
 
             builder.Register(ctx =>
             {

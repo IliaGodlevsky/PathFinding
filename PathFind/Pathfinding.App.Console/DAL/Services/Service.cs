@@ -21,7 +21,7 @@ namespace Pathfinding.App.Console.DAL.Services
         public Service(IMapper mapper, IUnitOfWorkFactory factory = null)
         {
             this.mapper = mapper;
-            this.factory = factory ?? new InMemoryUnitOfWorkFactory();
+            this.factory = factory ?? new LiteDbInMemoryUnitOfWorkFactory();
         }
 
         public int AddAlgorithm(AlgorithmCreateDto algorithm)
@@ -29,7 +29,7 @@ namespace Pathfinding.App.Console.DAL.Services
             return Transaction(unitOfWork =>
             {
                 var entity = mapper.Map<AlgorithmEntity>(algorithm);
-                unitOfWork.AlgorithmsRepository.AddOne(entity);
+                unitOfWork.AlgorithmsRepository.Insert(entity);
                 return entity.Id;
             });
         }
@@ -46,11 +46,11 @@ namespace Pathfinding.App.Console.DAL.Services
                 int id = unitOfWork.AddGraph(mapper, history.Graph);
                 var algorithms = mapper.Map<AlgorithmEntity[]>(history.Algorithms);
                 algorithms.ForEach(a => a.GraphId = id);
-                unitOfWork.AlgorithmsRepository.AddMany(algorithms);
+                unitOfWork.AlgorithmsRepository.Insert(algorithms);
                 var vertices = history.Range
                     .Select((x, i) => (Order: i, Vertex: history.Graph.Get(x)));
                 var entities = SelectRangeEntities(vertices, id);
-                unitOfWork.RangeRepository.AddRange(entities);
+                unitOfWork.RangeRepository.Insert(entities);
                 var read = mapper.Map<PathfindingHistoryReadDto>(history);
                 read.Id = id;
                 return read;
@@ -62,14 +62,14 @@ namespace Pathfinding.App.Console.DAL.Services
             return Transaction(unitOfWork =>
             {
                 var list = SelectRangeEntities(vertices, graphId);
-                unitOfWork.RangeRepository.AddRange(list);
+                unitOfWork.RangeRepository.Insert(list);
                 return true;
             });
         }
 
         public bool DeleteGraph(int graphId)
         {
-            return Transaction(unitOfWork => unitOfWork.GraphRepository.DeleteGraph(graphId));
+            return Transaction(unitOfWork => unitOfWork.GraphRepository.Delete(graphId));
         }
 
         public IReadOnlyList<GraphEntity> GetAllGraphInfo()
@@ -154,7 +154,7 @@ namespace Pathfinding.App.Console.DAL.Services
         {
             return Transaction(unitOfWork =>
             {
-                var entity = unitOfWork.GraphRepository.GetGraph(graphId);
+                var entity = unitOfWork.GraphRepository.Read(graphId);
                 entity.ObstaclesCount = newCount;
                 return unitOfWork.GraphRepository.Update(entity);
             });
@@ -170,7 +170,7 @@ namespace Pathfinding.App.Console.DAL.Services
                         VertexId = neighborhood.Key.Id,
                         NeighborId = neighbor.Id
                     })).ToReadOnly();
-                unitOfWork.NeighborsRepository.AddNeighbours(list);
+                unitOfWork.NeighborsRepository.Insert(list);
                 return true;
             });
         }

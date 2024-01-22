@@ -7,9 +7,9 @@ namespace Pathfinding.App.Console.DAL.Interface
     {
         IEnumerable<AlgorithmEntity> GetByGraphId(int graphId);
 
-        void AddOne(AlgorithmEntity entity);
+        AlgorithmEntity Insert(AlgorithmEntity entity);
 
-        int AddMany(IEnumerable<AlgorithmEntity> entity);
+        IEnumerable<AlgorithmEntity> Insert(IEnumerable<AlgorithmEntity> entity);
 
         bool DeleteByGraphId(int graphId);
     }

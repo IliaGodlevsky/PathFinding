@@ -118,8 +118,9 @@
     <Compile Include="DAL\Services\Service.cs" />
     <Compile Include="DAL\Interface\IUnitOfWorkFactory.cs" />
     <Compile Include="DAL\Interface\IUnitOfWork.cs" />
-    <Compile Include="DAL\UOF\Factories\InMemoryUnitOfWorkFactory.cs" />
-    <Compile Include="DAL\UOF\Factories\SqliteUnitOfWorkFactory.cs" />
+    <Compile Include="DAL\UOF\Factories\LiteDbInMemoryUnitOfWorkFactory.cs" />
+    <Compile Include="DAL\UOF\Factories\LiteDbInFileUnitOfWorkFactory.cs" />
+    <Compile Include="DAL\UOF\Factories\SqliteInFileUnitOfWorkFactory.cs" />
     <Compile Include="DAL\UOF\LiteDbUnitOfWork.cs" />
     <Compile Include="DAL\UOF\SqliteUnitOfWork.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\KeyResolveMiddlware.cs" />

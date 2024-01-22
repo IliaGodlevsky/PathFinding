@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Pathfinding.App.Console.DAL.UOF.Factories
 {
-    internal sealed class InMemoryUnitOfWorkFactory : IUnitOfWorkFactory
+    internal sealed class LiteDbInMemoryUnitOfWorkFactory : IUnitOfWorkFactory
     {
         private static readonly MemoryStream Memory = new();
 

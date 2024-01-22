@@ -5,9 +5,9 @@ namespace Pathfinding.App.Console.DAL.Interface
 {
     internal interface IRangeRepository
     {
-        RangeEntity AddRange(RangeEntity entity);
+        RangeEntity Insert(RangeEntity entity);
 
-        IEnumerable<RangeEntity> AddRange(IEnumerable<RangeEntity> entities);
+        IEnumerable<RangeEntity> Insert(IEnumerable<RangeEntity> entities);
 
         bool DeleteByVertexId(int vertexId);
 

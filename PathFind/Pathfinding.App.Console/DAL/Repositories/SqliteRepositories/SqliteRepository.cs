@@ -52,9 +52,11 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
             }
         }
 
-        private const string Id = nameof(IEntity.Id);
+        protected const string Id = nameof(IEntity.Id);
 
         private static readonly Type Type = typeof(T);
+        private static readonly IReadOnlyCollection<PropertyInfo> Properties;
+        private static readonly IReadOnlyCollection<string> Names;
 
         private readonly static string DeleteQuery;
         private readonly static string SelectAllQuery;
@@ -80,6 +82,8 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 
         static SqliteRepository()
         {
+            Properties = Type.GetProperties().ToReadOnly();
+            Names = GetPropertiesNames();
             TableName = Type.GetAttributeOrDefault<TableAttribute>().Name;
             InsertQuery = GetInsertQuery();
             UpdateQuery = GetUpdateQuery();
@@ -106,8 +110,8 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
         {
             var parametres = new { Id = id };
             connection.Query(DeleteQuery, parametres, transaction);
-            var result = connection.Query<T>(SelectQuery, parametres, transaction);
-            return !result.Any();
+            var present = connection.Query<T>(SelectQuery, parametres, transaction);
+            return !present.Any();
         }
 
         public T Read(int id)
@@ -117,7 +121,20 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 
         public IEnumerable<T> Insert(IEnumerable<T> entities)
         {
-            return entities.ForEach(x => Insert(x));
+            var values = entities.ToReadOnly();
+            var insertQuery = GetBulkInsertQuery(values);
+            connection.Execute(insertQuery, transaction: transaction);
+            var instertedScript = $"SELECT * FROM {TableName} " +
+                $"ORDER BY {Id} DESC LIMIT {values.Count}";
+            var inserted = connection
+                .Query<T>(instertedScript, transaction: transaction)
+                .Reverse()
+                .ToReadOnly();
+            for (int i = 0; i < values.Count; i++)
+            {
+                values[i].Id = inserted[i].Id;
+            }
+            return values;
         }
 
         public IEnumerable<T> GetAll()
@@ -127,7 +144,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 
         private static IReadOnlyCollection<string> GetPropertiesNames()
         {
-            return Type.GetProperties()
+            return Properties
                 .Where(p => !Attribute.IsDefined(p, typeof(IdentityAttribute)))
                 .Select(p => p.Name)
                 .ToReadOnly();
@@ -135,7 +152,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 
         private static string GetCreateTableScript()
         {
-            string attributes = Type.GetProperties().Select(p => 
+            string attributes = Properties.Select(p => 
                     p.GetCustomAttributes<SqliteBuildAttribute>()
                     .OfType<ISqliteBuildAttribute>()
                     .Append(new PropertyName(p.Name))
@@ -149,7 +166,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 
         private static string GetCreateIndexScript()
         {
-            return Type.GetProperties()
+            return Properties
                 .Where(p => Attribute.IsDefined(p, typeof(IndexAttribute)))
                 .Select(p => $"CREATE INDEX IF NOT EXISTS idx_{TableName}_{p.Name} ON {TableName}({p.Name})")
                 .To(lines => string.Join(";\n", lines));
@@ -157,9 +174,8 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 
         private static string GetInsertQuery()
         {
-            var properties = GetPropertiesNames();
-            string props = string.Join(", ", properties);
-            string values = string.Join(", ", properties.Select(p => $"@{p}"));
+            string props = string.Join(", ", Names);
+            string values = string.Join(", ", Names.Select(p => $"@{p}"));
             string query = $"INSERT INTO {TableName} ({props}) " +
                 $"VALUES ({values}); SELECT LAST_INSERT_ROWID()";
             return query;
@@ -167,10 +183,25 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 
         private static string GetUpdateQuery()
         {
-            var properties = GetPropertiesNames();
-            var props = properties.Select(p => $"{p} = @{p}").ToReadOnly();
-            var values = string.Join(", ", props);
+            var values = Names.Select(p => $"{p} = @{p}")
+                .To(props => string.Join(", ", props));
             return $"UPDATE {TableName} SET {values} WHERE {Id} = @{Id}";
+        }
+
+        private static string GetBulkInsertQuery(IEnumerable<T> items)
+        {
+            var properties = Properties
+                .Where(p => !Attribute.IsDefined(p, typeof(IdentityAttribute)))
+                .ToReadOnly();
+            string result = items.Select(i =>
+            {
+                var props = properties
+                    .Select(p => p.GetValue(i))
+                    .To(values => string.Join(", ", values));
+                return string.Concat("(", props, ")");
+            }).To(str => $"INSERT INTO {TableName} " +
+                $"({string.Join(", ", Names)}) VALUES {string.Join(", ", str)}");
+            return result;
         }
     }
 }

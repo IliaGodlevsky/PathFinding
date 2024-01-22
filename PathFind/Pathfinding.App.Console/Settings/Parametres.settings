@@ -45,10 +45,10 @@
       <Value Profile="(Default)">-</Value>
     </Setting>
     <Setting Name="LiteDbConnectionString" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">pathfinding.ldb</Value>
+      <Value Profile="(Default)">pathfinding.litedb</Value>
     </Setting>
     <Setting Name="SqliteConnectionString" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">pathfinding.db</Value>
+      <Value Profile="(Default)">pathfinding.sqlite</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -16,13 +16,13 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
             collection.EnsureIndex(x => x.GraphId);
         }
 
-        public RangeEntity AddRange(RangeEntity entity)
+        public RangeEntity Insert(RangeEntity entity)
         {
             collection.Insert(entity);
             return entity;
         }
 
-        public IEnumerable<RangeEntity> AddRange(IEnumerable<RangeEntity> entities)
+        public IEnumerable<RangeEntity> Insert(IEnumerable<RangeEntity> entities)
         {
             collection.Insert(entities);
             return entities;

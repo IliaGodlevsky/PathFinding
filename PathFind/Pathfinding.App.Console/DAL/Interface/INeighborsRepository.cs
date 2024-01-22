@@ -5,14 +5,12 @@ namespace Pathfinding.App.Console.DAL.Interface
 {
     internal interface INeighborsRepository
     {
-        IEnumerable<NeighborEntity> AddNeighbours(IEnumerable<NeighborEntity> neighbours);
+        IEnumerable<NeighborEntity> Insert(IEnumerable<NeighborEntity> neighbours);
 
         IReadOnlyDictionary<int, IReadOnlyCollection<NeighborEntity>>
             GetNeighboursForVertices(IEnumerable<int> verticesIds);
 
         bool DeleteNeighbour(int vertexId, int neighbourId);
-
-        NeighborEntity AddNeighbour(NeighborEntity neighbour);
 
         bool DeleteByGraphId(int graphId);
     }

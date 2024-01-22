@@ -9,10 +9,12 @@ using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Settings;
+using Pathfinding.Visualization.Extensions;
 using Shared.Extensions;
 using Shared.Process.EventArguments;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -61,6 +63,11 @@ namespace Pathfinding.App.Console.Units
             graph.Graph.Get(e.Current).VisualizeAsVisited();
         }
 
+        private void OnSubPathFound(object sender, SubPathFoundEventArgs e)
+        {
+            e.SubPath.Select(graph.Graph.Get).Reverse().VisualizeAsPath();
+        }
+
         private void OnVertexEnqueued(object sender, PathfindingEventArgs e)
         {
             graph.Graph.Get(e.Current).VisualizeAsEnqueued();
@@ -85,6 +92,7 @@ namespace Pathfinding.App.Console.Units
             algorithm.VertexEnqueued += OnVertexEnqueued;
             algorithm.Started += OnAlgorithmStarted;
             algorithm.Finished += OnAlgorithmFinished;
+            algorithm.SubPathFound += OnSubPathFound;
         }
 
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)

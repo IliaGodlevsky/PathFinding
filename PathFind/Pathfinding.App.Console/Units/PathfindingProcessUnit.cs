@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
+using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Core.Exceptions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.App.Console.DAL.Models.TransferObjects;
@@ -15,6 +16,7 @@ using Pathfinding.Visualization.Extensions;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Pathfinding.App.Console.Units
@@ -46,10 +48,11 @@ namespace Pathfinding.App.Console.Units
             {
                 var range = rangeBuilder.Range.ToReadOnly();
                 var algorithm = msg.Factory.Create(range);
+                var path = NullGraphPath.Interface;
                 try
                 {
                     PrepareForPathfinding(algorithm, msg.InitStatistics);
-                    FindPath(algorithm);
+                    path = algorithm.FindPath();
                 }
                 catch (PathfindingException ex)
                 {
@@ -57,6 +60,10 @@ namespace Pathfinding.App.Console.Units
                 }
                 finally
                 {
+                    var pathFound = new PathFoundMessage(path);
+                    messenger.SendMany(pathFound, 
+                        Tokens.Statistics, Tokens.History);
+                    input.Input();
                     ClearColors(null, null);
                     algorithm.Dispose();
                 }
@@ -69,22 +76,6 @@ namespace Pathfinding.App.Console.Units
             rangeBuilder.Range.RestoreVerticesVisualState();
             var msg = new StatisticsLineMessage(string.Empty);
             messenger.Send(msg, Tokens.AppLayout);
-        }
-
-        private void FindPath(PathfindingProcess algorithm)
-        {
-            var path = NullGraphPath.Interface;
-            try
-            {
-                path = algorithm.FindPath();
-                path.Select(graph.Graph.Get).VisualizeAsPath();
-            }
-            finally
-            {
-                var msg = new PathFoundMessage(path);
-                messenger.SendMany(msg, Tokens.Statistics, Tokens.History);
-                input.Input();
-            }
         }
 
         private void SetGraph(GraphMessage msg)

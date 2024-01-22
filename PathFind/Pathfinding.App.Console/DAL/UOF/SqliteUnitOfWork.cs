@@ -27,9 +27,9 @@ namespace Pathfinding.App.Console.DAL.UOF
         public INeighborsRepository NeighborsRepository
             => new SqliteNeighborsRepository(connection, transaction);
 
-        public SqliteUnitOfWork()
+        public SqliteUnitOfWork(string connectionString)
         {
-            connection = new(GetConnectionString());
+            connection = new(connectionString);
             connection.Open();
             transaction = connection.BeginTransaction();
         }
@@ -68,13 +68,6 @@ namespace Pathfinding.App.Console.DAL.UOF
         public void SaveChanges()
         {
 
-        }
-
-        private static string GetConnectionString()
-        {
-            string connectionString = Parametres.Default.SqliteConnectionString;
-            string fullPath = Path.Combine(Environment.CurrentDirectory, connectionString);
-            return $"Data Source={fullPath};";
         }
     }
 }

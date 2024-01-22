@@ -5,11 +5,11 @@ namespace Pathfinding.App.Console.DAL.Interface
 {
     internal interface IGraphParametresRepository
     {
-        GraphEntity GetGraph(int graphId);
+        GraphEntity Read(int graphId);
 
-        GraphEntity AddGraph(GraphEntity graph);
+        GraphEntity Insert(GraphEntity graph);
 
-        bool DeleteGraph(int graphId); // should be cascade
+        bool Delete(int graphId); // should be cascade
 
         bool Update(GraphEntity graph);
 

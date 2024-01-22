@@ -11,20 +11,5 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
             IDbTransaction transaction) : base(connection, transaction)
         {
         }
-
-        public GraphEntity AddGraph(GraphEntity graph)
-        {
-            return Insert(graph);
-        }
-
-        public bool DeleteGraph(int graphId)
-        {
-            return Delete(graphId);
-        }
-
-        public GraphEntity GetGraph(int graphId)
-        {
-            return Read(graphId);
-        }
     }
 }

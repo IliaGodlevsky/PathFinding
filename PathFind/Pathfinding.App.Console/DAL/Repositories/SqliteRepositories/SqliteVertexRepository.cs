@@ -1,8 +1,10 @@
 ﻿using Dapper;
 using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
+using Shared.Extensions;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 {
@@ -16,8 +18,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 
         public IEnumerable<VertexEntity> AddVertices(IEnumerable<VertexEntity> vertices)
         {
-            Insert(vertices);
-            return vertices;
+            return Insert(vertices);
         }
 
         public bool DeleteVerticesByGraphId(int graphId)
@@ -25,7 +26,9 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
             string query = $"DELETE FROM {TableName} WHERE {nameof(VertexEntity.GraphId)} = @GraphId";
             var parametres = new { GraphId = graphId };
             connection.Query(query, parametres, transaction);
-            return true;
+            string selectQuery = $"SELECT {Id} FROM {TableName} WHERE {nameof(VertexEntity.GraphId)} = @GraphId";
+            var present = connection.Query<VertexEntity>(selectQuery, parametres, transaction).ToReadOnly();
+            return present.Count == 0;
         }
 
         public VertexEntity GetVertexById(int vertexId)

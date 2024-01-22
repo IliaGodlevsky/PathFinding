@@ -24,13 +24,13 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
             collection.EnsureIndex(x => x.Id);
         }
 
-        public GraphEntity AddGraph(GraphEntity graph)
+        public GraphEntity Insert(GraphEntity graph)
         {
             collection.Insert(graph);
             return graph;
         }
 
-        public bool DeleteGraph(int graphId)
+        public bool Delete(int graphId)
         {
             collection.Delete(graphId);
             verticesRepository.DeleteVerticesByGraphId(graphId);
@@ -45,7 +45,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
             return collection.FindAll();
         }
 
-        public GraphEntity GetGraph(int graphId)
+        public GraphEntity Read(int graphId)
         {
             return collection.FindById(graphId);
         }

@@ -3,7 +3,6 @@ using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 
 namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 {
@@ -14,18 +13,6 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
             IDbTransaction transaction) : base(connection, transaction)
         {
 
-        }
-
-        public int AddMany(IEnumerable<AlgorithmEntity> entity)
-        {
-            var array = entity.ToArray();
-            Insert(entity);
-            return array.Length;
-        }
-
-        public void AddOne(AlgorithmEntity entity)
-        {
-            Insert(entity);
         }
 
         public bool DeleteByGraphId(int graphId)

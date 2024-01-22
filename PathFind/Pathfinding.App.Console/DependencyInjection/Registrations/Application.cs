@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Core.Resolving.Pipeline;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
@@ -86,11 +87,11 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterType<AppLayout>().As<ICanRecieveMessage>().SingleInstance().AutoActivate();
 
-                builder.RegisterUnits(new UnitParamtresFactory(), PathfindingUnits.Main, Graph, Process, Range, Algorithms);
+                builder.RegisterUnits(PathfindingUnits.Main, Graph, Process, Range, Algorithms);
 
                 builder.RegisterType<Service>().As<IService>().SingleInstance();
                 builder.RegisterDecorator<CacheService, IService>();
-                builder.RegisterType<SqliteUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
+                builder.RegisterType<SqliteInFileUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
 
                 builder.RegisterMapper();
 
@@ -200,7 +201,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterUnit<GraphSharingUnit>(new UnitParamtresFactory());
+                builder.RegisterUnit<GraphSharingUnit>();
                 builder.RegisterType<GraphSharingUnitMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main).SingleInstance();
 
                 builder.RegisterType<SaveGraphMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
@@ -233,7 +234,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterUnit<GraphEditorUnit>(new UnitParamtresFactory());
+                builder.RegisterUnit<GraphEditorUnit>();
                 builder.RegisterType<EditorKeysMenuItem>().Keyed<IMenuItem>(PathfindingUnits.KeysUnit).SingleInstance();
                 builder.RegisterType<EditorUnitMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ReverseVertexMenuItem>().Keyed<IMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
@@ -248,7 +249,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterUnit<ColorsUnit>(new UnitParamtresFactory());
+                builder.RegisterUnit<ColorsUnit>();
                 builder.RegisterInstance(Colours.Default).As<SettingsBase>().SingleInstance();
                 builder.RegisterType<ColorsUnitMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main).SingleInstance();
                 builder.RegisterType<RegularVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
@@ -281,7 +282,6 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             public void Apply(ContainerBuilder builder)
             {
                 var stepRuleResolveMiddleware = new KeyResolveMiddlware<string, IStepRule>(PathfindingAlgorithms);
-                var heuristicsResolveMiddleware = new KeyResolveMiddlware<string, IHeuristic>(PathfindingAlgorithms);
                 var combinedResolveMiddleware = new CombinedAlgorithmsResolveMiddleware(PathfindingAlgorithms);
 
                 builder.RegisterType<DijkstraAlgorithmMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Algorithms).SingleInstance()
@@ -324,7 +324,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterUnit<PathfindingHistoryUnit>(new UnitParamtresFactory());
+                builder.RegisterUnit<PathfindingHistoryUnit>();
                 builder.RegisterType<HistoryMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
                 builder.RegisterType<ApplyHistoryMenuItem>().Keyed<IMenuItem>(History).SingleInstance();
                 //builder.RegisterType<ClearHistoryMenuItem>().Keyed<IMenuItem>(History).As<ICanRecieveMessage>().SingleInstance();
@@ -350,7 +350,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterUnit<PathfindingStatisticsUnit>(new UnitParamtresFactory());
+                builder.RegisterUnit<PathfindingStatisticsUnit>();
                 builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
                 builder.RegisterType<ApplyStatisticsMenuItem>().Keyed<IMenuItem>(Statistics).SingleInstance();
             }
@@ -360,7 +360,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         {
             public void Apply(ContainerBuilder builder)
             {
-                builder.RegisterUnit<KeysUnit>(new UnitParamtresFactory());
+                builder.RegisterUnit<KeysUnit>();
                 builder.RegisterInstance(Keys.Default).As<SettingsBase>().SingleInstance();
                 builder.RegisterType<KeysUnitMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main).SingleInstance();
                 builder.RegisterType<RegularKeysMenuItem>().Keyed<IMenuItem>(PathfindingUnits.KeysUnit).SingleInstance();

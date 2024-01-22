@@ -17,7 +17,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
             collection.EnsureIndex(x => x.Id);
         }
 
-        public IEnumerable<VertexEntity> AddVertices(IEnumerable<VertexEntity> vertices)
+        public IEnumerable<VertexEntity> Insert(IEnumerable<VertexEntity> vertices)
         {
             collection.InsertBulk(vertices);
             return vertices;
@@ -28,7 +28,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
             return collection.DeleteMany(x => x.GraphId == graphId) > 0;
         }
 
-        public VertexEntity GetVertexById(int vertexId)
+        public VertexEntity Read(int vertexId)
         {
             return collection.FindById(vertexId);
         }
@@ -38,7 +38,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
             return collection.Find(x => x.GraphId == graphId);
         }
 
-        public bool UpdateVertex(VertexEntity vertex)
+        public bool Update(VertexEntity vertex)
         {
             return collection.Update(vertex);
         }

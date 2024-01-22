@@ -23,7 +23,7 @@ namespace Pathfinding.App.Console.Extensions
         public static IGraph<Vertex> CreateGraph(this IUnitOfWork unitOfWork,
             int graphId, IMapper mapper)
         {
-            var graphEntity = unitOfWork.GraphRepository.GetGraph(graphId);
+            var graphEntity = unitOfWork.GraphRepository.Read(graphId);
             var vertexEntities = unitOfWork.VerticesRepository
                 .GetVerticesByGraphId(graphId)
                 .ToDictionary(x => x.Id);
@@ -46,7 +46,7 @@ namespace Pathfinding.App.Console.Extensions
             return unitOfWork.RangeRepository
                 .GetByGraphId(graphId)
                 .OrderBy(x => x.Position)
-                .Select(x => unitOfWork.VerticesRepository.GetVertexById(x.VertexId))
+                .Select(x => unitOfWork.VerticesRepository.Read(x.VertexId))
                 .Select(x => new Coordinate(x.X, x.Y))
                 .ToReadOnly();
         }
@@ -54,12 +54,12 @@ namespace Pathfinding.App.Console.Extensions
         public static int AddGraph(this IUnitOfWork unitOfWork,
             IMapper mapper, IGraph<Vertex> graph)
         {
-            var graphEnitity = mapper.Map<GraphEntity>(graph);
-            unitOfWork.GraphRepository.AddGraph(graphEnitity);
+            var graphEntity = mapper.Map<GraphEntity>(graph);
+            graphEntity = unitOfWork.GraphRepository.Insert(graphEntity);
             var vertices = mapper.Map<IEnumerable<VertexEntity>>(graph)
-                .ForEach(x => x.GraphId = graphEnitity.Id)
+                .ForEach(x => x.GraphId = graphEntity.Id)
                 .ToReadOnly();
-            unitOfWork.VerticesRepository.AddVertices(vertices);
+            vertices = unitOfWork.VerticesRepository.Insert(vertices).ToReadOnly();
             vertices.Zip(graph, (x, y) => (Entity: x, Vertex: y))
                 .ForEach(x => x.Vertex.Id = x.Entity.Id);
             var neighbours = graph
@@ -68,8 +68,8 @@ namespace Pathfinding.App.Console.Extensions
                     VertexId = x.Id,
                     NeighborId = n.Id
                 })).ToArray();
-            unitOfWork.NeighborsRepository.AddNeighbours(neighbours);
-            return graphEnitity.Id;
+            unitOfWork.NeighborsRepository.Insert(neighbours);
+            return graphEntity.Id;
         }
     }
 }

@@ -6,6 +6,7 @@ using Pathfinding.GraphLib.Core.Interface;
 using Shared.Process.EventHandlers;
 using Shared.Process.Interface;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Pathfinding.AlgorithmLib.Core.Abstractions
@@ -31,6 +32,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         public event PathfindingEventHandler VertexVisited;
         public event PathfindingEventHandler VertexEnqueued;
+        public event SubPathFoundEventHandler SubPathFound;
         public event ProcessEventHandler Started;
         public event ProcessEventHandler Finished;
         public event ProcessEventHandler Interrupted;
@@ -67,6 +69,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             Interrupted = null;
             Paused = null;
             Resumed = null;
+            SubPathFound = null;
             pauseEvent.Dispose();
         }
 
@@ -117,6 +120,11 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         protected void RaiseVertexEnqueued(IVertex vertex)
         {
             VertexEnqueued?.Invoke(this, new(vertex));
+        }
+
+        protected void RaiseSubPathFound(IEnumerable<ICoordinate> subPath)
+        {
+            SubPathFound?.Invoke(this, new(subPath));
         }
 
         protected void ThrowIfDisposed()

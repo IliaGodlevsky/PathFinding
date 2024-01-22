@@ -44,6 +44,8 @@
     <Compile Include="PathfindingEventArgs.cs" />
     <Compile Include="PathfindingEventHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubPathFoundEventArgs.cs" />
+    <Compile Include="SubPathFoundEventHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
