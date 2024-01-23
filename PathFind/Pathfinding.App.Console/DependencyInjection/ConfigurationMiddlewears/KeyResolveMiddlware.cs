@@ -22,7 +22,6 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
             var instances = context.ResolveWithMetadataKeyed<TKey, TValue>(key);
             var type = typeof(IReadOnlyDictionary<TKey, TValue>);
             var param = new TypedParameter(type, instances);
-            var parametres = context.Parameters.ToList();
             context.ChangeParametres(param);
             next(context);
         }

@@ -14,6 +14,7 @@ using Shared.Random;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
@@ -58,16 +59,17 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             length = msg.Length;
         }
 
-        public void Execute()
+        public async void Execute()
         {
             var layers = GetLayers();
             var graph = assemble.AssembleGraph(layers, width, length);
-            int id = service.AddGraph(graph);
             var costRangeMsg = new CostRangeChangedMessage(costRange);
             messenger.Send(costRangeMsg, Tokens.AppLayout);
-            var graphMsg = new GraphMessage(graph, id);
-            messenger.SendMany(graphMsg, Tokens.Visual,
-                Tokens.AppLayout, Tokens.Main, Tokens.Common);
+            var graphMsg = new GraphMessage(graph, 0);
+            messenger.SendMany(graphMsg, Tokens.AppLayout, Tokens.Main);
+            int id = await Task.Run(() => service.AddGraph(graph));
+            graphMsg = new GraphMessage(graph, id);
+            messenger.SendMany(graphMsg, Tokens.Visual, Tokens.Common);
         }
 
         public virtual bool CanBeExecuted()

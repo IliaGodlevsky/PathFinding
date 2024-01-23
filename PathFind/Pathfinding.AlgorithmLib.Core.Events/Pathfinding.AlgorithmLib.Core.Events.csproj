@@ -48,6 +48,10 @@
     <Compile Include="SubPathFoundEventHandler.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Interface\Pathfinding.AlgorithmLib.Core.Interface.csproj">
+      <Project>{9AB4F0E3-6693-4ACD-95BC-24D04134781F}</Project>
+      <Name>Pathfinding.AlgorithmLib.Core.Interface</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
       <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface</Name>

@@ -6,6 +6,8 @@ using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.App.Console.Settings;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
 {
@@ -17,13 +19,17 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
         {
         }
 
-        public override void Execute()
+        public override async void Execute()
         {
             base.Execute();
-            service.UpdateVertices(processed, graph.Id);
+            var vertices = processed.ToArray();
             processed.Clear();
             int obstacles = graph.Graph.GetObstaclesCount();
-            service.UpdateObstaclesCount(obstacles, graph.Id);
+            await Task.Run(() =>
+            {
+                service.UpdateVertices(processed, graph.Id);
+                service.UpdateObstaclesCount(obstacles, graph.Id);
+            });
         }
 
         protected override VertexActions GetActions()

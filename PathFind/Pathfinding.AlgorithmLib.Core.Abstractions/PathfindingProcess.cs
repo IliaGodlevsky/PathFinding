@@ -122,7 +122,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             VertexEnqueued?.Invoke(this, new(vertex));
         }
 
-        protected void RaiseSubPathFound(IEnumerable<ICoordinate> subPath)
+        protected void RaiseSubPathFound(IGraphPath subPath)
         {
             SubPathFound?.Invoke(this, new(subPath));
         }

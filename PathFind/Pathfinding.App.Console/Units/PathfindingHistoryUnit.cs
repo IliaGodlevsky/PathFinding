@@ -16,6 +16,7 @@ using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.Units
 {
@@ -101,15 +102,16 @@ namespace Pathfinding.App.Console.Units
             history.Statistics = msg.Statistics;
         }
 
-        private void OnPathFound(PathFoundMessage msg)
+        private async void OnPathFound(PathFoundMessage msg)
         {
             history.Path = msg.Path.ToReadOnly();
             history.Visited = visitedVertices.ToReadOnly();
             history.GraphId = Graph.Id;
-            service.AddAlgorithm(history);
-            history = new();
             visitedVertices.Clear();
             algorithm = PathfindingProcess.Idle;
+            var copy = history;
+            history = new();
+            await Task.Run(() => service.AddAlgorithm(copy));
         }
 
         private bool IsHistoryApplied() => isHistoryApplied;

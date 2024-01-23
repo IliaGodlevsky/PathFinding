@@ -33,6 +33,7 @@ using Pathfinding.App.Console.Model.Visualizations;
 using Pathfinding.App.Console.Model.Visualizations.Containers;
 using Pathfinding.App.Console.Settings;
 using Pathfinding.App.Console.Units;
+using Pathfinding.App.Console.ValueInput;
 using Pathfinding.App.Console.ValueInput.UserInput;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Modules;
@@ -53,6 +54,8 @@ using Pathfinding.Logging.Loggers;
 using Pathfinding.Visualization.Core.Abstractions;
 using Shared.Executable;
 using Shared.Extensions;
+using Shared.Primitives.Attributes;
+using Shared.Primitives.Extensions;
 using Shared.Random;
 using Shared.Random.Realizations;
 using System;
@@ -100,8 +103,9 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main)
                     .As<ICanRecieveMessage>().SingleInstance();
 
-                builder.RegisterType<VertexVisualizations>().CommunicateContainers().SingleInstance()
-                    .AsImplementedInterfaces().ConfigurePipeline(p => p.Use(new AllVisualizedVerticesMiddleware()));
+                builder.RegisterType<VertexVisualizations>().CommunicateContainers().SingleInstance().AsImplementedInterfaces()
+                    .ConfigurePipeline(p => p.Use(new VerticesVisualizationMiddleware(RegistrationConstants.VisualizedTypeKey)));
+                    
                 builder.RegisterVisualizionContainer<VisualizedVertices>(Constants.TargetColorKey);
                 builder.RegisterVisualizionContainer<VisualizedVertices>(Constants.SourceColorKey);
                 builder.RegisterVisualizionContainer<VisualizedVertices>(Constants.RegularColorKey);
@@ -184,6 +188,17 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance();
                 builder.RegisterType<ConsoleUserKeyInput>().As<IInput<ConsoleKey>>().SingleInstance();
                 builder.RegisterType<ConsoleUserTimeSpanInput>().As<IInput<TimeSpan>>().SingleInstance();
+                builder.RegisterType<FilePathInput>().As<IFilePathInput>().SingleInstance();
+                builder.RegisterType<AddressInput>().As<IInput<(string, int)>>().SingleInstance();
+            }
+        }
+
+        private sealed class TestInputComponent /*: IComponent*/
+        {
+            public void Apply(ContainerBuilder builder)
+            {
+                builder.RegisterType<TestInput>().AsImplementedInterfaces().SingleInstance();
+                builder.RegisterType<LiteDbInMemoryUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
             }
         }
 
@@ -214,9 +229,6 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 //builder.RegisterType<SavePathfindingRangeMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
                 //builder.RegisterType<LoadPathfindingRangeMenuItem>().Keyed<IMenuItem>(Sharing)
                 //    .As<ICanRecieveMessage>().SingleInstance();
-
-                builder.RegisterType<FilePathInput>().As<IFilePathInput>().SingleInstance();
-                builder.RegisterType<AddressInput>().As<IInput<(string, int)>>().SingleInstance();
 
                 builder.RegisterType<JsonSerializer<IEnumerable<CoordinateDto>>>().As<ISerializer<IEnumerable<CoordinateDto>>>().SingleInstance();
                 builder.RegisterType<JsonSerializer<IEnumerable<int>>>().As<ISerializer<IEnumerable<int>>>().SingleInstance();

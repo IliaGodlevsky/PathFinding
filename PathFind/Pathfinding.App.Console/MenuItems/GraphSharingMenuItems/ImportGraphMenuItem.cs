@@ -14,6 +14,7 @@ using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 {
@@ -40,27 +41,32 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             this.log = log;
         }
 
-        public virtual void Execute()
+        public virtual async void Execute()
         {
             try
             {
                 var path = InputPath();
-                var imported = ImportGraph(path);
-                var dtos = service.AddPathfindingHistory(imported);
+                var imported = ImportGraph(path).ToList();
                 var ids = service.GetAllGraphInfo().Select(x => x.Id).ToReadOnly();
-                if (ids.Count == imported.Count && ids.Count > 0)
+                if (ids.Count == 0 && imported.Count > 0)
                 {
-                    int id = ids.First();
-                    var graph = dtos.First().Graph;
+                    var toAdd = new[] { imported[0] };
+                    var history = service.AddPathfindingHistory(toAdd).First();
+                    var graph = history.Graph;
                     var costRange = graph.First().Cost.CostRange;
                     var costMsg = new CostRangeChangedMessage(costRange);
                     messenger.Send(costMsg, Tokens.AppLayout);
-                    var graphMsg = new GraphMessage(graph, id);
+                    var graphMsg = new GraphMessage(graph, history.Id);
                     messenger.SendMany(graphMsg, Tokens.Visual,
                         Tokens.AppLayout, Tokens.Main, Tokens.Common);
-                    var range = dtos.First().Range;
+                    var range = history.Range;
                     rangeBuilder.Undo();
                     rangeBuilder.Include(range, graph);
+                    imported.RemoveAt(0);
+                }
+                if (imported.Count > 0)
+                {
+                    await Task.Run(() => service.AddPathfindingHistory(imported));
                 }
             }
             catch (Exception ex)

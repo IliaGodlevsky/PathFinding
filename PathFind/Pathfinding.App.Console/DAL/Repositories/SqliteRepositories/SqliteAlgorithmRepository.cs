@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
+using Shared.Extensions;
 using System.Collections.Generic;
 using System.Data;
 
@@ -26,6 +27,11 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
         {
             var query = $"SELECT * FROM {TableName} WHERE {nameof(AlgorithmEntity.GraphId)} = @GraphId";
             return connection.Query<AlgorithmEntity>(query, new { GraphId = graphId }, transaction);
+        }
+
+        public override IEnumerable<AlgorithmEntity> Insert(IEnumerable<AlgorithmEntity> entities)
+        {
+            return entities.ForEach(e => Insert(e));
         }
     }
 }

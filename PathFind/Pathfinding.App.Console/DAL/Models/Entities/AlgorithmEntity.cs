@@ -22,6 +22,8 @@ namespace Pathfinding.App.Console.DAL.Models.Entities
 
         public string Statistics { get; set; }
 
+        public byte[] Costs { get; set; }
+
         public byte[] Path { get; set; }
 
         public byte[] Obstacles { get; set; }
@@ -29,7 +31,5 @@ namespace Pathfinding.App.Console.DAL.Models.Entities
         public byte[] Visited { get; set; }
 
         public byte[] Range { get; set; }
-
-        public byte[] Costs { get; set; }
     }
 }

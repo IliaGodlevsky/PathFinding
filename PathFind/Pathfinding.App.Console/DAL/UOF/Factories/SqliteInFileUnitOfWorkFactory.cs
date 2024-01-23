@@ -12,9 +12,11 @@ namespace Pathfinding.App.Console.DAL.UOF.Factories
 
         private static string GetConnectionString()
         {
-            var dataFile = Parametres.Default.SqliteConnectionString;
-            var builder = new SqliteConnectionStringBuilder() { DataSource = dataFile };
-            return builder.ToString();
+            var connectionStringBuilder = new SqliteConnectionStringBuilder()
+            {
+                DataSource = Parametres.Default.SqliteConnectionString
+            }; 
+            return connectionStringBuilder.ToString();
         }
     }
 }

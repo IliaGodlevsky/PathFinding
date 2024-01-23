@@ -73,6 +73,7 @@
     <Compile Include="DAL\Attributes\UniqueAttribute.cs" />
     <Compile Include="DAL\DbTables.cs" />
     <Compile Include="DAL\Interface\ISqliteBuildAttribute.cs" />
+    <Compile Include="DAL\Models\Entities\SubAlgorithmEntity.cs" />
     <Compile Include="DAL\Models\TransferObjects\AlgorithmCreateDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\AlgorithmSerializationDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\AlgorithmReadDto.cs" />
@@ -125,7 +126,7 @@
     <Compile Include="DAL\UOF\SqliteUnitOfWork.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\KeyResolveMiddlware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\CombinedAlgorithmsResolveMiddleware.cs" />
-    <Compile Include="DependencyInjection\ConfigurationMiddlewears\AllVisualizedVerticesMiddleware.cs" />
+    <Compile Include="DependencyInjection\ConfigurationMiddlewears\VerticesVisualizationMiddleware.cs" />
     <Compile Include="DependencyInjection\Registrations\Application.cs" />
     <Compile Include="Extensions\EntitiesExtensions.cs" />
     <Compile Include="Extensions\ILiteDbExtensions.cs" />
@@ -303,6 +304,7 @@
     <Compile Include="Units\PathfindingStatisticsUnit.cs" />
     <Compile Include="Units\PathfindingVisualizationUnit.cs" />
     <Compile Include="Units\Unit.cs" />
+    <Compile Include="ValueInput\TestInput.cs" />
     <Compile Include="ValueInput\UserInput\AddressInput.cs" />
     <Compile Include="ValueInput\UserInput\FilePathInput.cs" />
     <Compile Include="Model\Notes\Statistics.cs" />

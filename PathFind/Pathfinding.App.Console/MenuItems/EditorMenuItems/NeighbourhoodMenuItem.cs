@@ -12,6 +12,7 @@ using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
 {
@@ -24,7 +25,7 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
 
         }
 
-        public override void Execute()
+        public async override void Execute()
         {
             HashSet<ICoordinate> GetNeighbors(Vertex vertex)
             {
@@ -32,8 +33,10 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
             }
             var neighbors = graph.Graph.ToDictionary(x => x.Position, GetNeighbors);
             base.Execute();
+            processed.Clear();
             var addedNeighbors = new Dictionary<Vertex, IReadOnlyCollection<Vertex>>();
             var removedNeighbors = new Dictionary<Vertex, IReadOnlyCollection<Vertex>>();
+
             foreach (var vertex in processed)
             {
                 var areNeighbours = vertex.Neighbours
@@ -46,8 +49,12 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
                 addedNeighbors.Add(vertex, added.ToReadOnly());
                 removedNeighbors.Add(vertex, removed.ToReadOnly());
             }
-            service.AddNeighbors(addedNeighbors);
-            service.RemoveNeighbors(removedNeighbors);
+
+            await Task.Run(() =>
+            {
+                service.AddNeighbors(addedNeighbors);
+                service.RemoveNeighbors(removedNeighbors);
+            });
         }
 
         public override string ToString()

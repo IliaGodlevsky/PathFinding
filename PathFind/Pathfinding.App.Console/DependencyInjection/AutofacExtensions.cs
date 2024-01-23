@@ -72,8 +72,8 @@ namespace Pathfinding.App.Console.DependencyInjection
         public static void RegisterVisualizionContainer<T>(this ContainerBuilder builder, string colorKey)
             where T : IVisualizedVertices
         {
-            builder.RegisterType<T>().As<IVisualizedVertices>()
-                .WithMetadata(RegistrationConstants.VisualizedTypeKey, colorKey).SingleInstance();
+            builder.RegisterType<T>().As<IVisualizedVertices>().SingleInstance()
+                .WithMetadata(RegistrationConstants.VisualizedTypeKey, colorKey);
         }
 
         public static IRegistrationBuilder<ITotalVisualization<Vertex>, TActivatorData, SingleRegistrationStyle> CommunicateContainers<TActivatorData>(

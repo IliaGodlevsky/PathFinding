@@ -9,6 +9,7 @@ using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
 {
@@ -33,10 +34,10 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
             return graph.Graph.GetNumberOfNotIsolatedVertices() > 1;
         }
 
-        public override void Execute()
+        public async override void Execute()
         {
             base.Execute();
-
+            processed.Clear();
             var currentRange = service.GetRange(graph.Id)
                 .Select((x, i) => (Order: i, Coordinate: x))
                 .ToDictionary(x => x.Coordinate, x => x.Order);
@@ -65,9 +66,12 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
                 .Select(x => graph.Graph.Get(x.Key))
                 .ToReadOnly();
 
-            service.AddRange(added.ToArray(), graph.Id);
-            service.UpdateRange(updated.ToArray(), graph.Id);
-            service.RemoveRange(deleted, graph.Id);
+            await Task.Run(() =>
+            {
+                service.RemoveRange(deleted, graph.Id);
+                service.UpdateRange(updated.ToArray(), graph.Id);
+                service.AddRange(added.ToArray(), graph.Id);
+            });
         }
 
         public override string ToString()

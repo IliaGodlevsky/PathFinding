@@ -8,6 +8,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Windows.Forms.VisualStyles;
+using System.Windows.Markup;
 
 namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 {
@@ -94,19 +97,19 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
             DeleteQuery = $"DELETE FROM {TableName} WHERE {Id} = @{Id}";
         }
 
-        public T Insert(T entity)
+        public virtual T Insert(T entity)
         {
             entity.Id = connection.QuerySingle<int>(InsertQuery, entity, transaction);
             return entity;
         }
 
-        public bool Update(T entity)
+        public virtual bool Update(T entity)
         {
             connection.Query(UpdateQuery, entity, transaction);
             return true;
         }
 
-        public bool Delete(int id)
+        public virtual bool Delete(int id)
         {
             var parametres = new { Id = id };
             connection.Query(DeleteQuery, parametres, transaction);
@@ -114,25 +117,28 @@ namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
             return !present.Any();
         }
 
-        public T Read(int id)
+        public virtual T Read(int id)
         {
             return connection.QuerySingle<T>(SelectQuery, new { Id = id }, transaction);
         }
 
-        public IEnumerable<T> Insert(IEnumerable<T> entities)
+        public virtual IEnumerable<T> Insert(IEnumerable<T> entities)
         {
             var values = entities.ToReadOnly();
-            var insertQuery = GetBulkInsertQuery(values);
-            connection.Execute(insertQuery, transaction: transaction);
-            var instertedScript = $"SELECT * FROM {TableName} " +
-                $"ORDER BY {Id} DESC LIMIT {values.Count}";
-            var inserted = connection
-                .Query<T>(instertedScript, transaction: transaction)
-                .Reverse()
-                .ToReadOnly();
-            for (int i = 0; i < values.Count; i++)
+            if (values.Count > 0)
             {
-                values[i].Id = inserted[i].Id;
+                var insertQuery = GetBulkInsertQuery(values);
+                connection.Execute(insertQuery, transaction: transaction);
+                var instertedScript = $"SELECT * FROM {TableName} " +
+                    $"ORDER BY {Id} DESC LIMIT {values.Count}";
+                var inserted = connection
+                    .Query<T>(instertedScript, transaction: transaction)
+                    .Reverse()
+                    .ToReadOnly();
+                for (int i = 0; i < values.Count; i++)
+                {
+                    values[i].Id = inserted[i].Id;
+                }
             }
             return values;
         }

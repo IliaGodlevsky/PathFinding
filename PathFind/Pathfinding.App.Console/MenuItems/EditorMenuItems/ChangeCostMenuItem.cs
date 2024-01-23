@@ -4,7 +4,9 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.App.Console.Settings;
+using Shared.Extensions;
 using System;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
 {
@@ -17,11 +19,12 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
         {
         }
 
-        public override void Execute()
+        public async override void Execute()
         {
             base.Execute();
-            service.UpdateVertices(processed, graph.Id);
+            var vertices = processed.ToReadOnly();
             processed.Clear();
+            await Task.Run(() => service.UpdateVertices(vertices, graph.Id));
         }
 
         public override string ToString()

@@ -7,6 +7,7 @@ using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations;
 using Shared.Extensions;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,10 +21,10 @@ namespace Pathfinding.App.Console.DAL.Services
         private bool areAllGraphsFetched = false;
         private readonly HashSet<int> areAllAlgorithmsFetched = new();
 
-        private readonly Dictionary<int, IGraph<Vertex>> graphs = new();
-        private readonly Dictionary<int, List<AlgorithmReadDto>> algorithms = new();
-        private readonly Dictionary<int, List<ICoordinate>> range = new();
-        private readonly Dictionary<int, GraphEntity> graphEntities = new();
+        private readonly ConcurrentDictionary<int, IGraph<Vertex>> graphs = new();
+        private readonly ConcurrentDictionary<int, List<AlgorithmReadDto>> algorithms = new();
+        private readonly ConcurrentDictionary<int, List<ICoordinate>> range = new();
+        private readonly ConcurrentDictionary<int, GraphEntity> graphEntities = new();
 
         public CacheService(IService service, IMapper mapper)
         {
@@ -46,7 +47,7 @@ namespace Pathfinding.App.Console.DAL.Services
             int id = service.AddGraph(graph);
             var entity = mapper.Map<GraphEntity>(graph);
             entity.Id = id;
-            graphEntities.Add(id, entity);
+            graphEntities.TryAdd(id, entity);
             graphs[id] = graph;
             return id;
         }
@@ -59,7 +60,7 @@ namespace Pathfinding.App.Console.DAL.Services
                 graphs[dto.Id] = dto.Graph;
                 var entity = mapper.Map<GraphEntity>(dto.Graph);
                 entity.Id = dto.Id;
-                graphEntities.Add(dto.Id, entity);
+                graphEntities.TryAdd(dto.Id, entity);
                 algorithms.TryGetOrAddNew(dto.Id).AddRange(dto.Algorithms);
                 range.TryGetOrAddNew(dto.Id).AddRange(dto.Range);
             }
@@ -71,10 +72,10 @@ namespace Pathfinding.App.Console.DAL.Services
             bool deleted = service.DeleteGraph(graphId);
             if (deleted)
             {
-                graphs.Remove(graphId);
-                algorithms.Remove(graphId);
-                range.Remove(graphId);
-                graphEntities.Remove(graphId);
+                graphs.TryRemove(graphId, out _);
+                algorithms.TryRemove(graphId, out _);
+                range.TryRemove(graphId, out _);
+                graphEntities.TryRemove(graphId, out _);
                 areAllAlgorithmsFetched.Remove(graphId);
             }
             return deleted;
@@ -142,7 +143,7 @@ namespace Pathfinding.App.Console.DAL.Services
             var pathfindingRange = range.TryGetOrAddNew(graphId);
             if (pathfindingRange.Count == 0)
             {
-                pathfindingRange = service.GetRange(graphId).ToList();
+                pathfindingRange.AddRange(service.GetRange(graphId));
                 range[graphId] = pathfindingRange;
             }
             return pathfindingRange.AsReadOnly();
@@ -153,7 +154,7 @@ namespace Pathfinding.App.Console.DAL.Services
             bool isDeleted = service.RemoveRange(graphId);
             if (isDeleted)
             {
-                range.Remove(graphId);
+                range.TryRemove(graphId, out _);
             }
             return isDeleted;
         }
