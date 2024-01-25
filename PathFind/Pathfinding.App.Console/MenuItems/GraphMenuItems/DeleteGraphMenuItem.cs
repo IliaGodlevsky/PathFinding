@@ -10,6 +10,7 @@ using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
@@ -37,16 +38,17 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 .Where(x => x.Id != graph.Id).Any();
         }
 
-        public void Execute()
+        public async void Execute()
         {
             var graphs = service.GetAllGraphInfo()
                 .Where(x => x.Id != graph.Id).ToList();
             string menuList = GetMenuList(graphs);
             int index = GetIndex(menuList, graphs.Count);
+            var ids = new List<int>();
             while (index != graphs.Count)
             {
                 int id = graphs[index].Id;
-                service.DeleteGraph(id);
+                ids.Add(id);
                 graphs.RemoveAt(index);
                 var message = new GraphDeletedMessage(id);
                 messenger.Send(message, Tokens.Common);
@@ -57,6 +59,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 menuList = GetMenuList(graphs);
                 index = GetIndex(menuList, graphs.Count);
             }
+            await Task.Run(() => ids.ForEach(id => service.DeleteGraph(id)));
         }
 
         private string GetMenuList(IReadOnlyCollection<GraphEntity> graphs)

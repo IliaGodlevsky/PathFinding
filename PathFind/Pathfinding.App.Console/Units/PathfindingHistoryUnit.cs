@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
+using Pathfinding.AlgorithmLib.Core.Interface;
+using Pathfinding.AlgorithmLib.Core.Interface.Extensions;
 using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Extensions;
@@ -25,6 +27,7 @@ namespace Pathfinding.App.Console.Units
         private readonly IService service;
         private readonly IPathfindingRangeBuilder<Vertex> builder;
         private readonly HashSet<ICoordinate> visitedVertices = new();
+        private readonly List<ICoordinate> path = new();
 
         private AlgorithmCreateDto history = new();
         private GraphReadDto Graph = GraphReadDto.Empty;
@@ -66,17 +69,6 @@ namespace Pathfinding.App.Console.Units
             Graph = msg.Graph;
         }
 
-        //private void ClearHistory(ClearHistoryMessage msg)
-        //{
-        //    var hist = history.GetHistory(graph.GetHashCode());
-        //    hist.Obstacles.Clear();
-        //    hist.Paths.Clear();
-        //    hist.Ranges.Clear();
-        //    hist.Costs.Clear();
-        //    hist.Visited.Clear();
-        //    hist.Algorithms.Clear();
-        //}
-
         private void OnVertexVisited(object sender, PathfindingEventArgs args)
         {
             visitedVertices.Add(args.Current);
@@ -95,6 +87,12 @@ namespace Pathfinding.App.Console.Units
             algorithm = msg.Algorithm;
             algorithm.Started += OnStarted;
             algorithm.VertexVisited += OnVertexVisited;
+            algorithm.SubPathFound += OnSubPathFound;
+        }
+
+        private void OnSubPathFound(object sender, SubPathFoundEventArgs args)
+        {
+            path.AddRange(args.SubPath);
         }
 
         private void SetStatistics(StatisticsMessage msg)
@@ -104,14 +102,18 @@ namespace Pathfinding.App.Console.Units
 
         private async void OnPathFound(PathFoundMessage msg)
         {
-            history.Path = msg.Path.ToReadOnly();
+            var foundPath = msg.Path.IsEmpty() 
+                ? path.ToArray()
+                : msg.Path.AsEnumerable();
+            history.Path = foundPath.ToArray().ToReadOnly();
             history.Visited = visitedVertices.ToReadOnly();
             history.GraphId = Graph.Id;
             visitedVertices.Clear();
+            path.Clear();
             algorithm = PathfindingProcess.Idle;
-            var copy = history;
+            var reference = history;
             history = new();
-            await Task.Run(() => service.AddAlgorithm(copy));
+            await Task.Run(() => service.AddAlgorithm(reference));
         }
 
         private bool IsHistoryApplied() => isHistoryApplied;

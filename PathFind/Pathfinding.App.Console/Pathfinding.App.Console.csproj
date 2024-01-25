@@ -271,7 +271,6 @@
     <Compile Include="MenuItems\MenuItemPriority\LowPriorityAttribute.cs" />
     <Compile Include="MenuItems\MenuItemPriority\MediumPriorityAttribute.cs" />
     <Compile Include="MenuItems\PathfindingHistoryMenuItems\ApplyHistoryMenuItem.cs" />
-    <Compile Include="MenuItems\PathfindingHistoryMenuItems\ClearHistoryMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingHistoryMenuItems\ShowHistoryMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\ClearColorsMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\ClearGraphMenuItem.cs" />
