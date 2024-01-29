@@ -65,7 +65,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAL\Attributes\BsonTableAttribute.cs" />
-    <Compile Include="DAL\Attributes\DefaultAttribute.cs" />
     <Compile Include="DAL\Attributes\IdentityAttribute.cs" />
     <Compile Include="DAL\Attributes\NotNullAttribute.cs" />
     <Compile Include="DAL\Attributes\ReferenseAttribute.cs" />

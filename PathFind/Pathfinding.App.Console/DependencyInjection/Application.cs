@@ -7,14 +7,14 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 {
     internal sealed partial class Application : IDisposable
     {
-        private readonly ContainerBuilder builder;
+        private readonly ContainerBuilder builder = new();
         private readonly Lazy<ILifetimeScope> scope;
 
         private ILifetimeScope Scope => scope.Value;
 
-        public Application()
+        public Application(string title = Constants.Title)
         {
-            builder = new ContainerBuilder();
+            Terminal.Title = title;
             scope = new(() => builder.Build());
         }
 

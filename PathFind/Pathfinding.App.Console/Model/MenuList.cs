@@ -40,7 +40,7 @@ namespace Pathfinding.App.Console.Model
 
         public void Display()
         {
-            System.Console.WriteLine(ToString());
+            Terminal.WriteLine(ToString());
         }
 
         public override string ToString()

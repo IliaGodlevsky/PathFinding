@@ -9,6 +9,7 @@ using Pathfinding.GraphLib.Core.Realizations;
 using Shared.Extensions;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 namespace Pathfinding.App.Console.DAL.Services
@@ -93,7 +94,7 @@ namespace Pathfinding.App.Console.DAL.Services
                 areAllGraphsFetched = true;
                 return entities;
             }
-            return graphEntities.Values.ToList().AsReadOnly();
+            return graphEntities.Values.ToReadOnly();
         }
 
         public IGraph<Vertex> GetGraph(int id)

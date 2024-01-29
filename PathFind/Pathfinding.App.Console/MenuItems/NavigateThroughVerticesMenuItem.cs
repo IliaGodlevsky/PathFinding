@@ -118,21 +118,18 @@ namespace Pathfinding.App.Console.MenuItems
 
         private string GetLegend()
         {
-            var legend = new List<(string Descriptin, ConsoleKey Key)>()
-            {
-                (nameof(Keys.VertexUp), Keys.VertexUp),
-                (nameof(Keys.VertexDown), Keys.VertexDown),
-                (nameof(Keys.VertexLeft), Keys.VertexLeft),
-                (nameof(Keys.VertexRight), Keys.VertexRight),
-                (nameof(Keys.ExitVerticesNavigating), Keys.ExitVerticesNavigating),
-            };
-            foreach (var action in Actions)
-            {
-                legend.Add((action.ResourceName, (ConsoleKey)Keys[action.ResourceName]));
-            }
-            return legend
-                .Select(l => $"{l.Descriptin.ConvertCamelCaseToRegular()} - {l.Key}")
+            return Actions
+                .Select(x=> (Description: x.ResourceName, Key: Keys[x.ResourceName]))
+                .Concat(new (string Description, object Key)[]
+                {
+                    (nameof(Keys.VertexUp), Keys.VertexUp),
+                    (nameof(Keys.VertexDown), Keys.VertexDown),
+                    (nameof(Keys.VertexLeft), Keys.VertexLeft),
+                    (nameof(Keys.VertexRight), Keys.VertexRight),
+                    (nameof(Keys.ExitVerticesNavigating), Keys.ExitVerticesNavigating),
+                })
                 .Distinct()
+                .Select(l => $"{l.Description.ConvertCamelCaseToRegular()} - {l.Key}")
                 .OrderByDescending(x => x.Length)
                 .CreateMenuList(columnsNumber: 3)
                 .ToString();

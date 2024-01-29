@@ -93,8 +93,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterUnits(PathfindingUnits.Main, Graph, Process, Range, Algorithms);
 
                 builder.RegisterType<Service>().As<IService>().SingleInstance();
-                builder.RegisterDecorator<CacheService, IService>();
-                builder.RegisterType<LiteDbInMemoryUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
+                builder.RegisterType<SqliteInFileUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
 
                 builder.RegisterMapper();
 

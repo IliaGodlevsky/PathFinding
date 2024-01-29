@@ -47,13 +47,10 @@ namespace Pathfinding.App.Console.DAL.Services
                 var algorithms = mapper.Map<AlgorithmEntity[]>(history.Algorithms);
                 algorithms.ForEach(a => a.GraphId = id);
                 unitOfWork.AlgorithmsRepository.Insert(algorithms);
-                var vertices = history.Range
-                    .Select((x, i) => (Order: i, Vertex: history.Graph.Get(x)));
+                var vertices = history.Range.Select((x, i) => (Order: i, Vertex: history.Graph.Get(x)));
                 var entities = SelectRangeEntities(vertices, id);
                 unitOfWork.RangeRepository.Insert(entities);
-                var read = mapper.Map<PathfindingHistoryReadDto>(history);
-                read.Id = id;
-                return read;
+                return mapper.Map<PathfindingHistoryReadDto>(history) with { Id = id };
             }).ToReadOnly());
         }
 

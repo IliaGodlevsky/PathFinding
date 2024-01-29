@@ -8,9 +8,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Windows.Forms.VisualStyles;
-using System.Windows.Markup;
 
 namespace Pathfinding.App.Console.DAL.Repositories.SqliteRepositories
 {

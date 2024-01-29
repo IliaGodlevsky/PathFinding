@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DAL.Models.TransferObjects
 {
-    internal class PathfindingHistoryReadDto
+    internal record PathfindingHistoryReadDto
     {
         public int Id { get; set; }
 

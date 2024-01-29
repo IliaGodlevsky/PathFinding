@@ -24,8 +24,6 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
                 .ForMember(x => x.Coordinate, opt => opt.MapFrom(x => x.ToReadOnly()));
             CreateMap<CoordinateDto, ICoordinate>()
                 .ConvertUsing(x => new Coordinate(x.Coordinate.ToArray()));
-            CreateMap<VertexSerializationDto, VertexSerializationDto>();
-            CreateMap<VertexSerializationDto, VertexSerializationDto>();
             CreateMap<IVertexCost, VertexCostDto>()
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => x.CurrentCost))
                 .ForMember(x => x.UpperValueOfRange, opt => opt.MapFrom(x => x.CostRange.UpperValueOfRange))

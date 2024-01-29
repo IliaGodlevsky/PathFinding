@@ -50,8 +50,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 var ids = service.GetAllGraphInfo().Select(x => x.Id).ToReadOnly();
                 if (ids.Count == 0 && imported.Count > 0)
                 {
-                    var toAdd = new[] { imported[0] };
-                    var history = service.AddPathfindingHistory(toAdd).First();
+                    var history = service.AddPathfindingHistory(imported[0].Enumerate())
+                        .First();
                     var graph = history.Graph;
                     var costRange = graph.First().Cost.CostRange;
                     var costMsg = new CostRangeChangedMessage(costRange);
