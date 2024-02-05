@@ -22,7 +22,7 @@ namespace Pathfinding.App.Console.Units
     {
         private readonly IUndo undo = undo;
         private readonly ILog log = log;
-        private readonly Lazy<IMenuItem> exit 
+        private readonly Lazy<IMenuItem> exit
             = new(() => new AnswerExitMenuItem(input));
 
         protected override IMenuItem ExitMenuItem => exit.Value;

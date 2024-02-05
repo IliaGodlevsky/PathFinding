@@ -4,8 +4,6 @@ using Pathfinding.App.Console.Interface;
 using System;
 using System.Collections.Generic;
 
-using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
-
 namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 {
     internal sealed class VerticesVisualizationMiddleware : IResolveMiddleware

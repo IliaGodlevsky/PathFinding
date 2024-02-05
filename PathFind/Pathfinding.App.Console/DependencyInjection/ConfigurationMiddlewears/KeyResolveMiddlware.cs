@@ -2,7 +2,6 @@
 using Autofac.Core.Resolving.Pipeline;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 {

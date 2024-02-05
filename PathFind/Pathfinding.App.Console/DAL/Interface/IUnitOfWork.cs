@@ -14,8 +14,6 @@ namespace Pathfinding.App.Console.DAL.Interface
 
         IRangeRepository RangeRepository { get; }
 
-        void SaveChanges();
-
         void BeginTransaction();
 
         void RollbackTransaction();

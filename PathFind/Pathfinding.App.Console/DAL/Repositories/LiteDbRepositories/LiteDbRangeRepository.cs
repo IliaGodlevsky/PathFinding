@@ -1,7 +1,6 @@
 ﻿using LiteDB;
 using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
-using Pathfinding.App.Console.Extensions;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
@@ -12,7 +11,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 
         public LiteDbRangeRepository(ILiteDatabase db)
         {
-            collection = db.GetNamedCollection<RangeEntity>();
+            collection = db.GetCollection<RangeEntity>(DbTables.Ranges);
             collection.EnsureIndex(x => x.GraphId);
         }
 
@@ -53,6 +52,12 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
         public bool Update(RangeEntity entity)
         {
             return collection.Update(entity);
+        }
+
+        public bool Update(IEnumerable<RangeEntity> entities)
+        {
+            collection.Update(entities);
+            return true;
         }
     }
 }

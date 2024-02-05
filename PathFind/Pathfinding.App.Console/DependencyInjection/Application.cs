@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using AutoMapper.Internal;
 using Pathfinding.App.Console.MenuItems;
 using System;
 using System.Text;
@@ -20,10 +21,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
         public void ApplyComponents()
         {
-            foreach (var component in GetComponents())
-            {
-                component.Apply(builder);
-            }
+            Components.ForAll(x => x.Apply(builder));
         }
 
         public void Run(Encoding outputEncoding)
@@ -31,6 +29,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             Terminal.OutputEncoding = outputEncoding;
             Scope.Resolve<MainUnitMenuItem>().Execute();
         }
+
+        public void Run() => Run(Encoding.UTF8);
 
         public void Dispose()
         {

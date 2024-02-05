@@ -30,11 +30,11 @@ namespace Pathfinding.App.Console.DAL.Interface
 
         GraphSerializationDto GetSerializationGraph(int graphId);
 
-        int AddGraph(GraphSerializationDto graph);
+        GraphReadDto AddGraph(GraphSerializationDto graph);
 
-        int AddGraph(IGraph<Vertex> graph);
+        GraphReadDto AddGraph(IGraph<Vertex> graph);
 
-        int AddAlgorithm(AlgorithmCreateDto algorithm);
+        AlgorithmReadDto AddAlgorithm(AlgorithmCreateDto algorithm);
 
         bool AddNeighbors(IReadOnlyDictionary<Vertex, IReadOnlyCollection<Vertex>> neighborhoods);
 

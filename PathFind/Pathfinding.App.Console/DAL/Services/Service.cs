@@ -24,17 +24,17 @@ namespace Pathfinding.App.Console.DAL.Services
             this.factory = factory ?? new LiteDbInMemoryUnitOfWorkFactory();
         }
 
-        public int AddAlgorithm(AlgorithmCreateDto algorithm)
+        public AlgorithmReadDto AddAlgorithm(AlgorithmCreateDto algorithm)
         {
             return Transaction(unitOfWork =>
             {
                 var entity = mapper.Map<AlgorithmEntity>(algorithm);
-                unitOfWork.AlgorithmsRepository.Insert(entity);
-                return entity.Id;
+                entity = unitOfWork.AlgorithmsRepository.Insert(entity);
+                return mapper.Map<AlgorithmReadDto>(entity);
             });
         }
 
-        public int AddGraph(IGraph<Vertex> dto)
+        public GraphReadDto AddGraph(IGraph<Vertex> dto)
         {
             return Transaction(unitOfWork => unitOfWork.AddGraph(mapper, dto));
         }
@@ -43,14 +43,15 @@ namespace Pathfinding.App.Console.DAL.Services
         {
             return Transaction(unitOfWork => histories.Select(history =>
             {
-                int id = unitOfWork.AddGraph(mapper, history.Graph);
+                var dto = unitOfWork.AddGraph(mapper, history.Graph);
                 var algorithms = mapper.Map<AlgorithmEntity[]>(history.Algorithms);
-                algorithms.ForEach(a => a.GraphId = id);
+                algorithms.ForEach(a => a.GraphId = dto.Id);
                 unitOfWork.AlgorithmsRepository.Insert(algorithms);
-                var vertices = history.Range.Select((x, i) => (Order: i, Vertex: history.Graph.Get(x)));
-                var entities = SelectRangeEntities(vertices, id);
+                var vertices = history.Range
+                    .Select((x, i) => (Order: i, Vertex: history.Graph.Get(x)));
+                var entities = SelectRangeEntities(vertices, dto.Id);
                 unitOfWork.RangeRepository.Insert(entities);
-                return mapper.Map<PathfindingHistoryReadDto>(history) with { Id = id };
+                return mapper.Map<PathfindingHistoryReadDto>(history) with { Id = dto.Id };
             }).ToReadOnly());
         }
 
@@ -83,7 +84,8 @@ namespace Pathfinding.App.Console.DAL.Services
         {
             return Transaction(unitOfWork =>
             {
-                return unitOfWork.GraphRepository.GetAll().Select(x => x.Id).ToReadOnly();
+                return unitOfWork.GraphRepository.GetAll()
+                    .Select(x => x.Id).ToReadOnly();
             });
         }
 
@@ -111,13 +113,8 @@ namespace Pathfinding.App.Console.DAL.Services
         {
             return Transaction(unitOfWork =>
             {
-                foreach (var vertex in vertices)
-                {
-                    var entity = unitOfWork.RangeRepository.GetByVertexId(vertex.Vertex.Id);
-                    entity.Position = vertex.Order;
-                    unitOfWork.RangeRepository.Update(entity);
-                }
-                return true;
+                var entites = SelectRangeEntities(vertices, graphId);
+                return unitOfWork.RangeRepository.Update(entites);
             });
         }
 
@@ -199,7 +196,7 @@ namespace Pathfinding.App.Console.DAL.Services
             return mapper.Map<GraphSerializationDto>(graph);
         }
 
-        public int AddGraph(GraphSerializationDto graph)
+        public GraphReadDto AddGraph(GraphSerializationDto graph)
         {
             var add = mapper.Map<IGraph<Vertex>>(graph);
             return AddGraph(add);
@@ -213,7 +210,6 @@ namespace Pathfinding.App.Console.DAL.Services
                 {
                     unitOfWork.BeginTransaction();
                     var result = action(unitOfWork);
-                    unitOfWork.SaveChanges();
                     unitOfWork.CommitTransaction();
                     return result;
                 }

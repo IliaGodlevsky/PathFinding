@@ -38,7 +38,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 .Where(x => x.Id != graph.Id).Any();
         }
 
-        public void Execute()
+        public async void Execute()
         {
             var graphs = service.GetAllGraphInfo()
                 .Where(x => x.Id != graph.Id).ToList();
@@ -59,7 +59,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 menuList = GetMenuList(graphs);
                 index = GetIndex(menuList, graphs.Count);
             }
-            ids.ForEach(id => service.DeleteGraph(id));
+            await Task.Run(() => ids.ForEach(id => service.DeleteGraph(id)));
         }
 
         private string GetMenuList(IReadOnlyCollection<GraphEntity> graphs)

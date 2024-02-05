@@ -22,9 +22,9 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         protected override IVertex GetNextVertex()
         {
             var neighbours = GetUnvisitedNeighbours(CurrentVertex);
+            Enqueued(CurrentVertex, neighbours);
             double leastVertexCost = neighbours.Any() ? neighbours.Min(CalculateHeuristic) : default;
             return neighbours
-                .ForEach(Enqueued)
                 .FirstOrNullVertex(vertex => CalculateHeuristic(vertex) == leastVertexCost);
         }
 

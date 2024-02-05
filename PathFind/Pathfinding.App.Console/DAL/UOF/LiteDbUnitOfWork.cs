@@ -11,6 +11,8 @@ namespace Pathfinding.App.Console.DAL.UOF
 
         public IGraphParametresRepository GraphRepository { get; }
 
+        public ISubAlgorithmRepository SubAlgorithmRepository { get; }
+
         public IAlgorithmsRepository AlgorithmsRepository { get; }
 
         public IVerticesRepository VerticesRepository { get; }
@@ -32,6 +34,7 @@ namespace Pathfinding.App.Console.DAL.UOF
         public LiteDbUnitOfWork(ILiteDatabase db)
         {
             database = db;
+            SubAlgorithmRepository = new LiteDbSubAlgorithmRepository(database);
             GraphRepository = new LiteDbGraphRepository(database);
             AlgorithmsRepository = new LiteDbAlgorithmRepository(database);
             VerticesRepository = new LiteDbVerticesRepository(database);
@@ -52,11 +55,6 @@ namespace Pathfinding.App.Console.DAL.UOF
         public void RollbackTransaction()
         {
             database.Rollback();
-        }
-
-        public void SaveChanges()
-        {
-
         }
 
         public void Dispose()

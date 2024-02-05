@@ -92,7 +92,7 @@ namespace Pathfinding.App.Console.Model.Notes
         private static string GetName(PropertyInfo prop)
         {
             var attribute = prop.GetAttributeOrDefault<DisplayNameSourceAttribute>();
-            return Languages.ResourceManager.GetString(attribute.ResourceName) ?? attribute.ResourceName;
+            return Languages.ResourceManager.GetString(attribute?.ResourceName ?? string.Empty) ?? attribute?.ResourceName ?? prop.Name;
         }
     }
 }

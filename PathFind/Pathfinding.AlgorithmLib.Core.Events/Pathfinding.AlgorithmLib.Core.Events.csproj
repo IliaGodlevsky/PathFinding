@@ -46,6 +46,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubPathFoundEventArgs.cs" />
     <Compile Include="SubPathFoundEventHandler.cs" />
+    <Compile Include="VerticesEnqueuedEventArgs.cs" />
+    <Compile Include="VerticesEnqueuedEventHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Interface\Pathfinding.AlgorithmLib.Core.Interface.csproj">

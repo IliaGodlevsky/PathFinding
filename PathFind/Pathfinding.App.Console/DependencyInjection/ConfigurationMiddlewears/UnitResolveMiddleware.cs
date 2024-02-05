@@ -11,7 +11,7 @@ namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 
         public PipelinePhase Phase => PipelinePhase.ParameterSelection;
 
-        public UnitResolveMiddleware(string metadataKey, 
+        public UnitResolveMiddleware(string metadataKey,
             Type type, IParametresFactory factory)
         {
             this.metadataKey = metadataKey;

@@ -34,7 +34,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
         protected override void InspectVertex(IVertex vertex)
         {
             var neighbours = GetUnvisitedNeighbours(vertex);
-            neighbours.ForEach(Enqueued);
+            Enqueued(vertex, neighbours);
             RelaxNeighbours(neighbours);
         }
     }

@@ -67,8 +67,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             messenger.Send(costRangeMsg, Tokens.AppLayout);
             var graphMsg = new GraphMessage(graph, 0);
             messenger.SendMany(graphMsg, Tokens.AppLayout, Tokens.Main);
-            int id = await Task.Run(() => service.AddGraph(graph));
-            graphMsg = new GraphMessage(graph, id);
+            var read = await Task.Run(() => service.AddGraph(graph));
+            graphMsg = new GraphMessage(read);
             messenger.SendMany(graphMsg, Tokens.Visual, Tokens.Common);
         }
 

@@ -80,7 +80,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel
                 .ConfigureAwait(false);
         }
 
-        protected override async void OnVertexEnqueued(object sender, PathfindingEventArgs e)
+        protected override async void OnVertexEnqueued(object sender, VerticesEnqueuedEventArgs e)
         {
             await Task.Run(() => base.OnVertexEnqueued(sender, e)).ConfigureAwait(false);
         }

@@ -49,7 +49,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
                 .OrderBy(x => x.Statistics.Algorithm)
                 .Select(x => (Id: x.Id, Statistics: x.Statistics))
                 .GroupBy(x => x.Statistics.Algorithm);
-            var ordered = grouped.SelectMany(x => x.OrderBy(x => x.Statistics.Steps));
+            var ordered = grouped.SelectMany(x => x.OrderBy(x=>x.Statistics.AlgorithmSpeed)
+                                                   .ThenBy(x => x.Statistics.Steps));
             var statistics = ordered.ToDictionary(x => x.Id, x => x.Statistics);
             string inputMessage = GetInputMessage(statistics.Values);
             using (RememberGraphState())

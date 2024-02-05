@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Core.Exceptions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.App.Console.DAL.Models.TransferObjects;
@@ -16,8 +15,6 @@ using Pathfinding.Visualization.Extensions;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace Pathfinding.App.Console.Units
 {
@@ -61,7 +58,7 @@ namespace Pathfinding.App.Console.Units
                 finally
                 {
                     var pathFound = new PathFoundMessage(path);
-                    messenger.SendMany(pathFound, 
+                    messenger.SendMany(pathFound,
                         Tokens.Statistics, Tokens.History);
                     input.Input();
                     ClearColors(null, null);

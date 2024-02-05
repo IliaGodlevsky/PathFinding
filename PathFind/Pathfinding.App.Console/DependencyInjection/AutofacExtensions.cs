@@ -39,7 +39,7 @@ namespace Pathfinding.App.Console.DependencyInjection
         public static void RegisterUnit(this ContainerBuilder builder,
             IParametresFactory factory, Type unit)
         {
-            var resolveMiddleware 
+            var resolveMiddleware
                 = new UnitResolveMiddleware(RegistrationConstants.UnitTypeKey, unit, factory);
             builder.RegisterType(unit).AsSelf().AsImplementedInterfaces().AutoActivate()
                 .SingleInstance().ConfigurePipeline(p => p.Use(resolveMiddleware));
@@ -93,7 +93,7 @@ namespace Pathfinding.App.Console.DependencyInjection
         public static void RegisterMapper(this ContainerBuilder builder)
         {
             var profileTypes = typeof(Program).Assembly.GetTypes()
-                .Where(t => typeof(Profile).IsAssignableFrom(t))
+                .Where(x => x.IsAssignableTo<Profile>())
                 .ToArray();
 
             builder.RegisterTypes(profileTypes).As<Profile>().SingleInstance();

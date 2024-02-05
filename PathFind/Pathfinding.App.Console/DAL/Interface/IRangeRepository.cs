@@ -17,6 +17,8 @@ namespace Pathfinding.App.Console.DAL.Interface
 
         bool Update(RangeEntity entity);
 
+        bool Update(IEnumerable<RangeEntity> entities);
+
         bool DeleteByGraphId(int graphId);
     }
 }

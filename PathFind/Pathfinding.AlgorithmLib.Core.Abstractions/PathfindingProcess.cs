@@ -30,8 +30,8 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         public static readonly PathfindingProcess Idle = new NullProcess();
 
+        public event VerticesEnqueuedEventHandler VertexEnqueued;
         public event PathfindingEventHandler VertexVisited;
-        public event PathfindingEventHandler VertexEnqueued;
         public event SubPathFoundEventHandler SubPathFound;
         public event ProcessEventHandler Started;
         public event ProcessEventHandler Finished;
@@ -117,9 +117,10 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             VertexVisited?.Invoke(this, new(vertex));
         }
 
-        protected void RaiseVertexEnqueued(IVertex vertex)
+        protected void RaiseVertexEnqueued(IVertex vertex,
+            IEnumerable<IVertex> vertices)
         {
-            VertexEnqueued?.Invoke(this, new(vertex));
+            VertexEnqueued?.Invoke(this, new(vertex, vertices));
         }
 
         protected void RaiseSubPathFound(IGraphPath subPath)

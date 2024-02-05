@@ -19,7 +19,7 @@ namespace System.Runtime.CompilerServices
 
 namespace Pathfinding.App.Console.Model.Notes
 {
-    internal sealed class Statistics(string algorithm)
+    internal sealed record class Statistics(string algorithm)
     {
         private const string Missing = "**********";
 
@@ -49,7 +49,7 @@ namespace Pathfinding.App.Console.Model.Notes
         [JsonIgnore]
         public string Name => GetString(Algorithm) ?? Missing;
 
-        [Displayable(9)]
+        [Displayable(10)]
         [DisplayNameSource(nameof(Languages.Status))]
         [JsonIgnore]
         public string Status => GetString(ResultStatus) ?? Missing;
@@ -76,6 +76,12 @@ namespace Pathfinding.App.Console.Model.Notes
 
         public string ResultStatus { get; set; } = string.Empty;
 
+        [Displayable(9)]
+        public string? Speed => AlgorithmSpeed?.ToString(Parametres.Default.TimeFormat,
+            CultureInfo.InvariantCulture);
+
+        public TimeSpan? AlgorithmSpeed { get; set; } = null!;
+
         public TimeSpan? Elapsed { get; set; } = null;
 
         [Displayable(4)]
@@ -93,12 +99,12 @@ namespace Pathfinding.App.Console.Model.Notes
         public override string ToString()
         {
             var values = new object?[] { Time, Visited, Steps,
-                Cost, Rule, Heuristic, Spread, Status };
+                Cost, Rule, Heuristic, Spread, Speed, Status };
             return names.Zip(values, (n, v) => (Name: n, Value: v))
                 .Where(x => x.Value is not null and not "")
                 .Select(x => $"{x.Name}: {x.Value}")
                 .Prepend(Name)
-                .To(lines => string.Join(" ", lines));
+                .To(lines => string.Join("; ", lines));
         }
 
         private static string? GetString(string? key)

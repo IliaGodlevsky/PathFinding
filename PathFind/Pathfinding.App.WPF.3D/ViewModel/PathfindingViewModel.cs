@@ -69,7 +69,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel
             visitedVerticesCount++;
         }
 
-        protected override async void OnVertexEnqueued(object sender, PathfindingEventArgs e)
+        protected override async void OnVertexEnqueued(object sender, VerticesEnqueuedEventArgs e)
         {
             await Task.Run(Graph.Get(e.Current).VisualizeAsEnqueued).ConfigureAwait(false);
         }

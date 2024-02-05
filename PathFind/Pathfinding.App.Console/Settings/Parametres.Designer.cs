@@ -151,19 +151,10 @@ namespace Pathfinding.App.Console.Settings {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("pathfinding.litedb")]
+        [global::System.Configuration.DefaultSettingValueAttribute("filename=pathfinding.litedb;connection=shared")]
         public string LiteDbConnectionString {
             get {
                 return ((string)(this["LiteDbConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("pathfinding.sqlite")]
-        public string SqliteConnectionString {
-            get {
-                return ((string)(this["SqliteConnectionString"]));
             }
         }
     }

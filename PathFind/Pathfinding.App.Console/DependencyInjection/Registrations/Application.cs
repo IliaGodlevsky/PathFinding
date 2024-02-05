@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Autofac.Core.Resolving.Pipeline;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
@@ -33,7 +32,6 @@ using Pathfinding.App.Console.Model.Visualizations;
 using Pathfinding.App.Console.Model.Visualizations.Containers;
 using Pathfinding.App.Console.Settings;
 using Pathfinding.App.Console.Units;
-using Pathfinding.App.Console.ValueInput;
 using Pathfinding.App.Console.ValueInput.UserInput;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Modules;
@@ -54,8 +52,6 @@ using Pathfinding.Logging.Loggers;
 using Pathfinding.Visualization.Core.Abstractions;
 using Shared.Executable;
 using Shared.Extensions;
-using Shared.Primitives.Attributes;
-using Shared.Primitives.Extensions;
 using Shared.Random;
 using Shared.Random.Realizations;
 using System;
@@ -72,13 +68,16 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
     internal sealed partial class Application : IDisposable
     {
-        private static IReadOnlyCollection<IComponent> GetComponents()
-        {
-            return typeof(Application).GetNestedTypes(BindingFlags.NonPublic)
-                .Where(member => typeof(IComponent).IsAssignableFrom(member))
-                .Select(member => (IComponent)Activator.CreateInstance(member))
-                .ToReadOnly();
-        }
+        private static readonly Lazy<IReadOnlyCollection<IComponent>> components
+            = new(() =>
+            {
+                return typeof(Application).GetNestedTypes(BindingFlags.NonPublic)
+                    .Where(member => typeof(IComponent).IsAssignableFrom(member))
+                    .Select(member => (IComponent)Activator.CreateInstance(member))
+                    .ToReadOnly();
+            });
+
+        private static IReadOnlyCollection<IComponent> Components => components.Value;
 
         private sealed class Main : IComponent
         {
@@ -93,18 +92,18 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterUnits(PathfindingUnits.Main, Graph, Process, Range, Algorithms);
 
                 builder.RegisterType<Service>().As<IService>().SingleInstance();
-                builder.RegisterType<SqliteInFileUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
+                builder.RegisterType<LiteDbInFileUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
 
                 builder.RegisterMapper();
 
                 builder.RegisterType<MainUnitMenuItem>().AsSelf().InstancePerDependency();
                 builder.RegisterType<GraphCreateMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main).SingleInstance();
-                builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main)
-                    .As<ICanRecieveMessage>().SingleInstance();
+                builder.RegisterType<PathfindingProcessMenuItem>()
+                    .Keyed<IMenuItem>(PathfindingUnits.Main).As<ICanRecieveMessage>().SingleInstance();
 
                 builder.RegisterType<VertexVisualizations>().CommunicateContainers().SingleInstance().AsImplementedInterfaces()
                     .ConfigurePipeline(p => p.Use(new VerticesVisualizationMiddleware(RegistrationConstants.VisualizedTypeKey)));
-                    
+
                 builder.RegisterVisualizionContainer<VisualizedVertices>(Constants.TargetColorKey);
                 builder.RegisterVisualizionContainer<VisualizedVertices>(Constants.SourceColorKey);
                 builder.RegisterVisualizionContainer<VisualizedVertices>(Constants.RegularColorKey);
@@ -192,15 +191,6 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        private sealed class TestInputComponent /*: IComponent*/
-        {
-            public void Apply(ContainerBuilder builder)
-            {
-                builder.RegisterType<TestInput>().AsImplementedInterfaces().SingleInstance();
-                builder.RegisterType<LiteDbInMemoryUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
-            }
-        }
-
         private sealed class BreadthAlgorithms : IComponent
         {
             public void Apply(ContainerBuilder builder)
@@ -232,6 +222,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<JsonSerializer<IEnumerable<CoordinateDto>>>().As<ISerializer<IEnumerable<CoordinateDto>>>().SingleInstance();
                 builder.RegisterType<JsonSerializer<IEnumerable<int>>>().As<ISerializer<IEnumerable<int>>>().SingleInstance();
                 builder.RegisterType<JsonSerializer<GraphSerializationDto>>().As<ISerializer<GraphSerializationDto>>().SingleInstance();
+                builder.RegisterType<JsonSerializer<IEnumerable<VisitedVerticesDto>>>().As<ISerializer<IEnumerable<VisitedVerticesDto>>>().SingleInstance();
                 builder.RegisterType<JsonSerializer<IEnumerable<PathfindingHistorySerializationDto>>>()
                     .As<ISerializer<IEnumerable<PathfindingHistorySerializationDto>>>().SingleInstance();
 
@@ -348,8 +339,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             public void Apply(ContainerBuilder builder)
             {
                 builder.RegisterType<PathfindingControlKeysMenuItem>().Keyed<IMenuItem>(PathfindingUnits.KeysUnit).SingleInstance();
-                builder.RegisterType<SpeedUpAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, nameof(Keys.Default.SpeedUp));
-                builder.RegisterType<SlowDownAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, nameof(Keys.Default.SpeedDown));
+                //builder.RegisterType<SpeedUpAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, nameof(Keys.Default.SpeedUp));
+                //builder.RegisterType<SlowDownAnimation>().As<IAnimationSpeedAction>().WithMetadata(Key, nameof(Keys.Default.SpeedDown));
                 builder.RegisterType<ResumeAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, nameof(Keys.Default.ResumeAlgorithm));
                 builder.RegisterType<PauseAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, nameof(Keys.Default.PauseAlgorithm));
                 builder.RegisterType<InterruptAlgorithm>().As<IPathfindingAction>().WithMetadata(Key, nameof(Keys.Default.InterruptAlgorithm));

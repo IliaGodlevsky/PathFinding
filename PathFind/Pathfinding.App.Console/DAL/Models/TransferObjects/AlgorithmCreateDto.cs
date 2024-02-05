@@ -14,7 +14,7 @@ namespace Pathfinding.App.Console.DAL.Models.TransferObjects
 
         public IReadOnlyCollection<ICoordinate> Range { get; set; }
 
-        public IReadOnlyCollection<ICoordinate> Visited { get; set; }
+        public IReadOnlyCollection<(ICoordinate, IReadOnlyList<ICoordinate>)> Visited { get; set; }
 
         public IReadOnlyCollection<ICoordinate> Obstacles { get; set; }
 

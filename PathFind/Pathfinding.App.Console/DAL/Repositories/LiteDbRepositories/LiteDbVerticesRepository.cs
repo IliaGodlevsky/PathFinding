@@ -1,7 +1,6 @@
 ﻿using LiteDB;
 using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
-using Pathfinding.App.Console.Extensions;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
@@ -12,7 +11,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 
         public LiteDbVerticesRepository(ILiteDatabase db)
         {
-            collection = db.GetNamedCollection<VertexEntity>();
+            collection = db.GetCollection<VertexEntity>(DbTables.Vertices);
             collection.EnsureIndex(x => x.GraphId);
             collection.EnsureIndex(x => x.Id);
         }

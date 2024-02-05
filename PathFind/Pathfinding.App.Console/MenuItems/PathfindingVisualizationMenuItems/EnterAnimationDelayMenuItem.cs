@@ -33,7 +33,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
             {
                 var delay = spanInput.Input(Languages.DelayTimeInputMsg, DelayRange);
                 var msg = new AlgorithmDelayMessage(delay);
-                messenger.Send(msg, Tokens.Visualization);
+                messenger.SendMany(msg, Tokens.Visualization);
             }
         }
 

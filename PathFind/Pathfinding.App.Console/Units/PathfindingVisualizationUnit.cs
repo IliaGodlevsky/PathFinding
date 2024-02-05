@@ -14,7 +14,6 @@ using Shared.Extensions;
 using Shared.Process.EventArguments;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,6 +21,7 @@ namespace Pathfinding.App.Console.Units
 {
     internal sealed class PathfindingVisualizationUnit : Unit, ICanRecieveMessage
     {
+        private readonly IMessenger messenger;
         private readonly ConsoleKeystrokesHook keyStrokeHook = new();
         private readonly IReadOnlyCollection<(string, IPathfindingAction)> pathfindingActions;
         private readonly IReadOnlyCollection<(string, IAnimationSpeedAction)> animationActions;
@@ -29,13 +29,15 @@ namespace Pathfinding.App.Console.Units
         private PathfindingProcess algorithm = PathfindingProcess.Idle;
         private GraphReadDto graph = GraphReadDto.Empty;
         private bool isVisualizationApplied = true;
-        private TimeSpan animationDelay = Constants.AlgorithmDelayTimeValueRange.LowerValueOfRange;
+        private TimeSpan animationDelay = TimeSpan.FromMilliseconds(2);
 
         public PathfindingVisualizationUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IReadOnlyCollection<(string, IPathfindingAction)> pathfindingActions,
-            IReadOnlyCollection<(string, IAnimationSpeedAction)> animationActions)
+            IReadOnlyCollection<(string, IAnimationSpeedAction)> animationActions,
+            IMessenger messenger)
             : base(menuItems)
         {
+            this.messenger = messenger;
             this.animationActions = animationActions;
             this.pathfindingActions = pathfindingActions;
         }
@@ -68,13 +70,17 @@ namespace Pathfinding.App.Console.Units
             e.SubPath.Select(graph.Graph.Get).Reverse().VisualizeAsPath();
         }
 
-        private void OnVertexEnqueued(object sender, PathfindingEventArgs e)
+        private void OnVertexEnqueued(object sender, VerticesEnqueuedEventArgs e)
         {
-            graph.Graph.Get(e.Current).VisualizeAsEnqueued();
+            foreach (var coordinate in e.Enqueued)
+            {
+                graph.Graph.Get(coordinate).VisualizeAsEnqueued();
+            }
         }
 
         private void OnAlgorithmStarted(object sender, ProcessEventArgs e)
         {
+            messenger.Send(new AlgorithmDelayMessage(animationDelay), Tokens.Statistics);
             keyStrokeHook.KeyPressed += OnConsoleKeyPressed;
             Task.Run(keyStrokeHook.Start);
         }

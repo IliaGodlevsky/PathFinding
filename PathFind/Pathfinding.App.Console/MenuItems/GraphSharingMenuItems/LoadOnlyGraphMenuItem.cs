@@ -43,15 +43,15 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             {
                 var path = input.Input();
                 var dto = serializer.DeserializeFromFile(path);
-                int id = service.AddGraph(dto);
+                var read = service.AddGraph(dto);
                 var count = service.GetGraphIds().Count;
                 if (count == 1)
                 {
-                    var graph = service.GetGraph(id);
+                    var graph = service.GetGraph(read.Id);
                     var costRange = graph.First().Cost.CostRange;
                     var costMsg = new CostRangeChangedMessage(costRange);
                     messenger.Send(costMsg, Tokens.AppLayout);
-                    var graphMsg = new GraphMessage(graph, id);
+                    var graphMsg = new GraphMessage(graph, read.Id);
                     messenger.SendMany(graphMsg, Tokens.Visual,
                         Tokens.AppLayout, Tokens.Main, Tokens.Common);
                 }

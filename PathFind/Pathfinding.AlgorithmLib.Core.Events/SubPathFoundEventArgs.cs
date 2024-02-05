@@ -1,7 +1,5 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Interface;
 using System;
-using System.Collections.Generic;
 
 namespace Pathfinding.AlgorithmLib.Core.Events
 {

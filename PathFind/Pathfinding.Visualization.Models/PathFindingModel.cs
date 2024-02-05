@@ -99,12 +99,15 @@ namespace Pathfinding.Visualization.Models
             visitedVerticesCount++;
         }
 
-        protected virtual void OnVertexEnqueued(object sender, PathfindingEventArgs e)
+        protected virtual void OnVertexEnqueued(object sender, VerticesEnqueuedEventArgs e)
         {
-            var current = Graph.Get(e.Current);
-            if (!range.IsInRange(current))
+            foreach (var coordinate in e.Enqueued)
             {
-                current.VisualizeAsEnqueued();
+                var current = Graph.Get(coordinate);
+                if (!range.IsInRange(current))
+                {
+                    current.VisualizeAsEnqueued();
+                }
             }
         }
 

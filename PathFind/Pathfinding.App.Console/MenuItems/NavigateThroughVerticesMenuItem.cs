@@ -119,7 +119,7 @@ namespace Pathfinding.App.Console.MenuItems
         private string GetLegend()
         {
             return Actions
-                .Select(x=> (Description: x.ResourceName, Key: Keys[x.ResourceName]))
+                .Select(x => (Description: x.ResourceName, Key: Keys[x.ResourceName]))
                 .Concat(new (string Description, object Key)[]
                 {
                     (nameof(Keys.VertexUp), Keys.VertexUp),

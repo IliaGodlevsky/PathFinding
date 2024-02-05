@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
-using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Interface.Extensions;
 using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.TransferObjects;
@@ -26,7 +25,7 @@ namespace Pathfinding.App.Console.Units
     {
         private readonly IService service;
         private readonly IPathfindingRangeBuilder<Vertex> builder;
-        private readonly HashSet<ICoordinate> visitedVertices = new();
+        private readonly List<(ICoordinate, IReadOnlyList<ICoordinate>)> visitedVertices = new();
         private readonly List<ICoordinate> path = new();
 
         private AlgorithmCreateDto history = new();
@@ -53,9 +52,23 @@ namespace Pathfinding.App.Console.Units
             graph.ApplyCosts(currentHistory[key].Costs);
             var obstacles = currentHistory[key].Obstacles.Select(graph.Get);
             obstacles.ForEach(vertex => vertex.VisualizeAsObstacle());
-            var visited = currentHistory[key].Visited.Select(graph.Get);
-            visited.ForEach(vertex => vertex.VisualizeAsVisited());
+            var visited = currentHistory[key].Visited;
+            var speed = currentHistory[key].Statistics.AlgorithmSpeed;
             currentHistory[key].Range.Select(graph.Get).Reverse().VisualizeAsRange();
+            visited.ForEach(vertex =>
+            {
+                if (speed.HasValue)
+                {
+                    speed.Value.Wait();
+                }
+                var current = graph.Get(vertex.Item1);
+                current.VisualizeAsVisited();
+                foreach(var item in vertex.Item2)
+                {
+                    var enqueued = graph.Get(item);
+                    enqueued.VisualizeAsEnqueued();
+                }
+            });
             currentHistory[key].Path.Select(graph.Get).VisualizeAsPath();
         }
 
@@ -69,9 +82,9 @@ namespace Pathfinding.App.Console.Units
             Graph = msg.Graph;
         }
 
-        private void OnVertexVisited(object sender, PathfindingEventArgs args)
+        private void OnVertexEnqueued(object sender, VerticesEnqueuedEventArgs e)
         {
-            visitedVertices.Add(args.Current);
+            visitedVertices.Add((e.Current, e.Enqueued));
         }
 
         private void OnStarted(object sender, EventArgs args)
@@ -86,7 +99,7 @@ namespace Pathfinding.App.Console.Units
         {
             algorithm = msg.Algorithm;
             algorithm.Started += OnStarted;
-            algorithm.VertexVisited += OnVertexVisited;
+            algorithm.VertexEnqueued += OnVertexEnqueued;
             algorithm.SubPathFound += OnSubPathFound;
         }
 
@@ -102,11 +115,11 @@ namespace Pathfinding.App.Console.Units
 
         private async void OnPathFound(PathFoundMessage msg)
         {
-            var foundPath = msg.Path.IsEmpty() 
+            var foundPath = msg.Path.IsEmpty()
                 ? path.ToArray()
                 : msg.Path.AsEnumerable();
             history.Path = foundPath.ToArray().ToReadOnly();
-            history.Visited = visitedVertices.ToReadOnly();
+            history.Visited = visitedVertices.ToList().AsReadOnly();
             history.GraphId = Graph.Id;
             visitedVertices.Clear();
             path.Clear();

@@ -1,7 +1,6 @@
 ﻿using LiteDB;
 using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
-using Pathfinding.App.Console.Extensions;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
@@ -16,7 +15,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 
         public LiteDbGraphRepository(ILiteDatabase database)
         {
-            collection = database.GetNamedCollection<GraphEntity>();
+            collection = database.GetCollection<GraphEntity>(DbTables.Graphs);
             neighborsRepository = new(database);
             algorithmRepository = new(database);
             rangeRepository = new(database);
@@ -32,11 +31,13 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 
         public bool Delete(int graphId)
         {
-            collection.Delete(graphId);
-            verticesRepository.DeleteVerticesByGraphId(graphId);
+            // Order sensitive. Do not change the order of deleting
+            // Reason: some repositories need the presence of values in the database
             neighborsRepository.DeleteByGraphId(graphId);
             rangeRepository.DeleteByGraphId(graphId);
+            verticesRepository.DeleteVerticesByGraphId(graphId);
             algorithmRepository.DeleteByGraphId(graphId);
+            collection.Delete(graphId);
             return true;
         }
 

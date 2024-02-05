@@ -1,27 +1,10 @@
-﻿using LiteDB;
-using Pathfinding.App.Console.DAL.Attributes;
-using Pathfinding.App.Console.DAL.Interface;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace Pathfinding.App.Console.DAL.Models.Entities;
 
-namespace Pathfinding.App.Console.DAL.Models.Entities
+internal class NeighborEntity
 {
-    [Table(DbTables.Neighbors)]
-    [BsonTable(DbTables.Neighbors)]
-    internal class NeighborEntity : IEntity
-    {
-        [BsonId]
-        [NotNull]
-        [Identity]
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        [NotNull]
-        [Reference(DbTables.Vertices, nameof(VertexEntity.Id))]
-        public int NeighborId { get; set; }
+    public int NeighborId { get; set; }
 
-        [NotNull]
-        [Index]
-        [Reference(DbTables.Vertices, nameof(VertexEntity.Id), 
-            ReferenceAttribute.OnDeleteCascade)]
-        public int VertexId { get; set; }
-    }
+    public int VertexId { get; set; }
 }

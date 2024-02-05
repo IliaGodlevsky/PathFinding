@@ -1,42 +1,20 @@
-﻿using LiteDB;
-using Pathfinding.App.Console.DAL.Attributes;
-using Pathfinding.App.Console.DAL.Interface;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace Pathfinding.App.Console.DAL.Models.Entities;
 
-namespace Pathfinding.App.Console.DAL.Models.Entities
+internal class VertexEntity
 {
-    [Table(DbTables.Vertices)]
-    [BsonTable(DbTables.Vertices)]
-    internal class VertexEntity : IEntity
-    {
-        [Index]
-        [BsonId]
-        [NotNull]
-        [Identity]
-        public int Id { get; set; }
+    public int Id { get; set; }
 
-        [Index]
-        [NotNull]
-        [Reference(DbTables.Graphs, nameof(GraphEntity.Id),
-            ReferenceAttribute.OnDeleteCascade)]
-        public int GraphId { get; set; }
+    public int GraphId { get; set; }
 
-        [NotNull]
-        public int X { get; set; }
+    public int X { get; set; }
 
-        [NotNull]
-        public int Y { get; set; }
+    public int Y { get; set; }
 
-        [NotNull]
-        public int Cost { get; set; }
+    public int Cost { get; set; }
 
-        [NotNull]
-        public int UpperValueRange { get; set; }
+    public int UpperValueRange { get; set; }
 
-        [NotNull]
-        public int LowerValueRange { get; set; }
+    public int LowerValueRange { get; set; }
 
-        [NotNull]
-        public bool IsObstacle { get; set; }
-    }
+    public bool IsObstacle { get; set; }
 }

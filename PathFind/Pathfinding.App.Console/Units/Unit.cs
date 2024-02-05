@@ -11,7 +11,7 @@ namespace Pathfinding.App.Console.Units
     {
         private IReadOnlyCollection<IMenuItem> MenuItems { get; }
 
-        protected virtual IMenuItem ExitMenuItem { get; } 
+        protected virtual IMenuItem ExitMenuItem { get; }
             = new ExitMenuItem();
 
         protected Unit(IReadOnlyCollection<IMenuItem> menuItems)
@@ -30,7 +30,7 @@ namespace Pathfinding.App.Console.Units
 
         private static bool CanBeExecuted(IMenuItem item)
         {
-            bool canBeExecuted = item is IConditionedMenuItem m 
+            bool canBeExecuted = item is IConditionedMenuItem m
                 && m.CanBeExecuted();
             return item is not IConditionedMenuItem || canBeExecuted;
         }

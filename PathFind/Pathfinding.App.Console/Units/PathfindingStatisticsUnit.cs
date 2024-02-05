@@ -9,6 +9,7 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model.Notes;
+using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -38,6 +39,7 @@ namespace Pathfinding.App.Console.Units
             messenger.Register<PathfindingStatisticsUnit, StatisticsMessage>(this, Tokens.Statistics, SetStatistics);
             messenger.Register<PathfindingStatisticsUnit, PathFoundMessage>(this, Tokens.Statistics, OnPathFound);
             messenger.Register<PathfindingStatisticsUnit, IsAppliedMessage>(this, Tokens.Statistics, SetIsApplied);
+            messenger.Register<PathfindingStatisticsUnit, AlgorithmDelayMessage>(this, token, SetAnimationDelay);
         }
 
         private bool IsStatisticsApplied() => isStatisticsApplied;
@@ -68,6 +70,11 @@ namespace Pathfinding.App.Console.Units
         private void SetIsApplied(IsAppliedMessage msg)
         {
             isStatisticsApplied = msg.IsApplied;
+        }
+
+        private void SetAnimationDelay(AlgorithmDelayMessage message)
+        {
+            statistics.AlgorithmSpeed = message.Delay;
         }
 
         private void SetStatistics(StatisticsMessage msg)
@@ -116,6 +123,7 @@ namespace Pathfinding.App.Console.Units
             };
             if (IsStatisticsApplied())
             {
+                stats.AlgorithmSpeed = statistics.AlgorithmSpeed;
                 stats.Elapsed = timer.Elapsed;
                 stats.Visited = visited;
                 stats.Spread = statistics.Spread;

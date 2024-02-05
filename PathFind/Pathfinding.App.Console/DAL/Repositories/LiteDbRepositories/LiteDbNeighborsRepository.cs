@@ -1,7 +1,6 @@
 ﻿using LiteDB;
 using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
-using Pathfinding.App.Console.Extensions;
 using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +14,8 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 
         public LiteDbNeighborsRepository(ILiteDatabase db)
         {
-            vertices = db.GetNamedCollection<VertexEntity>();
-            collection = db.GetNamedCollection<NeighborEntity>();
+            vertices = db.GetCollection<VertexEntity>(DbTables.Vertices);
+            collection = db.GetCollection<NeighborEntity>(DbTables.Neighbors);
             collection.EnsureIndex(x => x.VertexId);
         }
 
@@ -28,7 +27,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 
         public IEnumerable<NeighborEntity> Insert(IEnumerable<NeighborEntity> neighbours)
         {
-            collection.InsertBulk(neighbours);
+            collection.Insert(neighbours);
             return neighbours;
         }
 

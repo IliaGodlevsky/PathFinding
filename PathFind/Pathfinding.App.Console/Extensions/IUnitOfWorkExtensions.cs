@@ -30,7 +30,7 @@ namespace Pathfinding.App.Console.Extensions
             var ids = vertexEntities.Select(x => x.Key).ToArray();
             var neighbors = unitOfWork.NeighborsRepository
                 .GetNeighboursForVertices(ids)
-                .ToDictionary(x => x.Key, x => x.Value.Select(i => vertexEntities[i.NeighborId]));
+                .ToDictionary(x => x.Key, x => x.Value.Select(i => vertexEntities[i.NeighborId]).ToReadOnly());
             var readDto = new GraphAssembleDto()
             {
                 Width = graphEntity.Width,
@@ -51,25 +51,24 @@ namespace Pathfinding.App.Console.Extensions
                 .ToReadOnly();
         }
 
-        public static int AddGraph(this IUnitOfWork unitOfWork,
+        public static GraphReadDto AddGraph(this IUnitOfWork unitOfWork,
             IMapper mapper, IGraph<Vertex> graph)
         {
             var graphEntity = mapper.Map<GraphEntity>(graph);
-            graphEntity = unitOfWork.GraphRepository.Insert(graphEntity);
+            unitOfWork.GraphRepository.Insert(graphEntity);
             var vertices = mapper.Map<IEnumerable<VertexEntity>>(graph)
                 .ForEach(x => x.GraphId = graphEntity.Id)
                 .ToReadOnly();
-            vertices = unitOfWork.VerticesRepository.Insert(vertices).ToReadOnly();
+            unitOfWork.VerticesRepository.Insert(vertices);
             vertices.Zip(graph, (x, y) => (Entity: x, Vertex: y))
                 .ForEach(x => x.Vertex.Id = x.Entity.Id);
             var neighbours = graph
-                .SelectMany(x => x.Neighbours.OfType<Vertex>().Select(n => new NeighborEntity()
-                {
-                    VertexId = x.Id,
-                    NeighborId = n.Id
-                })).ToArray();
+                .SelectMany(x => x.Neighbours
+                    .OfType<Vertex>()
+                    .Select(n => new NeighborEntity() { VertexId = x.Id, NeighborId = n.Id }))
+                    .ToReadOnly();
             unitOfWork.NeighborsRepository.Insert(neighbours);
-            return graphEntity.Id;
+            return new() { Id = graphEntity.Id, Graph = graph };
         }
     }
 }
