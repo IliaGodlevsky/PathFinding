@@ -10,11 +10,7 @@ internal class AlgorithmEntity
 
     public byte[] Costs { get; set; }
 
-    public byte[] Path { get; set; }
-
     public byte[] Obstacles { get; set; }
-
-    public byte[] Visited { get; set; }
 
     public byte[] Range { get; set; }
 }

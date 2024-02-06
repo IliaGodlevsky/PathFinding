@@ -6,6 +6,8 @@
 
         public int AlgorithmId { get; set; }
 
+        public int Order { get; set; }
+
         public byte[] Visited { get; set; }
 
         public byte[] Path { get; set; }

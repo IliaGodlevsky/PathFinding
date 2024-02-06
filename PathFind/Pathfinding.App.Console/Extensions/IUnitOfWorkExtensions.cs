@@ -17,7 +17,13 @@ namespace Pathfinding.App.Console.Extensions
             int graphId, IMapper mapper)
         {
             var algorithms = unitofWork.AlgorithmsRepository.GetByGraphId(graphId);
-            return mapper.Map<AlgorithmReadDto[]>(algorithms).ToReadOnly();
+            var dtos = mapper.Map<AlgorithmReadDto[]>(algorithms).ToReadOnly();
+            foreach(var dto in dtos)
+            {
+                var subAlgorithms = unitofWork.SubAlgorithmRepository.GetByAlgorithmId(dto.Id);
+                dto.SubAlgorithms = mapper.Map<SubAlgorithmReadDto[]>(subAlgorithms).ToReadOnly();
+            }
+            return dtos;
         }
 
         public static IGraph<Vertex> CreateGraph(this IUnitOfWork unitOfWork,
@@ -26,6 +32,7 @@ namespace Pathfinding.App.Console.Extensions
             var graphEntity = unitOfWork.GraphRepository.Read(graphId);
             var vertexEntities = unitOfWork.VerticesRepository
                 .GetVerticesByGraphId(graphId)
+                .OrderBy(x => x.Order)
                 .ToDictionary(x => x.Id);
             var ids = vertexEntities.Select(x => x.Key).ToArray();
             var neighbors = unitOfWork.NeighborsRepository
@@ -56,9 +63,12 @@ namespace Pathfinding.App.Console.Extensions
         {
             var graphEntity = mapper.Map<GraphEntity>(graph);
             unitOfWork.GraphRepository.Insert(graphEntity);
-            var vertices = mapper.Map<IEnumerable<VertexEntity>>(graph)
-                .ForEach(x => x.GraphId = graphEntity.Id)
-                .ToReadOnly();
+            var vertices = mapper.Map<VertexEntity[]>(graph).ToReadOnly();
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                vertices[i].Order = i;
+                vertices[i].GraphId = graphEntity.Id;
+            }
             unitOfWork.VerticesRepository.Insert(vertices);
             vertices.Zip(graph, (x, y) => (Entity: x, Vertex: y))
                 .ForEach(x => x.Vertex.Id = x.Entity.Id);

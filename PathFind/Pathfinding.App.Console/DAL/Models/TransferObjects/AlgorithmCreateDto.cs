@@ -10,11 +10,9 @@ namespace Pathfinding.App.Console.DAL.Models.TransferObjects
 
         public Statistics Statistics { get; set; }
 
-        public IReadOnlyCollection<ICoordinate> Path { get; set; }
+        public IReadOnlyCollection<SubAlgorithmCreateDto> SubAlgorithms { get; set; }
 
         public IReadOnlyCollection<ICoordinate> Range { get; set; }
-
-        public IReadOnlyCollection<(ICoordinate, IReadOnlyList<ICoordinate>)> Visited { get; set; }
 
         public IReadOnlyCollection<ICoordinate> Obstacles { get; set; }
 

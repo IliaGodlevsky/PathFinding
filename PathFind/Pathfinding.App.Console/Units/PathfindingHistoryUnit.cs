@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
-using Pathfinding.AlgorithmLib.Core.Interface.Extensions;
 using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.TransferObjects;
 using Pathfinding.App.Console.Extensions;
@@ -9,10 +8,10 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.Visualizations.VisualizationUnits;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Modules.Interface;
-using Pathfinding.Visualization.Extensions;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
@@ -26,7 +25,7 @@ namespace Pathfinding.App.Console.Units
         private readonly IService service;
         private readonly IPathfindingRangeBuilder<Vertex> builder;
         private readonly List<(ICoordinate, IReadOnlyList<ICoordinate>)> visitedVertices = new();
-        private readonly List<ICoordinate> path = new();
+        private readonly List<SubAlgorithmCreateDto> subAlgorithms = new();
 
         private AlgorithmCreateDto history = new();
         private GraphReadDto Graph = GraphReadDto.Empty;
@@ -44,32 +43,12 @@ namespace Pathfinding.App.Console.Units
 
         private void VisualizeHistory(AlgorithmKeyMessage msg)
         {
-            var graph = Graph.Graph;
-            var key = msg.AlgorithmKey;
-            graph.RestoreVerticesVisualState();
-            var currentHistory = service.GetGraphPathfindingHistory(Graph.Id)
-                .ToDictionary(x => x.Id);
-            graph.ApplyCosts(currentHistory[key].Costs);
-            var obstacles = currentHistory[key].Obstacles.Select(graph.Get);
-            obstacles.ForEach(vertex => vertex.VisualizeAsObstacle());
-            var visited = currentHistory[key].Visited;
-            var speed = currentHistory[key].Statistics.AlgorithmSpeed;
-            currentHistory[key].Range.Select(graph.Get).Reverse().VisualizeAsRange();
-            visited.ForEach(vertex =>
-            {
-                if (speed.HasValue)
-                {
-                    speed.Value.Wait();
-                }
-                var current = graph.Get(vertex.Item1);
-                current.VisualizeAsVisited();
-                foreach(var item in vertex.Item2)
-                {
-                    var enqueued = graph.Get(item);
-                    enqueued.VisualizeAsEnqueued();
-                }
-            });
-            currentHistory[key].Path.Select(graph.Get).VisualizeAsPath();
+            var algorithm = service
+                .GetGraphPathfindingHistory(Graph.Id)
+                .FirstOrDefault(x => x.Id == msg.AlgorithmKey);
+            var units = new VisualizationUnits(algorithm);
+            units.Visualize(Graph.Graph);
+
         }
 
         private void SetIsApplied(IsAppliedMessage msg)
@@ -105,7 +84,13 @@ namespace Pathfinding.App.Console.Units
 
         private void OnSubPathFound(object sender, SubPathFoundEventArgs args)
         {
-            path.AddRange(args.SubPath);
+            var subAlgorithm = new SubAlgorithmCreateDto()
+            {
+                Path = args.SubPath,
+                Visited = visitedVertices.ToList().AsReadOnly()
+            };
+            subAlgorithms.Add(subAlgorithm);
+            visitedVertices.Clear();
         }
 
         private void SetStatistics(StatisticsMessage msg)
@@ -115,16 +100,11 @@ namespace Pathfinding.App.Console.Units
 
         private async void OnPathFound(PathFoundMessage msg)
         {
-            var foundPath = msg.Path.IsEmpty()
-                ? path.ToArray()
-                : msg.Path.AsEnumerable();
-            history.Path = foundPath.ToArray().ToReadOnly();
-            history.Visited = visitedVertices.ToList().AsReadOnly();
             history.GraphId = Graph.Id;
-            visitedVertices.Clear();
-            path.Clear();
+            history.SubAlgorithms = subAlgorithms.ToList().AsReadOnly();
             algorithm = PathfindingProcess.Idle;
             var reference = history;
+            subAlgorithms.Clear();
             history = new();
             await Task.Run(() => service.AddAlgorithm(reference));
         }

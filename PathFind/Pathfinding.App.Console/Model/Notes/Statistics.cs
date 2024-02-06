@@ -77,6 +77,7 @@ namespace Pathfinding.App.Console.Model.Notes
         public string ResultStatus { get; set; } = string.Empty;
 
         [Displayable(9)]
+        [JsonIgnore]
         public string? Speed => AlgorithmSpeed?.ToString(Parametres.Default.TimeFormat,
             CultureInfo.InvariantCulture);
 

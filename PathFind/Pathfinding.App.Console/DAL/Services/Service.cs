@@ -29,8 +29,18 @@ namespace Pathfinding.App.Console.DAL.Services
             return Transaction(unitOfWork =>
             {
                 var entity = mapper.Map<AlgorithmEntity>(algorithm);
+                var entities = mapper.Map<SubAlgorithmEntity[]>(algorithm.SubAlgorithms);
                 entity = unitOfWork.AlgorithmsRepository.Insert(entity);
-                return mapper.Map<AlgorithmReadDto>(entity);
+                for (int i = 0; i < entities.Length; i++)
+                {
+                    entities[i].Order = i;
+                    entities[i].AlgorithmId = entity.Id;
+                }
+                unitOfWork.SubAlgorithmRepository.Insert(entities);
+                var subAlgorithms = mapper.Map<SubAlgorithmReadDto[]>(entities);
+                var result = mapper.Map<AlgorithmReadDto>(entity);
+                result.SubAlgorithms = subAlgorithms.ToReadOnly();
+                return result;
             });
         }
 

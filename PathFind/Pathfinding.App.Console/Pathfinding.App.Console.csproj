@@ -64,9 +64,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlgorithmStatuses.cs" />
     <Compile Include="DAL\DbTables.cs" />
     <Compile Include="DAL\Interface\ISubAlgorithmRepository.cs" />
+    <Compile Include="DAL\Models\Algorithms.cs" />
+    <Compile Include="DAL\Models\Entities\AlgorithmEntity2.cs" />
+    <Compile Include="DAL\Models\Entities\AlgorithmRunEntity.cs" />
+    <Compile Include="DAL\Models\Entities\GraphStateEntity.cs" />
+    <Compile Include="DAL\Models\Entities\StatisticsEntity.cs" />
     <Compile Include="DAL\Models\Entities\SubAlgorithmEntity.cs" />
+    <Compile Include="DAL\Models\Mappers\SubAlgorithmsMappingProfile.cs" />
     <Compile Include="DAL\Models\TransferObjects\AlgorithmCreateDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\AlgorithmSerializationDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\AlgorithmReadDto.cs" />
@@ -77,6 +84,9 @@
     <Compile Include="DAL\Models\TransferObjects\PathfindingHistoryCreateDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\PathfindingHistorySerializationDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\PathfindingHistoryReadDto.cs" />
+    <Compile Include="DAL\Models\TransferObjects\SubAlgorithmCreateDto.cs" />
+    <Compile Include="DAL\Models\TransferObjects\SubAlgorithmReadDto.cs" />
+    <Compile Include="DAL\Models\TransferObjects\SubAlgorithmSerializationDto.cs" />
     <Compile Include="DAL\Models\TransferObjects\VertexAssembleDto.cs" />
     <Compile Include="DAL\Models\Entities\NeighborEntity.cs" />
     <Compile Include="DAL\Models\Entities\AlgorithmEntity.cs" />
@@ -116,6 +126,7 @@
     <Compile Include="Extensions\IUnitOfWorkExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Interface\INeighbourhoodCommand.cs" />
+    <Compile Include="Interface\IVisualizationUnit.cs" />
     <Compile Include="Messaging\IToken.cs" />
     <Compile Include="Interface\IVisualizedVertices.cs" />
     <Compile Include="MenuItems\GraphSharingMenuItems\LoadOnlyGraphMenuItem.cs" />
@@ -182,6 +193,13 @@
     <Compile Include="Model\Visualizations\Containers\NullVisualizedVertices.cs" />
     <Compile Include="Model\Visualizations\Containers\VisualizedVisited.cs" />
     <Compile Include="Model\Visualizations\Containers\VisualizedVertices.cs" />
+    <Compile Include="Model\Visualizations\VisualizationUnits\ApplyCostsVisualizationUnit.cs" />
+    <Compile Include="Model\Visualizations\VisualizationUnits\ObstaclesVisualizationUnit.cs" />
+    <Compile Include="Model\Visualizations\VisualizationUnits\RangeVisualizationUnit.cs" />
+    <Compile Include="Model\Visualizations\VisualizationUnits\RestoreVisualStateUnit.cs" />
+    <Compile Include="Model\Visualizations\VisualizationUnits\SubAlgorithmVisualizationUnit.cs" />
+    <Compile Include="Model\Visualizations\VisualizationUnits\VisualizationUnit.cs" />
+    <Compile Include="Model\Visualizations\VisualizationUnits\VisualizationUnits.cs" />
     <Compile Include="Settings\Keys.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

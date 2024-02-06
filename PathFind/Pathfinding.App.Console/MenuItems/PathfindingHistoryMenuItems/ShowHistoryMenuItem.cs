@@ -63,11 +63,11 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
                     {
                         using (Cursor.HideCursor())
                         {
-                            var keyMsg = new AlgorithmKeyMessage(page.Key);
-                            messenger.Send(keyMsg, Tokens.History);
                             string data = $"{index + 1} {page.Value}";
                             var lineMsg = new StatisticsLineMessage(data);
                             messenger.Send(lineMsg, Tokens.AppLayout);
+                            var keyMsg = new AlgorithmKeyMessage(page.Key);
+                            messenger.Send(keyMsg, Tokens.History);
                         }
                     }
                     index = GetAlgorithmId(inputMessage, statistics.Count);

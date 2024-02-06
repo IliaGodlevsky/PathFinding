@@ -8,6 +8,8 @@ namespace Pathfinding.App.Console.DAL.Interface
 
         IAlgorithmsRepository AlgorithmsRepository { get; }
 
+        ISubAlgorithmRepository SubAlgorithmRepository { get; }
+
         IVerticesRepository VerticesRepository { get; }
 
         INeighborsRepository NeighborsRepository { get; }

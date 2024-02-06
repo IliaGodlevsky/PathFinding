@@ -9,7 +9,6 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model.Notes;
-using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -57,7 +56,7 @@ namespace Pathfinding.App.Console.Units
 
         private void OnStarted(object sender, EventArgs e)
         {
-            statistics.ResultStatus = nameof(Languages.Started);
+            statistics.ResultStatus = AlgorithmStatuses.Started;
             timer.Restart();
         }
 
@@ -79,20 +78,20 @@ namespace Pathfinding.App.Console.Units
 
         private void SetStatistics(StatisticsMessage msg)
         {
-            statistics = msg.Statistics;
+            statistics = msg.Statistics with { AlgorithmSpeed = statistics.AlgorithmSpeed };
         }
 
         private void OnPathFound(PathFoundMessage message)
         {
             var note = GetStatistics(message.Path);
-            if (note.ResultStatus != nameof(Languages.Interrupted))
+            if (note.ResultStatus != AlgorithmStatuses.Interrupted)
             {
-                note.ResultStatus = nameof(Languages.Succeeded);
+                note.ResultStatus = AlgorithmStatuses.Succeeded;
             }
             if (message.Path.IsEmpty()
-                && note.ResultStatus != nameof(Languages.Interrupted))
+                && note.ResultStatus != AlgorithmStatuses.Interrupted)
             {
-                note.ResultStatus = nameof(Languages.Failed);
+                note.ResultStatus = AlgorithmStatuses.Failed;
             }
             if (IsStatisticsApplied())
             {
