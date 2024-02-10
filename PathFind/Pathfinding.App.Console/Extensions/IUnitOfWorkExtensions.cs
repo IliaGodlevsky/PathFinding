@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using Pathfinding.AlgorithmLib.History;
 using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
-using Pathfinding.App.Console.DAL.Models.TransferObjects;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Create;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
@@ -13,17 +16,49 @@ namespace Pathfinding.App.Console.Extensions
 {
     internal static class IUnitOfWorkExtensions
     {
-        public static IReadOnlyCollection<AlgorithmReadDto> GetAlgorithms(this IUnitOfWork unitofWork,
+        public static void AddHistory(this IUnitOfWork unitOfWork, IMapper mapper, 
+            IEnumerable<AlgorithmRunHistoryCreateDto> algorithms)
+        {
+            foreach (var runHistory in algorithms)
+            {
+                var runEntity = mapper.Map<AlgorithmRunEntity>(runHistory.Run);
+                unitOfWork.RunRepository.Insert(runEntity);
+                var graphState = mapper.Map<GraphStateEntity>(runHistory.GraphState);
+                graphState.AlgorithmRunId = runEntity.Id;
+                var subAlgorithms = mapper.Map<SubAlgorithmEntity[]>(runHistory.SubAlgorithms);
+                for (int i = 0; i < subAlgorithms.Length; i++)
+                {
+                    subAlgorithms[i].Order = i;
+                    subAlgorithms[i].AlgorithmRunId = runEntity.Id;
+                }
+                var runStatistics = mapper.Map<StatisticsEntity>(runHistory.Statistics);
+                runStatistics.AlgorithmRunId = runEntity.Id;
+                unitOfWork.GraphStateRepository.Insert(graphState);
+                unitOfWork.SubAlgorithmRepository.Insert(subAlgorithms);
+                unitOfWork.StatisticsRepository.Insert(runStatistics);
+            }
+        }
+
+        public static IReadOnlyCollection<AlgorithmRunHistoryReadDto> GetAlgorithmRuns(this IUnitOfWork unitofWork,
             int graphId, IMapper mapper)
         {
-            var algorithms = unitofWork.AlgorithmsRepository.GetByGraphId(graphId);
-            var dtos = mapper.Map<AlgorithmReadDto[]>(algorithms).ToReadOnly();
-            foreach(var dto in dtos)
+            var algorithms = unitofWork.RunRepository.GetByGraphId(graphId);
+            var dtos = mapper.Map<AlgorithmRunReadDto[]>(algorithms).ToReadOnly();
+            var runHistories = new List<AlgorithmRunHistoryReadDto>();
+            foreach (var dto in dtos)
             {
-                var subAlgorithms = unitofWork.SubAlgorithmRepository.GetByAlgorithmId(dto.Id);
-                dto.SubAlgorithms = mapper.Map<SubAlgorithmReadDto[]>(subAlgorithms).ToReadOnly();
+                var subAlgorithms = unitofWork.SubAlgorithmRepository.GetByAlgorithmRunId(dto.Id);
+                var graphState = unitofWork.GraphStateRepository.GetByRunId(dto.Id);
+                var runStatistics = unitofWork.StatisticsRepository.GetByAlgorithmRunId(dto.Id);
+                runHistories.Add(new AlgorithmRunHistoryReadDto()
+                {
+                    SubAlgorithms = mapper.Map<SubAlgorithmReadDto[]>(subAlgorithms).ToReadOnly(),
+                    GraphState = mapper.Map<GraphStateReadDto>(graphState),
+                    Statistics = mapper.Map<RunStatisticsDto>(runStatistics),
+                    Run = dto
+                });
             }
-            return dtos;
+            return runHistories.AsReadOnly();
         }
 
         public static IGraph<Vertex> CreateGraph(this IUnitOfWork unitOfWork,
@@ -52,7 +87,6 @@ namespace Pathfinding.App.Console.Extensions
         {
             return unitOfWork.RangeRepository
                 .GetByGraphId(graphId)
-                .OrderBy(x => x.Position)
                 .Select(x => unitOfWork.VerticesRepository.Read(x.VertexId))
                 .Select(x => new Coordinate(x.X, x.Y))
                 .ToReadOnly();

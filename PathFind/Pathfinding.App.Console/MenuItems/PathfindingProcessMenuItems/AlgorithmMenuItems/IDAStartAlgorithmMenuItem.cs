@@ -3,6 +3,7 @@ using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Factory;
 using Pathfinding.AlgorithmLib.Factory.Interface;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -48,7 +49,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
             return base.GetAlgorithm();
         }
 
-        protected override Statistics GetStatistics(string heusristic, string stepRule)
+        protected override RunStatisticsDto GetStatistics(string heusristic, string stepRule)
         {
             var stats = base.GetStatistics(heusristic, stepRule);
             stats.Spread = Spread;

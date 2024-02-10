@@ -2,6 +2,7 @@
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Factory.Interface;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -77,10 +78,11 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
             }
         }
 
-        protected virtual Statistics GetStatistics(string heusristic, string stepRule)
+        protected virtual RunStatisticsDto GetStatistics(string heusristic, string stepRule)
         {
-            return new Statistics(LanguageKey)
+            return new()
             {
+                AlgorithmId = LanguageKey,
                 Heuristics = heusristic,
                 StepRule = stepRule
             };

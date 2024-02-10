@@ -9,7 +9,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
     {
         private readonly ILiteCollection<GraphEntity> collection;
         private readonly LiteDbNeighborsRepository neighborsRepository;
-        private readonly LiteDbAlgorithmRepository algorithmRepository;
+        private readonly LiteDbAlgorithmRunRepository algorithmRunRepository;
         private readonly LiteDbRangeRepository rangeRepository;
         private readonly LiteDbVerticesRepository verticesRepository;
 
@@ -17,10 +17,9 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
         {
             collection = database.GetCollection<GraphEntity>(DbTables.Graphs);
             neighborsRepository = new(database);
-            algorithmRepository = new(database);
+            algorithmRunRepository = new(database);
             rangeRepository = new(database);
             verticesRepository = new(database);
-            collection.EnsureIndex(x => x.Id);
         }
 
         public GraphEntity Insert(GraphEntity graph)
@@ -36,7 +35,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
             neighborsRepository.DeleteByGraphId(graphId);
             rangeRepository.DeleteByGraphId(graphId);
             verticesRepository.DeleteVerticesByGraphId(graphId);
-            algorithmRepository.DeleteByGraphId(graphId);
+            algorithmRunRepository.DeleteByGraphId(graphId);
             collection.Delete(graphId);
             return true;
         }

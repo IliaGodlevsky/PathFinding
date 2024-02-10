@@ -16,6 +16,12 @@ namespace Pathfinding.App.Console.DAL.Interface
 
         IRangeRepository RangeRepository { get; }
 
+        IStatisticsRepository StatisticsRepository { get; }
+
+        IGraphStateRepository GraphStateRepository { get; }
+
+        IAlgorithmRunRepository RunRepository { get; }
+
         void BeginTransaction();
 
         void RollbackTransaction();

@@ -1,4 +1,6 @@
-﻿namespace Pathfinding.App.Console.Messaging.Messages
+﻿using System;
+
+namespace Pathfinding.App.Console.Messaging.Messages
 {
     internal sealed class AlgorithmKeyMessage
     {

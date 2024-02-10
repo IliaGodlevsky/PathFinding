@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Factory;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.AlgorithmMenuItems;
@@ -22,7 +23,10 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 
         protected override AlgorithmInfo GetAlgorithm()
         {
-            var statistics = new Statistics(nameof(Languages.LeeAlgorithm));
+            var statistics = new RunStatisticsDto 
+            { 
+                AlgorithmId = nameof(Languages.LeeAlgorithm) 
+            };
             return new(new LeeAlgorithmFactory(), statistics);
         }
     }

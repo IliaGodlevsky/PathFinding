@@ -1,9 +1,22 @@
 ﻿global using Terminal = System.Console;
 
 using Pathfinding.App.Console.DependencyInjection.Registrations;
+using System.ComponentModel;
 
-using (var app = new Application())
+namespace System.Runtime.CompilerServices
 {
-    app.ApplyComponents();
-    app.Run();
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public record IsExternalInit;
+}
+
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        using (var app = new Application())
+        {
+            app.ApplyComponents();
+            app.Run();
+        }
+    }
 }

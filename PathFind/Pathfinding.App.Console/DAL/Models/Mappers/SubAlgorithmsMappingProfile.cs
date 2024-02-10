@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Pathfinding.App.Console.DAL.Models.Entities;
-using Pathfinding.App.Console.DAL.Models.TransferObjects;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Create;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Serialization;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
-using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Shared.Extensions;
 using System.Collections.Generic;
 
@@ -13,10 +15,8 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
     {
         public SubAlgorithmsMappingProfile(ISerializer<IEnumerable<VisitedVerticesDto>> visitedVerticesSerializer) 
         {
-            CreateMap<byte[], IReadOnlyCollection<(ICoordinate, IReadOnlyList<ICoordinate>)>>()
-                .ConvertUsing((x, y, context) => context.Mapper.Map<IReadOnlyCollection<(ICoordinate, IReadOnlyList<ICoordinate>)>>(visitedVerticesSerializer.DeserializeFromBytes(x)).ToReadOnly());
-            CreateMap<IReadOnlyCollection<(ICoordinate, IReadOnlyList<ICoordinate>)>, byte[]>()
-                .ConvertUsing((x, y, context) => visitedVerticesSerializer.SerializeToBytes(context.Mapper.Map<VisitedVerticesDto[]>(x)));
+            CreateMap<SubAlgorithmCreateDto, SubAlgorithmReadDto>();
+            CreateMap<SubAlgorithmReadDto, SubAlgorithmCreateDto>();
 
             CreateMap<SubAlgorithmEntity, SubAlgorithmReadDto>();
             CreateMap<SubAlgorithmCreateDto, SubAlgorithmEntity>();

@@ -1,7 +1,10 @@
 ﻿using Pathfinding.App.Console.Interface;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+
+
 
 namespace Pathfinding.App.Console.Model.FramedAxes
 {

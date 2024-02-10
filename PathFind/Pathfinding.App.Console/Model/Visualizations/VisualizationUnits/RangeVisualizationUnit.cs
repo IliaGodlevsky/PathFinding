@@ -1,4 +1,4 @@
-﻿using Pathfinding.App.Console.DAL.Models.TransferObjects;
+﻿using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.Visualization.Extensions;
 using System;
@@ -8,13 +8,14 @@ namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
 {
     internal sealed class RangeVisualizationUnit : VisualizationUnit
     {
-        public RangeVisualizationUnit(AlgorithmReadDto algorithm) : base(algorithm)
+        public RangeVisualizationUnit(RunVisualizationDto algorithm) 
+            : base(algorithm)
         {
         }
 
         public override void Visualize(IGraph<Vertex> graph)
         {
-            algorithm.Range
+            algorithm.GraphState.Range
                 .Select(graph.Get)
                 .Reverse()
                 .VisualizeAsRange();

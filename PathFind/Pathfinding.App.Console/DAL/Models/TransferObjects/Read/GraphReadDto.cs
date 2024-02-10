@@ -2,7 +2,7 @@
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Realizations;
 
-namespace Pathfinding.App.Console.DAL.Models.TransferObjects
+namespace Pathfinding.App.Console.DAL.Models.TransferObjects.Read
 {
     internal class GraphReadDto
     {

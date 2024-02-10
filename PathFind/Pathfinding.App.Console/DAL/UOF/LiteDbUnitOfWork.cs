@@ -21,6 +21,12 @@ namespace Pathfinding.App.Console.DAL.UOF
 
         public INeighborsRepository NeighborsRepository { get; }
 
+        public IStatisticsRepository StatisticsRepository { get; }
+
+        public IGraphStateRepository GraphStateRepository { get; }
+
+        public IAlgorithmRunRepository RunRepository { get; }
+
         public LiteDbUnitOfWork(string connectionString)
             : this(new LiteDatabase(connectionString))
         {
@@ -40,6 +46,9 @@ namespace Pathfinding.App.Console.DAL.UOF
             VerticesRepository = new LiteDbVerticesRepository(database);
             NeighborsRepository = new LiteDbNeighborsRepository(database);
             RangeRepository = new LiteDbRangeRepository(database);
+            StatisticsRepository = new LiteDbStatisticsRepository(database);
+            GraphStateRepository = new LiteDbGraphStateRepository(database);
+            RunRepository = new LiteDbAlgorithmRunRepository(database);
         }
 
         public void BeginTransaction()

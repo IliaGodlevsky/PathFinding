@@ -12,7 +12,6 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
         public LiteDbVerticesRepository(ILiteDatabase db)
         {
             collection = db.GetCollection<VertexEntity>(DbTables.Vertices);
-            collection.EnsureIndex(x => x.GraphId);
             collection.EnsureIndex(x => x.Id);
         }
 

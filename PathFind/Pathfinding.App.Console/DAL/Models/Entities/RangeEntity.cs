@@ -8,5 +8,5 @@ internal class RangeEntity
 
     public int VertexId { get; set; }
 
-    public int Position { get; set; }
+    public int Order { get; set; }
 }

@@ -1,11 +1,12 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
+using System;
 using System.Collections.Generic;
 
-namespace Pathfinding.App.Console.DAL.Models.TransferObjects
+namespace Pathfinding.App.Console.DAL.Models.TransferObjects.Create
 {
     internal class SubAlgorithmCreateDto
     {
-        public int AlgorithmId { get;set; }
+        public int AlgorithmRunId { get; set; }
 
         public int Order { get; set; }
 

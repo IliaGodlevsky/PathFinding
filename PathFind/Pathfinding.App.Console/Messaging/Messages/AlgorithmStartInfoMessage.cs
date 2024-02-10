@@ -1,5 +1,6 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Factory.Interface;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.Model.Notes;
 
 namespace Pathfinding.App.Console.Messaging.Messages
@@ -8,10 +9,10 @@ namespace Pathfinding.App.Console.Messaging.Messages
     {
         public IAlgorithmFactory<PathfindingProcess> Factory { get; }
 
-        public Statistics InitStatistics { get; }
+        public RunStatisticsDto InitStatistics { get; }
 
         public AlgorithmStartInfoMessage(IAlgorithmFactory<PathfindingProcess> factory,
-            Statistics initStatistics)
+            RunStatisticsDto initStatistics)
         {
             Factory = factory;
             InitStatistics = initStatistics;

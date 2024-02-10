@@ -11,8 +11,6 @@ namespace Pathfinding.App.Console.DAL.Interface
 
         bool DeleteByVertexId(int vertexId);
 
-        RangeEntity GetByVertexId(int vertexId);
-
         IEnumerable<RangeEntity> GetByGraphId(int graphId);
 
         bool Update(RangeEntity entity);

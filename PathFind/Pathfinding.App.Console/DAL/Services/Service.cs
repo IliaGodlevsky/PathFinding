@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
-using Pathfinding.App.Console.DAL.Models.TransferObjects;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Create;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Serialization;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.DAL.UOF.Factories;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Model;
@@ -24,23 +27,13 @@ namespace Pathfinding.App.Console.DAL.Services
             this.factory = factory ?? new LiteDbInMemoryUnitOfWorkFactory();
         }
 
-        public AlgorithmReadDto AddAlgorithm(AlgorithmCreateDto algorithm)
+        public AlgorithmRunReadDto AddAlgorithm(AlgorithmRunCreateDto run)
         {
-            return Transaction(unitOfWork =>
+            return Transaction(unit =>
             {
-                var entity = mapper.Map<AlgorithmEntity>(algorithm);
-                var entities = mapper.Map<SubAlgorithmEntity[]>(algorithm.SubAlgorithms);
-                entity = unitOfWork.AlgorithmsRepository.Insert(entity);
-                for (int i = 0; i < entities.Length; i++)
-                {
-                    entities[i].Order = i;
-                    entities[i].AlgorithmId = entity.Id;
-                }
-                unitOfWork.SubAlgorithmRepository.Insert(entities);
-                var subAlgorithms = mapper.Map<SubAlgorithmReadDto[]>(entities);
-                var result = mapper.Map<AlgorithmReadDto>(entity);
-                result.SubAlgorithms = subAlgorithms.ToReadOnly();
-                return result;
+                var entity = mapper.Map<AlgorithmRunEntity>(run);
+                unit.RunRepository.Insert(entity);
+                return mapper.Map<AlgorithmRunReadDto>(entity);
             });
         }
 
@@ -54,9 +47,8 @@ namespace Pathfinding.App.Console.DAL.Services
             return Transaction(unitOfWork => histories.Select(history =>
             {
                 var dto = unitOfWork.AddGraph(mapper, history.Graph);
-                var algorithms = mapper.Map<AlgorithmEntity[]>(history.Algorithms);
-                algorithms.ForEach(a => a.GraphId = dto.Id);
-                unitOfWork.AlgorithmsRepository.Insert(algorithms);
+                history.Algorithms.ForEach(x => x.Run.GraphId = dto.Id);
+                unitOfWork.AddHistory(mapper, history.Algorithms);
                 var vertices = history.Range
                     .Select((x, i) => (Order: i, Vertex: history.Graph.Get(x)));
                 var entities = SelectRangeEntities(vertices, dto.Id);
@@ -92,16 +84,13 @@ namespace Pathfinding.App.Console.DAL.Services
 
         public IReadOnlyCollection<int> GetGraphIds()
         {
-            return Transaction(unitOfWork =>
-            {
-                return unitOfWork.GraphRepository.GetAll()
-                    .Select(x => x.Id).ToReadOnly();
-            });
+            return Transaction(unitOfWork => unitOfWork.GraphRepository
+                                .GetAll().Select(x => x.Id).ToReadOnly());
         }
 
-        public IReadOnlyCollection<AlgorithmReadDto> GetGraphPathfindingHistory(int graphId)
+        public IReadOnlyCollection<AlgorithmRunHistoryReadDto> GetGraphPathfindingHistory(int graphId)
         {
-            return Transaction(unitOfWork => unitOfWork.GetAlgorithms(graphId, mapper));
+            return Transaction(unitOfWork => unitOfWork.GetAlgorithmRuns(graphId, mapper));
         }
 
         public IReadOnlyCollection<ICoordinate> GetRange(int graphId)
@@ -139,7 +128,7 @@ namespace Pathfinding.App.Console.DAL.Services
             {
                 Id = graphId,
                 Graph = unitOfWork.CreateGraph(graphId, mapper),
-                Algorithms = unitOfWork.GetAlgorithms(graphId, mapper),
+                Algorithms = unitOfWork.GetAlgorithmRuns(graphId, mapper),
                 Range = unitOfWork.GetRange(graphId)
             });
         }
@@ -212,6 +201,77 @@ namespace Pathfinding.App.Console.DAL.Services
             return AddGraph(add);
         }
 
+        private IReadOnlyCollection<RangeEntity> SelectRangeEntities(IEnumerable<(int Order, Vertex Vertex)> vertices, int graphId)
+        {
+            return vertices.Select(x => new RangeEntity
+            {
+                GraphId = graphId,
+                VertexId = x.Vertex.Id,
+                Order = x.Order
+            }).ToReadOnly();
+        }
+
+        public IReadOnlyCollection<RunStatisticsDto> GetRunStatiticsForGraph(int graphId)
+        {
+            return Transaction(unit =>
+            {
+                var runs = unit.RunRepository.GetByGraphId(graphId)
+                    .OrderBy(x => x.Id)
+                    .ToReadOnly();
+                var statistics = unit.StatisticsRepository
+                    .GetByRunIds(runs.Select(x => x.Id))
+                    .OrderBy(x => x.AlgorithmRunId)
+                    .ToReadOnly();
+                var runStatistics = mapper.Map<RunStatisticsDto[]>(statistics).ToReadOnly();
+                for (int i = 0; i < runs.Count; i++)
+                {
+                    runStatistics[i].AlgorithmId = runs[i].AlgorithmId;
+                }
+                return runStatistics;
+            });
+        }
+
+        public RunVisualizationDto GetRunInfo(int runId)
+        {
+            return Transaction<RunVisualizationDto>(unit =>
+            {
+                var graphState = unit.GraphStateRepository.GetByRunId(runId);
+                var subAlgorithms = unit.SubAlgorithmRepository.GetByAlgorithmRunId(runId);
+                var speed = unit.StatisticsRepository.GetByAlgorithmRunId(runId).AlgorithmSpeed;
+                return new()
+                {
+                    GraphState = mapper.Map<GraphStateReadDto>(graphState),
+                    Algorithms = mapper.Map<SubAlgorithmReadDto[]>(subAlgorithms).ToReadOnly(),
+                    AlgorithmSpeed = speed
+                };
+            });
+        }
+
+        public IEnumerable<SubAlgorithmReadDto> Insert(IEnumerable<SubAlgorithmCreateDto> subAlgorithms)
+        {
+            return Transaction(unit =>
+            {
+                var entities = mapper.Map<SubAlgorithmEntity[]>(subAlgorithms);
+                unit.SubAlgorithmRepository.Insert(entities);
+                return mapper.Map<SubAlgorithmReadDto[]>(entities).ToReadOnly();
+            });
+        }
+
+        public void AddRunHistory(
+            params AlgorithmRunHistoryCreateDto[] histories)
+        {
+            Transaction(unit =>
+            {
+                unit.AddHistory(mapper, histories);
+                return true;
+            });
+        }
+
+        public int GetRunCount(int graphId)
+        {
+            return Transaction<int>(unit => unit.RunRepository.GetCount(graphId));
+        }
+
         private T Transaction<T>(Func<IUnitOfWork, T> action)
         {
             using (var unitOfWork = factory.Create())
@@ -229,16 +289,6 @@ namespace Pathfinding.App.Console.DAL.Services
                     throw;
                 }
             }
-        }
-
-        private IReadOnlyCollection<RangeEntity> SelectRangeEntities(IEnumerable<(int Order, Vertex Vertex)> vertices, int graphId)
-        {
-            return vertices.Select(x => new RangeEntity
-            {
-                GraphId = graphId,
-                VertexId = x.Vertex.Id,
-                Position = x.Order
-            }).ToReadOnly();
         }
     }
 }

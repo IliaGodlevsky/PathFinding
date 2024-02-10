@@ -2,7 +2,9 @@
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.App.Console.DAL.Interface;
-using Pathfinding.App.Console.DAL.Models.TransferObjects;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Create;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messaging;
@@ -27,7 +29,7 @@ namespace Pathfinding.App.Console.Units
         private readonly List<(ICoordinate, IReadOnlyList<ICoordinate>)> visitedVertices = new();
         private readonly List<SubAlgorithmCreateDto> subAlgorithms = new();
 
-        private AlgorithmCreateDto history = new();
+        private RunStatisticsDto runStatistics = new();
         private GraphReadDto Graph = GraphReadDto.Empty;
         private PathfindingProcess algorithm = PathfindingProcess.Idle;
 
@@ -43,12 +45,9 @@ namespace Pathfinding.App.Console.Units
 
         private void VisualizeHistory(AlgorithmKeyMessage msg)
         {
-            var algorithm = service
-                .GetGraphPathfindingHistory(Graph.Id)
-                .FirstOrDefault(x => x.Id == msg.AlgorithmKey);
+            var algorithm = service.GetRunInfo(msg.AlgorithmKey);
             var units = new VisualizationUnits(algorithm);
             units.Visualize(Graph.Graph);
-
         }
 
         private void SetIsApplied(IsAppliedMessage msg)
@@ -69,13 +68,12 @@ namespace Pathfinding.App.Console.Units
         private void OnStarted(object sender, EventArgs args)
         {
             var graph = Graph.Graph;
-            history.Obstacles = graph.GetObstaclesCoordinates().ToReadOnly();
-            history.Costs = graph.GetCosts();
-            history.Range = builder.Range.GetCoordinates().ToReadOnly();
         }
 
         private void PrepareForPathfinding(AlgorithmMessage msg)
         {
+            subAlgorithms.Clear();
+            visitedVertices.Clear();
             algorithm = msg.Algorithm;
             algorithm.Started += OnStarted;
             algorithm.VertexEnqueued += OnVertexEnqueued;
@@ -95,18 +93,28 @@ namespace Pathfinding.App.Console.Units
 
         private void SetStatistics(StatisticsMessage msg)
         {
-            history.Statistics = msg.Statistics;
+            runStatistics = msg.Statistics;
         }
 
         private async void OnPathFound(PathFoundMessage msg)
         {
-            history.GraphId = Graph.Id;
-            history.SubAlgorithms = subAlgorithms.ToList().AsReadOnly();
-            algorithm = PathfindingProcess.Idle;
-            var reference = history;
-            subAlgorithms.Clear();
-            history = new();
-            await Task.Run(() => service.AddAlgorithm(reference));
+            AlgorithmRunHistoryCreateDto algorithmRunCreateDto = new()
+            {
+                Run = new() 
+                { 
+                    GraphId = Graph.Id, 
+                    AlgorithmId = runStatistics.AlgorithmId 
+                },
+                GraphState = new()
+                {
+                    Obstacles = Graph.Graph.GetObstaclesCoordinates().ToReadOnly(),
+                    Costs = Graph.Graph.GetCosts(),
+                    Range = builder.Range.GetCoordinates().ToReadOnly()
+                },
+                SubAlgorithms = subAlgorithms.ToList(),
+                Statistics = runStatistics
+            };
+            await Task.Run(() => service.AddRunHistory(algorithmRunCreateDto));
         }
 
         private bool IsHistoryApplied() => isHistoryApplied;

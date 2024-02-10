@@ -2,7 +2,8 @@
 using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Exceptions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
-using Pathfinding.App.Console.DAL.Models.TransferObjects;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messaging;
@@ -81,7 +82,7 @@ namespace Pathfinding.App.Console.Units
         }
 
         private void PrepareForPathfinding(PathfindingProcess algorithm,
-            Statistics statistics)
+            RunStatisticsDto statistics)
         {
             var lineMsg = new StatisticsLineMessage(statistics.Name);
             messenger.Send(lineMsg, Tokens.AppLayout);

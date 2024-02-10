@@ -1,16 +1,7 @@
-﻿namespace Pathfinding.App.Console.DAL.Models.Entities;
-
-internal class AlgorithmEntity
+﻿namespace Pathfinding.App.Console.DAL.Models.Entities
 {
-    public int Id { get; set; }
-
-    public int GraphId { get; set; }
-
-    public string Statistics { get; set; }
-
-    public byte[] Costs { get; set; }
-
-    public byte[] Obstacles { get; set; }
-
-    public byte[] Range { get; set; }
+    internal class AlgorithmEntity
+    {
+        public string Name { get; set; }
+    }
 }

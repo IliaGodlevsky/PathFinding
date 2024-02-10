@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Pathfinding.App.Console.DAL.Models.TransferObjects
+namespace Pathfinding.App.Console.DAL.Models.TransferObjects.Serialization
 {
     internal class GraphSerializationDto
     {

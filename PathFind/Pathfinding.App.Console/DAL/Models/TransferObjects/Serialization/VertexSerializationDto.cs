@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
+using System.Collections.Generic;
 
-namespace Pathfinding.App.Console.DAL.Models.TransferObjects
+namespace Pathfinding.App.Console.DAL.Models.TransferObjects.Serialization
 {
     internal class VertexSerializationDto
     {

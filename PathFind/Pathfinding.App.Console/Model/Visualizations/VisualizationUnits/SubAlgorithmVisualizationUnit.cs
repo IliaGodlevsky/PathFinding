@@ -1,4 +1,4 @@
-﻿using Pathfinding.App.Console.DAL.Models.TransferObjects;
+﻿using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
 using Pathfinding.App.Console.EventArguments;
 using Pathfinding.GraphLib.Core.Interface;
 using Shared.Extensions;
@@ -17,10 +17,10 @@ namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
 
         private TimeSpan? Speed { get; set; }
 
-        public SubAlgorithmVisualizationUnit(AlgorithmReadDto algorithm) 
+        public SubAlgorithmVisualizationUnit(RunVisualizationDto algorithm) 
             : base(algorithm)
         {
-            initSpeed = algorithm.Statistics.AlgorithmSpeed;
+            initSpeed = algorithm.AlgorithmSpeed;
             Speed = initSpeed;
         }
 
@@ -36,7 +36,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
                 hook.KeyPressed += OnKeyPressed;
                 Task.Run(hook.Start);
                 var subAlgorithms = algorithm
-                    .SubAlgorithms
+                    .Algorithms
                     .OrderBy(x => x.Order);
                 foreach (var subAlgorithm in subAlgorithms)
                 {

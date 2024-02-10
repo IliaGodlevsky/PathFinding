@@ -1,20 +1,32 @@
 ﻿using Pathfinding.App.Console.DAL.Models.Entities;
-using Pathfinding.App.Console.DAL.Models.TransferObjects;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Create;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Serialization;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
+using System;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DAL.Interface
 {
     internal interface IService
     {
+        int GetRunCount(int graphId);
+
         IGraph<Vertex> GetGraph(int id);
 
         IReadOnlyCollection<int> GetGraphIds();
 
+        IReadOnlyCollection<RunStatisticsDto> GetRunStatiticsForGraph(int graphId);
+
+        IEnumerable<SubAlgorithmReadDto> Insert(IEnumerable<SubAlgorithmCreateDto> subAlgorithms);
+
+        RunVisualizationDto GetRunInfo(int runId);
+
         IReadOnlyList<GraphEntity> GetAllGraphInfo();
 
-        IReadOnlyCollection<AlgorithmReadDto> GetGraphPathfindingHistory(int graphId);
+        IReadOnlyCollection<AlgorithmRunHistoryReadDto> GetGraphPathfindingHistory(int graphId);
 
         PathfindingHistoryReadDto GetPathfindingHistory(int graphId);
 
@@ -34,7 +46,9 @@ namespace Pathfinding.App.Console.DAL.Interface
 
         GraphReadDto AddGraph(IGraph<Vertex> graph);
 
-        AlgorithmReadDto AddAlgorithm(AlgorithmCreateDto algorithm);
+        AlgorithmRunReadDto AddAlgorithm(AlgorithmRunCreateDto algorithm);
+
+        void AddRunHistory(params AlgorithmRunHistoryCreateDto[] histories);
 
         bool AddNeighbors(IReadOnlyDictionary<Vertex, IReadOnlyCollection<Vertex>> neighborhoods);
 

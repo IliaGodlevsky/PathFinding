@@ -12,7 +12,6 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
         public LiteDbRangeRepository(ILiteDatabase db)
         {
             collection = db.GetCollection<RangeEntity>(DbTables.Ranges);
-            collection.EnsureIndex(x => x.GraphId);
         }
 
         public RangeEntity Insert(RangeEntity entity)
@@ -41,12 +40,10 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 
         public IEnumerable<RangeEntity> GetByGraphId(int graphId)
         {
-            return collection.Find(x => x.GraphId == graphId);
-        }
-
-        public RangeEntity GetByVertexId(int vertexId)
-        {
-            return collection.FindOne(x => x.VertexId == vertexId);
+            return collection.Query()
+                .Where(x => x.GraphId == graphId)
+                .OrderBy(x => x.Order)
+                .ToEnumerable();
         }
 
         public bool Update(RangeEntity entity)

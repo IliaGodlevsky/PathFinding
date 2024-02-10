@@ -1,4 +1,4 @@
-﻿using Pathfinding.App.Console.DAL.Models.TransferObjects;
+﻿using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 

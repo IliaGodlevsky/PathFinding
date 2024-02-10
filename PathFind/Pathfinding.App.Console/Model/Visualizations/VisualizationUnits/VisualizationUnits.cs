@@ -1,4 +1,4 @@
-﻿using Pathfinding.App.Console.DAL.Models.TransferObjects;
+﻿using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.GraphLib.Core.Interface;
 using Shared.Extensions;
@@ -10,7 +10,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
     {
         private readonly IReadOnlyCollection<IVisualizationUnit> units;
 
-        public VisualizationUnits(AlgorithmReadDto algorithm)
+        public VisualizationUnits(RunVisualizationDto algorithm)
         {
             units = new IVisualizationUnit[]
             {

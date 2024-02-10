@@ -1,6 +1,7 @@
 ﻿using LiteDB;
 using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
@@ -12,17 +13,11 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
         public LiteDbSubAlgorithmRepository(ILiteDatabase db)
         {
             collection = db.GetCollection<SubAlgorithmEntity>(DbTables.SubAlgorithms);
-            collection.EnsureIndex(x => x.AlgorithmId);
         }
 
-        public bool DeleteByAlgorithmId(int algorithmId)
+        public IEnumerable<SubAlgorithmEntity> GetByAlgorithmRunId(int runId)
         {
-            return collection.DeleteMany(x => x.AlgorithmId == algorithmId) > 0;
-        }
-
-        public IEnumerable<SubAlgorithmEntity> GetByAlgorithmId(int algorithmId)
-        {
-            return collection.Find(x => x.AlgorithmId == algorithmId);
+            return collection.Find(x => x.AlgorithmRunId == runId);
         }
 
         public IEnumerable<SubAlgorithmEntity> Insert(IEnumerable<SubAlgorithmEntity> entities)

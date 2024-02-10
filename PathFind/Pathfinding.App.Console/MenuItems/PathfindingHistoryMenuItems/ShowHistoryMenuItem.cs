@@ -1,13 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.DAL.Interface;
-using Pathfinding.App.Console.DAL.Models.TransferObjects;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
-using Pathfinding.App.Console.Model.Notes;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Shared.Extensions;
 using Shared.Primitives;
@@ -39,16 +39,15 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public bool CanBeExecuted()
         {
-            var history = service.GetGraphPathfindingHistory(graph.Id);
-            return IsHistoryApplied() && history.Count > 0;
+            return IsHistoryApplied() && service.GetRunCount(graph.Id) > 0;
         }
 
         public void Execute()
         {
-            var grouped = service.GetGraphPathfindingHistory(graph.Id)
-                .OrderBy(x => x.Statistics.Algorithm)
-                .Select(x => (Id: x.Id, Statistics: x.Statistics))
-                .GroupBy(x => x.Statistics.Algorithm);
+            var grouped = service.GetRunStatiticsForGraph(graph.Id)
+                .OrderBy(x => x.AlgorithmId)
+                .Select(x => (Id: x.Id, Statistics: x))
+                .GroupBy(x => x.Statistics.AlgorithmId);
             var ordered = grouped.SelectMany(x => x.OrderBy(x=>x.Statistics.AlgorithmSpeed)
                                                    .ThenBy(x => x.Statistics.Steps));
             var statistics = ordered.ToDictionary(x => x.Id, x => x.Statistics);
@@ -66,7 +65,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
                             string data = $"{index + 1} {page.Value}";
                             var lineMsg = new StatisticsLineMessage(data);
                             messenger.Send(lineMsg, Tokens.AppLayout);
-                            var keyMsg = new AlgorithmKeyMessage(page.Key);
+                            var keyMsg = new AlgorithmKeyMessage(page.Value.AlgorithmRunId);
                             messenger.Send(keyMsg, Tokens.History);
                         }
                     }
@@ -75,7 +74,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             }
         }
 
-        private string GetInputMessage(IReadOnlyCollection<Statistics> statistics)
+        private string GetInputMessage(IReadOnlyCollection<RunStatisticsDto> statistics)
         {
             var table = statistics.ToTable();
             string header = Aggregate(table.Headers);

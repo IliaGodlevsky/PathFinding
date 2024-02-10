@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Pathfinding.App.Console.DAL.Models.Entities;
-using Pathfinding.App.Console.DAL.Models.TransferObjects;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Serialization;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
@@ -20,17 +21,12 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
         {
             this.vertexFactory = vertexFactory;
 
-            CreateMap<ICoordinate, CoordinateDto>()
-                .ForMember(x => x.Coordinate, opt => opt.MapFrom(x => x.ToReadOnly()));
-            CreateMap<CoordinateDto, ICoordinate>()
-                .ConvertUsing(x => new Coordinate(x.Coordinate.ToArray()));
             CreateMap<IVertexCost, VertexCostDto>()
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => x.CurrentCost))
                 .ForMember(x => x.UpperValueOfRange, opt => opt.MapFrom(x => x.CostRange.UpperValueOfRange))
                 .ForMember(x => x.LowerValueOfRange, opt => opt.MapFrom(x => x.CostRange.LowerValueOfRange));
             CreateMap<VertexCostDto, IVertexCost>()
                 .ConvertUsing(x => new VertexCost(x.Cost, new(x.UpperValueOfRange, x.LowerValueOfRange)));
-            CreateMap<ICoordinate, ICoordinate>().ConvertUsing(x => x);
             CreateMap<VertexAssembleDto, Vertex>()
                 .ConstructUsing(x => vertexFactory.CreateVertex(x.Coordinate));
             CreateMap<Vertex, VertexEntity>()

@@ -3,6 +3,7 @@ using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Interface.Extensions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -22,7 +23,7 @@ namespace Pathfinding.App.Console.Units
 
         private bool isStatisticsApplied = true;
         private int visited = 0;
-        private Statistics statistics = Statistics.Empty;
+        private RunStatisticsDto statistics = new();
 
         public PathfindingStatisticsUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IMessenger messenger)
@@ -101,7 +102,7 @@ namespace Pathfinding.App.Console.Units
             var msg = new StatisticsMessage(note);
             messenger.Send(msg, Tokens.History);
             visited = 0;
-            statistics = Statistics.Empty;
+            statistics = new();
         }
 
         private void OnVertexVisited(object sender, PathfindingEventArgs e)
@@ -112,10 +113,11 @@ namespace Pathfinding.App.Console.Units
             messenger.Send(msg, Tokens.AppLayout);
         }
 
-        private Statistics GetStatistics(IGraphPath path)
+        private RunStatisticsDto GetStatistics(IGraphPath path)
         {
-            var stats = new Statistics(statistics.Algorithm)
+            var stats = new RunStatisticsDto()
             {
+                AlgorithmId = statistics.AlgorithmId,
                 ResultStatus = statistics.ResultStatus,
                 StepRule = statistics.StepRule,
                 Heuristics = statistics.Heuristics
@@ -135,7 +137,7 @@ namespace Pathfinding.App.Console.Units
             return stats;
         }
 
-        private Statistics GetStatistics()
+        private RunStatisticsDto GetStatistics()
         {
             return GetStatistics(NullGraphPath.Instance);
         }

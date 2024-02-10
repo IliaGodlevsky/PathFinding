@@ -1,4 +1,4 @@
-﻿namespace Pathfinding.App.Console.DAL.Models.TransferObjects
+﻿namespace Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined
 {
     internal class VertexCostDto
     {

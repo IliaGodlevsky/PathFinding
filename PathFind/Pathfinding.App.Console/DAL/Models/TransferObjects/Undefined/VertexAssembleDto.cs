@@ -1,6 +1,6 @@
 ﻿using Pathfinding.GraphLib.Core.Realizations;
 
-namespace Pathfinding.App.Console.DAL.Models.TransferObjects
+namespace Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined
 {
     internal class VertexAssembleDto
     {

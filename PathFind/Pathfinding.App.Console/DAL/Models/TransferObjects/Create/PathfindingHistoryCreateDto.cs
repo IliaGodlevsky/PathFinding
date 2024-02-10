@@ -2,15 +2,13 @@
 using Pathfinding.GraphLib.Core.Interface;
 using System.Collections.Generic;
 
-namespace Pathfinding.App.Console.DAL.Models.TransferObjects
+namespace Pathfinding.App.Console.DAL.Models.TransferObjects.Create
 {
-    internal record PathfindingHistoryReadDto
+    internal class PathfindingHistoryCreateDto
     {
-        public int Id { get; set; }
-
         public IGraph<Vertex> Graph { get; set; }
 
-        public IReadOnlyCollection<AlgorithmReadDto> Algorithms { get; set; }
+        public IReadOnlyCollection<AlgorithmRunHistoryCreateDto> Algorithms { get; set; }
 
         public IReadOnlyCollection<ICoordinate> Range { get; set; }
     }

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
-using Pathfinding.App.Console.DAL.Models.TransferObjects;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Create;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Serialization;
 
 namespace Pathfinding.App.Console.DAL.Models.Mappers
 {
