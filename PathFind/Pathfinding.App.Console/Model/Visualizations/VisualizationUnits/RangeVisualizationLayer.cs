@@ -1,25 +1,20 @@
 ﻿using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.Visualization.Extensions;
-using System;
+using Pathfinding.VisualizationLib.Core.Interface;
 using System.Linq;
 
 namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
 {
-    internal sealed class RangeVisualizationUnit : VisualizationUnit
+    internal sealed class RangeVisualizationLayer(RunVisualizationDto algorithm) 
+        : VisualizationLayer(algorithm)
     {
-        public RangeVisualizationUnit(RunVisualizationDto algorithm) 
-            : base(algorithm)
-        {
-        }
-
-        public override void Visualize(IGraph<Vertex> graph)
+        public override void Overlay(IGraph<IVertex> graph)
         {
             algorithm.GraphState.Range
                 .Select(graph.Get)
-                .Reverse()
+                .OfType<ITotallyVisualizable>()
                 .VisualizeAsRange();
-
         }
     }
 }

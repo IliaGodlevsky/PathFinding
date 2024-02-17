@@ -1,37 +1,24 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Factory;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
-using Pathfinding.App.Console.Localization;
+using Pathfinding.App.Console.DAL;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.AlgorithmMenuItems;
-using Pathfinding.App.Console.Model.Notes;
 using Shared.Random;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
     [LowPriority]
-    internal sealed class RandomAlgorithmMenuItem : AlgorithmMenuItem
+    internal sealed class RandomAlgorithmMenuItem(
+        IMessenger messenger,
+        IRandom random) : AlgorithmMenuItem(messenger)
     {
-        private readonly IRandom random;
+        private readonly IRandom random = random;
 
-        public RandomAlgorithmMenuItem(IMessenger messenger, IRandom random)
-            : base(messenger)
-        {
-            this.random = random;
-        }
-
-        public override string ToString()
-        {
-            return Languages.RandomAlgorithm;
-        }
+        protected override string LanguageKey => AlgorithmNames.Random;
 
         protected override AlgorithmInfo GetAlgorithm()
         {
-            var statistics = new RunStatisticsDto
-            {
-                AlgorithmId = nameof(Languages.RandomAlgorithm)
-            };
-            return new(new RandomAlgorithmFactory(random), statistics);
+            return new(new RandomAlgorithmFactory(random), RunStatistics);
         }
     }
 }

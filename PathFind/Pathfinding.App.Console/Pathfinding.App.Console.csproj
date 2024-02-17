@@ -210,13 +210,13 @@
     <Compile Include="Model\Visualizations\Containers\NullVisualizedVertices.cs" />
     <Compile Include="Model\Visualizations\Containers\VisualizedVisited.cs" />
     <Compile Include="Model\Visualizations\Containers\VisualizedVertices.cs" />
-    <Compile Include="Model\Visualizations\VisualizationUnits\ApplyCostsVisualizationUnit.cs" />
-    <Compile Include="Model\Visualizations\VisualizationUnits\ObstaclesVisualizationUnit.cs" />
-    <Compile Include="Model\Visualizations\VisualizationUnits\RangeVisualizationUnit.cs" />
-    <Compile Include="Model\Visualizations\VisualizationUnits\RestoreVisualStateUnit.cs" />
-    <Compile Include="Model\Visualizations\VisualizationUnits\SubAlgorithmVisualizationUnit.cs" />
-    <Compile Include="Model\Visualizations\VisualizationUnits\VisualizationUnit.cs" />
-    <Compile Include="Model\Visualizations\VisualizationUnits\VisualizationUnits.cs" />
+    <Compile Include="Model\Visualizations\VisualizationUnits\ApplyCostsVisualizationLayer.cs" />
+    <Compile Include="Model\Visualizations\VisualizationUnits\ObstaclesVisualizationLayer.cs" />
+    <Compile Include="Model\Visualizations\VisualizationUnits\RangeVisualizationLayer.cs" />
+    <Compile Include="Model\Visualizations\VisualizationUnits\RestoreVisualStateLayer.cs" />
+    <Compile Include="Model\Visualizations\VisualizationUnits\SubAlgorithmVisualizationLayer.cs" />
+    <Compile Include="Model\Visualizations\VisualizationUnits\VisualizationLayer.cs" />
+    <Compile Include="Model\Visualizations\VisualizationUnits\VisualizationLayers.cs" />
     <Compile Include="Settings\Keys.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

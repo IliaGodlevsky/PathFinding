@@ -19,12 +19,6 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
             collection.EnsureIndex(x => x.VertexId);
         }
 
-        public NeighborEntity Insert(NeighborEntity neighbour)
-        {
-            collection.Insert(neighbour);
-            return neighbour;
-        }
-
         public IEnumerable<NeighborEntity> Insert(IEnumerable<NeighborEntity> neighbours)
         {
             collection.Insert(neighbours);

@@ -7,19 +7,9 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 {
-    internal sealed class LiteDbStatisticsRepository : IStatisticsRepository
+    internal sealed class LiteDbStatisticsRepository(ILiteDatabase db) : IStatisticsRepository
     {
-        private readonly ILiteCollection<StatisticsEntity> collection;
-
-        public LiteDbStatisticsRepository(ILiteDatabase db) 
-        {
-            collection = db.GetCollection<StatisticsEntity>(DbTables.Statistics);
-        }
-
-        public bool DeleteByRunId(int runId)
-        {
-            return collection.DeleteMany(x => x.AlgorithmRunId == runId) > 0;
-        }
+        private readonly ILiteCollection<StatisticsEntity> collection = db.GetCollection<StatisticsEntity>(DbTables.Statistics);
 
         public StatisticsEntity GetByAlgorithmRunId(int runId)
         {

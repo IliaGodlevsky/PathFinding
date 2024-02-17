@@ -13,8 +13,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
         public LiteDbAlgorithmRepository(ILiteDatabase db)
         {
             collection = db.GetCollection<AlgorithmEntity>(DbTables.Algorithms);
-            BsonMapper.Global.Entity<AlgorithmEntity>()
-                .Id(x => x.Name, autoId: false);
+            BsonMapper.Global.Entity<AlgorithmEntity>().Id(x => x.Name, autoId: false);
             if (collection.Count() == 0)
             {
                 var algorithms = AlgorithmNames.Algorithms

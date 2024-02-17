@@ -5,7 +5,6 @@ using Pathfinding.App.Console.DAL.Models.TransferObjects.Serialization;
 using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
-using System;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DAL.Interface
@@ -14,13 +13,13 @@ namespace Pathfinding.App.Console.DAL.Interface
     {
         int GetRunCount(int graphId);
 
+        int GetGraphCount();
+
         IGraph<Vertex> GetGraph(int id);
 
         IReadOnlyCollection<int> GetGraphIds();
 
         IReadOnlyCollection<RunStatisticsDto> GetRunStatiticsForGraph(int graphId);
-
-        IEnumerable<SubAlgorithmReadDto> Insert(IEnumerable<SubAlgorithmCreateDto> subAlgorithms);
 
         RunVisualizationDto GetRunInfo(int runId);
 

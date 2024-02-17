@@ -6,16 +6,11 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 {
-    internal sealed class CombinedAlgorithmsResolveMiddleware : IResolveMiddleware
+    internal sealed class CombinedAlgorithmsResolveMiddleware(string key) : IResolveMiddleware
     {
-        private readonly string key;
+        private readonly string key = key;
 
         public PipelinePhase Phase => PipelinePhase.ParameterSelection;
-
-        public CombinedAlgorithmsResolveMiddleware(string key)
-        {
-            this.key = key;
-        }
 
         public void Execute(ResolveRequestContext context, Action<ResolveRequestContext> next)
         {

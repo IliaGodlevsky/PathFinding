@@ -13,6 +13,8 @@ namespace Pathfinding.App.Console.DAL.Interface
 
         IEnumerable<RangeEntity> GetByGraphId(int graphId);
 
+        IEnumerable<RangeEntity> GetByVerticesIds(IEnumerable<int> verticesIds);
+
         bool Update(RangeEntity entity);
 
         bool Update(IEnumerable<RangeEntity> entities);

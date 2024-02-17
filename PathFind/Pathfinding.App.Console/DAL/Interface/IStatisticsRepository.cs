@@ -11,7 +11,5 @@ namespace Pathfinding.App.Console.DAL.Interface
         IEnumerable<StatisticsEntity> GetByRunIds(IEnumerable<int> runIds);
 
         StatisticsEntity Insert(StatisticsEntity entity);
-
-        bool DeleteByRunId(int runId);
     }
 }

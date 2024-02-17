@@ -26,8 +26,6 @@ namespace Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined
                 .Skip(1).ToList().AsReadOnly();
         }
 
-        public int Id { get; set; }
-
         public int AlgorithmRunId { get; set; }
 
         public string AlgorithmId { get; set; } = null!;

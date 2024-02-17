@@ -6,14 +6,9 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 {
-    internal sealed class LiteDbSubAlgorithmRepository : ISubAlgorithmRepository
+    internal sealed class LiteDbSubAlgorithmRepository(ILiteDatabase db) : ISubAlgorithmRepository
     {
-        private readonly ILiteCollection<SubAlgorithmEntity> collection;
-
-        public LiteDbSubAlgorithmRepository(ILiteDatabase db)
-        {
-            collection = db.GetCollection<SubAlgorithmEntity>(DbTables.SubAlgorithms);
-        }
+        private readonly ILiteCollection<SubAlgorithmEntity> collection = db.GetCollection<SubAlgorithmEntity>(DbTables.SubAlgorithms);
 
         public IEnumerable<SubAlgorithmEntity> GetByAlgorithmRunId(int runId)
         {

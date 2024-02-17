@@ -35,7 +35,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             this.service = service;
         }
 
-        public virtual bool CanBeExecuted() => service.GetGraphIds().Count > 0;
+        public virtual bool CanBeExecuted() => service.GetGraphCount() > 0;
 
         public virtual async void Execute()
         {

@@ -17,7 +17,6 @@ using Pathfinding.GraphLib.Core.Modules.Interface;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.Units
@@ -46,8 +45,8 @@ namespace Pathfinding.App.Console.Units
         private void VisualizeHistory(AlgorithmKeyMessage msg)
         {
             var algorithm = service.GetRunInfo(msg.AlgorithmKey);
-            var units = new VisualizationUnits(algorithm);
-            units.Visualize(Graph.Graph);
+            var layers = new VisualizationLayers(algorithm);
+            layers.Overlay(Graph.Graph);
         }
 
         private void SetIsApplied(IsAppliedMessage msg)
@@ -72,8 +71,6 @@ namespace Pathfinding.App.Console.Units
 
         private void PrepareForPathfinding(AlgorithmMessage msg)
         {
-            subAlgorithms.Clear();
-            visitedVertices.Clear();
             algorithm = msg.Algorithm;
             algorithm.Started += OnStarted;
             algorithm.VertexEnqueued += OnVertexEnqueued;
@@ -85,7 +82,7 @@ namespace Pathfinding.App.Console.Units
             var subAlgorithm = new SubAlgorithmCreateDto()
             {
                 Path = args.SubPath,
-                Visited = visitedVertices.ToList().AsReadOnly()
+                Visited = visitedVertices.ToReadOnly()
             };
             subAlgorithms.Add(subAlgorithm);
             visitedVertices.Clear();
@@ -111,9 +108,12 @@ namespace Pathfinding.App.Console.Units
                     Costs = Graph.Graph.GetCosts(),
                     Range = builder.Range.GetCoordinates().ToReadOnly()
                 },
-                SubAlgorithms = subAlgorithms.ToList(),
+                SubAlgorithms = subAlgorithms.ToReadOnly(),
                 Statistics = runStatistics
             };
+            subAlgorithms.Clear();
+            visitedVertices.Clear();
+            runStatistics = new();
             await Task.Run(() => service.AddRunHistory(algorithmRunCreateDto));
         }
 
@@ -128,7 +128,6 @@ namespace Pathfinding.App.Console.Units
             messenger.Register<PathfindingHistoryUnit, AlgorithmMessage>(this, token, PrepareForPathfinding);
             messenger.Register<PathfindingHistoryUnit, PathFoundMessage>(this, token, OnPathFound);
             messenger.Register<PathfindingHistoryUnit, StatisticsMessage>(this, token, SetStatistics);
-            //messenger.Register<PathfindingHistoryUnit, ClearHistoryMessage>(this, Tokens.History, ClearHistory);
         }
     }
 }

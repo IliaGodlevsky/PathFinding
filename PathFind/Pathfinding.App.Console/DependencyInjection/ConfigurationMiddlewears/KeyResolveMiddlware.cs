@@ -5,16 +5,9 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears
 {
-    internal sealed class KeyResolveMiddlware<TKey, TValue> : IResolveMiddleware
+    internal sealed class KeyResolveMiddlware<TKey, TValue>(string key) : IResolveMiddleware
     {
-        private readonly string key;
-
         public PipelinePhase Phase => PipelinePhase.ParameterSelection;
-
-        public KeyResolveMiddlware(string key)
-        {
-            this.key = key;
-        }
 
         public void Execute(ResolveRequestContext context, Action<ResolveRequestContext> next)
         {

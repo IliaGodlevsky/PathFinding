@@ -13,20 +13,13 @@ using System.Linq;
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     [MediumPriority]
-    internal sealed class ChooseNeighbourhoodMenuItem : IMenuItem
+    internal sealed class ChooseNeighbourhoodMenuItem(IMessenger messenger,
+        IReadOnlyDictionary<string, INeighborhoodFactory> factories,
+        IInput<int> intInput) : IMenuItem
     {
-        private readonly IReadOnlyDictionary<string, INeighborhoodFactory> factories;
-        private readonly IMessenger messenger;
-        private readonly IInput<int> intInput;
-
-        public ChooseNeighbourhoodMenuItem(IMessenger messenger,
-            IInput<int> intInput,
-            IReadOnlyDictionary<string, INeighborhoodFactory> factories)
-        {
-            this.messenger = messenger;
-            this.intInput = intInput;
-            this.factories = factories;
-        }
+        private readonly IReadOnlyDictionary<string, INeighborhoodFactory> factories = factories;
+        private readonly IMessenger messenger = messenger;
+        private readonly IInput<int> intInput = intInput;
 
         public void Execute()
         {

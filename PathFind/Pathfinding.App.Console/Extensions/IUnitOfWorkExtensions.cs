@@ -50,12 +50,12 @@ namespace Pathfinding.App.Console.Extensions
                 var subAlgorithms = unitofWork.SubAlgorithmRepository.GetByAlgorithmRunId(dto.Id);
                 var graphState = unitofWork.GraphStateRepository.GetByRunId(dto.Id);
                 var runStatistics = unitofWork.StatisticsRepository.GetByAlgorithmRunId(dto.Id);
-                runHistories.Add(new AlgorithmRunHistoryReadDto()
+                runHistories.Add(new()
                 {
-                    SubAlgorithms = mapper.Map<SubAlgorithmReadDto[]>(subAlgorithms).ToReadOnly(),
+                    Run = dto,
+                    SubAlgorithms = mapper.Map<SubAlgorithmReadDto[]>(subAlgorithms),
                     GraphState = mapper.Map<GraphStateReadDto>(graphState),
-                    Statistics = mapper.Map<RunStatisticsDto>(runStatistics),
-                    Run = dto
+                    Statistics = mapper.Map<RunStatisticsDto>(runStatistics)
                 });
             }
             return runHistories.AsReadOnly();
@@ -69,18 +69,20 @@ namespace Pathfinding.App.Console.Extensions
                 .GetVerticesByGraphId(graphId)
                 .OrderBy(x => x.Order)
                 .ToDictionary(x => x.Id);
-            var ids = vertexEntities.Select(x => x.Key).ToArray();
+            var ids = vertexEntities.Select(x => x.Key).ToReadOnly();
             var neighbors = unitOfWork.NeighborsRepository
                 .GetNeighboursForVertices(ids)
                 .ToDictionary(x => x.Key, x => x.Value.Select(i => vertexEntities[i.NeighborId]).ToReadOnly());
-            var readDto = new GraphAssembleDto()
+            var assembleDto = new GraphAssembleDto()
             {
                 Width = graphEntity.Width,
                 Length = graphEntity.Length,
-                Vertices = mapper.Map<VertexAssembleDto[]>(vertexEntities.Values).ToReadOnly(),
-                Neighborhood = neighbors.ToDictionary(x => x.Key, x => (IReadOnlyCollection<VertexAssembleDto>)mapper.Map<VertexAssembleDto[]>(x.Value).ToReadOnly())
+                Vertices = mapper.Map<VertexAssembleDto[]>(vertexEntities.Values),
+                Neighborhood = neighbors
+                    .ToDictionary(x => x.Key, x => mapper.Map<VertexAssembleDto[]>(x.Value)
+                    .ToReadOnly())
             };
-            return mapper.Map<IGraph<Vertex>>(readDto);
+            return mapper.Map<IGraph<Vertex>>(assembleDto);
         }
 
         public static IReadOnlyCollection<ICoordinate> GetRange(this IUnitOfWork unitOfWork, int graphId)

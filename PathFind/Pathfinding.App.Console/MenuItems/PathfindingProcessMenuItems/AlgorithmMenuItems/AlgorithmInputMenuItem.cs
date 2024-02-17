@@ -6,7 +6,6 @@ using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
-using Pathfinding.App.Console.Model.Notes;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,8 +17,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
         private readonly IReadOnlyDictionary<string, IStepRule> stepRules;
         private readonly IReadOnlyDictionary<string, IHeuristic> heuristics;
 
-        protected abstract string LanguageKey { get; }
-
         protected AlgorithmInputMenuItem(IMessenger messenger,
             IReadOnlyDictionary<string, IStepRule> stepRules,
             IReadOnlyDictionary<string, IHeuristic> heuristics,
@@ -29,11 +26,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
             this.stepRules = stepRules;
             this.heuristics = heuristics;
             this.intInput = intInput;
-        }
-
-        public override string ToString()
-        {
-            return Languages.ResourceManager.GetString(LanguageKey);
         }
 
         protected abstract IAlgorithmFactory<PathfindingProcess> CreateAlgorithm(IStepRule stepRule, IHeuristic heuristics);
@@ -80,12 +72,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
 
         protected virtual RunStatisticsDto GetStatistics(string heusristic, string stepRule)
         {
-            return new()
-            {
-                AlgorithmId = LanguageKey,
-                Heuristics = heusristic,
-                StepRule = stepRule
-            };
+            return RunStatistics with { Heuristics = heusristic, StepRule = stepRule };
         }
     }
 }

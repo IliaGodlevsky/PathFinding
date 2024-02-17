@@ -3,36 +3,31 @@ using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Factory;
 using Pathfinding.AlgorithmLib.Factory.Interface;
+using Pathfinding.App.Console.DAL;
 using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.AlgorithmMenuItems;
-using Pathfinding.App.Console.Model.Notes;
 using Shared.Primitives.ValueRange;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
     [HighPriority]
-    internal sealed class IDAStarAlgorithmMenuItem : AlgorithmInputMenuItem
+    internal sealed class IDAStarAlgorithmMenuItem(
+        IReadOnlyDictionary<string, IStepRule> stepRules,
+        IReadOnlyDictionary<string, IHeuristic> heuristics,
+        IInput<int> input,
+        IMessenger messenger) 
+        : AlgorithmInputMenuItem(messenger, stepRules, heuristics, input)
     {
-        private readonly InclusiveValueRange<int> spreadRange;
+        private static readonly InclusiveValueRange<int> SpreadRange = new(8, 1);
 
         private int Spread { get; set; }
 
-        protected override string LanguageKey { get; } = nameof(Languages.IDAStarAlgorithm);
-
-        public IDAStarAlgorithmMenuItem(
-            IReadOnlyDictionary<string, IStepRule> stepRules,
-            IReadOnlyDictionary<string, IHeuristic> heuristics,
-            IInput<int> input,
-            IMessenger messenger)
-            : base(messenger, stepRules, heuristics, input)
-        {
-            spreadRange = new(8, 1);
-        }
+        protected override string LanguageKey { get; } = AlgorithmNames.IDAStar;
 
         protected override IAlgorithmFactory<PathfindingProcess> CreateAlgorithm(IStepRule stepRule, IHeuristic heuristics)
         {
@@ -43,17 +38,15 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
         {
             using (Cursor.UseCurrentPositionWithClean())
             {
-                string message = string.Format(Languages.SpreadLevelMsg, spreadRange);
-                Spread = intInput.Input(message, spreadRange);
+                string message = string.Format(Languages.SpreadLevelMsg, SpreadRange);
+                Spread = intInput.Input(message, SpreadRange);
             }
             return base.GetAlgorithm();
         }
 
         protected override RunStatisticsDto GetStatistics(string heusristic, string stepRule)
         {
-            var stats = base.GetStatistics(heusristic, stepRule);
-            stats.Spread = Spread;
-            return stats;
+            return base.GetStatistics(heusristic, stepRule) with { Spread = Spread };
         }
     }
 }

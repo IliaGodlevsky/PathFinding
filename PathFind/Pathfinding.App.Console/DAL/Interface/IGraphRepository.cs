@@ -5,6 +5,8 @@ namespace Pathfinding.App.Console.DAL.Interface
 {
     internal interface IGraphParametresRepository
     {
+        int GetCount();
+
         GraphEntity Read(int graphId);
 
         GraphEntity Insert(GraphEntity graph);

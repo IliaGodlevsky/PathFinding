@@ -1,6 +1,7 @@
 ﻿using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
 using Pathfinding.App.Console.EventArguments;
 using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.Visualization.Extensions;
 using Shared.Extensions;
 using Shared.Primitives;
 using System;
@@ -9,15 +10,14 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
 {
-    internal sealed class SubAlgorithmVisualizationUnit : VisualizationUnit
+    internal sealed class SubAlgorithmVisualizationLayer : VisualizationLayer
     {
-        private readonly TimeSpan millisecond = TimeSpan.FromMilliseconds(1);
         private readonly ConsoleKeystrokesHook hook = new();
         private readonly TimeSpan? initSpeed;
 
         private TimeSpan? Speed { get; set; }
 
-        public SubAlgorithmVisualizationUnit(RunVisualizationDto algorithm) 
+        public SubAlgorithmVisualizationLayer(RunVisualizationDto algorithm) 
             : base(algorithm)
         {
             initSpeed = algorithm.AlgorithmSpeed;
@@ -29,33 +29,25 @@ namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
             Speed = Speed is null ? initSpeed : null;
         }
 
-        public override void Visualize(IGraph<Vertex> graph)
+        public override void Overlay(IGraph<IVertex> graph)
         {
             using (Disposable.Use(StopHook))
             {
                 hook.KeyPressed += OnKeyPressed;
                 Task.Run(hook.Start);
-                var subAlgorithms = algorithm
-                    .Algorithms
-                    .OrderBy(x => x.Order);
+                var subAlgorithms = algorithm.Algorithms.OrderBy(x => x.Order);
                 foreach (var subAlgorithm in subAlgorithms)
                 {
                     foreach (var vertex in subAlgorithm.Visited)
                     {
                         Speed?.Wait();
-                        var current = graph.Get(vertex.Visited);
+                        var current = (Vertex)graph.Get(vertex.Visited);
                         current.VisualizeAsVisited();
-                        foreach (var item in vertex.Enqueued)
-                        {
-                            var enqueued = graph.Get(item);
-                            enqueued.VisualizeAsEnqueued();
-                        }
+                        vertex.Enqueued.Select(graph.Get)
+                            .OfType<Vertex>().ForEach(x => x.VisualizeAsEnqueued());
                     }
-                    foreach (var coordinate in subAlgorithm.Path)
-                    {
-                        var vertex = graph.Get(coordinate);
-                        vertex.VisualizeAsPath();
-                    }
+                    subAlgorithm.Path.Select(graph.Get)
+                        .OfType<Vertex>().VisualizeAsPath();
                 }
             }
         }

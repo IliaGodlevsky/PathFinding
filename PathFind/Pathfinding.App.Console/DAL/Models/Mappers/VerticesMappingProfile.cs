@@ -50,8 +50,7 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
         private IEnumerable<Vertex> ToVertices(IEnumerable<VertexSerializationDto> dtos,
             ResolutionContext context)
         {
-            var vertices = dtos
-                .Select(context.Mapper.Map<Vertex>)
+            var vertices = context.Mapper.Map<Vertex[]>(dtos)
                 .ToDictionary(x => x.Position);
             foreach (var dto in dtos)
             {

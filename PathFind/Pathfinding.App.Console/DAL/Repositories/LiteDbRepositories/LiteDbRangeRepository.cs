@@ -1,18 +1,15 @@
 ﻿using LiteDB;
 using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
+using Shared.Extensions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 {
-    internal sealed class LiteDbRangeRepository : IRangeRepository
+    internal sealed class LiteDbRangeRepository(ILiteDatabase db) : IRangeRepository
     {
-        private readonly ILiteCollection<RangeEntity> collection;
-
-        public LiteDbRangeRepository(ILiteDatabase db)
-        {
-            collection = db.GetCollection<RangeEntity>(DbTables.Ranges);
-        }
+        private readonly ILiteCollection<RangeEntity> collection = db.GetCollection<RangeEntity>(DbTables.Ranges);
 
         public RangeEntity Insert(RangeEntity entity)
         {
@@ -55,6 +52,13 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
         {
             collection.Update(entities);
             return true;
+        }
+
+        public IEnumerable<RangeEntity> GetByVerticesIds(IEnumerable<int> verticesIds)
+        {
+            var ids = verticesIds.Select(x => new BsonValue(x)).ToArray();
+            var query = Query.In(nameof(RangeEntity.VertexId), ids);
+            return collection.Find(query).OrderBy(x => x.Order);
         }
     }
 }

@@ -27,7 +27,6 @@ using Pathfinding.App.Console.MenuItems.PathfindingStatisticsMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.InProcessActions;
-using Pathfinding.App.Console.Model.PathfindingActions;
 using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.App.Console.Model.Visualizations;
 using Pathfinding.App.Console.Model.Visualizations.Containers;
@@ -162,6 +161,8 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<VonNeumannNeighborhoodFactory>().Keyed<INeighborhoodFactory>(Neighbourhood)
                     .SingleInstance().WithMetadata(Neighbourhood, nameof(Languages.VonNeumannNeighbourhood));
 
+                builder.RegisterType<RandomAlgorithmMenuItem>().Keyed<IMenuItem>(Algorithms).SingleInstance();
+
                 builder.RegisterType<DefaultStepRule>().Keyed<IStepRule>(PathfindingAlgorithms).SingleInstance()
                     .WithMetadata(PathfindingAlgorithms, nameof(Languages.Default));
                 builder.RegisterType<LandscapeStepRule>().Keyed<IStepRule>(PathfindingAlgorithms).SingleInstance()
@@ -192,16 +193,6 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        private sealed class BreadthAlgorithms : IComponent
-        {
-            public void Apply(ContainerBuilder builder)
-            {
-                builder.RegisterType<AStarLeeAlgorithmMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Algorithms).SingleInstance()
-                    .ConfigurePipeline(p => p.Use(new KeyResolveMiddlware<string, IHeuristic>(PathfindingAlgorithms)));
-                builder.RegisterType<LeeAlgorithmMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Algorithms).SingleInstance();
-            }
-        }
-
         private sealed class GraphSharing : IComponent
         {
             public void Apply(ContainerBuilder builder)
@@ -215,15 +206,15 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<RecieveGraphMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
                 builder.RegisterType<SaveGraphOnlyMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
                 builder.RegisterType<LoadGraphOnlyMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
-                // TODO: Implement saving of pathfinding range only with graph!
-                //builder.RegisterType<SavePathfindingRangeMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
-                //builder.RegisterType<LoadPathfindingRangeMenuItem>().Keyed<IMenuItem>(Sharing)
-                //    .As<ICanRecieveMessage>().SingleInstance();
 
-                builder.RegisterType<JsonSerializer<IEnumerable<CoordinateDto>>>().As<ISerializer<IEnumerable<CoordinateDto>>>().SingleInstance();
-                builder.RegisterType<JsonSerializer<IEnumerable<int>>>().As<ISerializer<IEnumerable<int>>>().SingleInstance();
-                builder.RegisterType<JsonSerializer<GraphSerializationDto>>().As<ISerializer<GraphSerializationDto>>().SingleInstance();
-                builder.RegisterType<JsonSerializer<IEnumerable<VisitedVerticesDto>>>().As<ISerializer<IEnumerable<VisitedVerticesDto>>>().SingleInstance();
+                builder.RegisterType<JsonSerializer<IEnumerable<CoordinateDto>>>()
+                    .As<ISerializer<IEnumerable<CoordinateDto>>>().SingleInstance();
+                builder.RegisterType<JsonSerializer<IEnumerable<int>>>()
+                    .As<ISerializer<IEnumerable<int>>>().SingleInstance();
+                builder.RegisterType<JsonSerializer<GraphSerializationDto>>()
+                    .As<ISerializer<GraphSerializationDto>>().SingleInstance();
+                builder.RegisterType<JsonSerializer<IEnumerable<VisitedVerticesDto>>>()
+                    .As<ISerializer<IEnumerable<VisitedVerticesDto>>>().SingleInstance();
                 builder.RegisterType<JsonSerializer<IEnumerable<PathfindingHistorySerializationDto>>>()
                     .As<ISerializer<IEnumerable<PathfindingHistorySerializationDto>>>().SingleInstance();
 
@@ -243,7 +234,6 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<ReverseVertexMenuItem>().Keyed<IMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<NeighbourhoodMenuItem>().Keyed<IMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<ChangeCostMenuItem>().Keyed<IMenuItem>(Editor).SingleInstance().As<ICanRecieveMessage>();
-                //builder.RegisterType<SmoothGraphMenuItem>().Keyed<IMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
                 builder.RegisterType<MeanCost>().As<IMeanCost>().SingleInstance();
             }
         }
@@ -280,31 +270,27 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
             }
         }
 
-        private sealed class WaveAlgorithms : IComponent
+        private sealed class Algos : IComponent
         {
             public void Apply(ContainerBuilder builder)
             {
                 var stepRuleResolveMiddleware = new KeyResolveMiddlware<string, IStepRule>(PathfindingAlgorithms);
                 var combinedResolveMiddleware = new CombinedAlgorithmsResolveMiddleware(PathfindingAlgorithms);
+                var heuristicResolveMiddleware = new KeyResolveMiddlware<string, IHeuristic>(PathfindingAlgorithms);
 
-                builder.RegisterType<DijkstraAlgorithmMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Algorithms).SingleInstance()
-                    .ConfigurePipeline(p => p.Use(stepRuleResolveMiddleware));
-                builder.RegisterType<AStarAlgorithmMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Algorithms).SingleInstance()
-                    .ConfigurePipeline(p => p.Use(combinedResolveMiddleware));
-                builder.RegisterType<IDAStarAlgorithmMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Algorithms).SingleInstance()
-                    .ConfigurePipeline(p => p.Use(combinedResolveMiddleware));
-                builder.RegisterType<RandomAlgorithmMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Algorithms).SingleInstance();
-            }
-        }
-
-        private sealed class GreedyAlgorithms : IComponent
-        {
-            public void Apply(ContainerBuilder builder)
-            {
-                builder.RegisterType<CostGreedyAlgorithmMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Algorithms).SingleInstance()
-                    .ConfigurePipeline(p => p.Use(new KeyResolveMiddlware<string, IStepRule>(PathfindingAlgorithms)));
-                builder.RegisterType<DepthFirstAlgorithmMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Algorithms).SingleInstance()
-                    .ConfigurePipeline(p => p.Use(new KeyResolveMiddlware<string, IHeuristic>(PathfindingAlgorithms)));
+                builder.RegisterType<DijkstraAlgorithmMenuItem>().Keyed<IMenuItem>(Algorithms)
+                    .SingleInstance().ConfigurePipeline(p => p.Use(stepRuleResolveMiddleware));
+                builder.RegisterType<AStarAlgorithmMenuItem>().Keyed<IMenuItem>(Algorithms)
+                    .SingleInstance().ConfigurePipeline(p => p.Use(combinedResolveMiddleware));
+                builder.RegisterType<IDAStarAlgorithmMenuItem>().Keyed<IMenuItem>(Algorithms)
+                    .SingleInstance().ConfigurePipeline(p => p.Use(combinedResolveMiddleware));
+                builder.RegisterType<CostGreedyAlgorithmMenuItem>().Keyed<IMenuItem>(Algorithms)
+                    .SingleInstance().ConfigurePipeline(p => p.Use(stepRuleResolveMiddleware));
+                builder.RegisterType<DepthFirstAlgorithmMenuItem>().Keyed<IMenuItem>(Algorithms)
+                    .SingleInstance().ConfigurePipeline(p => p.Use(heuristicResolveMiddleware));
+                builder.RegisterType<AStarLeeAlgorithmMenuItem>().Keyed<IMenuItem>(Algorithms)
+                    .SingleInstance().ConfigurePipeline(p => p.Use(heuristicResolveMiddleware));
+                builder.RegisterType<LeeAlgorithmMenuItem>().Keyed<IMenuItem>(Algorithms).SingleInstance();
             }
         }
 

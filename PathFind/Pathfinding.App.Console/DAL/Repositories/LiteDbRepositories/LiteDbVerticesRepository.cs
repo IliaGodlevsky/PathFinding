@@ -36,11 +36,6 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
             return collection.Find(x => x.GraphId == graphId);
         }
 
-        public bool Update(VertexEntity vertex)
-        {
-            return collection.Update(vertex);
-        }
-
         public bool UpdateVertices(IEnumerable<VertexEntity> vertices)
         {
             return collection.Update(vertices) > 0;

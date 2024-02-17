@@ -33,7 +33,6 @@ namespace Shared.Extensions
             return collection switch
             {
                 ReadOnlyCollection<T> readOnly => readOnly,
-                IList<T> list => new ReadOnlyCollection<T>(list),
                 _ => Array.AsReadOnly(collection.ToArray()),
             };
         }

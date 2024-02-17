@@ -13,18 +13,13 @@ using Pathfinding.Visualization.Extensions;
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
     [LowPriority]
-    internal sealed class ClearColorsMenuItem : IConditionedMenuItem, ICanRecieveMessage
+    internal sealed class ClearColorsMenuItem(IMessenger messenger,
+        IPathfindingRangeBuilder<Vertex> rangeBuilder) 
+        : IConditionedMenuItem, ICanRecieveMessage
     {
-        private readonly IMessenger messenger;
-        private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
+        private readonly IMessenger messenger = messenger;
+        private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder = rangeBuilder;
         private GraphReadDto graph = GraphReadDto.Empty;
-
-        public ClearColorsMenuItem(IMessenger messenger,
-            IPathfindingRangeBuilder<Vertex> rangeBuilder)
-        {
-            this.messenger = messenger;
-            this.rangeBuilder = rangeBuilder;
-        }
 
         public bool CanBeExecuted() => graph != GraphReadDto.Empty;
 

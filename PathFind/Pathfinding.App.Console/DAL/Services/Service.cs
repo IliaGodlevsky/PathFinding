@@ -112,8 +112,15 @@ namespace Pathfinding.App.Console.DAL.Services
         {
             return Transaction(unitOfWork =>
             {
-                var entites = SelectRangeEntities(vertices, graphId);
-                return unitOfWork.RangeRepository.Update(entites);
+                var verts = vertices.Select(x => x.Vertex.Id).ToReadOnly();
+                var ranges = unitOfWork.RangeRepository.GetByVerticesIds(verts)
+                    .OrderBy(x => x.VertexId).ToReadOnly();
+                var orderedVertices = vertices.OrderBy(x => x.Vertex.Id).ToReadOnly();
+                for (int i = 0; i < ranges.Count; i++)
+                {
+                    ranges[i].Order = orderedVertices[i].Order;
+                }
+                return unitOfWork.RangeRepository.Update(ranges);
             });
         }
 
@@ -215,7 +222,8 @@ namespace Pathfinding.App.Console.DAL.Services
         {
             return Transaction(unit =>
             {
-                var runs = unit.RunRepository.GetByGraphId(graphId)
+                var runs = unit.RunRepository
+                    .GetByGraphId(graphId)
                     .OrderBy(x => x.Id)
                     .ToReadOnly();
                 var statistics = unit.StatisticsRepository
@@ -247,18 +255,7 @@ namespace Pathfinding.App.Console.DAL.Services
             });
         }
 
-        public IEnumerable<SubAlgorithmReadDto> Insert(IEnumerable<SubAlgorithmCreateDto> subAlgorithms)
-        {
-            return Transaction(unit =>
-            {
-                var entities = mapper.Map<SubAlgorithmEntity[]>(subAlgorithms);
-                unit.SubAlgorithmRepository.Insert(entities);
-                return mapper.Map<SubAlgorithmReadDto[]>(entities).ToReadOnly();
-            });
-        }
-
-        public void AddRunHistory(
-            params AlgorithmRunHistoryCreateDto[] histories)
+        public void AddRunHistory(params AlgorithmRunHistoryCreateDto[] histories)
         {
             Transaction(unit =>
             {
@@ -270,6 +267,11 @@ namespace Pathfinding.App.Console.DAL.Services
         public int GetRunCount(int graphId)
         {
             return Transaction<int>(unit => unit.RunRepository.GetCount(graphId));
+        }
+
+        public int GetGraphCount()
+        {
+            return Transaction(unit => unit.GraphRepository.GetCount());
         }
 
         private T Transaction<T>(Func<IUnitOfWork, T> action)

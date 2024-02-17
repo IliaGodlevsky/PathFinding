@@ -1,5 +1,4 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
-using System;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DAL.Models.TransferObjects.Create
@@ -13,6 +12,5 @@ namespace Pathfinding.App.Console.DAL.Models.TransferObjects.Create
         public IReadOnlyCollection<(ICoordinate Visited, IReadOnlyList<ICoordinate> Enqueued)> Visited { get; set; }
 
         public IReadOnlyCollection<ICoordinate> Path { get; set; }
-
     }
 }

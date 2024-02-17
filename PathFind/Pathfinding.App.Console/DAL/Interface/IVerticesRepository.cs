@@ -11,8 +11,6 @@ namespace Pathfinding.App.Console.DAL.Interface
 
         bool DeleteVerticesByGraphId(int graphId);
 
-        bool Update(VertexEntity vertex);
-
         bool UpdateVertices(IEnumerable<VertexEntity> vertices);
 
         VertexEntity Read(int vertexId);

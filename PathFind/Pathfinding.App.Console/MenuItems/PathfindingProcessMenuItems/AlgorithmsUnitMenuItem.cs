@@ -10,19 +10,12 @@ using Pathfinding.Logging.Interface;
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
     [HighestPriority]
-    internal sealed class AlgorithmsUnitMenuItem
-        : UnitDisplayMenuItem<AlgorithmChooseUnit>, IConditionedMenuItem
+    internal sealed class AlgorithmsUnitMenuItem(IInput<int> intInput,
+        AlgorithmChooseUnit unit,
+        IPathfindingRangeBuilder<Vertex> builder,
+        ILog log): UnitDisplayMenuItem<AlgorithmChooseUnit>(intInput, unit, log), IConditionedMenuItem
     {
-        private readonly IPathfindingRangeBuilder<Vertex> builder;
-
-        public AlgorithmsUnitMenuItem(IInput<int> intInput,
-            AlgorithmChooseUnit unit,
-            IPathfindingRangeBuilder<Vertex> builder,
-            ILog log)
-            : base(intInput, unit, log)
-        {
-            this.builder = builder;
-        }
+        private readonly IPathfindingRangeBuilder<Vertex> builder = builder;
 
         public bool CanBeExecuted()
         {

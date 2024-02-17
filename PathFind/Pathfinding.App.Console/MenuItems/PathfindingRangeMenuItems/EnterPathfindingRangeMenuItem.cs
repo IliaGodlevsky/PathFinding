@@ -69,8 +69,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
             await Task.Run(() =>
             {
                 service.RemoveRange(deleted, graph.Id);
-                service.UpdateRange(updated.ToArray(), graph.Id);
-                service.AddRange(added.ToArray(), graph.Id);
+                service.UpdateRange(updated, graph.Id);
+                service.AddRange(added, graph.Id);
             });
         }
 

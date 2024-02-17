@@ -3,29 +3,23 @@ using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
-using Pathfinding.App.Console.Model.Notes;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.AlgorithmMenuItems
 {
     internal abstract class AlgorithmMenuItem : IMenuItem
     {
-        protected readonly struct AlgorithmInfo
-        {
-            public readonly IAlgorithmFactory<PathfindingProcess> Factory { get; }
-
-            public readonly RunStatisticsDto InitStatistics { get; }
-
-            public AlgorithmInfo(IAlgorithmFactory<PathfindingProcess> factory,
-                RunStatisticsDto initStatistics)
-            {
-                Factory = factory;
-                InitStatistics = initStatistics;
-            }
-        }
+        protected readonly record struct AlgorithmInfo(
+            IAlgorithmFactory<PathfindingProcess> Factory,
+            RunStatisticsDto InitStatistics);
 
         protected readonly IMessenger messenger;
+
+        protected abstract string LanguageKey { get; }
+
+        protected RunStatisticsDto RunStatistics => new() { AlgorithmId = LanguageKey };
 
         protected AlgorithmMenuItem(IMessenger messenger)
         {
@@ -37,6 +31,11 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
             var info = GetAlgorithm();
             var msg = new AlgorithmStartInfoMessage(info.Factory, info.InitStatistics);
             messenger.Send(msg, Tokens.Pathfinding);
+        }
+
+        public override string ToString()
+        {
+            return Languages.ResourceManager.GetString(LanguageKey);
         }
 
         protected abstract AlgorithmInfo GetAlgorithm();

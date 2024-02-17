@@ -4,14 +4,9 @@ using Pathfinding.App.Console.DAL.Models.Entities;
 
 namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 {
-    internal sealed class LiteDbGraphStateRepository : IGraphStateRepository
+    internal sealed class LiteDbGraphStateRepository(ILiteDatabase db) : IGraphStateRepository
     {
-        private readonly ILiteCollection<GraphStateEntity> collection;
-
-        public LiteDbGraphStateRepository(ILiteDatabase db)
-        {
-            collection = db.GetCollection<GraphStateEntity>(DbTables.GraphStates);
-        }
+        private readonly ILiteCollection<GraphStateEntity> collection = db.GetCollection<GraphStateEntity>(DbTables.GraphStates);
 
         public GraphStateEntity GetByRunId(int runId)
         {

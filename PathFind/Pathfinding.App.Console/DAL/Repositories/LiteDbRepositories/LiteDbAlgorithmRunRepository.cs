@@ -1,26 +1,18 @@
 ﻿using LiteDB;
 using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
-using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 {
-    internal sealed class LiteDbAlgorithmRunRepository : IAlgorithmRunRepository
+    internal sealed class LiteDbAlgorithmRunRepository(ILiteDatabase db) 
+        : IAlgorithmRunRepository
     {
-        private readonly ILiteCollection<AlgorithmRunEntity> collection;
-        private readonly ILiteCollection<StatisticsEntity> statistics;
-        private readonly ILiteCollection<GraphStateEntity> graphStates;
-        private readonly ILiteCollection<SubAlgorithmEntity> subAlgorithms;
-
-        public LiteDbAlgorithmRunRepository(ILiteDatabase db)
-        {
-            collection = db.GetCollection<AlgorithmRunEntity>(DbTables.AlgorithmRuns);
-            statistics = db.GetCollection<StatisticsEntity>(DbTables.Statistics);
-            graphStates = db.GetCollection<GraphStateEntity>(DbTables.GraphStates);
-            subAlgorithms = db.GetCollection<SubAlgorithmEntity>(DbTables.SubAlgorithms);
-        }
+        private readonly ILiteCollection<AlgorithmRunEntity> collection = db.GetCollection<AlgorithmRunEntity>(DbTables.AlgorithmRuns);
+        private readonly ILiteCollection<StatisticsEntity> statistics = db.GetCollection<StatisticsEntity>(DbTables.Statistics);
+        private readonly ILiteCollection<GraphStateEntity> graphStates = db.GetCollection<GraphStateEntity>(DbTables.GraphStates);
+        private readonly ILiteCollection<SubAlgorithmEntity> subAlgorithms = db.GetCollection<SubAlgorithmEntity>(DbTables.SubAlgorithms);
 
         public bool DeleteByGraphId(int graphId)
         {

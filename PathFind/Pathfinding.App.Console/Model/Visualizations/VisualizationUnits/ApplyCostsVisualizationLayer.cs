@@ -4,15 +4,15 @@ using Pathfinding.GraphLib.Core.Interface.Extensions;
 
 namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
 {
-    internal sealed class ApplyCostsVisualizationUnit : VisualizationUnit
+    internal sealed class ApplyCostsVisualizationLayer : VisualizationLayer
     {
-        public ApplyCostsVisualizationUnit(RunVisualizationDto algorithm) 
+        public ApplyCostsVisualizationLayer(RunVisualizationDto algorithm) 
             : base(algorithm)
         {
 
         }
 
-        public override void Visualize(IGraph<Vertex> graph)
+        public override void Overlay(IGraph<IVertex> graph)
         {
             graph.ApplyCosts(algorithm.GraphState.Costs);
         }

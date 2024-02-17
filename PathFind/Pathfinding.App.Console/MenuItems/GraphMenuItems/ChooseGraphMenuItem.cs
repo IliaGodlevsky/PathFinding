@@ -34,8 +34,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public bool CanBeExecuted()
         {
-            var count = service.GetGraphIds().Count;
-            return count > 0;
+            return service.GetGraphCount() > 0;
         }
 
         public void Execute()

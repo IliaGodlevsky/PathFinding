@@ -1,18 +1,18 @@
 ﻿using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
-using Pathfinding.App.Console.Interface;
 using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Factory.Interface;
 
 namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
 {
-    internal abstract class VisualizationUnit : IVisualizationUnit
+    internal abstract class VisualizationLayer : ILayer
     {
         protected readonly RunVisualizationDto algorithm;
 
-        protected VisualizationUnit(RunVisualizationDto algorithm)
+        protected VisualizationLayer(RunVisualizationDto algorithm)
         {
             this.algorithm = algorithm;
         }
 
-        public abstract void Visualize(IGraph<Vertex> graph);
+        public abstract void Overlay(IGraph<IVertex> graph);
     }
 }

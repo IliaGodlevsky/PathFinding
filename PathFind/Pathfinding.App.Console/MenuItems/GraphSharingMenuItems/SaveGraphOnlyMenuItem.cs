@@ -38,7 +38,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 
         public bool CanBeExecuted()
         {
-            return service.GetGraphIds().Count > 0;
+            return service.GetGraphCount() > 0;
         }
 
         public async void Execute()

@@ -10,6 +10,6 @@ namespace Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined
 
         public IReadOnlyCollection<VertexAssembleDto> Vertices { get; set; }
 
-        public IReadOnlyDictionary<int, IReadOnlyCollection<VertexAssembleDto>> Neighborhood { get; set; }
+        public IReadOnlyDictionary<int, IReadOnlyList<VertexAssembleDto>> Neighborhood { get; set; }
     }
 }

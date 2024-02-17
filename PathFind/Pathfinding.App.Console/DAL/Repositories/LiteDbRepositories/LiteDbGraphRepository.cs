@@ -5,22 +5,13 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 {
-    internal sealed class LiteDbGraphRepository : IGraphParametresRepository
+    internal sealed class LiteDbGraphRepository(ILiteDatabase database) : IGraphParametresRepository
     {
-        private readonly ILiteCollection<GraphEntity> collection;
-        private readonly LiteDbNeighborsRepository neighborsRepository;
-        private readonly LiteDbAlgorithmRunRepository algorithmRunRepository;
-        private readonly LiteDbRangeRepository rangeRepository;
-        private readonly LiteDbVerticesRepository verticesRepository;
-
-        public LiteDbGraphRepository(ILiteDatabase database)
-        {
-            collection = database.GetCollection<GraphEntity>(DbTables.Graphs);
-            neighborsRepository = new(database);
-            algorithmRunRepository = new(database);
-            rangeRepository = new(database);
-            verticesRepository = new(database);
-        }
+        private readonly ILiteCollection<GraphEntity> collection = database.GetCollection<GraphEntity>(DbTables.Graphs);
+        private readonly LiteDbNeighborsRepository neighborsRepository = new(database);
+        private readonly LiteDbAlgorithmRunRepository algorithmRunRepository = new(database);
+        private readonly LiteDbRangeRepository rangeRepository = new(database);
+        private readonly LiteDbVerticesRepository verticesRepository = new(database);
 
         public GraphEntity Insert(GraphEntity graph)
         {
@@ -36,8 +27,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
             rangeRepository.DeleteByGraphId(graphId);
             verticesRepository.DeleteVerticesByGraphId(graphId);
             algorithmRunRepository.DeleteByGraphId(graphId);
-            collection.Delete(graphId);
-            return true;
+            return collection.Delete(graphId);
         }
 
         public IEnumerable<GraphEntity> GetAll()
@@ -53,6 +43,11 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
         public bool Update(GraphEntity graph)
         {
             return collection.Update(graph);
+        }
+
+        public int GetCount()
+        {
+            return collection.Count();
         }
     }
 }

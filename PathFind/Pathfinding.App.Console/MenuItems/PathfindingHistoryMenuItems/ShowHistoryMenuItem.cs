@@ -44,28 +44,26 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void Execute()
         {
-            var grouped = service.GetRunStatiticsForGraph(graph.Id)
+            var statistics = service.GetRunStatiticsForGraph(graph.Id)
                 .OrderBy(x => x.AlgorithmId)
-                .Select(x => (Id: x.Id, Statistics: x))
-                .GroupBy(x => x.Statistics.AlgorithmId);
-            var ordered = grouped.SelectMany(x => x.OrderBy(x=>x.Statistics.AlgorithmSpeed)
-                                                   .ThenBy(x => x.Statistics.Steps));
-            var statistics = ordered.ToDictionary(x => x.Id, x => x.Statistics);
-            string inputMessage = GetInputMessage(statistics.Values);
+                .GroupBy(x => x.AlgorithmId)
+                .SelectMany(x => x.OrderBy(x => x.AlgorithmSpeed).ThenBy(x => x.Steps))
+                .ToReadOnly();
+            string inputMessage = GetInputMessage(statistics);
             using (RememberGraphState())
             {
                 int index = GetAlgorithmId(inputMessage, statistics.Count);
                 while (index != statistics.Count)
                 {
-                    var page = statistics.ElementAt(index);
+                    var page = statistics[index];
                     using (Cursor.UseCurrentPosition())
                     {
                         using (Cursor.HideCursor())
                         {
-                            string data = $"{index + 1} {page.Value}";
+                            string data = $"{index + 1} {page}";
                             var lineMsg = new StatisticsLineMessage(data);
                             messenger.Send(lineMsg, Tokens.AppLayout);
-                            var keyMsg = new AlgorithmKeyMessage(page.Value.AlgorithmRunId);
+                            var keyMsg = new AlgorithmKeyMessage(page.AlgorithmRunId);
                             messenger.Send(keyMsg, Tokens.History);
                         }
                     }
