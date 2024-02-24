@@ -54,12 +54,10 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests.Realizations
             var vertexFactory = new TestVertexFactory();
             var graphFactory = new GraphFactory<TestVertex>();
             var assemble = new Assemble(vertexFactory, graphFactory);
-            var layers = new ILayer[]
-            {
+            var layers = new Layers(
                 new TestObstacleLayer(),
                 new TestCostLayer(),
-                new NeighborhoodLayer(new MooreNeighborhoodFactory())
-            };
+                new NeighborhoodLayer(new MooreNeighborhoodFactory()));
             return assemble.AssembleGraph(layers, Constants.Width, Constants.Length);
         }
 

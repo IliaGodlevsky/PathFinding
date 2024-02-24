@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Coordinate.cs" />
     <Compile Include="Graph.cs" />
+    <Compile Include="Layers.cs" />
     <Compile Include="Neighborhoods\MooreNeighborhood.cs" />
     <Compile Include="Neighborhoods\VonNeumannNeighborhood.cs" />
     <Compile Include="PathfindingRange.cs" />

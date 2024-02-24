@@ -5,6 +5,7 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations.Layers;
@@ -32,6 +33,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected int length = 0;
         protected int obstaclePercent = 0;
         protected INeighborhoodFactory neighborhoodFactory;
+        protected ILayer smoothLayer;
 
         protected GraphCreatingMenuItem(IMessenger messenger,
             GraphAssemble assemble,
@@ -53,6 +55,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected void SetObstaclePercent(ObstaclePercentMessage msg)
             => obstaclePercent = msg.ObstaclePercent;
 
+        protected void SetSmoothLayer(LayerMessage msg)
+            => smoothLayer = msg.Layer;
+
         protected void SetGraphParams(GraphParamsMessage msg)
         {
             width = msg.Width;
@@ -61,7 +66,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         public async void Execute()
         {
-            var layers = GetLayers();
+            var layers = new Layers(GetLayers());
             var graph = assemble.AssembleGraph(layers, width, length);
             var costRangeMsg = new CostRangeChangedMessage(costRange);
             messenger.Send(costRangeMsg, Tokens.AppLayout);
@@ -84,6 +89,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             yield return new NeighborhoodLayer(neighborhoodFactory);
             yield return new VertexCostLayer(costRange, random);
             yield return new ObstacleLayer(random, obstaclePercent);
+            yield return smoothLayer ?? new Layers();
         }
 
         public virtual void RegisterHanlders(IMessenger messenger)
@@ -92,6 +98,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             messenger.Register<GraphCreatingMenuItem, NeighbourhoodMessage>(this, Tokens.Graph, SetNeighbourhood);
             messenger.Register<GraphCreatingMenuItem, GraphParamsMessage>(this, Tokens.Graph, SetGraphParams);
             messenger.Register<GraphCreatingMenuItem, CostRangeMessage>(this, Tokens.Graph, SetCostRange);
+            messenger.Register<GraphCreatingMenuItem, LayerMessage>(this, Tokens.Graph, SetSmoothLayer);
         }
     }
 }

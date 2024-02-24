@@ -1,9 +1,11 @@
 ﻿using Autofac;
+using AutoMapper;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.App.Console.DAL.Interface;
+using Pathfinding.App.Console.DAL.Models.Mappers;
 using Pathfinding.App.Console.DAL.Models.TransferObjects.Serialization;
 using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.DAL.Services;
@@ -94,7 +96,21 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<Service>().As<IService>().SingleInstance();
                 builder.RegisterType<LiteDbInFileUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
 
-                builder.RegisterMapper();
+                builder.RegisterType<AlgorithmRunMappingProfile>().As<Profile>().SingleInstance();
+                builder.RegisterType<GraphMappingProfile<Vertex>>().As<Profile>().SingleInstance();
+                builder.RegisterType<GraphStateMappingProfile>().As<Profile>().SingleInstance();
+                builder.RegisterType<HistoryMappingProfile>().As<Profile>().SingleInstance();
+                builder.RegisterType<StatisticsMappingProfile>().As<Profile>().SingleInstance();
+                builder.RegisterType<SubAlgorithmsMappingProfile>().As<Profile>().SingleInstance();
+                builder.RegisterType<UntitledMappingConfig>().As<Profile>().SingleInstance();
+                builder.RegisterType<VerticesMappingProfile<Vertex>>().As<Profile>().SingleInstance();
+
+                builder.Register(ctx =>
+                {
+                    var profiles = ctx.Resolve<IEnumerable<Profile>>();
+                    var config = new MapperConfiguration(c => c.AddProfiles(profiles));
+                    return config.CreateMapper(ctx.Resolve);
+                }).As<IMapper>().SingleInstance();
 
                 builder.RegisterType<MainUnitMenuItem>().AsSelf().InstancePerDependency();
                 builder.RegisterType<GraphCreateMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main).SingleInstance();
@@ -132,6 +148,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<EnterCostRangeMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
                 builder.RegisterType<EnterGraphParametresMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
                 builder.RegisterType<EnterObstaclePercentMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
+                builder.RegisterType<SmoothLayerMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
 
                 builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
                 builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
@@ -140,6 +157,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
 
                 builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
                 builder.RegisterType<XorshiftRandom>().As<IRandom>().SingleInstance();
+                /*builder.RegisterDecorator<IRandom>((с, inner) => new ThreadSafeRandom(inner), "Random").SingleInstance()*/;
 
                 builder.RegisterType<PathfindingRange<Vertex>>().Named<IPathfindingRange<Vertex>>(PathfindingRange).SingleInstance();
                 builder.RegisterDecorator<IPathfindingRange<Vertex>>((с, inner) => new VisualPathfindingRange<Vertex>(inner), PathfindingRange).SingleInstance();
@@ -192,6 +210,9 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
                 builder.RegisterType<AddressInput>().As<IInput<(string, int)>>().SingleInstance();
             }
         }
+
+
+
 
         private sealed class GraphSharing : IComponent
         {

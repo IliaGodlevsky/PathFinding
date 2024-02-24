@@ -14,10 +14,5 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
             : base(intInput)
         {
         }
-
-        public override string ToString()
-        {
-            return Languages.TargetColor;
-        }
     }
 }

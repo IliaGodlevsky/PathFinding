@@ -1,5 +1,4 @@
 ﻿using Pathfinding.App.Console.Interface;
-using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Settings;
 
@@ -14,11 +13,6 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
             : base(intInput)
         {
 
-        }
-
-        public override string ToString()
-        {
-            return Languages.TransitColor;
         }
     }
 }

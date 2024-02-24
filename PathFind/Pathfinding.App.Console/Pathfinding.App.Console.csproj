@@ -144,6 +144,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Interface\INeighbourhoodCommand.cs" />
     <Compile Include="Interface\IVisualizationUnit.cs" />
+    <Compile Include="MenuItems\GraphMenuItems\SmoothLayerMenuItem.cs" />
     <Compile Include="Messaging\IToken.cs" />
     <Compile Include="Interface\IVisualizedVertices.cs" />
     <Compile Include="MenuItems\GraphSharingMenuItems\LoadOnlyGraphMenuItem.cs" />
@@ -194,6 +195,7 @@
     <Compile Include="Messaging\Messages\NeighbourhoodMessage.cs" />
     <Compile Include="Messaging\Messages\ObstaclePercentMessage.cs" />
     <Compile Include="Messaging\Messages\PathFoundMessage.cs" />
+    <Compile Include="Messaging\Messages\LayerMessage.cs" />
     <Compile Include="Messaging\Messages\StatisticsLineMessage.cs" />
     <Compile Include="Messaging\Messages\StatisticsMessage.cs" />
     <Compile Include="Model\ApplicationSettingsStore.cs" />
@@ -273,7 +275,6 @@
     <Compile Include="MenuItems\GraphMenuItems\GraphMenuItem.cs" />
     <Compile Include="MenuItems\EditorMenuItems\ReverseVertexMenuItem.cs" />
     <Compile Include="MenuItems\GraphSharingMenuItems\SaveGraphMenuItem.cs" />
-    <Compile Include="MenuItems\EditorMenuItems\SmoothGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphSharingMenuItems\RecieveGraphMenuItem.cs" />
     <Compile Include="MenuItems\GraphSharingMenuItems\SendGraphMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\ColorsUnitMenuItem.cs" />

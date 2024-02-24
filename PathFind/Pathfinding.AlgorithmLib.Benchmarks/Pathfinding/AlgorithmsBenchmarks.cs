@@ -1,4 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
@@ -25,7 +26,7 @@ namespace Pathfinding.AlgorithmLib.Benchmarks.Pathfinding
         private readonly IGraphAssemble<TestVertex> graphAssemble;
         private readonly ILayer costLayer;
         private readonly ILayer neighboursLayer;
-        private readonly ILayer[] layers;
+        private readonly Layers layers;
 
         protected AlgorithmsBenchmarks()
         {
@@ -33,7 +34,7 @@ namespace Pathfinding.AlgorithmLib.Benchmarks.Pathfinding
                     vertexFactory, graphFactory);
             costLayer = new VertexCostLayer(range, random);
             neighboursLayer = new NeighborhoodLayer(neighbourhood);
-            layers = new ILayer[] { costLayer, neighboursLayer };
+            layers = new Layers(costLayer, neighboursLayer);
         }
 
         public IEnumerable<IEnumerable<IVertex>> Ranges()

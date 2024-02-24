@@ -22,7 +22,6 @@ namespace Pathfinding.App.Console.Model
                           new FramedToRightOrdinate(graph),
                           new FramedToLeftOrdinate(graph))
         {
-
         }
 
         private GraphField(IGraph<Vertex> graph, params FramedAxis[] axes)

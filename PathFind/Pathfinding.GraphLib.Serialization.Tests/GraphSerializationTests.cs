@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
@@ -33,7 +34,7 @@ namespace Pathfinding.GraphLib.Serialization.Tests
             using (var stream = new MemoryStream())
             {
                 var assemble = GetAssemble();
-                var layers = GetLayers();
+                var layers = new Layers(GetLayers());
                 var graph = assemble.AssembleGraph(layers, dimensions);
 
                 serializer.SerializeTo(graph, stream);

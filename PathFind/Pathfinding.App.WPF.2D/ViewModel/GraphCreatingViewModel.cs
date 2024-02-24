@@ -4,6 +4,7 @@ using Pathfinding.App.WPF._2D.Infrastructure;
 using Pathfinding.App.WPF._2D.Interface;
 using Pathfinding.App.WPF._2D.Messages.DataMessages;
 using Pathfinding.App.WPF._2D.Model;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations.Layers;
@@ -61,7 +62,7 @@ namespace Pathfinding.App.WPF._2D.ViewModel
             try
             {
                 CostRange = new InclusiveValueRange<int>(UpperValueOfRange, 1);
-                var layers = GetLayers();
+                var layers = new Layers(GetLayers());
                 var graph = await SelectedGraphAssemble.AssembleGraphAsync(layers, Width, Length);
                 messenger.Send(new GraphCreatedMessage(graph));
             }

@@ -5,6 +5,7 @@ using Pathfinding.App.WPF._3D.Infrastructure.Commands;
 using Pathfinding.App.WPF._3D.Interface;
 using Pathfinding.App.WPF._3D.Messages.PassValueMessages;
 using Pathfinding.App.WPF._3D.Model;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations.Layers;
@@ -61,7 +62,7 @@ namespace Pathfinding.App.WPF._3D.ViewModel
         {
             try
             {
-                var layers = GetLayers();
+                var layers = new Layers(GetLayers());
                 var graph = await SelectedGraphAssemble.AssembleGraphAsync(layers, Width, Length, Height);
                 messenger.Send(new GraphCreatedMessage(graph));
             }

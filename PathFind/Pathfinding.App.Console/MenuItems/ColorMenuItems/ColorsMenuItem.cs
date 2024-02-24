@@ -43,5 +43,10 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
                 Colours.Default[SettingKey] = allColors[index];
             }
         }
+
+        public override sealed string ToString()
+        {
+            return SettingKey;
+        }
     }
 }

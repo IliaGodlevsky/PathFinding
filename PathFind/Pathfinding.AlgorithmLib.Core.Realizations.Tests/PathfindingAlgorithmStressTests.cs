@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Factory.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Factory.Extensions;
 using Pathfinding.GraphLib.Factory.Interface;
 using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
@@ -30,7 +31,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests
         private readonly INeighborhoodFactory neighbourhood = new MooreNeighborhoodFactory();
         private readonly IVertexFactory<TestVertex> vertexFactory = new TestVertexFactory();
         private readonly IGraphAssemble<TestVertex> graphAssemble;
-        private readonly ILayer[] layers;
+        private readonly Layers layers;
 
         public PathfindingAlgorithmStressTests()
         {
@@ -38,7 +39,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Tests
                 vertexFactory, graphFactory);
             var costLayer = new VertexCostLayer(range, random);
             var neighboursLayer = new NeighborhoodLayer(neighbourhood);
-            layers = new ILayer[] { costLayer, neighboursLayer };
+            layers = new Layers(costLayer, neighboursLayer);
         }
 
         //[TestCaseSource(typeof(FindPathTestCaseData), nameof(FindPathTestCaseData.Factories))]

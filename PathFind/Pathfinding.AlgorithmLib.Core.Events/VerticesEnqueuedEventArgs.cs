@@ -11,7 +11,9 @@ namespace Pathfinding.AlgorithmLib.Core.Events
         public VerticesEnqueuedEventArgs(IVertex current, IEnumerable<IVertex> enqueued) 
             : base(current)
         {
-            Enqueued = enqueued.Select(x => x.Position).ToList().AsReadOnly();
+            Enqueued = enqueued.Select(x => x.Position)
+                .ToList()
+                .AsReadOnly();
         }
     }
 }

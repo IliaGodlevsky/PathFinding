@@ -13,21 +13,18 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.DAL.Models.Mappers
 {
-    internal sealed class VerticesMappingProfile : Profile
+    internal sealed class VerticesMappingProfile<T> : Profile
+        where T : IVertex
     {
-        private readonly IVertexFactory<Vertex> vertexFactory;
-
-        public VerticesMappingProfile(IVertexFactory<Vertex> vertexFactory)
+        public VerticesMappingProfile(IVertexFactory<T> vertexFactory)
         {
-            this.vertexFactory = vertexFactory;
-
             CreateMap<IVertexCost, VertexCostDto>()
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => x.CurrentCost))
                 .ForMember(x => x.UpperValueOfRange, opt => opt.MapFrom(x => x.CostRange.UpperValueOfRange))
                 .ForMember(x => x.LowerValueOfRange, opt => opt.MapFrom(x => x.CostRange.LowerValueOfRange));
             CreateMap<VertexCostDto, IVertexCost>()
                 .ConvertUsing(x => new VertexCost(x.Cost, new(x.UpperValueOfRange, x.LowerValueOfRange)));
-            CreateMap<VertexAssembleDto, Vertex>()
+            CreateMap<VertexAssembleDto, T>()
                 .ConstructUsing(x => vertexFactory.CreateVertex(x.Coordinate));
             CreateMap<Vertex, VertexEntity>()
                 .ForMember(x => x.X, opt => opt.MapFrom(x => x.Position.GetX()))
@@ -35,22 +32,21 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
                 .ForMember(x => x.UpperValueRange, opt => opt.MapFrom(x => x.Cost.CostRange.UpperValueOfRange))
                 .ForMember(x => x.LowerValueRange, opt => opt.MapFrom(x => x.Cost.CostRange.LowerValueOfRange))
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => x.Cost.CurrentCost));
-            CreateMap<VertexEntity, Vertex>().ConstructUsing(x => vertexFactory.CreateVertex(new Coordinate(x.X, x.Y)))
+            CreateMap<VertexEntity, T>().ConstructUsing(x => vertexFactory.CreateVertex(new Coordinate(x.X, x.Y)))
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => new VertexCost(x.Cost, new(x.UpperValueRange, x.LowerValueRange))));
             CreateMap<VertexEntity, VertexAssembleDto>()
                 .ForMember(x => x.Coordinate, opt => opt.MapFrom(x => new Coordinate(x.X, x.Y)))
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => new VertexCost(x.Cost, new(x.UpperValueRange, x.LowerValueRange))));
-            CreateMap<Vertex, VertexSerializationDto>()
+            CreateMap<T, VertexSerializationDto>()
                 .ForMember(x => x.Neighbors, opt => opt.MapFrom(x => x.Neighbours.GetCoordinates().ToReadOnly()));
-            CreateMap<VertexSerializationDto, Vertex>().ConstructUsing(x => vertexFactory.CreateVertex(new Coordinate(x.Position.Coordinate.ToArray())));
-            CreateMap<IEnumerable<VertexSerializationDto>, IEnumerable<Vertex>>()
-                .ConstructUsing((x, context) => ToVertices(x, context));
+            CreateMap<VertexSerializationDto, T>().ConstructUsing(x => vertexFactory.CreateVertex(new Coordinate(x.Position.Coordinate.ToArray())));
+            CreateMap<IEnumerable<VertexSerializationDto>, IEnumerable<T>>().ConstructUsing(ToVertices);
         }
 
-        private IEnumerable<Vertex> ToVertices(IEnumerable<VertexSerializationDto> dtos,
+        private IEnumerable<T> ToVertices(IEnumerable<VertexSerializationDto> dtos,
             ResolutionContext context)
         {
-            var vertices = context.Mapper.Map<Vertex[]>(dtos)
+            var vertices = context.Mapper.Map<T[]>(dtos)
                 .ToDictionary(x => x.Position);
             foreach (var dto in dtos)
             {
@@ -60,7 +56,7 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
                     .Map<ICoordinate[]>(dto.Neighbors)
                     .Select(x => vertices[x])
                     .ToReadOnly();
-                vertex.Neighbours.AddRange(neighbors);
+                vertex.Neighbours.AddRange(neighbors.OfType<IVertex>());
             }
             return vertices.Values;
         }

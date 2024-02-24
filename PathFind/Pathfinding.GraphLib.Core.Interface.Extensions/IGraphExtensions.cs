@@ -7,17 +7,20 @@ namespace Pathfinding.GraphLib.Core.Interface.Extensions
 {
     public static class IGraphExtensions
     {
-        public static int GetWidth(this IGraph<IVertex> graph)
+        public static int GetWidth<TVertex>(this IGraph<TVertex> graph)
+            where TVertex : IVertex
         {
             return graph.DimensionsSizes.ElementAtOrDefault(0);
         }
 
-        public static int GetLength(this IGraph<IVertex> graph)
+        public static int GetLength<TVertex>(this IGraph<TVertex> graph)
+            where TVertex : IVertex
         {
             return graph.DimensionsSizes.ElementAtOrDefault(1);
         }
 
-        public static int GetHeight(this IGraph<IVertex> graph)
+        public static int GetHeight<TVertex>(this IGraph<TVertex> graph)
+            where TVertex : IVertex
         {
             return graph.DimensionsSizes.ElementAtOrDefault(2);
         }

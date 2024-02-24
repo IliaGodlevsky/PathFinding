@@ -44,7 +44,8 @@ namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
                         var current = (Vertex)graph.Get(vertex.Visited);
                         current.VisualizeAsVisited();
                         vertex.Enqueued.Select(graph.Get)
-                            .OfType<Vertex>().ForEach(x => x.VisualizeAsEnqueued());
+                            .OfType<Vertex>()
+                            .ForEach(x => x.VisualizeAsEnqueued());
                     }
                     subAlgorithm.Path.Select(graph.Get)
                         .OfType<Vertex>().VisualizeAsPath();

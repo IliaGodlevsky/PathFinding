@@ -5,6 +5,7 @@ using Autofac.Core.Resolving.Pipeline;
 using Autofac.Features.Metadata;
 using AutoMapper;
 using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.App.Console.DAL.Models.Mappers;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
@@ -88,22 +89,6 @@ namespace Pathfinding.App.Console.DependencyInjection
                     container.Containers.AddRange(except);
                 }
             });
-        }
-
-        public static void RegisterMapper(this ContainerBuilder builder)
-        {
-            var profileTypes = typeof(Program).Assembly.GetTypes()
-                .Where(x => x.IsAssignableTo<Profile>())
-                .ToArray();
-
-            builder.RegisterTypes(profileTypes).As<Profile>().SingleInstance();
-
-            builder.Register(ctx =>
-            {
-                var profiles = ctx.Resolve<Profile[]>();
-                var config = new MapperConfiguration(c => c.AddProfiles(profiles));
-                return config.CreateMapper(ctx.Resolve);
-            }).As<IMapper>().SingleInstance();
         }
 
         public static void ChangeParametres(this ResolveRequestContext context,
