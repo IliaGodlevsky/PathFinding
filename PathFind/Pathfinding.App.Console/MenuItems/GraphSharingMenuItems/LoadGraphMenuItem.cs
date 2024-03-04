@@ -15,17 +15,13 @@ using System.Linq;
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 {
     [LowPriority]
-    internal sealed class LoadGraphMenuItem : ImportGraphMenuItem<string>
+    internal sealed class LoadGraphMenuItem(IMessenger messenger,
+        IFilePathInput input,
+        IPathfindingRangeBuilder<Vertex> rangeBuilder,
+        ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer,
+        ILog log,
+        IService service) : ImportGraphMenuItem<string>(messenger, input, rangeBuilder, serializer, log, service)
     {
-        public LoadGraphMenuItem(IMessenger messenger,
-            IFilePathInput input, IService service,
-            IPathfindingRangeBuilder<Vertex> rangeBuilder,
-            ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer,
-            ILog log)
-            : base(messenger, input, service, rangeBuilder, serializer, log)
-        {
-        }
-
         protected override IReadOnlyCollection<PathfindingHistorySerializationDto> ImportGraph(string path)
         {
             return serializer.DeserializeFromFile(path).ToArray();

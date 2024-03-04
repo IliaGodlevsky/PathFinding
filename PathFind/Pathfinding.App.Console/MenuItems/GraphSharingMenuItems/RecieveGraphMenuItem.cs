@@ -10,24 +10,19 @@ using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
+using Shared.Extensions;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 {
     [LowPriority]
-    internal sealed class RecieveGraphMenuItem : ImportGraphMenuItem<int>
+    internal sealed class RecieveGraphMenuItem(IMessenger messenger,
+        IInput<int> input,
+        IPathfindingRangeBuilder<Vertex> rangeBuilder,
+        ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer,
+        ILog log,
+        IService service) : ImportGraphMenuItem<int>(messenger, input,  rangeBuilder, serializer, log, service)
     {
-        public RecieveGraphMenuItem(IMessenger messenger,
-            IInput<int> input,
-            IService service,
-            IPathfindingRangeBuilder<Vertex> rangeBuilder,
-            ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer,
-            ILog log)
-            : base(messenger, input, service, rangeBuilder, serializer, log)
-        {
-        }
-
         public override string ToString()
         {
             return Languages.RecieveGraph;
@@ -44,7 +39,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
         protected override IReadOnlyCollection<PathfindingHistorySerializationDto> ImportGraph(int port)
         {
             Terminal.Write(Languages.WaitingForConnection);
-            return serializer.DeserializeFromNetwork(port).ToArray();
+            return serializer.DeserializeFromNetwork(port).ToReadOnly();
         }
     }
 }

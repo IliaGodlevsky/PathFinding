@@ -1,6 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Factory.Interface;
-using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,7 +11,7 @@ namespace Pathfinding.GraphLib.Core.Realizations
 
         public Layers(params ILayer[] layers)
         {
-            this.layers = layers.ToReadOnly();
+            this.layers = layers;
         }
 
         public Layers(IEnumerable<ILayer> layers)
@@ -21,7 +20,7 @@ namespace Pathfinding.GraphLib.Core.Realizations
 
         }
 
-        public void Overlay(IGraph<IVertex> graph)
+        public virtual void Overlay(IGraph<IVertex> graph)
         {
             foreach (var layer in layers)
             {

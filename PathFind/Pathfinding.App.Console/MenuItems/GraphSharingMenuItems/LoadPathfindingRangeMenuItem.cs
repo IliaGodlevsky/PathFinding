@@ -14,6 +14,7 @@ using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
+using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,28 +22,19 @@ using System.Linq;
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 {
     [LowPriority]
-    internal sealed class LoadPathfindingRangeMenuItem : IConditionedMenuItem, ICanRecieveMessage
+    internal sealed class LoadPathfindingRangeMenuItem(ISerializer<IEnumerable<ICoordinate>> serializer,
+        IPathfindingRangeBuilder<Vertex> rangeBuilder,
+        IFilePathInput pathInput,
+        ILog log,
+        IService service) : IConditionedMenuItem, ICanRecieveMessage
     {
-        private readonly ISerializer<IEnumerable<ICoordinate>> serializer;
-        private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
-        private readonly IInput<string> pathInput;
-        private readonly IService service;
-        private readonly ILog log;
+        private readonly ISerializer<IEnumerable<ICoordinate>> serializer = serializer;
+        private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder = rangeBuilder;
+        private readonly IInput<string> pathInput = pathInput;
+        private readonly IService service = service;
+        private readonly ILog log = log;
 
         private GraphReadDto graph = GraphReadDto.Empty;
-
-        public LoadPathfindingRangeMenuItem(ISerializer<IEnumerable<ICoordinate>> serializer,
-            IPathfindingRangeBuilder<Vertex> rangeBuilder,
-            IService service,
-            IFilePathInput pathInput,
-            ILog log)
-        {
-            this.service = service;
-            this.serializer = serializer;
-            this.pathInput = pathInput;
-            this.rangeBuilder = rangeBuilder;
-            this.log = log;
-        }
 
         public bool CanBeExecuted()
         {
@@ -57,7 +49,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 var range = serializer.DeserializeFromFile(path).ToList();
                 var vertices = range
                     .Select((x, i) => (Order: i, Id: graph.Graph.Get(x)))
-                    .ToArray();
+                    .ToReadOnly();
                 service.AddRange(vertices, graph.Id);
                 rangeBuilder.Undo();
                 rangeBuilder.Include(range, graph.Graph);

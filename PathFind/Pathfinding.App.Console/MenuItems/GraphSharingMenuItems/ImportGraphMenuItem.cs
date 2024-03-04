@@ -29,9 +29,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 
         protected ImportGraphMenuItem(IMessenger messenger,
             IInput<TPath> input,
-            IService service,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
-            ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer, ILog log)
+            ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer, 
+            ILog log,
+            IService service)
         {
             this.service = service;
             this.rangeBuilder = rangeBuilder;
@@ -50,8 +51,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 var ids = service.GetAllGraphInfo().Select(x => x.Id).ToReadOnly();
                 if (ids.Count == 0 && imported.Count > 0)
                 {
-                    var history = service.AddPathfindingHistory(imported[0].Enumerate())
-                        .First();
+                    var import = imported[0].Enumerate();
+                    var history = service.AddPathfindingHistory(import).First();
                     var graph = history.Graph;
                     var costRange = graph.First().Cost.CostRange;
                     var costMsg = new CostRangeChangedMessage(costRange);

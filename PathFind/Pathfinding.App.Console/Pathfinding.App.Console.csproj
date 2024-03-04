@@ -129,6 +129,7 @@
     <Compile Include="DAL\Repositories\LiteDbRepositories\LiteDbSubAlgorithmRepository.cs" />
     <Compile Include="DAL\Repositories\LiteDbRepositories\LiteDbVerticesRepository.cs" />
     <Compile Include="DAL\Interface\IService.cs" />
+    <Compile Include="DAL\Services\WithoutDbService.cs" />
     <Compile Include="DAL\Services\Service.cs" />
     <Compile Include="DAL\Interface\IUnitOfWorkFactory.cs" />
     <Compile Include="DAL\Interface\IUnitOfWork.cs" />
@@ -144,7 +145,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Interface\INeighbourhoodCommand.cs" />
     <Compile Include="Interface\IVisualizationUnit.cs" />
-    <Compile Include="MenuItems\GraphMenuItems\SmoothLayerMenuItem.cs" />
+    <Compile Include="MenuItems\GraphMenuItems\EnterSmoothLevelMenuItem.cs" />
     <Compile Include="Messaging\IToken.cs" />
     <Compile Include="Interface\IVisualizedVertices.cs" />
     <Compile Include="MenuItems\GraphSharingMenuItems\LoadOnlyGraphMenuItem.cs" />

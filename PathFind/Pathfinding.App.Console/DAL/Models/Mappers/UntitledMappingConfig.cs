@@ -14,9 +14,13 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
     {
         public UntitledMappingConfig(
             ISerializer<IEnumerable<CoordinateDto>> coordinateSerializer,
-            ISerializer<IEnumerable<int>> arraySerializer,
+            ISerializer<IEnumerable<int>> intArraySerializer,
             ISerializer<IEnumerable<VisitedVerticesDto>> visitedVerticesSerializer)
         {
+            CreateMap<byte[], IReadOnlyCollection<int>>()
+                .ConvertUsing(x => intArraySerializer.DeserializeFromBytes(x).ToReadOnly());
+            CreateMap<IReadOnlyCollection<int>, byte[]>().
+                ConvertUsing(x => intArraySerializer.SerializeToBytes(x));
             CreateMap<byte[], IReadOnlyCollection<ICoordinate>>()
                 .ConvertUsing((x, y, context) => context.Mapper.Map<ICoordinate[]>(coordinateSerializer.DeserializeFromBytes(x)).ToReadOnly());
             CreateMap<IReadOnlyCollection<ICoordinate>, byte[]>()

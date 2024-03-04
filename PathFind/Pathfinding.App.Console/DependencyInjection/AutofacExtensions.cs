@@ -6,9 +6,12 @@ using Autofac.Features.Metadata;
 using AutoMapper;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.DAL.Models.Mappers;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
+using Pathfinding.GraphLib.Serialization.Core.Interface;
+using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers;
 using Pathfinding.VisualizationLib.Core.Interface;
 using Shared.Extensions;
 using System;
@@ -51,6 +54,32 @@ namespace Pathfinding.App.Console.DependencyInjection
             return context.Resolve<IEnumerable<Meta<TValue>>>()
                 .ToDictionary(action => (TKey)action.Metadata[key], action => action.Value)
                 .AsReadOnly();
+        }
+
+        public static void RegisterMapper(this ContainerBuilder builder)
+        {
+            builder.RegisterType<JsonSerializer<IEnumerable<VisitedVerticesDto>>>()
+                    .As<ISerializer<IEnumerable<VisitedVerticesDto>>>().SingleInstance();
+            builder.RegisterType<JsonSerializer<IEnumerable<CoordinateDto>>>()
+                .As<ISerializer<IEnumerable<CoordinateDto>>>().SingleInstance();
+            builder.RegisterType<JsonSerializer<IEnumerable<int>>>()
+                .As<ISerializer<IEnumerable<int>>>().SingleInstance();
+
+            builder.RegisterType<AlgorithmRunMappingProfile>().As<Profile>().SingleInstance();
+            builder.RegisterType<GraphMappingProfile<Vertex>>().As<Profile>().SingleInstance();
+            builder.RegisterType<VerticesMappingProfile<Vertex>>().As<Profile>().SingleInstance();
+            builder.RegisterType<GraphStateMappingProfile>().As<Profile>().SingleInstance();
+            builder.RegisterType<HistoryMappingProfile>().As<Profile>().SingleInstance();
+            builder.RegisterType<StatisticsMappingProfile>().As<Profile>().SingleInstance();
+            builder.RegisterType<SubAlgorithmsMappingProfile>().As<Profile>().SingleInstance();
+            builder.RegisterType<UntitledMappingConfig>().As<Profile>().SingleInstance();
+
+            builder.Register(ctx =>
+            {
+                var profiles = ctx.Resolve<IEnumerable<Profile>>();
+                var config = new MapperConfiguration(c => c.AddProfiles(profiles));
+                return config.CreateMapper(ctx.Resolve);
+            }).As<IMapper>().SingleInstance();
         }
 
         public static IReadOnlyDictionary<TKey, TValue> ResolveWithMetadataKeyed<TKey, TValue>(this IComponentContext context, string key)

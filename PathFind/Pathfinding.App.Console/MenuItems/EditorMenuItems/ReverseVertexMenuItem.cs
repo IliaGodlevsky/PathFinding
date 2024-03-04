@@ -12,13 +12,9 @@ using System.Threading.Tasks;
 namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
 {
     [HighPriority]
-    internal sealed class ReverseVertexMenuItem : NavigateThroughVerticesMenuItem
+    internal sealed class ReverseVertexMenuItem(IInput<ConsoleKey> keyInput, 
+        IService service) : NavigateThroughVerticesMenuItem(keyInput, service)
     {
-        public ReverseVertexMenuItem(IInput<ConsoleKey> keyInput, IService service)
-            : base(keyInput, service)
-        {
-        }
-
         public override async void Execute()
         {
             base.Execute();

@@ -45,8 +45,6 @@ namespace Pathfinding.App.Console.DAL.Interface
 
         GraphReadDto AddGraph(IGraph<Vertex> graph);
 
-        AlgorithmRunReadDto AddAlgorithm(AlgorithmRunCreateDto algorithm);
-
         void AddRunHistory(params AlgorithmRunHistoryCreateDto[] histories);
 
         bool AddNeighbors(IReadOnlyDictionary<Vertex, IReadOnlyCollection<Vertex>> neighborhoods);

@@ -14,7 +14,7 @@ using System.Linq;
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     [MediumPriority]
-    internal sealed class SmoothLayerMenuItem(IInput<int> input, 
+    internal sealed class EnterSmoothLevelMenuItem(IInput<int> input, 
         IMessenger messenger, IMeanCost meanCost) : IMenuItem
     {
         private static readonly InclusiveValueRange<int> SmoothLevelRange = new(1, 4);

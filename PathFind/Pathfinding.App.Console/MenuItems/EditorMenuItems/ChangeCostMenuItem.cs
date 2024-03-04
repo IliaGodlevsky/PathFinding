@@ -11,14 +11,9 @@ using System.Threading.Tasks;
 namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
 {
     [LowPriority]
-    internal sealed class ChangeCostMenuItem : NavigateThroughVerticesMenuItem
+    internal sealed class ChangeCostMenuItem(IInput<ConsoleKey> keyInput,
+        IService service) : NavigateThroughVerticesMenuItem(keyInput, service)
     {
-        public ChangeCostMenuItem(IInput<ConsoleKey> keyInput,
-            IService service)
-            : base(keyInput, service)
-        {
-        }
-
         public async override void Execute()
         {
             base.Execute();

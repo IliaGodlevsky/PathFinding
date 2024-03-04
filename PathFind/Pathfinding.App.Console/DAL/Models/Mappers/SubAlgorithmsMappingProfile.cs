@@ -5,7 +5,6 @@ using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
 using Pathfinding.App.Console.DAL.Models.TransferObjects.Serialization;
 using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Shared.Extensions;
 using System.Collections.Generic;
 
@@ -13,7 +12,7 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
 {
     internal sealed class SubAlgorithmsMappingProfile : Profile
     {
-        public SubAlgorithmsMappingProfile(ISerializer<IEnumerable<VisitedVerticesDto>> visitedVerticesSerializer) 
+        public SubAlgorithmsMappingProfile() 
         {
             CreateMap<SubAlgorithmCreateDto, SubAlgorithmReadDto>();
             CreateMap<SubAlgorithmReadDto, SubAlgorithmCreateDto>();
@@ -23,11 +22,11 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
             CreateMap<SubAlgorithmReadDto, SubAlgorithmSerializationDto>();
             CreateMap<SubAlgorithmSerializationDto, SubAlgorithmCreateDto>();
 
-            CreateMap<(ICoordinate, IReadOnlyList<ICoordinate>), VisitedVerticesDto>()
+            CreateMap<(ICoordinate Visited, IReadOnlyList<ICoordinate> Enqueued), VisitedVerticesDto>()
                 .ConvertUsing((x, y, context) => new VisitedVerticesDto()
                 {
-                    Current = context.Mapper.Map<CoordinateDto>(x.Item1),
-                    Enqueued = context.Mapper.Map<CoordinateDto[]>(x.Item2)
+                    Current = context.Mapper.Map<CoordinateDto>(x.Visited),
+                    Enqueued = context.Mapper.Map<CoordinateDto[]>(x.Enqueued)
                 });
             CreateMap<VisitedVerticesDto, (ICoordinate, IReadOnlyList<ICoordinate>)>()
                 .ConvertUsing((x, y, context)

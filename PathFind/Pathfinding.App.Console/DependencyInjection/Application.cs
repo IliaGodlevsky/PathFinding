@@ -1,27 +1,28 @@
 ﻿using Autofac;
-using AutoMapper.Internal;
 using Pathfinding.App.Console.MenuItems;
 using System;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.DependencyInjection.Registrations
 {
     internal sealed partial class Application : IDisposable
     {
-        private readonly ContainerBuilder builder = new();
-        private readonly Lazy<ILifetimeScope> scope;
+        private readonly ContainerBuilder builder;
+        private readonly Lazy<IContainer> scope;
 
-        private ILifetimeScope Scope => scope.Value;
+        private IContainer Scope => scope.Value;
 
         public Application(string title = Constants.Title)
         {
             Terminal.Title = title;
-            scope = new(() => builder.Build());
+            builder = new ContainerBuilder();
+            scope = new(() => BuildApplication(builder));
         }
 
         public void ApplyComponents()
         {
-            Components.ForAll(x => x.Apply(builder));
+            Parallel.ForEach(Components, x => x.Apply(builder));
         }
 
         public void Run(Encoding outputEncoding)

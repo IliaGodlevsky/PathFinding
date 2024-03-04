@@ -24,9 +24,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 
         protected ExportGraphMenuItem(IInput<TPath> input,
             IInput<int> intInput,
-            IService service,
             ISerializer<IEnumerable<PathfindingHistorySerializationDto>> graphSerializer,
-            ILog log)
+            ILog log,
+            IService service)
         {
             this.input = input;
             this.intInput = intInput;

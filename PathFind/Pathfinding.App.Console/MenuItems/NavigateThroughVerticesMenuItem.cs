@@ -40,7 +40,7 @@ namespace Pathfinding.App.Console.MenuItems
         {
             this.keyInput = keyInput;
             this.service = service;
-            this.actions = new(GetActions);
+            actions = new(GetActions);
         }
 
         public virtual bool CanBeExecuted()

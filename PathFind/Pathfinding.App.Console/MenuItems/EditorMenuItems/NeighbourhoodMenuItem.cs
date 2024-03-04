@@ -17,17 +17,12 @@ using System.Threading.Tasks;
 namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
 {
     [MediumPriority]
-    internal sealed class NeighbourhoodMenuItem : NavigateThroughVerticesMenuItem
+    internal sealed class NeighbourhoodMenuItem(IInput<ConsoleKey> keyInput, 
+        IService service) : NavigateThroughVerticesMenuItem(keyInput, service)
     {
-        public NeighbourhoodMenuItem(IInput<ConsoleKey> keyInput, IService service)
-            : base(keyInput, service)
-        {
-
-        }
-
         public async override void Execute()
         {
-            HashSet<ICoordinate> GetNeighbors(Vertex vertex)
+            static HashSet<ICoordinate> GetNeighbors(Vertex vertex)
             {
                 return vertex.Neighbours.GetCoordinates().ToHashSet();
             }
@@ -49,7 +44,6 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
                 addedNeighbors.Add(vertex, added.ToReadOnly());
                 removedNeighbors.Add(vertex, removed.ToReadOnly());
             }
-
             await Task.Run(() =>
             {
                 service.AddNeighbors(addedNeighbors);

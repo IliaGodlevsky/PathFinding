@@ -5,8 +5,8 @@ namespace Pathfinding.App.Console.DAL
 {
     internal static class AlgorithmNames
     {
-        public static readonly IReadOnlyCollection<string> Algorithms =
-            new List<string>() { Dijkstra, AStar, IDAStar, Random, Lee, AStarLee, Depth, Cost };
+        public static readonly IReadOnlyCollection<string> Algorithms = new List<string>() 
+        { Dijkstra, AStar, IDAStar, Random, Lee, AStarLee, Depth, Cost };
 
         public const string Dijkstra = nameof(Languages.DijkstraAlgorithm);
         public const string AStar = nameof(Languages.AStarAlgorithm);

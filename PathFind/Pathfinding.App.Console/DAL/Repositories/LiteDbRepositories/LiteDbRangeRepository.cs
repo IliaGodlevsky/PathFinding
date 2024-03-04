@@ -11,12 +11,6 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
     {
         private readonly ILiteCollection<RangeEntity> collection = db.GetCollection<RangeEntity>(DbTables.Ranges);
 
-        public RangeEntity Insert(RangeEntity entity)
-        {
-            collection.Insert(entity);
-            return entity;
-        }
-
         public IEnumerable<RangeEntity> Insert(IEnumerable<RangeEntity> entities)
         {
             collection.Insert(entities);
@@ -41,11 +35,6 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
                 .Where(x => x.GraphId == graphId)
                 .OrderBy(x => x.Order)
                 .ToEnumerable();
-        }
-
-        public bool Update(RangeEntity entity)
-        {
-            return collection.Update(entity);
         }
 
         public bool Update(IEnumerable<RangeEntity> entities)

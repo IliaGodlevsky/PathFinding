@@ -65,11 +65,6 @@ namespace Pathfinding.App.Console.Units
             graph.Graph.Get(e.Current).VisualizeAsVisited();
         }
 
-        private void OnSubPathFound(object sender, SubPathFoundEventArgs e)
-        {
-            e.SubPath.Select(graph.Graph.Get).Reverse().VisualizeAsPath();
-        }
-
         private void OnVertexEnqueued(object sender, VerticesEnqueuedEventArgs e)
         {
             foreach (var coordinate in e.Enqueued)
@@ -98,7 +93,6 @@ namespace Pathfinding.App.Console.Units
             algorithm.VertexEnqueued += OnVertexEnqueued;
             algorithm.Started += OnAlgorithmStarted;
             algorithm.Finished += OnAlgorithmFinished;
-            algorithm.SubPathFound += OnSubPathFound;
         }
 
         private void OnConsoleKeyPressed(object sender, ConsoleKeyPressedEventArgs e)

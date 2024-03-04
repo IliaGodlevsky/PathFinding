@@ -14,23 +14,15 @@ using System.Linq;
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     [LowPriority]
-    internal sealed class ChooseGraphMenuItem : IConditionedMenuItem
+    internal sealed class ChooseGraphMenuItem(IMessenger messenger,
+        IPathfindingRangeBuilder<Vertex> builder,
+        IInput<int> input,
+        IService service) : IConditionedMenuItem
     {
-        private readonly IMessenger messenger;
-        private readonly IInput<int> input;
-        private readonly IService service;
-        private readonly IPathfindingRangeBuilder<Vertex> builder;
-
-        public ChooseGraphMenuItem(IMessenger messenger,
-            IPathfindingRangeBuilder<Vertex> builder,
-            IInput<int> input,
-            IService service)
-        {
-            this.messenger = messenger;
-            this.input = input;
-            this.service = service;
-            this.builder = builder;
-        }
+        private readonly IMessenger messenger = messenger;
+        private readonly IInput<int> input = input;
+        private readonly IService service = service;
+        private readonly IPathfindingRangeBuilder<Vertex> builder = builder;
 
         public bool CanBeExecuted()
         {

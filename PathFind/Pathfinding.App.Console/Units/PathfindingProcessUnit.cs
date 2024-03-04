@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Core.Abstractions;
+using Pathfinding.AlgorithmLib.Core.Events;
 using Pathfinding.AlgorithmLib.Core.Exceptions;
 using Pathfinding.AlgorithmLib.Core.NullObjects;
 using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
@@ -16,6 +17,7 @@ using Pathfinding.Visualization.Extensions;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.App.Console.Units
 {
@@ -81,9 +83,15 @@ namespace Pathfinding.App.Console.Units
             graph = msg.Graph;
         }
 
+        private void OnSubPathFound(object sender, SubPathFoundEventArgs e)
+        {
+            e.SubPath.Select(graph.Graph.Get).Reverse().VisualizeAsPath();
+        }
+
         private void PrepareForPathfinding(PathfindingProcess algorithm,
             RunStatisticsDto statistics)
         {
+            algorithm.SubPathFound += OnSubPathFound;
             var lineMsg = new StatisticsLineMessage(statistics.Name);
             messenger.Send(lineMsg, Tokens.AppLayout);
             var algorithmMsg = new AlgorithmMessage(algorithm);

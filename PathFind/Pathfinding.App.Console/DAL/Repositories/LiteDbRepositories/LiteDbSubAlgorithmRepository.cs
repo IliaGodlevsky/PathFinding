@@ -12,7 +12,10 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 
         public IEnumerable<SubAlgorithmEntity> GetByAlgorithmRunId(int runId)
         {
-            return collection.Find(x => x.AlgorithmRunId == runId);
+            return collection.Query()
+                .Where(x => x.AlgorithmRunId == runId)
+                .OrderBy(x => x.Order)
+                .ToEnumerable();
         }
 
         public IEnumerable<SubAlgorithmEntity> Insert(IEnumerable<SubAlgorithmEntity> entities)

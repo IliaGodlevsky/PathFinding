@@ -15,27 +15,19 @@ using System.Threading.Tasks;
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     [LowPriority]
-    internal sealed class DeleteGraphMenuItem : IConditionedMenuItem, ICanRecieveMessage
+    internal sealed class DeleteGraphMenuItem(IInput<int> input,
+        IMessenger messenger,
+        IService service) : IConditionedMenuItem, ICanRecieveMessage
     {
-        private readonly IService service;
-        private readonly IMessenger messenger;
-        private readonly IInput<int> input;
+        private readonly IService service = service;
+        private readonly IMessenger messenger = messenger;
+        private readonly IInput<int> input = input;
 
         private GraphReadDto graph = GraphReadDto.Empty;
 
-        public DeleteGraphMenuItem(IInput<int> input,
-            IService service,
-            IMessenger messenger)
-        {
-            this.service = service;
-            this.messenger = messenger;
-            this.input = input;
-        }
-
         public bool CanBeExecuted()
         {
-            return service.GetAllGraphInfo()
-                .Where(x => x.Id != graph.Id).Any();
+            return service.GetAllGraphInfo().Where(x => x.Id != graph.Id).Any();
         }
 
         public async void Execute()

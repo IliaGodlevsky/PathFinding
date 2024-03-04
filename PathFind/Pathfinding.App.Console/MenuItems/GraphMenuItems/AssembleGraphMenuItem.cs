@@ -9,17 +9,12 @@ using Shared.Random;
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     [HighestPriority]
-    internal sealed class AssembleGraphMenuItem : GraphCreatingMenuItem
+    internal sealed class AssembleGraphMenuItem(IMessenger messenger,
+        IGraphAssemble<Vertex> assemble,
+        IRandom random,
+        IService service) 
+        : GraphCreatingMenuItem(messenger, assemble, random, service)
     {
-        public AssembleGraphMenuItem(IMessenger messenger,
-            IGraphAssemble<Vertex> assemble,
-            IRandom random,
-            IService service)
-            : base(messenger, assemble, random, service)
-        {
-
-        }
-
         public override string ToString()
         {
             return Languages.AssembleGraph;

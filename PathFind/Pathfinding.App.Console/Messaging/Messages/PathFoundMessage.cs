@@ -2,13 +2,8 @@
 
 namespace Pathfinding.App.Console.Messaging.Messages
 {
-    internal sealed class PathFoundMessage
+    internal sealed class PathFoundMessage(IGraphPath path)
     {
-        public PathFoundMessage(IGraphPath path)
-        {
-            Path = path;
-        }
-
-        public IGraphPath Path { get; }
+        public IGraphPath Path { get; } = path;
     }
 }

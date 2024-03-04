@@ -16,26 +16,17 @@ using System.Linq;
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 {
     [LowPriority]
-    internal sealed class LoadGraphOnlyMenuItem : IMenuItem
+    internal sealed class LoadGraphOnlyMenuItem(IMessenger messenger,
+        IFilePathInput input,
+        ISerializer<GraphSerializationDto> serializer,
+        ILog log,
+        IService service) : IMenuItem
     {
-        private readonly IMessenger messenger;
-        private readonly IInput<string> input;
-        private readonly ISerializer<GraphSerializationDto> serializer;
-        private readonly IService service;
-        private readonly ILog log;
-
-        public LoadGraphOnlyMenuItem(IMessenger messenger,
-            IFilePathInput input,
-            IService service,
-            ISerializer<GraphSerializationDto> serializer,
-            ILog log)
-        {
-            this.service = service;
-            this.serializer = serializer;
-            this.messenger = messenger;
-            this.input = input;
-            this.log = log;
-        }
+        private readonly IMessenger messenger = messenger;
+        private readonly IInput<string> input = input;
+        private readonly ISerializer<GraphSerializationDto> serializer = serializer;
+        private readonly IService service = service;
+        private readonly ILog log = log;
 
         public void Execute()
         {

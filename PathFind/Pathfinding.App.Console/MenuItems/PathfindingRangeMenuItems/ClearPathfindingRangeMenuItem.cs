@@ -13,19 +13,14 @@ using Pathfinding.GraphLib.Core.Modules.Interface;
 namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
 {
     [HighPriority]
-    internal sealed class ClearPathfindingRangeMenuItem : IConditionedMenuItem, ICanRecieveMessage
+    internal sealed class ClearPathfindingRangeMenuItem(IService storage,
+        IPathfindingRangeBuilder<Vertex> rangeBuilder) 
+        : IConditionedMenuItem, ICanRecieveMessage
     {
-        private readonly IService storage;
-        private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
+        private readonly IService storage = storage;
+        private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder = rangeBuilder;
 
         private int Id { get; set; }
-
-        public ClearPathfindingRangeMenuItem(IService storage,
-            IPathfindingRangeBuilder<Vertex> rangeBuilder)
-        {
-            this.storage = storage;
-            this.rangeBuilder = rangeBuilder;
-        }
 
         public bool CanBeExecuted()
         {

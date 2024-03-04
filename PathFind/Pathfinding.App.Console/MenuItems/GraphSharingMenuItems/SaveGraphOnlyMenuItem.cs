@@ -15,30 +15,21 @@ using System.Linq;
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 {
     [LowPriority]
-    internal sealed class SaveGraphOnlyMenuItem : IConditionedMenuItem
+    internal sealed class SaveGraphOnlyMenuItem(IFilePathInput input,
+        IInput<int> intInput,
+        ISerializer<GraphSerializationDto> serializer,
+        ILog log,
+        IService service) : IConditionedMenuItem
     {
-        private readonly IInput<string> stringInput;
-        private readonly IInput<int> intInput;
-        private readonly IService service;
-        private readonly ISerializer<GraphSerializationDto> serializer;
-        private readonly ILog log;
-
-        public SaveGraphOnlyMenuItem(IFilePathInput input,
-            IInput<int> intInput,
-            IService service,
-            ISerializer<GraphSerializationDto> serializer,
-            ILog log)
-        {
-            this.stringInput = input;
-            this.intInput = intInput;
-            this.service = service;
-            this.serializer = serializer;
-            this.log = log;
-        }
+        private readonly IInput<string> stringInput = input;
+        private readonly IInput<int> intInput = intInput;
+        private readonly IService service = service;
+        private readonly ISerializer<GraphSerializationDto> serializer = serializer;
+        private readonly ILog log = log;
 
         public bool CanBeExecuted()
         {
-            return service.GetGraphCount() > 0;
+            return service is not null && service.GetGraphCount() > 0;
         }
 
         public async void Execute()
@@ -84,13 +75,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 .Append(Languages.Quit)
                 .CreateMenuList(1)
                 .ToString();
-        }
-
-        private string GetString(int width, int length, int obstacles)
-        {
-            int count = width * length;
-            int obstaclePercent = obstacles / count;
-            return $"Width: {width} Length: {length} Obstacle percent: {obstaclePercent}({obstacles}/{count})";
         }
 
         public override string ToString()

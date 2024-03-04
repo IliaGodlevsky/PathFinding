@@ -2,7 +2,6 @@
 using Pathfinding.App.Console.DAL.Models.Entities;
 using Pathfinding.App.Console.DAL.Models.TransferObjects.Serialization;
 using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
-using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.Realizations;
@@ -26,7 +25,7 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
                 .ConvertUsing(x => new VertexCost(x.Cost, new(x.UpperValueOfRange, x.LowerValueOfRange)));
             CreateMap<VertexAssembleDto, T>()
                 .ConstructUsing(x => vertexFactory.CreateVertex(x.Coordinate));
-            CreateMap<Vertex, VertexEntity>()
+            CreateMap<T, VertexEntity>()
                 .ForMember(x => x.X, opt => opt.MapFrom(x => x.Position.GetX()))
                 .ForMember(x => x.Y, opt => opt.MapFrom(x => x.Position.GetY()))
                 .ForMember(x => x.UpperValueRange, opt => opt.MapFrom(x => x.Cost.CostRange.UpperValueOfRange))

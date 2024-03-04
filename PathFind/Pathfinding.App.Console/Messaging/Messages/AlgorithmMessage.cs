@@ -2,13 +2,8 @@
 
 namespace Pathfinding.App.Console.Messaging.Messages
 {
-    internal sealed class AlgorithmMessage
+    internal sealed class AlgorithmMessage(PathfindingProcess algorithm)
     {
-        public PathfindingProcess Algorithm { get; }
-
-        public AlgorithmMessage(PathfindingProcess algorithm)
-        {
-            Algorithm = algorithm;
-        }
+        public PathfindingProcess Algorithm { get; } = algorithm;
     }
 }

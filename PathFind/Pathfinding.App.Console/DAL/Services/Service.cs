@@ -16,26 +16,10 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.DAL.Services
 {
-    internal sealed class Service : IService
+    internal sealed class Service(IMapper mapper, IUnitOfWorkFactory factory = null) : IService
     {
-        private readonly IMapper mapper;
-        private readonly IUnitOfWorkFactory factory;
-
-        public Service(IMapper mapper, IUnitOfWorkFactory factory = null)
-        {
-            this.mapper = mapper;
-            this.factory = factory ?? new LiteDbInMemoryUnitOfWorkFactory();
-        }
-
-        public AlgorithmRunReadDto AddAlgorithm(AlgorithmRunCreateDto run)
-        {
-            return Transaction(unit =>
-            {
-                var entity = mapper.Map<AlgorithmRunEntity>(run);
-                unit.RunRepository.Insert(entity);
-                return mapper.Map<AlgorithmRunReadDto>(entity);
-            });
-        }
+        private readonly IMapper mapper = mapper;
+        private readonly IUnitOfWorkFactory factory = factory ?? new LiteDbInMemoryUnitOfWorkFactory();
 
         public GraphReadDto AddGraph(IGraph<Vertex> dto)
         {
@@ -84,8 +68,7 @@ namespace Pathfinding.App.Console.DAL.Services
 
         public IReadOnlyCollection<int> GetGraphIds()
         {
-            return Transaction(unitOfWork => unitOfWork.GraphRepository
-                                .GetAll().Select(x => x.Id).ToReadOnly());
+            return Transaction(unitOfWork => unitOfWork.GraphRepository.GetAll().Select(x => x.Id).ToReadOnly());
         }
 
         public IReadOnlyCollection<AlgorithmRunHistoryReadDto> GetGraphPathfindingHistory(int graphId)
@@ -266,7 +249,7 @@ namespace Pathfinding.App.Console.DAL.Services
 
         public int GetRunCount(int graphId)
         {
-            return Transaction<int>(unit => unit.RunRepository.GetCount(graphId));
+            return Transaction(unit => unit.RunRepository.GetCount(graphId));
         }
 
         public int GetGraphCount()

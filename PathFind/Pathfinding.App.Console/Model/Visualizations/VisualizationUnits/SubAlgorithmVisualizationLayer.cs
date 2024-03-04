@@ -5,6 +5,7 @@ using Pathfinding.Visualization.Extensions;
 using Shared.Extensions;
 using Shared.Primitives;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -35,20 +36,16 @@ namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
             {
                 hook.KeyPressed += OnKeyPressed;
                 Task.Run(hook.Start);
-                var subAlgorithms = algorithm.Algorithms.OrderBy(x => x.Order);
-                foreach (var subAlgorithm in subAlgorithms)
+                foreach (var subAlgorithm in algorithm.Algorithms)
                 {
                     foreach (var vertex in subAlgorithm.Visited)
                     {
                         Speed?.Wait();
                         var current = (Vertex)graph.Get(vertex.Visited);
                         current.VisualizeAsVisited();
-                        vertex.Enqueued.Select(graph.Get)
-                            .OfType<Vertex>()
-                            .ForEach(x => x.VisualizeAsEnqueued());
+                        VisualizeAsEnqueued(vertex.Enqueued, graph);
                     }
-                    subAlgorithm.Path.Select(graph.Get)
-                        .OfType<Vertex>().VisualizeAsPath();
+                    VisualizeAsPath(subAlgorithm.Path, graph);
                 }
             }
         }
@@ -67,6 +64,19 @@ namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
                     Loose();
                     break;
             }
+        }
+
+        private static void VisualizeAsPath(IEnumerable<ICoordinate> vertices,
+            IGraph<IVertex> graph)
+        {
+            vertices.Select(graph.Get).OfType<Vertex>().VisualizeAsPath();
+        }
+
+        private static void VisualizeAsEnqueued(IEnumerable<ICoordinate> vertices,
+            IGraph<IVertex> graph)
+        {
+            vertices.Select(graph.Get)
+                .OfType<Vertex>().ForEach(x => x.VisualizeAsEnqueued());
         }
     }
 }

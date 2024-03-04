@@ -8,16 +8,10 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.Views
 {
-    internal sealed class View : IDisplayable
+    internal sealed class View(IUnit model, IInput<int> input) : IDisplayable
     {
-        private readonly IUnit unit;
-        private readonly IInput<int> intInput;
-
-        public View(IUnit model, IInput<int> input)
-        {
-            this.intInput = input;
-            this.unit = model;
-        }
+        private readonly IUnit unit = model;
+        private readonly IInput<int> intInput = input;
 
         public void Display()
         {
