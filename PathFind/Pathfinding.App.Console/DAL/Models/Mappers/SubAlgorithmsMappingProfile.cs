@@ -20,6 +20,7 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
             CreateMap<SubAlgorithmEntity, SubAlgorithmReadDto>();
             CreateMap<SubAlgorithmCreateDto, SubAlgorithmEntity>();
             CreateMap<SubAlgorithmReadDto, SubAlgorithmSerializationDto>();
+            CreateMap<SubAlgorithmSerializationDto, SubAlgorithmReadDto>();
             CreateMap<SubAlgorithmSerializationDto, SubAlgorithmCreateDto>();
 
             CreateMap<(ICoordinate Visited, IReadOnlyList<ICoordinate> Enqueued), VisitedVerticesDto>()

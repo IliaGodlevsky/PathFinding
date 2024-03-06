@@ -9,6 +9,7 @@ using Pathfinding.GraphLib.Factory.Interface;
 using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 
 namespace Pathfinding.App.Console.DAL.Models.Mappers
 {
@@ -45,7 +46,7 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
         private IEnumerable<T> ToVertices(IEnumerable<VertexSerializationDto> dtos,
             ResolutionContext context)
         {
-            var vertices = context.Mapper.Map<T[]>(dtos)
+            var vertices = dtos.Select(x => context.Mapper.Map<T>(x))
                 .ToDictionary(x => x.Position);
             foreach (var dto in dtos)
             {

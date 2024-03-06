@@ -21,15 +21,15 @@ namespace Pathfinding.App.Console.DAL.Services
     internal sealed class WithoutDbService(IMapper mapper, 
         IPathfindingRangeBuilder<Vertex> rangeBuilder) : IService
     {
-        private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder = rangeBuilder;
         private readonly IMapper mapper = mapper;
+        private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder = rangeBuilder;
 
+        private List<AlgorithmRunHistoryReadDto> runHistory = new();
         private IGraph<Vertex> current = Graph<Vertex>.Empty;
 
         public GraphReadDto AddGraph(GraphSerializationDto graph)
         {
-            current = mapper.Map<IGraph<Vertex>>(graph);
-            return new() { Graph = current, Id = current.GetHashCode() };
+            return AddGraph(mapper.Map<IGraph<Vertex>>(graph));
         }
 
         public GraphReadDto AddGraph(IGraph<Vertex> graph)
@@ -46,31 +46,26 @@ namespace Pathfinding.App.Console.DAL.Services
         public IReadOnlyCollection<PathfindingHistoryReadDto> AddPathfindingHistory(IEnumerable<PathfindingHistoryCreateDto> histories)
         {
             var history = histories.First();
-            current = history.Graph;
-            var dto = new PathfindingHistoryReadDto
+            current = mapper.Map<IGraph<Vertex>>(history.Graph);
+            runHistory = new(mapper.Map<IEnumerable<AlgorithmRunHistoryReadDto>>(history.Algorithms));
+            for (int i = 0; i < runHistory.Count; i++)
+            {
+                runHistory[i].Statistics.AlgorithmRunId = i;
+                runHistory[i].Statistics.AlgorithmId = runHistory[i].Run.AlgorithmId;
+            }
+            return new PathfindingHistoryReadDto()
             {
                 Id = current.GetHashCode(),
-                Graph = history.Graph,
-                Algorithms = Array.Empty<AlgorithmRunHistoryReadDto>(),
-                Range = history.Range
-            };
-            return new[] { dto };
+                Graph = current,
+                Range = mapper.Map<ICoordinate[]>(history.Range),
+                Algorithms = runHistory
+            }.Enumerate().ToReadOnly();
         }
 
         public IReadOnlyCollection<PathfindingHistoryReadDto> AddPathfindingHistory(IEnumerable<PathfindingHistorySerializationDto> histories)
         {
-            var history = histories.First();
-            current = mapper.Map<IGraph<Vertex>>(history.Graph);
-            return new PathfindingHistoryReadDto[]
-            {
-                new()
-                { 
-                    Id = 0,
-                    Graph = current,
-                    Range = mapper.Map<ICoordinate[]>(history.Range),
-                    Algorithms = Array.Empty<AlgorithmRunHistoryReadDto>()
-                }
-            };
+            var read = mapper.Map<IEnumerable<PathfindingHistoryCreateDto>>(histories);
+            return AddPathfindingHistory(read);
         }
 
         public bool AddRange(IEnumerable<(int Order, Vertex Vertex)> vertices, int graphId)
@@ -80,7 +75,11 @@ namespace Pathfinding.App.Console.DAL.Services
 
         public void AddRunHistory(params AlgorithmRunHistoryCreateDto[] histories)
         {
-            
+            runHistory.AddRange(mapper.Map<IEnumerable<AlgorithmRunHistoryReadDto>>(histories));
+            for (int i = 0; i < runHistory.Count; i++)
+            {
+                runHistory[i].Statistics.AlgorithmRunId = i;
+            }
         }
 
         public bool DeleteGraph(int graphId)
@@ -121,18 +120,13 @@ namespace Pathfinding.App.Console.DAL.Services
             return new[] { 0 };
         }
 
-        public IReadOnlyCollection<AlgorithmRunHistoryReadDto> GetGraphPathfindingHistory(int graphId)
-        {
-            return Array.Empty<AlgorithmRunHistoryReadDto>();
-        }
-
         public PathfindingHistoryReadDto GetPathfindingHistory(int graphId)
         {
             return new()
             { 
                 Id = graphId,
                 Graph = current,
-                Algorithms = Array.Empty<AlgorithmRunHistoryReadDto>(),
+                Algorithms = runHistory,
                 Range = rangeBuilder.Range.GetCoordinates().ToReadOnly()
             };
         }
@@ -144,15 +138,15 @@ namespace Pathfinding.App.Console.DAL.Services
 
         public int GetRunCount(int graphId)
         {
-            return 0;
+            return runHistory.Count;
         }
 
         public RunVisualizationDto GetRunInfo(int runId)
         {
             return new()
             {
-                AlgorithmSpeed = TimeSpan.FromMilliseconds(0),
-                Algorithms = Array.Empty<SubAlgorithmReadDto>(),
+                AlgorithmSpeed = runHistory[runId].Statistics.AlgorithmSpeed,
+                Algorithms = runHistory[runId].SubAlgorithms,
                 GraphState = new()
                 {
                     AlgorithmRunId = runId,
@@ -165,7 +159,7 @@ namespace Pathfinding.App.Console.DAL.Services
 
         public IReadOnlyCollection<RunStatisticsDto> GetRunStatiticsForGraph(int graphId)
         {
-            return Array.Empty<RunStatisticsDto>();
+            return runHistory.Select(x => x.Statistics).ToReadOnly();
         }
 
         public GraphSerializationDto GetSerializationGraph(int graphId)
@@ -178,7 +172,7 @@ namespace Pathfinding.App.Console.DAL.Services
             return new()
             {
                 Graph = mapper.Map<GraphSerializationDto>(current),
-                Algorithms = Array.Empty<AlgorithmRunHistorySerializationDto>(),
+                Algorithms = mapper.Map<AlgorithmRunHistorySerializationDto[]>(runHistory),
                 Range = mapper.Map<CoordinateDto[]>(rangeBuilder.Range.GetCoordinates())
             };
         }

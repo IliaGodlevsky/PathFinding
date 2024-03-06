@@ -2,13 +2,12 @@
 using Pathfinding.App.Console.MenuItems;
 using System;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.DependencyInjection.Registrations
 {
-    internal sealed partial class Application : IDisposable
+    internal sealed class Application : IDisposable
     {
-        private readonly ContainerBuilder builder;
+        private readonly ContainerBuilder builder = new();
         private readonly Lazy<IContainer> scope;
 
         private IContainer Scope => scope.Value;
@@ -16,13 +15,7 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         public Application(string title = Constants.Title)
         {
             Terminal.Title = title;
-            builder = new ContainerBuilder();
-            scope = new(() => BuildApplication(builder));
-        }
-
-        public void ApplyComponents()
-        {
-            Parallel.ForEach(Components, x => x.Apply(builder));
+            scope = new(Build);
         }
 
         public void Run(Encoding outputEncoding)
@@ -36,6 +29,23 @@ namespace Pathfinding.App.Console.DependencyInjection.Registrations
         public void Dispose()
         {
             Scope.Dispose();
+        }
+
+        private IContainer Build()
+        {
+            return builder
+                .AddDataAccessLayer()
+                .AddAlgorithms()
+                .AddTransitVertices()
+                .AddColorsEditor()
+                .AddGraphEditor()
+                .AddKeysEditor()
+                .AddGraphSharing()
+                .AddPathfindingControl()
+                .AddPathfindingHistory()
+                .AddPathfindingStatistics()
+                .AddPathfindingVisualization()
+                .BuildApplication();
         }
     }
 }

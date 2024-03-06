@@ -18,10 +18,11 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
 
             CreateMap<AlgorithmRunReadDto, AlgorithmRunSerializationDto>();
             CreateMap<AlgorithmRunSerializationDto, AlgorithmRunCreateDto>();
+            CreateMap<AlgorithmRunSerializationDto, AlgorithmRunReadDto>();
 
             CreateMap<AlgorithmRunHistoryReadDto, AlgorithmRunHistorySerializationDto>();
             CreateMap<AlgorithmRunHistorySerializationDto, AlgorithmRunHistoryCreateDto>();
-
+            CreateMap<AlgorithmRunHistorySerializationDto, AlgorithmRunHistoryReadDto>();
             CreateMap<AlgorithmRunHistoryReadDto, AlgorithmRunHistoryCreateDto>();
             CreateMap<AlgorithmRunHistoryCreateDto, AlgorithmRunHistoryReadDto>();
         }

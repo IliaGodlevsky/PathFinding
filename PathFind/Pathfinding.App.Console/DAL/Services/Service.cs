@@ -16,7 +16,8 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.DAL.Services
 {
-    internal sealed class Service(IMapper mapper, IUnitOfWorkFactory factory = null) : IService
+    internal sealed class Service(IMapper mapper, 
+        IUnitOfWorkFactory factory = null) : IService
     {
         private readonly IMapper mapper = mapper;
         private readonly IUnitOfWorkFactory factory = factory ?? new LiteDbInMemoryUnitOfWorkFactory();
@@ -69,11 +70,6 @@ namespace Pathfinding.App.Console.DAL.Services
         public IReadOnlyCollection<int> GetGraphIds()
         {
             return Transaction(unitOfWork => unitOfWork.GraphRepository.GetAll().Select(x => x.Id).ToReadOnly());
-        }
-
-        public IReadOnlyCollection<AlgorithmRunHistoryReadDto> GetGraphPathfindingHistory(int graphId)
-        {
-            return Transaction(unitOfWork => unitOfWork.GetAlgorithmRuns(graphId, mapper));
         }
 
         public IReadOnlyCollection<ICoordinate> GetRange(int graphId)

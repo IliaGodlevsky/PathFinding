@@ -15,7 +15,6 @@ internal class Program
     {
         using (var app = new Application())
         {
-            app.ApplyComponents();
             app.Run();
         }
     }

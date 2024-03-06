@@ -25,8 +25,6 @@ namespace Pathfinding.App.Console.DAL.Interface
 
         IReadOnlyList<GraphEntity> GetAllGraphInfo();
 
-        IReadOnlyCollection<AlgorithmRunHistoryReadDto> GetGraphPathfindingHistory(int graphId);
-
         PathfindingHistoryReadDto GetPathfindingHistory(int graphId);
 
         IReadOnlyCollection<ICoordinate> GetRange(int graphId);

@@ -139,7 +139,7 @@
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\KeyResolveMiddlware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\CombinedAlgorithmsResolveMiddleware.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\VerticesVisualizationMiddleware.cs" />
-    <Compile Include="DependencyInjection\Registrations\Application.cs" />
+    <Compile Include="DependencyInjection\ContainerBuilderExtensions.cs" />
     <Compile Include="Extensions\EntitiesExtensions.cs" />
     <Compile Include="Extensions\IUnitOfWorkExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
@@ -308,7 +308,6 @@
     <Compile Include="Messaging\Messages\ClearColorsMessage.cs" />
     <Compile Include="Messaging\Messages\ClearHistoryMessage.cs" />
     <Compile Include="Messaging\Messages\GraphChangedMessage.cs" />
-    <Compile Include="DependencyInjection\Registrations\IComponent.cs" />
     <Compile Include="DependencyInjection\Application.cs" />
     <Compile Include="Units\AlgorithmChooseUnit.cs" />
     <Compile Include="Units\ColorsUnit.cs" />

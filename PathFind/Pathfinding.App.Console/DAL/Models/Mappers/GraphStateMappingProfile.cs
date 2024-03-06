@@ -17,6 +17,7 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
             CreateMap<GraphStateEntity, GraphStateReadDto>();
 
             CreateMap<GraphStateReadDto, GraphStateSerializationDto>();
+            CreateMap<GraphStateSerializationDto, GraphStateReadDto>();
             CreateMap<GraphStateSerializationDto, GraphStateCreateDto>();
         }
     }

@@ -56,7 +56,7 @@ namespace Pathfinding.App.Console.DependencyInjection
                 .AsReadOnly();
         }
 
-        public static void RegisterMapper(this ContainerBuilder builder)
+        public static void RegisterAutoMapper(this ContainerBuilder builder)
         {
             builder.RegisterType<JsonSerializer<IEnumerable<VisitedVerticesDto>>>()
                     .As<ISerializer<IEnumerable<VisitedVerticesDto>>>().SingleInstance();
