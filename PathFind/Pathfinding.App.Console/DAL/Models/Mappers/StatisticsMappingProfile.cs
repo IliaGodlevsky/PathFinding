@@ -7,8 +7,8 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
 {
     internal sealed class StatisticsMappingProfile : Profile
     {
-        public StatisticsMappingProfile() 
-        { 
+        public StatisticsMappingProfile()
+        {
             CreateMap<RunStatisticsDto, StatisticsEntity>();
             CreateMap<StatisticsEntity, RunStatisticsDto>();
             CreateMap<RunStatisticsDto, RunStatisticsSerializationDto>();

@@ -2,7 +2,6 @@
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Pathfinding.GraphLib.Core.NullObjects;
-using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 

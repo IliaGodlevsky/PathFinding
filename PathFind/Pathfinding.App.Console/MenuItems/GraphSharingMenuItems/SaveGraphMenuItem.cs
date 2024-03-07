@@ -16,8 +16,8 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
         IInput<int> intInput,
         ISerializer<IEnumerable<PathfindingHistorySerializationDto>> graphSerializer,
         ILog log,
-        IService service) 
-        : ExportGraphMenuItem<string>(input, intInput,  graphSerializer, log, service)
+        IService service)
+        : ExportGraphMenuItem<string>(input, intInput, graphSerializer, log, service)
     {
         public override string ToString() => Languages.SaveGraph;
 

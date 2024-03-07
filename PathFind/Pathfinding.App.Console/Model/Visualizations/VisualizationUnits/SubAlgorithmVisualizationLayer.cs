@@ -18,7 +18,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
 
         private TimeSpan? Speed { get; set; }
 
-        public SubAlgorithmVisualizationLayer(RunVisualizationDto algorithm) 
+        public SubAlgorithmVisualizationLayer(RunVisualizationDto algorithm)
             : base(algorithm)
         {
             initSpeed = algorithm.AlgorithmSpeed;

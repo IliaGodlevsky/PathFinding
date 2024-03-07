@@ -12,7 +12,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     internal sealed class AssembleGraphMenuItem(IMessenger messenger,
         IGraphAssemble<Vertex> assemble,
         IRandom random,
-        IService service) 
+        IService service)
         : GraphCreatingMenuItem(messenger, assemble, random, service)
     {
         public override string ToString()

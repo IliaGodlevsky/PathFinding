@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Pathfinding.AlgorithmLib.History;
 using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
 using Pathfinding.App.Console.DAL.Models.TransferObjects.Create;
@@ -16,7 +15,7 @@ namespace Pathfinding.App.Console.Extensions
 {
     internal static class IUnitOfWorkExtensions
     {
-        public static void AddHistory(this IUnitOfWork unitOfWork, IMapper mapper, 
+        public static void AddHistory(this IUnitOfWork unitOfWork, IMapper mapper,
             IEnumerable<AlgorithmRunHistoryCreateDto> algorithms)
         {
             foreach (var runHistory in algorithms)

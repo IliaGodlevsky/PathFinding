@@ -12,8 +12,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
 {
     [LowPriority]
     internal sealed class DepthFirstAlgorithmMenuItem(IReadOnlyDictionary<string, IHeuristic> heuristics,
-        IMessenger messenger, 
-        IInput<int> intInput) 
+        IMessenger messenger,
+        IInput<int> intInput)
         : AlgorithmInputMenuItem(messenger, null, heuristics, intInput)
     {
         protected override string LanguageKey => AlgorithmNames.Depth;

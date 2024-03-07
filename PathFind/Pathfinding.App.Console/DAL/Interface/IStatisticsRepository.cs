@@ -1,5 +1,4 @@
 ﻿using Pathfinding.App.Console.DAL.Models.Entities;
-using System;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DAL.Interface

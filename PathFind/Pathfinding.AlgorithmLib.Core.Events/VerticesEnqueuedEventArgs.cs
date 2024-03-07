@@ -8,7 +8,7 @@ namespace Pathfinding.AlgorithmLib.Core.Events
     {
         public IReadOnlyList<ICoordinate> Enqueued { get; }
 
-        public VerticesEnqueuedEventArgs(IVertex current, IEnumerable<IVertex> enqueued) 
+        public VerticesEnqueuedEventArgs(IVertex current, IEnumerable<IVertex> enqueued)
             : base(current)
         {
             Enqueued = enqueued.Select(x => x.Position)

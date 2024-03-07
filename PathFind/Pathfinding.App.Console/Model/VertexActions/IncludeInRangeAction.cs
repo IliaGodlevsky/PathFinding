@@ -3,14 +3,9 @@ using Pathfinding.GraphLib.Core.Modules.Interface;
 
 namespace Pathfinding.App.Console.Model.VertexActions
 {
-    internal sealed class IncludeInRangeAction : IVertexAction
+    internal sealed class IncludeInRangeAction(IPathfindingRangeBuilder<Vertex> rangeBuilder) : IVertexAction
     {
-        private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
-
-        public IncludeInRangeAction(IPathfindingRangeBuilder<Vertex> rangeBuilder)
-        {
-            this.rangeBuilder = rangeBuilder;
-        }
+        private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder = rangeBuilder;
 
         public void Invoke(Vertex vertex)
         {

@@ -13,8 +13,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
     [LowPriority]
     internal sealed class CostGreedyAlgorithmMenuItem(
         IReadOnlyDictionary<string, IStepRule> stepRules,
-        IMessenger messenger, 
-        IInput<int> intInput) 
+        IMessenger messenger,
+        IInput<int> intInput)
         : AlgorithmInputMenuItem(messenger, stepRules, null, intInput)
     {
         protected override string LanguageKey => AlgorithmNames.Cost;

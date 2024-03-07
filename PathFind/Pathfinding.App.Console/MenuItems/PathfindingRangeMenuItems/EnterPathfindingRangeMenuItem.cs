@@ -14,20 +14,13 @@ using System.Threading.Tasks;
 namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
 {
     [HighestPriority]
-    internal sealed class EnterPathfindingRangeMenuItem : NavigateThroughVerticesMenuItem
+    internal sealed class EnterPathfindingRangeMenuItem(VertexActions actions,
+        IInput<ConsoleKey> keyInput,
+        IPathfindingRangeBuilder<Vertex> builder,
+        IService service) : NavigateThroughVerticesMenuItem(keyInput, service)
     {
-        private readonly IPathfindingRangeBuilder<Vertex> builder;
-        private readonly VertexActions rangeActions;
-
-        public EnterPathfindingRangeMenuItem(VertexActions actions,
-            IInput<ConsoleKey> keyInput,
-            IPathfindingRangeBuilder<Vertex> builder,
-            IService service)
-            : base(keyInput, service)
-        {
-            this.rangeActions = actions;
-            this.builder = builder;
-        }
+        private readonly IPathfindingRangeBuilder<Vertex> builder = builder;
+        private readonly VertexActions rangeActions = actions;
 
         public override bool CanBeExecuted()
         {

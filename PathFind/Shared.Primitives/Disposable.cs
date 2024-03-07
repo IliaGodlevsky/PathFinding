@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 
 namespace Shared.Primitives
 {
@@ -8,7 +6,7 @@ namespace Shared.Primitives
     {
         private readonly Action action;
 
-        public static Disposable Use(Action action) 
+        public static Disposable Use(Action action)
             => new(action ?? throw new ArgumentNullException(nameof(action)));
 
         private Disposable(Action action) => this.action = action;

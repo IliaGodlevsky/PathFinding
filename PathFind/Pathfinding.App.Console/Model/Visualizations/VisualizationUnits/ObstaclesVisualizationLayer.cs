@@ -8,7 +8,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
 {
     internal sealed class ObstaclesVisualizationLayer : VisualizationLayer
     {
-        public ObstaclesVisualizationLayer(RunVisualizationDto algorithm) 
+        public ObstaclesVisualizationLayer(RunVisualizationDto algorithm)
             : base(algorithm)
         {
         }

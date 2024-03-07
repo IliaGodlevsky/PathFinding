@@ -1,7 +1,16 @@
-﻿using Pathfinding.App.Console.Localization;
+﻿global using Terminal = System.Console;
+
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Settings;
 using Shared.Primitives.ValueRange;
 using System;
+using System.ComponentModel;
+
+namespace System.Runtime.CompilerServices
+{
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public record IsExternalInit;
+}
 
 namespace Pathfinding.App.Console
 {

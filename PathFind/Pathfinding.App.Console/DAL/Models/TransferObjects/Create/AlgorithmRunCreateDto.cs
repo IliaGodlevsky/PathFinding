@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Pathfinding.App.Console.DAL.Models.TransferObjects.Create
+﻿namespace Pathfinding.App.Console.DAL.Models.TransferObjects.Create
 {
     internal class AlgorithmRunCreateDto
     {

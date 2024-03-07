@@ -4,12 +4,9 @@ using Pathfinding.Logging.Interface;
 
 namespace Pathfinding.App.Console.MenuItems
 {
-    internal sealed class MainUnitMenuItem : UnitDisplayMenuItem<MainUnit>
+    internal sealed class MainUnitMenuItem(IInput<int> input,
+        MainUnit viewModel, ILog log)
+        : UnitDisplayMenuItem<MainUnit>(input, viewModel, log)
     {
-        public MainUnitMenuItem(IInput<int> input, MainUnit viewModel, ILog log)
-            : base(input, viewModel, log)
-        {
-
-        }
     }
 }

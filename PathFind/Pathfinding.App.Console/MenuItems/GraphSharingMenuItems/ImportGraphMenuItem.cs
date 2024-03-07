@@ -30,7 +30,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
         protected ImportGraphMenuItem(IMessenger messenger,
             IInput<TPath> input,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
-            ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer, 
+            ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer,
             ILog log,
             IService service)
         {

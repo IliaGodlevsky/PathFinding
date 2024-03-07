@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.DAL.Services
 {
-    internal sealed class Service(IMapper mapper, 
+    internal sealed class Service(IMapper mapper,
         IUnitOfWorkFactory factory = null) : IService
     {
         private readonly IMapper mapper = mapper;

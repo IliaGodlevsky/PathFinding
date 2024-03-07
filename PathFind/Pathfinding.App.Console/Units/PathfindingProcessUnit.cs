@@ -10,7 +10,6 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.App.Console.Model.Notes;
 using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Visualization.Extensions;

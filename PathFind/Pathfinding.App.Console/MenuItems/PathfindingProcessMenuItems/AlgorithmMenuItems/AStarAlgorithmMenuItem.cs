@@ -15,7 +15,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
         IReadOnlyDictionary<string, IStepRule> stepRules,
         IReadOnlyDictionary<string, IHeuristic> heuristics,
         IInput<int> input,
-        IMessenger messenger) 
+        IMessenger messenger)
         : AlgorithmInputMenuItem(messenger, stepRules, heuristics, input)
     {
         protected override string LanguageKey { get; } = AlgorithmNames.AStar;

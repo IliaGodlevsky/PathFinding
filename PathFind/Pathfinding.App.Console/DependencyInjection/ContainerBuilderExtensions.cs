@@ -9,6 +9,7 @@ using Pathfinding.App.Console.DAL.Services;
 using Pathfinding.App.Console.DAL.UOF.Factories;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Loggers;
 using Pathfinding.App.Console.MenuItems;
 using Pathfinding.App.Console.MenuItems.ColorMenuItems;
@@ -17,9 +18,14 @@ using Pathfinding.App.Console.MenuItems.GraphMenuItems;
 using Pathfinding.App.Console.MenuItems.GraphSharingMenuItems;
 using Pathfinding.App.Console.MenuItems.KeysMenuItems;
 using Pathfinding.App.Console.MenuItems.MainMenuItems;
+using Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems;
+using Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.AlgorithmMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems;
+using Pathfinding.App.Console.MenuItems.PathfindingStatisticsMenuItems;
+using Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems;
 using Pathfinding.App.Console.Model;
+using Pathfinding.App.Console.Model.InProcessActions;
 using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.App.Console.Model.Visualizations;
 using Pathfinding.App.Console.Model.Visualizations.Containers;
@@ -44,19 +50,13 @@ using Pathfinding.Logging.Interface;
 using Pathfinding.Logging.Loggers;
 using Pathfinding.Visualization.Core.Abstractions;
 using Shared.Executable;
-using Shared.Random.Realizations;
 using Shared.Random;
+using Shared.Random.Realizations;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using static Pathfinding.App.Console.DependencyInjection.PathfindingUnits;
 using static Pathfinding.App.Console.DependencyInjection.RegistrationConstants;
-using Pathfinding.App.Console.Localization;
-using Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.AlgorithmMenuItems;
-using Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems;
-using Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems;
-using Pathfinding.App.Console.Model.InProcessActions;
-using Pathfinding.App.Console.MenuItems.PathfindingStatisticsMenuItems;
 
 namespace Pathfinding.App.Console.DependencyInjection
 {
@@ -75,8 +75,7 @@ namespace Pathfinding.App.Console.DependencyInjection
         public static ContainerBuilder AddGraphSharing(this ContainerBuilder builder)
         {
             builder.RegisterUnit<GraphSharingUnit>();
-            builder.RegisterType<GraphSharingUnitMenuItem>()
-                .Keyed<IMenuItem>(PathfindingUnits.Main).SingleInstance();
+            builder.RegisterType<GraphSharingUnitMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
 
             builder.RegisterType<FilePathInput>().As<IFilePathInput>().SingleInstance();
             builder.RegisterType<AddressInput>().As<IInput<(string, int)>>().SingleInstance();
@@ -99,7 +98,7 @@ namespace Pathfinding.App.Console.DependencyInjection
         {
             builder.RegisterUnit<GraphEditorUnit>();
             builder.RegisterType<EditorKeysMenuItem>().Keyed<IMenuItem>(PathfindingUnits.KeysUnit).SingleInstance();
-            builder.RegisterType<EditorUnitMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main).As<ICanRecieveMessage>().SingleInstance();
+            builder.RegisterType<EditorUnitMenuItem>().Keyed<IMenuItem>(Main).As<ICanRecieveMessage>().SingleInstance();
             builder.RegisterType<ReverseVertexMenuItem>().Keyed<IMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
             builder.RegisterType<NeighbourhoodMenuItem>().Keyed<IMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
             builder.RegisterType<ChangeCostMenuItem>().Keyed<IMenuItem>(Editor).SingleInstance().As<ICanRecieveMessage>();
@@ -110,7 +109,7 @@ namespace Pathfinding.App.Console.DependencyInjection
         {
             builder.RegisterUnit<ColorsUnit>();
             builder.RegisterInstance(Colours.Default).As<SettingsBase>().SingleInstance();
-            builder.RegisterType<ColorsUnitMenuItem>().Keyed<IMenuItem>(PathfindingUnits.Main).SingleInstance();
+            builder.RegisterType<ColorsUnitMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
             builder.RegisterType<RegularVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
             builder.RegisterType<PathVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
             builder.RegisterType<SourceVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
@@ -139,6 +138,15 @@ namespace Pathfinding.App.Console.DependencyInjection
             var stepRuleResolveMiddleware = new KeyResolveMiddlware<string, IStepRule>(PathfindingAlgorithms);
             var combinedResolveMiddleware = new CombinedAlgorithmsResolveMiddleware(PathfindingAlgorithms);
             var heuristicResolveMiddleware = new KeyResolveMiddlware<string, IHeuristic>(PathfindingAlgorithms);
+
+            builder.RegisterType<EuclidianDistance>().Keyed<IHeuristic>(PathfindingAlgorithms)
+                .SingleInstance().WithMetadata(PathfindingAlgorithms, nameof(Languages.Euclidian));
+            builder.RegisterType<ManhattanDistance>().Keyed<IHeuristic>(PathfindingAlgorithms)
+                .SingleInstance().WithMetadata(PathfindingAlgorithms, nameof(Languages.Manhattan));
+            builder.RegisterType<ChebyshevDistance>().Keyed<IHeuristic>(PathfindingAlgorithms)
+                .SingleInstance().WithMetadata(PathfindingAlgorithms, nameof(Languages.Chebyshev));
+            builder.RegisterType<CosineDistance>().Keyed<IHeuristic>(PathfindingAlgorithms)
+                .SingleInstance().WithMetadata(PathfindingAlgorithms, nameof(Languages.CosDistance));
 
             builder.RegisterType<DijkstraAlgorithmMenuItem>().Keyed<IMenuItem>(Algorithms)
                 .SingleInstance().ConfigurePipeline(p => p.Use(stepRuleResolveMiddleware));
@@ -301,15 +309,6 @@ namespace Pathfinding.App.Console.DependencyInjection
                 .WithMetadata(PathfindingAlgorithms, nameof(Languages.Default));
             builder.RegisterType<LandscapeStepRule>().Keyed<IStepRule>(PathfindingAlgorithms).SingleInstance()
                 .WithMetadata(PathfindingAlgorithms, nameof(Languages.Landscape));
-
-            builder.RegisterType<EuclidianDistance>().Keyed<IHeuristic>(PathfindingAlgorithms).SingleInstance()
-                .WithMetadata(PathfindingAlgorithms, nameof(Languages.Euclidian));
-            builder.RegisterType<ManhattanDistance>().Keyed<IHeuristic>(PathfindingAlgorithms).SingleInstance()
-                .WithMetadata(PathfindingAlgorithms, nameof(Languages.Manhattan));
-            builder.RegisterType<ChebyshevDistance>().Keyed<IHeuristic>(PathfindingAlgorithms).SingleInstance()
-                .WithMetadata(PathfindingAlgorithms, nameof(Languages.Chebyshev));
-            builder.RegisterType<CosineDistance>().Keyed<IHeuristic>(PathfindingAlgorithms).SingleInstance()
-                .WithMetadata(PathfindingAlgorithms, nameof(Languages.CosDistance));
 
             builder.RegisterGenericDecorator(typeof(BufferedSerializer<>), typeof(ISerializer<>));
             builder.RegisterGenericDecorator(typeof(CompressSerializer<>), typeof(ISerializer<>));

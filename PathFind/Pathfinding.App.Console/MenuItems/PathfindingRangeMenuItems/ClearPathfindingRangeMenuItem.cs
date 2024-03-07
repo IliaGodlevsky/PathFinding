@@ -14,7 +14,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
 {
     [HighPriority]
     internal sealed class ClearPathfindingRangeMenuItem(IService storage,
-        IPathfindingRangeBuilder<Vertex> rangeBuilder) 
+        IPathfindingRangeBuilder<Vertex> rangeBuilder)
         : IConditionedMenuItem, ICanRecieveMessage
     {
         private readonly IService storage = storage;

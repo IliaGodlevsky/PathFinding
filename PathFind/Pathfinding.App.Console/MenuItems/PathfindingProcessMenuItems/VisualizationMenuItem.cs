@@ -7,7 +7,7 @@ using Pathfinding.Logging.Interface;
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
     [MediumPriority]
-    internal sealed class VisualizationMenuItem(IInput<int> input, PathfindingVisualizationUnit viewModel, ILog log) 
+    internal sealed class VisualizationMenuItem(IInput<int> input, PathfindingVisualizationUnit viewModel, ILog log)
         : UnitDisplayMenuItem<PathfindingVisualizationUnit>(input, viewModel, log)
     {
         public override string ToString()

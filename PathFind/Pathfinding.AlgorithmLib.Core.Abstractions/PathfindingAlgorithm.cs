@@ -86,7 +86,7 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
             return new GraphPath(traces.ToDictionary(), CurrentRange.Target);
         }
 
-        protected virtual void Enqueued(IVertex vertex, 
+        protected virtual void Enqueued(IVertex vertex,
             IEnumerable<IVertex> vertices)
         {
             RaiseVertexEnqueued(vertex, vertices);

@@ -1,7 +1,6 @@
 ﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
 using Pathfinding.AlgorithmLib.Factory.Interface;
 using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
-using Pathfinding.App.Console.Model.Notes;
 
 namespace Pathfinding.App.Console.Messaging.Messages
 {

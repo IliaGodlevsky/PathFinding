@@ -29,7 +29,7 @@ namespace Pathfinding.App.Console.Units
 
         private static bool CanBeExecuted(IMenuItem item)
         {
-            return item is not IConditionedMenuItem 
+            return item is not IConditionedMenuItem
                 || item is IConditionedMenuItem m && m.CanBeExecuted();
         }
     }

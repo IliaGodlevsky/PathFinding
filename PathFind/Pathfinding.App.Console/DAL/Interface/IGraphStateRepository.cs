@@ -1,5 +1,4 @@
 ﻿using Pathfinding.App.Console.DAL.Models.Entities;
-using System;
 
 namespace Pathfinding.App.Console.DAL.Interface
 {

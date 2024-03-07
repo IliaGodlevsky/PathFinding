@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Pathfinding.App.Console.DAL.Models.Entities
+﻿namespace Pathfinding.App.Console.DAL.Models.Entities
 {
     internal class GraphStateEntity
     {

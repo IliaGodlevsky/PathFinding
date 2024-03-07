@@ -14,7 +14,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
     [LowPriority]
     internal sealed class ClearColorsMenuItem(IMessenger messenger,
-        IPathfindingRangeBuilder<Vertex> rangeBuilder) 
+        IPathfindingRangeBuilder<Vertex> rangeBuilder)
         : IConditionedMenuItem, ICanRecieveMessage
     {
         private readonly IMessenger messenger = messenger;

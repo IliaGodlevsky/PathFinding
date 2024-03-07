@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 {
-    internal sealed class LiteDbAlgorithmRunRepository(ILiteDatabase db) 
+    internal sealed class LiteDbAlgorithmRunRepository(ILiteDatabase db)
         : IAlgorithmRunRepository
     {
         private readonly ILiteCollection<AlgorithmRunEntity> collection = db.GetCollection<AlgorithmRunEntity>(DbTables.AlgorithmRuns);
@@ -33,7 +33,7 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 
         public int GetCount(int graphId)
         {
-            return collection.Find(x=>x.GraphId == graphId).Count();
+            return collection.Find(x => x.GraphId == graphId).Count();
         }
 
         public AlgorithmRunEntity Insert(AlgorithmRunEntity entity)

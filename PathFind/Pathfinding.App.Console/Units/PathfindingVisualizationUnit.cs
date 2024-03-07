@@ -9,7 +9,6 @@ using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Settings;
-using Pathfinding.Visualization.Extensions;
 using Shared.Extensions;
 using Shared.Process.EventArguments;
 using System;

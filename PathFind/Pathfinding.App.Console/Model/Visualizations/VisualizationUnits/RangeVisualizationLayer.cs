@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
 {
-    internal sealed class RangeVisualizationLayer(RunVisualizationDto algorithm) 
+    internal sealed class RangeVisualizationLayer(RunVisualizationDto algorithm)
         : VisualizationLayer(algorithm)
     {
         public override void Overlay(IGraph<IVertex> graph)

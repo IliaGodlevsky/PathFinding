@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Pathfinding.App.Console.DAL.Models.TransferObjects.Read
+﻿namespace Pathfinding.App.Console.DAL.Models.TransferObjects.Read
 {
     internal class AlgorithmRunReadDto
     {

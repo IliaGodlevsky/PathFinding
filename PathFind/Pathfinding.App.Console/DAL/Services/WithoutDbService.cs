@@ -18,7 +18,7 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.DAL.Services
 {
-    internal sealed class WithoutDbService(IMapper mapper, 
+    internal sealed class WithoutDbService(IMapper mapper,
         IPathfindingRangeBuilder<Vertex> rangeBuilder) : IService
     {
         private readonly IMapper mapper = mapper;
@@ -93,15 +93,15 @@ namespace Pathfinding.App.Console.DAL.Services
             {
                 return Array.Empty<GraphEntity>();
             }
-            return new[] 
-            { 
-                new GraphEntity() 
-                { 
+            return new[]
+            {
+                new GraphEntity()
+                {
                     Id = current.GetHashCode(),
                     Width = current.GetWidth(),
                     Length = current.GetLength(),
                     ObstaclesCount = current.GetObstaclesCount()
-                } 
+                }
             };
         }
 
@@ -123,7 +123,7 @@ namespace Pathfinding.App.Console.DAL.Services
         public PathfindingHistoryReadDto GetPathfindingHistory(int graphId)
         {
             return new()
-            { 
+            {
                 Id = graphId,
                 Graph = current,
                 Algorithms = runHistory,

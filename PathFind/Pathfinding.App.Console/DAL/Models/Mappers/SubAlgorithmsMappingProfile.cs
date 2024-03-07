@@ -12,7 +12,7 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
 {
     internal sealed class SubAlgorithmsMappingProfile : Profile
     {
-        public SubAlgorithmsMappingProfile() 
+        public SubAlgorithmsMappingProfile()
         {
             CreateMap<SubAlgorithmCreateDto, SubAlgorithmReadDto>();
             CreateMap<SubAlgorithmReadDto, SubAlgorithmCreateDto>();

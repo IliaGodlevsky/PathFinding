@@ -14,8 +14,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     [HighestPriority]
     internal sealed class DijkstraAlgorithmMenuItem(
         IReadOnlyDictionary<string, IStepRule> stepRules,
-        IInput<int> input, 
-        IMessenger messenger) 
+        IInput<int> input,
+        IMessenger messenger)
         : AlgorithmInputMenuItem(messenger, stepRules, null, input)
     {
         protected override string LanguageKey => AlgorithmNames.Dijkstra;

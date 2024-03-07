@@ -14,8 +14,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     [MediumPriority]
     internal sealed class AStarLeeAlgorithmMenuItem(
         IReadOnlyDictionary<string, IHeuristic> heuristics,
-        IMessenger messenger, 
-        IInput<int> intInput) 
+        IMessenger messenger,
+        IInput<int> intInput)
         : AlgorithmInputMenuItem(messenger, null, heuristics, intInput)
     {
         protected override string LanguageKey => AlgorithmNames.AStarLee;

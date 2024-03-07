@@ -13,7 +13,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     internal sealed class AlgorithmsUnitMenuItem(IInput<int> intInput,
         AlgorithmChooseUnit unit,
         IPathfindingRangeBuilder<Vertex> builder,
-        ILog log): UnitDisplayMenuItem<AlgorithmChooseUnit>(intInput, unit, log), IConditionedMenuItem
+        ILog log) : UnitDisplayMenuItem<AlgorithmChooseUnit>(intInput, unit, log), IConditionedMenuItem
     {
         private readonly IPathfindingRangeBuilder<Vertex> builder = builder;
 

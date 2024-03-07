@@ -21,7 +21,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
         IPathfindingRangeBuilder<Vertex> rangeBuilder,
         ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer,
         ILog log,
-        IService service) : ImportGraphMenuItem<int>(messenger, input,  rangeBuilder, serializer, log, service)
+        IService service) : ImportGraphMenuItem<int>(messenger, input, rangeBuilder, serializer, log, service)
     {
         public override string ToString()
         {

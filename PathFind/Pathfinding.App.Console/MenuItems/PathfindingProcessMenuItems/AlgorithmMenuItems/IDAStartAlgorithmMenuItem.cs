@@ -20,7 +20,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
         IReadOnlyDictionary<string, IStepRule> stepRules,
         IReadOnlyDictionary<string, IHeuristic> heuristics,
         IInput<int> input,
-        IMessenger messenger) 
+        IMessenger messenger)
         : AlgorithmInputMenuItem(messenger, stepRules, heuristics, input)
     {
         private static readonly InclusiveValueRange<int> SpreadRange = new(8, 1);

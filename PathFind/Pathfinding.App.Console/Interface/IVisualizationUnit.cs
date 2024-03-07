@@ -1,5 +1,4 @@
-﻿using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Interface;
+﻿using Pathfinding.GraphLib.Core.Interface;
 
 namespace Pathfinding.App.Console.Interface
 {

@@ -97,10 +97,10 @@ namespace Pathfinding.App.Console.Units
         {
             AlgorithmRunHistoryCreateDto algorithmRunCreateDto = new()
             {
-                Run = new() 
-                { 
-                    GraphId = Graph.Id, 
-                    AlgorithmId = runStatistics.AlgorithmId 
+                Run = new()
+                {
+                    GraphId = Graph.Id,
+                    AlgorithmId = runStatistics.AlgorithmId
                 },
                 GraphState = new()
                 {

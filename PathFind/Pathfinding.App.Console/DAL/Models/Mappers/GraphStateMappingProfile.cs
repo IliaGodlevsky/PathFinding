@@ -8,7 +8,7 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
 {
     internal sealed class GraphStateMappingProfile : Profile
     {
-        public GraphStateMappingProfile() 
+        public GraphStateMappingProfile()
         {
             CreateMap<GraphStateCreateDto, GraphStateReadDto>();
             CreateMap<GraphStateReadDto, GraphStateCreateDto>();

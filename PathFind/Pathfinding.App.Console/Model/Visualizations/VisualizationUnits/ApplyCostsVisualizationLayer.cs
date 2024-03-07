@@ -6,7 +6,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
 {
     internal sealed class ApplyCostsVisualizationLayer : VisualizationLayer
     {
-        public ApplyCostsVisualizationLayer(RunVisualizationDto algorithm) 
+        public ApplyCostsVisualizationLayer(RunVisualizationDto algorithm)
             : base(algorithm)
         {
 
