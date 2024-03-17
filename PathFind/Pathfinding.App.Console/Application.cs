@@ -6,12 +6,10 @@ using System.Text;
 
 internal static class Application
 {
-    public static void Run() => Run(Encoding.UTF8);
-
-    public static void Run(Encoding encoding)
+    public static void Run(string[] args)
     {
         Terminal.Title = Constants.Title;
-        Terminal.OutputEncoding = encoding;
+        Terminal.OutputEncoding = Encoding.UTF8;
         var builder = new ContainerBuilder();
         using var container = Build(builder);
         container.Resolve<MainUnitMenuItem>().Execute();

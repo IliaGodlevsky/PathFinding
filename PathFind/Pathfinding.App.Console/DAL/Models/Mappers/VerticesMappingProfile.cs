@@ -17,10 +17,6 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
     {
         public VerticesMappingProfile(IVertexFactory<T> vertexFactory)
         {
-            CreateMap<IVertexCost, VertexCostDto>()
-                .ForMember(x => x.Cost, opt => opt.MapFrom(x => x.CurrentCost))
-                .ForMember(x => x.UpperValueOfRange, opt => opt.MapFrom(x => x.CostRange.UpperValueOfRange))
-                .ForMember(x => x.LowerValueOfRange, opt => opt.MapFrom(x => x.CostRange.LowerValueOfRange));
             CreateMap<VertexCostDto, IVertexCost>()
                 .ConvertUsing(x => new VertexCost(x.Cost, new(x.UpperValueOfRange, x.LowerValueOfRange)));
             CreateMap<VertexAssembleDto, T>()
@@ -45,8 +41,7 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
         private IEnumerable<T> ToVertices(IEnumerable<VertexSerializationDto> dtos,
             ResolutionContext context)
         {
-            var vertices = dtos.Select(context.Mapper.Map<T>)
-                .ToDictionary(x => x.Position);
+            var vertices = dtos.Select(context.Mapper.Map<T>).ToDictionary(x => x.Position);
             foreach (var dto in dtos)
             {
                 var position = context.Mapper.Map<ICoordinate>(dto.Position);

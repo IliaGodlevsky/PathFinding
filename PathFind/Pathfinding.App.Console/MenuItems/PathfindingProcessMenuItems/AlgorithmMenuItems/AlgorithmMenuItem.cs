@@ -19,7 +19,8 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
 
         protected abstract string LanguageKey { get; }
 
-        protected RunStatisticsDto RunStatistics => new() { AlgorithmId = LanguageKey };
+        protected RunStatisticsDto RunStatistics 
+            => new() { AlgorithmId = LanguageKey };
 
         protected AlgorithmMenuItem(IMessenger messenger)
         {

@@ -1,1 +1,1 @@
-﻿Application.Run();
+﻿Application.Run(args);

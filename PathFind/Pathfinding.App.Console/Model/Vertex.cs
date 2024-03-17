@@ -56,7 +56,7 @@ namespace Pathfinding.App.Console.Model
 
         public void Display()
         {
-            if (ConsolePosition is not null)
+            if (ConsolePosition.HasValue)
             {
                 Cursor.SetPosition(ConsolePosition.Value);
                 Cursor.Write(Color, Cost.CurrentCost);

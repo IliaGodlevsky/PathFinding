@@ -47,19 +47,23 @@ namespace Pathfinding.App.Console.DAL.Services
         {
             var history = histories.First();
             current = mapper.Map<IGraph<Vertex>>(history.Graph);
-            runHistory = new(mapper.Map<IEnumerable<AlgorithmRunHistoryReadDto>>(history.Algorithms));
-            for (int i = 0; i < runHistory.Count; i++)
+            var dto = mapper.Map<IEnumerable<AlgorithmRunHistoryReadDto>>(history.Algorithms);
+            runHistory = new(dto);
+            for (int runId = 0; runId < runHistory.Count; runId++)
             {
-                runHistory[i].Statistics.AlgorithmRunId = i;
-                runHistory[i].Statistics.AlgorithmId = runHistory[i].Run.AlgorithmId;
+                runHistory[runId].Statistics.AlgorithmRunId = runId;
+                runHistory[runId].Statistics.AlgorithmId = runHistory[runId].Run.AlgorithmId;
             }
-            return new PathfindingHistoryReadDto()
-            {
-                Id = current.GetHashCode(),
-                Graph = current,
-                Range = mapper.Map<ICoordinate[]>(history.Range),
-                Algorithms = runHistory
-            }.Enumerate().ToReadOnly();
+            return new[]
+            { 
+                new PathfindingHistoryReadDto()
+                {
+                    Id = current.GetHashCode(),
+                    Graph = current,
+                    Range = mapper.Map<ICoordinate[]>(history.Range),
+                    Algorithms = runHistory
+                }
+            };
         }
 
         public IReadOnlyCollection<PathfindingHistoryReadDto> AddPathfindingHistory(IEnumerable<PathfindingHistorySerializationDto> histories)
@@ -117,7 +121,7 @@ namespace Pathfinding.App.Console.DAL.Services
 
         public IReadOnlyCollection<int> GetGraphIds()
         {
-            return new[] { 0 };
+            return new[] { current.GetHashCode() };
         }
 
         public PathfindingHistoryReadDto GetPathfindingHistory(int graphId)

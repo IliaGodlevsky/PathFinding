@@ -33,7 +33,10 @@ namespace Pathfinding.App.Console.DAL.Repositories.LiteDbRepositories
 
         public IEnumerable<VertexEntity> GetVerticesByGraphId(int graphId)
         {
-            return collection.Find(x => x.GraphId == graphId);
+            return collection.Query()
+                .Where(x => x.GraphId == graphId)
+                .OrderBy(x => x.Order)
+                .ToEnumerable();
         }
 
         public bool UpdateVertices(IEnumerable<VertexEntity> vertices)

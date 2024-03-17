@@ -84,11 +84,11 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<LoadGraphMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
             builder.RegisterType<SendGraphMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
             builder.RegisterType<RecieveGraphMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
-            builder.RegisterType<SaveGraphOnlyMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
-            builder.RegisterType<LoadGraphOnlyMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
+            //builder.RegisterType<SaveGraphOnlyMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
+            //builder.RegisterType<LoadGraphOnlyMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
 
-            builder.RegisterType<JsonSerializer<GraphSerializationDto>>()
-                .As<ISerializer<GraphSerializationDto>>().SingleInstance();
+            //builder.RegisterType<JsonSerializer<GraphSerializationDto>>()
+            //    .As<ISerializer<GraphSerializationDto>>().SingleInstance();
             builder.RegisterType<JsonSerializer<IEnumerable<PathfindingHistorySerializationDto>>>()
                 .As<ISerializer<IEnumerable<PathfindingHistorySerializationDto>>>().SingleInstance();
             return builder;
@@ -147,6 +147,11 @@ namespace Pathfinding.App.Console.DependencyInjection
                 .SingleInstance().WithMetadata(PathfindingAlgorithms, nameof(Languages.Chebyshev));
             builder.RegisterType<CosineDistance>().Keyed<IHeuristic>(PathfindingAlgorithms)
                 .SingleInstance().WithMetadata(PathfindingAlgorithms, nameof(Languages.CosDistance));
+
+            builder.RegisterType<DefaultStepRule>().Keyed<IStepRule>(PathfindingAlgorithms)
+                .SingleInstance().WithMetadata(PathfindingAlgorithms, nameof(Languages.Default));
+            builder.RegisterType<LandscapeStepRule>().Keyed<IStepRule>(PathfindingAlgorithms)
+                .SingleInstance().WithMetadata(PathfindingAlgorithms, nameof(Languages.Landscape));
 
             builder.RegisterType<DijkstraAlgorithmMenuItem>().Keyed<IMenuItem>(Algorithms)
                 .SingleInstance().ConfigurePipeline(p => p.Use(stepRuleResolveMiddleware));
@@ -218,7 +223,6 @@ namespace Pathfinding.App.Console.DependencyInjection
 
         public static IContainer BuildApplication(this ContainerBuilder builder)
         {
-            var uniqueKey = Guid.NewGuid();
             builder.RegisterType<ConsoleUserAnswerInput>().As<IInput<Answer>>().SingleInstance();
             builder.RegisterType<ConsoleUserIntInput>().As<IInput<int>>().SingleInstance();
             builder.RegisterType<ConsoleUserStringInput>().As<IInput<string>>().SingleInstance();
@@ -279,6 +283,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterComposite<Logs, ILog>().SingleInstance();
 
             builder.RegisterComposite<CompositeUndo, IUndo>().SingleInstance();
+            var uniqueKey = Guid.NewGuid();
             builder.RegisterType<XorshiftRandom>().Keyed<IRandom>(uniqueKey).SingleInstance();
             builder.RegisterDecorator<IRandom>((с, inner) => new ThreadSafeRandom(inner), uniqueKey).SingleInstance();
             builder.RegisterType<MeanCost>().As<IMeanCost>().SingleInstance();
@@ -304,11 +309,6 @@ namespace Pathfinding.App.Console.DependencyInjection
                 .SingleInstance().WithMetadata(Neighbourhood, nameof(Languages.VonNeumannNeighbourhood));
 
             builder.RegisterType<RandomAlgorithmMenuItem>().Keyed<IMenuItem>(Algorithms).SingleInstance();
-
-            builder.RegisterType<DefaultStepRule>().Keyed<IStepRule>(PathfindingAlgorithms).SingleInstance()
-                .WithMetadata(PathfindingAlgorithms, nameof(Languages.Default));
-            builder.RegisterType<LandscapeStepRule>().Keyed<IStepRule>(PathfindingAlgorithms).SingleInstance()
-                .WithMetadata(PathfindingAlgorithms, nameof(Languages.Landscape));
 
             builder.RegisterGenericDecorator(typeof(BufferedSerializer<>), typeof(ISerializer<>));
             builder.RegisterGenericDecorator(typeof(CompressSerializer<>), typeof(ISerializer<>));

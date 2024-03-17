@@ -220,12 +220,12 @@ namespace Pathfinding.App.Console.DAL.Services
 
         public RunVisualizationDto GetRunInfo(int runId)
         {
-            return Transaction<RunVisualizationDto>(unit =>
+            return Transaction(unit =>
             {
                 var graphState = unit.GraphStateRepository.GetByRunId(runId);
                 var subAlgorithms = unit.SubAlgorithmRepository.GetByAlgorithmRunId(runId);
                 var speed = unit.StatisticsRepository.GetByAlgorithmRunId(runId).AlgorithmSpeed;
-                return new()
+                return new RunVisualizationDto()
                 {
                     GraphState = mapper.Map<GraphStateReadDto>(graphState),
                     Algorithms = mapper.Map<SubAlgorithmReadDto[]>(subAlgorithms).ToReadOnly(),

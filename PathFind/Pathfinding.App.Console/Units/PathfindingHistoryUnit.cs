@@ -82,7 +82,8 @@ namespace Pathfinding.App.Console.Units
             var subAlgorithm = new SubAlgorithmCreateDto()
             {
                 Path = args.SubPath,
-                Visited = visitedVertices.ToReadOnly()
+                Visited = visitedVertices.ToReadOnly(),
+                Order = subAlgorithms.Count
             };
             subAlgorithms.Add(subAlgorithm);
             visitedVertices.Clear();

@@ -16,22 +16,18 @@ namespace Pathfinding.App.Console.Extensions
     internal static class IUnitOfWorkExtensions
     {
         public static void AddHistory(this IUnitOfWork unitOfWork, IMapper mapper,
-            IEnumerable<AlgorithmRunHistoryCreateDto> algorithms)
+            IEnumerable<AlgorithmRunHistoryCreateDto> runHistories)
         {
-            foreach (var runHistory in algorithms)
+            foreach (var runHistory in runHistories)
             {
                 var runEntity = mapper.Map<AlgorithmRunEntity>(runHistory.Run);
                 unitOfWork.RunRepository.Insert(runEntity);
                 var graphState = mapper.Map<GraphStateEntity>(runHistory.GraphState);
-                graphState.AlgorithmRunId = runEntity.Id;
                 var subAlgorithms = mapper.Map<SubAlgorithmEntity[]>(runHistory.SubAlgorithms);
-                for (int i = 0; i < subAlgorithms.Length; i++)
-                {
-                    subAlgorithms[i].Order = i;
-                    subAlgorithms[i].AlgorithmRunId = runEntity.Id;
-                }
                 var runStatistics = mapper.Map<StatisticsEntity>(runHistory.Statistics);
+                subAlgorithms.ForEach(x => x.AlgorithmRunId = runEntity.Id);
                 runStatistics.AlgorithmRunId = runEntity.Id;
+                graphState.AlgorithmRunId = runEntity.Id;
                 unitOfWork.GraphStateRepository.Insert(graphState);
                 unitOfWork.SubAlgorithmRepository.Insert(subAlgorithms);
                 unitOfWork.StatisticsRepository.Insert(runStatistics);
@@ -66,7 +62,6 @@ namespace Pathfinding.App.Console.Extensions
             var graphEntity = unitOfWork.GraphRepository.Read(graphId);
             var vertexEntities = unitOfWork.VerticesRepository
                 .GetVerticesByGraphId(graphId)
-                .OrderBy(x => x.Order)
                 .ToDictionary(x => x.Id);
             var ids = vertexEntities.Select(x => x.Key).ToReadOnly();
             var neighbors = unitOfWork.NeighborsRepository
