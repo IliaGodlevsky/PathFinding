@@ -1,13 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.DAL.Interface;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Serialization;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
-using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.Modules.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
 using Shared.Extensions;
@@ -18,24 +15,21 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 {
-    internal abstract class ImportGraphMenuItem<TPath> : IMenuItem
+    internal abstract class ImportGraphMenuItem<TPath, TImport> : IMenuItem
     {
         protected readonly IMessenger messenger;
         protected readonly IInput<TPath> input;
-        protected readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
-        protected readonly ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer;
+        protected readonly ISerializer<IEnumerable<TImport>> serializer;
         protected readonly IService service;
         protected readonly ILog log;
 
         protected ImportGraphMenuItem(IMessenger messenger,
             IInput<TPath> input,
-            IPathfindingRangeBuilder<Vertex> rangeBuilder,
-            ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer,
+            ISerializer<IEnumerable<TImport>> serializer,
             ILog log,
             IService service)
         {
             this.service = service;
-            this.rangeBuilder = rangeBuilder;
             this.serializer = serializer;
             this.messenger = messenger;
             this.input = input;
@@ -51,23 +45,18 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 var ids = service.GetAllGraphInfo().Select(x => x.Id).ToReadOnly();
                 if (ids.Count == 0 && imported.Count > 0)
                 {
-                    var import = imported[0].Enumerate();
-                    var history = service.AddPathfindingHistory(import).First();
-                    var graph = history.Graph;
-                    var costRange = graph.First().Cost.CostRange;
+                    var graph = AddSingleImported(imported[0]);
+                    var costRange = graph.Graph.First().Cost.CostRange;
                     var costMsg = new CostRangeChangedMessage(costRange);
                     messenger.Send(costMsg, Tokens.AppLayout);
-                    var graphMsg = new GraphMessage(graph, history.Id);
+                    var graphMsg = new GraphMessage(graph);
                     messenger.SendMany(graphMsg, Tokens.Visual,
                         Tokens.AppLayout, Tokens.Main, Tokens.Common);
-                    var range = history.Range;
-                    rangeBuilder.Undo();
-                    rangeBuilder.Include(range, graph);
                     imported.RemoveAt(0);
                 }
                 if (imported.Count > 0)
                 {
-                    await Task.Run(() => service.AddPathfindingHistory(imported));
+                    await Task.Run(() => AddImported(imported));
                 }
             }
             catch (Exception ex)
@@ -78,6 +67,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 
         protected abstract TPath InputPath();
 
-        protected abstract IReadOnlyCollection<PathfindingHistorySerializationDto> ImportGraph(TPath path);
+        protected abstract GraphReadDto AddSingleImported(TImport imported);
+
+        protected abstract void AddImported(IEnumerable<TImport> imported);
+
+        protected abstract IReadOnlyCollection<TImport> ImportGraph(TPath path);
     }
 }

@@ -12,8 +12,8 @@ namespace Shared.Random.Realizations
     public sealed class CryptoRandom : IRandom, IDisposable
     {
         private const int Increment = 4;
+        private const int MaxBufferSize = 2048;
 
-        private readonly int maxBufferSize = 2048;
         private readonly byte[] buffer;
         private readonly RandomNumberGenerator rng;
 
@@ -22,14 +22,14 @@ namespace Shared.Random.Realizations
         public CryptoRandom()
         {
             rng = RandomNumberGenerator.Create();
-            buffer = new byte[maxBufferSize];
+            buffer = new byte[MaxBufferSize];
             rng.GetBytes(buffer);
         }
 
         public uint NextUInt()
         {
             currentPosition += Increment;
-            if (currentPosition >= maxBufferSize)
+            if (currentPosition >= MaxBufferSize)
             {
                 currentPosition = 0;
                 rng.GetBytes(buffer);

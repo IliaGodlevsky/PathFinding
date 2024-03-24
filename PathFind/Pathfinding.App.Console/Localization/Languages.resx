@@ -402,8 +402,8 @@
   <data name="LoadGraph" xml:space="preserve">
     <value>Load graph</value>
   </data>
-  <data name="LoadGraphOnly" xml:space="preserve">
-    <value>Load graph only</value>
+  <data name="LoadGraphHistory" xml:space="preserve">
+    <value>Load graph history</value>
   </data>
   <data name="LoadRange" xml:space="preserve">
     <value>Load range</value>
@@ -471,6 +471,9 @@
   <data name="RecieveGraph" xml:space="preserve">
     <value>Recieve graph</value>
   </data>
+  <data name="RecieveGraphHistory" xml:space="preserve">
+    <value>Recieve graph history</value>
+  </data>
   <data name="Red" xml:space="preserve">
     <value>Red</value>
   </data>
@@ -504,14 +507,17 @@
   <data name="SaveGraph" xml:space="preserve">
     <value>Save graph</value>
   </data>
-  <data name="SaveGraphOnly" xml:space="preserve">
-    <value>Save graph only</value>
+  <data name="SaveGraphHistory" xml:space="preserve">
+    <value>Save graph history</value>
   </data>
   <data name="SaveRange" xml:space="preserve">
     <value>Save range</value>
   </data>
   <data name="SendGraph" xml:space="preserve">
     <value>Send graph</value>
+  </data>
+  <data name="SendGraphHistory" xml:space="preserve">
+    <value>Send graph history</value>
   </data>
   <data name="ShowHistory" xml:space="preserve">
     <value>Show history</value>

@@ -19,6 +19,13 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
         {
             CreateMap<VertexCostDto, IVertexCost>()
                 .ConvertUsing(x => new VertexCost(x.Cost, new(x.UpperValueOfRange, x.LowerValueOfRange)));
+            CreateMap<IVertexCost, VertexCostDto>()
+                .ConvertUsing(x => new VertexCostDto()
+                {
+                    Cost = x.CurrentCost,
+                    UpperValueOfRange = x.CostRange.UpperValueOfRange,
+                    LowerValueOfRange = x.CostRange.LowerValueOfRange
+                });
             CreateMap<VertexAssembleDto, T>()
                 .ConstructUsing(x => vertexFactory.CreateVertex(x.Coordinate));
             CreateMap<T, VertexEntity>()

@@ -916,11 +916,11 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Load graph only.
+        ///   Looks up a localized string similar to Load graph history.
         /// </summary>
-        public static string LoadGraphOnly {
+        public static string LoadGraphHistory {
             get {
-                return ResourceManager.GetString("LoadGraphOnly", resourceCulture);
+                return ResourceManager.GetString("LoadGraphHistory", resourceCulture);
             }
         }
         
@@ -1123,6 +1123,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recieve graph history.
+        /// </summary>
+        public static string RecieveGraphHistory {
+            get {
+                return ResourceManager.GetString("RecieveGraphHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Red.
         /// </summary>
         public static string Red {
@@ -1222,11 +1231,11 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save graph only.
+        ///   Looks up a localized string similar to Save graph history.
         /// </summary>
-        public static string SaveGraphOnly {
+        public static string SaveGraphHistory {
             get {
-                return ResourceManager.GetString("SaveGraphOnly", resourceCulture);
+                return ResourceManager.GetString("SaveGraphHistory", resourceCulture);
             }
         }
         
@@ -1245,6 +1254,15 @@ namespace Pathfinding.App.Console.Localization {
         public static string SendGraph {
             get {
                 return ResourceManager.GetString("SendGraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send graph history.
+        /// </summary>
+        public static string SendGraphHistory {
+            get {
+                return ResourceManager.GetString("SendGraphHistory", resourceCulture);
             }
         }
         

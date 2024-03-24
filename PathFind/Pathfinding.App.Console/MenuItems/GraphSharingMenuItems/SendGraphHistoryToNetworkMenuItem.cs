@@ -12,18 +12,17 @@ using System.Threading.Tasks;
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 {
     [LowPriority]
-    internal sealed class SaveGraphMenuItem(IFilePathInput input,
+    internal sealed class SendGraphHistoryToNetworkMenuItem(IInput<(string Host, int Port)> input,
         IInput<int> intInput,
-        ISerializer<IEnumerable<PathfindingHistorySerializationDto>> graphSerializer,
+        ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer,
         ILog log,
-        IService service)
-        : ExportGraphMenuItem<string>(input, intInput, graphSerializer, log, service)
+        IService service) : ExportGraphToNetworkMenuItem<PathfindingHistorySerializationDto>(input, intInput, serializer, log, service)
     {
-        public override string ToString() => Languages.SaveGraph;
+        public override string ToString() => Languages.SendGraphHistory;
 
-        protected override async Task ExportAsync(string path, IEnumerable<PathfindingHistorySerializationDto> info)
+        protected override PathfindingHistorySerializationDto GetForSave(int graphId)
         {
-            await graphSerializer.SerializeToFileAsync(info, path);
+            return service.GetSerializationHistory(graphId);
         }
     }
 }

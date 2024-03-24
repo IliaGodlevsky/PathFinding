@@ -147,11 +147,17 @@
     <Compile Include="Interface\IVisualizationUnit.cs" />
     <Compile Include="MenuItems\GraphMenuItems\EnterNeighbourCycleModeMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\EnterSmoothLevelMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\ExportGraphToFileMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\ExportGraphToNetworkMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\ImportGraphFromFileMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\ImportGraphFromNetworkMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\RecieveGraphFromNetworkMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\SendGraphToNetworkMenuItem.cs" />
     <Compile Include="Messaging\IToken.cs" />
     <Compile Include="Interface\IVisualizedVertices.cs" />
-    <Compile Include="MenuItems\GraphSharingMenuItems\LoadOnlyGraphMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\LoadGraphFromFileMenuItem.cs" />
     <Compile Include="MenuItems\GraphSharingMenuItems\LoadPathfindingRangeMenuItem.cs" />
-    <Compile Include="MenuItems\GraphSharingMenuItems\SaveGraphOnlyMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\SaveGraphToFileMenuItem.cs" />
     <Compile Include="MenuItems\GraphSharingMenuItems\SavePathfindingRangeMenuItem.cs" />
     <Compile Include="MenuItems\GraphSharingMenuItems\GraphSharingUnitMenuItem.cs" />
     <Compile Include="MenuItems\PathfindingProcessMenuItems\AlgorithmMenuItems\AlgorithmInputMenuItem.cs" />
@@ -274,12 +280,12 @@
     <Compile Include="MenuItems\GraphMenuItems\EnterCostRangeMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\EnterGraphParametresMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\EnterObstaclePercentMenuItem.cs" />
-    <Compile Include="MenuItems\GraphSharingMenuItems\LoadGraphMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\LoadGraphHistoryFromFileMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\GraphMenuItem.cs" />
     <Compile Include="MenuItems\EditorMenuItems\ReverseVertexMenuItem.cs" />
-    <Compile Include="MenuItems\GraphSharingMenuItems\SaveGraphMenuItem.cs" />
-    <Compile Include="MenuItems\GraphSharingMenuItems\RecieveGraphMenuItem.cs" />
-    <Compile Include="MenuItems\GraphSharingMenuItems\SendGraphMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\SaveGraphHistoryToFileMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\RecieveGraphHistoryFromNetworkMenuItem.cs" />
+    <Compile Include="MenuItems\GraphSharingMenuItems\SendGraphHistoryToNetworkMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\ColorsUnitMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\EditorUnitMenuItem.cs" />
     <Compile Include="MenuItems\MainMenuItems\GraphCreateMenuItem.cs" />
@@ -579,6 +585,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="MenuItems\GraphSharingMenuItems\Export\" />
+    <Folder Include="MenuItems\GraphSharingMenuItems\Import\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

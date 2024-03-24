@@ -1,6 +1,5 @@
 ﻿using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Serialization;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -14,23 +13,23 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 {
-    internal abstract class ExportGraphMenuItem<TPath> : IConditionedMenuItem
+    internal abstract class ExportGraphMenuItem<TPath, TExport> : IConditionedMenuItem
     {
         protected readonly IInput<TPath> input;
         protected readonly IInput<int> intInput;
-        protected readonly ISerializer<IEnumerable<PathfindingHistorySerializationDto>> graphSerializer;
+        protected readonly ISerializer<IEnumerable<TExport>> serializer;
         protected readonly IService service;
         protected readonly ILog log;
 
         protected ExportGraphMenuItem(IInput<TPath> input,
             IInput<int> intInput,
-            ISerializer<IEnumerable<PathfindingHistorySerializationDto>> graphSerializer,
+            ISerializer<IEnumerable<TExport>> graphSerializer,
             ILog log,
             IService service)
         {
             this.input = input;
             this.intInput = intInput;
-            this.graphSerializer = graphSerializer;
+            this.serializer = graphSerializer;
             this.log = log;
             this.service = service;
         }
@@ -55,7 +54,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
         }
 
         protected abstract Task ExportAsync(TPath path,
-            IEnumerable<PathfindingHistorySerializationDto> histories);
+            IEnumerable<TExport> histories);
 
         private string CreateMenuList(IReadOnlyCollection<GraphEntity> graphs)
         {
@@ -76,9 +75,11 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
             }
         }
 
-        private IReadOnlyCollection<PathfindingHistorySerializationDto> GetHistoriesToSave()
+        protected abstract TExport GetForSave(int graphId);
+
+        private IReadOnlyCollection<TExport> GetHistoriesToSave()
         {
-            var toExport = new List<PathfindingHistorySerializationDto>();
+            var toExport = new List<TExport>();
             var keys = service.GetAllGraphInfo().ToList();
             int index = 1;
             do
@@ -86,7 +87,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 if (index == keys.Count)
                 {
                     var histories = keys
-                        .Select(x => service.GetSerializationHistory(x.Id))
+                        .Select(x => GetForSave(x.Id))
                         .ToReadOnly();
                     toExport.AddRange(histories);
                     break;
@@ -96,7 +97,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
                 if (index < keys.Count)
                 {
                     int id = keys[index].Id;
-                    var history = service.GetSerializationHistory(id);
+                    var history = GetForSave(id);
                     toExport.Add(history);
                     keys.RemoveAt(index);
                     index = 0;

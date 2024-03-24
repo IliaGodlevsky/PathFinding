@@ -84,15 +84,17 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<FilePathInput>().As<IFilePathInput>().SingleInstance();
             builder.RegisterType<AddressInput>().As<IInput<(string, int)>>().SingleInstance();
 
-            builder.RegisterType<SaveGraphMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
-            builder.RegisterType<LoadGraphMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
-            builder.RegisterType<SendGraphMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
-            builder.RegisterType<RecieveGraphMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
-            //builder.RegisterType<SaveGraphOnlyMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
-            //builder.RegisterType<LoadGraphOnlyMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
+            builder.RegisterType<SaveGraphHistoryToFileMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
+            builder.RegisterType<LoadGraphHistoryFromFileMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
+            builder.RegisterType<SendGraphHistoryToNetworkMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
+            builder.RegisterType<RecieveGraphHistoryFromNetworkMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
+            builder.RegisterType<SaveGraphToFileMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
+            builder.RegisterType<LoadGraphFromFileMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
+            builder.RegisterType<SendGraphToNetworkMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
+            builder.RegisterType<RecieveGraphFromNetworkMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
 
-            //builder.RegisterType<JsonSerializer<GraphSerializationDto>>()
-            //    .As<ISerializer<GraphSerializationDto>>().SingleInstance();
+            builder.RegisterType<JsonSerializer<IEnumerable<GraphSerializationDto>>>()
+                .As<ISerializer<IEnumerable<GraphSerializationDto>>>().SingleInstance();
             builder.RegisterType<JsonSerializer<IEnumerable<PathfindingHistorySerializationDto>>>()
                 .As<ISerializer<IEnumerable<PathfindingHistorySerializationDto>>>().SingleInstance();
             return builder;
