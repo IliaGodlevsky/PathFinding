@@ -412,6 +412,15 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cycle mode.
+        /// </summary>
+        public static string CycleMode {
+            get {
+                return ResourceManager.GetString("CycleMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dark blue.
         /// </summary>
         public static string DarkBlue {
@@ -750,6 +759,15 @@ namespace Pathfinding.App.Console.Localization {
         public static string InputCostRange {
             get {
                 return ResourceManager.GetString("InputCostRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input cycle: .
+        /// </summary>
+        public static string InputCycleMsg {
+            get {
+                return ResourceManager.GetString("InputCycleMsg", resourceCulture);
             }
         }
         

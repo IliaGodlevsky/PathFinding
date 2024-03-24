@@ -94,11 +94,11 @@ namespace Pathfinding.App.Console.Extensions
             var graphEntity = mapper.Map<GraphEntity>(graph);
             unitOfWork.GraphRepository.Insert(graphEntity);
             var vertices = mapper.Map<VertexEntity[]>(graph).ToReadOnly();
-            for (int i = 0; i < vertices.Count; i++)
+            vertices.ForEach((x, i) =>
             {
-                vertices[i].Order = i;
-                vertices[i].GraphId = graphEntity.Id;
-            }
+                x.Order = i;
+                x.GraphId = graphEntity.Id;
+            });
             unitOfWork.VerticesRepository.Insert(vertices);
             vertices.Zip(graph, (x, y) => (Entity: x, Vertex: y))
                 .ForEach(x => x.Vertex.Id = x.Entity.Id);

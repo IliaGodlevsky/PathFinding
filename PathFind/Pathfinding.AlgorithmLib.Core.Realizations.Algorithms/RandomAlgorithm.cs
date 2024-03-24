@@ -20,7 +20,7 @@ namespace Pathfinding.AlgorithmLib.Core.Realizations.Algorithms
         }
 
         public RandomAlgorithm(IEnumerable<IVertex> pathfindingRange)
-            : this(pathfindingRange, new CongruentialRandom())
+            : this(pathfindingRange, new XorshiftRandom())
         {
 
         }

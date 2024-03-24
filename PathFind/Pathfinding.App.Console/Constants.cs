@@ -46,12 +46,15 @@ namespace Pathfinding.App.Console
 
         public static InclusiveValueRange<int> ObstaclesPercentValueRange { get; }
 
+        public static InclusiveValueRange<int> CycleModeValueRange { get; }
+
         public static InclusiveValueRange<TimeSpan> AlgorithmDelayTimeValueRange { get; }
 
         public static InclusiveValueRange<int> VerticesCostRange { get; }
 
         static Constants()
         {
+            CycleModeValueRange = new(2, 1);
             VerticesCostRange = new(Settings.MaxCost, Settings.MinCost);
             GraphWidthValueRange = new(Settings.MaxGraphWidth, Settings.MinGraphWidth);
             GraphLengthValueRange = new(Settings.MaxGraphLength, Settings.MinGraphLength);

@@ -22,64 +22,11 @@ namespace Pathfinding.App.Console.DependencyInjection
 {
     internal static class AutofacExtensions
     {
-        public static void RegisterUnits(this ContainerBuilder builder, params Type[] units)
-        {
-            units.ForEach(unit => builder.RegisterUnit(new UnitParamtresFactory(), unit));
-        }
-
-        public static void RegisterUnit<TUnit>(this ContainerBuilder builder,
-            IParametresFactory factory)
-            where TUnit : IUnit
-        {
-            builder.RegisterUnit(factory, typeof(TUnit));
-        }
-
-        public static void RegisterUnit<TUnit>(this ContainerBuilder builder)
-            where TUnit : IUnit
-        {
-            builder.RegisterUnits(typeof(TUnit));
-        }
-
-        public static void RegisterUnit(this ContainerBuilder builder,
-            IParametresFactory factory, Type unit)
-        {
-            var resolveMiddleware
-                = new UnitResolveMiddleware(RegistrationConstants.UnitTypeKey, unit, factory);
-            builder.RegisterType(unit).AsSelf().AsImplementedInterfaces().AutoActivate()
-                .SingleInstance().ConfigurePipeline(p => p.Use(resolveMiddleware));
-        }
-
         public static IReadOnlyDictionary<TKey, TValue> ResolveWithMetadata<TKey, TValue>(this IComponentContext context, string key)
         {
             return context.Resolve<IEnumerable<Meta<TValue>>>()
                 .ToDictionary(action => (TKey)action.Metadata[key], action => action.Value)
                 .AsReadOnly();
-        }
-
-        public static void RegisterAutoMapper(this ContainerBuilder builder)
-        {
-            builder.RegisterType<JsonSerializer<IEnumerable<VisitedVerticesDto>>>()
-                    .As<ISerializer<IEnumerable<VisitedVerticesDto>>>().SingleInstance();
-            builder.RegisterType<JsonSerializer<IEnumerable<CoordinateDto>>>()
-                .As<ISerializer<IEnumerable<CoordinateDto>>>().SingleInstance();
-            builder.RegisterType<JsonSerializer<IEnumerable<int>>>()
-                .As<ISerializer<IEnumerable<int>>>().SingleInstance();
-
-            builder.RegisterType<AlgorithmRunMappingProfile>().As<Profile>().SingleInstance();
-            builder.RegisterType<GraphMappingProfile<Vertex>>().As<Profile>().SingleInstance();
-            builder.RegisterType<VerticesMappingProfile<Vertex>>().As<Profile>().SingleInstance();
-            builder.RegisterType<GraphStateMappingProfile>().As<Profile>().SingleInstance();
-            builder.RegisterType<HistoryMappingProfile>().As<Profile>().SingleInstance();
-            builder.RegisterType<StatisticsMappingProfile>().As<Profile>().SingleInstance();
-            builder.RegisterType<SubAlgorithmsMappingProfile>().As<Profile>().SingleInstance();
-            builder.RegisterType<UntitledMappingConfig>().As<Profile>().SingleInstance();
-
-            builder.Register(ctx =>
-            {
-                var profiles = ctx.Resolve<IEnumerable<Profile>>();
-                var config = new MapperConfiguration(c => c.AddProfiles(profiles));
-                return config.CreateMapper(ctx.Resolve);
-            }).As<IMapper>().SingleInstance();
         }
 
         public static IReadOnlyDictionary<TKey, TValue> ResolveWithMetadataKeyed<TKey, TValue>(this IComponentContext context, string key)

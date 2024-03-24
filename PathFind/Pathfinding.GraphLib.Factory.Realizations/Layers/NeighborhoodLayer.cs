@@ -1,4 +1,5 @@
 ﻿using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.GraphLib.Core.Realizations;
 using Pathfinding.GraphLib.Factory.Interface;
 using Shared.Extensions;
 using Shared.Primitives.Extensions;
@@ -11,10 +12,18 @@ namespace Pathfinding.GraphLib.Factory.Realizations.Layers
     public sealed class NeighborhoodLayer : ILayer
     {
         private readonly INeighborhoodFactory factory;
+        private readonly ReturnOptions options;
 
-        public NeighborhoodLayer(INeighborhoodFactory factory)
+        public NeighborhoodLayer(INeighborhoodFactory factory, ReturnOptions options)
         {
             this.factory = factory;
+            this.options = options;
+        }
+
+        public NeighborhoodLayer(INeighborhoodFactory factory)
+            : this(factory, ReturnOptions.Limit)
+        {
+
         }
 
         public void Overlay(IGraph<IVertex> graph)
@@ -27,19 +36,19 @@ namespace Pathfinding.GraphLib.Factory.Realizations.Layers
             }
         }
 
-        private static IReadOnlyCollection<IVertex> GetNeighboursWithinGraph(INeighborhood self,
+        private IReadOnlyCollection<IVertex> GetNeighboursWithinGraph(INeighborhood self,
             IGraph<IVertex> graph)
         {
-            bool IsWithin(int coordinate, int graphDimension)
+            int ReturnInRange(int coordinate, int index)
             {
-                var range = new InclusiveValueRange<int>(graphDimension - 1);
-                return range.Contains(coordinate);
+                var range = new InclusiveValueRange<int>(graph.DimensionsSizes[index] - 1);
+                return range.ReturnInRange(coordinate, options);
             }
-            bool IsWithinGraph(ICoordinate neighbour)
-            {
-                return neighbour.Juxtapose(graph.DimensionsSizes, IsWithin);
-            }
-            return self.Where(IsWithinGraph).Select(graph.Get).OfType<IVertex>().ToArray();
+            return self.Select(x => x.Select(ReturnInRange))
+                .Select(x => new Coordinate(x.ToArray()))
+                .Distinct()
+                .Select(graph.Get)
+                .ToReadOnly();
         }
     }
 }

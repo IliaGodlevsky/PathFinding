@@ -61,6 +61,17 @@ namespace Shared.Extensions
             return collection;
         }
 
+        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T, int> action)
+        {
+            int i = 0;
+            foreach (var item in collection)
+            {
+                action(item, i);
+                i++;
+            }
+            return collection;
+        }
+
         public static bool Juxtapose<T>(this IEnumerable<T> self, IEnumerable<T> second, Func<T, T, bool> predicate)
         {
             return self.SequenceEqual(second, new MatchComparer<T>(predicate));

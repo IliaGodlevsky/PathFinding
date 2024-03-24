@@ -145,6 +145,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Interface\INeighbourhoodCommand.cs" />
     <Compile Include="Interface\IVisualizationUnit.cs" />
+    <Compile Include="MenuItems\GraphMenuItems\EnterNeighbourCycleModeMenuItem.cs" />
     <Compile Include="MenuItems\GraphMenuItems\EnterSmoothLevelMenuItem.cs" />
     <Compile Include="Messaging\IToken.cs" />
     <Compile Include="Interface\IVisualizedVertices.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="Messaging\Messages\ObstaclePercentMessage.cs" />
     <Compile Include="Messaging\Messages\PathFoundMessage.cs" />
     <Compile Include="Messaging\Messages\LayerMessage.cs" />
+    <Compile Include="Messaging\Messages\ReturnOptionsMessage.cs" />
     <Compile Include="Messaging\Messages\StatisticsLineMessage.cs" />
     <Compile Include="Messaging\Messages\StatisticsMessage.cs" />
     <Compile Include="Model\ApplicationSettingsStore.cs" />

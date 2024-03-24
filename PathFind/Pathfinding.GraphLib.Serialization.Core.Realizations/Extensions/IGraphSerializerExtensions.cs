@@ -11,19 +11,15 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
     {
         public static byte[] SerializeToBytes<T>(this ISerializer<T> serializer, T item)
         {
-            using (var memory = new MemoryStream())
-            {
-                serializer.SerializeTo(item, memory);
-                return memory.ToArray();
-            }
+            using var memory = new MemoryStream();
+            serializer.SerializeTo(item, memory);
+            return memory.ToArray();
         }
 
         public static T DeserializeFromBytes<T>(this ISerializer<T> serializer, byte[] item)
         {
-            using (var memory = new MemoryStream(item))
-            {
-                return serializer.DeserializeFrom(memory);
-            }
+            using var memory = new MemoryStream(item);
+            return serializer.DeserializeFrom(memory);
         }
 
         public static async Task SerializeToFileAsync<T>(this ISerializer<T> self,
@@ -35,29 +31,21 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
         public static void SerializeToFile<T>(this ISerializer<T> self,
             T value, string filePath)
         {
-            using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-            {
-                self.SerializeTo(value, fileStream);
-            }
+            using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+            self.SerializeTo(value, fileStream);
         }
 
         public static T DeserializeFromFile<T>(this ISerializer<T> self, string filePath)
         {
-            using (var fileStream = File.OpenRead(filePath))
-            {
-                return self.DeserializeFrom(fileStream);
-            }
+            using var fileStream = File.OpenRead(filePath);
+            return self.DeserializeFrom(fileStream);
         }
 
         public static void SerializeToNetwork<T>(this ISerializer<T> self, T value, string host, int port)
         {
-            using (var client = new TcpClient(host, port))
-            {
-                using (var networkStream = client.GetStream())
-                {
-                    self.SerializeTo(value, networkStream);
-                }
-            }
+            using var client = new TcpClient(host, port);
+            using var networkStream = client.GetStream();
+            self.SerializeTo(value, networkStream);
         }
 
         public static async Task SerializeToNetworkAsync<T>(this ISerializer<T> self,
@@ -69,7 +57,7 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
         public static async Task SerializeToNetworkAsync<T>(this ISerializer<T> self,
             T value, (string Host, int Port) address)
         {
-            await self.SerializeToNetworkAsync(value, address.Host, address.Port);
+            await self.SerializeToNetworkAsync(value, address.Host, address.Port).ConfigureAwait(false);
         }
 
         public static T DeserializeFromNetwork<T>(this ISerializer<T> self, int port)
@@ -78,13 +66,9 @@ namespace Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions
             using (Disposable.Use(listener.Stop))
             {
                 listener.Start();
-                using (var client = listener.AcceptTcpClient())
-                {
-                    using (var networkStream = client.GetStream())
-                    {
-                        return self.DeserializeFrom(networkStream);
-                    }
-                }
+                using var client = listener.AcceptTcpClient();
+                using var networkStream = client.GetStream();
+                return self.DeserializeFrom(networkStream);
             }
         }
     }

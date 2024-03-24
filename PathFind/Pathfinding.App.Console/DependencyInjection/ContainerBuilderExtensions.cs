@@ -1,10 +1,13 @@
 ﻿using Autofac;
+using AutoMapper;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
 using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
 using Pathfinding.App.Console.DAL.Interface;
+using Pathfinding.App.Console.DAL.Models.Mappers;
 using Pathfinding.App.Console.DAL.Models.TransferObjects.Serialization;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.DAL.Services;
 using Pathfinding.App.Console.DAL.UOF.Factories;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
@@ -50,6 +53,7 @@ using Pathfinding.Logging.Interface;
 using Pathfinding.Logging.Loggers;
 using Pathfinding.Visualization.Core.Abstractions;
 using Shared.Executable;
+using Shared.Extensions;
 using Shared.Random;
 using Shared.Random.Realizations;
 using System;
@@ -276,6 +280,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<EnterGraphParametresMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
             builder.RegisterType<EnterObstaclePercentMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
             builder.RegisterType<EnterSmoothLevelMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
+            builder.RegisterType<EnterNeighbourCycleModeMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
@@ -315,6 +320,59 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterGenericDecorator(typeof(ThreadSafeSerializer<>), typeof(ISerializer<>));
 
             return builder.Build();
+        }
+
+        private static void RegisterAutoMapper(this ContainerBuilder builder)
+        {
+            builder.RegisterType<JsonSerializer<IEnumerable<VisitedVerticesDto>>>()
+                    .As<ISerializer<IEnumerable<VisitedVerticesDto>>>().SingleInstance();
+            builder.RegisterType<JsonSerializer<IEnumerable<CoordinateDto>>>()
+                .As<ISerializer<IEnumerable<CoordinateDto>>>().SingleInstance();
+            builder.RegisterType<JsonSerializer<IEnumerable<int>>>()
+                .As<ISerializer<IEnumerable<int>>>().SingleInstance();
+
+            builder.RegisterType<AlgorithmRunMappingProfile>().As<Profile>().SingleInstance();
+            builder.RegisterType<GraphMappingProfile<Vertex>>().As<Profile>().SingleInstance();
+            builder.RegisterType<VerticesMappingProfile<Vertex>>().As<Profile>().SingleInstance();
+            builder.RegisterType<GraphStateMappingProfile>().As<Profile>().SingleInstance();
+            builder.RegisterType<HistoryMappingProfile>().As<Profile>().SingleInstance();
+            builder.RegisterType<StatisticsMappingProfile>().As<Profile>().SingleInstance();
+            builder.RegisterType<SubAlgorithmsMappingProfile>().As<Profile>().SingleInstance();
+            builder.RegisterType<UntitledMappingConfig>().As<Profile>().SingleInstance();
+
+            builder.Register(ctx =>
+            {
+                var profiles = ctx.Resolve<IEnumerable<Profile>>();
+                var config = new MapperConfiguration(c => c.AddProfiles(profiles));
+                return config.CreateMapper(ctx.Resolve);
+            }).As<IMapper>().SingleInstance();
+        }
+
+        private static void RegisterUnits(this ContainerBuilder builder, params Type[] units)
+        {
+            units.ForEach(unit => builder.RegisterUnit(new UnitParamtresFactory(), unit));
+        }
+
+        private static void RegisterUnit<TUnit>(this ContainerBuilder builder,
+            IParametresFactory factory)
+            where TUnit : IUnit
+        {
+            builder.RegisterUnit(factory, typeof(TUnit));
+        }
+
+        private static void RegisterUnit<TUnit>(this ContainerBuilder builder)
+            where TUnit : IUnit
+        {
+            builder.RegisterUnits(typeof(TUnit));
+        }
+
+        private static void RegisterUnit(this ContainerBuilder builder,
+            IParametresFactory factory, Type unit)
+        {
+            var resolveMiddleware
+                = new UnitResolveMiddleware(RegistrationConstants.UnitTypeKey, unit, factory);
+            builder.RegisterType(unit).AsSelf().AsImplementedInterfaces().AutoActivate()
+                .SingleInstance().ConfigurePipeline(p => p.Use(resolveMiddleware));
         }
     }
 }

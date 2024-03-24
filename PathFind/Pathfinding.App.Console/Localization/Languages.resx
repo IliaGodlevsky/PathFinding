@@ -234,6 +234,9 @@
   <data name="Cyan" xml:space="preserve">
     <value>Cyan</value>
   </data>
+  <data name="CycleMode" xml:space="preserve">
+    <value>Cycle mode</value>
+  </data>
   <data name="DarkBlue" xml:space="preserve">
     <value>Dark blue</value>
   </data>
@@ -347,6 +350,9 @@
   </data>
   <data name="InputCostRange" xml:space="preserve">
     <value>Input cost range</value>
+  </data>
+  <data name="InputCycleMsg" xml:space="preserve">
+    <value>Input cycle: </value>
   </data>
   <data name="InputGraphParametres" xml:space="preserve">
     <value>Input graph parametres</value>

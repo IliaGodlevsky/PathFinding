@@ -34,6 +34,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected int obstaclePercent = 0;
         protected INeighborhoodFactory neighborhoodFactory;
         protected ILayer smoothLayer;
+        protected ReturnOptions returnOptions = ReturnOptions.Limit;
 
         protected GraphCreatingMenuItem(IMessenger messenger,
             GraphAssemble assemble,
@@ -57,6 +58,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         protected void SetSmoothLayer(LayerMessage msg)
             => smoothLayer = msg.Layer;
+
+        protected void SetReturnOptions(ReturnOptionsMessage msg)
+            => returnOptions = msg.Options;
 
         protected void SetGraphParams(GraphParamsMessage msg)
         {
@@ -86,7 +90,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         protected virtual IEnumerable<ILayer> GetLayers()
         {
-            yield return new NeighborhoodLayer(neighborhoodFactory);
+            yield return new NeighborhoodLayer(neighborhoodFactory, returnOptions);
             yield return new VertexCostLayer(costRange, random);
             yield return new ObstacleLayer(random, obstaclePercent);
             yield return smoothLayer ?? new Layers();
@@ -96,6 +100,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             messenger.Register<GraphCreatingMenuItem, ObstaclePercentMessage>(this, Tokens.Graph, SetObstaclePercent);
             messenger.Register<GraphCreatingMenuItem, NeighbourhoodMessage>(this, Tokens.Graph, SetNeighbourhood);
+            messenger.Register<GraphCreatingMenuItem, ReturnOptionsMessage>(this, Tokens.Graph, SetReturnOptions);
             messenger.Register<GraphCreatingMenuItem, GraphParamsMessage>(this, Tokens.Graph, SetGraphParams);
             messenger.Register<GraphCreatingMenuItem, CostRangeMessage>(this, Tokens.Graph, SetCostRange);
             messenger.Register<GraphCreatingMenuItem, LayerMessage>(this, Tokens.Graph, SetSmoothLayer);
