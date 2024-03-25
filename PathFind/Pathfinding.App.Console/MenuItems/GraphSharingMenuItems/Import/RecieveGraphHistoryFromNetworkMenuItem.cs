@@ -13,15 +13,15 @@ using Pathfinding.Logging.Interface;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
+namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
 {
     [LowPriority]
-    internal sealed class LoadGraphHistoryFromFileMenuItem(IMessenger messenger,
-        IFilePathInput input,
+    internal sealed class RecieveGraphHistoryFromNetworkMenuItem(IMessenger messenger,
+        IInput<int> input,
         IPathfindingRangeBuilder<Vertex> rangeBuilder,
         ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer,
         ILog log,
-        IService service) : ImportGraphFromFileMenuItem<PathfindingHistorySerializationDto>(messenger, input, serializer, log, service)
+        IService service) : ImportGraphFromNetworkMenuItem<PathfindingHistorySerializationDto>(messenger, input, serializer, log, service)
     {
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder = rangeBuilder;
 
@@ -40,7 +40,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
 
         public override string ToString()
         {
-            return Languages.LoadGraphHistory;
+            return Languages.RecieveGraph;
         }
     }
 }

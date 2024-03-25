@@ -7,14 +7,14 @@ using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
 using System.Collections.Generic;
 
-namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
+namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
 {
-    [LowPriority]
+    [MediumPriority]
     internal sealed class SaveGraphToFileMenuItem(IFilePathInput input,
         IInput<int> intInput,
         ISerializer<IEnumerable<GraphSerializationDto>> serializer,
         ILog log,
-        IService service) 
+        IService service)
         : ExportGraphToFileMenuItem<GraphSerializationDto>(input, intInput, serializer, log, service)
     {
 

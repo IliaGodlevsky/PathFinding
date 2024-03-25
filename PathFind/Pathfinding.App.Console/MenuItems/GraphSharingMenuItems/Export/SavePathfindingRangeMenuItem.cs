@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
+namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
 {
     [LowPriority]
     internal sealed class SavePathfindingRangeMenuItem : IConditionedMenuItem

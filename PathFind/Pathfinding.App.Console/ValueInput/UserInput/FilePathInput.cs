@@ -4,14 +4,9 @@ using Pathfinding.App.Console.Localization;
 
 namespace Pathfinding.App.Console.ValueInput.UserInput
 {
-    internal sealed class FilePathInput : IFilePathInput
+    internal sealed class FilePathInput(IInput<string> input) : IFilePathInput
     {
-        private readonly IInput<string> input;
-
-        public FilePathInput(IInput<string> input)
-        {
-            this.input = input;
-        }
+        private readonly IInput<string> input = input;
 
         public string Input()
         {

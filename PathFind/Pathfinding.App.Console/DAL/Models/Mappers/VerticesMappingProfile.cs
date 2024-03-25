@@ -17,12 +17,12 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
     {
         public VerticesMappingProfile(IVertexFactory<T> vertexFactory)
         {
-            CreateMap<VertexCostDto, IVertexCost>()
-                .ConvertUsing(x => new VertexCost(x.Cost, new(x.UpperValueOfRange, x.LowerValueOfRange)));
             CreateMap<IVertexCost, VertexCostDto>()
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => x.CurrentCost))
                 .ForMember(x => x.UpperValueOfRange, opt => opt.MapFrom(x => x.CostRange.UpperValueOfRange))
                 .ForMember(x => x.LowerValueOfRange, opt => opt.MapFrom(x => x.CostRange.LowerValueOfRange));
+            CreateMap<VertexCostDto, IVertexCost>()
+                .ConvertUsing(x => new VertexCost(x.Cost, new(x.UpperValueOfRange, x.LowerValueOfRange)));
             CreateMap<VertexAssembleDto, T>()
                 .ConstructUsing(x => vertexFactory.CreateVertex(x.Coordinate));
             CreateMap<T, VertexEntity>()

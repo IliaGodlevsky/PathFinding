@@ -6,7 +6,7 @@ using Pathfinding.Logging.Interface;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
+namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
 {
     internal abstract class ExportGraphToNetworkMenuItem<TExport> : ExportGraphMenuItem<(string Host, int Port), TExport>
     {

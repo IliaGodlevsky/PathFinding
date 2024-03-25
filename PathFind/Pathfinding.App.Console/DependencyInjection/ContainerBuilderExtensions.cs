@@ -19,6 +19,8 @@ using Pathfinding.App.Console.MenuItems.ColorMenuItems;
 using Pathfinding.App.Console.MenuItems.EditorMenuItems;
 using Pathfinding.App.Console.MenuItems.GraphMenuItems;
 using Pathfinding.App.Console.MenuItems.GraphSharingMenuItems;
+using Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export;
+using Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import;
 using Pathfinding.App.Console.MenuItems.KeysMenuItems;
 using Pathfinding.App.Console.MenuItems.MainMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems;
@@ -88,6 +90,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<LoadGraphHistoryFromFileMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
             builder.RegisterType<SendGraphHistoryToNetworkMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
             builder.RegisterType<RecieveGraphHistoryFromNetworkMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
+
             builder.RegisterType<SaveGraphToFileMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
             builder.RegisterType<LoadGraphFromFileMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
             builder.RegisterType<SendGraphToNetworkMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();

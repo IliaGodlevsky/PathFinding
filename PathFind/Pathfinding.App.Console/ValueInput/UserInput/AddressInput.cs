@@ -4,17 +4,11 @@ using Pathfinding.App.Console.Localization;
 
 namespace Pathfinding.App.Console.ValueInput.UserInput
 {
-    internal sealed class AddressInput : IInput<(string Host, int Port)>
+    internal sealed class AddressInput(IInput<int> intInput,
+        IInput<string> stringInput) : IInput<(string Host, int Port)>
     {
-        private readonly IInput<int> intInput;
-        private readonly IInput<string> stringInput;
-
-        public AddressInput(IInput<int> intInput,
-            IInput<string> stringInput)
-        {
-            this.intInput = intInput;
-            this.stringInput = stringInput;
-        }
+        private readonly IInput<int> intInput = intInput;
+        private readonly IInput<string> stringInput = stringInput;
 
         public (string Host, int Port) Input()
         {

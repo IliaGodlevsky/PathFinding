@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
+namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
 {
     internal abstract class ImportGraphMenuItem<TPath, TImport> : IMenuItem
     {

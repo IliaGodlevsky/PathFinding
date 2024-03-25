@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
+namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
 {
     [LowPriority]
     internal sealed class LoadPathfindingRangeMenuItem(ISerializer<IEnumerable<ICoordinate>> serializer,

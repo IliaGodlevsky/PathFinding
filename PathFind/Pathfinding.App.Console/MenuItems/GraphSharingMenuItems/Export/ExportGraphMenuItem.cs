@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
+namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
 {
     internal abstract class ExportGraphMenuItem<TPath, TExport> : IConditionedMenuItem
     {
@@ -29,7 +29,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems
         {
             this.input = input;
             this.intInput = intInput;
-            this.serializer = graphSerializer;
+            serializer = graphSerializer;
             this.log = log;
             this.service = service;
         }
