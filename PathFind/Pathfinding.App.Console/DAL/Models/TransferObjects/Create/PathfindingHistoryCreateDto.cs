@@ -4,9 +4,10 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DAL.Models.TransferObjects.Create
 {
-    internal class PathfindingHistoryCreateDto
+    internal class PathfindingHistoryCreateDto<T>
+        where T : IVertex
     {
-        public IGraph<Vertex> Graph { get; set; }
+        public GraphCreateDto<T> Graph { get; set; }
 
         public IReadOnlyCollection<AlgorithmRunHistoryCreateDto> Algorithms { get; set; }
 

@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using Newtonsoft.Json;
 using Pathfinding.App.Console.DAL.Models.Entities;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Create;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
 using Pathfinding.App.Console.DAL.Models.TransferObjects.Serialization;
 using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.GraphLib.Core.Interface;
@@ -20,32 +23,36 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
         {
             this.graphFactory = graphFactory;
             CreateMap<IGraph<T>, IGraph<T>>().ConvertUsing(x => x);
-            CreateMap<IGraph<T>, GraphEntity>()
-                .ForMember(x => x.Width, opt => opt.MapFrom(x => x.GetWidth()))
-                .ForMember(x => x.Length, opt => opt.MapFrom(x => x.GetLength()))
-                .ForMember(x => x.ObstaclesCount, opt => opt.MapFrom(x => x.GetObstaclesCount()));
             CreateMap<GraphAssembleDto, IGraph<T>>().ConstructUsing(Construct);
             CreateMap<IGraph<T>, IReadOnlyCollection<VertexSerializationDto>>()
                 .ConvertUsing((x, y, context) => context.Mapper.Map<VertexSerializationDto[]>(x.AsEnumerable()));
             CreateMap<IGraph<T>, GraphSerializationDto>()
                 .ForMember(x => x.DimensionSizes, opt => opt.MapFrom(x => x.DimensionsSizes))
                 .ForMember(x => x.Vertices, opt => opt.MapFrom(x => x.ToArray()));
-            CreateMap<GraphSerializationDto, IGraph<T>>().ConstructUsing(Construct);
+            CreateMap<GraphSerializationDto, GraphCreateDto<T>>().ConstructUsing(Construct);
+            CreateMap<GraphCreateDto<T>, GraphEntity>()
+                .ForMember(x => x.Dimensions, opt => opt.MapFrom(x => JsonConvert.SerializeObject(x.Graph.DimensionsSizes)))
+                .ForMember(x => x.ObstaclesCount, opt => opt.MapFrom(x => x.Graph.GetObstaclesCount()));
+            CreateMap<GraphCreateDto<T>, GraphReadDto<T>>();
+            CreateMap<GraphReadDto<T>, GraphSerializationDto>()
+                .ConvertUsing((x, y, context) => context.Mapper.Map<GraphSerializationDto>(x.Graph) with { Name = x.Name });
+            CreateMap<GraphEntity, GraphInformationReadDto>()
+                .ForMember(x => x.Dimensions, opt => opt.MapFrom(x => JsonConvert.DeserializeObject<int[]>(x.Dimensions)));
         }
 
-        private IGraph<T> Construct(GraphSerializationDto serializationDto, ResolutionContext context)
+        private GraphCreateDto<T> Construct(GraphSerializationDto serializationDto, ResolutionContext context)
         {
             var vertices = context.Mapper
                         .Map<IEnumerable<T>>(serializationDto.Vertices)
                         .ToReadOnly();
-            return graphFactory.CreateGraph(vertices, serializationDto.DimensionSizes);
+            var graph = graphFactory.CreateGraph(vertices, serializationDto.DimensionSizes);
+            return new() { Name = serializationDto.Name, Graph = graph };
         }
 
         private IGraph<T> Construct(GraphAssembleDto assembleDto, ResolutionContext context)
         {
             var vertices = context.Mapper.Map<T[]>(assembleDto.Vertices);
-            var paramemters = new[] { assembleDto.Width, assembleDto.Length };
-            var graph = graphFactory.CreateGraph(vertices, paramemters);
+            var graph = graphFactory.CreateGraph(vertices, assembleDto.Dimensions);
             vertices.Zip(assembleDto.Vertices, (i, j) => (Vertex: i, Info: j))
                     .ForEach(i =>
                     {

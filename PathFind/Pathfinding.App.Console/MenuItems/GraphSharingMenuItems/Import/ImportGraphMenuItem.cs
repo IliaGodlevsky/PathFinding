@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using LiteDB;
 using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
+using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
 using Shared.Extensions;
@@ -20,14 +22,14 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
         protected readonly IMessenger messenger;
         protected readonly IInput<TPath> input;
         protected readonly ISerializer<IEnumerable<TImport>> serializer;
-        protected readonly IService service;
+        protected readonly IService<Vertex> service;
         protected readonly ILog log;
 
         protected ImportGraphMenuItem(IMessenger messenger,
             IInput<TPath> input,
             ISerializer<IEnumerable<TImport>> serializer,
             ILog log,
-            IService service)
+            IService<Vertex> service)
         {
             this.service = service;
             this.serializer = serializer;
@@ -53,6 +55,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
                     messenger.SendMany(graphMsg, Tokens.Visual,
                         Tokens.AppLayout, Tokens.Main, Tokens.Common);
                     imported.RemoveAt(0);
+                    Post(graph);
                 }
                 if (imported.Count > 0)
                 {
@@ -67,7 +70,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
 
         protected abstract TPath InputPath();
 
-        protected abstract GraphReadDto AddSingleImported(TImport imported);
+        protected abstract void Post(GraphReadDto<Vertex> dto);
+
+        protected abstract GraphReadDto<Vertex> AddSingleImported(TImport imported);
 
         protected abstract void AddImported(IEnumerable<TImport> imported);
 

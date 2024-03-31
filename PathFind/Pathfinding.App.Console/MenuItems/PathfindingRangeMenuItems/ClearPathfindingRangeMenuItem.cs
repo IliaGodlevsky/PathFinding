@@ -13,11 +13,11 @@ using Pathfinding.GraphLib.Core.Modules.Interface;
 namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
 {
     [HighPriority]
-    internal sealed class ClearPathfindingRangeMenuItem(IService storage,
+    internal sealed class ClearPathfindingRangeMenuItem(IService<Vertex> storage,
         IPathfindingRangeBuilder<Vertex> rangeBuilder)
-        : IConditionedMenuItem, ICanRecieveMessage
+        : IConditionedMenuItem, ICanReceiveMessage
     {
-        private readonly IService storage = storage;
+        private readonly IService<Vertex> storage = storage;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder = rangeBuilder;
 
         private int Id { get; set; }
@@ -33,7 +33,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
             rangeBuilder.Undo();
         }
 
-        public void RegisterHanlders(IMessenger messenger)
+        public void RegisterHandlers(IMessenger messenger)
         {
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }

@@ -664,7 +664,7 @@ namespace Pathfinding.App.Console.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Width: {0} Length: {1} Obstacle percent: {2} ({3}/{4}).
+        ///   Looks up a localized string similar to {0}, Width: {1} Length: {2} Obstacle percent: {3} ({4}/{5}).
         /// </summary>
         public static string GraphParametes {
             get {

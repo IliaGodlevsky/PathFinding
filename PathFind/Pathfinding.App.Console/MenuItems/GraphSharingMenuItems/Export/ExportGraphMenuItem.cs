@@ -1,8 +1,10 @@
 ﻿using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
+using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
 using Shared.Extensions;
@@ -18,14 +20,14 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
         protected readonly IInput<TPath> input;
         protected readonly IInput<int> intInput;
         protected readonly ISerializer<IEnumerable<TExport>> serializer;
-        protected readonly IService service;
+        protected readonly IService<Vertex> service;
         protected readonly ILog log;
 
         protected ExportGraphMenuItem(IInput<TPath> input,
             IInput<int> intInput,
             ISerializer<IEnumerable<TExport>> graphSerializer,
             ILog log,
-            IService service)
+            IService<Vertex> service)
         {
             this.input = input;
             this.intInput = intInput;
@@ -56,7 +58,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
         protected abstract Task ExportAsync(TPath path,
             IEnumerable<TExport> histories);
 
-        private string CreateMenuList(IReadOnlyCollection<GraphEntity> graphs)
+        private string CreateMenuList(IReadOnlyCollection<GraphInformationReadDto> graphs)
         {
             var menu = graphs.Select(k => k.ConvertToString())
                 .Append(Languages.All)

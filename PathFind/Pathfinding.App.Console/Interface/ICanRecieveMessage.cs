@@ -2,8 +2,8 @@
 
 namespace Pathfinding.App.Console.Interface
 {
-    internal interface ICanRecieveMessage
+    internal interface ICanReceiveMessage
     {
-        void RegisterHanlders(IMessenger messenger);
+        void RegisterHandlers(IMessenger messenger);
     }
 }

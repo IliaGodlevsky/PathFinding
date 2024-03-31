@@ -8,6 +8,7 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
+using Pathfinding.App.Console.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,13 +18,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     [LowPriority]
     internal sealed class DeleteGraphMenuItem(IInput<int> input,
         IMessenger messenger,
-        IService service) : IConditionedMenuItem, ICanRecieveMessage
+        IService<Vertex> service) : IConditionedMenuItem, ICanReceiveMessage
     {
-        private readonly IService service = service;
+        private readonly IService<Vertex> service = service;
         private readonly IMessenger messenger = messenger;
         private readonly IInput<int> input = input;
 
-        private GraphReadDto graph = GraphReadDto.Empty;
+        private GraphReadDto<Vertex> graph = GraphReadDto<Vertex>.Empty;
 
         public bool CanBeExecuted()
         {
@@ -54,7 +55,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             await Task.Run(() => ids.ForEach(id => service.DeleteGraph(id)));
         }
 
-        private string GetMenuList(IReadOnlyCollection<GraphEntity> graphs)
+        private string GetMenuList(IReadOnlyCollection<GraphInformationReadDto> graphs)
         {
             string menu = graphs.Select(s => s.ConvertToString())
                 .Append(Languages.Quit)
@@ -68,7 +69,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             return Languages.DeleteGraph;
         }
 
-        public void RegisterHanlders(IMessenger messenger)
+        public void RegisterHandlers(IMessenger messenger)
         {
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }

@@ -4,17 +4,18 @@ using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
+using Pathfinding.App.Console.Model;
 using Pathfinding.Logging.Interface;
 
 namespace Pathfinding.App.Console.MenuItems.MainMenuItems
 {
     internal abstract class MainMenuItem<TUnit>
-        : UnitDisplayMenuItem<TUnit>, IConditionedMenuItem, ICanRecieveMessage
+        : UnitDisplayMenuItem<TUnit>, IConditionedMenuItem, ICanReceiveMessage
         where TUnit : IUnit
     {
         private readonly IMessenger messenger;
 
-        private GraphReadDto graph = GraphReadDto.Empty;
+        private GraphReadDto<Vertex> graph = GraphReadDto<Vertex>.Empty;
 
         protected MainMenuItem(IInput<int> input, TUnit viewModel,
             IMessenger messenger, ILog log)
@@ -25,10 +26,10 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
 
         public bool CanBeExecuted()
         {
-            return graph != GraphReadDto.Empty;
+            return graph != GraphReadDto<Vertex>.Empty;
         }
 
-        public void RegisterHanlders(IMessenger messenger)
+        public void RegisterHandlers(IMessenger messenger)
         {
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }

@@ -15,7 +15,7 @@ using System.Linq;
 namespace Pathfinding.App.Console.Model.Visualizations
 {
     internal sealed class VertexVisualizations
-        : ITotalVisualization<Vertex>, ICanRecieveMessage, IDisposable
+        : ITotalVisualization<Vertex>, ICanReceiveMessage, IDisposable
     {
         private readonly IReadOnlyDictionary<string, IVisualizedVertices> containers;
 
@@ -58,7 +58,7 @@ namespace Pathfinding.App.Console.Model.Visualizations
             }
         }
 
-        public void RegisterHanlders(IMessenger messenger)
+        public void RegisterHandlers(IMessenger messenger)
         {
             messenger.RegisterGraph(this, Tokens.Visual, OnGraphCreated);
             messenger.Register<VertexVisualizations, GraphDeletedMessage>(this, Tokens.Common, OnGraphDeleted);

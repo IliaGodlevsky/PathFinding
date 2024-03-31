@@ -17,11 +17,11 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     internal sealed class ChooseGraphMenuItem(IMessenger messenger,
         IPathfindingRangeBuilder<Vertex> builder,
         IInput<int> input,
-        IService service) : IConditionedMenuItem
+        IService<Vertex> service) : IConditionedMenuItem
     {
         private readonly IMessenger messenger = messenger;
         private readonly IInput<int> input = input;
-        private readonly IService service = service;
+        private readonly IService<Vertex> service = service;
         private readonly IPathfindingRangeBuilder<Vertex> builder = builder;
 
         public bool CanBeExecuted()
@@ -42,13 +42,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             {
                 int id = graphs[index].Id;
                 var graph = service.GetGraph(id);
-                var costRange = graph.First().Cost.CostRange;
-                messenger.SendMany(new GraphMessage(graph, id), Tokens.Visual,
+                var costRange = graph.Graph.First().Cost.CostRange;
+                messenger.SendMany(new GraphMessage(graph), Tokens.Visual,
                     Tokens.AppLayout, Tokens.Main, Tokens.Common);
                 messenger.Send(new CostRangeChangedMessage(costRange), Tokens.AppLayout);
                 var range = service.GetRange(id);
                 builder.Undo();
-                builder.Include(range, graph);
+                builder.Include(range, graph.Graph);
             }
         }
 

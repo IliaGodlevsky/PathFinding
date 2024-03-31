@@ -41,8 +41,8 @@ namespace Pathfinding.App.Console.DependencyInjection
         {
             return builder.OnActivated(e =>
             {
-                var recievers = e.Context.Resolve<ICanRecieveMessage[]>();
-                recievers.ForEach(r => r.RegisterHanlders(e.Instance));
+                var recievers = e.Context.Resolve<ICanReceiveMessage[]>();
+                recievers.ForEach(r => r.RegisterHandlers(e.Instance));
             });
         }
 

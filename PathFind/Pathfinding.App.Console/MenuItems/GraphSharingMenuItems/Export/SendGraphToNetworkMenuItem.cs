@@ -3,6 +3,7 @@ using Pathfinding.App.Console.DAL.Models.TransferObjects.Serialization;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
+using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
         IInput<int> intInput,
         ISerializer<IEnumerable<GraphSerializationDto>> serializer,
         ILog log,
-        IService service) : ExportGraphToNetworkMenuItem<GraphSerializationDto>(input, intInput, serializer, log, service)
+        IService<Vertex> service) : ExportGraphToNetworkMenuItem<GraphSerializationDto>(input, intInput, serializer, log, service)
     {
         protected override GraphSerializationDto GetForSave(int graphId)
         {

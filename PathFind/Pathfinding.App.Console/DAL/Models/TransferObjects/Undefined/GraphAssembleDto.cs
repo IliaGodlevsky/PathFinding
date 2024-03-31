@@ -4,9 +4,7 @@ namespace Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined
 {
     internal class GraphAssembleDto
     {
-        public int Width { get; set; }
-
-        public int Length { get; set; }
+        public IReadOnlyList<int> Dimensions { get; set; }
 
         public IReadOnlyCollection<VertexAssembleDto> Vertices { get; set; }
 

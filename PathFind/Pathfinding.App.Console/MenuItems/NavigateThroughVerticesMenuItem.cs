@@ -18,15 +18,15 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.MenuItems
 {
-    internal abstract class NavigateThroughVerticesMenuItem : IConditionedMenuItem, ICanRecieveMessage
+    internal abstract class NavigateThroughVerticesMenuItem : IConditionedMenuItem, ICanReceiveMessage
     {
         protected readonly IInput<ConsoleKey> keyInput;
-        protected readonly IService service;
+        protected readonly IService<Vertex> service;
         protected readonly Lazy<VertexActions> actions;
 
         protected readonly HashSet<Vertex> processed = new();
 
-        protected GraphReadDto graph = GraphReadDto.Empty;
+        protected GraphReadDto<Vertex> graph = GraphReadDto<Vertex>.Empty;
         protected InclusiveValueRange<int> xRange = default;
         protected InclusiveValueRange<int> yRange = default;
 
@@ -36,7 +36,7 @@ namespace Pathfinding.App.Console.MenuItems
 
         protected NavigateThroughVerticesMenuItem(
             IInput<ConsoleKey> keyInput,
-            IService service)
+            IService<Vertex> service)
         {
             this.keyInput = keyInput;
             this.service = service;
@@ -45,7 +45,7 @@ namespace Pathfinding.App.Console.MenuItems
 
         public virtual bool CanBeExecuted()
         {
-            return graph != GraphReadDto.Empty;
+            return graph != GraphReadDto<Vertex>.Empty;
         }
 
         public virtual void Execute()
@@ -111,7 +111,7 @@ namespace Pathfinding.App.Console.MenuItems
             yRange = new(graph.Graph.GetLength() - 1);
         }
 
-        public virtual void RegisterHanlders(IMessenger messenger)
+        public virtual void RegisterHandlers(IMessenger messenger)
         {
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }

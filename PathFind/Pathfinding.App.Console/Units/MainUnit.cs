@@ -18,7 +18,7 @@ namespace Pathfinding.App.Console.Units
     internal sealed class MainUnit(IReadOnlyCollection<IMenuItem> menuItems,
         IInput<Answer> input,
         IUndo undo,
-        ILog log) : Unit(menuItems), ICanRecieveMessage
+        ILog log) : Unit(menuItems), ICanReceiveMessage
     {
         private readonly IUndo undo = undo;
         private readonly ILog log = log;
@@ -62,7 +62,7 @@ namespace Pathfinding.App.Console.Units
             DisplayGraph();
         }
 
-        public void RegisterHanlders(IMessenger messenger)
+        public void RegisterHandlers(IMessenger messenger)
         {
             var token = Tokens.Main.Bind(IsGraphCreated);
             messenger.RegisterGraph(this, Tokens.Main, SetGraph);

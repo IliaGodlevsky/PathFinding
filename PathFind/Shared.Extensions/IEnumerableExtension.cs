@@ -42,11 +42,6 @@ namespace Shared.Extensions
             items.ForEach(collection.Add);
         }
 
-        public static void RemoveMany<T>(this ICollection<T> collection, IEnumerable<T> range)
-        {
-            range.ForEach(x => collection.Remove(x));
-        }
-
         public static T AggregateOrDefault<T>(this IEnumerable<T> collection, Func<T, T, T> func)
         {
             return collection.Any() ? collection.Aggregate(func) : default;

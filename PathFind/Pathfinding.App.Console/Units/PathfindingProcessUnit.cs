@@ -20,14 +20,14 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.Units
 {
-    internal sealed class PathfindingProcessUnit : Unit, ICanRecieveMessage
+    internal sealed class PathfindingProcessUnit : Unit, ICanReceiveMessage
     {
         private readonly IMessenger messenger;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder;
         private readonly IInput<ConsoleKey> input;
         private readonly ILog log;
 
-        private GraphReadDto graph = GraphReadDto.Empty;
+        private GraphReadDto<Vertex> graph = GraphReadDto<Vertex>.Empty;
 
         public PathfindingProcessUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IPathfindingRangeBuilder<Vertex> rangeBuilder,
@@ -102,7 +102,7 @@ namespace Pathfinding.App.Console.Units
             messenger.Send(statMsg, Tokens.Statistics);
         }
 
-        public void RegisterHanlders(IMessenger messenger)
+        public void RegisterHandlers(IMessenger messenger)
         {
             messenger.Register<PathfindingProcessUnit, AlgorithmStartInfoMessage>(this, Tokens.Pathfinding, FindPath);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);

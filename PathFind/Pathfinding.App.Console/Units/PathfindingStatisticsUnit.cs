@@ -15,7 +15,7 @@ using System.Diagnostics;
 
 namespace Pathfinding.App.Console.Units
 {
-    internal sealed class PathfindingStatisticsUnit : Unit, ICanRecieveMessage
+    internal sealed class PathfindingStatisticsUnit : Unit, ICanReceiveMessage
     {
         private readonly IMessenger messenger;
         private readonly Stopwatch timer = new();
@@ -31,7 +31,7 @@ namespace Pathfinding.App.Console.Units
             this.messenger = messenger;
         }
 
-        public void RegisterHanlders(IMessenger messenger)
+        public void RegisterHandlers(IMessenger messenger)
         {
             var token = Tokens.Statistics.Bind(IsStatisticsApplied);
             messenger.Register<PathfindingStatisticsUnit, AlgorithmMessage>(this, token, SubscribeOnStatistics);

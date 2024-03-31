@@ -16,18 +16,19 @@ using System.Linq;
 
 namespace Pathfinding.App.Console.DAL.Services
 {
-    internal sealed class Service(IMapper mapper,
-        IUnitOfWorkFactory factory = null) : IService
+    internal sealed class Service<T>(IMapper mapper,
+        IUnitOfWorkFactory factory = null) : IService<T>
+        where T : IVertex
     {
         private readonly IMapper mapper = mapper;
         private readonly IUnitOfWorkFactory factory = factory ?? new LiteDbInMemoryUnitOfWorkFactory();
 
-        public GraphReadDto AddGraph(IGraph<Vertex> dto)
+        public GraphReadDto<T> AddGraph(GraphCreateDto<T> graph)
         {
-            return Transaction(unitOfWork => unitOfWork.AddGraph(mapper, dto));
+            return Transaction(unitOfWork => unitOfWork.AddGraph(mapper, graph));
         }
 
-        public IReadOnlyCollection<PathfindingHistoryReadDto> AddPathfindingHistory(IEnumerable<PathfindingHistoryCreateDto> histories)
+        public IReadOnlyCollection<PathfindingHistoryReadDto<T>> AddPathfindingHistory(IEnumerable<PathfindingHistoryCreateDto<T>> histories)
         {
             return Transaction(unitOfWork => histories.Select(history =>
             {
@@ -35,14 +36,14 @@ namespace Pathfinding.App.Console.DAL.Services
                 history.Algorithms.ForEach(x => x.Run.GraphId = dto.Id);
                 unitOfWork.AddHistory(mapper, history.Algorithms);
                 var vertices = history.Range
-                    .Select((x, i) => (Order: i, Vertex: history.Graph.Get(x)));
+                    .Select((x, i) => (Order: i, Vertex: history.Graph.Graph.Get(x)));
                 var entities = SelectRangeEntities(vertices, dto.Id);
                 unitOfWork.RangeRepository.Insert(entities);
-                return mapper.Map<PathfindingHistoryReadDto>(history) with { Id = dto.Id };
+                return mapper.Map<PathfindingHistoryReadDto<T>>(history) with { Graph = dto };
             }).ToReadOnly());
         }
 
-        public bool AddRange(IEnumerable<(int Order, Vertex Vertex)> vertices, int graphId)
+        public bool AddRange(IEnumerable<(int Order, T Vertex)> vertices, int graphId)
         {
             return Transaction(unitOfWork =>
             {
@@ -57,14 +58,18 @@ namespace Pathfinding.App.Console.DAL.Services
             return Transaction(unitOfWork => unitOfWork.GraphRepository.Delete(graphId));
         }
 
-        public IReadOnlyList<GraphEntity> GetAllGraphInfo()
+        public IReadOnlyList<GraphInformationReadDto> GetAllGraphInfo()
         {
-            return Transaction(unitOfWork => unitOfWork.GraphRepository.GetAll().ToList().AsReadOnly());
+            return Transaction(unitOfWork =>
+            {
+                var result = unitOfWork.GraphRepository.GetAll();
+                return mapper.Map<GraphInformationReadDto[]>(result);
+            });
         }
 
-        public IGraph<Vertex> GetGraph(int id)
+        public GraphReadDto<T> GetGraph(int id)
         {
-            return Transaction(unitOfWork => unitOfWork.CreateGraph(id, mapper));
+            return Transaction(unitOfWork => unitOfWork.CreateGraph<T>(id, mapper));
         }
 
         public IReadOnlyCollection<int> GetGraphIds()
@@ -77,24 +82,24 @@ namespace Pathfinding.App.Console.DAL.Services
             return Transaction(unitOfWork => unitOfWork.GetRange(graphId));
         }
 
-        public bool RemoveNeighbors(IReadOnlyDictionary<Vertex, IReadOnlyCollection<Vertex>> neighborhoods)
+        public bool RemoveNeighbors(IReadOnlyDictionary<T, IReadOnlyCollection<T>> neighborhoods)
         {
             return Transaction(unitOfWork =>
             {
                 var repo = unitOfWork.NeighborsRepository;
-                neighborhoods.ForEach(x => x.Value.ForEach(i => repo.DeleteNeighbour(x.Key.Id, i.Id)));
+                neighborhoods.ForEach(x => x.Value.ForEach(i => repo.DeleteNeighbour(((dynamic)x.Key).Id, ((dynamic)i).Id)));
                 return true;
             });
         }
 
-        public bool UpdateRange(IEnumerable<(int Order, Vertex Vertex)> vertices, int graphId)
+        public bool UpdateRange(IEnumerable<(int Order, T Vertex)> vertices, int graphId)
         {
             return Transaction(unitOfWork =>
             {
-                var verts = vertices.Select(x => x.Vertex.Id).ToReadOnly();
+                var verts = vertices.Select(x => (int)((dynamic)x.Vertex).Id).ToReadOnly();
                 var ranges = unitOfWork.RangeRepository.GetByVerticesIds(verts)
                     .OrderBy(x => x.VertexId).ToReadOnly();
-                var orderedVertices = vertices.OrderBy(x => x.Vertex.Id).ToReadOnly();
+                var orderedVertices = vertices.OrderBy(x => (int)((dynamic)x.Vertex).Id).ToReadOnly();
                 for (int i = 0; i < ranges.Count; i++)
                 {
                     ranges[i].Order = orderedVertices[i].Order;
@@ -108,18 +113,17 @@ namespace Pathfinding.App.Console.DAL.Services
             return Transaction(unitOfWork => unitOfWork.RangeRepository.DeleteByGraphId(graphId));
         }
 
-        public PathfindingHistoryReadDto GetPathfindingHistory(int graphId)
+        public PathfindingHistoryReadDto<T> GetPathfindingHistory(int graphId)
         {
-            return Transaction(unitOfWork => new PathfindingHistoryReadDto()
+            return Transaction(unitOfWork => new PathfindingHistoryReadDto<T>()
             {
-                Id = graphId,
-                Graph = unitOfWork.CreateGraph(graphId, mapper),
+                Graph = unitOfWork.CreateGraph<T>(graphId, mapper),
                 Algorithms = unitOfWork.GetAlgorithmRuns(graphId, mapper),
                 Range = unitOfWork.GetRange(graphId)
             });
         }
 
-        public bool UpdateVertices(IEnumerable<Vertex> vertices, int graphId)
+        public bool UpdateVertices(IEnumerable<T> vertices, int graphId)
         {
             return Transaction(unitOfWork =>
             {
@@ -139,65 +143,61 @@ namespace Pathfinding.App.Console.DAL.Services
             });
         }
 
-        public bool AddNeighbors(IReadOnlyDictionary<Vertex, IReadOnlyCollection<Vertex>> neighborhoods)
+        public bool AddNeighbors(IReadOnlyDictionary<T, IReadOnlyCollection<T>> neighborhoods)
         {
             return Transaction(unitOfWork =>
             {
                 var list = neighborhoods.SelectMany(neighborhood =>
                     neighborhood.Value.Select(neighbor => new NeighborEntity
                     {
-                        VertexId = neighborhood.Key.Id,
-                        NeighborId = neighbor.Id
+                        VertexId = ((dynamic)neighborhood.Key).Id,
+                        NeighborId = ((dynamic)neighbor).Id
                     })).ToReadOnly();
                 unitOfWork.NeighborsRepository.Insert(list);
                 return true;
             });
         }
 
-        public bool RemoveRange(IEnumerable<Vertex> vertices, int graphId)
+        public bool RemoveRange(IEnumerable<T> vertices, int graphId)
         {
             return Transaction(unitOfWork =>
             {
-                vertices.ForEach(x => unitOfWork.RangeRepository.DeleteByVertexId(x.Id));
+                vertices.ForEach(x => unitOfWork.RangeRepository.DeleteByVertexId(((dynamic)x).Id));
                 return true;
             });
         }
 
-        public IReadOnlyCollection<PathfindingHistoryReadDto> AddPathfindingHistory(IEnumerable<PathfindingHistorySerializationDto> histories)
+        public IReadOnlyCollection<PathfindingHistoryReadDto<T>> AddPathfindingHistory(IEnumerable<PathfindingHistorySerializationDto> histories)
         {
-            var dtos = mapper.Map<PathfindingHistoryCreateDto[]>(histories);
-            return AddPathfindingHistory(dtos);
+            return AddPathfindingHistory(mapper.Map<PathfindingHistoryCreateDto<T>[]>(histories));
         }
 
         public PathfindingHistorySerializationDto GetSerializationHistory(int graphId)
         {
-            var dto = GetPathfindingHistory(graphId);
-            return mapper.Map<PathfindingHistorySerializationDto>(dto);
+            return mapper.Map<PathfindingHistorySerializationDto>(GetPathfindingHistory(graphId));
         }
 
         public GraphSerializationDto GetSerializationGraph(int graphId)
         {
-            var graph = GetGraph(graphId);
-            return mapper.Map<GraphSerializationDto>(graph);
+            return mapper.Map<GraphSerializationDto>(GetGraph(graphId));
         }
 
-        public GraphReadDto AddGraph(GraphSerializationDto graph)
+        public GraphReadDto<T> AddGraph(GraphSerializationDto graph)
         {
-            var add = mapper.Map<IGraph<Vertex>>(graph);
-            return AddGraph(add);
+            return AddGraph(mapper.Map<GraphCreateDto<T>>(graph));
         }
 
-        private IReadOnlyCollection<RangeEntity> SelectRangeEntities(IEnumerable<(int Order, Vertex Vertex)> vertices, int graphId)
+        private IReadOnlyCollection<RangeEntity> SelectRangeEntities(IEnumerable<(int Order, T Vertex)> vertices, int graphId)
         {
             return vertices.Select(x => new RangeEntity
             {
                 GraphId = graphId,
-                VertexId = x.Vertex.Id,
+                VertexId = ((dynamic)x.Vertex).Id,
                 Order = x.Order
             }).ToReadOnly();
         }
 
-        public IReadOnlyCollection<RunStatisticsDto> GetRunStatiticsForGraph(int graphId)
+        public IReadOnlyCollection<RunStatisticsDto> GetRunStatisticsForGraph(int graphId)
         {
             return Transaction(unit =>
             {
@@ -209,12 +209,9 @@ namespace Pathfinding.App.Console.DAL.Services
                     .GetByRunIds(runs.Select(x => x.Id))
                     .OrderBy(x => x.AlgorithmRunId)
                     .ToReadOnly();
-                var runStatistics = mapper.Map<RunStatisticsDto[]>(statistics).ToReadOnly();
-                for (int i = 0; i < runs.Count; i++)
-                {
-                    runStatistics[i].AlgorithmId = runs[i].AlgorithmId;
-                }
-                return runStatistics;
+                return mapper.Map<RunStatisticsDto[]>(statistics)
+                    .ForEach((x, i) => x.AlgorithmId = runs[i].AlgorithmId)
+                    .ToReadOnly();
             });
         }
 
@@ -253,7 +250,7 @@ namespace Pathfinding.App.Console.DAL.Services
             return Transaction(unit => unit.GraphRepository.GetCount());
         }
 
-        private T Transaction<T>(Func<IUnitOfWork, T> action)
+        private TParam Transaction<TParam>(Func<IUnitOfWork, TParam> action)
         {
             using (var unitOfWork = factory.Create())
             {

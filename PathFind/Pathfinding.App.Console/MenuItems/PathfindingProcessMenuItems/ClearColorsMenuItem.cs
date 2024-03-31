@@ -15,13 +15,13 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     [LowPriority]
     internal sealed class ClearColorsMenuItem(IMessenger messenger,
         IPathfindingRangeBuilder<Vertex> rangeBuilder)
-        : IConditionedMenuItem, ICanRecieveMessage
+        : IConditionedMenuItem, ICanReceiveMessage
     {
         private readonly IMessenger messenger = messenger;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder = rangeBuilder;
-        private GraphReadDto graph = GraphReadDto.Empty;
+        private GraphReadDto<Vertex> graph = GraphReadDto<Vertex>.Empty;
 
-        public bool CanBeExecuted() => graph != GraphReadDto.Empty;
+        public bool CanBeExecuted() => graph != GraphReadDto<Vertex>.Empty;
 
         public void Execute()
         {
@@ -41,7 +41,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
             return Languages.ClearColors;
         }
 
-        public void RegisterHanlders(IMessenger messenger)
+        public void RegisterHandlers(IMessenger messenger)
         {
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }

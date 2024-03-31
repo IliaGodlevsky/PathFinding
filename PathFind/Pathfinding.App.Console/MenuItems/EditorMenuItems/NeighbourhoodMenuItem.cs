@@ -17,8 +17,8 @@ using System.Threading.Tasks;
 namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
 {
     [MediumPriority]
-    internal sealed class NeighbourhoodMenuItem(IInput<ConsoleKey> keyInput,
-        IService service) : NavigateThroughVerticesMenuItem(keyInput, service)
+    internal sealed class NeighborhoodMenuItem(IInput<ConsoleKey> keyInput,
+        IService<Vertex> service) : NavigateThroughVerticesMenuItem(keyInput, service)
     {
         public async override void Execute()
         {

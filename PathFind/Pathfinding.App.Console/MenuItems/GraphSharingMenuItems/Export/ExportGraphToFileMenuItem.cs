@@ -1,5 +1,6 @@
 ﻿using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
@@ -14,11 +15,11 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
             IInput<int> intInput,
             ISerializer<IEnumerable<TExport>> graphSerializer,
             ILog log,
-            IService service) : base(input, intInput, graphSerializer, log, service)
+            IService<Vertex> service) : base(input, intInput, graphSerializer, log, service)
         {
         }
 
-        protected override sealed async Task ExportAsync(string path, IEnumerable<TExport> histories)
+        protected override async Task ExportAsync(string path, IEnumerable<TExport> histories)
         {
             await serializer.SerializeToFileAsync(histories, path);
         }

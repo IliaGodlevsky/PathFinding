@@ -8,6 +8,7 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
+using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
 using Shared.Extensions;
 using Shared.Primitives;
@@ -18,19 +19,19 @@ using System.Text;
 namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 {
     [HighPriority]
-    internal sealed class ShowHistoryMenuItem : IConditionedMenuItem, ICanRecieveMessage
+    internal sealed class ShowHistoryMenuItem : IConditionedMenuItem, ICanReceiveMessage
     {
         private readonly IMessenger messenger;
         private readonly IInput<int> input;
-        private readonly IService service;
+        private readonly IService<Vertex> service;
 
         private bool isHistoryApplied = true;
 
-        private GraphReadDto graph = GraphReadDto.Empty;
+        private GraphReadDto<Vertex> graph = GraphReadDto<Vertex>.Empty;
 
         public ShowHistoryMenuItem(IMessenger messenger,
             IInput<int> input,
-            IService service)
+            IService<Vertex> service)
         {
             this.service = service;
             this.input = input;
@@ -44,7 +45,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public void Execute()
         {
-            var statistics = service.GetRunStatiticsForGraph(graph.Id)
+            var statistics = service.GetRunStatisticsForGraph(graph.Id)
                 .OrderBy(x => x.AlgorithmId)
                 .GroupBy(x => x.AlgorithmId)
                 .SelectMany(x => x.OrderBy(x => x.AlgorithmSpeed).ThenBy(x => x.Steps))
@@ -119,7 +120,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             return Languages.ShowHistory;
         }
 
-        public void RegisterHanlders(IMessenger messenger)
+        public void RegisterHandlers(IMessenger messenger)
         {
             messenger.Register<ShowHistoryMenuItem, IsAppliedMessage>(this, Tokens.History, SetIsApplied);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);

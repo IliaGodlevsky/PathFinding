@@ -6,14 +6,14 @@ namespace Pathfinding.App.Console.Messaging.Messages
 {
     internal sealed class GraphMessage
     {
-        public GraphReadDto Graph { get; set; }
+        public GraphReadDto<Vertex> Graph { get; set; }
 
-        public GraphMessage(IGraph<Vertex> graph, int id)
-            : this(new() { Id = id, Graph = graph })
+        public GraphMessage(IGraph<Vertex> graph, int id, string name)
+            : this(new() { Id = id, Graph = graph, Name = name })
         {
         }
 
-        public GraphMessage(GraphReadDto dto)
+        public GraphMessage(GraphReadDto<Vertex> dto)
         {
             Graph = dto;
         }

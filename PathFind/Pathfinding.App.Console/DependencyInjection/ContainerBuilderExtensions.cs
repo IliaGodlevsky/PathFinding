@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using AutoMapper;
+using AutoMapper.Configuration;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
@@ -72,9 +73,8 @@ namespace Pathfinding.App.Console.DependencyInjection
     {
         public static ContainerBuilder AddDataAccessLayer(this ContainerBuilder builder)
         {
-            builder.RegisterType<Service>().As<IService>().SingleInstance();
-            builder.RegisterType<LiteDbInFileUnitOfWorkFactory>()
-                .As<IUnitOfWorkFactory>().SingleInstance();
+            builder.RegisterType<Service<Vertex>>().As<IService<Vertex>>().SingleInstance();
+            builder.RegisterType<LiteDbInMemoryUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
             return builder;
         }
 
@@ -89,12 +89,12 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<SaveGraphHistoryToFileMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
             builder.RegisterType<LoadGraphHistoryFromFileMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
             builder.RegisterType<SendGraphHistoryToNetworkMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
-            builder.RegisterType<RecieveGraphHistoryFromNetworkMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
+            builder.RegisterType<ReceiveGraphHistoryFromNetworkMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
 
             builder.RegisterType<SaveGraphToFileMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
             builder.RegisterType<LoadGraphFromFileMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
             builder.RegisterType<SendGraphToNetworkMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
-            builder.RegisterType<RecieveGraphFromNetworkMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
+            builder.RegisterType<ReceiveGraphFromNetworkMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
 
             builder.RegisterType<JsonSerializer<IEnumerable<GraphSerializationDto>>>()
                 .As<ISerializer<IEnumerable<GraphSerializationDto>>>().SingleInstance();
@@ -107,10 +107,10 @@ namespace Pathfinding.App.Console.DependencyInjection
         {
             builder.RegisterUnit<GraphEditorUnit>();
             builder.RegisterType<EditorKeysMenuItem>().Keyed<IMenuItem>(PathfindingUnits.KeysUnit).SingleInstance();
-            builder.RegisterType<EditorUnitMenuItem>().Keyed<IMenuItem>(Main).As<ICanRecieveMessage>().SingleInstance();
-            builder.RegisterType<ReverseVertexMenuItem>().Keyed<IMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
-            builder.RegisterType<NeighbourhoodMenuItem>().Keyed<IMenuItem>(Editor).As<ICanRecieveMessage>().SingleInstance();
-            builder.RegisterType<ChangeCostMenuItem>().Keyed<IMenuItem>(Editor).SingleInstance().As<ICanRecieveMessage>();
+            builder.RegisterType<EditorUnitMenuItem>().Keyed<IMenuItem>(Main).As<ICanReceiveMessage>().SingleInstance();
+            builder.RegisterType<ReverseVertexMenuItem>().Keyed<IMenuItem>(Editor).As<ICanReceiveMessage>().SingleInstance();
+            builder.RegisterType<NeighborhoodMenuItem>().Keyed<IMenuItem>(Editor).As<ICanReceiveMessage>().SingleInstance();
+            builder.RegisterType<ChangeCostMenuItem>().Keyed<IMenuItem>(Editor).SingleInstance().As<ICanReceiveMessage>();
             return builder;
         }
 
@@ -183,7 +183,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterUnit<PathfindingVisualizationUnit>(new VisualizationUnitParametresFactory());
             builder.RegisterType<VisualizationMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
             builder.RegisterType<ApplyVisualizationMenuItem>().Keyed<IMenuItem>(Visual).SingleInstance();
-            builder.RegisterType<EnterAnimationDelayMenuItem>().Keyed<IMenuItem>(Visual).As<ICanRecieveMessage>().SingleInstance();
+            builder.RegisterType<EnterAnimationDelayMenuItem>().Keyed<IMenuItem>(Visual).As<ICanReceiveMessage>().SingleInstance();
             builder.RegisterType<VisitedVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
             builder.RegisterType<EnqueuedVertexColorMenuItem>().Keyed<IMenuItem>(Colors).SingleInstance();
             builder.RegisterVisualizionContainer<VisualizedVisited>(Constants.VisitedColorKey);
@@ -197,7 +197,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<HistoryMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
             builder.RegisterType<ApplyHistoryMenuItem>().Keyed<IMenuItem>(History).SingleInstance();
             //builder.RegisterType<ClearHistoryMenuItem>().Keyed<IMenuItem>(History).As<ICanRecieveMessage>().SingleInstance();
-            builder.RegisterType<ShowHistoryMenuItem>().Keyed<IMenuItem>(History).As<ICanRecieveMessage>().SingleInstance();
+            builder.RegisterType<ShowHistoryMenuItem>().Keyed<IMenuItem>(History).As<ICanReceiveMessage>().SingleInstance();
             return builder;
         }
 
@@ -242,15 +242,15 @@ namespace Pathfinding.App.Console.DependencyInjection
 
             builder.RegisterType<WeakReferenceMessenger>().As<IMessenger>().SingleInstance().RegisterRecievers();
 
-            builder.RegisterType<AppLayout>().As<ICanRecieveMessage>().SingleInstance().AutoActivate();
+            builder.RegisterType<AppLayout>().As<ICanReceiveMessage>().SingleInstance().AutoActivate();
 
             builder.RegisterUnits(Main, Graph, Process, Range, Algorithms);
 
             builder.RegisterType<MainUnitMenuItem>().AsSelf().InstancePerDependency();
             builder.RegisterType<GraphCreateMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
-            builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IMenuItem>(Main).As<ICanRecieveMessage>().SingleInstance();
+            builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IMenuItem>(Main).As<ICanReceiveMessage>().SingleInstance();
 
-            builder.RegisterType<WithoutDbService>().As<IService>().SingleInstance().IfNotRegistered(typeof(IService));
+            builder.RegisterType<DefaultService<Vertex>>().As<IService<Vertex>>().SingleInstance().IfNotRegistered(typeof(IService<Vertex>));
             builder.RegisterAutoMapper();
 
             builder.RegisterType<VertexVisualizations>().CommunicateContainers().SingleInstance().AsImplementedInterfaces()
@@ -266,21 +266,21 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<AlgorithmsUnitMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
 
             builder.RegisterType<PathfindingRangeMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
-            builder.RegisterType<ClearColorsMenuItem>().Keyed<IMenuItem>(Process).As<ICanRecieveMessage>().SingleInstance();
-            builder.RegisterType<ClearGraphMenuItem>().Keyed<IMenuItem>(Process).As<ICanRecieveMessage>().SingleInstance();
-            builder.RegisterType<ClearPathfindingRangeMenuItem>().Keyed<IMenuItem>(Range).As<ICanRecieveMessage>().SingleInstance();
-            builder.RegisterType<EnterPathfindingRangeMenuItem>().Keyed<IMenuItem>(Range).As<ICanRecieveMessage>().SingleInstance()
+            builder.RegisterType<ClearColorsMenuItem>().Keyed<IMenuItem>(Process).As<ICanReceiveMessage>().SingleInstance();
+            builder.RegisterType<ClearGraphMenuItem>().Keyed<IMenuItem>(Process).As<ICanReceiveMessage>().SingleInstance();
+            builder.RegisterType<ClearPathfindingRangeMenuItem>().Keyed<IMenuItem>(Range).As<ICanReceiveMessage>().SingleInstance();
+            builder.RegisterType<EnterPathfindingRangeMenuItem>().Keyed<IMenuItem>(Range).As<ICanReceiveMessage>().SingleInstance()
                 .ConfigurePipeline(p => p.Use(new VertexActionResolveMiddlewear(PathfindingRange)));
             builder.RegisterType<IncludeInRangeAction>().Keyed<IVertexAction>(PathfindingRange)
                 .WithMetadata(PathfindingRange, nameof(Keys.Default.IncludeInRange));
             builder.RegisterType<ExcludeFromRangeAction>().Keyed<IVertexAction>(PathfindingRange)
                 .WithMetadata(PathfindingRange, nameof(Keys.Default.ExcludeFromRange));
 
-            builder.RegisterType<AssembleGraphMenuItem>().Keyed<IMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
+            builder.RegisterType<AssembleGraphMenuItem>().Keyed<IMenuItem>(Graph).As<ICanReceiveMessage>().SingleInstance();
             builder.RegisterType<ChooseGraphMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
             builder.RegisterType<ChooseNeighbourhoodMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance()
                 .ConfigurePipeline(p => p.Use(new KeyResolveMiddlware<string, INeighborhoodFactory>(Neighbourhood)));
-            builder.RegisterType<DeleteGraphMenuItem>().Keyed<IMenuItem>(Graph).As<ICanRecieveMessage>().SingleInstance();
+            builder.RegisterType<DeleteGraphMenuItem>().Keyed<IMenuItem>(Graph).As<ICanReceiveMessage>().SingleInstance();
             builder.RegisterType<EnterCostRangeMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
             builder.RegisterType<EnterGraphParametresMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
             builder.RegisterType<EnterObstaclePercentMenuItem>().Keyed<IMenuItem>(Graph).SingleInstance();
@@ -340,7 +340,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<GraphMappingProfile<Vertex>>().As<Profile>().SingleInstance();
             builder.RegisterType<VerticesMappingProfile<Vertex>>().As<Profile>().SingleInstance();
             builder.RegisterType<GraphStateMappingProfile>().As<Profile>().SingleInstance();
-            builder.RegisterType<HistoryMappingProfile>().As<Profile>().SingleInstance();
+            builder.RegisterType<HistoryMappingProfile<Vertex>>().As<Profile>().SingleInstance();
             builder.RegisterType<StatisticsMappingProfile>().As<Profile>().SingleInstance();
             builder.RegisterType<SubAlgorithmsMappingProfile>().As<Profile>().SingleInstance();
             builder.RegisterType<UntitledMappingConfig>().As<Profile>().SingleInstance();

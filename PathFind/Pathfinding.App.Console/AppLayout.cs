@@ -12,7 +12,7 @@ using System.Drawing;
 
 namespace Pathfinding.App.Console
 {
-    internal sealed class AppLayout : ICanRecieveMessage
+    internal sealed class AppLayout : ICanReceiveMessage
     {
         public const int HeightOfAbscissaView = 2;
         public const int HeightOfGraphParametresView = 1;
@@ -31,7 +31,7 @@ namespace Pathfinding.App.Console
 
         public static int LateralDistanceBetweenVertices { get; private set; }
 
-        public void RegisterHanlders(IMessenger messenger)
+        public void RegisterHandlers(IMessenger messenger)
         {
             messenger.Register<AppLayout, CostRangeChangedMessage, IToken>(this, Tokens.AppLayout, SetRange);
             messenger.Register<AppLayout, StatisticsLineMessage, IToken>(this, Tokens.AppLayout, ShowStatistics);

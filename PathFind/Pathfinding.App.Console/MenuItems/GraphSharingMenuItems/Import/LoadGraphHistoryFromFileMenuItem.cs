@@ -21,16 +21,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
         IPathfindingRangeBuilder<Vertex> rangeBuilder,
         ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer,
         ILog log,
-        IService service) : ImportGraphFromFileMenuItem<PathfindingHistorySerializationDto>(messenger, input, serializer, log, service)
+        IService<Vertex> service) : ImportGraphFromFileMenuItem<PathfindingHistorySerializationDto>(messenger, input, serializer, log, service)
     {
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder = rangeBuilder;
 
-        protected override GraphReadDto AddSingleImported(PathfindingHistorySerializationDto imported)
+        protected override GraphReadDto<Vertex> AddSingleImported(PathfindingHistorySerializationDto imported)
         {
-            var result = service.AddPathfindingHistory(new[] { imported }).ElementAt(0);
-            rangeBuilder.Undo();
-            rangeBuilder.Include(result.Range, result.Graph);
-            return new() { Graph = result.Graph, Id = result.Id };
+            return service.AddPathfindingHistory(new[] { imported }).ElementAt(0).Graph;
         }
 
         protected override void AddImported(IEnumerable<PathfindingHistorySerializationDto> imported)
@@ -41,6 +38,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
         public override string ToString()
         {
             return Languages.LoadGraphHistory;
+        }
+
+        protected override void Post(GraphReadDto<Vertex> dto)
+        {
+            var range = service.GetRange(dto.Id);
+            rangeBuilder.Undo();
+            rangeBuilder.Include(range, dto.Graph);
         }
     }
 }

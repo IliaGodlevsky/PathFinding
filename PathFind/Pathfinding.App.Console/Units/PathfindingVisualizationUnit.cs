@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.Units
 {
-    internal sealed class PathfindingVisualizationUnit : Unit, ICanRecieveMessage
+    internal sealed class PathfindingVisualizationUnit : Unit, ICanReceiveMessage
     {
         private readonly IMessenger messenger;
         private readonly ConsoleKeystrokesHook keyStrokeHook = new();
@@ -26,7 +26,7 @@ namespace Pathfinding.App.Console.Units
         private readonly IReadOnlyCollection<(string, IAnimationSpeedAction)> animationActions;
 
         private PathfindingProcess algorithm = PathfindingProcess.Idle;
-        private GraphReadDto graph = GraphReadDto.Empty;
+        private GraphReadDto<Vertex> graph = GraphReadDto<Vertex>.Empty;
         private bool isVisualizationApplied = true;
         private TimeSpan animationDelay = TimeSpan.FromMilliseconds(2);
 
@@ -108,7 +108,7 @@ namespace Pathfinding.App.Console.Units
                 .Action;
         }
 
-        public void RegisterHanlders(IMessenger messenger)
+        public void RegisterHandlers(IMessenger messenger)
         {
             var token = Tokens.Visualization.Bind(IsVisualizationApplied);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);

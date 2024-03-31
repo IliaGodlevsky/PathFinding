@@ -1,9 +1,11 @@
 ﻿using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Entities;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
+using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
@@ -18,13 +20,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
     internal sealed class SavePathfindingRangeMenuItem : IConditionedMenuItem
     {
         private readonly ISerializer<IEnumerable<ICoordinate>> serializer;
-        private readonly IService service;
+        private readonly IService<Vertex> service;
         private readonly IInput<string> stringInput;
         private readonly IInput<int> intInput;
         private readonly ILog log;
 
         public SavePathfindingRangeMenuItem(ISerializer<IEnumerable<ICoordinate>> serializer,
-            IService service,
+            IService<Vertex> service,
             IFilePathInput stringInput,
             IInput<int> intInput,
             ILog log)
@@ -87,7 +89,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
             }
         }
 
-        private string CreateMenuList(IReadOnlyCollection<GraphEntity> graphs)
+        private string CreateMenuList(IReadOnlyCollection<GraphInformationReadDto> graphs)
         {
             return graphs.Select(k => k.ConvertToString())
                 .Append(Languages.Quit)

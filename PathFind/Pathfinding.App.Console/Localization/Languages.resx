@@ -319,7 +319,7 @@
     <value>Input height of graph: </value>
   </data>
   <data name="GraphParametes" xml:space="preserve">
-    <value>Width: {0} Length: {1} Obstacle percent: {2} ({3}/{4})</value>
+    <value>{0}, Width: {1} Length: {2} Obstacle percent: {3} ({4}/{5})</value>
   </data>
   <data name="GraphSharing" xml:space="preserve">
     <value>Sharing</value>

@@ -6,17 +6,18 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
+using Pathfinding.App.Console.Model;
 using Pathfinding.Visualization.Extensions;
 using Shared.Executable;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
     [LowPriority]
-    internal sealed class ClearGraphMenuItem : IConditionedMenuItem, ICanRecieveMessage
+    internal sealed class ClearGraphMenuItem : IConditionedMenuItem, ICanReceiveMessage
     {
         private readonly IMessenger messenger;
         private readonly IUndo undo;
-        private GraphReadDto graph = GraphReadDto.Empty;
+        private GraphReadDto<Vertex> graph = GraphReadDto<Vertex>.Empty;
 
         public ClearGraphMenuItem(IMessenger messenger, IUndo undo)
         {
@@ -24,7 +25,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
             this.undo = undo;
         }
 
-        public bool CanBeExecuted() => graph != GraphReadDto.Empty;
+        public bool CanBeExecuted() => graph != GraphReadDto<Vertex>.Empty;
 
         public void Execute()
         {
@@ -44,7 +45,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
             return Languages.ClearGraph;
         }
 
-        public void RegisterHanlders(IMessenger messenger)
+        public void RegisterHandlers(IMessenger messenger)
         {
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }

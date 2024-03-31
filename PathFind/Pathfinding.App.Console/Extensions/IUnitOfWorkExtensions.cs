@@ -10,6 +10,7 @@ using Pathfinding.GraphLib.Core.Realizations;
 using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 
 namespace Pathfinding.App.Console.Extensions
 {
@@ -38,9 +39,9 @@ namespace Pathfinding.App.Console.Extensions
             int graphId, IMapper mapper)
         {
             var algorithms = unitofWork.RunRepository.GetByGraphId(graphId);
-            var dtos = mapper.Map<AlgorithmRunReadDto[]>(algorithms).ToReadOnly();
+            var read = mapper.Map<AlgorithmRunReadDto[]>(algorithms).ToReadOnly();
             var runHistories = new List<AlgorithmRunHistoryReadDto>();
-            foreach (var dto in dtos)
+            foreach (var dto in read)
             {
                 var subAlgorithms = unitofWork.SubAlgorithmRepository.GetByAlgorithmRunId(dto.Id);
                 var graphState = unitofWork.GraphStateRepository.GetByRunId(dto.Id);
@@ -56,8 +57,9 @@ namespace Pathfinding.App.Console.Extensions
             return runHistories.AsReadOnly();
         }
 
-        public static IGraph<Vertex> CreateGraph(this IUnitOfWork unitOfWork,
+        public static GraphReadDto<T> CreateGraph<T>(this IUnitOfWork unitOfWork,
             int graphId, IMapper mapper)
+            where T : IVertex
         {
             var graphEntity = unitOfWork.GraphRepository.Read(graphId);
             var vertexEntities = unitOfWork.VerticesRepository
@@ -67,16 +69,17 @@ namespace Pathfinding.App.Console.Extensions
             var neighbors = unitOfWork.NeighborsRepository
                 .GetNeighboursForVertices(ids)
                 .ToDictionary(x => x.Key, x => x.Value.Select(i => vertexEntities[i.NeighborId]).ToReadOnly());
+            var informationDto = mapper.Map<GraphInformationReadDto>(graphEntity);
             var assembleDto = new GraphAssembleDto()
             {
-                Width = graphEntity.Width,
-                Length = graphEntity.Length,
+                Dimensions = informationDto.Dimensions,
                 Vertices = mapper.Map<VertexAssembleDto[]>(vertexEntities.Values),
                 Neighborhood = neighbors
                     .ToDictionary(x => x.Key, x => mapper.Map<VertexAssembleDto[]>(x.Value)
                     .ToReadOnly())
             };
-            return mapper.Map<IGraph<Vertex>>(assembleDto);
+            var result = mapper.Map<IGraph<T>>(assembleDto);
+            return new() { Graph = result, Id = graphEntity.Id, Name = graphEntity.Name };
         }
 
         public static IReadOnlyCollection<ICoordinate> GetRange(this IUnitOfWork unitOfWork, int graphId)
@@ -88,27 +91,28 @@ namespace Pathfinding.App.Console.Extensions
                 .ToReadOnly();
         }
 
-        public static GraphReadDto AddGraph(this IUnitOfWork unitOfWork,
-            IMapper mapper, IGraph<Vertex> graph)
+        public static GraphReadDto<T> AddGraph<T>(this IUnitOfWork unitOfWork,
+            IMapper mapper, GraphCreateDto<T> graph)
+            where T : IVertex
         {
             var graphEntity = mapper.Map<GraphEntity>(graph);
             unitOfWork.GraphRepository.Insert(graphEntity);
-            var vertices = mapper.Map<VertexEntity[]>(graph).ToReadOnly();
+            var vertices = mapper.Map<VertexEntity[]>(graph.Graph).ToReadOnly();
             vertices.ForEach((x, i) =>
             {
                 x.Order = i;
                 x.GraphId = graphEntity.Id;
             });
             unitOfWork.VerticesRepository.Insert(vertices);
-            vertices.Zip(graph, (x, y) => (Entity: x, Vertex: y))
-                .ForEach(x => x.Vertex.Id = x.Entity.Id);
-            var neighbours = graph
+            vertices.Zip(graph.Graph, (x, y) => (Entity: x, Vertex: y))
+                .ForEach(x => ((dynamic)x.Vertex).Id = x.Entity.Id);
+            var neighbors = graph.Graph
                 .SelectMany(x => x.Neighbours
-                    .OfType<Vertex>()
-                    .Select(n => new NeighborEntity() { VertexId = x.Id, NeighborId = n.Id }))
+                    .OfType<T>()
+                    .Select(n => new NeighborEntity() { VertexId = ((dynamic)x).Id, NeighborId = ((dynamic)n).Id }))
                     .ToReadOnly();
-            unitOfWork.NeighborsRepository.Insert(neighbours);
-            return new() { Id = graphEntity.Id, Graph = graph };
+            unitOfWork.NeighborsRepository.Insert(neighbors);
+            return mapper.Map<GraphReadDto<T>>(graph) with { Id =  graphEntity.Id };
         }
     }
 }

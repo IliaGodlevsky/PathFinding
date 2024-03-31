@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.DAL.Interface;
-using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
+using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
@@ -17,7 +17,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
             IFilePathInput input,
             ISerializer<IEnumerable<TImport>> serializer,
             ILog log,
-            IService service) : base(messenger, input, serializer, log, service)
+            IService<Vertex> service) : base(messenger, input, serializer, log, service)
         {
         }
 
@@ -30,7 +30,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
         {
             using (Cursor.UseCurrentPositionWithClean())
             {
-                return input.Input("Enter path: ");
+                return input.Input();
             }
         }
     }

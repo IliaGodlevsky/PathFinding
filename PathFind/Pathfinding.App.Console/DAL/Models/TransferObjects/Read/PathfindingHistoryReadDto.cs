@@ -4,11 +4,10 @@ using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DAL.Models.TransferObjects.Read
 {
-    internal record PathfindingHistoryReadDto
+    internal record PathfindingHistoryReadDto<T>
+        where T : IVertex
     {
-        public int Id { get; set; }
-
-        public IGraph<Vertex> Graph { get; set; }
+        public GraphReadDto<T> Graph { get; set; }
 
         public IReadOnlyCollection<AlgorithmRunHistoryReadDto> Algorithms { get; set; }
 

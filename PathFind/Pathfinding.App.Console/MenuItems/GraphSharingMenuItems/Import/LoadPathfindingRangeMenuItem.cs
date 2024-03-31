@@ -26,19 +26,19 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
         IPathfindingRangeBuilder<Vertex> rangeBuilder,
         IFilePathInput pathInput,
         ILog log,
-        IService service) : IConditionedMenuItem, ICanRecieveMessage
+        IService<Vertex> service) : IConditionedMenuItem, ICanReceiveMessage
     {
         private readonly ISerializer<IEnumerable<ICoordinate>> serializer = serializer;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder = rangeBuilder;
         private readonly IInput<string> pathInput = pathInput;
-        private readonly IService service = service;
+        private readonly IService<Vertex> service = service;
         private readonly ILog log = log;
 
-        private GraphReadDto graph = GraphReadDto.Empty;
+        private GraphReadDto<Vertex> graph = GraphReadDto<Vertex>.Empty;
 
         public bool CanBeExecuted()
         {
-            return graph != GraphReadDto.Empty;
+            return graph != GraphReadDto<Vertex>.Empty;
         }
 
         public void Execute()
@@ -60,7 +60,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
             }
         }
 
-        public void RegisterHanlders(IMessenger messenger)
+        public void RegisterHandlers(IMessenger messenger)
         {
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);
         }

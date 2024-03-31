@@ -2,6 +2,7 @@
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
+using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.App.Console.Settings;
 using Pathfinding.GraphLib.Core.Interface.Extensions;
@@ -13,7 +14,7 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
 {
     [HighPriority]
     internal sealed class ReverseVertexMenuItem(IInput<ConsoleKey> keyInput,
-        IService service) : NavigateThroughVerticesMenuItem(keyInput, service)
+        IService<Vertex> service) : NavigateThroughVerticesMenuItem(keyInput, service)
     {
         public override async void Execute()
         {

@@ -21,22 +21,22 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.Units
 {
-    internal sealed class PathfindingHistoryUnit : Unit, ICanRecieveMessage
+    internal sealed class PathfindingHistoryUnit : Unit, ICanReceiveMessage
     {
-        private readonly IService service;
+        private readonly IService<Vertex> service;
         private readonly IPathfindingRangeBuilder<Vertex> builder;
         private readonly List<(ICoordinate, IReadOnlyList<ICoordinate>)> visitedVertices = new();
         private readonly List<SubAlgorithmCreateDto> subAlgorithms = new();
 
         private RunStatisticsDto runStatistics = new();
-        private GraphReadDto Graph = GraphReadDto.Empty;
+        private GraphReadDto<Vertex> Graph = GraphReadDto<Vertex>.Empty;
         private PathfindingProcess algorithm = PathfindingProcess.Idle;
 
         private bool isHistoryApplied = true;
 
         public PathfindingHistoryUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IPathfindingRangeBuilder<Vertex> builder,
-            IService service) : base(menuItems)
+            IService<Vertex> service) : base(menuItems)
         {
             this.service = service;
             this.builder = builder;
@@ -120,7 +120,7 @@ namespace Pathfinding.App.Console.Units
 
         private bool IsHistoryApplied() => isHistoryApplied;
 
-        public void RegisterHanlders(IMessenger messenger)
+        public void RegisterHandlers(IMessenger messenger)
         {
             var token = Tokens.History.Bind(IsHistoryApplied);
             messenger.RegisterGraph(this, Tokens.Common, SetGraph);

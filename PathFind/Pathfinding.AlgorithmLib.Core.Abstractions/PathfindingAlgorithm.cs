@@ -107,17 +107,15 @@ namespace Pathfinding.AlgorithmLib.Core.Abstractions
 
         private IEnumerable<(IVertex Source, IVertex Target)> GetSubRanges()
         {
-            using (var iterator = pathfindingRange.GetEnumerator())
+            using var iterator = pathfindingRange.GetEnumerator();
+            if (iterator.MoveNext())
             {
-                if (iterator.MoveNext())
+                var previous = iterator.Current;
+                while (iterator.MoveNext())
                 {
-                    var previous = iterator.Current;
-                    while (iterator.MoveNext())
-                    {
-                        var current = iterator.Current;
-                        yield return (previous, current);
-                        previous = iterator.Current;
-                    }
+                    var current = iterator.Current;
+                    yield return (previous, current);
+                    previous = iterator.Current;
                 }
             }
         }

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.DAL.Interface;
+using Pathfinding.App.Console.DAL.Models.TransferObjects.Create;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messaging;
@@ -21,12 +22,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
     using GraphAssemble = IGraphAssemble<Vertex>;
 
-    internal abstract class GraphCreatingMenuItem : IConditionedMenuItem, ICanRecieveMessage
+    internal abstract class GraphCreatingMenuItem : IConditionedMenuItem, ICanReceiveMessage
     {
         protected readonly IMessenger messenger;
         protected readonly IRandom random;
         protected readonly GraphAssemble assemble;
-        protected readonly IService service;
+        protected readonly IService<Vertex> service;
+        protected readonly IInput<string> input;
 
         protected InclusiveValueRange<int> costRange = new(9, 1);
         protected int width = 0;
@@ -39,15 +41,17 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected GraphCreatingMenuItem(IMessenger messenger,
             GraphAssemble assemble,
             IRandom random,
-            IService service)
+            IService<Vertex> service, 
+            IInput<string> stringInput)
         {
             this.service = service;
             this.messenger = messenger;
             this.random = random;
             this.assemble = assemble;
+            this.input = stringInput;
         }
 
-        protected void SetNeighbourhood(NeighbourhoodMessage msg)
+        protected void SetNeighborhood(NeighbourhoodMessage msg)
             => neighborhoodFactory = msg.Factory;
 
         protected void SetCostRange(CostRangeMessage msg)
@@ -72,11 +76,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
             var layers = new Layers(GetLayers());
             var graph = assemble.AssembleGraph(layers, width, length);
+            string graphName = input.Input("Enter graph name: ");
+            var createDto = new GraphCreateDto<Vertex>() { Graph = graph, Name = graphName };
             var costRangeMsg = new CostRangeChangedMessage(costRange);
             messenger.Send(costRangeMsg, Tokens.AppLayout);
-            var graphMsg = new GraphMessage(graph, 0);
+            var graphMsg = new GraphMessage(graph, 0, graphName);
             messenger.SendMany(graphMsg, Tokens.AppLayout, Tokens.Main);
-            var read = await Task.Run(() => service.AddGraph(graph));
+            var read = await Task.Run(() => service.AddGraph(createDto));
             graphMsg = new GraphMessage(read);
             messenger.SendMany(graphMsg, Tokens.Visual, Tokens.Common);
         }
@@ -96,10 +102,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             yield return smoothLayer ?? new Layers();
         }
 
-        public virtual void RegisterHanlders(IMessenger messenger)
+        public virtual void RegisterHandlers(IMessenger messenger)
         {
             messenger.Register<GraphCreatingMenuItem, ObstaclePercentMessage>(this, Tokens.Graph, SetObstaclePercent);
-            messenger.Register<GraphCreatingMenuItem, NeighbourhoodMessage>(this, Tokens.Graph, SetNeighbourhood);
+            messenger.Register<GraphCreatingMenuItem, NeighbourhoodMessage>(this, Tokens.Graph, SetNeighborhood);
             messenger.Register<GraphCreatingMenuItem, ReturnOptionsMessage>(this, Tokens.Graph, SetReturnOptions);
             messenger.Register<GraphCreatingMenuItem, GraphParamsMessage>(this, Tokens.Graph, SetGraphParams);
             messenger.Register<GraphCreatingMenuItem, CostRangeMessage>(this, Tokens.Graph, SetCostRange);

@@ -22,6 +22,8 @@ namespace Pathfinding.App.Console.DAL.Models.Entities
 
         public double? Cost { get; set; } = null;
 
+        public int? Visited { get; set; } = null;
+
         public int? Spread { get; set; } = null;
     }
 }

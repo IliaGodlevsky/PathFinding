@@ -17,7 +17,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems
     internal sealed class EnterPathfindingRangeMenuItem(VertexActions actions,
         IInput<ConsoleKey> keyInput,
         IPathfindingRangeBuilder<Vertex> builder,
-        IService service) : NavigateThroughVerticesMenuItem(keyInput, service)
+        IService<Vertex> service) : NavigateThroughVerticesMenuItem(keyInput, service)
     {
         private readonly IPathfindingRangeBuilder<Vertex> builder = builder;
         private readonly VertexActions rangeActions = actions;

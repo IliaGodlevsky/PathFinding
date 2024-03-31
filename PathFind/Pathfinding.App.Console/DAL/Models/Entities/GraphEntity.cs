@@ -1,12 +1,12 @@
 ﻿namespace Pathfinding.App.Console.DAL.Models.Entities;
 
-internal class GraphEntity
+internal record GraphEntity
 {
     public int Id { get; set; }
 
-    public int Width { get; set; }
+    public string Name { get; set; }
 
-    public int Length { get; set; }
+    public string Dimensions { get; set; }
 
     public int ObstaclesCount { get; set; }
 }

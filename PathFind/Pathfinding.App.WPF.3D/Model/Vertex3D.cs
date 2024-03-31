@@ -31,6 +31,10 @@ namespace Pathfinding.App.WPF._3D.Model
                 {
                     VisualizeAsObstacle();
                 }
+                else
+                {
+                    VisualizeAsRegular();
+                }
             }
         }
 

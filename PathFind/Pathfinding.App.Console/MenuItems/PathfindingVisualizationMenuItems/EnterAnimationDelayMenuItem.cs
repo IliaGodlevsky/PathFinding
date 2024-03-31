@@ -11,7 +11,7 @@ using System;
 namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
 {
     [HighPriority]
-    internal sealed class EnterAnimationDelayMenuItem : IConditionedMenuItem, ICanRecieveMessage
+    internal sealed class EnterAnimationDelayMenuItem : IConditionedMenuItem, ICanReceiveMessage
     {
         private readonly IInput<TimeSpan> spanInput;
         private readonly IMessenger messenger;
@@ -49,7 +49,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
             return Languages.EnterAnimationDelay;
         }
 
-        public void RegisterHanlders(IMessenger messenger)
+        public void RegisterHandlers(IMessenger messenger)
         {
             messenger.Register<EnterAnimationDelayMenuItem, IsAppliedMessage>(this, Tokens.Visualization, SetApplied);
         }
