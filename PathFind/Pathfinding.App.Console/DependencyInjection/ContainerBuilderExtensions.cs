@@ -74,7 +74,7 @@ namespace Pathfinding.App.Console.DependencyInjection
         public static ContainerBuilder AddDataAccessLayer(this ContainerBuilder builder)
         {
             builder.RegisterType<Service<Vertex>>().As<IService<Vertex>>().SingleInstance();
-            builder.RegisterType<LiteDbInMemoryUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
+            builder.RegisterType<LiteDbInFileUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
             return builder;
         }
 

@@ -7,7 +7,6 @@ using Pathfinding.App.Console.DAL.Models.TransferObjects.Serialization;
 using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.DAL.UOF.Factories;
 using Pathfinding.App.Console.Extensions;
-using Pathfinding.App.Console.Model;
 using Pathfinding.GraphLib.Core.Interface;
 using Shared.Extensions;
 using System;
