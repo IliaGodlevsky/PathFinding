@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using AutoMapper;
-using AutoMapper.Configuration;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.AlgorithmLib.Core.Interface;
 using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
@@ -74,7 +73,8 @@ namespace Pathfinding.App.Console.DependencyInjection
         public static ContainerBuilder AddDataAccessLayer(this ContainerBuilder builder)
         {
             builder.RegisterType<Service<Vertex>>().As<IService<Vertex>>().SingleInstance();
-            builder.RegisterType<LiteDbInFileUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
+            builder.RegisterType<LiteDbInFileUnitOfWorkFactory>()
+                .As<IUnitOfWorkFactory>().SingleInstance();
             return builder;
         }
 

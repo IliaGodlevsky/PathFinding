@@ -99,10 +99,7 @@ namespace Pathfinding.App.Console.DAL.Services
                 var ranges = unitOfWork.RangeRepository.GetByVerticesIds(verts)
                     .OrderBy(x => x.VertexId).ToReadOnly();
                 var orderedVertices = vertices.OrderBy(x => (int)((dynamic)x.Vertex).Id).ToReadOnly();
-                for (int i = 0; i < ranges.Count; i++)
-                {
-                    ranges[i].Order = orderedVertices[i].Order;
-                }
+                ranges.ForEach((x, i) => x.Order = orderedVertices[i].Order);
                 return unitOfWork.RangeRepository.Update(ranges);
             });
         }

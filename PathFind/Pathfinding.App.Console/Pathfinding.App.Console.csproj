@@ -332,7 +332,6 @@
     <Compile Include="Units\PathfindingStatisticsUnit.cs" />
     <Compile Include="Units\PathfindingVisualizationUnit.cs" />
     <Compile Include="Units\Unit.cs" />
-    <Compile Include="ValueInput\TestInput.cs" />
     <Compile Include="ValueInput\UserInput\AddressInput.cs" />
     <Compile Include="ValueInput\UserInput\FilePathInput.cs" />
     <Compile Include="Settings\Colours.Designer.cs">

@@ -17,7 +17,7 @@ namespace Pathfinding.App.Console.Model.FramedAxes
             this.graphWidth = graphWidth;
         }
 
-        protected override IEnumerable<Fracture> GetCoordinates()
+        protected override IEnumerable<(string Value, Point Coordinate)> GetCoordinates()
         {
             int x = AppLayout.WidthOfOrdinateView;
             int y = AppLayout.HeightOfGraphParametresView
@@ -27,11 +27,11 @@ namespace Pathfinding.App.Console.Model.FramedAxes
             {
                 var increment = LateralDistance * i;
                 var coordinate = new Point(start.X + increment, start.Y);
-                yield return new(Value: i.ToString(), Coordinate: coordinate);
+                yield return (Value: i.ToString(), Coordinate: coordinate);
             }
         }
 
-        protected override IEnumerable<Fracture> GetFrames()
+        protected override IEnumerable<(string Value, Point Coordinate)> GetFrames()
         {
             int x = AppLayout.WidthOfOrdinateView;
             int y = AppLayout.HeightOfGraphParametresView
@@ -43,11 +43,11 @@ namespace Pathfinding.App.Console.Model.FramedAxes
             {
                 var increment = LateralDistance * i;
                 var coord = new Point(start.X + increment, start.Y);
-                yield return new(Value: frame, Coordinate: coord);
+                yield return (Value: frame, Coordinate: coord);
             }
             x = start.X + LateralDistance * graphWidth;
             var coordinate = new Point(x, start.Y);
-            yield return new(CoordinateDelimiter, coordinate);
+            yield return (CoordinateDelimiter, coordinate);
         }
     }
 }
