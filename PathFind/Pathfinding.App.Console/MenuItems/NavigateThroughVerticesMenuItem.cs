@@ -1,32 +1,34 @@
 ﻿global using VertexActions = System.Collections.Generic.IReadOnlyCollection<(string ResourceName, Pathfinding.App.Console.Interface.IVertexAction Action)>;
 using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DAL.Interface;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Settings;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.Realizations;
+using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Infrastructure.Data.Pathfinding;
+using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Models.Read;
 using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems
 {
     internal abstract class NavigateThroughVerticesMenuItem : IConditionedMenuItem, ICanReceiveMessage
     {
         protected readonly IInput<ConsoleKey> keyInput;
-        protected readonly IService<Vertex> service;
+        protected readonly IRequestService<Vertex> service;
         protected readonly Lazy<VertexActions> actions;
 
         protected readonly HashSet<Vertex> processed = new();
 
-        protected GraphReadDto<Vertex> graph = GraphReadDto<Vertex>.Empty;
+        protected GraphModel<Vertex> graph = null;
         protected InclusiveValueRange<int> xRange = default;
         protected InclusiveValueRange<int> yRange = default;
 
@@ -36,7 +38,7 @@ namespace Pathfinding.App.Console.MenuItems
 
         protected NavigateThroughVerticesMenuItem(
             IInput<ConsoleKey> keyInput,
-            IService<Vertex> service)
+            IRequestService<Vertex> service)
         {
             this.keyInput = keyInput;
             this.service = service;
@@ -45,37 +47,41 @@ namespace Pathfinding.App.Console.MenuItems
 
         public virtual bool CanBeExecuted()
         {
-            return graph != GraphReadDto<Vertex>.Empty;
+            return graph != null;
         }
 
-        public virtual void Execute()
+        public virtual async Task ExecuteAsync(CancellationToken token = default)
         {
-            AppLayout.SetCursorPositionUnderGraphField();
-            using (Cursor.UseCurrentPositionWithClean())
+            if (!token.IsCancellationRequested)
             {
-                Terminal.Write(GetLegend());
-                using (Cursor.UseCurrentPosition())
+                AppLayout.SetCursorPositionUnderGraphField();
+                using (Cursor.UseCurrentPositionWithClean())
                 {
-                    int x = 0, y = 0;
-                    ConsoleKey key;
-                    do
+                    Terminal.Write(GetLegend());
+                    using (Cursor.UseCurrentPosition())
                     {
-                        var coordinate = new Coordinate(x, y);
-                        var vertex = graph.Graph.Get(coordinate);
-                        Cursor.SetPosition(vertex.ConsolePosition.Value);
-                        key = keyInput.Input();
-                        if (key == Keys.VertexUp)
-                            y = ReturnInRange(y - 1, yRange);
-                        else if (key == Keys.VertexDown)
-                            y = ReturnInRange(y + 1, yRange);
-                        else if (key == Keys.VertexLeft)
-                            x = ReturnInRange(x - 1, xRange);
-                        else if (key == Keys.VertexRight)
-                            x = ReturnInRange(x + 1, xRange);
-                        else
-                            Do(vertex, key);
-                    } while (key != Keys.ExitVerticesNavigating);
+                        int x = 0, y = 0;
+                        ConsoleKey key;
+                        do
+                        {
+                            var coordinate = new Coordinate(x, y);
+                            var vertex = graph.Graph.Get(coordinate);
+                            Cursor.SetPosition(vertex.ConsolePosition.Value);
+                            key = keyInput.Input();
+                            if (key == Keys.VertexUp)
+                                y = ReturnInRange(y - 1, yRange);
+                            else if (key == Keys.VertexDown)
+                                y = ReturnInRange(y + 1, yRange);
+                            else if (key == Keys.VertexLeft)
+                                x = ReturnInRange(x - 1, xRange);
+                            else if (key == Keys.VertexRight)
+                                x = ReturnInRange(x + 1, xRange);
+                            else
+                                Do(vertex, key);
+                        } while (key != Keys.ExitVerticesNavigating);
+                    }
                 }
+                await Task.CompletedTask;
             }
         }
 

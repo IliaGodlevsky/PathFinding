@@ -1,6 +1,6 @@
 ﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model.FramedAxes;
-using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.Domain.Interface;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace Pathfinding.App.Console.Model
 {
     internal sealed class GraphField : IDisplayable
     {
-        public static readonly GraphField Empty 
+        public static readonly GraphField Empty
             = new(Array.Empty<IDisplayable>());
 
         private IReadOnlyCollection<IDisplayable> Displayables { get; }

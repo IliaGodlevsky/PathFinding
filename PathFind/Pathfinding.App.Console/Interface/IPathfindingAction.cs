@@ -1,4 +1,4 @@
-﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
+﻿using Pathfinding.Infrastructure.Business.Algorithms;
 
 namespace Pathfinding.App.Console.Interface
 {

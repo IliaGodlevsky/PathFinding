@@ -5,6 +5,8 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
@@ -17,14 +19,16 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 
         }
 
-        public override void Execute()
+        public override async Task ExecuteAsync(CancellationToken token = default)
         {
+            if (token.IsCancellationRequested) return;
             using (Cursor.UseCurrentPositionWithClean())
             {
                 int width = input.Input(Languages.GraphWidthInputMsg, Constants.GraphWidthValueRange);
                 int length = input.Input(Languages.GraphHeightInputMsg, Constants.GraphLengthValueRange);
                 var message = new GraphParamsMessage(width, length);
                 messenger.Send(message, Tokens.Graph);
+                await Task.CompletedTask;
             }
         }
 

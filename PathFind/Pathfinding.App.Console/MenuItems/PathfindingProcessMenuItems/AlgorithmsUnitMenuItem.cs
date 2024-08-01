@@ -3,9 +3,9 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Units;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.Modules.Interface;
+using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Logging.Interface;
+using Pathfinding.Service.Interface.Commands;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {

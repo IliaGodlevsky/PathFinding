@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.AlgorithmLib.Factory;
-using Pathfinding.App.Console.DAL;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.AlgorithmMenuItems;
+using Pathfinding.Domain.Core;
+using Pathfinding.Infrastructure.Business.Algorithms.Factories;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
@@ -14,7 +14,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 
         protected override AlgorithmInfo GetAlgorithm()
         {
-            return new(new LeeAlgorithmFactory(), RunStatistics);
+            return new(new LeeAlgorithmFactory(), LanguageKey);
         }
     }
 }

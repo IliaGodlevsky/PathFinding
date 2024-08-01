@@ -1,7 +1,4 @@
-﻿using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
-using Pathfinding.App.Console.EventArguments;
-using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.Visualization.Extensions;
+﻿using Pathfinding.App.Console.EventArguments;
 using Shared.Extensions;
 using Shared.Primitives;
 using System;

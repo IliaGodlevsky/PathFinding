@@ -1,5 +1,5 @@
 ﻿using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Interface;
+using Pathfinding.Domain.Interface;
 using Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,4 @@
-﻿using Pathfinding.GraphLib.Factory.Interface;
+﻿using Pathfinding.Domain.Interface.Factories;
 
 namespace Pathfinding.App.Console.Messaging.Messages
 {

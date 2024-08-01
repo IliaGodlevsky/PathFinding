@@ -1,11 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.AlgorithmLib.Factory.Interface;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
+using Pathfinding.Infrastructure.Business.Algorithms;
+using Pathfinding.Service.Interface;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.AlgorithmMenuItems
 {
@@ -13,25 +14,28 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
     {
         protected readonly record struct AlgorithmInfo(
             IAlgorithmFactory<PathfindingProcess> Factory,
-            RunStatisticsDto InitStatistics);
+            string AlgorithmId,
+            string StepRule = null,
+            string Heuristics = null,
+            int? Spread = null);
 
         protected readonly IMessenger messenger;
 
         protected abstract string LanguageKey { get; }
-
-        protected RunStatisticsDto RunStatistics 
-            => new() { AlgorithmId = LanguageKey };
 
         protected AlgorithmMenuItem(IMessenger messenger)
         {
             this.messenger = messenger;
         }
 
-        public virtual void Execute()
+        public virtual async Task ExecuteAsync(CancellationToken token = default)
         {
+            if (token.IsCancellationRequested) return;
             var info = GetAlgorithm();
-            var msg = new AlgorithmStartInfoMessage(info.Factory, info.InitStatistics);
+            var msg = new AlgorithmStartInfoMessage(info.Factory,
+                LanguageKey, info.StepRule, info.Heuristics);
             messenger.Send(msg, Tokens.Pathfinding);
+            await Task.CompletedTask;
         }
 
         public override string ToString()

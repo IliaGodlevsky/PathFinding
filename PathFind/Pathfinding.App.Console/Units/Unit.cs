@@ -22,8 +22,8 @@ namespace Pathfinding.App.Console.Units
         {
             return MenuItems
                 .Where(CanBeExecuted)
-                .Append(ExitMenuItem)
                 .OrderByOrderAttribute()
+                .Append(ExitMenuItem)
                 .ToReadOnly();
         }
 

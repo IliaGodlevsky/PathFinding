@@ -49,10 +49,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
-      <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
-      <Name>Pathfinding.GraphLib.Core.Interface</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Shared.Primitives\Shared.Primitives.csproj">
       <Project>{30973320-9F61-45FB-8C75-3256ADB1BFB1}</Project>
       <Name>Shared.Primitives</Name>

@@ -1,19 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.AlgorithmLib.Core.Events;
-using Pathfinding.App.Console.DAL.Interface;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Create;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.Visualizations.VisualizationUnits;
-using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.Modules.Interface;
+using Pathfinding.Domain.Interface;
+using Pathfinding.Infrastructure.Business.Algorithms;
+using Pathfinding.Infrastructure.Business.Algorithms.Events;
+using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Commands;
+using Pathfinding.Service.Interface.Models.Read;
+using Pathfinding.Service.Interface.Models.Undefined;
+using Pathfinding.Service.Interface.Requests.Create;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
@@ -23,28 +22,28 @@ namespace Pathfinding.App.Console.Units
 {
     internal sealed class PathfindingHistoryUnit : Unit, ICanReceiveMessage
     {
-        private readonly IService<Vertex> service;
+        private readonly IRequestService<Vertex> service;
         private readonly IPathfindingRangeBuilder<Vertex> builder;
         private readonly List<(ICoordinate, IReadOnlyList<ICoordinate>)> visitedVertices = new();
-        private readonly List<SubAlgorithmCreateDto> subAlgorithms = new();
+        private readonly List<CreateSubAlgorithmRequest> subAlgorithms = new();
 
-        private RunStatisticsDto runStatistics = new();
-        private GraphReadDto<Vertex> Graph = GraphReadDto<Vertex>.Empty;
+        private RunStatisticsModel runStatistics = new();
+        private GraphModel<Vertex> Graph = null;
         private PathfindingProcess algorithm = PathfindingProcess.Idle;
 
         private bool isHistoryApplied = true;
 
         public PathfindingHistoryUnit(IReadOnlyCollection<IMenuItem> menuItems,
             IPathfindingRangeBuilder<Vertex> builder,
-            IService<Vertex> service) : base(menuItems)
+            IRequestService<Vertex> service) : base(menuItems)
         {
             this.service = service;
             this.builder = builder;
         }
 
-        private void VisualizeHistory(AlgorithmKeyMessage msg)
+        private async void VisualizeHistory(AlgorithmKeyMessage msg)
         {
-            var algorithm = service.GetRunInfo(msg.AlgorithmKey);
+            var algorithm = await service.ReadRunInfoAsync(msg.AlgorithmKey);
             var layers = new VisualizationLayers(algorithm);
             layers.Overlay(Graph.Graph);
         }
@@ -79,7 +78,7 @@ namespace Pathfinding.App.Console.Units
 
         private void OnSubPathFound(object sender, SubPathFoundEventArgs args)
         {
-            var subAlgorithm = new SubAlgorithmCreateDto()
+            var subAlgorithm = new CreateSubAlgorithmRequest()
             {
                 Path = args.SubPath,
                 Visited = visitedVertices.ToReadOnly(),
@@ -96,7 +95,7 @@ namespace Pathfinding.App.Console.Units
 
         private async void OnPathFound(PathFoundMessage msg)
         {
-            AlgorithmRunHistoryCreateDto algorithmRunCreateDto = new()
+            AlgorithmRunHistoryModel algorithmRunCreateDto = new()
             {
                 Run = new()
                 {

@@ -59,14 +59,6 @@
     <Compile Include="ReplaceTransitVerticesModule.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface.Extensions\Pathfinding.GraphLib.Core.Interface.Extensions.csproj">
-      <Project>{3c13810c-ed74-490b-9303-9ccbfe485f5e}</Project>
-      <Name>Pathfinding.GraphLib.Core.Interface.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
-      <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
-      <Name>Pathfinding.GraphLib.Core.Interface</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Modules.Interface\Pathfinding.GraphLib.Core.Modules.Interface.csproj">
       <Project>{580F22FB-42C3-45C4-9328-2D968DC63C5E}</Project>
       <Name>Pathfinding.GraphLib.Core.Modules.Interface</Name>

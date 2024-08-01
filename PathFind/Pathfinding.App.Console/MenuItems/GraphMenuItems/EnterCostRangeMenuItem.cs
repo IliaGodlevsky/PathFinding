@@ -6,6 +6,8 @@ using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Shared.Primitives.ValueRange;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
@@ -17,7 +19,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
         }
 
-        public override void Execute()
+        public override async Task ExecuteAsync(CancellationToken token = default)
         {
             using (Cursor.UseCurrentPositionWithClean())
             {
@@ -26,6 +28,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 int lowerValueOfRange = input.Input(Languages.RangeLowerValueInputMsg, range);
                 var costRange = new InclusiveValueRange<int>(upperValueOfRange, lowerValueOfRange);
                 messenger.Send(new CostRangeMessage(costRange), Tokens.Graph);
+                await Task.CompletedTask;
             }
         }
 

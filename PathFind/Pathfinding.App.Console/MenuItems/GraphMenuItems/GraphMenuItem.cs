@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.Interface;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
@@ -14,6 +16,6 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             this.input = input;
         }
 
-        public abstract void Execute();
+        public abstract Task ExecuteAsync(CancellationToken token = default);
     }
 }

@@ -1,7 +1,10 @@
-﻿namespace Pathfinding.App.Console.Interface
+﻿using System.Threading;
+using System.Threading.Tasks;
+
+namespace Pathfinding.App.Console.Interface
 {
     internal interface IMenuItem
     {
-        void Execute();
+        Task ExecuteAsync(CancellationToken token = default);
     }
 }

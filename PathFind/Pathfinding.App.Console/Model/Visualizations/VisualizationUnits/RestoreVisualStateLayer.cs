@@ -1,6 +1,4 @@
-﻿using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Factory.Interface;
-using Pathfinding.Visualization.Extensions;
+﻿using Pathfinding.Visualization.Extensions;
 
 namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
 {

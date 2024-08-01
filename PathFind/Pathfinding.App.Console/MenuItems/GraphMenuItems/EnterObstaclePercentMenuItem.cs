@@ -5,6 +5,8 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
@@ -16,14 +18,16 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         {
         }
 
-        public override void Execute()
+        public override async Task ExecuteAsync(CancellationToken token = default)
         {
+            if (token.IsCancellationRequested) return;
             using (Cursor.UseCurrentPositionWithClean())
             {
                 int obstaclePercent = input.Input(Languages.ObstaclePercentInputMsg,
                     Constants.ObstaclesPercentValueRange);
                 var msg = new ObstaclePercentMessage(obstaclePercent);
                 messenger.Send(msg, Tokens.Graph);
+                await Task.CompletedTask;
             }
         }
 

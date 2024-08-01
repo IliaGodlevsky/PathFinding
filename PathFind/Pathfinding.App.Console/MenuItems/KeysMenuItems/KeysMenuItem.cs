@@ -6,6 +6,8 @@ using Pathfinding.App.Console.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.KeysMenuItems
 {
@@ -35,8 +37,9 @@ namespace Pathfinding.App.Console.MenuItems.KeysMenuItems
                 .CreateMenuList(columnsNumber: 5);
         }
 
-        public void Execute()
+        public async Task ExecuteAsync(CancellationToken token = default)
         {
+            if (token.IsCancellationRequested) return;
             string message = string.Format(Languages.ChooseKeyMsg, keysMenuList + "\n");
             int index = GetIndex(message, keys.Count + 1, 1) - 1;
             while (index != keys.Count)
@@ -51,6 +54,7 @@ namespace Pathfinding.App.Console.MenuItems.KeysMenuItems
                 }
                 index = GetIndex(message, keys.Count + 1, 1) - 1;
             }
+            await Task.CompletedTask;
         }
 
         private int GetIndex(string message, int limit, int bottom)

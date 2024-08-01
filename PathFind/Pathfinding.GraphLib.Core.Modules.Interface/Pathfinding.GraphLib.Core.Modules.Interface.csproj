@@ -48,10 +48,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
-      <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
-      <Name>Pathfinding.GraphLib.Core.Interface</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Shared.Executable\Shared.Executable.csproj">
       <Project>{0A7C5FE5-4688-42C4-8202-676042BB0F81}</Project>
       <Name>Shared.Executable</Name>

@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{365C8661-CC5E-4D80-9BAD-340895E10D3C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Pathfinding.Infrastructure.Business</RootNamespace>
+    <AssemblyName>Pathfinding.Infrastructure.Business</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <LangVersion>Latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>Latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PriorityQueue, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5e136dbf0437dacd, processorArchitecture=MSIL">
+      <HintPath>..\packages\OptimizedPriorityQueue.5.1.0\lib\net45\PriorityQueue.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Linq.Async, Version=6.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Async.6.0.1\lib\net48\System.Linq.Async.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Algorithms\AStarAlgorithm.cs" />
+    <Compile Include="Algorithms\AStarLeeAlgorithm.cs" />
+    <Compile Include="Algorithms\BreadthFirstAlgorithm.cs" />
+    <Compile Include="Algorithms\CostGreedyAlgorithm.cs" />
+    <Compile Include="Algorithms\DepthFirstAlgorithm.cs" />
+    <Compile Include="Algorithms\DijkstraAlgorithm.cs" />
+    <Compile Include="Algorithms\DistanceFirstAlgorithm.cs" />
+    <Compile Include="Algorithms\Events\PathfindingEventArgs.cs" />
+    <Compile Include="Algorithms\Events\PathfindingEventHandler.cs" />
+    <Compile Include="Algorithms\Events\SubPathFoundEventArgs.cs" />
+    <Compile Include="Algorithms\Events\SubPathFoundEventHandler.cs" />
+    <Compile Include="Algorithms\Events\VerticesEnqueuedEventArgs.cs" />
+    <Compile Include="Algorithms\Events\VerticesEnqueuedEventHandler.cs" />
+    <Compile Include="Algorithms\Exceptions\AlgorithmInterruptedException.cs" />
+    <Compile Include="Algorithms\Exceptions\DeadendVertexException.cs" />
+    <Compile Include="Algorithms\Exceptions\PathfindingException.cs" />
+    <Compile Include="Algorithms\Factories\AStarAlgorithmFactory.cs" />
+    <Compile Include="Algorithms\Factories\AStarLeeAlgorithmFactory.cs" />
+    <Compile Include="Algorithms\Factories\CostGreedyAlgorithmFactory.cs" />
+    <Compile Include="Algorithms\Factories\DepthFirstAlgorithmFactory.cs" />
+    <Compile Include="Algorithms\Factories\DijkstraAlgorithmFactory.cs" />
+    <Compile Include="Algorithms\Factories\DistanceFirstAlgorithmFactory.cs" />
+    <Compile Include="Algorithms\Factories\HeuristicCostGreedyAlgorithmFactory.cs" />
+    <Compile Include="Algorithms\Factories\IDAStarAlgorithmFactory.cs" />
+    <Compile Include="Algorithms\Factories\LeeAlgorithmFactory.cs" />
+    <Compile Include="Algorithms\Factories\RandomAlgorithmFactory.cs" />
+    <Compile Include="Algorithms\GraphPaths\CompositeGraphPath.cs" />
+    <Compile Include="Algorithms\GraphPaths\GraphPath.cs" />
+    <Compile Include="Algorithms\GraphPaths\NullGraphPath.cs" />
+    <Compile Include="Algorithms\GreedyAlgorithm.cs" />
+    <Compile Include="Algorithms\HeuristicCostGreedyAlgorithm.cs" />
+    <Compile Include="Algorithms\Heuristics\ChebyshevDistance.cs" />
+    <Compile Include="Algorithms\Heuristics\CosineDistance.cs" />
+    <Compile Include="Algorithms\Heuristics\Distance.cs" />
+    <Compile Include="Algorithms\Heuristics\EuclidianDistance.cs" />
+    <Compile Include="Algorithms\Heuristics\ManhattanDistance.cs" />
+    <Compile Include="Algorithms\IDAStarAlgorithm.cs" />
+    <Compile Include="Algorithms\LeeAlgorithm.cs" />
+    <Compile Include="Algorithms\PathfindingAlgorithm.cs" />
+    <Compile Include="Algorithms\PathfindingProcess.cs" />
+    <Compile Include="Algorithms\RandomAlgorithm.cs" />
+    <Compile Include="Algorithms\StepRules\CardinalStepRule.cs" />
+    <Compile Include="Algorithms\StepRules\DefaultStepRule.cs" />
+    <Compile Include="Algorithms\StepRules\LandscapeStepRule.cs" />
+    <Compile Include="Algorithms\StepRules\RatedStepRule.cs" />
+    <Compile Include="Algorithms\StepRules\WalkStepRule.cs" />
+    <Compile Include="Algorithms\WaveAlgorithm.cs" />
+    <Compile Include="Commands\ExcludeSourceVertex.cs" />
+    <Compile Include="Commands\ExcludeTargetVertex.cs" />
+    <Compile Include="Commands\ExcludeTransitVertex.cs" />
+    <Compile Include="Commands\IncludeSourceVertex.cs" />
+    <Compile Include="Commands\IncludeTargetVertex.cs" />
+    <Compile Include="Commands\IncludeTransitVertex.cs" />
+    <Compile Include="Commands\MarkToReplaceTransitVertex.cs" />
+    <Compile Include="Commands\PathfindingRangeBuilder.cs" />
+    <Compile Include="Commands\RemoveMarkToReplaceTransitVertex.cs" />
+    <Compile Include="Commands\ReplaceIsolatedSourceVertex.cs" />
+    <Compile Include="Commands\ReplaceIsolatedTargetVertex.cs" />
+    <Compile Include="Commands\ReplaceTransitCommand.cs" />
+    <Compile Include="Commands\ReplaceTransitIsolatedVertex.cs" />
+    <Compile Include="Commands\ReplaceTransitVertex.cs" />
+    <Compile Include="Commands\ReplaceTransitVerticesModule.cs" />
+    <Compile Include="Extensions\AlgorithmExtensions.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\GraphPathExtensions.cs" />
+    <Compile Include="Extensions\PriorityQueueExtensions.cs" />
+    <Compile Include="Extensions\SimplePriorityQueueExtensions.cs" />
+    <Compile Include="Extensions\UnitOfWorkExtensions.cs" />
+    <Compile Include="Layers\CostsVisualizationLayer.cs" />
+    <Compile Include="Layers\Layers.cs" />
+    <Compile Include="Layers\ObstaclesVisualizationLayer.cs" />
+    <Compile Include="Layers\RangeVisualizationLayer.cs" />
+    <Compile Include="Layers\RestoreVisualStateLayer.cs" />
+    <Compile Include="Layers\SubAlgorithmVisualizationLayer.cs" />
+    <Compile Include="Layers\VisualizationLayer.cs" />
+    <Compile Include="Mappings\AlgorithmRunMappingProfile.cs" />
+    <Compile Include="Mappings\GraphMappingProfile.cs" />
+    <Compile Include="Mappings\GraphStateMappingProfile.cs" />
+    <Compile Include="Mappings\HistoryMappingProfile.cs" />
+    <Compile Include="Mappings\StatisticsMappingProfile.cs" />
+    <Compile Include="Mappings\SubAlgorithmsMappingProfile.cs" />
+    <Compile Include="Mappings\UntitledMappingConfig.cs" />
+    <Compile Include="Mappings\VerticesMappingProfile.cs" />
+    <Compile Include="MeanCosts\GeometricMeanCost.cs" />
+    <Compile Include="MeanCosts\MeanCost.cs" />
+    <Compile Include="MeanCosts\RootMeanSquareCost.cs" />
+    <Compile Include="Layers\NeighborhoodLayer.cs" />
+    <Compile Include="Layers\ObstacleLayer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestService.cs" />
+    <Compile Include="Serializers\AesCrypto.cs" />
+    <Compile Include="Serializers\Decorators\BufferedSerializer.cs" />
+    <Compile Include="Serializers\Decorators\CompressSerializer.cs" />
+    <Compile Include="Serializers\Decorators\CryptoSerializer.cs" />
+    <Compile Include="Serializers\Decorators\ThreadSafeSerializer.cs" />
+    <Compile Include="Serializers\Exceptions\SerializationException.cs" />
+    <Compile Include="Serializers\JsonSerializer.cs" />
+    <Compile Include="Layers\SmoothLayer.cs" />
+    <Compile Include="Layers\VertexCostLayer.cs" />
+    <Compile Include="VisualPathfindingRange.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pathfinding.Domain.Core\Pathfinding.Domain.Core.csproj">
+      <Project>{E0C71A1A-7DB7-426F-80DC-887F87F0AA13}</Project>
+      <Name>Pathfinding.Domain.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Domain.Interface\Pathfinding.Domain.Interface.csproj">
+      <Project>{bee15faf-f9d2-432a-a8bb-6d1be7fe2888}</Project>
+      <Name>Pathfinding.Domain.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Infrastructure.Data\Pathfinding.Infrastructure.Data.csproj">
+      <Project>{8c4c7a00-a654-45ba-b0c7-e9c6fe6cfeeb}</Project>
+      <Name>Pathfinding.Infrastructure.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Service.Interface\Pathfinding.Service.Interface.csproj">
+      <Project>{EC4CAA5A-1164-45C7-83AA-0B551D485832}</Project>
+      <Name>Pathfinding.Service.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Executable\Shared.Executable.csproj">
+      <Project>{0A7C5FE5-4688-42C4-8202-676042BB0F81}</Project>
+      <Name>Shared.Executable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
+      <Project>{CD11D46E-4675-4090-B50B-A85FFA3D1D2C}</Project>
+      <Name>Shared.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Primitives.Extensions\Shared.Primitives.Extensions.csproj">
+      <Project>{597B3252-3165-4574-826C-95399452D0B8}</Project>
+      <Name>Shared.Primitives.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Primitives\Shared.Primitives.csproj">
+      <Project>{30973320-9F61-45FB-8C75-3256ADB1BFB1}</Project>
+      <Name>Shared.Primitives</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Process\Shared.Process.csproj">
+      <Project>{78DDAA5D-8ABD-4695-A66B-1EAF2BDE77EB}</Project>
+      <Name>Shared.Process</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Random.Extensions\Shared.Random.Extensions.csproj">
+      <Project>{79ad3712-16c7-4f9d-82bb-d9a03f36ebf4}</Project>
+      <Name>Shared.Random.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Random\Shared.Random.csproj">
+      <Project>{8B3BA6E5-2FAD-492E-A51D-8B213A74C5B8}</Project>
+      <Name>Shared.Random</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Visualization\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

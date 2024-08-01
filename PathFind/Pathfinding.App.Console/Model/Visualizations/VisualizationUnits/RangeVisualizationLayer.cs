@@ -1,7 +1,5 @@
-﻿using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
-using Pathfinding.GraphLib.Core.Interface;
+﻿using Pathfinding.Service.Interface.Visualization;
 using Pathfinding.Visualization.Extensions;
-using Pathfinding.VisualizationLib.Core.Interface;
 using System.Linq;
 
 namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits

@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -7,8 +6,11 @@ using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Modules.Interface;
+using Pathfinding.Service.Interface.Commands;
+using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Visualization.Extensions;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
 {
@@ -19,16 +21,18 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems
     {
         private readonly IMessenger messenger = messenger;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder = rangeBuilder;
-        private GraphReadDto<Vertex> graph = GraphReadDto<Vertex>.Empty;
+        private GraphModel<Vertex> graph = null;
 
-        public bool CanBeExecuted() => graph != GraphReadDto<Vertex>.Empty;
+        public bool CanBeExecuted() => graph is not null;
 
-        public void Execute()
+        public async Task ExecuteAsync(CancellationToken token = default)
         {
+            if (token.IsCancellationRequested) return;
             var msg = new StatisticsLineMessage(string.Empty);
             messenger.Send(msg, Tokens.AppLayout);
             graph.Graph.RestoreVerticesVisualState();
             rangeBuilder.Range.RestoreVerticesVisualState();
+            await Task.CompletedTask;
         }
 
         private void SetGraph(GraphMessage msg)

@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8C4C7A00-A654-45BA-B0C7-E9C6FE6CFEEB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Pathfinding.Infrastructure.Data</RootNamespace>
+    <AssemblyName>Pathfinding.Infrastructure.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="LiteDB, Version=5.0.17.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiteDB.5.0.17\lib\net45\LiteDB.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Sqlite, Version=8.0.7.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Sqlite.Core.8.0.7\lib\netstandard2.0\Microsoft.Data.Sqlite.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.core, Version=2.1.6.2060, Culture=neutral, PublicKeyToken=1488e028ca7ab535, processorArchitecture=MSIL">
+      <HintPath>..\packages\SQLitePCLRaw.core.2.1.6\lib\netstandard2.0\SQLitePCLRaw.core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Linq.Async, Version=6.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Async.6.0.1\lib\net48\System.Linq.Async.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DbTables.cs" />
+    <Compile Include="Extensions\CoordinateExtensions.cs" />
+    <Compile Include="Extensions\GraphExtensions.cs" />
+    <Compile Include="Extensions\GraphAssembleExtensions.cs" />
+    <Compile Include="Extensions\PathfindingRangeBuilderExtensions.cs" />
+    <Compile Include="Extensions\PathfindingRangeExtensions.cs" />
+    <Compile Include="Extensions\VertexExtension.cs" />
+    <Compile Include="LiteDb\LiteDbInFileUnitOfWorkFactory.cs" />
+    <Compile Include="LiteDb\LiteDbInMemoryUnitOfWorkFactory.cs" />
+    <Compile Include="LiteDb\LiteDbUnitOfWork.cs" />
+    <Compile Include="LiteDb\Repositories\LiteDbRangeRepository.cs" />
+    <Compile Include="LiteDb\Repositories\LiteDbAlgorithmRepository.cs" />
+    <Compile Include="LiteDb\Repositories\LiteDbAlgorithmRunRepository.cs" />
+    <Compile Include="LiteDb\Repositories\LiteDbGraphRepository.cs" />
+    <Compile Include="LiteDb\Repositories\LiteDbGraphStateRepository.cs" />
+    <Compile Include="LiteDb\Repositories\LiteDbNeighboursRepository.cs" />
+    <Compile Include="LiteDb\Repositories\LiteDbStatisticsRepository.cs" />
+    <Compile Include="LiteDb\Repositories\LiteDbSubAlgorithmsRepository.cs" />
+    <Compile Include="LiteDb\Repositories\LiteDbVerticesRepository.cs" />
+    <Compile Include="Pathfinding\Coordinate.cs" />
+    <Compile Include="Pathfinding\Factories\GraphFactory.cs" />
+    <Compile Include="Pathfinding\Factories\MooreNeighborhoodFactory.cs" />
+    <Compile Include="Pathfinding\Factories\VonNeumannNeighborhoodFactory.cs" />
+    <Compile Include="Pathfinding\Graph.cs" />
+    <Compile Include="Pathfinding\Factories\GraphAssemble.cs" />
+    <Compile Include="Pathfinding\MooreNeighborhood.cs" />
+    <Compile Include="Pathfinding\NullCoordinate.cs" />
+    <Compile Include="Pathfinding\NullCost.cs" />
+    <Compile Include="Pathfinding\NullVertex.cs" />
+    <Compile Include="Pathfinding\PathfindingRange.cs" />
+    <Compile Include="Pathfinding\VertexCost.cs" />
+    <Compile Include="Pathfinding\VonNeumannNeighborhood.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sqlite\SqliteRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pathfinding.Domain.Core\Pathfinding.Domain.Core.csproj">
+      <Project>{e0c71a1a-7db7-426f-80dc-887f87f0aa13}</Project>
+      <Name>Pathfinding.Domain.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Domain.Interface\Pathfinding.Domain.Interface.csproj">
+      <Project>{bee15faf-f9d2-432a-a8bb-6d1be7fe2888}</Project>
+      <Name>Pathfinding.Domain.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Service.Interface\Pathfinding.Service.Interface.csproj">
+      <Project>{ec4caa5a-1164-45c7-83aa-0b551d485832}</Project>
+      <Name>Pathfinding.Service.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Executable\Shared.Executable.csproj">
+      <Project>{0A7C5FE5-4688-42C4-8202-676042BB0F81}</Project>
+      <Name>Shared.Executable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
+      <Project>{cd11d46e-4675-4090-b50b-a85ffa3d1d2c}</Project>
+      <Name>Shared.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Primitives.Extensions\Shared.Primitives.Extensions.csproj">
+      <Project>{597b3252-3165-4574-826c-95399452d0b8}</Project>
+      <Name>Shared.Primitives.Extensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Primitives\Shared.Primitives.csproj">
+      <Project>{30973320-9F61-45FB-8C75-3256ADB1BFB1}</Project>
+      <Name>Shared.Primitives</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

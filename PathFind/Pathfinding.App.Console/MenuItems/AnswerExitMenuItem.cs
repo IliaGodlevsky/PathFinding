@@ -2,6 +2,8 @@
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems
 {
@@ -10,14 +12,15 @@ namespace Pathfinding.App.Console.MenuItems
     {
         private readonly IInput<Answer> input = input;
 
-        public override void Execute()
+        public override async Task ExecuteAsync(CancellationToken token = default)
         {
+            if (token.IsCancellationRequested) return;
             using (Cursor.UseCurrentPositionWithClean())
             {
                 bool isExit = input.Input(MessagesTexts.ExitAppMsg, Answer.Range);
                 if (isExit)
                 {
-                    base.Execute();
+                    await base.ExecuteAsync(token);
                 }
             }
         }

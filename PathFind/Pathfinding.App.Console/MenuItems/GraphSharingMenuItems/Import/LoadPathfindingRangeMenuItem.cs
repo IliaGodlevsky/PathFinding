@@ -1,6 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DAL.Interface;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -8,16 +6,19 @@ using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.Modules.Interface;
-using Pathfinding.GraphLib.Serialization.Core.Interface;
-using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
+using Pathfinding.Domain.Interface;
+using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Logging.Interface;
-using Shared.Extensions;
+using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Commands;
+using Pathfinding.Service.Interface.Extensions;
+using Pathfinding.Service.Interface.Models.Read;
+using Pathfinding.Service.Interface.Requests.Create;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
 {
@@ -26,31 +27,36 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
         IPathfindingRangeBuilder<Vertex> rangeBuilder,
         IFilePathInput pathInput,
         ILog log,
-        IService<Vertex> service) : IConditionedMenuItem, ICanReceiveMessage
+        IRequestService<Vertex> service) : IConditionedMenuItem, ICanReceiveMessage
     {
         private readonly ISerializer<IEnumerable<ICoordinate>> serializer = serializer;
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder = rangeBuilder;
         private readonly IInput<string> pathInput = pathInput;
-        private readonly IService<Vertex> service = service;
+        private readonly IRequestService<Vertex> service = service;
         private readonly ILog log = log;
 
-        private GraphReadDto<Vertex> graph = GraphReadDto<Vertex>.Empty;
+        private GraphModel<Vertex> graph = null;
 
         public bool CanBeExecuted()
         {
-            return graph != GraphReadDto<Vertex>.Empty;
+            return graph is not null;
         }
 
-        public void Execute()
+        public async Task ExecuteAsync(CancellationToken token = default)
         {
             try
             {
                 string path = pathInput.Input();
-                var range = serializer.DeserializeFromFile(path).ToList();
+                var range = (await serializer.DeserializeFromFileAsync(path, token)).ToList();
                 var vertices = range
                     .Select((x, i) => (Order: i, Id: graph.Graph.Get(x)))
-                    .ToReadOnly();
-                service.AddRange(vertices, graph.Id);
+                    .ToList();
+                var createRangeRequest = new CreatePathfindingRangeRequest<Vertex>()
+                {
+                    Vertices = vertices,
+                    GraphId = graph.Id
+                };
+                await service.CreateRangeAsync(createRangeRequest, token);
                 rangeBuilder.Undo();
                 rangeBuilder.Include(range, graph.Graph);
             }

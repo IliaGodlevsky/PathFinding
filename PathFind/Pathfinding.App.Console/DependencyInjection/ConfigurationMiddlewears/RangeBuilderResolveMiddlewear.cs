@@ -2,7 +2,7 @@
 using Autofac.Core.Resolving.Pipeline;
 using Autofac.Features.Metadata;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Modules.Interface;
+using Pathfinding.Service.Interface.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;

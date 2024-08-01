@@ -1,5 +1,4 @@
-﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.App.Console.Interface;
+﻿using Pathfinding.App.Console.Interface;
 
 namespace Pathfinding.App.Console.Model.InProcessActions
 {

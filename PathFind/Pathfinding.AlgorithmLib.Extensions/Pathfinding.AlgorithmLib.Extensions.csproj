@@ -47,21 +47,9 @@
     <Compile Include="SimplePriorityQueueExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Exceptions\Pathfinding.AlgorithmLib.Core.Exceptions.csproj">
-      <Project>{70CB989C-EF34-473B-ACEF-23FDB0A47E9B}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Exceptions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.NullObjects\Pathfinding.AlgorithmLib.Core.NullObjects.csproj">
-      <Project>{16755D15-4338-4243-8EAA-95673423599F}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.NullObjects</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
       <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.NullObjects\Pathfinding.GraphLib.Core.NullObjects.csproj">
-      <Project>{67CCD24F-A5C1-41F9-9FE8-FC8C4C818646}</Project>
-      <Name>Pathfinding.GraphLib.Core.NullObjects</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared.Primitives\Shared.Primitives.csproj">
       <Project>{30973320-9F61-45FB-8C75-3256ADB1BFB1}</Project>

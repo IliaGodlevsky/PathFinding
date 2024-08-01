@@ -1,10 +1,10 @@
-﻿using Pathfinding.App.Console.DAL.Interface;
-using Pathfinding.App.Console.Interface;
+﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Serialization.Core.Interface;
-using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
+using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Extensions;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
@@ -12,15 +12,17 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
     internal abstract class ExportGraphToNetworkMenuItem<TExport> : ExportGraphMenuItem<(string Host, int Port), TExport>
     {
         protected ExportGraphToNetworkMenuItem(IInput<(string Host, int Port)> input,
-            IInput<int> intInput, ISerializer<IEnumerable<TExport>> graphSerializer, 
+            IInput<int> intInput, ISerializer<IEnumerable<TExport>> graphSerializer,
             ILog log,
-            IService<Vertex> service) : base(input, intInput, graphSerializer, log, service)
+            IRequestService<Vertex> service) : base(input, intInput, graphSerializer, log, service)
         {
         }
 
-        protected override async Task ExportAsync((string Host, int Port) path, IEnumerable<TExport> histories)
+        protected override async Task ExportAsync((string Host, int Port) path,
+            IEnumerable<TExport> histories,
+            CancellationToken token)
         {
-            await serializer.SerializeToNetworkAsync(histories, path);
+            await serializer.SerializeToNetworkAsync(histories, path, token);
         }
     }
 }

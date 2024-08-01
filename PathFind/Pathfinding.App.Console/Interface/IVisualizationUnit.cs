@@ -1,6 +1,4 @@
-﻿using Pathfinding.GraphLib.Core.Interface;
-
-namespace Pathfinding.App.Console.Interface
+﻿namespace Pathfinding.App.Console.Interface
 {
     internal interface IVisualizationUnit
     {

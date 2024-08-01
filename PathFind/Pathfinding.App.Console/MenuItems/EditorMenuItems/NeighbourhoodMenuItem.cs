@@ -1,33 +1,36 @@
-﻿using Pathfinding.App.Console.DAL.Interface;
-using Pathfinding.App.Console.Interface;
+﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.VertexActions;
 using Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions;
 using Pathfinding.App.Console.Settings;
-using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.Domain.Interface;
+using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Requests.Create;
+using Pathfinding.Service.Interface.Requests.Delete;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
 {
     [MediumPriority]
     internal sealed class NeighborhoodMenuItem(IInput<ConsoleKey> keyInput,
-        IService<Vertex> service) : NavigateThroughVerticesMenuItem(keyInput, service)
+        IRequestService<Vertex> service) : NavigateThroughVerticesMenuItem(keyInput, service)
     {
-        public async override void Execute()
+        public async override Task ExecuteAsync(CancellationToken token = default)
         {
             static HashSet<ICoordinate> GetNeighbors(Vertex vertex)
             {
                 return vertex.Neighbours.GetCoordinates().ToHashSet();
             }
             var neighbors = graph.Graph.ToDictionary(x => x.Position, GetNeighbors);
-            base.Execute();
+            await base.ExecuteAsync(token);
             processed.Clear();
             var addedNeighbors = new Dictionary<Vertex, IReadOnlyCollection<Vertex>>();
             var removedNeighbors = new Dictionary<Vertex, IReadOnlyCollection<Vertex>>();
@@ -44,11 +47,16 @@ namespace Pathfinding.App.Console.MenuItems.EditorMenuItems
                 addedNeighbors.Add(vertex, added.ToReadOnly());
                 removedNeighbors.Add(vertex, removed.ToReadOnly());
             }
-            await Task.Run(() =>
+            var createRequest = new CreateNeighborsRequest<Vertex>()
             {
-                service.AddNeighbors(addedNeighbors);
-                service.RemoveNeighbors(removedNeighbors);
-            });
+                Neighbors = addedNeighbors,
+            };
+            var deleteRequest = new DeleteNeighborsRequest<Vertex>()
+            {
+                Neighbors = removedNeighbors
+            };
+            await service.CreateNeighborsAsync(createRequest, token);
+            await service.RemoveNeighborsAsync(deleteRequest, token);
         }
 
         public override string ToString()

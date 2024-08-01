@@ -5,10 +5,12 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
-using Pathfinding.GraphLib.Factory.Interface;
+using Pathfinding.Domain.Interface.Factories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
@@ -21,27 +23,31 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private readonly IMessenger messenger = messenger;
         private readonly IInput<int> intInput = intInput;
 
-        public void Execute()
+        public async Task ExecuteAsync(CancellationToken token = default)
         {
-            if (factories.Count == 0)
+            if (!token.IsCancellationRequested)
             {
-                throw new Exception(Languages.NoItemsMsg);
-            }
+                if (factories.Count == 0)
+                {
+                    throw new Exception(Languages.NoItemsMsg);
+                }
 
-            if (factories.Count == 1)
-            {
-                var msg = new NeighbourhoodMessage(factories.ElementAt(0).Value);
-                messenger.Send(msg, Tokens.Graph);
-                return;
-            }
+                if (factories.Count == 1)
+                {
+                    var msg = new NeighbourhoodMessage(factories.ElementAt(0).Value);
+                    messenger.Send(msg, Tokens.Graph);
+                    return;
+                }
 
-            string menu = factories
-                .Select(f => Languages.ResourceManager.GetString(f.Key.ToString()))
-                .CreateMenuList(1)
-                .ToString();
-            int index = InputIndex(menu + Languages.ChooseNeighbourhoodMsg, factories.Count);
-            var message = new NeighbourhoodMessage(factories.ElementAt(index).Value);
-            messenger.Send(message, Tokens.Graph);
+                string menu = factories
+                    .Select(f => Languages.ResourceManager.GetString(f.Key.ToString()))
+                    .CreateMenuList(1)
+                    .ToString();
+                int index = InputIndex(menu + Languages.ChooseNeighbourhoodMsg, factories.Count);
+                var message = new NeighbourhoodMessage(factories.ElementAt(index).Value);
+                messenger.Send(message, Tokens.Graph);
+            }
+            await Task.CompletedTask;
         }
 
         private int InputIndex(string menu, int limit)

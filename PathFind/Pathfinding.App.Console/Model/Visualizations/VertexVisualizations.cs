@@ -5,7 +5,7 @@ using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model.Visualizations.Containers;
 using Pathfinding.App.Console.Settings;
-using Pathfinding.VisualizationLib.Core.Interface;
+using Pathfinding.Service.Interface.Visualization;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;

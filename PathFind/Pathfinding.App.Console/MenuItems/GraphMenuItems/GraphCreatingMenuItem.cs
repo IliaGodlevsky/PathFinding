@@ -1,21 +1,21 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DAL.Interface;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Create;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Realizations;
-using Pathfinding.GraphLib.Factory.Extensions;
-using Pathfinding.GraphLib.Factory.Interface;
-using Pathfinding.GraphLib.Factory.Realizations.Layers;
+using Pathfinding.Domain.Interface.Factories;
+using Pathfinding.Infrastructure.Business.Layers;
+using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Requests.Create;
 using Shared.Primitives.Extensions;
 using Shared.Primitives.ValueRange;
 using Shared.Random;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
@@ -27,7 +27,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected readonly IMessenger messenger;
         protected readonly IRandom random;
         protected readonly GraphAssemble assemble;
-        protected readonly IService<Vertex> service;
+        protected readonly IRequestService<Vertex> service;
         protected readonly IInput<string> input;
 
         protected InclusiveValueRange<int> costRange = new(9, 1);
@@ -41,7 +41,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         protected GraphCreatingMenuItem(IMessenger messenger,
             GraphAssemble assemble,
             IRandom random,
-            IService<Vertex> service, 
+            IRequestService<Vertex> service,
             IInput<string> stringInput)
         {
             this.service = service;
@@ -72,19 +72,21 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
             length = msg.Length;
         }
 
-        public async void Execute()
+        public async Task ExecuteAsync(CancellationToken token = default)
         {
-            var layers = new Layers(GetLayers());
-            var graph = assemble.AssembleGraph(layers, width, length);
-            string graphName = input.Input("Enter graph name: ");
-            var createDto = new GraphCreateDto<Vertex>() { Graph = graph, Name = graphName };
-            var costRangeMsg = new CostRangeChangedMessage(costRange);
-            messenger.Send(costRangeMsg, Tokens.AppLayout);
-            var graphMsg = new GraphMessage(graph, 0, graphName);
-            messenger.SendMany(graphMsg, Tokens.AppLayout, Tokens.Main);
-            var read = await Task.Run(() => service.AddGraph(createDto));
-            graphMsg = new GraphMessage(read);
-            messenger.SendMany(graphMsg, Tokens.Visual, Tokens.Common);
+            if (!token.IsCancellationRequested)
+            {
+                var layers = new Layers(GetLayers());
+                var graph = await assemble.AssembleGraphAsync(layers, width, length);
+                string graphName = input.Input("Enter graph name: ");
+                var createRequest = new CreateGraphRequest<Vertex>() { Graph = graph, Name = graphName };
+                var costRangeMsg = new CostRangeChangedMessage(costRange);
+                messenger.Send(costRangeMsg, Tokens.AppLayout);
+                var graphMsg = new GraphMessage(graph, 0, graphName);
+                messenger.SendMany(graphMsg, Tokens.AppLayout, Tokens.Main);
+                var result = await service.CreateGraphAsync(createRequest, token);
+                messenger.SendMany(new GraphMessage(result), Tokens.Visual, Tokens.Common);
+            }
         }
 
         public virtual bool CanBeExecuted()

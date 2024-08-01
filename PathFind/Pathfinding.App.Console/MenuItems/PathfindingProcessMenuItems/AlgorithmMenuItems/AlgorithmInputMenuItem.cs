@@ -1,11 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.AlgorithmLib.Core.Interface;
-using Pathfinding.AlgorithmLib.Factory.Interface;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
+using Pathfinding.Infrastructure.Business.Algorithms;
+using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Models.Undefined;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,8 +34,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
             var stepRule = InputItem(stepRules, Languages.ChooseStepRuleMsg);
             var heuristic = InputItem(heuristics, Languages.ChooseHeuristicMsg);
             var factory = CreateAlgorithm(stepRule.Value, heuristic.Value);
-            var statistics = GetStatistics(heuristic.Key, stepRule.Key);
-            return new(factory, statistics);
+            return new(factory, LanguageKey, stepRule.Key, heuristic.Key);
         }
 
         private static string GetString<T>(T key)
@@ -68,11 +66,6 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.Algorith
                 var item = items.ElementAt(index);
                 return (item.Key, item.Value);
             }
-        }
-
-        protected virtual RunStatisticsDto GetStatistics(string heusristic, string stepRule)
-        {
-            return RunStatistics with { Heuristics = heusristic, StepRule = stepRule };
         }
     }
 }

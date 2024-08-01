@@ -45,10 +45,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Exceptions\Pathfinding.AlgorithmLib.Core.Exceptions.csproj">
-      <Project>{70CB989C-EF34-473B-ACEF-23FDB0A47E9B}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Exceptions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Interface\Pathfinding.AlgorithmLib.Core.Interface.csproj">
       <Project>{9AB4F0E3-6693-4ACD-95BC-24D04134781F}</Project>
       <Name>Pathfinding.AlgorithmLib.Core.Interface</Name>

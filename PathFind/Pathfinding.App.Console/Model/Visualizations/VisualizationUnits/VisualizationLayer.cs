@@ -1,8 +1,4 @@
-﻿using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
-using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Factory.Interface;
-
-namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
+﻿namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
 {
     internal abstract class VisualizationLayer : ILayer
     {

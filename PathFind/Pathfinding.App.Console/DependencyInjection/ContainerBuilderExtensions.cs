@@ -1,15 +1,7 @@
 ﻿using Autofac;
 using AutoMapper;
 using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.AlgorithmLib.Core.Interface;
-using Pathfinding.AlgorithmLib.Core.Realizations.Heuristics;
-using Pathfinding.AlgorithmLib.Core.Realizations.StepRules;
-using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.DAL.Models.Mappers;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Serialization;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
-using Pathfinding.App.Console.DAL.Services;
-using Pathfinding.App.Console.DAL.UOF.Factories;
 using Pathfinding.App.Console.DependencyInjection.ConfigurationMiddlewears;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -27,7 +19,6 @@ using Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.AlgorithmMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingRangeMenuItems;
-using Pathfinding.App.Console.MenuItems.PathfindingStatisticsMenuItems;
 using Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Model.InProcessActions;
@@ -37,23 +28,25 @@ using Pathfinding.App.Console.Model.Visualizations.Containers;
 using Pathfinding.App.Console.Settings;
 using Pathfinding.App.Console.Units;
 using Pathfinding.App.Console.ValueInput.UserInput;
-using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Modules;
-using Pathfinding.GraphLib.Core.Modules.Commands;
-using Pathfinding.GraphLib.Core.Modules.Interface;
-using Pathfinding.GraphLib.Core.Realizations;
-using Pathfinding.GraphLib.Factory.Interface;
-using Pathfinding.GraphLib.Factory.Realizations.GraphAssembles;
-using Pathfinding.GraphLib.Factory.Realizations.GraphFactories;
-using Pathfinding.GraphLib.Factory.Realizations.NeighborhoodFactories;
-using Pathfinding.GraphLib.Serialization.Core.Interface;
-using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers;
-using Pathfinding.GraphLib.Serialization.Core.Realizations.Serializers.Decorators;
-using Pathfinding.GraphLib.Smoothing.Interface;
-using Pathfinding.GraphLib.Smoothing.Realizations.MeanCosts;
+using Pathfinding.Domain.Interface;
+using Pathfinding.Domain.Interface.Factories;
+using Pathfinding.Infrastructure.Business;
+using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
+using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
+using Pathfinding.Infrastructure.Business.Commands;
+using Pathfinding.Infrastructure.Business.Mappings;
+using Pathfinding.Infrastructure.Business.MeanCosts;
+using Pathfinding.Infrastructure.Business.Serializers;
+using Pathfinding.Infrastructure.Business.Serializers.Decorators;
+using Pathfinding.Infrastructure.Data.LiteDb;
+using Pathfinding.Infrastructure.Data.Pathfinding;
+using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Logging.Loggers;
-using Pathfinding.Visualization.Core.Abstractions;
+using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Commands;
+using Pathfinding.Service.Interface.Models.Serialization;
+using Pathfinding.Service.Interface.Models.Undefined;
 using Shared.Executable;
 using Shared.Extensions;
 using Shared.Random;
@@ -72,8 +65,7 @@ namespace Pathfinding.App.Console.DependencyInjection
     {
         public static ContainerBuilder AddDataAccessLayer(this ContainerBuilder builder)
         {
-            builder.RegisterType<Service<Vertex>>().As<IService<Vertex>>().SingleInstance();
-            builder.RegisterType<LiteDbInFileUnitOfWorkFactory>()
+            builder.Register(_ => new LiteDbInFileUnitOfWorkFactory(Parametres.Default.LiteDbConnectionString))
                 .As<IUnitOfWorkFactory>().SingleInstance();
             return builder;
         }
@@ -96,10 +88,10 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<SendGraphToNetworkMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
             builder.RegisterType<ReceiveGraphFromNetworkMenuItem>().Keyed<IMenuItem>(Sharing).SingleInstance();
 
-            builder.RegisterType<JsonSerializer<IEnumerable<GraphSerializationDto>>>()
-                .As<ISerializer<IEnumerable<GraphSerializationDto>>>().SingleInstance();
-            builder.RegisterType<JsonSerializer<IEnumerable<PathfindingHistorySerializationDto>>>()
-                .As<ISerializer<IEnumerable<PathfindingHistorySerializationDto>>>().SingleInstance();
+            builder.RegisterType<JsonSerializer<IEnumerable<GraphSerializationModel>>>()
+                .As<ISerializer<IEnumerable<GraphSerializationModel>>>().SingleInstance();
+            builder.RegisterType<JsonSerializer<IEnumerable<PathfindingHistorySerializationModel>>>()
+                .As<ISerializer<IEnumerable<PathfindingHistorySerializationModel>>>().SingleInstance();
             return builder;
         }
 
@@ -213,14 +205,6 @@ namespace Pathfinding.App.Console.DependencyInjection
             return builder;
         }
 
-        public static ContainerBuilder AddPathfindingStatistics(this ContainerBuilder builder)
-        {
-            builder.RegisterUnit<PathfindingStatisticsUnit>();
-            builder.RegisterType<StatisticsMenuItem>().Keyed<IMenuItem>(Process).SingleInstance();
-            builder.RegisterType<ApplyStatisticsMenuItem>().Keyed<IMenuItem>(Statistics).SingleInstance();
-            return builder;
-        }
-
         public static ContainerBuilder AddKeysEditor(this ContainerBuilder builder)
         {
             builder.RegisterUnit<KeysUnit>();
@@ -250,7 +234,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<GraphCreateMenuItem>().Keyed<IMenuItem>(Main).SingleInstance();
             builder.RegisterType<PathfindingProcessMenuItem>().Keyed<IMenuItem>(Main).As<ICanReceiveMessage>().SingleInstance();
 
-            builder.RegisterType<DefaultService<Vertex>>().As<IService<Vertex>>().SingleInstance().IfNotRegistered(typeof(IService<Vertex>));
+            builder.RegisterType<RequestService<Vertex>>().As<IRequestService<Vertex>>().SingleInstance();
             builder.RegisterAutoMapper();
 
             builder.RegisterType<VertexVisualizations>().CommunicateContainers().SingleInstance().AsImplementedInterfaces()
@@ -329,10 +313,10 @@ namespace Pathfinding.App.Console.DependencyInjection
 
         private static void RegisterAutoMapper(this ContainerBuilder builder)
         {
-            builder.RegisterType<JsonSerializer<IEnumerable<VisitedVerticesDto>>>()
-                    .As<ISerializer<IEnumerable<VisitedVerticesDto>>>().SingleInstance();
-            builder.RegisterType<JsonSerializer<IEnumerable<CoordinateDto>>>()
-                .As<ISerializer<IEnumerable<CoordinateDto>>>().SingleInstance();
+            builder.RegisterType<JsonSerializer<IEnumerable<VisitedVerticesModel>>>()
+                    .As<ISerializer<IEnumerable<VisitedVerticesModel>>>().SingleInstance();
+            builder.RegisterType<JsonSerializer<IEnumerable<CoordinateModel>>>()
+                .As<ISerializer<IEnumerable<CoordinateModel>>>().SingleInstance();
             builder.RegisterType<JsonSerializer<IEnumerable<int>>>()
                 .As<ISerializer<IEnumerable<int>>>().SingleInstance();
 

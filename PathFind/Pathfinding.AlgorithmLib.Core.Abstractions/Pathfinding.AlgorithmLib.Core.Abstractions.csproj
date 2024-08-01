@@ -51,14 +51,6 @@
     <Compile Include="WaveAlgorithm.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Events\Pathfinding.AlgorithmLib.Core.Events.csproj">
-      <Project>{943D8D5A-62E0-46A2-9914-DB9973DAF9C6}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Events</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Exceptions\Pathfinding.AlgorithmLib.Core.Exceptions.csproj">
-      <Project>{70CB989C-EF34-473B-ACEF-23FDB0A47E9B}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Exceptions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Interface\Pathfinding.AlgorithmLib.Core.Interface.csproj">
       <Project>{9AB4F0E3-6693-4ACD-95BC-24D04134781F}</Project>
       <Name>Pathfinding.AlgorithmLib.Core.Interface</Name>

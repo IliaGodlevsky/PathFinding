@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Autofac.Core.Resolving.Pipeline;
-using Pathfinding.AlgorithmLib.Core.Interface;
+using Pathfinding.Service.Interface;
 using System;
 using System.Collections.Generic;
 

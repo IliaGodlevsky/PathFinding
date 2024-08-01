@@ -74,25 +74,9 @@
     <Compile Include="Serializers\XmlGraphSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface.Extensions\Pathfinding.GraphLib.Core.Interface.Extensions.csproj">
-      <Project>{3c13810c-ed74-490b-9303-9ccbfe485f5e}</Project>
-      <Name>Pathfinding.GraphLib.Core.Interface.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
-      <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
-      <Name>Pathfinding.GraphLib.Core.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Realizations\Pathfinding.GraphLib.Core.Realizations.csproj">
-      <Project>{0C7DB792-B30B-4138-8D37-67450E2F0982}</Project>
-      <Name>Pathfinding.GraphLib.Core.Realizations</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Factory.Interface\Pathfinding.GraphLib.Factory.Interface.csproj">
       <Project>{8C66CBDB-9899-4D80-846A-F197925D3163}</Project>
       <Name>Pathfinding.GraphLib.Factory.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Serialization.Core.Interface\Pathfinding.GraphLib.Serialization.Core.Interface.csproj">
-      <Project>{84770BE3-D26C-4800-9DF1-EA33704E9FBD}</Project>
-      <Name>Pathfinding.GraphLib.Serialization.Core.Interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
       <Project>{cd11d46e-4675-4090-b50b-a85ffa3d1d2c}</Project>

@@ -4,9 +4,6 @@ using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.Realizations;
 using System;
 using System.Drawing;
 

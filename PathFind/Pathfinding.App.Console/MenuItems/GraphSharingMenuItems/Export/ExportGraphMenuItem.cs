@@ -1,16 +1,15 @@
-﻿using Pathfinding.App.Console.DAL.Interface;
-using Pathfinding.App.Console.DAL.Models.Entities;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
-using Pathfinding.App.Console.Extensions;
+﻿using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Serialization.Core.Interface;
 using Pathfinding.Logging.Interface;
+using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Models.Read;
 using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
@@ -20,14 +19,14 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
         protected readonly IInput<TPath> input;
         protected readonly IInput<int> intInput;
         protected readonly ISerializer<IEnumerable<TExport>> serializer;
-        protected readonly IService<Vertex> service;
+        protected readonly IRequestService<Vertex> service;
         protected readonly ILog log;
 
         protected ExportGraphMenuItem(IInput<TPath> input,
             IInput<int> intInput,
             ISerializer<IEnumerable<TExport>> graphSerializer,
             ILog log,
-            IService<Vertex> service)
+            IRequestService<Vertex> service)
         {
             this.input = input;
             this.intInput = intInput;
@@ -36,17 +35,17 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
             this.service = service;
         }
 
-        public virtual bool CanBeExecuted() => service.GetGraphCount() > 0;
+        public virtual bool CanBeExecuted() => service.ReadGraphCountAsync().Result > 0;
 
-        public virtual async void Execute()
+        public virtual async Task ExecuteAsync(CancellationToken token = default)
         {
             try
             {
-                var toExport = GetHistoriesToSave();
+                var toExport = await GetHistoriesToSave(token);
                 if (toExport.Count > 0)
                 {
                     var path = input.Input();
-                    await ExportAsync(path, toExport);
+                    await ExportAsync(path, toExport, token);
                 }
             }
             catch (Exception ex)
@@ -56,9 +55,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
         }
 
         protected abstract Task ExportAsync(TPath path,
-            IEnumerable<TExport> histories);
+            IEnumerable<TExport> histories,
+            CancellationToken token);
 
-        private string CreateMenuList(IReadOnlyCollection<GraphInformationReadDto> graphs)
+        private string CreateMenuList(IReadOnlyCollection<GraphInformationModel> graphs)
         {
             var menu = graphs.Select(k => k.ConvertToString())
                 .Append(Languages.All)
@@ -77,20 +77,22 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
             }
         }
 
-        protected abstract TExport GetForSave(int graphId);
+        protected abstract Task<TExport> GetForSave(int graphId, CancellationToken token);
 
-        private IReadOnlyCollection<TExport> GetHistoriesToSave()
+        private async Task<IReadOnlyCollection<TExport>> GetHistoriesToSave(CancellationToken token)
         {
             var toExport = new List<TExport>();
-            var keys = service.GetAllGraphInfo().ToList();
+            var keys = (await service.ReadAllGraphInfoAsync(token))
+                .GraphInformations
+                .ToList();
             int index = 1;
             do
             {
                 if (index == keys.Count)
                 {
-                    var histories = keys
-                        .Select(x => GetForSave(x.Id))
-                        .ToReadOnly();
+                    var histories = await keys.ToAsyncEnumerable()
+                        .SelectAwait(async x => await GetForSave(x.Id, token))
+                        .ToListAsync(token);
                     toExport.AddRange(histories);
                     break;
                 }
@@ -99,7 +101,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
                 if (index < keys.Count)
                 {
                     int id = keys[index].Id;
-                    var history = GetForSave(id);
+                    var history = await GetForSave(id, token);
                     toExport.Add(history);
                     keys.RemoveAt(index);
                     index = 0;

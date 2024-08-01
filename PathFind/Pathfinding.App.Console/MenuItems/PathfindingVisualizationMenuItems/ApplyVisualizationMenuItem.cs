@@ -6,6 +6,8 @@ using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
 {
@@ -21,14 +23,16 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
             this.messenger = messenger;
         }
 
-        public void Execute()
+        public async Task ExecuteAsync(CancellationToken token = default)
         {
+            if (token.IsCancellationRequested) return;
             using (Cursor.UseCurrentPositionWithClean())
             {
                 string message = MessagesTexts.ApplyVisualizationMsg;
                 bool isApplied = answerInput.Input(message, Answer.Range);
                 var msg = new IsAppliedMessage(isApplied);
                 messenger.Send(msg, Tokens.Visualization);
+                await Task.CompletedTask;
             }
         }
 

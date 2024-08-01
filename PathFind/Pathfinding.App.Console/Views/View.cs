@@ -5,25 +5,27 @@ using Pathfinding.App.Console.Localization;
 using Shared.Primitives.ValueRange;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.Views
 {
-    internal sealed class View(IUnit model, IInput<int> input) : IDisplayable
+    internal sealed class View(IUnit model, IInput<int> input)
     {
         private readonly IUnit unit = model;
         private readonly IInput<int> intInput = input;
 
-        public void Display()
+        public async Task DisplayAsync(CancellationToken token = default)
         {
             bool isClosureRequested = false;
-            while (!isClosureRequested)
+            while (!isClosureRequested || !token.IsCancellationRequested)
             {
                 try
                 {
                     AppLayout.SetCursorPositionUnderGraphField();
                     var menuItems = unit.GetMenuItems();
                     var menuItem = InputMenuItem(menuItems);
-                    menuItem.Execute();
+                    await menuItem.ExecuteAsync(token);
                 }
                 catch (ExitRequiredException)
                 {

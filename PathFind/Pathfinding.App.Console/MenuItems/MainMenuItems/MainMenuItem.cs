@@ -1,11 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.Logging.Interface;
+using Pathfinding.Service.Interface.Models.Read;
 
 namespace Pathfinding.App.Console.MenuItems.MainMenuItems
 {
@@ -15,7 +15,7 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
     {
         private readonly IMessenger messenger;
 
-        private GraphReadDto<Vertex> graph = GraphReadDto<Vertex>.Empty;
+        private GraphModel<Vertex> graph = null;
 
         protected MainMenuItem(IInput<int> input, TUnit viewModel,
             IMessenger messenger, ILog log)
@@ -26,7 +26,7 @@ namespace Pathfinding.App.Console.MenuItems.MainMenuItems
 
         public bool CanBeExecuted()
         {
-            return graph != GraphReadDto<Vertex>.Empty;
+            return graph is not null;
         }
 
         public void RegisterHandlers(IMessenger messenger)

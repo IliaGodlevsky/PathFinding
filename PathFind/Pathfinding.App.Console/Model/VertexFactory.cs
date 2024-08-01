@@ -1,6 +1,4 @@
-﻿using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Factory.Interface;
-using Pathfinding.VisualizationLib.Core.Interface;
+﻿using Pathfinding.Service.Interface.Visualization;
 
 namespace Pathfinding.App.Console.Model
 {

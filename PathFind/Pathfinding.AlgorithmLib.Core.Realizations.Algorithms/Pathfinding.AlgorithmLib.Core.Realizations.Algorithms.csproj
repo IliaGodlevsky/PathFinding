@@ -43,15 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AStarAlgorithm.cs" />
-    <Compile Include="AStarLeeAlgorithm.cs" />
-    <Compile Include="CostGreedyAlgorithm.cs" />
-    <Compile Include="DepthFirstAlgorithm.cs" />
-    <Compile Include="DijkstraAlgorithm.cs" />
-    <Compile Include="DistanceFirstAlgorithm.cs" />
-    <Compile Include="HeuristicCostGreedyAlgorithm.cs" />
-    <Compile Include="IDAStarAlgorithm.cs" />
-    <Compile Include="LeeAlgorithm.cs" />
     <Compile Include="Localization\Languages.ru.Designer.cs">
       <DependentUpon>Languages.ru.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -63,41 +54,8 @@
       <DependentUpon>Languages.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RandomAlgorithm.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Abstractions\Pathfinding.AlgorithmLib.Core.Abstractions.csproj">
-      <Project>{BBABA3C7-E177-44D6-B97E-4D8F3D01AFF6}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Abstractions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Exceptions\Pathfinding.AlgorithmLib.Core.Exceptions.csproj">
-      <Project>{70CB989C-EF34-473B-ACEF-23FDB0A47E9B}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Exceptions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Interface\Pathfinding.AlgorithmLib.Core.Interface.csproj">
-      <Project>{9AB4F0E3-6693-4ACD-95BC-24D04134781F}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.NullObjects\Pathfinding.AlgorithmLib.Core.NullObjects.csproj">
-      <Project>{16755D15-4338-4243-8EAA-95673423599F}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.NullObjects</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths\Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths.csproj">
-      <Project>{44D8FBA7-066B-46CC-A711-2315A5A22C70}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Realizations.GraphPaths</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Realizations.Heuristics\Pathfinding.AlgorithmLib.Core.Realizations.Heuristics.csproj">
-      <Project>{AC9456F4-D4A9-4025-9E8F-6BA056FBA37D}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Realizations.Heuristics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Realizations.StepRules\Pathfinding.AlgorithmLib.Core.Realizations.StepRules.csproj">
-      <Project>{F936E225-02CF-4CC7-81A1-18866724C693}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Realizations.StepRules</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Extensions\Pathfinding.AlgorithmLib.Extensions.csproj">
-      <Project>{80cf05f8-a3ef-4957-b56f-614389170221}</Project>
-      <Name>Pathfinding.AlgorithmLib.Extensions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface.Extensions\Pathfinding.GraphLib.Core.Interface.Extensions.csproj">
       <Project>{3C13810C-ED74-490B-9303-9CCBFE485F5E}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface.Extensions</Name>
@@ -105,10 +63,6 @@
     <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
       <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
       <Name>Pathfinding.GraphLib.Core.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.NullObjects\Pathfinding.GraphLib.Core.NullObjects.csproj">
-      <Project>{67CCD24F-A5C1-41F9-9FE8-FC8C4C818646}</Project>
-      <Name>Pathfinding.GraphLib.Core.NullObjects</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
       <Project>{cd11d46e-4675-4090-b50b-a85ffa3d1d2c}</Project>

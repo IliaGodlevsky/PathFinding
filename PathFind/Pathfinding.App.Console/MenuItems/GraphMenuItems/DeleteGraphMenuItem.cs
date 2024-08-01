@@ -1,7 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DAL.Interface;
-using Pathfinding.App.Console.DAL.Models.Entities;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -9,8 +6,12 @@ using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
+using Pathfinding.Infrastructure.Data.Pathfinding;
+using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Models.Read;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
@@ -18,23 +19,29 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
     [LowPriority]
     internal sealed class DeleteGraphMenuItem(IInput<int> input,
         IMessenger messenger,
-        IService<Vertex> service) : IConditionedMenuItem, ICanReceiveMessage
+        IRequestService<Vertex> service) : IConditionedMenuItem, ICanReceiveMessage
     {
-        private readonly IService<Vertex> service = service;
+        private readonly IRequestService<Vertex> service = service;
         private readonly IMessenger messenger = messenger;
         private readonly IInput<int> input = input;
 
-        private GraphReadDto<Vertex> graph = GraphReadDto<Vertex>.Empty;
+        private GraphModel<Vertex> graph = new() { Graph = Graph<Vertex>.Empty, Id = 0, Name = string.Empty };
 
         public bool CanBeExecuted()
         {
-            return service.GetAllGraphInfo().Where(x => x.Id != graph.Id).Any();
+            return service.ReadAllGraphInfoAsync()
+                .Result
+                .GraphInformations
+                .Where(x => x.Id != graph.Id)
+                .Any();
         }
 
-        public async void Execute()
+        public async Task ExecuteAsync(CancellationToken token = default)
         {
-            var graphs = service.GetAllGraphInfo()
-                .Where(x => x.Id != graph.Id).ToList();
+            var graphs = (await service.ReadAllGraphInfoAsync(token))
+                .GraphInformations
+                .Where(x => x.Id != graph.Id)
+                .ToList();
             string menuList = GetMenuList(graphs);
             int index = GetIndex(menuList, graphs.Count);
             var ids = new List<int>();
@@ -52,10 +59,10 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 menuList = GetMenuList(graphs);
                 index = GetIndex(menuList, graphs.Count);
             }
-            await Task.Run(() => ids.ForEach(id => service.DeleteGraph(id)));
+            await service.DeleteGraphsAsync(ids, token);
         }
 
-        private string GetMenuList(IReadOnlyCollection<GraphInformationReadDto> graphs)
+        private string GetMenuList(IReadOnlyCollection<GraphInformationModel> graphs)
         {
             string menu = graphs.Select(s => s.ConvertToString())
                 .Append(Languages.Quit)

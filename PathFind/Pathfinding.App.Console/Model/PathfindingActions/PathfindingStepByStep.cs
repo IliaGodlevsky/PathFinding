@@ -1,5 +1,5 @@
-﻿using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.App.Console.Interface;
+﻿using Pathfinding.App.Console.Interface;
+using Pathfinding.Infrastructure.Business.Algorithms;
 using Shared.Extensions;
 using System;
 

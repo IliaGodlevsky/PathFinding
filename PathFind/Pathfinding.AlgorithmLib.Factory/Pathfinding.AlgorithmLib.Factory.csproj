@@ -57,25 +57,9 @@
     <Compile Include="RandomAlgorithmFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Abstractions\Pathfinding.AlgorithmLib.Core.Abstractions.csproj">
-      <Project>{BBABA3C7-E177-44D6-B97E-4D8F3D01AFF6}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Abstractions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Interface\Pathfinding.AlgorithmLib.Core.Interface.csproj">
-      <Project>{9AB4F0E3-6693-4ACD-95BC-24D04134781F}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Interface</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Realizations.Algorithms\Pathfinding.AlgorithmLib.Core.Realizations.Algorithms.csproj">
       <Project>{3EB7129C-BE34-4ECF-B8C5-65B772184186}</Project>
       <Name>Pathfinding.AlgorithmLib.Core.Realizations.Algorithms</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Realizations.Heuristics\Pathfinding.AlgorithmLib.Core.Realizations.Heuristics.csproj">
-      <Project>{AC9456F4-D4A9-4025-9E8F-6BA056FBA37D}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Realizations.Heuristics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Realizations.StepRules\Pathfinding.AlgorithmLib.Core.Realizations.StepRules.csproj">
-      <Project>{F936E225-02CF-4CC7-81A1-18866724C693}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Realizations.StepRules</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pathfinding.AlgorithmLib.History.Interface\Pathfinding.AlgorithmLib.History.Interface.csproj">
       <Project>{A0750471-F960-42D7-B4B4-0571EA0EAB78}</Project>

@@ -1,14 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Serialization.Core.Interface;
-using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
+using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Extensions;
 using Shared.Extensions;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
 {
@@ -19,7 +20,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
             IInput<int> input,
             ISerializer<IEnumerable<TImport>> serializer,
             ILog log,
-            IService<Vertex> service)
+            IRequestService<Vertex> service)
             : base(messenger, input, serializer, log, service)
         {
         }
@@ -32,10 +33,11 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
             }
         }
 
-        protected override IReadOnlyCollection<TImport> ImportGraph(int port)
+        protected override async Task<IReadOnlyCollection<TImport>> ImportGraph(int port,
+            CancellationToken token)
         {
             Terminal.Write(Languages.WaitingForConnection);
-            return serializer.DeserializeFromNetwork(port).ToReadOnly();
+            return (await serializer.DeserializeFromNetwork(port, token)).ToReadOnly();
         }
     }
 }

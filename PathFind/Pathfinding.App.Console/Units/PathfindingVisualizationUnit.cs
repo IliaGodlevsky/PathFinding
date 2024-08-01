@@ -1,7 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.AlgorithmLib.Core.Events;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
 using Pathfinding.App.Console.EventArguments;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
@@ -9,6 +6,8 @@ using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Settings;
+using Pathfinding.Infrastructure.Business.Algorithms;
+using Pathfinding.Infrastructure.Business.Algorithms.Events;
 using Shared.Extensions;
 using Shared.Process.EventArguments;
 using System;

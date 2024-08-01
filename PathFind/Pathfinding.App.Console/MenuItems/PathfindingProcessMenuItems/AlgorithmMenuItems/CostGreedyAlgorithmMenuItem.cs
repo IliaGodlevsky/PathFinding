@@ -1,11 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.AlgorithmLib.Core.Abstractions;
-using Pathfinding.AlgorithmLib.Core.Interface;
-using Pathfinding.AlgorithmLib.Factory;
-using Pathfinding.AlgorithmLib.Factory.Interface;
-using Pathfinding.App.Console.DAL;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
+using Pathfinding.Domain.Core;
+using Pathfinding.Infrastructure.Business.Algorithms;
+using Pathfinding.Infrastructure.Business.Algorithms.Factories;
+using Pathfinding.Service.Interface;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingProcessMenuItems.AlgorithmMenuItems

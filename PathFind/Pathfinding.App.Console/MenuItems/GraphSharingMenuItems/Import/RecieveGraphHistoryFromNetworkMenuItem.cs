@@ -1,17 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DAL.Interface;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Serialization;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.Modules.Interface;
-using Pathfinding.GraphLib.Serialization.Core.Interface;
+using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Logging.Interface;
+using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Commands;
+using Pathfinding.Service.Interface.Models.Read;
+using Pathfinding.Service.Interface.Models.Serialization;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
 {
@@ -19,32 +20,36 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
     internal sealed class ReceiveGraphHistoryFromNetworkMenuItem(IMessenger messenger,
         IInput<int> input,
         IPathfindingRangeBuilder<Vertex> rangeBuilder,
-        ISerializer<IEnumerable<PathfindingHistorySerializationDto>> serializer,
+        ISerializer<IEnumerable<PathfindingHistorySerializationModel>> serializer,
         ILog log,
-        IService<Vertex> service) : ImportGraphFromNetworkMenuItem<PathfindingHistorySerializationDto>(messenger, input, serializer, log, service)
+        IRequestService<Vertex> service) : ImportGraphFromNetworkMenuItem<PathfindingHistorySerializationModel>(messenger, input, serializer, log, service)
     {
         private readonly IPathfindingRangeBuilder<Vertex> rangeBuilder = rangeBuilder;
 
-        protected override GraphReadDto<Vertex> AddSingleImported(PathfindingHistorySerializationDto imported)
+        protected override async Task<GraphModel<Vertex>> AddSingleImported(PathfindingHistorySerializationModel imported,
+            CancellationToken token)
         {
-            return service.AddPathfindingHistory(new[] { imported }).ElementAt(0).Graph;
+            return (await service.CreatePathfindingHistoryAsync(new[] { imported }, token))
+                .Models.ElementAt(0)
+                .Graph;
         }
 
-        protected override void AddImported(IEnumerable<PathfindingHistorySerializationDto> imported)
+        protected override async Task AddImported(IEnumerable<PathfindingHistorySerializationModel> imported,
+            CancellationToken token)
         {
-            service.AddPathfindingHistory(imported);
+            await service.CreatePathfindingHistoryAsync(imported, token);
+        }
+
+        protected override async Task Post(GraphModel<Vertex> model, CancellationToken token)
+        {
+            var range = await service.ReadRangeAsync(model.Id, token);
+            rangeBuilder.Undo();
+            rangeBuilder.Include(range.Range, model.Graph);
         }
 
         public override string ToString()
         {
             return Languages.RecieveGraphHistory;
-        }
-
-        protected override void Post(GraphReadDto<Vertex> dto)
-        {
-            var range = service.GetRange(dto.Id);
-            rangeBuilder.Undo();
-            rangeBuilder.Include(range, dto.Graph);
         }
     }
 }

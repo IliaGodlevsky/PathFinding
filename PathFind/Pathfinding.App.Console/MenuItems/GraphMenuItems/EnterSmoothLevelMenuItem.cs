@@ -5,11 +5,12 @@ using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
-using Pathfinding.GraphLib.Core.Realizations;
-using Pathfinding.GraphLib.Smoothing;
-using Pathfinding.GraphLib.Smoothing.Interface;
+using Pathfinding.Infrastructure.Business.Layers;
+using Pathfinding.Service.Interface;
 using Shared.Primitives.ValueRange;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
 {
@@ -23,8 +24,9 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
         private readonly IMessenger messenger = messenger;
         private readonly IMeanCost meanCost = meanCost;
 
-        public void Execute()
+        public async Task ExecuteAsync(CancellationToken token = default)
         {
+            if (token.IsCancellationRequested) return;
             var menu = new[] { "No", "Low", "Medium", "High" }.CreateMenuList(1);
             string msg = string.Concat(menu, "\n", "Enter smooth level: ");
             using (Cursor.UseCurrentPositionWithClean())
@@ -35,6 +37,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphMenuItems
                 var layers = new Layers(repeat);
                 var message = new LayerMessage(layers);
                 messenger.Send(message, Tokens.Graph);
+                await Task.CompletedTask;
             }
         }
 

@@ -8,7 +8,7 @@ namespace Pathfinding.App.Console.Model.FramedAxes
 {
     internal abstract class FramedAxis : IDisplayable, IEnumerable<(string Value, Point Coordinate)>
     {
-        protected static int LateralDistance 
+        protected static int LateralDistance
             => AppLayout.LateralDistanceBetweenVertices;
 
         protected abstract int ValueOffset { get; }

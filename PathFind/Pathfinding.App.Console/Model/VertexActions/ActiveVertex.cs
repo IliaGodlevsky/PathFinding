@@ -1,5 +1,4 @@
-﻿using Pathfinding.GraphLib.Core.Interface;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.Model.VertexActions
 {

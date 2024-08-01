@@ -1,18 +1,18 @@
-﻿using Pathfinding.App.Console.DAL.Interface;
-using Pathfinding.App.Console.DAL.Models.Entities;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
-using Pathfinding.App.Console.Extensions;
+﻿using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Serialization.Core.Interface;
-using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
+using Pathfinding.Domain.Interface;
 using Pathfinding.Logging.Interface;
+using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Extensions;
+using Pathfinding.Service.Interface.Models.Read;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
 {
@@ -20,13 +20,13 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
     internal sealed class SavePathfindingRangeMenuItem : IConditionedMenuItem
     {
         private readonly ISerializer<IEnumerable<ICoordinate>> serializer;
-        private readonly IService<Vertex> service;
+        private readonly IRequestService<Vertex> service;
         private readonly IInput<string> stringInput;
         private readonly IInput<int> intInput;
         private readonly ILog log;
 
         public SavePathfindingRangeMenuItem(ISerializer<IEnumerable<ICoordinate>> serializer,
-            IService<Vertex> service,
+            IRequestService<Vertex> service,
             IFilePathInput stringInput,
             IInput<int> intInput,
             ILog log)
@@ -40,29 +40,38 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
 
         public bool CanBeExecuted()
         {
-            var ids = service.GetGraphIds();
-            return ids.Select(id => service.GetRange(id)).Any(r => r.Count > 0);
+            var ids = service.ReadGraphIdsAsync().Result.GraphIds;
+            foreach (var id in ids)
+            {
+                var range = service.ReadRangeAsync(id).Result.Range;
+                if (range.Count > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
-        public async void Execute()
+        public async Task ExecuteAsync(CancellationToken token = default)
         {
             try
             {
-                var ids = service.GetGraphIds();
+                var ids = (await service.ReadGraphIdsAsync(token)).GraphIds;
                 if (ids.Count == 1)
                 {
                     var path = stringInput.Input();
-                    var range = service.GetRange(ids.First());
-                    await serializer.SerializeToFileAsync(range, path);
+                    var range = await service.ReadRangeAsync(ids.First(), token);
+                    await serializer.SerializeToFileAsync(range.Range, path, token);
                     return;
                 }
-                var graphsWithPath = ids
-                    .Where(id => service.GetRange(id).Count > 0)
-                    .ToArray();
-                var ranges = ids
-                    .Select(id => service.GetRange(id))
-                    .ToArray();
-                var graphs = service.GetAllGraphInfo()
+                var graphsWithPath = await ids.ToAsyncEnumerable()
+                    .WhereAwait(async id => (await service.ReadRangeAsync(id, token)).Range.Count > 0)
+                    .ToArrayAsync(token);
+                var ranges = await ids.ToAsyncEnumerable()
+                    .SelectAwait(async id => await service.ReadRangeAsync(id, token))
+                    .ToArrayAsync(token);
+                var graphs = (await service.ReadAllGraphInfoAsync())
+                    .GraphInformations
                     .Where(x => ids.Contains(x.Id))
                     .ToArray();
                 string menuList = CreateMenuList(graphs);
@@ -71,7 +80,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
                 {
                     var path = stringInput.Input();
                     var range = ranges[index];
-                    await serializer.SerializeToFileAsync(range, path);
+                    await serializer.SerializeToFileAsync(range.Range, path, token);
                 }
             }
             catch (Exception ex)
@@ -89,7 +98,7 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Export
             }
         }
 
-        private string CreateMenuList(IReadOnlyCollection<GraphInformationReadDto> graphs)
+        private string CreateMenuList(IReadOnlyCollection<GraphInformationModel> graphs)
         {
             return graphs.Select(k => k.ConvertToString())
                 .Append(Languages.Quit)

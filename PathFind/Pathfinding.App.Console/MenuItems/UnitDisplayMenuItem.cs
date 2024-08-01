@@ -2,6 +2,8 @@
 using Pathfinding.App.Console.Views;
 using Pathfinding.Logging.Interface;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems
 {
@@ -20,12 +22,12 @@ namespace Pathfinding.App.Console.MenuItems
             this.log = log;
         }
 
-        public virtual void Execute()
+        public virtual async Task ExecuteAsync(CancellationToken token = default)
         {
             try
             {
                 var view = new View(unit, intInput);
-                view.Display();
+                await view.DisplayAsync(token);
             }
             catch (Exception ex)
             {

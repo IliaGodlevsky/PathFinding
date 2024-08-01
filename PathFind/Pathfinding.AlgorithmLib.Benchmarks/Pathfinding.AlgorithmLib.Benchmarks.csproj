@@ -181,34 +181,6 @@
     <Compile Include="Pathfinding\WaveAlgorithmsBenchmarks.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Abstractions\Pathfinding.AlgorithmLib.Core.Abstractions.csproj">
-      <Project>{BBABA3C7-E177-44D6-B97E-4D8F3D01AFF6}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Abstractions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Interface\Pathfinding.AlgorithmLib.Core.Interface.csproj">
-      <Project>{9AB4F0E3-6693-4ACD-95BC-24D04134781F}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Realizations.Algorithms\Pathfinding.AlgorithmLib.Core.Realizations.Algorithms.csproj">
-      <Project>{3EB7129C-BE34-4ECF-B8C5-65B772184186}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Realizations.Algorithms</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
-      <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
-      <Name>Pathfinding.GraphLib.Core.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Realizations\Pathfinding.GraphLib.Core.Realizations.csproj">
-      <Project>{0C7DB792-B30B-4138-8D37-67450E2F0982}</Project>
-      <Name>Pathfinding.GraphLib.Core.Realizations</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Factory.Extensions\Pathfinding.GraphLib.Factory.Extensions.csproj">
-      <Project>{992503e9-626f-4ed5-b9cf-239c56c8f440}</Project>
-      <Name>Pathfinding.GraphLib.Factory.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Factory.Interface\Pathfinding.GraphLib.Factory.Interface.csproj">
-      <Project>{8C66CBDB-9899-4D80-846A-F197925D3163}</Project>
-      <Name>Pathfinding.GraphLib.Factory.Interface</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Factory.Realizations\Pathfinding.GraphLib.Factory.Realizations.csproj">
       <Project>{96DE3110-BA88-449C-A514-282BEFF4003E}</Project>
       <Name>Pathfinding.GraphLib.Factory.Realizations</Name>

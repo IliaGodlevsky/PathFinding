@@ -1,12 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DAL.Interface;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Serialization.Core.Interface;
-using Pathfinding.GraphLib.Serialization.Core.Realizations.Extensions;
 using Pathfinding.Logging.Interface;
+using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Extensions;
 using Shared.Extensions;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
 {
@@ -17,13 +18,15 @@ namespace Pathfinding.App.Console.MenuItems.GraphSharingMenuItems.Import
             IFilePathInput input,
             ISerializer<IEnumerable<TImport>> serializer,
             ILog log,
-            IService<Vertex> service) : base(messenger, input, serializer, log, service)
+            IRequestService<Vertex> service)
+            : base(messenger, input, serializer, log, service)
         {
         }
 
-        protected override sealed IReadOnlyCollection<TImport> ImportGraph(string path)
+        protected override sealed async Task<IReadOnlyCollection<TImport>> ImportGraph(string path,
+            CancellationToken token)
         {
-            return serializer.DeserializeFromFile(path).ToReadOnly();
+            return (await serializer.DeserializeFromFileAsync(path, token)).ToReadOnly();
         }
 
         protected override sealed string InputPath()

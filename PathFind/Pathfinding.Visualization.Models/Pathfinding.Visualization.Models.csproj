@@ -45,62 +45,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Abstractions\Pathfinding.AlgorithmLib.Core.Abstractions.csproj">
-      <Project>{BBABA3C7-E177-44D6-B97E-4D8F3D01AFF6}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Abstractions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Events\Pathfinding.AlgorithmLib.Core.Events.csproj">
-      <Project>{943d8d5a-62e0-46a2-9914-db9973daf9c6}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Events</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Exceptions\Pathfinding.AlgorithmLib.Core.Exceptions.csproj">
-      <Project>{70CB989C-EF34-473B-ACEF-23FDB0A47E9B}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Exceptions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Interface.Extensions\Pathfinding.AlgorithmLib.Core.Interface.Extensions.csproj">
-      <Project>{1d30187d-dadb-4725-a9c5-c43ee983a080}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Interface.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.Interface\Pathfinding.AlgorithmLib.Core.Interface.csproj">
-      <Project>{9AB4F0E3-6693-4ACD-95BC-24D04134781F}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Core.NullObjects\Pathfinding.AlgorithmLib.Core.NullObjects.csproj">
-      <Project>{16755D15-4338-4243-8EAA-95673423599F}</Project>
-      <Name>Pathfinding.AlgorithmLib.Core.NullObjects</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.Factory\Pathfinding.AlgorithmLib.Factory.csproj">
-      <Project>{E8ECD5E0-009E-4FFA-8FB8-4CB9209A4F25}</Project>
-      <Name>Pathfinding.AlgorithmLib.Factory</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.AlgorithmLib.History.Interface\Pathfinding.AlgorithmLib.History.Interface.csproj">
-      <Project>{A0750471-F960-42D7-B4B4-0571EA0EAB78}</Project>
-      <Name>Pathfinding.AlgorithmLib.History.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface.Extensions\Pathfinding.GraphLib.Core.Interface.Extensions.csproj">
-      <Project>{3c13810c-ed74-490b-9303-9ccbfe485f5e}</Project>
-      <Name>Pathfinding.GraphLib.Core.Interface.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Interface\Pathfinding.GraphLib.Core.Interface.csproj">
-      <Project>{5175B72D-BAC7-472C-A396-3936BF1237C0}</Project>
-      <Name>Pathfinding.GraphLib.Core.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Core.Realizations\Pathfinding.GraphLib.Core.Realizations.csproj">
-      <Project>{0C7DB792-B30B-4138-8D37-67450E2F0982}</Project>
-      <Name>Pathfinding.GraphLib.Core.Realizations</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Factory.Interface\Pathfinding.GraphLib.Factory.Interface.csproj">
-      <Project>{8C66CBDB-9899-4D80-846A-F197925D3163}</Project>
-      <Name>Pathfinding.GraphLib.Factory.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Serialization.Core.Interface\Pathfinding.GraphLib.Serialization.Core.Interface.csproj">
-      <Project>{84770BE3-D26C-4800-9DF1-EA33704E9FBD}</Project>
-      <Name>Pathfinding.GraphLib.Serialization.Core.Interface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pathfinding.GraphLib.Serialization.Core.Realizations\Pathfinding.GraphLib.Serialization.Core.Realizations.csproj">
-      <Project>{5b3827e8-4cc0-490d-b15c-4190a2982059}</Project>
-      <Name>Pathfinding.GraphLib.Serialization.Core.Realizations</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Pathfinding.GraphLib.Visualization\Pathfinding.GraphLib.Visualization.csproj">
       <Project>{5616B5FF-BA13-4805-860C-1F69F2946B89}</Project>
       <Name>Pathfinding.GraphLib.Visualization</Name>

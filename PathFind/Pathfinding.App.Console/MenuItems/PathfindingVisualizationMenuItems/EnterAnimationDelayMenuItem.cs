@@ -7,6 +7,8 @@ using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Shared.Primitives.ValueRange;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
 {
@@ -27,13 +29,15 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingVisualizationMenuItems
             this.messenger = messenger;
         }
 
-        public void Execute()
+        public async Task ExecuteAsync(CancellationToken token = default)
         {
+            if (token.IsCancellationRequested) return;
             using (Cursor.UseCurrentPositionWithClean())
             {
                 var delay = spanInput.Input(Languages.DelayTimeInputMsg, DelayRange);
                 var msg = new AlgorithmDelayMessage(delay);
                 messenger.SendMany(msg, Tokens.Visualization);
+                await Task.CompletedTask;
             }
         }
 

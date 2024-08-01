@@ -6,6 +6,8 @@ using Pathfinding.App.Console.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
 {
@@ -30,8 +32,9 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
                 .CreateMenuList(columnsNumber: 4);
         }
 
-        public void Execute()
+        public async Task ExecuteAsync(CancellationToken token = default)
         {
+            if (token.IsCancellationRequested) return;
             int index = default;
             using (Cursor.UseCurrentPositionWithClean())
             {
@@ -42,6 +45,7 @@ namespace Pathfinding.App.Console.MenuItems.ColorMenuItems
             {
                 Colours.Default[SettingKey] = allColors[index];
             }
+            await Task.CompletedTask;
         }
 
         public override sealed string ToString()

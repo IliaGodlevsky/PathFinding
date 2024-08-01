@@ -100,5 +100,10 @@ namespace Shared.Extensions
         {
             return selector(items);
         }
+
+        public static U To<T, U>(this IEnumerable<T> items, Func<IEnumerable<T>, U> selector)
+        {
+            return selector(items);
+        }
     }
 }

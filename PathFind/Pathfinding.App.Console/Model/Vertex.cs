@@ -1,8 +1,9 @@
 ﻿using Pathfinding.App.Console.Interface;
-using Pathfinding.GraphLib.Core.Interface;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
-using Pathfinding.GraphLib.Core.NullObjects;
-using Pathfinding.VisualizationLib.Core.Interface;
+using Pathfinding.Domain.Core;
+using Pathfinding.Domain.Interface;
+using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Infrastructure.Data.Pathfinding;
+using Pathfinding.Service.Interface.Visualization;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +12,7 @@ using System.Drawing;
 namespace Pathfinding.App.Console.Model
 {
     [DebuggerDisplay("{Position.ToString()}")]
-    internal class Vertex : IVertex, ITotallyVisualizable, IDisplayable
+    internal class Vertex : IVertex, IEntity<int>, ITotallyVisualizable, IDisplayable
     {
         private readonly ITotalVisualization<Vertex> visualization;
 

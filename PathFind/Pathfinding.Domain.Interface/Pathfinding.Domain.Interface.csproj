@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BEE15FAF-F9D2-432A-A8BB-6D1BE7FE2888}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Pathfinding.Domain.Interface</RootNamespace>
+    <AssemblyName>Pathfinding.Domain.Interface</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Comparers\CoordinateEqualityComparer.cs" />
+    <Compile Include="Comparers\VertexEqualityComparer.cs" />
+    <Compile Include="Factories\IVertexFactory.cs" />
+    <Compile Include="ICoordinate.cs" />
+    <Compile Include="IGraph.cs" />
+    <Compile Include="Factories\IGraphAssemble.cs" />
+    <Compile Include="Factories\IGraphFactory.cs" />
+    <Compile Include="Factories\INeighborhood.cs" />
+    <Compile Include="Factories\INeighborhoodFactory.cs" />
+    <Compile Include="IPathfindingRange.cs" />
+    <Compile Include="Factories\IUnitOfWorkFactory.cs" />
+    <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="IVertex.cs" />
+    <Compile Include="IVertexCost.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IAlgorithmRunRepository.cs" />
+    <Compile Include="Repositories\IAlgorithmsRepository.cs" />
+    <Compile Include="Repositories\IGraphParametresRepository.cs" />
+    <Compile Include="Repositories\IGraphStateRepository.cs" />
+    <Compile Include="Repositories\INeighborsRepository.cs" />
+    <Compile Include="Repositories\IRangeRepository.cs" />
+    <Compile Include="Repositories\IStatisticsRepository.cs" />
+    <Compile Include="Repositories\ISubAlgorithmRepository.cs" />
+    <Compile Include="Repositories\IVerticesRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pathfinding.Domain.Core\Pathfinding.Domain.Core.csproj">
+      <Project>{e0c71a1a-7db7-426f-80dc-887f87f0aa13}</Project>
+      <Name>Pathfinding.Domain.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared.Primitives\Shared.Primitives.csproj">
+      <Project>{30973320-9F61-45FB-8C75-3256ADB1BFB1}</Project>
+      <Name>Shared.Primitives</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

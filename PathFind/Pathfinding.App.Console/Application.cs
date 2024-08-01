@@ -3,16 +3,18 @@ using Pathfinding.App.Console;
 using Pathfinding.App.Console.DependencyInjection;
 using Pathfinding.App.Console.MenuItems;
 using System.Text;
+using System.Threading.Tasks;
 
 internal static class Application
 {
-    public static void Run(string[] args)
+    public static async Task Run()
     {
         Terminal.Title = Constants.Title;
         Terminal.OutputEncoding = Encoding.UTF8;
         var builder = new ContainerBuilder();
         using var container = Build(builder);
-        container.Resolve<MainUnitMenuItem>().Execute();
+        var mainItem = container.Resolve<MainUnitMenuItem>();
+        await mainItem.ExecuteAsync();
     }
 
     private static IContainer Build(ContainerBuilder builder)
@@ -27,7 +29,6 @@ internal static class Application
             .AddGraphSharing()
             .AddPathfindingControl()
             .AddPathfindingHistory()
-            .AddPathfindingStatistics()
             .AddPathfindingVisualization()
             .BuildApplication();
     }

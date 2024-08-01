@@ -1,7 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.App.Console.DAL.Interface;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Read;
-using Pathfinding.App.Console.DAL.Models.TransferObjects.Undefined;
 using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.Localization;
@@ -9,12 +6,19 @@ using Pathfinding.App.Console.MenuItems.MenuItemPriority;
 using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
-using Pathfinding.GraphLib.Core.Interface.Extensions;
+using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Models.Read;
+using Pathfinding.Service.Interface.Models.Undefined;
+using Pathfinding.Service.Interface.Requests.Read;
 using Shared.Extensions;
 using Shared.Primitives;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 {
@@ -23,15 +27,15 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
     {
         private readonly IMessenger messenger;
         private readonly IInput<int> input;
-        private readonly IService<Vertex> service;
+        private readonly IRequestService<Vertex> service;
 
         private bool isHistoryApplied = true;
 
-        private GraphReadDto<Vertex> graph = GraphReadDto<Vertex>.Empty;
+        private GraphModel<Vertex> graph = null;
 
         public ShowHistoryMenuItem(IMessenger messenger,
             IInput<int> input,
-            IService<Vertex> service)
+            IRequestService<Vertex> service)
         {
             this.service = service;
             this.input = input;
@@ -40,12 +44,19 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
 
         public bool CanBeExecuted()
         {
-            return IsHistoryApplied() && service.GetRunCount(graph.Id) > 0;
+            if (graph is not null)
+            {
+                var request = new ReadRunCountRequest(graph.Id);
+                return IsHistoryApplied() && service.ReadRunCountAsync(request).Result > 0;
+            }
+            return false;
         }
 
-        public void Execute()
+        public async Task ExecuteAsync(CancellationToken token = default)
         {
-            var statistics = service.GetRunStatisticsForGraph(graph.Id)
+            if (token.IsCancellationRequested) return;
+            var statistics = (await service.ReadRunStatisticsAsync(graph.Id, token))
+                .Models
                 .OrderBy(x => x.AlgorithmId)
                 .GroupBy(x => x.AlgorithmId)
                 .SelectMany(x => x.OrderBy(x => x.AlgorithmSpeed).ThenBy(x => x.Steps))
@@ -73,7 +84,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             }
         }
 
-        private string GetInputMessage(IReadOnlyCollection<RunStatisticsDto> statistics)
+        private string GetInputMessage(IReadOnlyCollection<RunStatisticsModel> statistics)
         {
             var table = statistics.ToTable();
             string header = Aggregate(table.Headers);
