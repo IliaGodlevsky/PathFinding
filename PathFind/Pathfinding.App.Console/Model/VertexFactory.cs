@@ -1,4 +1,6 @@
-﻿using Pathfinding.Service.Interface.Visualization;
+﻿using Pathfinding.Domain.Interface;
+using Pathfinding.Domain.Interface.Factories;
+using Pathfinding.Service.Interface.Visualization;
 
 namespace Pathfinding.App.Console.Model
 {

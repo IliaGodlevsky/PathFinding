@@ -1,6 +1,7 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Shared.Primitives;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,17 +13,17 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
     [DebuggerDisplay("Count = {Neighbours.Count}")]
     public sealed class VonNeumannNeighborhood : INeighborhood
     {
-        private readonly Lazy<IReadOnlyCollection<ICoordinate>> neighbourhood;
+        private readonly Lazy<IReadOnlyCollection<Coordinate>> neighbourhood;
 
         public int Count => neighbourhood.Value.Count;
 
-        public VonNeumannNeighborhood(ICoordinate coordinate)
+        public VonNeumannNeighborhood(Coordinate coordinate)
         {
-            neighbourhood = new Lazy<IReadOnlyCollection<ICoordinate>>(
+            neighbourhood = new Lazy<IReadOnlyCollection<Coordinate>>(
                 () => DetectNeighborhood(coordinate), true);
         }
 
-        private IReadOnlyCollection<ICoordinate> DetectNeighborhood(ICoordinate self)
+        private IReadOnlyCollection<Coordinate> DetectNeighborhood(Coordinate self)
         {
             var mooreNeighbourhood = new MooreNeighborhood(self);
             return mooreNeighbourhood
@@ -30,7 +31,7 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
                 .ToArray();
         }
 
-        public IEnumerator<ICoordinate> GetEnumerator()
+        public IEnumerator<Coordinate> GetEnumerator()
         {
             return neighbourhood.Value.GetEnumerator();
         }

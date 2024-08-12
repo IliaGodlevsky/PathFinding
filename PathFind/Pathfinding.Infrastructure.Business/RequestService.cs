@@ -12,7 +12,7 @@ using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Service.Interface.Requests.Delete;
 using Pathfinding.Service.Interface.Requests.Read;
 using Pathfinding.Service.Interface.Requests.Update;
-using Shared.Extensions;
+using Pathfinding.Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,14 +93,11 @@ namespace Pathfinding.Infrastructure.Business
             }, token);
         }
 
-        public async Task CreateRunHistoryAsync(IEnumerable<CreateAlgorithmRunHistoryRequest> histories,
+        public async Task<IReadOnlyCollection<int>> CreateRunHistoryAsync(IEnumerable<CreateAlgorithmRunHistoryRequest> histories,
             CancellationToken token = default)
         {
-            await Transaction(async (unitOfWork, t) =>
-            {
-                await unitOfWork.AddHistoryAsync(mapper, histories);
-                return true;
-            }, token);
+            return await Transaction(async (unitOfWork, t) 
+                => await unitOfWork.AddHistoryAsync(mapper, histories), token);
         }
 
         public async Task<bool> DeleteGraphAsync(int graphId,
@@ -313,22 +310,28 @@ namespace Pathfinding.Infrastructure.Business
                 => await unitOfWork.GraphRepository.DeleteAsync(ids, t), token);
         }
 
-        public Task<GraphModel<T>> CreateGraphAsync(CreateGraphFromSerializationRequest request,
+        public async Task<GraphModel<T>> CreateGraphAsync(CreateGraphFromSerializationRequest request,
             CancellationToken token = default)
         {
-            throw new NotImplementedException();
+            var graph = mapper.Map<CreateGraphRequest<T>>(request);
+            return await CreateGraphAsync(graph, token);
         }
 
-        public Task<IReadOnlyCollection<GraphModel<T>>> CreateGraphsAsync(CreateGraphsFromSerializationRequest request,
+        public async Task<IReadOnlyCollection<GraphModel<T>>> CreateGraphsAsync(CreateGraphsFromSerializationRequest request,
             CancellationToken token = default)
         {
-            throw new NotImplementedException();
+            return await request.Graphs
+                .ToAsyncEnumerable()
+                .SelectAwait(async x => await CreateGraphAsync(x, token))
+                .ToListAsync(token);
         }
 
-        public Task<PathfindingHistoriesModel<T>> CreatePathfindingHistoryAsync(IEnumerable<PathfindingHistorySerializationModel> request,
+        public async Task<PathfindingHistoriesModel<T>> CreatePathfindingHistoryAsync(IEnumerable<PathfindingHistorySerializationModel> request,
             CancellationToken token = default)
         {
-            throw new NotImplementedException();
+            var requests = mapper.Map<List<CreatePathfindingHistoryRequest<T>>>(request);
+            var model = new CreatePathfindingHistoriesRequest<T>() { Models = requests };
+            return await CreatePathfindingHistoryAsync(model, token);
         }
 
         private IReadOnlyCollection<PathfindingRange> SelectRangeEntities(IEnumerable<(int Order, T Vertex)> vertices, int graphId)

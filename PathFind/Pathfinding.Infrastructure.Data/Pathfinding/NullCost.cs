@@ -1,6 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
-using Shared.Primitives.Single;
-using Shared.Primitives.ValueRange;
+using Pathfinding.Shared.Primitives;
 using System.Diagnostics;
 
 namespace Pathfinding.Infrastructure.Data.Pathfinding
@@ -38,11 +37,6 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
         public override string ToString()
         {
             return string.Empty;
-        }
-
-        public IVertexCost SetCost(int cost)
-        {
-            return Instance;
         }
     }
 }

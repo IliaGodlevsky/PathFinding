@@ -65,7 +65,7 @@ namespace Pathfinding.Service.Interface
         Task<GraphModel<T>> CreateGraphAsync(CreateGraphFromSerializationRequest request,
             CancellationToken token = default);
 
-        Task CreateRunHistoryAsync(IEnumerable<CreateAlgorithmRunHistoryRequest> histories,
+        Task<IReadOnlyCollection<int>> CreateRunHistoryAsync(IEnumerable<CreateAlgorithmRunHistoryRequest> histories,
             CancellationToken token = default);
 
         Task<bool> CreateNeighborsAsync(CreateNeighborsRequest<T> request,

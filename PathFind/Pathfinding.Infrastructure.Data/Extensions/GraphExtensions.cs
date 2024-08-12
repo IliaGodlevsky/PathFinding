@@ -1,5 +1,6 @@
 ﻿using Pathfinding.Domain.Interface;
-using Shared.Primitives.Extensions;
+using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,12 @@ namespace Pathfinding.Infrastructure.Data.Extensions
 {
     public static class GraphExtensions
     {
+        public static TVertex Get<TVertex>(this IGraph<TVertex> graph, int x, int y)
+            where TVertex : IVertex
+        {
+            return graph.Get(new Coordinate(x, y));
+        }
+
         public static int GetWidth<TVertex>(this IGraph<TVertex> graph)
             where TVertex : IVertex
         {
@@ -49,19 +56,19 @@ namespace Pathfinding.Infrastructure.Data.Extensions
             return graph.Where(vertex => vertex.IsObstacle);
         }
 
-        public static IEnumerable<ICoordinate> GetCoordinates<TVertex>(this IEnumerable<TVertex> graph)
+        public static IEnumerable<Coordinate> GetCoordinates<TVertex>(this IEnumerable<TVertex> graph)
             where TVertex : IVertex
         {
             return graph.Select(vertex => vertex.Position);
         }
 
-        public static IEnumerable<ICoordinate> GetObstaclesCoordinates<TVertex>(this IGraph<TVertex> graph)
+        public static IEnumerable<Coordinate> GetObstaclesCoordinates<TVertex>(this IGraph<TVertex> graph)
             where TVertex : IVertex
         {
             return graph.GetObstacles().Select(vertex => vertex.Position);
         }
 
-        public static IEnumerable<ICoordinate> GetNotObstaclesCoordinates<TVertex>(this IGraph<TVertex> graph)
+        public static IEnumerable<Coordinate> GetNotObstaclesCoordinates<TVertex>(this IGraph<TVertex> graph)
             where TVertex : IVertex
         {
             return graph.Where(vertex => !vertex.IsObstacle).Select(vertex => vertex.Position);

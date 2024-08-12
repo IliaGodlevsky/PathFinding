@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Pathfinding.Domain.Core;
-using Pathfinding.Domain.Interface;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Serialization;
 using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Service.Interface.Requests.Create;
-using Shared.Extensions;
+using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Primitives;
 using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.DAL.Models.Mappers
@@ -23,16 +23,16 @@ namespace Pathfinding.App.Console.DAL.Models.Mappers
             CreateMap<SubAlgorithmSerializationModel, SubAlgorithmModel>();
             CreateMap<SubAlgorithmSerializationModel, CreateSubAlgorithmRequest>();
 
-            CreateMap<(ICoordinate Visited, IReadOnlyList<ICoordinate> Enqueued), VisitedVerticesModel>()
+            CreateMap<(Coordinate Visited, IReadOnlyList<Coordinate> Enqueued), VisitedVerticesModel>()
                 .ConvertUsing((x, y, context) => new VisitedVerticesModel()
                 {
                     Current = context.Mapper.Map<CoordinateModel>(x.Visited),
                     Enqueued = context.Mapper.Map<CoordinateModel[]>(x.Enqueued)
                 });
-            CreateMap<VisitedVerticesModel, (ICoordinate, IReadOnlyList<ICoordinate>)>()
+            CreateMap<VisitedVerticesModel, (Coordinate, IReadOnlyList<Coordinate>)>()
                 .ConvertUsing((x, y, context)
-                => (context.Mapper.Map<ICoordinate>(x.Current),
-                    context.Mapper.Map<ICoordinate[]>(x.Enqueued).ToReadOnly()));
+                => (context.Mapper.Map<Coordinate>(x.Current),
+                    context.Mapper.Map<Coordinate[]>(x.Enqueued).ToReadOnly()));
         }
     }
 }

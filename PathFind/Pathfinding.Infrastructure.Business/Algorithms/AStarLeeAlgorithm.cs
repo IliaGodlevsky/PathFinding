@@ -3,6 +3,7 @@ using Pathfinding.Domain.Interface.Comparers;
 using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Service.Interface;
+using Pathfinding.Shared.Primitives;
 using Priority_Queue;
 using System.Collections.Generic;
 
@@ -10,7 +11,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 {
     public sealed class AStarLeeAlgorithm : BreadthFirstAlgorithm<SimplePriorityQueue<IVertex, double>>
     {
-        private readonly Dictionary<ICoordinate, double> heuristics;
+        private readonly Dictionary<Coordinate, double> heuristics;
         private readonly IHeuristic heuristic;
 
         public AStarLeeAlgorithm(IEnumerable<IVertex> pathfindingRange, IHeuristic function)

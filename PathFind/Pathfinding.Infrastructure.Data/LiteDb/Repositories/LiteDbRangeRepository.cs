@@ -19,70 +19,49 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
 
         public async Task<IEnumerable<PathfindingRange>> CreateAsync(IEnumerable<PathfindingRange> entities, CancellationToken token = default)
         {
-            return await Task.Run(() =>
-            {
-                collection.Insert(entities);
-                return entities;
-            }, token);
+            collection.Insert(entities);
+            return await Task.FromResult(entities);
         }
 
         public async Task<bool> DeleteByGraphIdAsync(int graphId, CancellationToken token = default)
         {
-            return await Task.Run(() =>
-            {
-                int deleted = collection.DeleteMany(x => x.GraphId == graphId);
-                return deleted > 0;
-            }, token);
+            int deleted = collection.DeleteMany(x => x.GraphId == graphId);
+            return await Task.FromResult(deleted > 0);
         }
 
         public async Task<bool> DeleteByVertexIdAsync(int vertexId, CancellationToken token = default)
         {
-            return await Task.Run(() =>
-            {
-                int deleted = collection.DeleteMany(x => x.VertexId == vertexId);
-                return deleted > 0;
-            }, token);
+            int deleted = collection.DeleteMany(x => x.VertexId == vertexId);
+            return await Task.FromResult(deleted > 0);
         }
 
         public async Task<bool> DeleteByVerticesIdsAsync(IEnumerable<int> verticesIds, CancellationToken token = default)
         {
-            return await Task.Run(() =>
-            {
-                var ids = verticesIds.Select(x => new BsonValue(x)).ToArray();
-                var query = Query.In(nameof(PathfindingRange.VertexId), ids);
-                return collection.DeleteMany(query) > 0;
-            }, token);
+            var ids = verticesIds.Select(x => new BsonValue(x)).ToArray();
+            var query = Query.In(nameof(PathfindingRange.VertexId), ids);
+            return await Task.FromResult(collection.DeleteMany(query) > 0);
         }
 
         public async Task<IEnumerable<PathfindingRange>> ReadByGraphIdAsync(int graphId, CancellationToken token = default)
         {
-            return await Task.Run(() =>
-            {
-                return collection.Query()
+            await Task.CompletedTask;
+            return collection.Query()
                 .Where(x => x.GraphId == graphId)
                 .OrderBy(x => x.Order)
                 .ToEnumerable();
-            }, token);
         }
 
         public async Task<IEnumerable<PathfindingRange>> ReadByVerticesIdsAsync(IEnumerable<int> verticesIds, CancellationToken token = default)
         {
-            return await Task.Run(() =>
-            {
-                var ids = verticesIds.Select(x => new BsonValue(x)).ToArray();
-                var query = Query.In(nameof(PathfindingRange.VertexId), ids);
-                return collection.Find(query).OrderBy(x => x.Order);
-            }, token);
-
+            var ids = verticesIds.Select(x => new BsonValue(x)).ToArray();
+            var query = Query.In(nameof(PathfindingRange.VertexId), ids);
+            return await Task.FromResult(collection.Find(query).OrderBy(x => x.Order));
         }
 
         public async Task<bool> UpdateAsync(IEnumerable<PathfindingRange> entities, CancellationToken token = default)
         {
-            return await Task.Run(() =>
-            {
-                collection.Update(entities);
-                return true;
-            }, token);
+            collection.Update(entities);
+            return await Task.FromResult(true);
         }
     }
 }

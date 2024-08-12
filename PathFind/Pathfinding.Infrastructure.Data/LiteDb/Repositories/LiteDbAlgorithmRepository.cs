@@ -24,7 +24,8 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
 
         public async Task<IEnumerable<Algorithm>> GetAllAsync(CancellationToken token = default)
         {
-            return await Task.Run(() => collection.FindAll(), token);
+            await Task.CompletedTask;
+            return collection.FindAll();
         }
     }
 }

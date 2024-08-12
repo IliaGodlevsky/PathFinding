@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,7 +53,6 @@
     <Compile Include="Comparers\CoordinateEqualityComparer.cs" />
     <Compile Include="Comparers\VertexEqualityComparer.cs" />
     <Compile Include="Factories\IVertexFactory.cs" />
-    <Compile Include="ICoordinate.cs" />
     <Compile Include="IGraph.cs" />
     <Compile Include="Factories\IGraphAssemble.cs" />
     <Compile Include="Factories\IGraphFactory.cs" />
@@ -76,16 +75,13 @@
     <Compile Include="Repositories\IVerticesRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Pathfinding.Domain.Core\Pathfinding.Domain.Core.csproj">
       <Project>{e0c71a1a-7db7-426f-80dc-887f87f0aa13}</Project>
       <Name>Pathfinding.Domain.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Shared.Primitives\Shared.Primitives.csproj">
-      <Project>{30973320-9F61-45FB-8C75-3256ADB1BFB1}</Project>
-      <Name>Shared.Primitives</Name>
+    <ProjectReference Include="..\Pathfinding.Shared\Pathfinding.Shared.csproj">
+      <Project>{C57FE374-EC6D-4797-829E-A31697E08975}</Project>
+      <Name>Pathfinding.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

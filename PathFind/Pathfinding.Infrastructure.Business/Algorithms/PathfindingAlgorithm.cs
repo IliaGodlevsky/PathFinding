@@ -3,14 +3,15 @@ using Pathfinding.Domain.Interface.Comparers;
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
-using Shared.Extensions;
-using Shared.Primitives;
+using Pathfinding.Shared;
+using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    using Traces = Dictionary<ICoordinate, IVertex>;
+    using Traces = Dictionary<Coordinate, IVertex>;
 
     public abstract class PathfindingAlgorithm<TStorage> : PathfindingProcess
         where TStorage : new()

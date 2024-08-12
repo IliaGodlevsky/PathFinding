@@ -1,4 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
+using Pathfinding.Shared.Primitives;
 using System;
 using System.Linq;
 
@@ -6,22 +7,22 @@ namespace Pathfinding.Infrastructure.Data.Extensions
 {
     public static class CoordinateExtensions
     {
-        public static int GetX(this ICoordinate coordinate)
+        public static int GetX(this Coordinate coordinate)
         {
-            return coordinate.ElementAtOrDefault(0);
+            return coordinate.CoordinatesValues.ElementAtOrDefault(0);
         }
 
-        public static int GetY(this ICoordinate coordinate)
+        public static int GetY(this Coordinate coordinate)
         {
-            return coordinate.ElementAtOrDefault(1);
+            return coordinate.CoordinatesValues.ElementAtOrDefault(1);
         }
 
-        public static int GetZ(this ICoordinate coordinate)
+        public static int GetZ(this Coordinate coordinate)
         {
-            return coordinate.ElementAtOrDefault(2);
+            return coordinate.CoordinatesValues.ElementAtOrDefault(2);
         }
 
-        public static bool IsCardinal(this ICoordinate self, ICoordinate coordinate)
+        public static bool IsCardinal(this Coordinate self, Coordinate coordinate)
         {
             // Cardinal coordinate differs from the
             // central one only for single coordinate value

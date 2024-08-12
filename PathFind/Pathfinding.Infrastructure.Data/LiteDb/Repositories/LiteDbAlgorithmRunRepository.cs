@@ -34,34 +34,29 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
 
         public async Task<bool> DeleteByGraphIdAsync(int graphId, CancellationToken token = default)
         {
-            return await Task.Run(async () =>
-            {
-                var runs = await ReadByGraphIdAsync(graphId, token);
-                var ids = runs
-                    .Select(x => new BsonValue(x.Id))
-                    .ToArray();
-                var query = Query.In(AlgorithmRunId, ids);
-                statistics.DeleteMany(query);
-                graphStates.DeleteMany(query);
-                subAlgorithms.DeleteMany(query);
-                return collection.DeleteMany(x => x.GraphId == graphId) > 0;
-            }, token);
+            var runs = await ReadByGraphIdAsync(graphId, token);
+            var ids = runs
+                .Select(x => new BsonValue(x.Id))
+                .ToArray();
+            var query = Query.In(AlgorithmRunId, ids);
+            statistics.DeleteMany(query);
+            graphStates.DeleteMany(query);
+            subAlgorithms.DeleteMany(query);
+            return collection.DeleteMany(x => x.GraphId == graphId) > 0;
         }
 
         public async Task<IEnumerable<AlgorithmRun>> ReadByGraphIdAsync(int graphId, CancellationToken token = default)
         {
-            return await Task.Run(() =>
-            {
-                var result = collection
-                    .Find(x => x.GraphId == graphId)
-                    .ToList();
-                return result;
-            }, token);
+            var result = collection
+                .Find(x => x.GraphId == graphId)
+                .ToList();
+            return await Task.FromResult(result);
         }
 
         public async Task<int> ReadCount(int graphId, CancellationToken token = default)
         {
-            return await Task.Run(() => collection.Count(x => x.GraphId == graphId), token);
+            await Task.CompletedTask;
+            return collection.Count(x => x.GraphId == graphId);
         }
     }
 }

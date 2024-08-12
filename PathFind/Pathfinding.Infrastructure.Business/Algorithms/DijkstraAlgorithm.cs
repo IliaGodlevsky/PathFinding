@@ -3,8 +3,8 @@ using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Service.Interface;
+using Pathfinding.Shared.Extensions;
 using Priority_Queue;
-using Shared.Extensions;
 using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms

@@ -19,26 +19,20 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
 
         public async Task<Statistics> CreateAsync(Statistics entity, CancellationToken token = default)
         {
-            return await Task.Run(() =>
-            {
-                collection.Insert(entity);
-                return entity;
-            }, token);
+            collection.Insert(entity);
+            return await Task.FromResult(entity);
         }
 
         public async Task<Statistics> ReadByAlgorithmRunIdAsync(int runId, CancellationToken token = default)
         {
-            return await Task.Run(() => collection.FindOne(x => x.AlgorithmRunId == runId), token);
+            return await Task.FromResult(collection.FindOne(x => x.AlgorithmRunId == runId));
         }
 
         public async Task<IEnumerable<Statistics>> ReadByRunIdsAsync(IEnumerable<int> runIds, CancellationToken token = default)
         {
-            return await Task.Run(() =>
-            {
-                var ids = runIds.Select(x => new BsonValue(x)).ToArray();
-                var query = Query.In(nameof(Statistics.AlgorithmRunId), ids);
-                return collection.Find(query).ToArray();
-            }, token);
+            var ids = runIds.Select(x => new BsonValue(x)).ToArray();
+            var query = Query.In(nameof(Statistics.AlgorithmRunId), ids);
+            return await Task.FromResult( collection.Find(query).ToArray());
         }
     }
 }

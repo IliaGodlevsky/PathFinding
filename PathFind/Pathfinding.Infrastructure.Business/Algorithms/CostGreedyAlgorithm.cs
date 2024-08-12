@@ -2,7 +2,7 @@
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Service.Interface;
-using Shared.Extensions;
+using Pathfinding.Shared.Extensions;
 using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms

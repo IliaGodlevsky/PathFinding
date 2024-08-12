@@ -8,7 +8,7 @@ using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Serialization;
 using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Service.Interface.Requests.Create;
-using Shared.Extensions;
+using Pathfinding.Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 

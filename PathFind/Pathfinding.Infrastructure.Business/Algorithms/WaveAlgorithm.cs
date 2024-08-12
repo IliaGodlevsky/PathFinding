@@ -1,5 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
-using Shared.Extensions;
+using Pathfinding.Shared.Extensions;
 using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms

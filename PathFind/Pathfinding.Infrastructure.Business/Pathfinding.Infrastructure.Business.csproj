@@ -182,37 +182,13 @@
       <Project>{EC4CAA5A-1164-45C7-83AA-0B551D485832}</Project>
       <Name>Pathfinding.Service.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Shared.Executable\Shared.Executable.csproj">
-      <Project>{0A7C5FE5-4688-42C4-8202-676042BB0F81}</Project>
-      <Name>Shared.Executable</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
-      <Project>{CD11D46E-4675-4090-B50B-A85FFA3D1D2C}</Project>
-      <Name>Shared.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Shared.Primitives.Extensions\Shared.Primitives.Extensions.csproj">
-      <Project>{597B3252-3165-4574-826C-95399452D0B8}</Project>
-      <Name>Shared.Primitives.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Shared.Primitives\Shared.Primitives.csproj">
-      <Project>{30973320-9F61-45FB-8C75-3256ADB1BFB1}</Project>
-      <Name>Shared.Primitives</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Shared.Process\Shared.Process.csproj">
-      <Project>{78DDAA5D-8ABD-4695-A66B-1EAF2BDE77EB}</Project>
-      <Name>Shared.Process</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Shared.Random.Extensions\Shared.Random.Extensions.csproj">
-      <Project>{79ad3712-16c7-4f9d-82bb-d9a03f36ebf4}</Project>
-      <Name>Shared.Random.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Shared.Random\Shared.Random.csproj">
-      <Project>{8B3BA6E5-2FAD-492E-A51D-8B213A74C5B8}</Project>
-      <Name>Shared.Random</Name>
+    <ProjectReference Include="..\Pathfinding.Shared\Pathfinding.Shared.csproj">
+      <Project>{c57fe374-ec6d-4797-829e-a31697e08975}</Project>
+      <Name>Pathfinding.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Visualization\" />
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

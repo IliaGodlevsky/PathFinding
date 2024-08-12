@@ -1,6 +1,7 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Comparers;
-using Shared.Extensions;
+using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Primitives;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
     {
         public static readonly Graph<TVertex> Empty = new Graph<TVertex>();
 
-        private readonly IReadOnlyDictionary<ICoordinate, TVertex> vertices;
+        private readonly IReadOnlyDictionary<Coordinate, TVertex> vertices;
 
         public IReadOnlyList<int> DimensionsSizes { get; }
 
@@ -52,7 +53,7 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
 
         }
 
-        public TVertex Get(ICoordinate coordinate)
+        public TVertex Get(Coordinate coordinate)
         {
             if (vertices.TryGetValue(coordinate, out var vertex))
             {

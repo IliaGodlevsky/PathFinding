@@ -1,4 +1,4 @@
-﻿using Shared.Primitives.ValueRange;
+﻿using Pathfinding.Shared.Primitives;
 
 namespace Pathfinding.Domain.Interface
 {

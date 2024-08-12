@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Pathfinding.Shared.Primitives;
+using System.Collections.Generic;
 
 namespace Pathfinding.Domain.Interface
 {
@@ -7,6 +8,6 @@ namespace Pathfinding.Domain.Interface
     {
         IReadOnlyList<int> DimensionsSizes { get; }
 
-        TVertex Get(ICoordinate coordinate);
+        TVertex Get(Coordinate coordinate);
     }
 }

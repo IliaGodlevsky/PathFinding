@@ -1,5 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
-using Shared.Primitives.ValueRange;
+using Pathfinding.Shared.Primitives;
 
 namespace Pathfinding.Infrastructure.Data.Pathfinding
 {

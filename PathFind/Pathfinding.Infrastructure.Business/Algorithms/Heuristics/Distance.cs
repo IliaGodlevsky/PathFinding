@@ -10,8 +10,8 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.Heuristics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public double Calculate(IVertex first, IVertex second)
         {
-            double result = first.Position
-                .Zip(second.Position, Zip)
+            double result = first.Position.CoordinatesValues
+                .Zip(second.Position.CoordinatesValues, Zip)
                 .Aggregate(Aggregate);
             return ProcessResult(result);
         }

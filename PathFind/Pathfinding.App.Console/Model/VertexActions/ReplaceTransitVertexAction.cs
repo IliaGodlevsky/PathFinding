@@ -1,4 +1,5 @@
 ﻿using Pathfinding.App.Console.Interface;
+using Pathfinding.Infrastructure.Business.Commands;
 
 namespace Pathfinding.App.Console.Model.VertexActions
 {

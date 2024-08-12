@@ -1,10 +1,14 @@
-﻿namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
+﻿using Pathfinding.Domain.Interface;
+using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Models.Read;
+
+namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
 {
     internal abstract class VisualizationLayer : ILayer
     {
-        protected readonly RunVisualizationDto algorithm;
+        protected readonly RunVisualizationModel algorithm;
 
-        protected VisualizationLayer(RunVisualizationDto algorithm)
+        protected VisualizationLayer(RunVisualizationModel algorithm)
         {
             this.algorithm = algorithm;
         }

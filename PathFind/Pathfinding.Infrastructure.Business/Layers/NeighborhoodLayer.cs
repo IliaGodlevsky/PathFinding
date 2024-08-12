@@ -2,9 +2,8 @@
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
-using Shared.Extensions;
-using Shared.Primitives.Extensions;
-using Shared.Primitives.ValueRange;
+using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,16 +14,10 @@ namespace Pathfinding.Infrastructure.Business.Layers
         private readonly INeighborhoodFactory factory;
         private readonly ReturnOptions options;
 
-        public NeighborhoodLayer(INeighborhoodFactory factory, ReturnOptions options)
+        public NeighborhoodLayer(INeighborhoodFactory factory, ReturnOptions options = null)
         {
             this.factory = factory;
-            this.options = options;
-        }
-
-        public NeighborhoodLayer(INeighborhoodFactory factory)
-            : this(factory, ReturnOptions.Limit)
-        {
-
+            this.options = options ?? ReturnOptions.Limit;
         }
 
         public void Overlay(IGraph<IVertex> graph)
@@ -45,7 +38,7 @@ namespace Pathfinding.Infrastructure.Business.Layers
                 var range = new InclusiveValueRange<int>(graph.DimensionsSizes[index] - 1);
                 return range.ReturnInRange(coordinate, options);
             }
-            return self.Select(x => x.Select(ReturnInRange))
+            return self.Select(x => x.CoordinatesValues.Select(ReturnInRange))
                 .Select(x => new Coordinate(x.ToArray()))
                 .Distinct()
                 .Select(graph.Get)

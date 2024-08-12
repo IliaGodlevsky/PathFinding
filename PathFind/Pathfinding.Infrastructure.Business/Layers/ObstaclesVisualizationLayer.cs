@@ -1,7 +1,7 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Visualization;
-using Shared.Extensions;
+using Pathfinding.Shared.Extensions;
 using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Layers

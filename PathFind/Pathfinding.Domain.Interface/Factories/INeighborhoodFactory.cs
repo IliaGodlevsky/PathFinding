@@ -1,7 +1,9 @@
-﻿namespace Pathfinding.Domain.Interface.Factories
+﻿using Pathfinding.Shared.Primitives;
+
+namespace Pathfinding.Domain.Interface.Factories
 {
     public interface INeighborhoodFactory
     {
-        INeighborhood CreateNeighborhood(ICoordinate coordinate);
+        INeighborhood CreateNeighborhood(Coordinate coordinate);
     }
 }

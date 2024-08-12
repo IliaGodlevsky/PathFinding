@@ -1,4 +1,4 @@
-﻿global using Terminal = System.Console;
+﻿//global using Terminal = System.Console;
 
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Settings;

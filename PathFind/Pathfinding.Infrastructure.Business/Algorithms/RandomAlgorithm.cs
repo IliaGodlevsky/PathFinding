@@ -1,8 +1,8 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Business.Algorithms.Exceptions;
-using Shared.Random;
-using Shared.Random.Extensions;
-using Shared.Random.Realizations;
+using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Interface;
+using Pathfinding.Shared.Random;
 using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms

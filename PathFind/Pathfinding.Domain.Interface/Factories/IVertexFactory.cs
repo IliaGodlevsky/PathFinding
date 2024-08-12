@@ -1,8 +1,10 @@
-﻿namespace Pathfinding.Domain.Interface.Factories
+﻿using Pathfinding.Shared.Primitives;
+
+namespace Pathfinding.Domain.Interface.Factories
 {
     public interface IVertexFactory<out TVertex>
         where TVertex : IVertex
     {
-        TVertex CreateVertex(ICoordinate coordinate);
+        TVertex CreateVertex(Coordinate coordinate);
     }
 }

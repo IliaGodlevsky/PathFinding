@@ -1,4 +1,7 @@
 ﻿using Pathfinding.App.Console.EventArguments;
+using Pathfinding.Domain.Interface;
+using Pathfinding.Service.Interface.Extensions;
+using Pathfinding.Service.Interface.Models.Read;
 using Shared.Extensions;
 using Shared.Primitives;
 using System;
@@ -15,7 +18,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
 
         private TimeSpan? Speed { get; set; }
 
-        public SubAlgorithmVisualizationLayer(RunVisualizationDto algorithm)
+        public SubAlgorithmVisualizationLayer(RunVisualizationModel algorithm)
             : base(algorithm)
         {
             initSpeed = algorithm.AlgorithmSpeed;
@@ -29,7 +32,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
 
         public override void Overlay(IGraph<IVertex> graph)
         {
-            using (Disposable.Use(StopHook))
+            using (Disposable.UseFast(StopHook))
             {
                 hook.KeyPressed += OnKeyPressed;
                 Task.Run(hook.Start);

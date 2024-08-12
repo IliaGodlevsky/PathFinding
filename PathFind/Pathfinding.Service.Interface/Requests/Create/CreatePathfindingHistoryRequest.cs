@@ -1,4 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
+using Pathfinding.Shared.Primitives;
 using System.Collections.Generic;
 
 namespace Pathfinding.Service.Interface.Requests.Create
@@ -10,6 +11,6 @@ namespace Pathfinding.Service.Interface.Requests.Create
 
         public IReadOnlyCollection<CreateAlgorithmRunHistoryRequest> Algorithms { get; set; }
 
-        public IReadOnlyCollection<ICoordinate> Range { get; set; }
+        public IReadOnlyCollection<Coordinate> Range { get; set; }
     }
 }

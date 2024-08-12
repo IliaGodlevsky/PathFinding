@@ -1,4 +1,6 @@
-﻿namespace Pathfinding.App.Console.Interface
+﻿using Pathfinding.Domain.Interface;
+
+namespace Pathfinding.App.Console.Interface
 {
     internal interface IVisualizationUnit
     {

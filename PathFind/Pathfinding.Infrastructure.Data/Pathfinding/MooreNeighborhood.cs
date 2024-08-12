@@ -1,6 +1,7 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
-using Shared.Extensions;
+using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Primitives;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,24 +13,24 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
     [DebuggerDisplay("Count = {Neighbours.Count}")]
     public sealed class MooreNeighborhood : INeighborhood
     {
-        private readonly ICoordinate selfCoordinate;
+        private readonly Coordinate selfCoordinate;
         private readonly int limitDepth;
         private readonly int[] resultCoordinatesValues;
-        private readonly Lazy<IReadOnlyCollection<ICoordinate>> neighbourhood;
+        private readonly Lazy<IReadOnlyCollection<Coordinate>> neighbourhood;
 
         public int Count => neighbourhood.Value.Count;
 
-        public MooreNeighborhood(ICoordinate coordinate)
+        public MooreNeighborhood(Coordinate coordinate)
         {
             selfCoordinate = coordinate;
             limitDepth = selfCoordinate.Count;
             resultCoordinatesValues = new int[limitDepth];
-            neighbourhood = new Lazy<IReadOnlyCollection<ICoordinate>>(GetNeighborhood, true);
+            neighbourhood = new Lazy<IReadOnlyCollection<Coordinate>>(GetNeighborhood, true);
         }
 
-        private HashSet<ICoordinate> CollectNeighbors(int depth = 0)
+        private HashSet<Coordinate> CollectNeighbors(int depth = 0)
         {
-            var neighborhood = new HashSet<ICoordinate>();
+            var neighborhood = new HashSet<Coordinate>();
             for (int offset = -1; offset <= 1; offset++)
             {
                 resultCoordinatesValues[depth] = selfCoordinate[depth] + offset;
@@ -46,14 +47,14 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
             return depth < limitDepth - 1;
         }
 
-        private IReadOnlyCollection<ICoordinate> GetNeighborhood()
+        private IReadOnlyCollection<Coordinate> GetNeighborhood()
         {
             var coordinates = CollectNeighbors();
             coordinates.Remove(selfCoordinate);
             return coordinates;
         }
 
-        public IEnumerator<ICoordinate> GetEnumerator()
+        public IEnumerator<Coordinate> GetEnumerator()
         {
             return neighbourhood.Value.GetEnumerator();
         }

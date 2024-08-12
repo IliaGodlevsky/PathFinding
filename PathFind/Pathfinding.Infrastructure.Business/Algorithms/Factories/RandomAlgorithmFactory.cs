@@ -1,7 +1,7 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Service.Interface;
-using Shared.Random;
-using Shared.Random.Realizations;
+using Pathfinding.Shared.Interface;
+using Pathfinding.Shared.Random;
 using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.Factories

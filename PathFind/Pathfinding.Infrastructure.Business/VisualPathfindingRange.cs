@@ -1,6 +1,6 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Service.Interface.Visualization;
-using Shared.Extensions;
+using Pathfinding.Shared.Extensions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

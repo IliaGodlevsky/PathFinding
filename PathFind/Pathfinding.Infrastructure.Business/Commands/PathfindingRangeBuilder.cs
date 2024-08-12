@@ -1,6 +1,6 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Service.Interface.Commands;
-using Shared.Extensions;
+using Pathfinding.Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 

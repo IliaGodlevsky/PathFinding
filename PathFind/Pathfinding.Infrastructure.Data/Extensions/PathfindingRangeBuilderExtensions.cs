@@ -1,7 +1,8 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface.Commands;
-using Shared.Extensions;
+using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +11,7 @@ namespace Pathfinding.Infrastructure.Data.Extensions
     public static class PathfindingRangeBuilderExtensions
     {
         public static void Include<TVertex>(this IPathfindingRangeBuilder<TVertex> builder,
-            IEnumerable<ICoordinate> coordinates, IGraph<TVertex> graph)
+            IEnumerable<Coordinate> coordinates, IGraph<TVertex> graph)
             where TVertex : IVertex
         {
             var pathfindingRange = coordinates.ToList();

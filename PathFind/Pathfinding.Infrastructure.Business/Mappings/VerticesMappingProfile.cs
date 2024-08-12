@@ -6,7 +6,8 @@ using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface.Models.Serialization;
 using Pathfinding.Service.Interface.Models.Undefined;
-using Shared.Extensions;
+using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,7 +30,7 @@ namespace Pathfinding.Infrastructure.Business.Mappings
             CreateMap<VertexAssembleModel, T>()
                 .ConstructUsing(x => vertexFactory.CreateVertex(x.Coordinate));
             CreateMap<T, Vertex>()
-                .ForMember(x => x.Coordinates, opt => opt.MapFrom(x => x.Position.ToArray()))
+                .ForMember(x => x.Coordinates, opt => opt.MapFrom(x => x.Position.CoordinatesValues.ToArray()))
                 .ForMember(x => x.UpperValueRange, opt => opt.MapFrom(x => x.Cost.CostRange.UpperValueOfRange))
                 .ForMember(x => x.LowerValueRange, opt => opt.MapFrom(x => x.Cost.CostRange.LowerValueOfRange))
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => x.Cost.CurrentCost));
@@ -57,10 +58,10 @@ namespace Pathfinding.Infrastructure.Business.Mappings
             var vertices = dtos.Select(context.Mapper.Map<T>).ToDictionary(x => x.Position);
             foreach (var dto in dtos)
             {
-                var position = context.Mapper.Map<ICoordinate>(dto.Position);
+                var position = context.Mapper.Map<Coordinate>(dto.Position);
                 var vertex = vertices[position];
                 var neighbors = context.Mapper
-                    .Map<ICoordinate[]>(dto.Neighbors)
+                    .Map<Coordinate[]>(dto.Neighbors)
                     .Select(x => vertices[x])
                     .ToReadOnly();
                 vertex.Neighbours.AddRange(neighbors.OfType<IVertex>());

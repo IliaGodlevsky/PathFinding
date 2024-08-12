@@ -41,11 +41,11 @@ namespace Pathfinding.App.Console.Units
             this.builder = builder;
         }
 
-        private async void VisualizeHistory(AlgorithmKeyMessage msg)
+        private void VisualizeHistory(AlgorithmKeyMessage msg)
         {
-            var algorithm = await service.ReadRunInfoAsync(msg.AlgorithmKey);
-            var layers = new VisualizationLayers(algorithm);
-            layers.Overlay(Graph.Graph);
+            //var algorithm = await service.ReadRunInfoAsync(msg.AlgorithmKey);
+            //var layers = new VisualizationLayers(algorithm);
+            //layers.Overlay(Graph.Graph);
         }
 
         private void SetIsApplied(IsAppliedMessage msg)
@@ -93,28 +93,28 @@ namespace Pathfinding.App.Console.Units
             runStatistics = msg.Statistics;
         }
 
-        private async void OnPathFound(PathFoundMessage msg)
+        private void OnPathFound(PathFoundMessage msg)
         {
-            AlgorithmRunHistoryModel algorithmRunCreateDto = new()
-            {
-                Run = new()
-                {
-                    GraphId = Graph.Id,
-                    AlgorithmId = runStatistics.AlgorithmId
-                },
-                GraphState = new()
-                {
-                    Obstacles = Graph.Graph.GetObstaclesCoordinates().ToReadOnly(),
-                    Costs = Graph.Graph.GetCosts(),
-                    Range = builder.Range.GetCoordinates().ToReadOnly()
-                },
-                SubAlgorithms = subAlgorithms.ToReadOnly(),
-                Statistics = runStatistics
-            };
-            subAlgorithms.Clear();
-            visitedVertices.Clear();
-            runStatistics = new();
-            await Task.Run(() => service.AddRunHistory(algorithmRunCreateDto));
+            //AlgorithmRunHistoryModel algorithmRunCreateDto = new()
+            //{
+            //    Run = new()
+            //    {
+            //        GraphId = Graph.Id,
+            //        AlgorithmId = runStatistics.AlgorithmId
+            //    },
+            //    GraphState = new()
+            //    {
+            //        Obstacles = Graph.Graph.GetObstaclesCoordinates().ToReadOnly(),
+            //        Costs = Graph.Graph.GetCosts(),
+            //        Range = builder.Range.GetCoordinates().ToReadOnly()
+            //    },
+            //    SubAlgorithms = subAlgorithms.ToReadOnly(),
+            //    Statistics = runStatistics
+            //};
+            //subAlgorithms.Clear();
+            //visitedVertices.Clear();
+            //runStatistics = new();
+            //await Task.Run(() => service.AddRunHistory(algorithmRunCreateDto));
         }
 
         private bool IsHistoryApplied() => isHistoryApplied;

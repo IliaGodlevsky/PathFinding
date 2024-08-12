@@ -10,6 +10,7 @@
     <RootNamespace>Pathfinding.Infrastructure.Data</RootNamespace>
     <AssemblyName>Pathfinding.Infrastructure.Data</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <LangVersion>latest</LangVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
@@ -28,14 +29,15 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
+    <LangVersion>latest</LangVersion>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LiteDB, Version=5.0.17.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
       <HintPath>..\packages\LiteDB.5.0.17\lib\net45\LiteDB.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
@@ -94,14 +96,12 @@
     <Compile Include="LiteDb\Repositories\LiteDbStatisticsRepository.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbSubAlgorithmsRepository.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbVerticesRepository.cs" />
-    <Compile Include="Pathfinding\Coordinate.cs" />
     <Compile Include="Pathfinding\Factories\GraphFactory.cs" />
     <Compile Include="Pathfinding\Factories\MooreNeighborhoodFactory.cs" />
     <Compile Include="Pathfinding\Factories\VonNeumannNeighborhoodFactory.cs" />
     <Compile Include="Pathfinding\Graph.cs" />
     <Compile Include="Pathfinding\Factories\GraphAssemble.cs" />
     <Compile Include="Pathfinding\MooreNeighborhood.cs" />
-    <Compile Include="Pathfinding\NullCoordinate.cs" />
     <Compile Include="Pathfinding\NullCost.cs" />
     <Compile Include="Pathfinding\NullVertex.cs" />
     <Compile Include="Pathfinding\PathfindingRange.cs" />
@@ -123,26 +123,10 @@
       <Project>{ec4caa5a-1164-45c7-83aa-0b551d485832}</Project>
       <Name>Pathfinding.Service.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Shared.Executable\Shared.Executable.csproj">
-      <Project>{0A7C5FE5-4688-42C4-8202-676042BB0F81}</Project>
-      <Name>Shared.Executable</Name>
+    <ProjectReference Include="..\Pathfinding.Shared\Pathfinding.Shared.csproj">
+      <Project>{C57FE374-EC6D-4797-829E-A31697E08975}</Project>
+      <Name>Pathfinding.Shared</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
-      <Project>{cd11d46e-4675-4090-b50b-a85ffa3d1d2c}</Project>
-      <Name>Shared.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Shared.Primitives.Extensions\Shared.Primitives.Extensions.csproj">
-      <Project>{597b3252-3165-4574-826c-95399452d0b8}</Project>
-      <Name>Shared.Primitives.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Shared.Primitives\Shared.Primitives.csproj">
-      <Project>{30973320-9F61-45FB-8C75-3256ADB1BFB1}</Project>
-      <Name>Shared.Primitives</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

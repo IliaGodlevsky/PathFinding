@@ -76,12 +76,14 @@ namespace Pathfinding.Infrastructure.Data.LiteDb
 
         public async Task RollbackAsync(CancellationToken token = default)
         {
-            await Task.Run(() => database.Rollback(), token);
+            database.Rollback();
+            await Task.CompletedTask;
         }
 
         public async Task CommitAsync(CancellationToken token = default)
         {
-            await Task.Run(() => database.Commit(), token);
+            database.Commit();
+            await Task.CompletedTask;
         }
     }
 }

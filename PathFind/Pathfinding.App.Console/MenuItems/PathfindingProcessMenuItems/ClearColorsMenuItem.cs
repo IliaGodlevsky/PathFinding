@@ -7,8 +7,8 @@ using Pathfinding.App.Console.Messaging;
 using Pathfinding.App.Console.Messaging.Messages;
 using Pathfinding.App.Console.Model;
 using Pathfinding.Service.Interface.Commands;
+using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Service.Interface.Models.Read;
-using Pathfinding.Visualization.Extensions;
 using System.Threading;
 using System.Threading.Tasks;
 

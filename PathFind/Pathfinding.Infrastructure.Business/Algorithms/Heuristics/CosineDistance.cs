@@ -13,9 +13,10 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.Heuristics
         {
             var firstVector = first.Position;
             var secondVector = second.Position;
-            double scalarProduct = GetScalarProduct(firstVector, secondVector);
-            double firstVectorLength = GetVectorLength(firstVector);
-            double secondVectorLength = GetVectorLength(secondVector);
+            double scalarProduct = GetScalarProduct(firstVector.CoordinatesValues, 
+                secondVector.CoordinatesValues);
+            double firstVectorLength = GetVectorLength(firstVector.CoordinatesValues);
+            double secondVectorLength = GetVectorLength(secondVector.CoordinatesValues);
             double vectorSum = firstVectorLength * secondVectorLength;
             double cosine = vectorSum > 0 ? scalarProduct / vectorSum : 0;
             return Math.Round(Radians * Math.Acos(cosine), digits: 10);

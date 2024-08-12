@@ -1,5 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
-using Shared.Primitives.Single;
+using Pathfinding.Shared.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,7 +15,7 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
 
         public ICollection<IVertex> Neighbours { get; } = Array.Empty<IVertex>();
 
-        public ICoordinate Position => NullCoordinate.Interface;
+        public Coordinate Position => Coordinate.Empty;
 
         private NullVertex()
         {

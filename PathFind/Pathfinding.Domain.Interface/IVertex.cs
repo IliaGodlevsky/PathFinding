@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pathfinding.Shared.Primitives;
+using System;
 using System.Collections.Generic;
 
 namespace Pathfinding.Domain.Interface
@@ -9,7 +10,7 @@ namespace Pathfinding.Domain.Interface
 
         IVertexCost Cost { get; set; }
 
-        ICoordinate Position { get; }
+        Coordinate Position { get; }
 
         ICollection<IVertex> Neighbours { get; }
     }

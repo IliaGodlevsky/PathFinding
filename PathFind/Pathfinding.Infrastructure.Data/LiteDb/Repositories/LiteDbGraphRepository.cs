@@ -27,11 +27,8 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
 
         public async Task<Graph> CreateAsync(Graph graph, CancellationToken token = default)
         {
-            return await Task.Run(() =>
-            {
-                collection.Insert(graph);
-                return graph;
-            }, token);
+            collection.Insert(graph);
+            return await Task.FromResult(graph);
         }
 
         public async Task<bool> DeleteAsync(int graphId, CancellationToken token = default)
@@ -42,20 +39,17 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             await rangeRepository.DeleteByGraphIdAsync(graphId, token);
             await verticesRepository.DeleteVerticesByGraphIdAsync(graphId, token);
             await algorithmRunRepository.DeleteByGraphIdAsync(graphId, token);
-            return await Task.Run(() => collection.Delete(graphId), token);
+            return collection.Delete(graphId);
         }
 
         public async Task<bool> DeleteAsync(IEnumerable<int> graphIds,
             CancellationToken token = default)
         {
-            return await Task.Run(async () =>
+            foreach (var id in graphIds)
             {
-                foreach (var id in graphIds)
-                {
-                    await DeleteAsync(id, token);
-                }
-                return true;
-            }, token);
+                await DeleteAsync(id, token);
+            }
+            return true;
         }
 
         public IAsyncEnumerable<Graph> GetAll(CancellationToken token = default)
@@ -65,17 +59,17 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
 
         public async Task<Graph> ReadAsync(int graphId, CancellationToken token = default)
         {
-            return await Task.Run(() => collection.FindById(graphId), token);
+            return await Task.FromResult(collection.FindById(graphId));
         }
 
         public async Task<int> ReadCountAsync(CancellationToken token = default)
         {
-            return await Task.Run(() => collection.Count(), token);
+            return await Task.FromResult(collection.Count());
         }
 
         public async Task<bool> UpdateAsync(Graph graph, CancellationToken token = default)
         {
-            return await Task.Run(() => collection.Update(graph), token);
+            return await Task.FromResult(collection.Update(graph));
         }
     }
 }

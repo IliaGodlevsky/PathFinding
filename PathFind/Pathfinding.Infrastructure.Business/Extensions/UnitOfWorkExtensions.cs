@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Service.Interface.Requests.Create;
-using Shared.Extensions;
+using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -15,16 +15,16 @@ namespace Pathfinding.Infrastructure.Business.Extensions
 {
     public static class UnitOfWorkExtensions
     {
-        public static async Task AddHistoryAsync(this IUnitOfWork unitOfWork,
+        public static async Task<IReadOnlyCollection<int>> AddHistoryAsync(this IUnitOfWork unitOfWork,
             IMapper mapper,
             IEnumerable<CreateAlgorithmRunHistoryRequest> runHistories,
             CancellationToken token = default)
         {
+            var models = new List<int>();
             foreach (var runHistory in runHistories)
             {
                 var runEntity = mapper.Map<AlgorithmRun>(runHistory.Run);
                 await unitOfWork.RunRepository.CreateAsync(runEntity, token);
-                runHistory.Run.Id = runEntity.Id;
                 var graphState = mapper.Map<GraphState>(runHistory.GraphState);
                 var subAlgorithms = mapper.Map<SubAlgorithm[]>(runHistory.SubAlgorithms);
                 var runStatistics = mapper.Map<Statistics>(runHistory.Statistics);
@@ -34,7 +34,9 @@ namespace Pathfinding.Infrastructure.Business.Extensions
                 await unitOfWork.GraphStateRepository.CreateAsync(graphState, token);
                 await unitOfWork.SubAlgorithmRepository.CreateAsync(subAlgorithms, token);
                 await unitOfWork.StatisticsRepository.CreateAsync(runStatistics, token);
+                models.Add(runEntity.Id);
             }
+            return models.ToReadOnly();
         }
 
         public static async Task<IReadOnlyCollection<AlgorithmRunHistoryModel>> GetAlgorithmRuns(this IUnitOfWork unitofWork,
@@ -93,12 +95,12 @@ namespace Pathfinding.Infrastructure.Business.Extensions
             };
         }
 
-        public static async Task<IReadOnlyCollection<ICoordinate>> GetRangeAsync(this IUnitOfWork unitOfWork,
+        public static async Task<IReadOnlyCollection<Coordinate>> GetRangeAsync(this IUnitOfWork unitOfWork,
             int graphId,
             IMapper mapper,
             CancellationToken token = default)
         {
-            var result = new List<ICoordinate>();
+            var result = new List<Coordinate>();
             var range = await unitOfWork.RangeRepository.ReadByGraphIdAsync(graphId, token);
             foreach (var x in range)
             {

@@ -1,4 +1,5 @@
 ﻿using Pathfinding.App.Console.Interface;
+using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
 using Shared.Extensions;
 
 namespace Pathfinding.App.Console.Model.VertexActions.NeighbourhoodActions

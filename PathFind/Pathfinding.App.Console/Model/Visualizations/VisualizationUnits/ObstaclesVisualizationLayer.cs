@@ -1,4 +1,6 @@
-﻿using Pathfinding.Service.Interface.Visualization;
+﻿using Pathfinding.Domain.Interface;
+using Pathfinding.Service.Interface.Models.Read;
+using Pathfinding.Service.Interface.Visualization;
 using Shared.Extensions;
 using System.Linq;
 
@@ -6,7 +8,7 @@ namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
 {
     internal sealed class ObstaclesVisualizationLayer : VisualizationLayer
     {
-        public ObstaclesVisualizationLayer(RunVisualizationDto algorithm)
+        public ObstaclesVisualizationLayer(RunVisualizationModel algorithm)
             : base(algorithm)
         {
         }

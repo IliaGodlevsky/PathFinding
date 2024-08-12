@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Pathfinding.Domain.Interface;
+using System.Collections.Generic;
 
 namespace Pathfinding.App.Console.Model.VertexActions
 {

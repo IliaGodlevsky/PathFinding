@@ -3,9 +3,10 @@
 
 namespace Pathfinding.Service.Interface.Models.Read
 {
-    public class GraphModel<T>
+    public record class GraphModel<T>
         where T : IVertex
     {
+        
         public int Id { get; set; }
 
         public string Name { get; set; }

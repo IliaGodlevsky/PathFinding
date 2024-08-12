@@ -1,10 +1,12 @@
-﻿namespace Pathfinding.App.Console.Messaging.Messages
+﻿using Pathfinding.Service.Interface.Models.Undefined;
+
+namespace Pathfinding.App.Console.Messaging.Messages
 {
     internal sealed class StatisticsMessage
     {
-        public RunStatisticsDto Statistics { get; }
+        public RunStatisticsModel Statistics { get; }
 
-        public StatisticsMessage(RunStatisticsDto statistics)
+        public StatisticsMessage(RunStatisticsModel statistics)
         {
             Statistics = statistics;
         }

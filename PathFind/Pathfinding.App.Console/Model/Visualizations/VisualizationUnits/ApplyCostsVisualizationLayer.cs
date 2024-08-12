@@ -1,8 +1,12 @@
-﻿namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
+﻿using Pathfinding.Domain.Interface;
+using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Service.Interface.Models.Read;
+
+namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
 {
     internal sealed class ApplyCostsVisualizationLayer : VisualizationLayer
     {
-        public ApplyCostsVisualizationLayer(RunVisualizationDto algorithm)
+        public ApplyCostsVisualizationLayer(RunVisualizationModel algorithm)
             : base(algorithm)
         {
 

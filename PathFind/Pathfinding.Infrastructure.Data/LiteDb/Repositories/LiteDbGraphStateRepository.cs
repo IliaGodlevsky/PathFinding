@@ -17,16 +17,13 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
 
         public async Task<GraphState> CreateAsync(GraphState entity, CancellationToken token = default)
         {
-            return await Task.Run(() =>
-            {
-                collection.Insert(entity);
-                return entity;
-            }, token);
+            collection.Insert(entity);
+            return await Task.FromResult(entity);
         }
 
         public async Task<GraphState> ReadByRunIdAsync(int runId, CancellationToken token = default)
         {
-            return await Task.Run(() => collection.FindOne(x => x.AlgorithmRunId == runId), token);
+            return await Task.FromResult(collection.FindOne(x => x.AlgorithmRunId == runId));
         }
     }
 }

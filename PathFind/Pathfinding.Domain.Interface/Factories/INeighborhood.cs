@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Pathfinding.Shared.Primitives;
+using System.Collections.Generic;
 
 namespace Pathfinding.Domain.Interface.Factories
 {
-    public interface INeighborhood : IReadOnlyCollection<ICoordinate>
+    public interface INeighborhood : IReadOnlyCollection<Coordinate>
     {
 
     }

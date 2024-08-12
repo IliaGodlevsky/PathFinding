@@ -1,4 +1,6 @@
-﻿using Pathfinding.Visualization.Extensions;
+﻿using Pathfinding.Domain.Interface;
+using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Extensions;
 
 namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits
 {

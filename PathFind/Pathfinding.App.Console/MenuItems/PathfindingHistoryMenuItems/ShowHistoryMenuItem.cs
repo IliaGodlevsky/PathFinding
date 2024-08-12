@@ -93,7 +93,7 @@ namespace Pathfinding.App.Console.MenuItems.PathfindingHistoryMenuItems
             return string.Concat(menuList, Languages.AlgorithmChoiceMsg);
         }
 
-        private Disposable RememberGraphState()
+        private IDisposable RememberGraphState()
         {
             var costs = graph.Graph.GetCosts();
             return Disposable.Use(() =>

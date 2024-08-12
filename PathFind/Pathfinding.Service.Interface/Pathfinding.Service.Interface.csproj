@@ -130,21 +130,9 @@
       <Project>{bee15faf-f9d2-432a-a8bb-6d1be7fe2888}</Project>
       <Name>Pathfinding.Domain.Interface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Shared.Executable\Shared.Executable.csproj">
-      <Project>{0A7C5FE5-4688-42C4-8202-676042BB0F81}</Project>
-      <Name>Shared.Executable</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
-      <Project>{CD11D46E-4675-4090-B50B-A85FFA3D1D2C}</Project>
-      <Name>Shared.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Shared.Primitives\Shared.Primitives.csproj">
-      <Project>{30973320-9F61-45FB-8C75-3256ADB1BFB1}</Project>
-      <Name>Shared.Primitives</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Shared.Process\Shared.Process.csproj">
-      <Project>{78DDAA5D-8ABD-4695-A66B-1EAF2BDE77EB}</Project>
-      <Name>Shared.Process</Name>
+    <ProjectReference Include="..\Pathfinding.Shared\Pathfinding.Shared.csproj">
+      <Project>{c57fe374-ec6d-4797-829e-a31697e08975}</Project>
+      <Name>Pathfinding.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

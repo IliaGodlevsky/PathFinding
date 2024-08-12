@@ -2,7 +2,8 @@
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
-using Shared.Extensions;
+using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Primitives;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
 {
-    using Traces = IReadOnlyDictionary<ICoordinate, IVertex>;
+    using Traces = IReadOnlyDictionary<Coordinate, IVertex>;
 
     public sealed class GraphPath : IGraphPath
     {
@@ -83,7 +84,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
             return self.Neighbours.Any(candidate.Equals);
         }
 
-        public IEnumerator<ICoordinate> GetEnumerator()
+        public IEnumerator<Coordinate> GetEnumerator()
         {
             for (int i = 0; i < Path.Count - 1; i++)
             {

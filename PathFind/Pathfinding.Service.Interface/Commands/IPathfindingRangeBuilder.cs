@@ -1,5 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
-using Shared.Executable;
+using Pathfinding.Shared.Interface;
 
 namespace Pathfinding.Service.Interface.Commands
 {

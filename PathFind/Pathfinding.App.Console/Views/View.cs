@@ -18,8 +18,9 @@ namespace Pathfinding.App.Console.Views
         public async Task DisplayAsync(CancellationToken token = default)
         {
             bool isClosureRequested = false;
-            while (!isClosureRequested || !token.IsCancellationRequested)
+            while (!isClosureRequested)
             {
+                if (token.IsCancellationRequested) break;
                 try
                 {
                     AppLayout.SetCursorPositionUnderGraphField();

@@ -1,6 +1,5 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Service.Interface;
-using Shared.Primitives.Single;
+﻿using Pathfinding.Service.Interface;
+using Pathfinding.Shared.Primitives;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,9 +19,9 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
 
         }
 
-        public IEnumerator<ICoordinate> GetEnumerator()
+        public IEnumerator<Coordinate> GetEnumerator()
         {
-            return Enumerable.Empty<ICoordinate>().GetEnumerator();
+            return Enumerable.Empty<Coordinate>().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

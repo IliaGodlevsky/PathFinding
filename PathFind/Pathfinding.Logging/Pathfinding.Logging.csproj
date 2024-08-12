@@ -71,9 +71,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Shared.Extensions\Shared.Extensions.csproj">
-      <Project>{CD11D46E-4675-4090-B50B-A85FFA3D1D2C}</Project>
-      <Name>Shared.Extensions</Name>
+    <ProjectReference Include="..\Pathfinding.Shared\Pathfinding.Shared.csproj">
+      <Project>{c57fe374-ec6d-4797-829e-a31697e08975}</Project>
+      <Name>Pathfinding.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

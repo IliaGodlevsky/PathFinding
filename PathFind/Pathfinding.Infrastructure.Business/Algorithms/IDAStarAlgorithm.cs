@@ -5,7 +5,7 @@ using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface;
-using Shared.Extensions;
+using Pathfinding.Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 

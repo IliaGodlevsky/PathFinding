@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Service.Interface.Models.Undefined;
-using Shared.Extensions;
+using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,18 +20,18 @@ namespace Pathfinding.Infrastructure.Business.Mappings
                 .ConstructUsing((x, context) => new Coordinate(context.Mapper.Map<IReadOnlyCollection<int>>(x).ToArray()));
             CreateMap<byte[], IReadOnlyCollection<int>>().ConvertUsing(x => FromBytes(intArraySerializer, x));
             CreateMap<IReadOnlyCollection<int>, byte[]>().ConvertUsing(x => ToBytes(intArraySerializer, x));
-            CreateMap<byte[], IReadOnlyCollection<ICoordinate>>()
-                .ConvertUsing((x, y, context) => context.Mapper.Map<ICoordinate[]>(coordinateSerializer.DeserializeFromBytes(x)).ToReadOnly());
-            CreateMap<IReadOnlyCollection<ICoordinate>, byte[]>()
+            CreateMap<byte[], IReadOnlyCollection<Coordinate>>()
+                .ConvertUsing((x, y, context) => context.Mapper.Map<Coordinate[]>(coordinateSerializer.DeserializeFromBytes(x)).ToReadOnly());
+            CreateMap<IReadOnlyCollection<Coordinate>, byte[]>()
                 .ConvertUsing((x, y, context) => coordinateSerializer.SerializeToBytesAsync(context.Mapper.Map<CoordinateModel[]>(x)).Result);
-            CreateMap<ICoordinate, CoordinateModel>()
-                .ForMember(x => x.Coordinate, opt => opt.MapFrom(x => x.ToReadOnly()));
-            CreateMap<CoordinateModel, ICoordinate>()
+            CreateMap<Coordinate, CoordinateModel>()
+                .ForMember(x => x.Coordinate, opt => opt.MapFrom(x => x.CoordinatesValues.ToReadOnly()));
+            CreateMap<CoordinateModel, Coordinate>()
                 .ConvertUsing(x => new Coordinate(x.Coordinate.ToArray()));
-            CreateMap<ICoordinate, ICoordinate>().ConvertUsing(x => x);
-            CreateMap<byte[], IReadOnlyCollection<(ICoordinate, IReadOnlyList<ICoordinate>)>>()
-                .ConvertUsing((x, y, context) => context.Mapper.Map<IReadOnlyCollection<(ICoordinate, IReadOnlyList<ICoordinate>)>>(visitedVerticesSerializer.DeserializeFromBytes(x)).ToReadOnly());
-            CreateMap<IReadOnlyCollection<(ICoordinate, IReadOnlyList<ICoordinate>)>, byte[]>()
+            CreateMap<Coordinate, Coordinate>().ConvertUsing(x => x);
+            CreateMap<byte[], IReadOnlyCollection<(Coordinate, IReadOnlyList<Coordinate>)>>()
+                .ConvertUsing((x, y, context) => context.Mapper.Map<IReadOnlyCollection<(Coordinate, IReadOnlyList<Coordinate>)>>(visitedVerticesSerializer.DeserializeFromBytes(x)).ToReadOnly());
+            CreateMap<IReadOnlyCollection<(Coordinate, IReadOnlyList<Coordinate>)>, byte[]>()
                 .ConvertUsing((x, y, context) => visitedVerticesSerializer.SerializeToBytesAsync(context.Mapper.Map<VisitedVerticesModel[]>(x)).Result);
         }
 

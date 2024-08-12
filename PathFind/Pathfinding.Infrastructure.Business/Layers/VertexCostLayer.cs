@@ -1,9 +1,9 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
-using Shared.Primitives.ValueRange;
-using Shared.Random;
-using Shared.Random.Extensions;
+using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Interface;
+using Pathfinding.Shared.Primitives;
 
 namespace Pathfinding.Infrastructure.Business.Layers
 {

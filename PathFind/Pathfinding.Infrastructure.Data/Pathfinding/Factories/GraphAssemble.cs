@@ -1,8 +1,7 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
-using Shared.Extensions;
-using Shared.Primitives.Extensions;
-using Shared.Primitives.ValueRange;
+using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -30,7 +29,7 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding.Factories
             return graphFactory.CreateGraph(vertices, graphDimensionsSizes);
         }
 
-        private static ICoordinate ToCoordinates(IReadOnlyList<int> dimensionSizes, int index)
+        private static Coordinate ToCoordinates(IReadOnlyList<int> dimensionSizes, int index)
         {
             var range = new InclusiveValueRange<int>(dimensionSizes.Count - 1);
             int Coordinate(int i)

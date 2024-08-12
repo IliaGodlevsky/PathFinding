@@ -3,14 +3,15 @@ using Pathfinding.Domain.Interface.Comparers;
 using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Service.Interface;
+using Pathfinding.Shared.Primitives;
 using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
     public class AStarAlgorithm : DijkstraAlgorithm
     {
-        private readonly Dictionary<ICoordinate, double> accumulatedCosts;
-        protected readonly Dictionary<ICoordinate, double> heuristics;
+        private readonly Dictionary<Coordinate, double> accumulatedCosts;
+        protected readonly Dictionary<Coordinate, double> heuristics;
         protected readonly IHeuristic heuristic;
 
         public AStarAlgorithm(IEnumerable<IVertex> pathfindingRange)

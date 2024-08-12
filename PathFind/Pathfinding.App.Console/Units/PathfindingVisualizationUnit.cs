@@ -8,6 +8,7 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.Settings;
 using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Infrastructure.Business.Algorithms.Events;
+using Pathfinding.Service.Interface.Models.Read;
 using Shared.Extensions;
 using Shared.Process.EventArguments;
 using System;
@@ -25,7 +26,7 @@ namespace Pathfinding.App.Console.Units
         private readonly IReadOnlyCollection<(string, IAnimationSpeedAction)> animationActions;
 
         private PathfindingProcess algorithm = PathfindingProcess.Idle;
-        private GraphReadDto<Vertex> graph = GraphReadDto<Vertex>.Empty;
+        private GraphModel<Vertex> graph = null;
         private bool isVisualizationApplied = true;
         private TimeSpan animationDelay = TimeSpan.FromMilliseconds(2);
 

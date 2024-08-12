@@ -1,5 +1,6 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Service.Interface;
+using Pathfinding.Shared.Primitives;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,11 +11,11 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
     public sealed class CompositeGraphPath : IGraphPath
     {
         private readonly IEnumerable<IGraphPath> paths;
-        private readonly Lazy<IReadOnlyCollection<ICoordinate>> path;
+        private readonly Lazy<IReadOnlyCollection<Coordinate>> path;
         private readonly Lazy<int> count;
         private readonly Lazy<double> cost;
 
-        private IReadOnlyCollection<ICoordinate> Path => path.Value;
+        private IReadOnlyCollection<Coordinate> Path => path.Value;
 
         public int Count => count.Value;
 
@@ -28,7 +29,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
             cost = new(GetCost);
         }
 
-        private IReadOnlyCollection<ICoordinate> GetPath()
+        private IReadOnlyCollection<Coordinate> GetPath()
         {
             return paths.SelectMany(p => p.Reverse()).ToArray();
         }
@@ -43,7 +44,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
             return Path.Count == 0 ? 0 : paths.Sum(p => p.Cost);
         }
 
-        public IEnumerator<ICoordinate> GetEnumerator()
+        public IEnumerator<Coordinate> GetEnumerator()
         {
             return Path.GetEnumerator();
         }

@@ -18,22 +18,17 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
 
         public async Task<IEnumerable<SubAlgorithm>> CreateAsync(IEnumerable<SubAlgorithm> entities, CancellationToken token = default)
         {
-            return await Task.Run(() =>
-            {
-                collection.InsertBulk(entities);
-                return entities;
-            }, token);
+            collection.InsertBulk(entities);
+            return await Task.FromResult(entities);
         }
 
         public async Task<IEnumerable<SubAlgorithm>> ReadByAlgorithmRunIdAsync(int runId, CancellationToken token = default)
         {
-            return await Task.Run(() =>
-            {
-                return collection.Query()
+            await Task.CompletedTask;
+            return collection.Query()
                 .Where(x => x.AlgorithmRunId == runId)
                 .OrderBy(x => x.Order)
                 .ToEnumerable();
-            }, token);
         }
     }
 }

@@ -19,37 +19,32 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
 
         public async Task<IEnumerable<Vertex>> CreateAsync(IEnumerable<Vertex> vertices, CancellationToken token = default)
         {
-            return await Task.Run(() =>
-            {
-                collection.InsertBulk(vertices);
-                return vertices;
-            }, token);
+            collection.InsertBulk(vertices);
+            return await Task.FromResult(vertices);
         }
 
         public async Task<bool> DeleteVerticesByGraphIdAsync(int graphId, CancellationToken token = default)
         {
-            return await Task.Run(() => collection.DeleteMany(x => x.GraphId == graphId) > 0, token);
+            return await Task.FromResult(collection.DeleteMany(x => x.GraphId == graphId) > 0);
         }
 
         public async Task<Vertex> ReadAsync(int vertexId, CancellationToken token = default)
         {
-            return await Task.Run(() => collection.FindById(vertexId), token);
+            return await Task.FromResult(collection.FindById(vertexId));
         }
 
         public async Task<IEnumerable<Vertex>> ReadVerticesByGraphIdAsync(int graphId, CancellationToken token = default)
         {
-            return await Task.Run(() =>
-            {
-                return collection.Query()
-                    .Where(x => x.GraphId == graphId)
-                    .OrderBy(x => x.Order)
-                    .ToEnumerable();
-            }, token);
+            await Task.CompletedTask;
+            return collection.Query()
+                .Where(x => x.GraphId == graphId)
+                .OrderBy(x => x.Order)
+                .ToEnumerable();
         }
 
-        public Task<bool> UpdateVerticesAsync(IEnumerable<Vertex> vertices, CancellationToken token = default)
+        public async Task<bool> UpdateVerticesAsync(IEnumerable<Vertex> vertices, CancellationToken token = default)
         {
-            return Task.Run(() => collection.Update(vertices) > 0, token);
+            return await Task.FromResult(collection.Update(vertices) > 0);
         }
     }
 }

@@ -2,7 +2,7 @@
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Visualization;
 using Pathfinding.Service.Interface.Extensions;
-using Shared.Extensions;
+using Pathfinding.Shared.Extensions;
 using System;
 using System.Linq;
 

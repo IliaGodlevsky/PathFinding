@@ -8,7 +8,7 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
-using Pathfinding.Visualization.Extensions;
+using Pathfinding.Service.Interface.Extensions;
 using Shared.Executable;
 using System;
 using System.Collections.Generic;
