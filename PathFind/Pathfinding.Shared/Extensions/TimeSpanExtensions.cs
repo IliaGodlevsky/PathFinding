@@ -13,10 +13,5 @@ namespace Pathfinding.Shared.Extensions
                 timePassed = DateTime.Now - start;
             }
         }
-
-        public static TimeSpan Multiply(this TimeSpan span, double value)
-        {
-            return TimeSpan.FromMilliseconds(span.TotalMilliseconds * value);
-        }
     }
 }

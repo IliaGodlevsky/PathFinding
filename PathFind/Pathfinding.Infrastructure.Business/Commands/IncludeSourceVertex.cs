@@ -1,9 +1,11 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface.Commands;
+using Pathfinding.Shared;
 
 namespace Pathfinding.Infrastructure.Business.Commands
 {
+    [Order(2), Group(Constants.IncludeCommands)]
     public sealed class IncludeSourceVertex<TVertex> : IPathfindingRangeCommand<TVertex>, IUndoCommand<TVertex>
         where TVertex : IVertex
     {

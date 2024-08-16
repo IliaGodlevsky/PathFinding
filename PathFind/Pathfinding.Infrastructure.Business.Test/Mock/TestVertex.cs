@@ -1,12 +1,15 @@
-﻿using Pathfinding.Domain.Interface;
+﻿using Pathfinding.Domain.Core;
+using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Shared.Primitives;
 
 namespace Pathfinding.Infrastructure.Business.Test.Mock
 {
-    internal sealed class TestVertex : IVertex
+    internal sealed class TestVertex : IVertex, IEntity<int>
     {
+        public int Id { get; set; }
+
         public bool IsObstacle { get; set; }
 
         public IVertexCost Cost { get; set; } = NullCost.Interface;

@@ -327,7 +327,7 @@ namespace Pathfinding.App.Console.DependencyInjection
             builder.RegisterType<HistoryMappingProfile<Vertex>>().As<Profile>().SingleInstance();
             builder.RegisterType<StatisticsMappingProfile>().As<Profile>().SingleInstance();
             builder.RegisterType<SubAlgorithmsMappingProfile>().As<Profile>().SingleInstance();
-            builder.RegisterType<UntitledMappingConfig>().As<Profile>().SingleInstance();
+            builder.RegisterType<UntitledMappingProfile>().As<Profile>().SingleInstance();
 
             builder.Register(ctx =>
             {

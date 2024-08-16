@@ -1,6 +1,6 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
-using Pathfinding.Infrastructure.Data.Pathfinding;
+using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
 using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
@@ -14,9 +14,10 @@ namespace Pathfinding.Infrastructure.Business.Layers
         private readonly INeighborhoodFactory factory;
         private readonly ReturnOptions options;
 
-        public NeighborhoodLayer(INeighborhoodFactory factory, ReturnOptions options = null)
+        public NeighborhoodLayer(INeighborhoodFactory factory = null,
+            ReturnOptions options = null)
         {
-            this.factory = factory;
+            this.factory = factory ?? new MooreNeighborhoodFactory();
             this.options = options ?? ReturnOptions.Limit;
         }
 

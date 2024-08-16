@@ -10,31 +10,32 @@ namespace Pathfinding.Infrastructure.Business.Test.Commands
     internal sealed class PathfindingRangeBuilderTests
     {
         private readonly TestGraphAssemble assemble;
-        private readonly PathfindingRangeBuilder<TestVertex> rangeBuilder;
+        private readonly IPathfindingRangeCommand<TestVertex>[] commands;
+
+        private PathfindingRangeBuilder<TestVertex> rangeBuilder;
 
         public PathfindingRangeBuilderTests()
         {
             assemble = new();
-            // Order sensitive
-            var includeCommands = new IPathfindingRangeCommand<TestVertex>[]
+            commands = new IPathfindingRangeCommand<TestVertex>[]
             {
-                new ReplaceTransitIsolatedVertex<TestVertex>(),
+                new ExcludeTargetVertex<TestVertex>(),
                 new IncludeSourceVertex<TestVertex>(),
+                new ReplaceTransitIsolatedVertex<TestVertex>(),
+                new IncludeTransitVertex<TestVertex>(),
                 new ReplaceIsolatedSourceVertex<TestVertex>(),
+                new ExcludeSourceVertex<TestVertex>(),
                 new IncludeTargetVertex<TestVertex>(),
                 new ReplaceIsolatedTargetVertex<TestVertex>(),
-                new IncludeTransitVertex<TestVertex>(),
-            };
-            // Order sensitive
-            var excludeCommands = new IPathfindingRangeCommand<TestVertex>[]
-            {
-                new ExcludeSourceVertex<TestVertex>(),
-                new ExcludeTargetVertex<TestVertex>(),
                 new ExcludeTransitVertex<TestVertex>()
             };
+        }
+
+        [SetUp]
+        public void Setup()
+        {
             var range = new PathfindingRange<TestVertex>();
-            rangeBuilder = new PathfindingRangeBuilder<TestVertex>(range, 
-                includeCommands, excludeCommands);
+            rangeBuilder = new PathfindingRangeBuilder<TestVertex>(range, commands);
         }
 
         [Test]

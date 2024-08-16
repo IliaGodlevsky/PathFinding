@@ -46,20 +46,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlackWhole.cs" />
     <Compile Include="CompositeUndo.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="EventArguments\ProcessEventArgs.cs" />
     <Compile Include="EventHandlers\ProcessEventHandler.cs" />
     <Compile Include="Exceptions\SingletonException.cs" />
+    <Compile Include="Extensions\EnumerableExtension.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
-    <Compile Include="Extensions\IDictionaryExtensions.cs" />
-    <Compile Include="Extensions\IEnumerableExtension.cs" />
-    <Compile Include="Extensions\IGenericComparableExtensions.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Extensions\ComparableExtensions.cs" />
     <Compile Include="Extensions\InclusiveValueRangeExtensions.cs" />
-    <Compile Include="Extensions\IRandomExtensions.cs" />
+    <Compile Include="Extensions\RandomExtensions.cs" />
     <Compile Include="Extensions\MemberInfoExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
+    <Compile Include="GroupAttribute.cs" />
     <Compile Include="Interface\IInterruptable.cs" />
     <Compile Include="Interface\IPausable.cs" />
     <Compile Include="Interface\IProcess.cs" />

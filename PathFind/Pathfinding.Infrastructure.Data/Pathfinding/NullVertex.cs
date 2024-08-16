@@ -1,4 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
+using Pathfinding.Shared;
 using Pathfinding.Shared.Primitives;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
 
         public IVertexCost Cost { get => NullCost.Interface; set { } }
 
-        public ICollection<IVertex> Neighbours { get; } = Array.Empty<IVertex>();
+        public ICollection<IVertex> Neighbours { get; } = BlackHole<IVertex>.Interface;
 
         public Coordinate Position => Coordinate.Empty;
 

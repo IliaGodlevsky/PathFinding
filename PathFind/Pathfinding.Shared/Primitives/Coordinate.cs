@@ -20,19 +20,19 @@ namespace Pathfinding.Shared.Primitives
 
         public Coordinate(int numberOfDimensions, IReadOnlyList<int> coordinates)
         {
-            CoordinatesValues = coordinates
-                .TakeOrDefault(numberOfDimensions)
-                .ToReadOnly();
+            CoordinatesValues = coordinates.TakeOrDefault(numberOfDimensions).ToReadOnly();
             toString = $"({string.Join(",", CoordinatesValues)})";
             hashCode = CoordinatesValues.AggregateOrDefault(HashCode.Combine);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Coordinate(IReadOnlyList<int> coordinates)
             : this(coordinates.Count, coordinates)
         {
 
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Coordinate(params int[] coordinates)
             : this((IReadOnlyList<int>)coordinates)
         {

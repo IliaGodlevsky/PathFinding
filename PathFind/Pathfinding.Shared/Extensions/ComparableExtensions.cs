@@ -2,7 +2,7 @@
 
 namespace Pathfinding.Shared.Extensions
 {
-    public static class IGenericComparableExtensions
+    public static class ComparableExtensions
     {
         public static bool IsGreaterThan<T>(this T first, T second)
             where T : IComparable<T>

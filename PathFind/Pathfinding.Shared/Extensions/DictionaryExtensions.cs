@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Pathfinding.Shared.Extensions
 {
-    public static class IDictionaryExtensions
+    public static class DictionaryExtensions
     {
         public static TValue GetOrDefault<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> self, TKey key, Func<TValue> defaultValue)
         {

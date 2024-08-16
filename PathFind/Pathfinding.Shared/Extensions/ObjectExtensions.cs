@@ -23,5 +23,11 @@ namespace Pathfinding.Shared.Extensions
             int order = self.GetAttributeOrDefault<OrderAttribute>().Order;
             return order;
         }
+
+        public static object GetGroupToken(this object self)
+        {
+            object groupToken = self.GetAttributeOrDefault<GroupAttribute>().GroupToken;
+            return groupToken;
+        }
     }
 }

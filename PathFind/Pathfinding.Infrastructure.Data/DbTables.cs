@@ -24,7 +24,8 @@ namespace Pathfinding.Infrastructure.Data
                 .GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance)
                 .Where(x => x.FieldType == typeof(string))
                 .Select(x => (string)x.GetValue(null))
-                .ToList().AsReadOnly();
+                .ToList()
+                .AsReadOnly();
         }
     }
 }

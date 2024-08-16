@@ -18,16 +18,14 @@ namespace Pathfinding.Infrastructure.Business.Commands
         public IPathfindingRange<TVertex> Range { get; }
 
         public PathfindingRangeBuilder(IPathfindingRange<TVertex> range,
-            IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> includeCommands,
-            IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> excludeCommands)
+            IReadOnlyCollection<IPathfindingRangeCommand<TVertex>> commands)
         {
             Range = range;
-            IncludeCommands = includeCommands;
-            ExcludeCommands = excludeCommands;
-            UndoCommands = IncludeCommands
-                .Union(ExcludeCommands)
-                .OfType<IUndoCommand<TVertex>>()
-                .ToArray();
+            var groupedCommands = commands.GroupBy(x => x.GetGroupToken())
+                .ToDictionary(x => x.Key, x => x.OrderByOrderAttribute().ToList());
+            IncludeCommands = groupedCommands.GetOrEmpty(Constants.IncludeCommands).ToReadOnly();
+            ExcludeCommands = groupedCommands.GetOrEmpty(Constants.ExcludeCommands).ToReadOnly();
+            UndoCommands = commands.OfType<IUndoCommand<TVertex>>().ToReadOnly();
         }
 
         public void Include(TVertex vertex)

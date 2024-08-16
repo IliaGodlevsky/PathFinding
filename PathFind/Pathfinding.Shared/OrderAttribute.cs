@@ -5,8 +5,7 @@ namespace Pathfinding.Shared
     [AttributeUsage(AttributeTargets.All)]
     public class OrderAttribute : Attribute
     {
-        public static readonly OrderAttribute Default
-            = new OrderAttribute(int.MaxValue);
+        public static readonly OrderAttribute Default = new(int.MaxValue);
 
         public virtual int Order { get; }
 

@@ -1,8 +1,10 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Service.Interface.Commands;
+using Pathfinding.Shared;
 
 namespace Pathfinding.Infrastructure.Business.Commands
 {
+    [Order(2), Group(Constants.ExcludeCommands)]
     public class ExcludeTargetVertex<TVertex> : IPathfindingRangeCommand<TVertex>
         where TVertex : IVertex
     {

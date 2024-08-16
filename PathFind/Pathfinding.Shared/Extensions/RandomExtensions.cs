@@ -4,7 +4,7 @@ using System;
 
 namespace Pathfinding.Shared.Extensions
 {
-    public static class IRandomExtensions
+    public static class RandomExtensions
     {
         /// <summary>
         /// Generates a random number that lays within the <paramref name="range"/>
@@ -42,15 +42,6 @@ namespace Pathfinding.Shared.Extensions
         public static double NextDouble(this IRandom random, InclusiveValueRange<double> range)
         {
             return range.Amplitude() * ((double)random.NextUInt() / uint.MaxValue) + range.LowerValueOfRange;
-        }
-
-        public static TimeSpan NextTimeSpan(this IRandom random, InclusiveValueRange<TimeSpan> range)
-        {
-            double lower = range.LowerValueOfRange.TotalMilliseconds;
-            double upper = range.UpperValueOfRange.TotalMilliseconds;
-            var valueRange = new InclusiveValueRange<double>(lower, upper);
-            double randomValue = random.NextDouble(valueRange);
-            return TimeSpan.FromMilliseconds(randomValue);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Pathfinding.Service.Interface.Models.Undefined
 {
-    public class CoordinateModel
+    public record CoordinateModel
     {
         public IReadOnlyCollection<int> Coordinate { get; set; }
     }

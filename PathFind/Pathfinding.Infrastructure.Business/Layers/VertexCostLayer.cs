@@ -1,30 +1,29 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
-using Pathfinding.Shared.Extensions;
-using Pathfinding.Shared.Interface;
 using Pathfinding.Shared.Primitives;
+using System;
 
 namespace Pathfinding.Infrastructure.Business.Layers
 {
     public sealed class VertexCostLayer : ILayer
     {
-        private InclusiveValueRange<int> CostRange { get; }
+        private readonly Func<InclusiveValueRange<int>, int> generator;
+        private readonly InclusiveValueRange<int> costRange;
 
-        private IRandom Random { get; }
-
-        public VertexCostLayer(InclusiveValueRange<int> costRange, IRandom random)
+        public VertexCostLayer(InclusiveValueRange<int> costRange, 
+            Func<InclusiveValueRange<int>, int> generator)
         {
-            CostRange = costRange;
-            Random = random;
+            this.costRange = costRange;
+            this.generator = generator;
         }
 
         public void Overlay(IGraph<IVertex> graph)
         {
             foreach (var vertex in graph)
             {
-                var costValue = Random.NextInt(CostRange);
-                vertex.Cost = new VertexCost(costValue, CostRange);
+                var costValue = generator(costRange);
+                vertex.Cost = new VertexCost(costValue, costRange);
             }
         }
     }

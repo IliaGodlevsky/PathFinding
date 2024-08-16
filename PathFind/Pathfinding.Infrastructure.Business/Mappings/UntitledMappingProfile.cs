@@ -9,9 +9,9 @@ using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Mappings
 {
-    public sealed class UntitledMappingConfig : Profile
+    public sealed class UntitledMappingProfile : Profile
     {
-        public UntitledMappingConfig(
+        public UntitledMappingProfile(
             ISerializer<IEnumerable<CoordinateModel>> coordinateSerializer,
             ISerializer<IEnumerable<int>> intArraySerializer,
             ISerializer<IEnumerable<VisitedVerticesModel>> visitedVerticesSerializer)
@@ -20,6 +20,7 @@ namespace Pathfinding.Infrastructure.Business.Mappings
                 .ConstructUsing((x, context) => new Coordinate(context.Mapper.Map<IReadOnlyCollection<int>>(x).ToArray()));
             CreateMap<byte[], IReadOnlyCollection<int>>().ConvertUsing(x => FromBytes(intArraySerializer, x));
             CreateMap<IReadOnlyCollection<int>, byte[]>().ConvertUsing(x => ToBytes(intArraySerializer, x));
+            CreateMap<Coordinate, byte[]>().ConvertUsing((x, y, context) => context.Mapper.Map<byte[]>(x.CoordinatesValues));
             CreateMap<byte[], IReadOnlyCollection<Coordinate>>()
                 .ConvertUsing((x, y, context) => context.Mapper.Map<Coordinate[]>(coordinateSerializer.DeserializeFromBytes(x)).ToReadOnly());
             CreateMap<IReadOnlyCollection<Coordinate>, byte[]>()

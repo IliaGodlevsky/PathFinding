@@ -25,12 +25,12 @@ namespace Pathfinding.Infrastructure.Business.Layers
             OnStarted?.Invoke();
             foreach (var subAlgorithm in algorithm.Algorithms)
             {
-                foreach (var vertex in subAlgorithm.Visited)
+                foreach (var (Visited, Enqueued) in subAlgorithm.Visited)
                 {
                     OnVisited?.Invoke();
-                    var current = (IPathfindingVisualizable)graph.Get(vertex.Visited);
+                    var current = (IPathfindingVisualizable)graph.Get(Visited);
                     current.VisualizeAsVisited();
-                    vertex.Enqueued.Select(graph.Get)
+                    Enqueued.Select(graph.Get)
                         .OfType<IPathfindingVisualizable>()
                         .ForEach(x => x.VisualizeAsEnqueued());
                 }

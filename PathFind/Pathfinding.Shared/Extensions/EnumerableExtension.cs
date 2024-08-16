@@ -26,7 +26,7 @@ namespace Pathfinding.Shared.Extensions
         }
     }
 
-    public static class IEnumerableExtension
+    public static class EnumerableExtension
     {
         public static IOrderedEnumerable<T> OrderByOrderAttribute<T>(this IEnumerable<T> collection)
         {

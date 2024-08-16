@@ -1,5 +1,6 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Service.Interface;
+using Pathfinding.Shared.Extensions;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -12,7 +13,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.Heuristics
         {
             double result = first.Position.CoordinatesValues
                 .Zip(second.Position.CoordinatesValues, Zip)
-                .Aggregate(Aggregate);
+                .AggregateOrDefault(Aggregate);
             return ProcessResult(result);
         }
 
