@@ -168,6 +168,7 @@
     <Compile Include="Data\BenchmarkVertex.cs" />
     <Compile Include="Data\BenchmarkVertexFactory.cs" />
     <Compile Include="HeuristicsBenchmarks.cs" />
+    <Compile Include="StepRulesBenchmarks.cs" />
     <Compile Include="WaveAlgorithmsBenchmarks.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

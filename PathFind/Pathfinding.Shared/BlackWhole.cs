@@ -5,8 +5,8 @@ using System.Linq;
 
 namespace Pathfinding.Shared
 {
-    public sealed class BlackHole<T> 
-        : Singleton<BlackHole<T>,  ICollection<T>>, ICollection<T>, IReadOnlyCollection<T>
+    public sealed class BlackHole<T>
+        : Singleton<BlackHole<T>, ICollection<T>>, ICollection<T>, IReadOnlyCollection<T>
     {
         public int Count => default;
 
@@ -19,12 +19,12 @@ namespace Pathfinding.Shared
 
         public void Add(T item)
         {
-            
+
         }
 
         public void Clear()
         {
-            
+
         }
 
         public bool Contains(T item)
@@ -34,7 +34,7 @@ namespace Pathfinding.Shared
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            
+
         }
 
         public IEnumerator<T> GetEnumerator()

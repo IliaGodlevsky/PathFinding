@@ -1,10 +1,5 @@
 ﻿using Pathfinding.Shared.Interface;
 using Pathfinding.Shared.Random;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pathfinding.Shared.Test.Random
 {

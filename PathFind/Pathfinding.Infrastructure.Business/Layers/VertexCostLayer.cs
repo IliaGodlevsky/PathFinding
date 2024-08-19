@@ -11,7 +11,7 @@ namespace Pathfinding.Infrastructure.Business.Layers
         private readonly Func<InclusiveValueRange<int>, int> generator;
         private readonly InclusiveValueRange<int> costRange;
 
-        public VertexCostLayer(InclusiveValueRange<int> costRange, 
+        public VertexCostLayer(InclusiveValueRange<int> costRange,
             Func<InclusiveValueRange<int>, int> generator)
         {
             this.costRange = costRange;

@@ -1,7 +1,7 @@
 ﻿using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Infrastructure.Business.Test.Mock;
-using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
 using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
 using Pathfinding.Shared.Primitives;
 using System.Collections;
 
@@ -9,20 +9,11 @@ namespace Pathfinding.Infrastructure.Business.Test.Algorithms.DataProviders
 {
     internal static class WaveAlgorithmDataProvider
     {
-        public static IEnumerable DijstraDataProvider
+        public static IEnumerable DijkstraDataProvider
         {
             get
             {
-                const int Width = 30;
-                const int Length = 35;
-                var assemble = new GraphAssemble<TestVertex>(
-                    new TestVertexFactory(),
-                    new GraphFactory<TestVertex>());
-                var obstacleLayer = new TestObstacleLayer();
-                var neighborhoodLayer = new NeighborhoodLayer();
-                var costLayer = new TestCostLayer();
-                var layers = new Layers.Layers(obstacleLayer, neighborhoodLayer, costLayer);
-                var graph = assemble.AssembleGraph(layers, Width, Length);
+                var graph = TestGraph.Instance;
 
                 return new TestCaseData[]
                 {

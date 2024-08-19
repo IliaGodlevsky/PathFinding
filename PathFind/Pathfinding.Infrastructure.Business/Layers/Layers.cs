@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Layers
 {
-    public class Layers : ILayer
+    public class Layers : List<ILayer>, ILayer
     {
         private readonly IEnumerable<ILayer> layers;
 

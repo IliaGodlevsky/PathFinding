@@ -108,7 +108,6 @@
     <Compile Include="Algorithms\StepRules\CardinalStepRule.cs" />
     <Compile Include="Algorithms\StepRules\DefaultStepRule.cs" />
     <Compile Include="Algorithms\StepRules\LandscapeStepRule.cs" />
-    <Compile Include="Algorithms\StepRules\RatedStepRule.cs" />
     <Compile Include="Algorithms\StepRules\WalkStepRule.cs" />
     <Compile Include="Algorithms\WaveAlgorithm.cs" />
     <Compile Include="Commands\Constants.cs" />

@@ -12,11 +12,9 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
     public sealed class LiteDbNeighborsRepository : INeighborsRepository
     {
         private readonly ILiteCollection<Neighbor> collection;
-        private readonly ILiteCollection<Vertex> vertices;
 
         public LiteDbNeighborsRepository(ILiteDatabase db)
         {
-            vertices = db.GetCollection<Vertex>(DbTables.Vertices);
             collection = db.GetCollection<Neighbor>(DbTables.Neighbors);
             collection.EnsureIndex(x => x.VertexId);
         }
@@ -29,12 +27,7 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
 
         public async Task<bool> DeleteByGraphIdAsync(int graphId, CancellationToken token = default)
         {
-            var bsonIds = vertices
-                .Find(x => x.GraphId == graphId)
-                .Select(x => new BsonValue(x.Id))
-                .ToArray();
-            var query = Query.In(nameof(Neighbor.VertexId), bsonIds);
-            int deleted = collection.DeleteMany(query);
+            int deleted = collection.DeleteMany(x => x.GraphId == graphId);
             return await Task.FromResult(deleted > 0);
         }
 

@@ -1,5 +1,6 @@
 ﻿using Pathfinding.Shared.Extensions;
 using System;
+using System.Runtime.CompilerServices;
 
 namespace Pathfinding.Shared.Primitives
 {
@@ -34,16 +35,19 @@ namespace Pathfinding.Shared.Primitives
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator (T UpperValueRange, T LowerValueRange)(InclusiveValueRange<T> range)
         {
             return (range.UpperValueOfRange, range.LowerValueOfRange);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator InclusiveValueRange<T>((T UpperValueRange, T LowerValueRange) range)
         {
             return new(range.UpperValueRange, range.LowerValueRange);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override readonly string ToString()
         {
             return $"[{LowerValueOfRange},{UpperValueOfRange}]";

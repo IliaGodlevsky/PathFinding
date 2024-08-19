@@ -1,5 +1,4 @@
-﻿using Pathfinding.Service.Interface.Models.Undefined;
-using Pathfinding.Shared.Primitives;
+﻿using Pathfinding.Shared.Primitives;
 using System.Collections;
 
 namespace Pathfinding.Infrastructure.Business.Test.Mappings
@@ -66,11 +65,11 @@ namespace Pathfinding.Infrastructure.Business.Test.Mappings
         {
             get
             {
-                return new []
+                return new[]
                 {
                     new TestCaseData(new Coordinate(1, 2))
                         .Returns(new byte[] { 91, 49, 44, 50, 93 }),
-                    
+
                     new TestCaseData(new Coordinate(3, 4, 5))
                         .Returns(new byte[] { 91, 51, 44, 52, 44, 53, 93 }),
 

@@ -22,7 +22,7 @@ namespace Pathfinding.Infrastructure.Business.Mappings
             CreateMap<IReadOnlyCollection<int>, byte[]>().ConvertUsing(x => ToBytes(intArraySerializer, x));
             CreateMap<Coordinate, byte[]>().ConvertUsing((x, y, context) => context.Mapper.Map<byte[]>(x.CoordinatesValues));
             CreateMap<byte[], IReadOnlyCollection<Coordinate>>()
-                .ConvertUsing((x, y, context) => context.Mapper.Map<Coordinate[]>(coordinateSerializer.DeserializeFromBytes(x)).ToReadOnly());
+                .ConvertUsing((x, y, context) => context.Mapper.Map<Coordinate[]>(coordinateSerializer.DeserializeFromBytes(x).Result).ToReadOnly());
             CreateMap<IReadOnlyCollection<Coordinate>, byte[]>()
                 .ConvertUsing((x, y, context) => coordinateSerializer.SerializeToBytesAsync(context.Mapper.Map<CoordinateModel[]>(x)).Result);
             CreateMap<Coordinate, CoordinateModel>()
@@ -31,7 +31,7 @@ namespace Pathfinding.Infrastructure.Business.Mappings
                 .ConvertUsing(x => new Coordinate(x.Coordinate.ToArray()));
             CreateMap<Coordinate, Coordinate>().ConvertUsing(x => x);
             CreateMap<byte[], IReadOnlyCollection<(Coordinate, IReadOnlyList<Coordinate>)>>()
-                .ConvertUsing((x, y, context) => context.Mapper.Map<IReadOnlyCollection<(Coordinate, IReadOnlyList<Coordinate>)>>(visitedVerticesSerializer.DeserializeFromBytes(x)).ToReadOnly());
+                .ConvertUsing((x, y, context) => context.Mapper.Map<IReadOnlyCollection<(Coordinate, IReadOnlyList<Coordinate>)>>(visitedVerticesSerializer.DeserializeFromBytes(x).Result).ToReadOnly());
             CreateMap<IReadOnlyCollection<(Coordinate, IReadOnlyList<Coordinate>)>, byte[]>()
                 .ConvertUsing((x, y, context) => visitedVerticesSerializer.SerializeToBytesAsync(context.Mapper.Map<VisitedVerticesModel[]>(x)).Result);
         }

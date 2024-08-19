@@ -23,7 +23,6 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks.Data
 
         static BenchmarkRange()
         {
-            var size = new int[] { 200, 250 };
             var assemble = new GraphAssemble<BenchmarkVertex>(
                 new BenchmarkVertexFactory(),
                 new GraphFactory<BenchmarkVertex>());
@@ -33,7 +32,7 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks.Data
                 new InclusiveValueRange<int>(9, 1),
                 range => random.NextInt(range));
             var layers = new Layers.Layers(neighborhoodLayer, costLayer);
-            graph = assemble.AssembleGraph(layers, size);
+            graph = assemble.AssembleGraph(layers, 200, 250);
         }
 
         public IEnumerator<BenchmarkVertex> GetEnumerator()

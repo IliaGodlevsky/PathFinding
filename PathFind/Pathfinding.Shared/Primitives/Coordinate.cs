@@ -1,6 +1,7 @@
 ﻿using Pathfinding.Shared.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace Pathfinding.Shared.Primitives
@@ -12,15 +13,15 @@ namespace Pathfinding.Shared.Primitives
         private readonly string toString;
         private readonly int hashCode;
 
-        public readonly IReadOnlyList<int> CoordinatesValues { get; }
+        public readonly int[] CoordinatesValues { get; }
 
-        public readonly int Count => CoordinatesValues.Count;
+        public readonly int Count => CoordinatesValues.Length;
 
         public readonly int this[int index] => CoordinatesValues[index];
 
         public Coordinate(int numberOfDimensions, IReadOnlyList<int> coordinates)
         {
-            CoordinatesValues = coordinates.TakeOrDefault(numberOfDimensions).ToReadOnly();
+            CoordinatesValues = coordinates.TakeOrDefault(numberOfDimensions).ToArray();
             toString = $"({string.Join(",", CoordinatesValues)})";
             hashCode = CoordinatesValues.AggregateOrDefault(HashCode.Combine);
         }
@@ -50,6 +51,18 @@ namespace Pathfinding.Shared.Primitives
         {
             return pos is Coordinate coord && Equals(coord);
         }
+
+        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //public static implicit operator Coordinate(int[] values)
+        //{
+        //    return new Coordinate(values);
+        //}
+
+        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //public static implicit operator int[](Coordinate coordinate)
+        //{
+        //    return coordinate.CoordinatesValues;
+        //}
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override readonly int GetHashCode() => hashCode;

@@ -35,6 +35,11 @@ namespace Pathfinding.Shared.Extensions
             {
                 Current = start - 1;
             }
+
+            public void Dispose()
+            {
+                Reset();
+            }
         }
 
         /// <summary>
@@ -45,10 +50,7 @@ namespace Pathfinding.Shared.Extensions
         /// values from <paramref name="range"/></returns>
         public static IEnumerable<int> Iterate(this InclusiveValueRange<int> range)
         {
-            foreach (int value in range)
-            {
-                yield return value;
-            }
+            foreach (var item in range) yield return item;
         }
 
         public static RangeEnumerator GetEnumerator(this InclusiveValueRange<int> range)

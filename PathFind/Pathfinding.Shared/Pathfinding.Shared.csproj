@@ -79,8 +79,5 @@
     <Compile Include="Random\ThreadSafeRandom.cs" />
     <Compile Include="Random\XorshiftRandom.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

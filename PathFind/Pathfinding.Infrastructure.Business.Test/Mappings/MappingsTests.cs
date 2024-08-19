@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
-using Pathfinding.App.Console.DAL.Models.Mappers;
-using Pathfinding.Infrastructure.Business.Mappings;
-using Pathfinding.Infrastructure.Business.Serializers;
-using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Infrastructure.Business.Test.Mock;
-using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
+using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Shared.Primitives;
 
 namespace Pathfinding.Infrastructure.Business.Test.Mappings
@@ -16,26 +12,7 @@ namespace Pathfinding.Infrastructure.Business.Test.Mappings
 
         public MappingsTests()
         {
-            var visitedVerticesSerializer = new JsonSerializer<IEnumerable<VisitedVerticesModel>>();
-            var coordinateModelSerializer = new JsonSerializer<IEnumerable<CoordinateModel>>();
-            var intArraySerializer = new JsonSerializer<IEnumerable<int>>();
-
-            var profiles = new Profile[]
-            {
-                new UntitledMappingProfile(coordinateModelSerializer,
-                    intArraySerializer,
-                    visitedVerticesSerializer),
-                new SubAlgorithmsMappingProfile(),
-                new StatisticsMappingProfile(),
-                new HistoryMappingProfile<TestVertex>(),
-                new GraphStateMappingProfile(),
-                new VerticesMappingProfile<TestVertex>(new TestVertexFactory()),
-                new GraphMappingProfile<TestVertex>(new GraphFactory<TestVertex>()),
-                new AlgorithmRunMappingProfile()
-            };
-            
-            var config = new MapperConfiguration(c => c.AddProfiles(profiles));
-            mapper = config.CreateMapper();
+            mapper = TestMapper.Interface.Mapper;
         }
 
         [TestCaseSource(typeof(CoordinatesDataProvider), nameof(CoordinatesDataProvider.Coordinates))]

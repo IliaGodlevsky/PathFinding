@@ -25,17 +25,22 @@ namespace Pathfinding.Infrastructure.Business
         where T : IVertex, IEntity<int>
     {
         private readonly IMapper mapper;
-        private readonly IUnitOfWorkFactory factory;
+        private readonly Func<IUnitOfWork> factory;
 
         public RequestService(IMapper mapper, IUnitOfWorkFactory factory)
+            : this(mapper, factory.Create)
         {
-            this.mapper = mapper;
-            this.factory = factory;
         }
 
         public RequestService(IMapper mapper)
             : this(mapper, new LiteDbInMemoryUnitOfWorkFactory())
         {
+        }
+
+        public RequestService(IMapper mapper, Func<IUnitOfWork> factory)
+        {
+            this.factory = factory;
+            this.mapper = mapper;
         }
 
         public async Task<bool> CreateNeighborsAsync(CreateNeighborsRequest<T> request, CancellationToken token = default)
@@ -45,6 +50,7 @@ namespace Pathfinding.Infrastructure.Business
                 var list = request.Neighbors.SelectMany(neighborhood =>
                     neighborhood.Value.Select(neighbor => new Neighbor
                     {
+                        GraphId = request.GraphId,
                         VertexId = neighborhood.Key.Id,
                         NeighborId = neighbor.Id
                     })).ToReadOnly();
@@ -64,11 +70,16 @@ namespace Pathfinding.Infrastructure.Business
                         var graph = history.Graph.Graph;
                         var model = await unitOfWork.AddGraphAsync(mapper, history.Graph, t);
                         history.Algorithms.ForEach(x => x.Run.GraphId = model.Id);
-                        await unitOfWork.AddHistoryAsync(mapper, history.Algorithms, t);
+                        var runHistory = await unitOfWork.AddHistoryAsync(mapper, history.Algorithms, t);
                         var vertices = history.Range.Select((x, i) => (Order: i, Vertex: graph.Get(x)));
                         var entities = SelectRangeEntities(vertices, model.Id);
                         await unitOfWork.RangeRepository.CreateAsync(entities, t);
-                        return mapper.Map<PathfindingHistoryModel<T>>(history) with { Graph = model };
+                        return new PathfindingHistoryModel<T>()
+                        {
+                            Graph = model,
+                            Algorithms = runHistory,
+                            Range = history.Range
+                        };
                     })
                     .ToListAsync(token);
                 return mapper.Map<PathfindingHistoriesModel<T>>(models);
@@ -93,11 +104,14 @@ namespace Pathfinding.Infrastructure.Business
             }, token);
         }
 
-        public async Task<IReadOnlyCollection<int>> CreateRunHistoryAsync(IEnumerable<CreateAlgorithmRunHistoryRequest> histories,
+        public async Task<IReadOnlyCollection<AlgorithmRunHistoryModel>> CreateRunHistoryAsync(IEnumerable<CreateAlgorithmRunHistoryRequest> histories,
             CancellationToken token = default)
         {
-            return await Transaction(async (unitOfWork, t) 
-                => await unitOfWork.AddHistoryAsync(mapper, histories), token);
+            return await Transaction(async (unitOfWork, t)=> 
+            {
+                var result = await unitOfWork.AddHistoryAsync(mapper, histories);
+                return mapper.Map<List<AlgorithmRunHistoryModel>>(result);
+            }, token);
         }
 
         public async Task<bool> DeleteGraphAsync(int graphId,
@@ -157,7 +171,7 @@ namespace Pathfinding.Infrastructure.Business
 
         public async Task<int> ReadGraphCountAsync(CancellationToken token = default)
         {
-            using (var unitOfWork = factory.Create())
+            using (var unitOfWork = factory())
             {
                 return await unitOfWork.GraphRepository.ReadCountAsync(token);
             }
@@ -310,13 +324,6 @@ namespace Pathfinding.Infrastructure.Business
                 => await unitOfWork.GraphRepository.DeleteAsync(ids, t), token);
         }
 
-        public async Task<GraphModel<T>> CreateGraphAsync(CreateGraphFromSerializationRequest request,
-            CancellationToken token = default)
-        {
-            var graph = mapper.Map<CreateGraphRequest<T>>(request);
-            return await CreateGraphAsync(graph, token);
-        }
-
         public async Task<IReadOnlyCollection<GraphModel<T>>> CreateGraphsAsync(CreateGraphsFromSerializationRequest request,
             CancellationToken token = default)
         {
@@ -347,7 +354,7 @@ namespace Pathfinding.Infrastructure.Business
         private async Task<TParam> Transaction<TParam>(Func<IUnitOfWork, CancellationToken, Task<TParam>> action,
             CancellationToken token = default)
         {
-            using (var unitOfWork = factory.Create())
+            using (var unitOfWork = factory())
             {
                 try
                 {

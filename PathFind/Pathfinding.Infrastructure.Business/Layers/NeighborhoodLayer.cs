@@ -14,11 +14,16 @@ namespace Pathfinding.Infrastructure.Business.Layers
         private readonly INeighborhoodFactory factory;
         private readonly ReturnOptions options;
 
-        public NeighborhoodLayer(INeighborhoodFactory factory = null,
-            ReturnOptions options = null)
+        public NeighborhoodLayer(INeighborhoodFactory factory, ReturnOptions options)
         {
             this.factory = factory ?? new MooreNeighborhoodFactory();
             this.options = options ?? ReturnOptions.Limit;
+        }
+
+        public NeighborhoodLayer()
+            : this(new MooreNeighborhoodFactory(), ReturnOptions.Limit)
+        {
+
         }
 
         public void Overlay(IGraph<IVertex> graph)

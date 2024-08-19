@@ -4,6 +4,8 @@
     {
         public int Id { get; set; }
 
+        public int GraphId { get; set; }
+
         public int NeighborId { get; set; }
 
         public int VertexId { get; set; }

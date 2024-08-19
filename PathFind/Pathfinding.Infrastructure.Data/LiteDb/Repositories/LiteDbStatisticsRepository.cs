@@ -32,7 +32,7 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
         {
             var ids = runIds.Select(x => new BsonValue(x)).ToArray();
             var query = Query.In(nameof(Statistics.AlgorithmRunId), ids);
-            return await Task.FromResult( collection.Find(query).ToArray());
+            return await Task.FromResult(collection.Find(query).ToArray());
         }
     }
 }

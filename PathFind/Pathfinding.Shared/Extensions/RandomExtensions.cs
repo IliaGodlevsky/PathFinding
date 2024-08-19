@@ -1,6 +1,6 @@
 ﻿using Pathfinding.Shared.Interface;
 using Pathfinding.Shared.Primitives;
-using System;
+using System.Collections.Generic;
 
 namespace Pathfinding.Shared.Extensions
 {
@@ -42,6 +42,29 @@ namespace Pathfinding.Shared.Extensions
         public static double NextDouble(this IRandom random, InclusiveValueRange<double> range)
         {
             return range.Amplitude() * ((double)random.NextUInt() / uint.MaxValue) + range.LowerValueOfRange;
+        }
+
+        public static IEnumerable<int> GenerateNumbers(this IRandom random, InclusiveValueRange<int> range, int limit)
+        {
+            while (limit-- > 0)
+            {
+                yield return random.NextInt(range);
+            }
+        }
+
+        public static IEnumerable<Coordinate> GenerateCoordinates(this IRandom random, 
+            InclusiveValueRange<int> range, int dimensions,  int limit)
+        {
+            while (limit-- > 0)
+            {
+                int dims = dimensions;
+                var coordinateValues = new int[dimensions];
+                while (dims-- > 0)
+                {
+                    coordinateValues[dims] = random.NextInt(range);
+                }
+                yield return new Coordinate(coordinateValues);
+            }
         }
     }
 }

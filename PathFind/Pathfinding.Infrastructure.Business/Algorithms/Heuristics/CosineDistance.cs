@@ -13,7 +13,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.Heuristics
         {
             var firstVector = first.Position;
             var secondVector = second.Position;
-            double scalarProduct = GetScalarProduct(firstVector.CoordinatesValues, 
+            double scalarProduct = GetScalarProduct(firstVector.CoordinatesValues,
                 secondVector.CoordinatesValues);
             double firstVectorLength = GetVectorLength(firstVector.CoordinatesValues);
             double secondVectorLength = GetVectorLength(secondVector.CoordinatesValues);

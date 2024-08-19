@@ -21,7 +21,7 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
         {
             var algorithm = new DijkstraAlgorithm(range);
 
-            var path = algorithm.FindPath();
+            algorithm.FindPath();
         }
 
         [Benchmark]
@@ -29,7 +29,7 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
         {
             var algorithm = new AStarAlgorithm(range);
 
-            var path = algorithm.FindPath();
+            algorithm.FindPath();
         }
 
         [Benchmark]
@@ -37,7 +37,7 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
         {
             var algorithm = new IDAStarAlgorithm(range);
 
-            var path = algorithm.FindPath();
+            algorithm.FindPath();
         }
     }
 }

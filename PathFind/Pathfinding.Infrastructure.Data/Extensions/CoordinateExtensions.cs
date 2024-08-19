@@ -1,5 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Shared.Primitives;
+﻿using Pathfinding.Shared.Primitives;
 using System;
 using System.Linq;
 

@@ -1,7 +1,7 @@
 ﻿using Pathfinding.Infrastructure.Business.Commands;
 using Pathfinding.Infrastructure.Business.Test.Mock;
-using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface.Commands;
 
 namespace Pathfinding.Infrastructure.Business.Test.Commands

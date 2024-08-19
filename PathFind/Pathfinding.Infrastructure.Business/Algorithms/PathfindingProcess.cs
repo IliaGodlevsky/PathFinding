@@ -16,8 +16,6 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
     {
         private sealed class NullProcess : PathfindingProcess
         {
-            public override Guid Id { get; } = Guid.Empty;
-
             public override IGraphPath FindPath() => NullGraphPath.Instance;
 
             public override void Interrupt() { }
@@ -42,8 +40,6 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 
         private readonly AutoResetEvent pauseEvent;
 
-        public virtual Guid Id { get; }
-
         public bool IsInProcess { get; private set; } = false;
 
         public bool IsPaused { get; private set; } = false;
@@ -54,7 +50,6 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 
         protected PathfindingProcess()
         {
-            Id = Guid.NewGuid();
             pauseEvent = new(true);
         }
 

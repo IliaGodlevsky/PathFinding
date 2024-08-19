@@ -35,6 +35,7 @@ namespace Pathfinding.Infrastructure.Business.Mappings
                 .ForMember(x => x.ObstaclesCount, opt => opt.MapFrom(x => x.Graph.GetObstaclesCount()));
             CreateMap<CreateGraphRequest<T>, GraphModel<T>>();
             CreateMap<GraphModel<T>, CreateGraphRequest<T>>();
+            CreateMap<CreateGraphFromSerializationRequest, CreateGraphRequest<T>>();
             CreateMap<CreateGraphRequest<T>, GraphSerializationModel>()
                 .ConvertUsing((x, y, context) => context.Mapper.Map<GraphSerializationModel>(x.Graph) with { Name = x.Name });
             CreateMap<Graph, GraphInformationModel>()
