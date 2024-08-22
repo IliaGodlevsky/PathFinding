@@ -66,5 +66,17 @@ namespace Pathfinding.Shared.Extensions
                 yield return new Coordinate(coordinateValues);
             }
         }
+
+        public static Coordinate GenerateCoordinate(this IRandom random,
+            InclusiveValueRange<int> range, int dimensions)
+        {
+            int dims = dimensions;
+            var coordinateValues = new int[dimensions];
+            while (dims-- > 0)
+            {
+                coordinateValues[dims] = random.NextInt(range);
+            }
+            return new Coordinate(coordinateValues);
+        }
     }
 }

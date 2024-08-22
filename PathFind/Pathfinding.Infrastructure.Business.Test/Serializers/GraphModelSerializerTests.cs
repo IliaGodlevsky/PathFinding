@@ -1,29 +1,42 @@
 ﻿using Pathfinding.Infrastructure.Business.Serializers;
-using Pathfinding.Infrastructure.Business.Test.Mock;
 using Pathfinding.Service.Interface.Models.Serialization;
 using Pathfinding.Shared.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Pathfinding.TestUtils.Attributes;
 
 namespace Pathfinding.Infrastructure.Business.Test.Serializers
 {
-    [TestFixture]
+    [TestFixture, UnitTest]
     public class GraphModelSerializerTests
     {
         [Test]
         public async Task SerializeToStream_ValidModel_ShouldSerialize()
         {
             var serializer = new JsonSerializer<GraphSerializationModel>();
-            var model = new GraphSerializationModel()
-            {
-                DimensionSizes = TestGraph.Interface.DimensionsSizes,
-                Name = "test",
-                Vertices = TestMapper.Instance.Mapper
-                    .Map<VertexSerializationModel[]>(TestGraph.Interface.ToArray())
-            };
+            var model = EntityBuilder.CreateGraphSerializationModelFull();
+
+            using var stream = new MemoryStream();
+            await serializer.SerializeToAsync(model, stream);
+
+            Assert.That(stream.Length, Is.GreaterThan(0));
+        }
+
+        [Test]
+        public async Task SerializeToStream_ModelWithNullProps_ShouldSerialize()
+        {
+            var serializer = new JsonSerializer<GraphSerializationModel>();
+            var model = new GraphSerializationModel();
+
+            using var stream = new MemoryStream();
+            await serializer.SerializeToAsync(model, stream);
+
+            Assert.That(stream.Length, Is.GreaterThan(0));
+        }
+
+        [Test]
+        public async Task DeserializeToStream_ModelWithNullProps_ShouldSerialize()
+        {
+            var serializer = new JsonSerializer<GraphSerializationModel>();
+            var model = new GraphSerializationModel();
 
             using var stream = new MemoryStream();
             await serializer.SerializeToAsync(model, stream);
@@ -32,20 +45,39 @@ namespace Pathfinding.Infrastructure.Business.Test.Serializers
 
             Assert.Multiple(() =>
             {
-                Assert.IsTrue(stream.Length > 0);
-                Assert.IsTrue(result.Vertices.Count == model.Vertices.Count);
-                Assert.IsTrue(result.Vertices.Juxtapose(model.Vertices, (x, y) =>
+                Assert.That(result.Vertices is null, Is.True);
+                Assert.That(result.DimensionSizes is null, Is.True);
+                Assert.That(result.Name is null, Is.True);
+            });
+        }
+
+        [Test]
+        public async Task DeserializeFromStream_ValidModel_ShouldDeserialize()
+        {
+            var serializer = new JsonSerializer<GraphSerializationModel>();
+            var model = EntityBuilder.CreateGraphSerializationModelFull();
+
+            using var stream = new MemoryStream();
+            await serializer.SerializeToAsync(model, stream);
+            stream.Seek(0, SeekOrigin.Begin);
+            var result = await serializer.DeserializeFromAsync(stream);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(stream.Length > 0, Is.True);
+                Assert.That(result.Vertices.Count == model.Vertices.Count, Is.True);
+                Assert.That(result.Vertices.Juxtapose(model.Vertices, (x, y) =>
                 {
                     return x.IsObstacle == y.IsObstacle
-                        && x.Neighbors.Juxtapose(y.Neighbors, 
+                        && x.Neighbors.Juxtapose(y.Neighbors,
                             (i, j) => i.Coordinate.SequenceEqual(j.Coordinate))
                         && x.Cost.Cost == y.Cost.Cost
                         && x.Cost.UpperValueOfRange == y.Cost.UpperValueOfRange
                         && x.Cost.LowerValueOfRange == y.Cost.LowerValueOfRange
                         && x.Position.Coordinate.SequenceEqual(y.Position.Coordinate);
-                }));
-                Assert.IsTrue(result.DimensionSizes.SequenceEqual(model.DimensionSizes));
-                Assert.IsTrue(result.Name == model.Name);
+                }), Is.True);
+                Assert.That(result.DimensionSizes.SequenceEqual(model.DimensionSizes), Is.True);
+                Assert.That(result.Name == model.Name, Is.True);
             });
         }
     }

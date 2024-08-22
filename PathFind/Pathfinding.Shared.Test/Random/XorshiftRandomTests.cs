@@ -1,9 +1,10 @@
 ﻿using Pathfinding.Shared.Interface;
 using Pathfinding.Shared.Random;
+using Pathfinding.TestUtils.Attributes;
 
 namespace Pathfinding.Shared.Test.Random
 {
-    [TestFixture]
+    [TestFixture, UnitTest]
     public class XorshiftRandomTests : RandomTests
     {
         protected override IRandom Random { get; set; }

@@ -1,5 +1,6 @@
 ﻿using Pathfinding.Shared.Extensions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -84,9 +85,30 @@ namespace Pathfinding.Shared.Extensions
             return collection;
         }
 
-        public static bool Juxtapose<T>(this IEnumerable<T> self, IEnumerable<T> second, Func<T, T, bool> predicate)
+        //public static bool Juxtapose<T>(this IEnumerable<T> self, IEnumerable<T> second, Func<T, T, bool> predicate)
+        //{
+        //    return self.SequenceEqual(second, new MatchComparer<T>(predicate));
+        //}
+
+        public static bool Juxtapose<T, U>(this IEnumerable<T> self, IEnumerable<U> second, Func<T, U, bool> predicate)
         {
-            return self.SequenceEqual(second, new MatchComparer<T>(predicate));
+            using (var enumerator = self.GetEnumerator())
+            {
+                using var enumerator2 = second.GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    if (!enumerator2.MoveNext() || !predicate(enumerator.Current, enumerator2.Current))
+                    {
+                        return false;
+                    }
+                }
+
+                if (enumerator2.MoveNext())
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public static IEnumerable<T> Except<T>(this IEnumerable<T> collection, params T[] items)

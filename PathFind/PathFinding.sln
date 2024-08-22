@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.Infrastructure.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.Infrastructure.Data.Benchmarks", "Pathfinding.Infrastructure.Data.Benchmarks\Pathfinding.Infrastructure.Data.Benchmarks.csproj", "{55D84D91-AE32-48E1-9160-06F31A964CA5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.TestUtils", "Pathfinding.TestUtils\Pathfinding.TestUtils.csproj", "{9112FC1E-7F2A-4B8E-9D2C-912BDB5B31EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +103,10 @@ Global
 		{55D84D91-AE32-48E1-9160-06F31A964CA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55D84D91-AE32-48E1-9160-06F31A964CA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55D84D91-AE32-48E1-9160-06F31A964CA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9112FC1E-7F2A-4B8E-9D2C-912BDB5B31EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9112FC1E-7F2A-4B8E-9D2C-912BDB5B31EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9112FC1E-7F2A-4B8E-9D2C-912BDB5B31EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9112FC1E-7F2A-4B8E-9D2C-912BDB5B31EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

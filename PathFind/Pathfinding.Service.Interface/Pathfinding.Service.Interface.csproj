@@ -47,6 +47,7 @@
     <Compile Include="Commands\IPathfindingRangeCommand.cs" />
     <Compile Include="Commands\IReplaceTransitCommand.cs" />
     <Compile Include="Commands\IUndoCommand.cs" />
+    <Compile Include="Extensions\RequestServiceExtensions.cs" />
     <Compile Include="Extensions\SerializerExtensions.cs" />
     <Compile Include="Extensions\VisualizationExtensions.cs" />
     <Compile Include="IAlgorithm.cs" />

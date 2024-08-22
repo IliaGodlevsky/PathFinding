@@ -167,7 +167,9 @@
     <Compile Include="Data\BenchmarkRange.cs" />
     <Compile Include="Data\BenchmarkVertex.cs" />
     <Compile Include="Data\BenchmarkVertexFactory.cs" />
+    <Compile Include="Data\SerializationDataProvider.cs" />
     <Compile Include="HeuristicsBenchmarks.cs" />
+    <Compile Include="SerializersBenchmarks.cs" />
     <Compile Include="StepRulesBenchmarks.cs" />
     <Compile Include="WaveAlgorithmsBenchmarks.cs" />
     <Compile Include="Program.cs" />

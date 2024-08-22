@@ -1,8 +1,10 @@
 ﻿using Pathfinding.Shared.Interface;
 using Pathfinding.Shared.Random;
+using Pathfinding.TestUtils.Attributes;
 
 namespace Pathfinding.Shared.Test.Random
 {
+    [TestFixture, UnitTest]
     public class CryptoRandomTests : RandomTests
     {
         protected override IRandom Random { get; set; }

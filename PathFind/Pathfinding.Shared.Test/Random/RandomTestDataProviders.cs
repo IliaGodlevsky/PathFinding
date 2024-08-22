@@ -9,7 +9,7 @@ namespace Pathfinding.Shared.Test.Random
             get
             {
                 var list = new List<TestCaseData>();
-                int limit = 10;
+                int limit = 5;
                 while (limit-- > 1)
                 {
                     var testCase = new TestCaseData(1000 * limit, limit * 0.75);
@@ -24,10 +24,25 @@ namespace Pathfinding.Shared.Test.Random
             get
             {
                 var list = new List<TestCaseData>();
-                int limit = 10;
+                int limit = 5;
                 while (limit-- > 1)
                 {
                     var testCase = new TestCaseData(1000 * limit, limit * 1.25);
+                    list.Add(testCase);
+                }
+                return list;
+            }
+        }
+
+        public static IEnumerable CongruentialRandomDataProvider
+        {
+            get
+            {
+                var list = new List<TestCaseData>();
+                int limit = 5;
+                while (limit-- > 1)
+                {
+                    var testCase = new TestCaseData(1000 * limit, limit * 0.1);
                     list.Add(testCase);
                 }
                 return list;

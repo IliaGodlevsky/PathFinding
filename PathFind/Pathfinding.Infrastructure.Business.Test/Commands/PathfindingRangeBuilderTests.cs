@@ -1,13 +1,14 @@
 ﻿using Pathfinding.Infrastructure.Business.Commands;
-using Pathfinding.Infrastructure.Business.Test.Mock;
+using Pathfinding.Infrastructure.Business.Test.TestRealizations;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface.Commands;
+using Pathfinding.TestUtils.Attributes;
 
 namespace Pathfinding.Infrastructure.Business.Test.Commands
 {
-    [TestFixture]
-    internal sealed class PathfindingRangeBuilderTests
+    [TestFixture, UnitTest]
+    public sealed class PathfindingRangeBuilderTests
     {
         private readonly TestGraphAssemble assemble;
         private readonly IPathfindingRangeCommand<TestVertex>[] commands;
@@ -60,7 +61,8 @@ namespace Pathfinding.Infrastructure.Business.Test.Commands
             rangeBuilder.Include(expectedRange[4]);
             var range = rangeBuilder.Range;
 
-            Assert.IsTrue(range.SequenceEqual(expectedRange), "Range was not as expected");
+            Assert.That(range.SequenceEqual(expectedRange), Is.True,
+                "Range was not as expected");
         }
 
         [Test]
@@ -89,7 +91,8 @@ namespace Pathfinding.Infrastructure.Business.Test.Commands
             rangeBuilder.Include(vertex4);
             var range = rangeBuilder.Range;
 
-            Assert.IsTrue(range.SequenceEqual(expectedRange), "Range was not as expected");
+            Assert.That(range.SequenceEqual(expectedRange), Is.True,
+                "Range was not as expected");
         }
     }
 }

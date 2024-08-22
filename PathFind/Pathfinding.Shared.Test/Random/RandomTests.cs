@@ -20,7 +20,7 @@ namespace Pathfinding.Shared.Test.Random
 
             var distinct = randomValues.Distinct().ToArray();
 
-            Assert.IsTrue((randomValues.Length - distinct.Length) / randomValues.Length * 100 <= tolerance,
+            Assert.That((randomValues.Length - distinct.Length) / randomValues.Length * 100 <= tolerance, Is.True,
                 $"Generated unique values were out of the tolerance {tolerance} %");
         }
     }

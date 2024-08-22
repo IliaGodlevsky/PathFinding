@@ -1,15 +1,13 @@
-﻿using Moq;
-using Pathfinding.Domain.Interface;
+﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Business.Algorithms;
-using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Business.Test.Algorithms.DataProviders;
-using Pathfinding.Infrastructure.Business.Test.Mock;
+using Pathfinding.Infrastructure.Business.Test.TestRealizations;
 using Pathfinding.Shared.Primitives;
-using System.Collections;
+using Pathfinding.TestUtils.Attributes;
 
 namespace Pathfinding.Infrastructure.Business.Test.Algorithms
 {
-    [TestFixture]
+    [TestFixture, UnitTest]
     public class WaveAlgorithmsTests
     {
         [TestCaseSource(typeof(WaveAlgorithmDataProvider),
@@ -22,7 +20,7 @@ namespace Pathfinding.Infrastructure.Business.Test.Algorithms
 
             var path = algorithm.FindPath();
 
-            Assert.IsTrue(path.SequenceEqual(expected),
+            Assert.That(path.SequenceEqual(expected), Is.True,
                 "The found path is not as the expected one");
         }
 

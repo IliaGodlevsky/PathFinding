@@ -1,9 +1,11 @@
 ﻿using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
 using Pathfinding.Infrastructure.Business.Test.Algorithms.DataProviders;
 using Pathfinding.Service.Interface;
+using Pathfinding.TestUtils.Attributes;
 
 namespace Pathfinding.Infrastructure.Business.Test.Algorithms.Heuristics
 {
+    [TestFixture, UnitTest]
     public class ChebyshevDistanceTests : HeuristicsTests
     {
         protected override IHeuristic Heuristic { get; } = new ChebyshevDistance();
