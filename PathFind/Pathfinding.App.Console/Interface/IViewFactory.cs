@@ -1,8 +1,9 @@
-﻿namespace Pathfinding.App.Console.Interface
+﻿using ReactiveUI;
+
+namespace Pathfinding.App.Console.Interface
 {
-    public interface IViewFactory<TView, TViewModel> 
+    public interface IViewFactory<out TView> 
         where TView : Terminal.Gui.View
-        where TViewModel : class
     {
         TView CreateView();
     }

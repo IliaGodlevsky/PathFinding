@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
 {
-    public sealed class LiteDbRangeRepository : IRangeRepository
+    internal sealed class LiteDbRangeRepository : IRangeRepository
     {
         private readonly ILiteCollection<PathfindingRange> collection;
 

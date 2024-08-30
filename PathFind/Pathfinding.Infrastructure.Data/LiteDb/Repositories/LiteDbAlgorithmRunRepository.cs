@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
 {
-    public sealed class LiteDbAlgorithmRunRepository : IAlgorithmRunRepository
+    internal sealed class LiteDbAlgorithmRunRepository : IAlgorithmRunRepository
     {
         private const string AlgorithmRunId = "AlgorithmRunId";
 

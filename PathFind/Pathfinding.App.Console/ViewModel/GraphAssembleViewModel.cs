@@ -5,16 +5,15 @@ using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Requests.Create;
+using Pathfinding.Shared.Interface;
+using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Primitives;
 using ReactiveUI;
-using Shared.Extensions;
-using Shared.Primitives.Extensions;
-using Shared.Random;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.ViewModel
 {
@@ -40,14 +39,6 @@ namespace Pathfinding.App.Console.ViewModel
         public INeighborhoodFactory NeighborhoodFactory { get; set; }
 
         public IGraphAssemble<VertexViewModel> Assembler { get; set; }
-
-        public IReadOnlyDictionary<string, int> SmoothLevels { get; }
-
-        public IReadOnlyDictionary<string, ReturnOptions> Options { get; }
-
-        public IReadOnlyDictionary<string, INeighborhoodFactory> NeighborhoodFactoires { get; }
-
-        public IReadOnlyDictionary<string, IGraphAssemble<VertexViewModel>> Assemblers { get; }
 
         public ReactiveCommand<Unit, Unit> AssembleCommand { get; }
 
@@ -75,15 +66,6 @@ namespace Pathfinding.App.Console.ViewModel
                         && assembler is not null
                         && neighborhood is not null;
                 });
-            SmoothLevels = smoothLevels.ToDictionary(x => x.Key, x => x.Value).AsReadOnly();
-            Assemblers = assemblers.ToDictionary(x => x.Key, x => x.Value).AsReadOnly();
-            NeighborhoodFactoires = neighbourhoodFactoires
-                .ToDictionary(x => x.Key, x => x.Value).AsReadOnly();
-            Options = new Dictionary<string, ReturnOptions>()
-            {
-                {"Limit", ReturnOptions.Limit },
-                {"Cycle", ReturnOptions.Cycle }
-            }.AsReadOnly();
             this.messenger = messenger;
             this.meanCost = meanCost;
             this.random = random;
@@ -95,7 +77,8 @@ namespace Pathfinding.App.Console.ViewModel
         {
             var obstacleLayer = new ObstacleLayer(random, ObstaclePercent);
             var neighborhoodLayer = new NeighborhoodLayer(NeighborhoodFactory, ReturnOption);
-            var costLayer = new VertexCostLayer(Constants.VerticesCostRange, random);
+            var costLayer = new VertexCostLayer(Constants.VerticesCostRange,
+                range => random.NextInt(range));
             var smoothLayer = new SmoothLayer(meanCost);
             var smoothLayers = Enumerable.Repeat(smoothLayer, SmoothLevel).To(x => new Layers(x));
             var layers = new Layers(obstacleLayer, neighborhoodLayer, costLayer, smoothLayers);

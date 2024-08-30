@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
 {
-    public sealed class LiteDbGraphStateRepository : IGraphStateRepository
+    internal sealed class LiteDbGraphStateRepository : IGraphStateRepository
     {
         private readonly ILiteCollection<GraphState> collection;
 

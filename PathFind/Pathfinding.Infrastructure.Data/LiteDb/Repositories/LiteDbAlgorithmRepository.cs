@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
 {
-    public sealed class LiteDbAlgorithmsRepository : IAlgorithmsRepository
+    internal sealed class LiteDbAlgorithmsRepository : IAlgorithmsRepository
     {
         private readonly ILiteCollection<Algorithm> collection;
 

@@ -1,5 +1,4 @@
 ﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Read;
 
 namespace Pathfinding.App.Console.Model.Visualizations.VisualizationUnits

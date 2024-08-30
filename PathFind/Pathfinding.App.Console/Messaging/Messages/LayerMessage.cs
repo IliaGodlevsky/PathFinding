@@ -1,4 +1,4 @@
-﻿using Pathfinding.Service.Interface;
+﻿using Pathfinding.Domain.Interface;
 
 namespace Pathfinding.App.Console.Messaging.Messages
 {

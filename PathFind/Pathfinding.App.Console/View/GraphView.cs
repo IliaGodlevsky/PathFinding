@@ -1,8 +1,8 @@
 ﻿using Pathfinding.App.Console.Interface;
 using Pathfinding.App.Console.ViewModel;
 using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Shared.Extensions;
 using ReactiveUI;
-using Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

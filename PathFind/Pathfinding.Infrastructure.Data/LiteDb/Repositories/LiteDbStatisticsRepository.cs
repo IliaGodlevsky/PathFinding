@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
 {
-    public sealed class LiteDbStatisticsRepository : IStatisticsRepository
+    internal sealed class LiteDbStatisticsRepository : IStatisticsRepository
     {
         private readonly ILiteCollection<Statistics> collection;
 

@@ -139,9 +139,6 @@
     <Compile Include="Messaging\Messages\StatisticsMessage.cs" />
     <Compile Include="Model\ApplicationSettingsStore.cs" />
     <Compile Include="Model\DiStruct.cs" />
-    <Compile Include="Model\Notes\DisplayableAttribute.cs" />
-    <Compile Include="Model\Notes\DisplayNameSourceAttribute.cs" />
-    <Compile Include="Model\Notes\Table.cs" />
     <Compile Include="Model\VertexActions\ActiveVertex.cs" />
     <Compile Include="Model\VertexActions\NeighbourhoodActions\ActivateVertexCommand.cs" />
     <Compile Include="Model\VertexActions\NeighbourhoodActions\ExcludeVertexCommand.cs" />
@@ -177,14 +174,11 @@
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\UnitParamtresFactory.cs" />
     <Compile Include="DependencyInjection\ConfigurationMiddlewears\IParametresFactory.cs" />
     <Compile Include="DependencyInjection\RegistrationConstants.cs" />
-    <Compile Include="Exceptions\ExitRequiredException.cs" />
     <Compile Include="Extensions\IGraphExtensions.cs" />
     <Compile Include="Extensions\IMessengerExtensions.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Cursor.cs" />
-    <Compile Include="EventArguments\ConsoleKeyPressedEventArgs.cs" />
-    <Compile Include="EventHandlers\ConsoleKeyPressedEventHandler.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IInputExtensions.cs" />
     <Compile Include="Interface\IAnimationSpeedAction.cs" />
@@ -258,8 +252,6 @@
     <Compile Include="Units\PathfindingRangeUnit.cs" />
     <Compile Include="Units\PathfindingVisualizationUnit.cs" />
     <Compile Include="Units\Unit.cs" />
-    <Compile Include="ValueInput\UserInput\AddressInput.cs" />
-    <Compile Include="ValueInput\UserInput\FilePathInput.cs" />
     <Compile Include="Settings\Colours.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -302,23 +294,20 @@
     <Compile Include="Model\Visualizations\VertexVisualizations.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AppLayout.cs" />
     <Compile Include="DependencyInjection\PathfindingUnits.cs" />
-    <Compile Include="ValueInput\UserInput\ConsoleUserAnswerInput.cs" />
-    <Compile Include="ValueInput\UserInput\ConsoleUserInput.cs" />
-    <Compile Include="ValueInput\UserInput\ConsoleUserIntInput.cs" />
-    <Compile Include="ValueInput\UserInput\ConsoleUserKeyInput.cs" />
-    <Compile Include="ValueInput\UserInput\ConsoleUserStringInput.cs" />
-    <Compile Include="ValueInput\UserInput\ConsoleUserTimeSpanInput.cs" />
-    <Compile Include="ViewModel\FactoriesChooseViewModel.cs" />
     <Compile Include="ViewModel\GraphAssembleViewModel.cs" />
+    <Compile Include="ViewModel\GraphsViewModel.cs" />
     <Compile Include="ViewModel\GraphViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\PathfindingAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\VertexViewModel.cs" />
-    <Compile Include="Views\View.cs" />
-    <Compile Include="View\FactoriesChooseView.cs" />
-    <Compile Include="View\GraphAssembleView.cs" />
+    <Compile Include="View\AssembleViews\FactoriesChooseView.cs" />
+    <Compile Include="View\AssembleViews\GraphParametresChooseView.cs" />
+    <Compile Include="View\Factories\GraphViewFactory.cs" />
+    <Compile Include="View\GraphFieldView.cs" />
+    <Compile Include="View\GraphsView.cs" />
     <Compile Include="View\GraphView.cs" />
+    <Compile Include="View\MainView.cs" />
     <Compile Include="View\VertexView.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -345,6 +334,10 @@
     <ProjectReference Include="..\Pathfinding.Service.Interface\Pathfinding.Service.Interface.csproj">
       <Project>{EC4CAA5A-1164-45C7-83AA-0B551D485832}</Project>
       <Name>Pathfinding.Service.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Shared\Pathfinding.Shared.csproj">
+      <Project>{C57FE374-EC6D-4797-829E-A31697E08975}</Project>
+      <Name>Pathfinding.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\Shared.Executable\Shared.Executable.csproj">
       <Project>{0A7C5FE5-4688-42C4-8202-676042BB0F81}</Project>

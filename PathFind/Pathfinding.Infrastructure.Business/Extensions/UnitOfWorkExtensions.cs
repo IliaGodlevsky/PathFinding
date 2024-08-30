@@ -6,6 +6,7 @@ using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -20,8 +21,8 @@ namespace Pathfinding.Infrastructure.Business.Extensions
             IEnumerable<CreateAlgorithmRunHistoryRequest> runHistories,
             CancellationToken token = default)
         {
-            var models = new List<AlgorithmRunHistoryModel>();
-            foreach (var runHistory in runHistories)
+            return Array.AsReadOnly(await runHistories.ToAsyncEnumerable()
+                .SelectAwait(async runHistory =>
             {
                 var runEntity = mapper.Map<AlgorithmRun>(runHistory.Run);
                 await unitOfWork.RunRepository.CreateAsync(runEntity, token);
@@ -34,15 +35,14 @@ namespace Pathfinding.Infrastructure.Business.Extensions
                 var state = await unitOfWork.GraphStateRepository.CreateAsync(graphState, token);
                 var subs = await unitOfWork.SubAlgorithmRepository.CreateAsync(subAlgorithms, token);
                 var stats = await unitOfWork.StatisticsRepository.CreateAsync(runStatistics, token);
-                models.Add(new AlgorithmRunHistoryModel()
+                return new AlgorithmRunHistoryModel()
                 {
                     GraphState = mapper.Map<GraphStateModel>(state),
                     SubAlgorithms = mapper.Map<List<SubAlgorithmModel>>(subs),
                     Run = mapper.Map<AlgorithmRunModel>(runEntity),
                     Statistics = mapper.Map<RunStatisticsModel>(stats)
-                });
-            }
-            return models.ToReadOnly();
+                };
+            }).ToArrayAsync(token));
         }
 
         public static async Task<IReadOnlyCollection<AlgorithmRunHistoryModel>> GetAlgorithmRuns(this IUnitOfWork unitofWork,
@@ -135,8 +135,8 @@ namespace Pathfinding.Infrastructure.Business.Extensions
             vertices.Zip(graph.Graph, (x, y) => (Entity: x, Vertex: y))
                 .ForEach(x => x.Vertex.Id = x.Entity.Id);
             var neighbors = graph.Graph
-                .SelectMany(x => x.Neighbours
-                    .Select(n => new Neighbor() { GraphId = graphEntity.Id, VertexId = x.Id, NeighborId = x.Id }))
+                .SelectMany(x => x.Neighbours.OfType<IEntity<int>>()
+                    .Select(n => new Neighbor() { GraphId = graphEntity.Id, VertexId = x.Id, NeighborId = n.Id }))
                     .ToReadOnly();
             await unitOfWork.NeighborsRepository.CreateAsync(neighbors, token);
             var result = mapper.Map<GraphModel<T>>(graph);

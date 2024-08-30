@@ -87,7 +87,9 @@ namespace Pathfinding.Infrastructure.Business.Test.RequestServiceTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(result.SubAlgorithms.Count, Is.GreaterThan(0));
+                Assert.That(EntityEqualityComparer.AreEqual(request, result),
+                    "Result is not equal to the original request");
+                Assert.That(result.Run.Id, Is.GreaterThan(0));
                 // TODO: Add more asserts
             });
         }

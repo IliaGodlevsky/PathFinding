@@ -5,7 +5,7 @@ namespace Pathfinding.Service.Interface.Models.Read
 {
     public class PathfindingRangeModel
     {
-        public List<Coordinate> Range { get; set; }
+        public IReadOnlyList<Coordinate> Range { get; set; }
             = new List<Coordinate>();
     }
 }

@@ -4,7 +4,6 @@ using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Serialization;
 using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Service.Interface.Requests.Create;
-using Pathfinding.Service.Interface.Requests.Delete;
 using Pathfinding.Service.Interface.Requests.Update;
 using System.Collections.Generic;
 using System.Threading;

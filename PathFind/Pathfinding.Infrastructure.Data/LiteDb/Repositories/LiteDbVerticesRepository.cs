@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
 {
-    public sealed class LiteDbVerticesRepository : IVerticesRepository
+    internal sealed class LiteDbVerticesRepository : IVerticesRepository
     {
         private readonly ILiteCollection<Vertex> collection;
 

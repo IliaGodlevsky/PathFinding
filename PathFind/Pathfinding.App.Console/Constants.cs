@@ -2,7 +2,7 @@
 
 using Pathfinding.App.Console.Localization;
 using Pathfinding.App.Console.Settings;
-using Shared.Primitives.ValueRange;
+using Pathfinding.Shared.Primitives;
 using System;
 using System.ComponentModel;
 

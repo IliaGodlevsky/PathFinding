@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
 {
-    public sealed class LiteDbGraphRepository : IGraphParametresRepository
+    internal sealed class LiteDbGraphRepository : IGraphParametresRepository
     {
         private readonly ILiteCollection<Graph> collection;
         private readonly LiteDbNeighborsRepository neighborsRepository;

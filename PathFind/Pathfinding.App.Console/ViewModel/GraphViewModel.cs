@@ -2,6 +2,7 @@
 using Pathfinding.App.Console.Interface;
 using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface;
+using Pathfinding.Service.Interface;
 using ReactiveUI;
 
 namespace Pathfinding.App.Console.ViewModel

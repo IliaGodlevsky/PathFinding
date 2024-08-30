@@ -13,11 +13,13 @@ namespace Pathfinding.Domain.Interface.Repositories
         Task<IEnumerable<Vertex>> CreateAsync(IEnumerable<Vertex> vertices,
             CancellationToken token = default);
 
-        Task<bool> DeleteVerticesByGraphIdAsync(int graphId, CancellationToken token = default);
+        Task<bool> DeleteVerticesByGraphIdAsync(int graphId,
+            CancellationToken token = default);
 
         Task<bool> UpdateVerticesAsync(IEnumerable<Vertex> vertices,
             CancellationToken token = default);
 
-        Task<Vertex> ReadAsync(int vertexId, CancellationToken token = default);
+        Task<Vertex> ReadAsync(int vertexId,
+            CancellationToken token = default);
     }
 }

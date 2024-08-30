@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
 {
-    public sealed class LiteDbNeighborsRepository : INeighborsRepository
+    internal sealed class LiteDbNeighborsRepository : INeighborsRepository
     {
         private readonly ILiteCollection<Neighbor> collection;
 
