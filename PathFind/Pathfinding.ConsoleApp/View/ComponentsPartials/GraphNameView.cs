@@ -23,7 +23,7 @@ namespace Pathfinding.ConsoleApp.View.GraphCreateViews
             nameLabel.Y = 1;
             nameLabel.Width = Dim.Percent(15);
 
-            nameField.X = Pos.Percent(15);
+            nameField.X = Pos.Percent(15) + 1;
             nameField.Y = 1;
             nameField.Width = Dim.Fill();
             

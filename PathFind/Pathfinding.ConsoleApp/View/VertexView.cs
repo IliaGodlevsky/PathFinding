@@ -12,22 +12,22 @@ namespace Pathfinding.ConsoleApp.View
 
         public VertexView(VertexViewModel viewModel)
         {
-            Data = viewModel;
             disposables = new CompositeDisposable();
-            viewModel.Cost.WhenAnyValue(x => x.CurrentCost)
-                .BindTo(this, x => x.Text)
-                .DisposeWith(disposables);
-            viewModel.WhenAnyValue(x => x.Cost)
-                .Select(x => x.CurrentCost.ToString())
-                .BindTo(this, x => x.Text)
-                .DisposeWith(disposables);
-            viewModel.WhenAnyValue(x => x.Color)
-                .Select(x => new ColorScheme()
-                {
-                    Normal = Application.Driver.MakeAttribute(x, Color.Black)
-                })
+            viewModel.WhenAnyValue(x => x.IsObstacle)
+                .Select(x => x ? Create(Color.Black) : Create(Color.White))
                 .BindTo(this, x => x.ColorScheme)
                 .DisposeWith(disposables);
+            viewModel.WhenAnyValue(x => x.Color)
+                .Select(Create)
+                .BindTo(this, x => x.ColorScheme)
+                .DisposeWith(disposables);
+            viewModel.Color = viewModel.IsObstacle ? Color.Black : Color.White;
+        }
+
+        private ColorScheme Create(Color foreground)
+        {
+            return new() { Normal 
+                = Application.Driver.MakeAttribute(foreground, Color.Black) };
         }
 
         protected override void Dispose(bool disposing)

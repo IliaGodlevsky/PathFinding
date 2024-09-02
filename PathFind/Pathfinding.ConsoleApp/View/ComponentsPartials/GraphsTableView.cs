@@ -19,14 +19,13 @@ namespace Pathfinding.ConsoleApp.View
                 new DataColumn("Obstacles", typeof(int))
             });
             table.PrimaryKey = new DataColumn[] { table.Columns["Id"] };
-            MultiSelect = true;
             var columnStyles = new Dictionary<DataColumn, ColumnStyle>()
             {
-                    { table.Columns["Id"], new ColumnStyle() { Visible = false } },
-                    { table.Columns["Name"], new ColumnStyle() { MinWidth = 30 } },
-                    { table.Columns["Width"], new ColumnStyle() { Alignment = TextAlignment.Centered } },
-                    { table.Columns["Length"], new ColumnStyle() { Alignment = TextAlignment.Centered } },
-                    { table.Columns["Obstacles"], new ColumnStyle() { Alignment = TextAlignment.Centered } }
+                { table.Columns["Id"], new ColumnStyle() { Visible = false } },
+                { table.Columns["Name"], new ColumnStyle() { MinWidth = 28 } },
+                { table.Columns["Width"], new ColumnStyle() { Alignment = TextAlignment.Centered } },
+                { table.Columns["Length"], new ColumnStyle() { Alignment = TextAlignment.Centered } },
+                { table.Columns["Obstacles"], new ColumnStyle() { Alignment = TextAlignment.Centered } }
             };
             Style = new TableStyle()
             {

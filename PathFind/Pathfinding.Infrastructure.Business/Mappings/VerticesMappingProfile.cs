@@ -34,7 +34,7 @@ namespace Pathfinding.Infrastructure.Business.Mappings
                 .ForMember(x => x.UpperValueRange, opt => opt.MapFrom(x => x.Cost.CostRange.UpperValueOfRange))
                 .ForMember(x => x.LowerValueRange, opt => opt.MapFrom(x => x.Cost.CostRange.LowerValueOfRange))
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => x.Cost.CurrentCost));
-            CreateMap<Vertex, T>().ConstructUsing((x, context) => vertexFactory.CreateVertex(context.Mapper.Map<Coordinate>(x.Coordinates)))
+            CreateMap<Vertex, T>().ConstructUsing((x, context) => vertexFactory.CreateVertex(FromBytesToCoordinate(x, context)))
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => new VertexCost(x.Cost, new(x.UpperValueRange, x.LowerValueRange))));
             CreateMap<Vertex, VertexAssembleModel>()
                 .ForMember(x => x.Coordinate, opt => opt.MapFrom(x => x.Coordinates))

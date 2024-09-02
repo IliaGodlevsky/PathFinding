@@ -5,8 +5,6 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApplicationLayer", "ApplicationLayer", "{5E241632-7DA6-44E3-807F-83980E2CEAC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.App.Console", "Pathfinding.App.Console\Pathfinding.App.Console.csproj", "{1EC9051F-ADBA-4EA2-BB67-A604153B9FE8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.Logging", "Pathfinding.Logging\Pathfinding.Logging.csproj", "{37085E09-A2DA-4930-B219-1A3E385C5385}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{18211407-5B4D-448E-903B-073358B7ADC2}"
@@ -43,7 +41,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.TestUtils", "Pa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.ConsoleApp", "Pathfinding.ConsoleApp\Pathfinding.ConsoleApp.csproj", "{76D95B30-D9EE-42CC-A797-F4FC78330B17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.ConsoleApp.Test", "Pathfinding.ConsoleApp.Test\Pathfinding.ConsoleApp.Test.csproj", "{C7F668C4-F408-4828-9CCC-F06F86D91E04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pathfinding.ConsoleApp.Test", "Pathfinding.ConsoleApp.Test\Pathfinding.ConsoleApp.Test.csproj", "{C7F668C4-F408-4828-9CCC-F06F86D91E04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,10 +49,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1EC9051F-ADBA-4EA2-BB67-A604153B9FE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1EC9051F-ADBA-4EA2-BB67-A604153B9FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1EC9051F-ADBA-4EA2-BB67-A604153B9FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1EC9051F-ADBA-4EA2-BB67-A604153B9FE8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{37085E09-A2DA-4930-B219-1A3E385C5385}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{37085E09-A2DA-4930-B219-1A3E385C5385}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37085E09-A2DA-4930-B219-1A3E385C5385}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -124,7 +118,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{1EC9051F-ADBA-4EA2-BB67-A604153B9FE8} = {5E241632-7DA6-44E3-807F-83980E2CEAC6}
 		{EC4CAA5A-1164-45C7-83AA-0B551D485832} = {8FBB3715-F3C4-443F-BC39-8D741ABBFAC3}
 		{E0C71A1A-7DB7-426F-80DC-887F87F0AA13} = {18211407-5B4D-448E-903B-073358B7ADC2}
 		{BEE15FAF-F9D2-432A-A8BB-6D1BE7FE2888} = {18211407-5B4D-448E-903B-073358B7ADC2}

@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Messages;
 using Autofac.Features.AttributeFilters;
 using Pathfinding.ConsoleApp.Injection;
+using System.Reactive;
 
 namespace Pathfinding.ConsoleApp.View.GraphCreateViews
 {
@@ -27,32 +28,39 @@ namespace Pathfinding.ConsoleApp.View.GraphCreateViews
             this.messenger = messenger;
             Initialize();
             Add(children.ToArray());
-            this.createButton.Events()
+            var hideWindowCommand = ReactiveCommand.Create<MouseEventArgs, Unit>(Hide,
+                this.viewModel.CreateCommand.CanExecute);
+            var commands = new[] { hideWindowCommand, this.viewModel.CreateCommand };
+            var combined = ReactiveCommand.CreateCombined(commands);
+            createButton.Events()
                 .MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
-                .InvokeCommand(this.viewModel, x => x.CreateCommand)
+                .InvokeCommand(combined)
                 .DisposeWith(disposables);
-            //createButton.MouseClick += e =>
-            //{
-            //    viewModel.CreateGraph(e);
-            //};
-
-            void OnCancelClicked(MouseEventArgs e)
-            {
-                if (e.MouseEvent.Flags == MouseFlags.Button1Clicked)
-                {
-                    Visible = false;
-                }
-            }
 
             cancelButton.MouseClick += OnCancelClicked;
-            messenger.Register<OpenGraphCreateViewRequest>(this, OnOpenCreateGraphViewRequestRecieved);
+            this.messenger.Register<OpenGraphCreateViewRequest>(this, OnOpenCreateGraphViewRequestRecieved);
         }
 
         private void OnOpenCreateGraphViewRequestRecieved(object recipient,
             OpenGraphCreateViewRequest request)
         {
             Visible = true;
+        }
+
+        private void OnCancelClicked(MouseEventArgs e)
+        {
+            if (e.MouseEvent.Flags == MouseFlags.Button1Clicked)
+            {
+                Visible = false;
+                Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
+            }
+        }
+
+        private Unit Hide(MouseEventArgs e)
+        {
+            Visible = false;
+            return Unit.Default;
         }
     }
 }

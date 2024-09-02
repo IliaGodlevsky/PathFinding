@@ -1,39 +1,37 @@
 ﻿using NStack;
-using Pathfinding.ConsoleApp.ViewModel.GraphCreateViewModels;
 using System.Linq;
-using ReactiveMarbles.ObservableEvents;
 using System.Reactive.Linq;
 using System.Reactive.Disposables;
 using ReactiveUI;
 using Terminal.Gui;
+using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.Domain.Interface.Factories;
+using System.Collections.Generic;
+using ReactiveMarbles.ObservableEvents;
 
 namespace Pathfinding.ConsoleApp.View.GraphCreateViews
 {
     internal sealed partial class NeighborhoodFactoryView : FrameView
     {
         private readonly CompositeDisposable disposables = new CompositeDisposable();
-        private readonly NeighborhoodFactoryViewModel viewModel;
+        private readonly CreateGraphViewModel viewModel;
 
-        public NeighborhoodFactoryView(NeighborhoodFactoryViewModel viewModel)
+        public NeighborhoodFactoryView(
+            IEnumerable<(string Name, INeighborhoodFactory Factory)> factories,
+            CreateGraphViewModel viewModel)
         {
             this.viewModel = viewModel;
             Initialize();
-            
-            neighborhoods.RadioLabels = viewModel.Factories
-                .Keys
-                .Select(x => ustring.Make(x))
+            var neighbors = factories.Select(x => x.Factory).ToList();
+            neighborhoods.RadioLabels = factories
+                .Select(x => ustring.Make(x.Name))
                 .ToArray();
-            neighborhoods.Events()
-                .SelectedItemChanged
-                .DistinctUntilChanged()
+            neighborhoods.Events().SelectedItemChanged
                 .Where(x => x.SelectedItem > -1)
-                .Select(x =>
-                {
-                    string label = neighborhoods.RadioLabels[x.SelectedItem].ToString();
-                    return viewModel.Factories[label];
-                })
-                .BindTo(viewModel, x => x.NeighborhoodFactory)
+                .Select(x => neighbors[x.SelectedItem])
+                .BindTo(this.viewModel, x => x.NeighborhoodFactory)
                 .DisposeWith(disposables);
+            neighborhoods.SelectedItem = 0;
         }
     }
 }

@@ -202,7 +202,6 @@ namespace Pathfinding.Infrastructure.Business.Test
             request.Statistics = new()
             {
                 AlgorithmId = AlgorithnName,
-                AlgorithmSpeed = TimeSpan.FromMilliseconds(random.NextDouble((5, 1))),
                 Spread = random.NextInt((5, 1)),
                 Cost = random.NextDouble((1500, 250)),
                 Steps = random.NextInt((145, 20)),

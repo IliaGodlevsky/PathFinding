@@ -14,6 +14,7 @@ namespace Pathfinding.ConsoleApp.View
             Y = 0;
             Width = Dim.Percent(25);
             Height = Dim.Fill();
+            Border = new Border();
             
             Add(children.ToArray());
         }

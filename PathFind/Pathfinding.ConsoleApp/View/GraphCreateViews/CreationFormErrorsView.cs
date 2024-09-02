@@ -13,8 +13,8 @@ namespace Pathfinding.ConsoleApp.View.GraphCreateViews
         { 
             this.viewModel = viewModel;
             Initialize();
-            viewModel.WhenAnyValue(x => x.Message)
-                .BindTo(this, x => x.errors.Text)
+            this.viewModel.WhenAnyValue(x => x.Message)
+                .BindTo(errors, x => x.Text)
                 .DisposeWith(disposables);
         }
     }

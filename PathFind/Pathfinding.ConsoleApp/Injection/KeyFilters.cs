@@ -9,5 +9,6 @@
         public const string Views = nameof(Views);
         public const string ViewModels = nameof(ViewModels);
         public const string CreateGraphView = nameof(CreateGraphView);
+        public const string GraphRunsView = nameof(GraphRunsView);
     }
 }

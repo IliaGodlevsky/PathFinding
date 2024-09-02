@@ -1,7 +1,9 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
+using Pathfinding.ConsoleApp.Messages;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface;
 using ReactiveUI;
 using System;
@@ -16,6 +18,17 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private readonly IRequestService<VertexViewModel> service;
         private readonly IMessenger messenger;
 
+        private GraphParametresModel activated;
+        public GraphParametresModel Activated
+        {
+            get => activated;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref activated, value);
+                messenger.Send(new GraphActivatedMessage(selected.Id));
+            }
+        }
+
         private GraphParametresModel selected;
 
         public GraphParametresModel Selected
@@ -24,7 +37,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set
             {
                 this.RaiseAndSetIfChanged(ref selected, value);
-                //messenger.send
+                messenger.Send(new GraphSelectedMessage(selected.Id));
+                
             }
         }
 
@@ -37,6 +51,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
             graphs = new Lazy<ObservableCollection<GraphParametresModel>>(GetGraphs);
             this.service = service;
             this.messenger = messenger;
+            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
+            messenger.Register<GraphDeletedMessage>(this, OnGraphDeleted);
         }
 
         private ObservableCollection<GraphParametresModel> GetGraphs()
@@ -50,6 +66,32 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 Obstacles = x.ObstaclesCount
             });
             return new ObservableCollection<GraphParametresModel>(values);
+        }
+
+        private void OnGraphCreated(object recipient, GraphCreatedMessage msg)
+        {
+            var parametres = new GraphParametresModel
+            {
+                Id = msg.Model.Id,
+                Name = msg.Model.Name,
+                Obstacles = msg.Model.Graph.GetObstaclesCount(),
+                Width = msg.Model.Graph.GetWidth(),
+                Length = msg.Model.Graph.GetLength()
+            };
+            Graphs.Add(parametres);
+            if (Graphs.Count == 1)
+            {
+                activated = parametres;
+            }
+        }
+
+        private void OnGraphDeleted(object recipient, GraphDeletedMessage msg)
+        {
+            var graph = Graphs.FirstOrDefault(x => x.Id == msg.GraphId);
+            if (graph != null)
+            {
+                Graphs.Remove(graph);
+            }
         }
     }
 }

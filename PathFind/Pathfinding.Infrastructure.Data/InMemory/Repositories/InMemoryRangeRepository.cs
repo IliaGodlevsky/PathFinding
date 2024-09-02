@@ -48,7 +48,9 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
         public async Task<IEnumerable<PathfindingRange>> ReadByGraphIdAsync(int graphId,
             CancellationToken token = default)
         {
-            var result = set.Where(x => x.GraphId == graphId).ToList();
+            var result = set.Where(x => x.GraphId == graphId)
+                .OrderBy(x => x.Order)
+                .ToList();
             return await Task.FromResult(result);
         }
 

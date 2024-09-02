@@ -35,6 +35,10 @@ namespace Pathfinding.Infrastructure.Business.Mappings
                 .ForMember(x => x.ObstaclesCount, opt => opt.MapFrom(x => x.Graph.GetObstaclesCount()));
             CreateMap<CreateGraphRequest<T>, GraphModel<T>>();
             CreateMap<GraphModel<T>, CreateGraphRequest<T>>();
+            CreateMap<GraphModel<T>, GraphSerializationModel>()
+                .ForMember(x => x.DimensionSizes, opt => opt.MapFrom(x => x.Graph.DimensionsSizes))
+                .ForMember(x => x.Vertices, opt => opt.MapFrom(x => x.Graph.ToArray()))
+                .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Name));
             CreateMap<CreateGraphFromSerializationRequest, CreateGraphRequest<T>>();
             CreateMap<CreateGraphRequest<T>, GraphSerializationModel>()
                 .ConvertUsing((x, y, context) => context.Mapper.Map<GraphSerializationModel>(x.Graph) with { Name = x.Name });
@@ -46,6 +50,7 @@ namespace Pathfinding.Infrastructure.Business.Mappings
         {
             var vertices = context.Mapper
                         .Map<IEnumerable<T>>(serializationDto.Vertices)
+                        .OrderBy(x => x.Position)
                         .ToReadOnly();
             var graph = graphFactory.CreateGraph(vertices, serializationDto.DimensionSizes);
             return new() { Name = serializationDto.Name, Graph = graph };
@@ -53,7 +58,7 @@ namespace Pathfinding.Infrastructure.Business.Mappings
 
         private IGraph<T> Construct(GraphAssembleModel assembleDto, ResolutionContext context)
         {
-            var vertices = context.Mapper.Map<T[]>(assembleDto.Vertices);
+            var vertices = context.Mapper.Map<T[]>(assembleDto.Vertices).OrderBy(x => x.Position).ToArray();
             var graph = graphFactory.CreateGraph(vertices, assembleDto.Dimensions);
             vertices.Zip(assembleDto.Vertices, (i, j) => (Vertex: i, Info: j))
                     .ForEach(i =>

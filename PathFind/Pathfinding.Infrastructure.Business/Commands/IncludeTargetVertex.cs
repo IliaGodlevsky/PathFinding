@@ -2,11 +2,12 @@
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface.Commands;
 using Pathfinding.Shared;
+using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Commands
 {
     [Order(4), Group(Constants.IncludeCommands)]
-    public sealed class IncludeTargetVertex<TVertex> : IPathfindingRangeCommand<TVertex>, IUndoCommand<TVertex>
+    public sealed class IncludeTargetVertex<TVertex> : IPathfindingRangeCommand<TVertex>
         where TVertex : IVertex
     {
         private readonly IPathfindingRangeCommand<TVertex> undoCommand;
@@ -16,21 +17,15 @@ namespace Pathfinding.Infrastructure.Business.Commands
             undoCommand = new ExcludeTargetVertex<TVertex>();
         }
 
-        public void Execute(IPathfindingRange<TVertex> range, TVertex vertex)
+        public void Execute(IList<TVertex> range, TVertex vertex)
         {
-            range.Target = vertex;
+            range.Add(vertex);
         }
 
-        public bool CanExecute(IPathfindingRange<TVertex> range, TVertex vertex)
+        public bool CanExecute(IList<TVertex> range, TVertex vertex)
         {
-            return range.Source != null
-                && range.Target == null
+            return range.Count == 1
                 && range.CanBeInRange(vertex);
-        }
-
-        public void Undo(IPathfindingRange<TVertex> range)
-        {
-            undoCommand.Execute(range, range.Target);
         }
     }
 }

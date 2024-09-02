@@ -1,12 +1,14 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
+using Pathfinding.ConsoleApp.Messages;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Service.Interface.Models.Serialization;
 using ReactiveUI;
 using System;
 using System.Reactive;
+using System.Threading.Tasks;
 
 namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
 {
@@ -27,7 +29,7 @@ namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
             this.messenger = messenger;
             this.serializer = serializer;
             this.service = service;
-            LoadGraphCommand = ReactiveCommand.Create(LoadGraph, CanLoad());
+            LoadGraphCommand = ReactiveCommand.CreateFromTask(LoadGraph, CanLoad());
         }
 
         private IObservable<bool> CanLoad()
@@ -36,11 +38,11 @@ namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
                 fileName => !string.IsNullOrEmpty(fileName));
         }
 
-        private async void LoadGraph()
+        private async Task LoadGraph()
         {
             var graph = await serializer.DeserializeFromFileAsync(FileName);
             var result = await service.CreateGraphAsync(graph);
-            //messenger.Send();
+            messenger.Send(new GraphCreatedMessage(result));
         }
     }
 }

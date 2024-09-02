@@ -15,19 +15,59 @@ using ReactiveUI;
 using System;
 using System.Linq;
 using System.Reactive;
-using System.Threading;
+using System.Threading.Tasks;
 using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class CreateGraphViewModel
+    internal sealed class CreateGraphViewModel : ReactiveObject
     {
         private static readonly InclusiveValueRange<int> CostRange = (9, 1);
         private readonly IRequestService<VertexViewModel> service;
         private readonly IGraphAssemble<VertexViewModel> graphAssemble;
         private readonly IMessenger messenger;
 
-        private int Limit { get; set; }
+        private string name;
+        public string Name 
+        {
+            get => name;
+            set => this.RaiseAndSetIfChanged(ref name, value);
+        }
+
+        private int width;
+        public int Width 
+        {
+            get => width;
+            set => this.RaiseAndSetIfChanged(ref width, value);
+        }
+
+        private int length;
+        public int Length 
+        {
+            get => length;
+            set => this.RaiseAndSetIfChanged(ref length, value);
+        }
+
+        private int obstacles;
+        public int Obstacles 
+        {
+            get => obstacles;
+            set => this.RaiseAndSetIfChanged(ref obstacles, value);
+        }
+
+        private int smoothLevel;
+        public int SmoothLevel 
+        {
+            get => smoothLevel;
+            set => this.RaiseAndSetIfChanged(ref smoothLevel, value);
+        }
+
+        private INeighborhoodFactory neighborhoodFactory;
+        public INeighborhoodFactory NeighborhoodFactory 
+        {
+            get => neighborhoodFactory;
+            set => this.RaiseAndSetIfChanged(ref neighborhoodFactory, value); 
+        }
 
         public ReactiveCommand<MouseEventArgs, Unit> CreateCommand { get; }
 
@@ -38,28 +78,37 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.service = service;
             this.messenger = messenger;
             this.graphAssemble = graphAssemble;
-            CreateCommand = ReactiveCommand.Create<MouseEventArgs>(CreateGraph);
+            CreateCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(CreateGraph, CanExecute());
         }
 
-        public async void CreateGraph(MouseEventArgs e)
+        private IObservable<bool> CanExecute()
+        {
+            return this.WhenAnyValue(
+                x => x.Width,
+                x => x.Length,
+                x => x.Obstacles,
+                x => x.Name,
+                x => x.NeighborhoodFactory,
+                (width, length, obstacles, name, factory) =>
+                {
+                    return width > 0 && length > 0 && obstacles >= 0 && factory != null
+                        && !string.IsNullOrEmpty(name);
+                });
+        }
+
+        public async Task CreateGraph(MouseEventArgs e)
         {
             var random = new CongruentialRandom();
-            var msg = new GraphParametresRequest();
-            messenger.Send(msg);
             var costLayer = new VertexCostLayer(CostRange, range => random.NextInt(range));
-            var obstacleLayer = new ObstacleLayer(random, msg.Obstacles);
-            var neighborhoodLayer = new NeighborhoodLayer(msg.NeighborhoodFactory, ReturnOptions.Limit);
-            var smoothLayer = Enumerable
-                .Repeat(new SmoothLayer(new MeanCost()), msg.SmoothLevel)
+            var obstacleLayer = new ObstacleLayer(random, Obstacles);
+            var neighborhoodLayer = new NeighborhoodLayer(NeighborhoodFactory, ReturnOptions.Limit);
+            var smoothLayer = Enumerable.Repeat(new SmoothLayer(new MeanCost()), SmoothLevel)
                 .To(x => new Layers(x.ToArray()));
             var layers = new Layers(costLayer, obstacleLayer, neighborhoodLayer, smoothLayer);
-            var graph = await graphAssemble.AssembleGraphAsync(layers, msg.Width, msg.Length);
-            var request = new CreateGraphRequest<VertexViewModel>() { Graph = graph, Name = msg.Name };
-            using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(60)))
-            {
-                var graphModel = await service.CreateGraphAsync(request, cts.Token);
-                //messenger.Send(graphModel);
-            }
+            var graph = await graphAssemble.AssembleGraphAsync(layers, Width, Length);
+            var request = new CreateGraphRequest<VertexViewModel>() { Graph = graph, Name = Name };
+            var graphModel = await service.CreateGraphAsync(request);
+            messenger.Send(new GraphCreatedMessage(graphModel));
         }
     }
 }

@@ -6,8 +6,6 @@
 
         public int GraphId { get; set; }
 
-        public int Order { get; set; }
-
         public byte[] Coordinates { get; set; }
 
         public int Cost { get; set; }

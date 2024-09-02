@@ -1,1 +1,0 @@
-﻿await Application.Run();

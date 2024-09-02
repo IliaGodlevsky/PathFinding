@@ -84,13 +84,15 @@ namespace Pathfinding.Infrastructure.Business.Extensions
                 .ReadNeighboursForVerticesAsync(ids, token))
                 .ToDictionary(x => x.Key, x => x.Value.Select(i => vertexEntities[i.NeighborId]).ToReadOnly());
             var informationDto = mapper.Map<GraphInformationModel>(graphEntity);
+            var vertices = mapper.Map<VertexAssembleModel[]>(vertexEntities.Values);
+            var neighborhood = neighbors
+                    .ToDictionary(x => x.Key, x => mapper.Map<VertexAssembleModel[]>(x.Value)
+                    .ToReadOnly());
             var assembleDto = new GraphAssembleModel()
             {
                 Dimensions = informationDto.Dimensions,
-                Vertices = mapper.Map<VertexAssembleModel[]>(vertexEntities.Values),
-                Neighborhood = neighbors
-                    .ToDictionary(x => x.Key, x => mapper.Map<VertexAssembleModel[]>(x.Value)
-                    .ToReadOnly())
+                Vertices = vertices,
+                Neighborhood = neighborhood
             };
             var result = mapper.Map<IGraph<T>>(assembleDto);
             return new GraphModel<T>()
@@ -128,7 +130,6 @@ namespace Pathfinding.Infrastructure.Business.Extensions
             var vertices = mapper.Map<Vertex[]>(graph.Graph).ToReadOnly();
             vertices.ForEach((x, i) =>
             {
-                x.Order = i;
                 x.GraphId = graphEntity.Id;
             });
             await unitOfWork.VerticesRepository.CreateAsync(vertices, token);

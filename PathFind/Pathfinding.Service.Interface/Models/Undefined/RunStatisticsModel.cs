@@ -16,8 +16,6 @@ namespace Pathfinding.Service.Interface.Models.Undefined
 
         public string ResultStatus { get; set; } = string.Empty;
 
-        public TimeSpan? AlgorithmSpeed { get; set; } = null;
-
         public TimeSpan? Elapsed { get; set; } = null;
 
         public int? Steps { get; set; } = null;

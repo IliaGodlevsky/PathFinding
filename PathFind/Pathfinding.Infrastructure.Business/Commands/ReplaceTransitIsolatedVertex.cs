@@ -2,6 +2,7 @@
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface.Commands;
 using Pathfinding.Shared;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Commands
@@ -10,19 +11,21 @@ namespace Pathfinding.Infrastructure.Business.Commands
     public sealed class ReplaceTransitIsolatedVertex<TVertex> : IPathfindingRangeCommand<TVertex>
         where TVertex : IVertex
     {
-        public void Execute(IPathfindingRange<TVertex> range, TVertex vertex)
+        public void Execute(IList<TVertex> range, TVertex vertex)
         {
-            var isolated = range.Transit.First(IsIsolated);
-            int isolatedIndex = range.Transit.IndexOf(isolated);
-            range.Transit.Remove(isolated);
-            range.Transit.Insert(isolatedIndex, vertex);
+            var isolated = range
+                .Skip(1)
+                .Take(range.Count - 2)
+                .First(IsIsolated);
+            int isolatedIndex = range.IndexOf(isolated);
+            range.Remove(isolated);
+            range.Insert(isolatedIndex, vertex);
         }
 
-        public bool CanExecute(IPathfindingRange<TVertex> range, TVertex vertex)
+        public bool CanExecute(IList<TVertex> range, TVertex vertex)
         {
-            return range.Transit.Count > 0
-                && range.HasSourceAndTargetSet()
-                && range.Transit.Any(IsIsolated)
+            return range.Count > 2
+                && range.Skip(1).Take(range.Count - 2).Any(IsIsolated)
                 && range.CanBeInRange(vertex);
         }
 

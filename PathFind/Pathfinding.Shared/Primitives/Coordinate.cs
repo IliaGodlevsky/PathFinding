@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace Pathfinding.Shared.Primitives
 {
-    public readonly struct Coordinate : IEquatable<Coordinate>
+    public readonly struct Coordinate : IEquatable<Coordinate>, IComparable<Coordinate>
     {
         public static readonly Coordinate Empty = new();
 
@@ -52,22 +52,18 @@ namespace Pathfinding.Shared.Primitives
             return pos is Coordinate coord && Equals(coord);
         }
 
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        //public static implicit operator Coordinate(int[] values)
-        //{
-        //    return new Coordinate(values);
-        //}
-
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        //public static implicit operator int[](Coordinate coordinate)
-        //{
-        //    return coordinate.CoordinatesValues;
-        //}
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override readonly int GetHashCode() => hashCode;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override readonly string ToString() => toString;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int CompareTo(Coordinate other)
+        {
+            var thisDistanceToOrigin = Math.Sqrt(CoordinatesValues.Sum(d => d * d));
+            var otherDistanceToOrigin = Math.Sqrt(other.CoordinatesValues.Sum(d => d * d));
+            return thisDistanceToOrigin.CompareTo(otherDistanceToOrigin);
+        }
     }
 }

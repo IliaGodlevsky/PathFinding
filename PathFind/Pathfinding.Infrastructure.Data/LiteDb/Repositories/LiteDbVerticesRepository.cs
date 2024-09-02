@@ -38,7 +38,6 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             await Task.CompletedTask;
             return collection.Query()
                 .Where(x => x.GraphId == graphId)
-                .OrderBy(x => x.Order)
                 .ToEnumerable();
         }
 

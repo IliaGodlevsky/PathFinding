@@ -117,15 +117,9 @@
     <Compile Include="Commands\IncludeSourceVertex.cs" />
     <Compile Include="Commands\IncludeTargetVertex.cs" />
     <Compile Include="Commands\IncludeTransitVertex.cs" />
-    <Compile Include="Commands\MarkToReplaceTransitVertex.cs" />
-    <Compile Include="Commands\PathfindingRangeBuilder.cs" />
-    <Compile Include="Commands\RemoveMarkToReplaceTransitVertex.cs" />
     <Compile Include="Commands\ReplaceIsolatedSourceVertex.cs" />
     <Compile Include="Commands\ReplaceIsolatedTargetVertex.cs" />
-    <Compile Include="Commands\ReplaceTransitCommand.cs" />
     <Compile Include="Commands\ReplaceTransitIsolatedVertex.cs" />
-    <Compile Include="Commands\ReplaceTransitVertex.cs" />
-    <Compile Include="Commands\ReplaceTransitVerticesModule.cs" />
     <Compile Include="Extensions\AlgorithmExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\GraphPathExtensions.cs" />

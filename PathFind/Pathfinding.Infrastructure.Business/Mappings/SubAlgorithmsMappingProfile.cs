@@ -8,7 +8,7 @@ using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
 using System.Collections.Generic;
 
-namespace Pathfinding.App.Console.DAL.Models.Mappers
+namespace Pathfinding.Infrastructure.Business.Mappings
 {
     public sealed class SubAlgorithmsMappingProfile : Profile
     {

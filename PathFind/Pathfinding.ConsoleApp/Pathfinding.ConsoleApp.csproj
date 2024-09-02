@@ -10,6 +10,7 @@
     <AssemblyName>Pathfinding.ConsoleApp</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <LangVersion>latest</LangVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
@@ -31,6 +32,7 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
+    <LangVersion>latest</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -51,34 +53,43 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Injection\ContainerBuilderExtensions.cs" />
     <Compile Include="Injection\MainApp.cs" />
     <Compile Include="Injection\KeyFilters.cs" />
+    <Compile Include="Messages\GraphActivatedMessage.cs" />
+    <Compile Include="Messages\GraphCreatedMessage.cs" />
+    <Compile Include="Messages\GraphDeletedMessage.cs" />
     <Compile Include="Messages\GraphFormErrorMessage.cs" />
     <Compile Include="Messages\GraphParametresRequest.cs" />
+    <Compile Include="Messages\GraphSelectedMessage.cs" />
     <Compile Include="Messages\OpenGraphCreateViewRequest.cs" />
     <Compile Include="Model\GraphParametresModel.cs" />
+    <Compile Include="Model\RunModel.cs" />
+    <Compile Include="ViewModel\ButtonsFrameViewModels\DeleteGraphButtonModel.cs" />
     <Compile Include="ViewModel\ButtonsFrameViewModels\LoadGraphButtonModel.cs" />
     <Compile Include="ViewModel\ButtonsFrameViewModels\SaveGraphButtonModel.cs" />
     <Compile Include="ViewModel\Factories\VertexViewModelFactory.cs" />
     <Compile Include="ViewModel\GraphCreateViewModels\CreateGraphViewModel.cs" />
     <Compile Include="ViewModel\GraphCreateViewModels\CreationFormErrorsViewModel.cs" />
-    <Compile Include="ViewModel\GraphCreateViewModels\GraphNameViewModel.cs" />
-    <Compile Include="ViewModel\GraphCreateViewModels\GraphParametresViewModel.cs" />
-    <Compile Include="ViewModel\GraphCreateViewModels\NeighborhoodFactoryViewModel.cs" />
-    <Compile Include="ViewModel\GraphCreateViewModels\SmoothLevelsViewModel.cs" />
+    <Compile Include="ViewModel\GraphFieldViewModel.cs" />
     <Compile Include="View\ButtonsFrameViews\ButtonsFrameView.cs" />
+    <Compile Include="View\ButtonsFrameViews\DeleteGraphButton.cs" />
     <Compile Include="View\ButtonsFrameViews\LoadGraphButton.cs" />
     <Compile Include="View\ButtonsFrameViews\NewGraphButton.cs" />
     <Compile Include="View\ButtonsFrameViews\SaveGraphButton.cs" />
     <Compile Include="View\ComponentsPartials\ButtonsFrameView.cs" />
     <Compile Include="View\ComponentsPartials\CreationFormErrorsView.cs" />
     <Compile Include="View\ComponentsPartials\CreateGraphView.cs" />
+    <Compile Include="View\ComponentsPartials\DeleteGraphButton.cs" />
+    <Compile Include="View\ComponentsPartials\GraphFieldView.cs" />
     <Compile Include="View\ComponentsPartials\GraphFrameView.cs" />
     <Compile Include="View\ComponentsPartials\GraphNameView.cs" />
     <Compile Include="View\ComponentsPartials\GraphParametresView.cs" />
+    <Compile Include="View\ComponentsPartials\GraphRunsView.cs" />
     <Compile Include="View\ComponentsPartials\LoadGraphButton.cs" />
     <Compile Include="View\ComponentsPartials\NeighborhoodFactoryView.cs" />
     <Compile Include="View\ComponentsPartials\NewGraphButton.cs" />
+    <Compile Include="View\ComponentsPartials\RunsTableView.cs" />
     <Compile Include="View\ComponentsPartials\SaveGraphButton.cs" />
     <Compile Include="View\ComponentsPartials\SmoothLevelView.cs" />
     <Compile Include="View\GraphCreateViews\CreateGraphView.cs" />
@@ -87,8 +98,11 @@
     <Compile Include="View\GraphCreateViews\GraphParametresView.cs" />
     <Compile Include="View\GraphCreateViews\NeighborhoodFactoryView.cs" />
     <Compile Include="View\GraphCreateViews\SmoothLevelView.cs" />
+    <Compile Include="View\GraphFieldView.cs" />
     <Compile Include="View\GraphFrameView.cs" />
+    <Compile Include="View\GraphRunsView.cs" />
     <Compile Include="View\GraphsTableView.cs" />
+    <Compile Include="View\RunsTableView.cs" />
     <Compile Include="View\VertexView.cs" />
     <Compile Include="ViewModel\VertexViewModel.cs" />
     <Compile Include="Program.cs" />
@@ -101,9 +115,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interface\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Pathfinding.Domain.Core\Pathfinding.Domain.Core.csproj">
       <Project>{E0C71A1A-7DB7-426F-80DC-887F87F0AA13}</Project>

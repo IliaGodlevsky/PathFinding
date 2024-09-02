@@ -17,7 +17,7 @@ namespace Pathfinding.Infrastructure.Business.Serializers
             {
                 using (var reader = new StreamReader(stream, Encoding.Default, false, 1024, leaveOpen: true))
                 {
-                    string deserialized = await reader.ReadToEndAsync();
+                    string deserialized = await reader.ReadToEndAsync().ConfigureAwait(false);
                     var dtos = JsonConvert.DeserializeObject<T>(deserialized);
                     return dtos;
                 }
@@ -35,7 +35,7 @@ namespace Pathfinding.Infrastructure.Business.Serializers
                 using (var writer = new StreamWriter(stream, Encoding.Default, 1024, leaveOpen: true))
                 {
                     string serialized = JsonConvert.SerializeObject(item);
-                    await writer.WriteAsync(serialized);
+                    await writer.WriteAsync(serialized).ConfigureAwait(false);
                 }
             }
             catch (Exception ex)

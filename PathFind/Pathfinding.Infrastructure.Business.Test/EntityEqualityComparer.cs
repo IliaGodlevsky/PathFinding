@@ -31,7 +31,6 @@ namespace Pathfinding.Infrastructure.Business.Test
                 && first.Heuristics == second.Heuristics
                 && first.AlgorithmId == second.AlgorithmId
                 && first.AlgorithmRunId == second.AlgorithmRunId
-                && first.AlgorithmSpeed == second.AlgorithmSpeed
                 && first.Cost == second.Cost
                 && first.Elapsed == second.Elapsed
                 && first.Spread == second.Spread

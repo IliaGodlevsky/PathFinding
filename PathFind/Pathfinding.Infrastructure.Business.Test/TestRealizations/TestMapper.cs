@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Pathfinding.App.Console.DAL.Models.Mappers;
 using Pathfinding.Infrastructure.Business.Mappings;
 using Pathfinding.Infrastructure.Business.Serializers;
 using Pathfinding.Infrastructure.Data.Pathfinding.Factories;

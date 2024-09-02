@@ -1,6 +1,7 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Service.Interface.Commands;
 using Pathfinding.Shared;
+using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Commands
 {
@@ -8,14 +9,14 @@ namespace Pathfinding.Infrastructure.Business.Commands
     public sealed class ExcludeSourceVertex<TVertex> : IPathfindingRangeCommand<TVertex>
         where TVertex : IVertex
     {
-        public void Execute(IPathfindingRange<TVertex> range, TVertex vertex)
+        public void Execute(IList<TVertex> range, TVertex vertex)
         {
-            range.Source = default;
+            range.Remove(vertex);
         }
 
-        public bool CanExecute(IPathfindingRange<TVertex> range, TVertex vertex)
+        public bool CanExecute(IList<TVertex> range, TVertex vertex)
         {
-            return range.Source?.Equals(vertex) == true;
+            return range.Contains(vertex);
         }
     }
 }

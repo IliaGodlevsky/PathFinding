@@ -46,6 +46,15 @@ namespace Pathfinding.Shared.Extensions
             };
         }
 
+        public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> collection)
+        {
+            return collection switch
+            {
+                ObservableCollection<T> observable => observable,
+                _ => new ObservableCollection<T>(collection),
+            };
+        }
+
         public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> items)
         {
             items.ForEach(collection.Add);

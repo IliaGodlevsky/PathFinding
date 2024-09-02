@@ -7,7 +7,7 @@ using System.Reactive.Disposables;
 
 namespace Pathfinding.ConsoleApp.View.ButtonsFrameViews
 {
-    internal sealed partial class SaveGraphButton : Button
+    internal sealed partial class SaveGraphButton
     {
         private readonly SaveGraphButtonModel viewModel;
         private readonly CompositeDisposable disposables = new CompositeDisposable();
@@ -19,7 +19,7 @@ namespace Pathfinding.ConsoleApp.View.ButtonsFrameViews
             this.Events().MouseClick
                 .Where(e => e.MouseEvent.Flags == MouseFlags.Button1Clicked)
                 .Do(OnSaveButtonClicked)
-                .InvokeCommand(viewModel, x => x.SaveGraphCommand)
+                .InvokeCommand(this.viewModel, x => x.SaveGraphCommand)
                 .DisposeWith(disposables);
         }
 
@@ -28,7 +28,10 @@ namespace Pathfinding.ConsoleApp.View.ButtonsFrameViews
             using (var dialog = new SaveDialog())
             {
                 Application.Run(dialog);
-                viewModel.FilePath = dialog.FilePath.ToString();
+                if (dialog.FileName != null)
+                {
+                    viewModel.FilePath = dialog.FilePath.ToString();
+                }
             }
         }
     }
