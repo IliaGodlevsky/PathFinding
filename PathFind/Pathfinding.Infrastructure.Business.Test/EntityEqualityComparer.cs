@@ -29,8 +29,6 @@ namespace Pathfinding.Infrastructure.Business.Test
         {
             return first.ResultStatus == second.ResultStatus
                 && first.Heuristics == second.Heuristics
-                && first.AlgorithmId == second.AlgorithmId
-                && first.AlgorithmRunId == second.AlgorithmRunId
                 && first.Cost == second.Cost
                 && first.Elapsed == second.Elapsed
                 && first.Spread == second.Spread
@@ -42,8 +40,7 @@ namespace Pathfinding.Infrastructure.Business.Test
         public static bool AreEqual(CreateSubAlgorithmRequest request,
             SubAlgorithmModel model)
         {
-            return request.AlgorithmRunId == model.AlgorithmRunId
-                && request.Order == model.Order
+            return request.Order == model.Order
                 && request.Path.SequenceEqual(model.Path)
                 && request.Visited.Juxtapose(model.Visited, (x, y) =>
                 {
@@ -64,8 +61,7 @@ namespace Pathfinding.Infrastructure.Business.Test
         {
             return request.Obstacles.SequenceEqual(model.Obstacles)
                 && request.Range.SequenceEqual(model.Range)
-                && request.Costs.SequenceEqual(model.Costs)
-                && request.AlgorithmRunId == model.AlgorithmRunId;
+                && request.Costs.SequenceEqual(model.Costs);
         }
     }
 }

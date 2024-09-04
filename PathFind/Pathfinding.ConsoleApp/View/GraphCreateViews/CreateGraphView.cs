@@ -7,10 +7,10 @@ using ReactiveUI;
 using System.Reactive.Disposables;
 using System.Collections.Generic;
 using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.ConsoleApp.Messages;
 using Autofac.Features.AttributeFilters;
 using Pathfinding.ConsoleApp.Injection;
 using System.Reactive;
+using Pathfinding.ConsoleApp.Messages.View;
 
 namespace Pathfinding.ConsoleApp.View.GraphCreateViews
 {

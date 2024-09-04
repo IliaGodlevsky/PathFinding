@@ -17,6 +17,7 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
         {
             collection = db.GetCollection<Neighbor>(DbTables.Neighbors);
             collection.EnsureIndex(x => x.VertexId);
+            collection.EnsureIndex(x => x.NeighborId);
         }
 
         public async Task<IEnumerable<Neighbor>> CreateAsync(IEnumerable<Neighbor> neighbours, CancellationToken token = default)

@@ -1,5 +1,4 @@
-﻿using Pathfinding.ConsoleApp.ViewModel.GraphCreateViewModels;
-using Terminal.Gui;
+﻿using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View.GraphCreateViews
 {

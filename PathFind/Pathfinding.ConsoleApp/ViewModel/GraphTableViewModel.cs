@@ -1,12 +1,14 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
-using Pathfinding.ConsoleApp.Messages;
+using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using ReactiveUI;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -14,9 +16,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal sealed class GraphTableViewModel : ReactiveObject
     {
-        private readonly Lazy<ObservableCollection<GraphParametresModel>> graphs;
-        private readonly IRequestService<VertexViewModel> service;
+        private readonly IRequestService<VertexModel> service;
         private readonly IMessenger messenger;
+        private readonly ILog logger;
 
         private GraphParametresModel activated;
         public GraphParametresModel Activated
@@ -25,7 +27,15 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set
             {
                 this.RaiseAndSetIfChanged(ref activated, value);
-                messenger.Send(new GraphActivatedMessage(selected.Id));
+                try
+                {
+                    var graph = service.ReadGraphAsync(activated.Id).GetAwaiter().GetResult();
+                    messenger.Send(new GraphActivatedMessage(graph.Id, graph.Graph));
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex);
+                }
             }
         }
 
@@ -38,34 +48,63 @@ namespace Pathfinding.ConsoleApp.ViewModel
             {
                 this.RaiseAndSetIfChanged(ref selected, value);
                 messenger.Send(new GraphSelectedMessage(selected.Id));
-                
             }
         }
 
-        public ObservableCollection<GraphParametresModel> Graphs => graphs.Value;
+        public ObservableCollection<GraphParametresModel> Graphs { get; } = new();
 
         public GraphTableViewModel(
-            IRequestService<VertexViewModel> service, 
-            [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger)
+            IRequestService<VertexModel> service, 
+            [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
+            ILog logger)
         {
-            graphs = new Lazy<ObservableCollection<GraphParametresModel>>(GetGraphs);
             this.service = service;
             this.messenger = messenger;
+            this.logger = logger;
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             messenger.Register<GraphDeletedMessage>(this, OnGraphDeleted);
+            messenger.Register<ObstaclesCountChangedMessage>(this, OnObstaclesCountChanged);
         }
 
-        private ObservableCollection<GraphParametresModel> GetGraphs()
+        public void LoadGraphs()
         {
-            var values = service.ReadAllGraphInfoAsync().Result.Select(x => new GraphParametresModel()
+            foreach (var value in GetGraphs())
             {
-                Id = x.Id,
-                Name = x.Name,
-                Width = x.Dimensions.ElementAt(0),
-                Length = x.Dimensions.ElementAt(1),
-                Obstacles = x.ObstaclesCount
-            });
-            return new ObservableCollection<GraphParametresModel>(values);
+                Graphs.Add(value);
+            }
+        }
+
+        private void OnObstaclesCountChanged(object recipient, ObstaclesCountChangedMessage msg)
+        {
+            var graph = Graphs.FirstOrDefault(x => x.Id == msg.GraphId);
+            if (graph != null)
+            {
+                graph.Obstacles += msg.Delta;
+            }
+        }
+
+        private List<GraphParametresModel> GetGraphs()
+        {
+            try
+            {
+                return service.ReadAllGraphInfoAsync()
+                .GetAwaiter()
+                .GetResult()
+                .Select(x => new GraphParametresModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Width = x.Dimensions.ElementAt(0),
+                    Length = x.Dimensions.ElementAt(1),
+                    Obstacles = x.ObstaclesCount
+                })
+                .ToList();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+                return new();
+            }
         }
 
         private void OnGraphCreated(object recipient, GraphCreatedMessage msg)
@@ -81,7 +120,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             Graphs.Add(parametres);
             if (Graphs.Count == 1)
             {
-                activated = parametres;
+                Activated = parametres;
             }
         }
 

@@ -1,7 +1,7 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
-using Pathfinding.ConsoleApp.Messages;
+using Pathfinding.ConsoleApp.Messages.View;
 using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View.ButtonsFrameViews

@@ -10,5 +10,7 @@
         public const string ViewModels = nameof(ViewModels);
         public const string CreateGraphView = nameof(CreateGraphView);
         public const string GraphRunsView = nameof(GraphRunsView);
+        public const string IncludeCommands = nameof(IncludeCommands);
+        public const string ExcludeCommands = nameof(ExcludeCommands);
     }
 }

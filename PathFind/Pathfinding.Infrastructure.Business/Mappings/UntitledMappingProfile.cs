@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Pathfinding.Domain.Core;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Extensions;
+using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
@@ -29,6 +31,7 @@ namespace Pathfinding.Infrastructure.Business.Mappings
                 .ForMember(x => x.Coordinate, opt => opt.MapFrom(x => x.CoordinatesValues.ToReadOnly()));
             CreateMap<CoordinateModel, Coordinate>()
                 .ConvertUsing(x => new Coordinate(x.Coordinate.ToArray()));
+            CreateMap<PathfindingRange, PathfindingRangeModel>();
             CreateMap<Coordinate, Coordinate>().ConvertUsing(x => x);
             CreateMap<byte[], IReadOnlyCollection<(Coordinate, IReadOnlyList<Coordinate>)>>()
                 .ConvertUsing((x, y, context) => context.Mapper.Map<IReadOnlyCollection<(Coordinate, IReadOnlyList<Coordinate>)>>(visitedVerticesSerializer.DeserializeFromBytes(x).Result).ToReadOnly());

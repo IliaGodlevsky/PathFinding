@@ -21,7 +21,7 @@ namespace Pathfinding.ConsoleApp.Model
 
         public int Obstacles
         {
-            get=> obstacles;
+            get => obstacles;
             set => this.RaiseAndSetIfChanged(ref obstacles, value);
         }
     }

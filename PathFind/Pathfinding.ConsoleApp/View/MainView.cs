@@ -10,6 +10,7 @@ namespace Pathfinding.ConsoleApp.View
     {
         public MainView([KeyFilter(KeyFilters.MainWindow)]IEnumerable<Terminal.Gui.View> children)
         {
+            Colors.Base.Normal = Application.Driver.MakeAttribute(Color.White, Color.Black);
             X = 0;
             Y = 0;
             Height = Dim.Fill();

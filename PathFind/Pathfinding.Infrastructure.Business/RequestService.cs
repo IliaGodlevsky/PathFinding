@@ -193,17 +193,20 @@ namespace Pathfinding.Infrastructure.Business
                 var graph = await unitOfWork.ReadGraphAsync<T>(graphId, mapper, t);
                 var algorithms = await unitOfWork.GetAlgorithmRuns(graphId, mapper, t);
                 var range = await unitOfWork.GetRangeAsync(graphId, mapper, t);
-                return new() { Graph = graph, Algorithms = algorithms, Range = range };
+                return new() 
+                { 
+                    Graph = graph, 
+                    Algorithms = algorithms, 
+                    Range = range.Select(x => x.Position).ToReadOnly() };
             }, token);
         }
 
-        public async Task<PathfindingRangeModel> ReadRangeAsync(int graphId,
+        public async Task<IReadOnlyCollection<PathfindingRangeModel>> ReadRangeAsync(int graphId,
             CancellationToken token = default)
         {
             return await Transaction(async (unitOfWork, t) =>
             {
-                var range = await unitOfWork.GetRangeAsync(graphId, mapper, t);
-                return new PathfindingRangeModel() { Range = range.ToReadOnly() };
+                return await unitOfWork.GetRangeAsync(graphId, mapper, t);
             }, token);
         }
 
@@ -221,12 +224,10 @@ namespace Pathfinding.Infrastructure.Business
             {
                 var graphState = await unit.GraphStateRepository.ReadByRunIdAsync(runId, t);
                 var subAlgorithms = await unit.SubAlgorithmRepository.ReadByAlgorithmRunIdAsync(runId, t);
-                var speed = await unit.StatisticsRepository.ReadByAlgorithmRunIdAsync(runId, t);
                 return new RunVisualizationModel()
                 {
                     GraphState = mapper.Map<GraphStateModel>(graphState),
-                    Algorithms = mapper.Map<SubAlgorithmModel[]>(subAlgorithms).ToReadOnly(),
-                    AlgorithmSpeed = speed.AlgorithmSpeed
+                    Algorithms = mapper.Map<SubAlgorithmModel[]>(subAlgorithms).ToReadOnly()
                 };
             }, token);
         }
@@ -337,13 +338,36 @@ namespace Pathfinding.Infrastructure.Business
             }, token);
         }
 
+        public async Task<bool> UpsertRangeAsync(UpsertPathfindingRangeRequest request,
+            CancellationToken token = default)
+        {
+            return await Transaction(async (unitOfWork, t) =>
+            {
+                var range = request.Ranges.Select(x => new PathfindingRange()
+                {
+                    Id = x.Id,
+                    IsSource = x.IsSource,
+                    IsTarget = x.IsTarget,
+                    VertexId = x.VertexId,
+                    GraphId = request.GraphId,
+                    Order = x.Order
+                }).ToList();
+                await unitOfWork.RangeRepository.UpsertAsync(range, t);
+                return true;
+            }, token);
+        }
+
         private IReadOnlyCollection<PathfindingRange> SelectRangeEntities(IEnumerable<(int Order, T Vertex)> vertices, int graphId)
         {
-            return vertices.Select(x => new PathfindingRange
+            var items = vertices.ToList();
+            return items.Select((x, i) => new PathfindingRange
             {
                 GraphId = graphId,
                 VertexId = x.Vertex.Id,
-                Order = x.Order
+                Order = x.Order,
+                IsSource = x.Order == 0,
+                IsTarget = x.Order == items.Count - 1 && items.Count > 1
+
             }).ToReadOnly();
         }
 

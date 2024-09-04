@@ -1,4 +1,4 @@
-﻿namespace Pathfinding.ConsoleApp.Messages
+﻿namespace Pathfinding.ConsoleApp.Messages.View
 {
     internal sealed class OpenGraphCreateViewRequest
     {

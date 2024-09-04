@@ -1,48 +1,58 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
-using Pathfinding.ConsoleApp.Messages;
+using Pathfinding.ConsoleApp.Messages.ViewModel;
+using Pathfinding.ConsoleApp.Model;
+using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Service.Interface.Models.Serialization;
 using ReactiveUI;
-using System;
 using System.Reactive;
 using System.Threading.Tasks;
+using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
 {
-    internal sealed class LoadGraphButtonModel
+    internal sealed class LoadGraphButtonModel : BaseViewModel
     {
         private readonly IMessenger messenger;
-        private readonly IRequestService<VertexViewModel> service;
-        private readonly ISerializer<GraphSerializationModel> serializer;
+        private readonly IRequestService<VertexModel> service;
+        private readonly ILog logger;
+        private readonly ISerializer<PathfindingHistorySerializationModel> serializer;
 
-        public string FileName { get; set; }
+        private string filePath;
+        public string FilePath
+        {
+            get => filePath;
+            set => this.RaiseAndSetIfChanged(ref filePath, value);
+        }
 
-        public ReactiveCommand<Unit, Unit> LoadGraphCommand { get; }
+        public ReactiveCommand<MouseEventArgs, Unit> LoadGraphCommand { get; }
 
         public LoadGraphButtonModel([KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
-            ISerializer<GraphSerializationModel> serializer,
-            IRequestService<VertexViewModel> service)
+            ISerializer<PathfindingHistorySerializationModel> serializer,
+            IRequestService<VertexModel> service,
+            ILog logger)
         {
             this.messenger = messenger;
             this.serializer = serializer;
             this.service = service;
-            LoadGraphCommand = ReactiveCommand.CreateFromTask(LoadGraph, CanLoad());
+            this.logger = logger;
+            LoadGraphCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(LoadGraph);
         }
 
-        private IObservable<bool> CanLoad()
+        private async Task LoadGraph(MouseEventArgs e)
         {
-            return this.WhenAnyValue(x => x.FileName,
-                fileName => !string.IsNullOrEmpty(fileName));
-        }
-
-        private async Task LoadGraph()
-        {
-            var graph = await serializer.DeserializeFromFileAsync(FileName);
-            var result = await service.CreateGraphAsync(graph);
-            messenger.Send(new GraphCreatedMessage(result));
+            if (!string.IsNullOrEmpty(FilePath))
+            {
+                await ExecuteSafe(async () =>
+                {
+                    var graph = await serializer.DeserializeFromFileAsync(FilePath);
+                    var result = await service.CreatePathfindingHistoryAsync(graph);
+                    messenger.Send(new GraphCreatedMessage(result.Graph));
+                }, logger.Error);
+            }
         }
     }
 }

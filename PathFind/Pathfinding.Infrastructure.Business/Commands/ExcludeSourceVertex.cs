@@ -9,14 +9,14 @@ namespace Pathfinding.Infrastructure.Business.Commands
     public sealed class ExcludeSourceVertex<TVertex> : IPathfindingRangeCommand<TVertex>
         where TVertex : IVertex
     {
-        public void Execute(IList<TVertex> range, TVertex vertex)
+        public void Execute(IPathfindingRange<TVertex> range, TVertex vertex)
         {
-            range.Remove(vertex);
+            range.Source = default;
         }
 
-        public bool CanExecute(IList<TVertex> range, TVertex vertex)
+        public bool CanExecute(IPathfindingRange<TVertex> range, TVertex vertex)
         {
-            return range.Contains(vertex);
+            return range.Source?.Equals(vertex) == true;
         }
     }
 }

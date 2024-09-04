@@ -1,31 +1,30 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
-using DynamicData.Tests;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages;
-using Pathfinding.Domain.Core;
+using Pathfinding.ConsoleApp.Messages.ViewModel;
+using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Domain.Interface;
+using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
+using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
-using Pathfinding.Service.Interface.Commands;
-using Pathfinding.Service.Interface.Extensions;
-using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Service.Interface.Requests.Update;
 using Pathfinding.Shared.Extensions;
 using ReactiveUI;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System;
 using System.Linq;
 using System.Reactive;
+using System.Threading.Tasks;
 using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class GraphFieldViewModel : ReactiveObject
+    internal sealed class GraphFieldViewModel : BaseViewModel
     {
-        private readonly IRequestService<VertexViewModel> service;
-        private readonly IReadOnlyList<IPathfindingRangeCommand<VertexViewModel>> includeCommands;
-
+        private readonly IMessenger messenger;
+        private readonly IRequestService<VertexModel> service;
+        private readonly ILog logger;
         private int graphId;
         public int GraphId 
         {
@@ -33,72 +32,97 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref graphId, value);
         }
 
-        private IGraph<VertexViewModel> graph;
-        public IGraph<VertexViewModel> Graph
+        private IGraph<VertexModel> graph;
+        public IGraph<VertexModel> Graph
         {
             get => graph;
             set => this.RaiseAndSetIfChanged(ref graph, value);
         }
 
-        public ReactiveCommand<MouseEventArgs, Unit> AddInRangeCommand { get; }
-
         public ReactiveCommand<MouseEventArgs, Unit> ReverseVertexCommand { get; }
 
-        private ObservableCollection<VertexViewModel> PathfindingRange { get; }
-            = new ObservableCollection<VertexViewModel>();
+        public ReactiveCommand<MouseEventArgs, Unit> IncreaseVertexCostCommand { get; }
 
-        public GraphFieldViewModel([KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
-            IEnumerable<IPathfindingRangeCommand<VertexViewModel>> includeCommands,
-            IRequestService<VertexViewModel> service)
+        public ReactiveCommand<MouseEventArgs, Unit> DecreaseVertexCostCommand { get; }
+
+        public GraphFieldViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
+            IRequestService<VertexModel> service, ILog logger)
         {
-            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
+            this.messenger = messenger;
+            this.service = service;
+            this.logger = logger;
             messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
             messenger.Register<GraphDeletedMessage>(this, OnGraphDeleted);
-            PathfindingRange.ActOnEveryObject(OnVertexAdded, OnVertexRemoved);
-            this.service = service;
-            this.includeCommands = includeCommands.OrderByOrderAttribute().ToReadOnly();
-            AddInRangeCommand = ReactiveCommand.Create<MouseEventArgs>(AddToRange);
-            ReverseVertexCommand = ReactiveCommand.Create<MouseEventArgs>(ReverseVertex);
+            ReverseVertexCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(ReverseVertex);
+            IncreaseVertexCostCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(IncreaseVertexCost);
+            DecreaseVertexCostCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(DecreaseVertexCost);
         }
 
-        private void AddToRange(MouseEventArgs e)
+        private async Task ReverseVertex(MouseEventArgs e)
         {
-            var vertex = (VertexViewModel)e.MouseEvent.View.Data;
-            includeCommands.ExecuteFirst(PathfindingRange, vertex);
-        }
-
-        private void ReverseVertex(MouseEventArgs e)
-        {
-            var vertex = (VertexViewModel)e.MouseEvent.View.Data;
-            if (!PathfindingRange.Contains(vertex))
+            var vertex = (VertexModel)e.MouseEvent.View.Data;
+            var inRangeRquest = new IsVertexInRangeRequest(vertex);
+            messenger.Send(inRangeRquest);
+            if (!inRangeRquest.IsInRange)
             {
                 vertex.IsObstacle = !vertex.IsObstacle;
-                var request = new UpdateVerticesRequest<VertexViewModel>()
+                messenger.Send(new ObstaclesCountChangedMessage()
+                {
+                    GraphId = graphId,
+                    Delta = vertex.IsObstacle ? 1 : -1
+                });
+                var request = new UpdateVerticesRequest<VertexModel>()
                 {
                     GraphId = graphId,
                     Vertices = vertex.Enumerate().ToList()
                 };
-                var _ = service.UpdateVerticesAsync(request).Result;
+                await ExecuteSafe(async () =>
+                {
+                    await service.UpdateVerticesAsync(request);
+                    var obstacles = Graph.GetObstaclesCount();
+                    var graphRequest = new UpdateGraphInfoRequest()
+                    {
+                        Id = graphId,
+                        ObstaclesCount = obstacles
+                    };
+                    await service.UpdateObstaclesCountAsync(graphRequest);
+                }, logger.Error);
             }
         }
 
-        private void OnGraphCreated(object recipient, GraphCreatedMessage msg)
+        private async Task IncreaseVertexCost(MouseEventArgs e)
         {
-            if (graphId == 0)
+            var vertex = (VertexModel)e.MouseEvent.View.Data;
+            await ChangeVertexCost(vertex, 1);
+        }
+
+        private async Task DecreaseVertexCost(MouseEventArgs e)
+        {
+            var vertex = (VertexModel)e.MouseEvent.View.Data;
+            await ChangeVertexCost(vertex, -1);
+        }
+
+        private async Task ChangeVertexCost(VertexModel vertex, int delta)
+        {
+            var cost = vertex.Cost.CurrentCost;
+            cost += delta;
+            cost = vertex.Cost.CostRange.ReturnInRange(cost);
+            vertex.Cost = new VertexCost(cost, vertex.Cost.CostRange);
+            var request = new UpdateVerticesRequest<VertexModel>()
             {
-                Graph = msg.Model.Graph;
-                GraphId = msg.Model.Id;
-            }
+                GraphId = GraphId,
+                Vertices = vertex.Enumerate().ToList()
+            };
+            await ExecuteSafe(async () =>
+            {
+                await service.UpdateVerticesAsync(request);
+            }, logger.Error);
         }
 
         private void OnGraphActivated(object recipient, GraphActivatedMessage msg)
         {
-            var model = service.ReadGraphAsync(msg.GraphId).Result;
-            Graph = model.Graph;
-            GraphId = model.Id;
-            var range = service.ReadRangeAsync(GraphId).Result;
-            PathfindingRange.Clear();
-            PathfindingRange.AddRange(range.Range.Select(Graph.Get));
+            Graph = msg.Graph;
+            GraphId = msg.GraphId;
         }
 
         private void OnGraphDeleted(object recipient, GraphDeletedMessage msg)
@@ -106,30 +130,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
             if (msg.GraphId == GraphId)
             {
                 GraphId = 0;
-                Graph = Graph<VertexViewModel>.Empty;
-                var _ = service.DeleteRangeAsync(PathfindingRange).Result;
-                PathfindingRange.Clear();
+                Graph = Graph<VertexModel>.Empty;
             }
-        }
-
-        private void OnVertexAdded(VertexViewModel vertex)
-        {
-            var index = PathfindingRange.IndexOf(vertex);
-            if (index == 0) vertex.VisualizeAsSource();
-            else if (index == PathfindingRange.Count - 1) vertex.VisualizeAsTarget();
-            else vertex.VisualizeAsTransit();
-            var request = new CreatePathfindingRangeRequest<VertexViewModel>()
-            {
-                GraphId = graphId,
-                Vertices = (index, vertex).Enumerate().ToList()
-            };
-            var _ = service.CreateRangeAsync(request).Result;
-        }
-
-        private void OnVertexRemoved(VertexViewModel vertex)
-        {
-            vertex.VisualizeAsRegular();
-            var _ = service.DeleteRangeAsync(vertex.Enumerate()).Result;
         }
     }
 }

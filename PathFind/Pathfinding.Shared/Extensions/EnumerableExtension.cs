@@ -51,6 +51,7 @@ namespace Pathfinding.Shared.Extensions
             return collection switch
             {
                 ObservableCollection<T> observable => observable,
+                List<T> list => new ObservableCollection<T>(list),
                 _ => new ObservableCollection<T>(collection),
             };
         }

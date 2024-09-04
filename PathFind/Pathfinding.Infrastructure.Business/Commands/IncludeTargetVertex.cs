@@ -2,7 +2,6 @@
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface.Commands;
 using Pathfinding.Shared;
-using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Commands
 {
@@ -10,21 +9,15 @@ namespace Pathfinding.Infrastructure.Business.Commands
     public sealed class IncludeTargetVertex<TVertex> : IPathfindingRangeCommand<TVertex>
         where TVertex : IVertex
     {
-        private readonly IPathfindingRangeCommand<TVertex> undoCommand;
-
-        public IncludeTargetVertex()
+        public void Execute(IPathfindingRange<TVertex> range, TVertex vertex)
         {
-            undoCommand = new ExcludeTargetVertex<TVertex>();
+            range.Target = vertex;
         }
 
-        public void Execute(IList<TVertex> range, TVertex vertex)
+        public bool CanExecute(IPathfindingRange<TVertex> range, TVertex vertex)
         {
-            range.Add(vertex);
-        }
-
-        public bool CanExecute(IList<TVertex> range, TVertex vertex)
-        {
-            return range.Count == 1
+            return range.Source != null
+                && range.Target == null
                 && range.CanBeInRange(vertex);
         }
     }

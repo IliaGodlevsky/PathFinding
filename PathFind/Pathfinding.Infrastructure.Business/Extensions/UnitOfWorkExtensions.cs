@@ -103,18 +103,20 @@ namespace Pathfinding.Infrastructure.Business.Extensions
             };
         }
 
-        public static async Task<IReadOnlyCollection<Coordinate>> GetRangeAsync(this IUnitOfWork unitOfWork,
+        public static async Task<IReadOnlyCollection<PathfindingRangeModel>> GetRangeAsync(this IUnitOfWork unitOfWork,
             int graphId,
             IMapper mapper,
             CancellationToken token = default)
         {
-            var result = new List<Coordinate>();
+            var result = new List<PathfindingRangeModel>();
             var range = await unitOfWork.RangeRepository.ReadByGraphIdAsync(graphId, token);
             foreach (var x in range)
             {
                 var vertex = await unitOfWork.VerticesRepository.ReadAsync(x.VertexId, token);
                 var coordinates = mapper.Map<Coordinate>(vertex.Coordinates);
-                result.Add(coordinates);
+                var model = mapper.Map<PathfindingRangeModel>(x);
+                model.Position = coordinates;
+                result.Add(model);
             }
             return result.AsReadOnly();
         }

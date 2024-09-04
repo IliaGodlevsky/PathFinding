@@ -1,7 +1,9 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
-using Pathfinding.ConsoleApp.Messages;
+using Pathfinding.ConsoleApp.Messages.ViewModel;
+using Pathfinding.ConsoleApp.Model;
+using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Service.Interface.Models.Serialization;
@@ -13,11 +15,12 @@ using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
 {
-    internal sealed class SaveGraphButtonModel : ReactiveObject
+    internal sealed class SaveGraphButtonModel : ImportExportViewModel
     {
-        private readonly IRequestService<VertexViewModel> service;
-        private readonly ISerializer<GraphSerializationModel> serializer;
+        private readonly IRequestService<VertexModel> service;
+        private readonly ISerializer<PathfindingHistorySerializationModel> serializer;
         private readonly IMessenger messenger;
+        private readonly ILog logger;
 
         private int graphId;
         public int GraphId
@@ -35,13 +38,14 @@ namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
 
         public ReactiveCommand<MouseEventArgs, Unit> SaveGraphCommand { get; }
 
-        public SaveGraphButtonModel(IRequestService<VertexViewModel> service,
-            ISerializer<GraphSerializationModel> serializer,
-            [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger)
+        public SaveGraphButtonModel(IRequestService<VertexModel> service,
+            ISerializer<PathfindingHistorySerializationModel> serializer,
+            [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
+            ILog logger)
         {
             this.service = service;
             this.serializer = serializer;
-            this.messenger = messenger;
+            this.logger = logger;
             SaveGraphCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(SaveGraph, CanSave());
             messenger.Register<GraphSelectedMessage>(this, OnGraphSelected);
             messenger.Register<GraphDeletedMessage>(this, OnGraphDeleted);
@@ -51,15 +55,20 @@ namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
         {
             return this.WhenAnyValue(
                 x => x.GraphId,
-                x => x.FilePath,
-                (graphId, filePath) => graphId > 0 && !string.IsNullOrEmpty(filePath));
+                graphId => graphId > 0);
         }
 
         private async Task SaveGraph(MouseEventArgs e)
         {
-            var graph = await service.ReadSerializationGraphAsync(GraphId);
-            await serializer.SerializeToFileAsync(graph, FilePath);
-            FilePath = string.Empty;
+            if (!string.IsNullOrEmpty(FilePath))
+            {
+                await ExecuteSafe(async () =>
+                {
+                    var graph = await service.ReadSerializationHistoryAsync(GraphId);
+                    await serializer.SerializeToFileAsync(graph, FilePath);
+                    FilePath = string.Empty;
+                }, logger.Error);
+            }
         }
 
         private void OnGraphSelected(object recipient, GraphSelectedMessage msg)

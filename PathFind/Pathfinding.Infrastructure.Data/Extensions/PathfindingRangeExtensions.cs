@@ -6,7 +6,7 @@ namespace Pathfinding.Infrastructure.Data.Extensions
 {
     public static class PathfindingRangeExtensions
     {
-        public static bool CanBeInRange<TVertex>(this ICollection<TVertex> range, TVertex vertex)
+        public static bool CanBeInRange<TVertex>(this IPathfindingRange<TVertex> range, TVertex vertex)
             where TVertex : IVertex
         {
             return !vertex.IsIsolated() && !range.Contains(vertex);

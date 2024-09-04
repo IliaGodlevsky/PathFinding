@@ -10,14 +10,14 @@ namespace Pathfinding.Infrastructure.Business.Commands
     public sealed class IncludeTransitVertex<TVertex> : IPathfindingRangeCommand<TVertex>
         where TVertex : IVertex
     {
-        public void Execute(IList<TVertex> range, TVertex vertex)
+        public void Execute(IPathfindingRange<TVertex> range, TVertex vertex)
         {
-            range.Insert(range.Count - 1, vertex);
+            range.Transit.Add(vertex);
         }
 
-        public bool CanExecute(IList<TVertex> range, TVertex vertex)
+        public bool CanExecute(IPathfindingRange<TVertex> range, TVertex vertex)
         {
-            return range.Count >= 2
+            return range.HasSourceAndTargetSet()
                 && range.CanBeInRange(vertex);
         }
     }

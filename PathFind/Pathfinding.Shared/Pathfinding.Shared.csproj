@@ -69,6 +69,7 @@
     <Compile Include="Interface\IUndo.cs" />
     <Compile Include="OrderAttribute.cs" />
     <Compile Include="Primitives\Coordinate.cs" />
+    <Compile Include="Primitives\ExtendedObservableCollection.cs" />
     <Compile Include="Primitives\InclusiveValueRange.cs" />
     <Compile Include="Primitives\ReturnOptions.cs" />
     <Compile Include="Primitives\Singleton.cs" />

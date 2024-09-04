@@ -10,6 +10,9 @@ namespace Pathfinding.Domain.Interface.Repositories
         Task<IEnumerable<PathfindingRange>> CreateAsync(IEnumerable<PathfindingRange> entities,
             CancellationToken token = default);
 
+        Task<IEnumerable<PathfindingRange>> UpsertAsync(IEnumerable<PathfindingRange> entities,
+            CancellationToken token = default);
+
         Task<bool> DeleteByVertexIdAsync(int vertexId,
             CancellationToken token = default);
 

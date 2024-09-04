@@ -10,16 +10,16 @@ namespace Pathfinding.Infrastructure.Business.Commands
     public sealed class ReplaceIsolatedSourceVertex<TVertex> : IPathfindingRangeCommand<TVertex>
         where TVertex : IVertex
     {
-        public void Execute(IList<TVertex> range, TVertex vertex)
+        public void Execute(IPathfindingRange<TVertex> range, TVertex vertex)
         {
-            range.RemoveAt(0);
-            range.Insert(0, vertex);
+            range.Source = default;
+            range.Source = vertex;
         }
 
-        public bool CanExecute(IList<TVertex> range, TVertex vertex)
+        public bool CanExecute(IPathfindingRange<TVertex> range, TVertex vertex)
         {
-            return range.Count > 1
-                && range[0].IsIsolated()
+            return range.Source != null
+                && range.Source.IsIsolated()
                 && range.CanBeInRange(vertex);
         }
     }

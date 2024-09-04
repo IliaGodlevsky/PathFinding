@@ -2,12 +2,13 @@
 using Autofac.Features.AttributeFilters;
 using AutoMapper;
 using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.Model.Factories;
 using Pathfinding.ConsoleApp.View;
 using Pathfinding.ConsoleApp.View.ButtonsFrameViews;
 using Pathfinding.ConsoleApp.View.GraphCreateViews;
 using Pathfinding.ConsoleApp.ViewModel;
 using Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels;
-using Pathfinding.ConsoleApp.ViewModel.Factories;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Business;
 using Pathfinding.Infrastructure.Business.Commands;
@@ -15,7 +16,10 @@ using Pathfinding.Infrastructure.Business.Mappings;
 using Pathfinding.Infrastructure.Business.Serializers;
 using Pathfinding.Infrastructure.Business.Serializers.Decorators;
 using Pathfinding.Infrastructure.Data.InMemory;
+using Pathfinding.Infrastructure.Data.LiteDb;
 using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
+using Pathfinding.Logging.Interface;
+using Pathfinding.Logging.Loggers;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Commands;
 using Pathfinding.Service.Interface.Models.Serialization;
@@ -24,10 +28,11 @@ using System.Collections.Generic;
 
 namespace Pathfinding.ConsoleApp.Injection
 {
-    internal static class ContainerBuilderExtensions
+    internal static class Container
     {
-        public static IContainer BuildApp(this ContainerBuilder builder)
+        public static IContainer BuildApp()
         {
+            var builder = new ContainerBuilder();
             builder.RegisterType<MainView>().AsSelf().WithAttributeFiltering();
             builder.RegisterType<RightPanelView>().Keyed<Terminal.Gui.View>(KeyFilters.MainWindow).WithAttributeFiltering();
             builder.RegisterType<GraphFrameView>().Keyed<Terminal.Gui.View>(KeyFilters.RightPanel).WithAttributeFiltering();
@@ -46,9 +51,14 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<GraphRunsView>().Keyed<Terminal.Gui.View>(KeyFilters.RightPanel).WithAttributeFiltering();
             builder.RegisterType<RunsTableView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphRunsView).WithAttributeFiltering();
 
-            builder.RegisterType<InMemoryUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
+            builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
+            builder.RegisterComposite<Logs, ILog>().As<ILog>().SingleInstance();
+
             builder.RegisterAutoMapper();
-            builder.RegisterType<RequestService<VertexViewModel>>().As<IRequestService<VertexViewModel>>().SingleInstance();
+            //builder.RegisterType<InMemoryUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
+            builder.Register(_ => new LiteDbInFileUnitOfWorkFactory("pathfinding.litedb")).As<IUnitOfWorkFactory>().SingleInstance();
+            builder.RegisterType<RequestService<VertexModel>>().As<IRequestService<VertexModel>>().SingleInstance();
 
             builder.RegisterType<WeakReferenceMessenger>().Keyed<IMessenger>(KeyFilters.Views).SingleInstance().WithAttributeFiltering();
             builder.RegisterType<WeakReferenceMessenger>().Keyed<IMessenger>(KeyFilters.ViewModels).SingleInstance().WithAttributeFiltering();
@@ -59,22 +69,36 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<GraphTableViewModel>().AsSelf().SingleInstance().WithAttributeFiltering();
             builder.RegisterType<GraphFieldViewModel>().AsSelf().SingleInstance().WithAttributeFiltering();
             builder.RegisterType<DeleteGraphButtonModel>().AsSelf().SingleInstance().WithAttributeFiltering();
+            builder.RegisterType<PathfindingRangeViewModel>().AsSelf().SingleInstance().WithAttributeFiltering();
 
-            builder.RegisterType<IncludeSourceVertex<VertexViewModel>>().As<IPathfindingRangeCommand<VertexViewModel>>().SingleInstance();
-            builder.RegisterType<IncludeTargetVertex<VertexViewModel>>().As<IPathfindingRangeCommand<VertexViewModel>>().SingleInstance();
-            builder.RegisterType<IncludeTransitVertex<VertexViewModel>>().As<IPathfindingRangeCommand<VertexViewModel>>().SingleInstance();
-            builder.RegisterType<ReplaceTransitIsolatedVertex<VertexViewModel>>().As<IPathfindingRangeCommand<VertexViewModel>>().SingleInstance();
-            builder.RegisterType<ReplaceIsolatedSourceVertex<VertexViewModel>>().As<IPathfindingRangeCommand<VertexViewModel>>().SingleInstance();
-            builder.RegisterType<ReplaceIsolatedTargetVertex<VertexViewModel>>().As<IPathfindingRangeCommand<VertexViewModel>>().SingleInstance();
+            builder.RegisterType<IncludeSourceVertex<VertexModel>>().SingleInstance().WithAttributeFiltering()
+                .Keyed<IPathfindingRangeCommand<VertexModel>>(KeyFilters.IncludeCommands);
+            builder.RegisterType<IncludeTargetVertex<VertexModel>>().SingleInstance().WithAttributeFiltering()
+                .Keyed<IPathfindingRangeCommand<VertexModel>>(KeyFilters.IncludeCommands);
+            builder.RegisterType<IncludeTransitVertex<VertexModel>>().SingleInstance().WithAttributeFiltering()
+                .Keyed<IPathfindingRangeCommand<VertexModel>>(KeyFilters.IncludeCommands);
+            builder.RegisterType<ReplaceTransitIsolatedVertex<VertexModel>>().SingleInstance().WithAttributeFiltering()
+                .Keyed<IPathfindingRangeCommand<VertexModel>>(KeyFilters.IncludeCommands);
+            builder.RegisterType<ReplaceIsolatedSourceVertex<VertexModel>>().SingleInstance().WithAttributeFiltering()
+                .Keyed<IPathfindingRangeCommand<VertexModel>>(KeyFilters.IncludeCommands);
+            builder.RegisterType<ReplaceIsolatedTargetVertex<VertexModel>>().SingleInstance().WithAttributeFiltering()
+                .Keyed<IPathfindingRangeCommand<VertexModel>>(KeyFilters.IncludeCommands);
+            builder.RegisterType<ExcludeSourceVertex<VertexModel>>().SingleInstance().WithAttributeFiltering()
+                .Keyed<IPathfindingRangeCommand<VertexModel>>(KeyFilters.ExcludeCommands);
+            builder.RegisterType<ExcludeTargetVertex<VertexModel>>().SingleInstance().WithAttributeFiltering()
+                .Keyed<IPathfindingRangeCommand<VertexModel>>(KeyFilters.ExcludeCommands);
+            builder.RegisterType<ExcludeTransitVertex<VertexModel>>().SingleInstance().WithAttributeFiltering()
+                .Keyed<IPathfindingRangeCommand<VertexModel>>(KeyFilters.ExcludeCommands);
 
-            builder.RegisterType<GraphFactory<VertexViewModel>>().As<IGraphFactory<VertexViewModel>>().SingleInstance();
-            builder.RegisterType<VertexViewModelFactory>().As<IVertexFactory<VertexViewModel>>().SingleInstance();
-            builder.RegisterType<GraphAssemble<VertexViewModel>>().As<IGraphAssemble<VertexViewModel>>().SingleInstance();
+            builder.RegisterType<GraphFactory<VertexModel>>().As<IGraphFactory<VertexModel>>().SingleInstance();
+            builder.RegisterType<VertexModelFactory>().As<IVertexFactory<VertexModel>>().SingleInstance();
+            builder.RegisterType<GraphAssemble<VertexModel>>().As<IGraphAssemble<VertexModel>>().SingleInstance();
 
-            builder.RegisterType<JsonSerializer<GraphSerializationModel>>()
-                .As<ISerializer<GraphSerializationModel>>().SingleInstance();
+            builder.RegisterType<JsonSerializer<PathfindingHistorySerializationModel>>()
+                .As<ISerializer<PathfindingHistorySerializationModel>>().SingleInstance();
 
-            builder.RegisterGenericDecorator(typeof(CompressSerializer<>), typeof(ISerializer<>));
+            builder.RegisterDecorator<CompressSerializer<PathfindingHistorySerializationModel>,
+                ISerializer<PathfindingHistorySerializationModel>>();
 
             builder.Register(_ => new List<(string Name, int Level)>()
             {
@@ -101,11 +125,11 @@ namespace Pathfinding.ConsoleApp.Injection
 
             builder.RegisterType<SubAlgorithmsMappingProfile>().As<Profile>().SingleInstance();
             builder.RegisterType<GraphStateMappingProfile>().As<Profile>().SingleInstance();
-            builder.RegisterType<GraphMappingProfile<VertexViewModel>>().As<Profile>().SingleInstance();
+            builder.RegisterType<GraphMappingProfile<VertexModel>>().As<Profile>().SingleInstance();
             builder.RegisterType<UntitledMappingProfile>().As<Profile>().SingleInstance();
-            builder.RegisterType<HistoryMappingProfile<VertexViewModel>>().As<Profile>().SingleInstance();
+            builder.RegisterType<HistoryMappingProfile<VertexModel>>().As<Profile>().SingleInstance();
             builder.RegisterType<AlgorithmRunMappingProfile>().As<Profile>().SingleInstance();
-            builder.RegisterType<VerticesMappingProfile<VertexViewModel>>().As<Profile>().SingleInstance();
+            builder.RegisterType<VerticesMappingProfile<VertexModel>>().As<Profile>().SingleInstance();
             builder.RegisterType<StatisticsMappingProfile>().As<Profile>().SingleInstance();
 
             builder.Register(context =>

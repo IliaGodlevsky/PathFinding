@@ -9,7 +9,6 @@ using Terminal.Gui;
 using Autofac.Features.AttributeFilters;
 using Pathfinding.ConsoleApp.Injection;
 using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.ConsoleApp.Messages;
 using System.Data;
 using System;
 
@@ -27,40 +26,55 @@ namespace Pathfinding.ConsoleApp.View
             this.viewModel = viewModel;
             this.messenger = messenger;
             Initialize();
-            this.Events()
-                .CellActivated
-                .Select(x => new GraphParametresModel()
-                {
-                    Width = (int)table.Rows[x.Row]["Width"],
-                    Length = (int)table.Rows[x.Row]["Length"],
-                    Name = (string)table.Rows[x.Row]["Name"],
-                    Id = (int)table.Rows[x.Row]["Id"],
-                    Obstacles = (int)table.Rows[x.Row]["Obstacles"]
-                })
+            viewModel.Graphs.ActOnEveryObject(AddToTable, RemoveFromTable)
+                .DisposeWith(disposables);
+            viewModel.LoadGraphs();
+            this.Events().CellActivated
+                .Select(x => GetModel(x.Row))
                 .DistinctUntilChanged(x => x.Id)
                 .BindTo(this.viewModel, x => x.Activated)
                 .DisposeWith(disposables);
             this.Events().SelectedCellChanged
                 .Where(x => x.NewRow > -1)
-                .Select(x => new GraphParametresModel()
-                {
-                    Width = (int)table.Rows[x.NewRow]["Width"],
-                    Length = (int)table.Rows[x.NewRow]["Length"],
-                    Name = (string)table.Rows[x.NewRow]["Name"],
-                    Id = (int)table.Rows[x.NewRow]["Id"],
-                    Obstacles = (int)table.Rows[x.NewRow]["Obstacles"]
-                })
+                .Select(x => GetModel(x.NewRow))
                 .BindTo(viewModel, x => x.Selected)
                 .DisposeWith(disposables);
-            viewModel.Graphs.ActOnEveryObject(AddToTable, RemoveFromTable);
+            //this.Events().MouseClick
+            //    .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
+            //    .Where(x => SelectedRow > -1)
+            //    .Select(x => GetModel(SelectedRow))
+            //    .BindTo(viewModel, x => x.Selected)
+            //    .DisposeWith(disposables);
         }
 
-        private void AddToTable(GraphParametresModel x)
+        private GraphParametresModel GetModel(int selectedRow)
         {
-            table.Rows.Add(x.Id, x.Name, x.Width, x.Length, x.Obstacles);
+            return new GraphParametresModel()
+            {
+                Width = (int)table.Rows[selectedRow]["Width"],
+                Length = (int)table.Rows[selectedRow]["Length"],
+                Name = (string)table.Rows[selectedRow]["Name"],
+                Id = (int)table.Rows[selectedRow]["Id"],
+                Obstacles = (int)table.Rows[selectedRow]["Obstacles"]
+            };
+        }
+
+        private void AddToTable(GraphParametresModel model)
+        {
+            table.Rows.Add(model.Id, model.Name, model.Width, model.Length, model.Obstacles);
             table.AcceptChanges();
             SetNeedsDisplay();
             Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
+            model.WhenAnyValue(c => c.Obstacles)
+                .Do(x => UpdateGraphInTable(model.Id, x))
+                .Subscribe();
+        }
+
+        private void UpdateGraphInTable(int id, int obstacles)
+        {
+            var row = table.Rows.Find(id);
+            row["Obstacles"] = obstacles;
+            table.AcceptChanges();
         }
 
         private void RemoveFromTable(GraphParametresModel model)

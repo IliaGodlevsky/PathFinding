@@ -32,7 +32,7 @@ namespace Pathfinding.Service.Interface
         Task<PathfindingHistoryModel<T>> ReadPathfindingHistoryAsync(int graphId,
             CancellationToken token = default);
 
-        Task<PathfindingRangeModel> ReadRangeAsync(int graphId,
+        Task<IReadOnlyCollection<PathfindingRangeModel>> ReadRangeAsync(int graphId,
             CancellationToken token = default);
 
         Task<bool> UpdateObstaclesCountAsync(UpdateGraphInfoRequest request,
@@ -66,6 +66,9 @@ namespace Pathfinding.Service.Interface
             CancellationToken token = default);
 
         Task<bool> UpdateVerticesAsync(UpdateVerticesRequest<T> request,
+            CancellationToken token = default);
+
+        Task<bool> UpsertRangeAsync(UpsertPathfindingRangeRequest request,
             CancellationToken token = default);
 
         Task<bool> CreateRangeAsync(CreatePathfindingRangeRequest<T> request,

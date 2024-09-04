@@ -1,11 +1,14 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
-using Pathfinding.ConsoleApp.Messages;
+using Pathfinding.ConsoleApp.Messages.ViewModel;
+using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Infrastructure.Business.MeanCosts;
 using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Infrastructure.Data.Pathfinding;
+using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Shared.Extensions;
@@ -20,13 +23,13 @@ using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class CreateGraphViewModel : ReactiveObject
+    internal sealed class CreateGraphViewModel : BaseViewModel
     {
         private static readonly InclusiveValueRange<int> CostRange = (9, 1);
-        private readonly IRequestService<VertexViewModel> service;
-        private readonly IGraphAssemble<VertexViewModel> graphAssemble;
+        private readonly IRequestService<VertexModel> service;
+        private readonly IGraphAssemble<VertexModel> graphAssemble;
         private readonly IMessenger messenger;
-
+        private readonly ILog logger;
         private string name;
         public string Name 
         {
@@ -71,12 +74,14 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public ReactiveCommand<MouseEventArgs, Unit> CreateCommand { get; }
 
-        public CreateGraphViewModel(IRequestService<VertexViewModel> service,
-            IGraphAssemble<VertexViewModel> graphAssemble,
-            [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger)
+        public CreateGraphViewModel(IRequestService<VertexModel> service,
+            IGraphAssemble<VertexModel> graphAssemble,
+            [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
+            ILog logger)
         {
             this.service = service;
             this.messenger = messenger;
+            this.logger = logger;
             this.graphAssemble = graphAssemble;
             CreateCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(CreateGraph, CanExecute());
         }
@@ -98,17 +103,20 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public async Task CreateGraph(MouseEventArgs e)
         {
-            var random = new CongruentialRandom();
-            var costLayer = new VertexCostLayer(CostRange, range => random.NextInt(range));
-            var obstacleLayer = new ObstacleLayer(random, Obstacles);
-            var neighborhoodLayer = new NeighborhoodLayer(NeighborhoodFactory, ReturnOptions.Limit);
-            var smoothLayer = Enumerable.Repeat(new SmoothLayer(new MeanCost()), SmoothLevel)
-                .To(x => new Layers(x.ToArray()));
-            var layers = new Layers(costLayer, obstacleLayer, neighborhoodLayer, smoothLayer);
-            var graph = await graphAssemble.AssembleGraphAsync(layers, Width, Length);
-            var request = new CreateGraphRequest<VertexViewModel>() { Graph = graph, Name = Name };
-            var graphModel = await service.CreateGraphAsync(request);
-            messenger.Send(new GraphCreatedMessage(graphModel));
+            await ExecuteSafe(async () =>
+            {
+                var random = new CongruentialRandom();
+                var costLayer = new VertexCostLayer(CostRange, range => new VertexCost(random.NextInt(range), range));
+                var obstacleLayer = new ObstacleLayer(random, Obstacles);
+                var neighborhoodLayer = new NeighborhoodLayer(NeighborhoodFactory, ReturnOptions.Limit);
+                var smoothLayer = Enumerable.Repeat(new SmoothLayer(new MeanCost()), SmoothLevel)
+                    .To(x => new Layers(x.ToArray()));
+                var layers = new Layers(costLayer, obstacleLayer, neighborhoodLayer, smoothLayer);
+                var graph = await graphAssemble.AssembleGraphAsync(layers, Width, Length);
+                var request = new CreateGraphRequest<VertexModel>() { Graph = graph, Name = Name };
+                var graphModel = await service.CreateGraphAsync(request);
+                messenger.Send(new GraphCreatedMessage(graphModel));
+            }, logger.Error);
         }
     }
 }

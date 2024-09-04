@@ -101,6 +101,7 @@
     <Compile Include="Models\Undefined\VertexAssembleModel.cs" />
     <Compile Include="Models\Undefined\VertexCostModel.cs" />
     <Compile Include="Models\Undefined\VisitedVerticesModel.cs" />
+    <Compile Include="Requests\Create\UpsertPathfindingRangeRequest.cs" />
     <Compile Include="Requests\Delete\DeleteNeighborsRequest.cs" />
     <Compile Include="Requests\Delete\DeleteRangeRequest.cs" />
     <Compile Include="Requests\FindPathRequest.cs" />

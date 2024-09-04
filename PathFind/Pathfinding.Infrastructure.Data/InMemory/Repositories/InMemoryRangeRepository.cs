@@ -74,5 +74,23 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
             }
             return await Task.FromResult(true);
         }
+
+        public async Task<IEnumerable<PathfindingRange>> UpsertAsync(IEnumerable<PathfindingRange> entities, CancellationToken token = default)
+        {
+            foreach (var entity in entities)
+            {
+                if (set.TryGetValue(entity, out var value))
+                {
+                    set.Remove(value);
+                    set.Add(entity);
+                }
+                else
+                {
+                    entity.Id = ++id;
+                    set.Add(entity);
+                }
+            }
+            return await Task.FromResult(entities);
+        }
     }
 }

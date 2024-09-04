@@ -63,5 +63,11 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             collection.Update(entities);
             return await Task.FromResult(true);
         }
+
+        public async Task<IEnumerable<PathfindingRange>> UpsertAsync(IEnumerable<PathfindingRange> entities, CancellationToken token = default)
+        {
+            collection.Upsert(entities);
+            return await Task.FromResult(entities);
+        }
     }
 }

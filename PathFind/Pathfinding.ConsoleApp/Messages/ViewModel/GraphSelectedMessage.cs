@@ -1,4 +1,4 @@
-﻿namespace Pathfinding.ConsoleApp.Messages
+﻿namespace Pathfinding.ConsoleApp.Messages.ViewModel
 {
     internal sealed class GraphSelectedMessage
     {

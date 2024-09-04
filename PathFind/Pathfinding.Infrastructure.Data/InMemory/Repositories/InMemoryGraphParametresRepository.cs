@@ -60,7 +60,6 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
             var equal = new Graph { Id = graph.Id };
             if (set.TryGetValue(equal, out var result))
             {
-                result.ObstaclesCount = graph.ObstaclesCount;
                 result.Dimensions = graph.Dimensions;
                 result.Name = graph.Name;
                 return await Task.FromResult(true);

@@ -1,7 +1,9 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
-using Pathfinding.ConsoleApp.Messages;
+using Pathfinding.ConsoleApp.Messages.ViewModel;
+using Pathfinding.ConsoleApp.Model;
+using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using ReactiveUI;
 using System;
@@ -11,11 +13,12 @@ using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
 {
-    internal sealed class DeleteGraphButtonModel : ReactiveObject
+    internal sealed class DeleteGraphButtonModel : BaseViewModel
     {
         private int graphId;
         private readonly IMessenger messenger;
-        private readonly IRequestService<VertexViewModel> service;
+        private readonly IRequestService<VertexModel> service;
+        private readonly ILog logger;
 
         public int GraphId 
         {
@@ -26,11 +29,13 @@ namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
         public ReactiveCommand<MouseEventArgs, Unit> DeleteCommand { get; }
 
         public DeleteGraphButtonModel([KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
-            IRequestService<VertexViewModel> service)
+            IRequestService<VertexModel> service, 
+            ILog logger)
         {
             DeleteCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(DeleteGraph, CanDelete());
             this.messenger = messenger;
             this.service = service;
+            this.logger = logger;
             messenger.Register<GraphSelectedMessage>(this, OnGraphSelected);
         }
 
@@ -42,8 +47,11 @@ namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
 
         private async Task DeleteGraph(MouseEventArgs e)
         {
-            await service.DeleteGraphAsync(GraphId);
-            messenger.Send(new GraphDeletedMessage(GraphId));
+            await ExecuteSafe(async () =>
+            {
+                await service.DeleteGraphAsync(GraphId);
+                messenger.Send(new GraphDeletedMessage(GraphId));
+            }, logger.Error);
         }
 
         private void OnGraphSelected(object recipient, GraphSelectedMessage msg)

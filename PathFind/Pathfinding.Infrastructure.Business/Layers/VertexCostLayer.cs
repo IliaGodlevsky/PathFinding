@@ -8,11 +8,11 @@ namespace Pathfinding.Infrastructure.Business.Layers
 {
     public sealed class VertexCostLayer : ILayer
     {
-        private readonly Func<InclusiveValueRange<int>, int> generator;
+        private readonly Func<InclusiveValueRange<int>, IVertexCost> generator;
         private readonly InclusiveValueRange<int> costRange;
 
         public VertexCostLayer(InclusiveValueRange<int> costRange,
-            Func<InclusiveValueRange<int>, int> generator)
+            Func<InclusiveValueRange<int>, IVertexCost> generator)
         {
             this.costRange = costRange;
             this.generator = generator;
@@ -22,8 +22,7 @@ namespace Pathfinding.Infrastructure.Business.Layers
         {
             foreach (var vertex in graph)
             {
-                var costValue = generator(costRange);
-                vertex.Cost = new VertexCost(costValue, costRange);
+                vertex.Cost = generator(costRange);
             }
         }
     }

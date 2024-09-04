@@ -1,6 +1,7 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
@@ -30,7 +31,7 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks.Data
             var random = new CongruentialRandom();
             var costLayer = new VertexCostLayer(
                 new InclusiveValueRange<int>(9, 1),
-                range => random.NextInt(range));
+                range => new VertexCost(random.NextInt(range), range));
             var layers = new Layers.Layers(neighborhoodLayer, costLayer);
             graph = assemble.AssembleGraph(layers, 200, 250);
         }

@@ -7,7 +7,7 @@ namespace Pathfinding.Service.Interface.Extensions
 {
     public static class PathfindingRangeCommandExtensions
     {
-        public static void ExecuteFirst<T>(this IEnumerable<IPathfindingRangeCommand<T>> commands, IList<T> range, T vertex)
+        public static void ExecuteFirst<T>(this IEnumerable<IPathfindingRangeCommand<T>> commands, IPathfindingRange<T> range, T vertex)
             where T : IVertex
         {
             commands.FirstOrDefault(x => x.CanExecute(range, vertex))
