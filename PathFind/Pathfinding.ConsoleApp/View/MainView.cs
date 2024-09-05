@@ -8,14 +8,24 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed class MainView : Window
     {
+        private const Color ForegroundColor = Color.Gray;
+        private const Color BackgroundColor = ColorContants.BackgroundColor;
+
         public MainView([KeyFilter(KeyFilters.MainWindow)]IEnumerable<Terminal.Gui.View> children)
         {
-            Colors.Base.Normal = Application.Driver.MakeAttribute(Color.White, Color.Black);
             X = 0;
             Y = 0;
             Height = Dim.Fill();
             Width = Dim.Fill();
             Add(children.ToArray());
+            Loaded += OnActivate;
+        }
+
+        private void OnActivate()
+        {
+            var driver = Application.Driver;
+            var attribute = driver.MakeAttribute(ForegroundColor, BackgroundColor);
+            Colors.Base.Normal = attribute;
         }
     }
 }

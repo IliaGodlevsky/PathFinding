@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Commands
 {
-    [Order(1), Group(Constants.IncludeCommands)]
+    [Order(1)]
     public sealed class ReplaceTransitIsolatedVertex<TVertex> : IPathfindingRangeCommand<TVertex>
         where TVertex : IVertex
     {

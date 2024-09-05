@@ -11,6 +11,7 @@ using Autofac.Features.AttributeFilters;
 using Pathfinding.ConsoleApp.Injection;
 using System.Reactive;
 using Pathfinding.ConsoleApp.Messages.View;
+using Pathfinding.Shared.Extensions;
 
 namespace Pathfinding.ConsoleApp.View.GraphCreateViews
 {
@@ -18,7 +19,8 @@ namespace Pathfinding.ConsoleApp.View.GraphCreateViews
     {
         private readonly CreateGraphViewModel viewModel;
         private readonly IMessenger messenger;
-        private readonly CompositeDisposable disposables = new CompositeDisposable();
+        private readonly CompositeDisposable disposables = new();
+        private readonly Terminal.Gui.View[] children;
 
         public CreateGraphView([KeyFilter(KeyFilters.CreateGraphView)]IEnumerable<Terminal.Gui.View> children,
             CreateGraphViewModel viewModel,
@@ -27,7 +29,8 @@ namespace Pathfinding.ConsoleApp.View.GraphCreateViews
             this.viewModel = viewModel;
             this.messenger = messenger;
             Initialize();
-            Add(children.ToArray());
+            this.children = children.ToArray();
+            Add(this.children);
             var hideWindowCommand = ReactiveCommand.Create<MouseEventArgs, Unit>(Hide,
                 this.viewModel.CreateCommand.CanExecute);
             var commands = new[] { hideWindowCommand, this.viewModel.CreateCommand };
@@ -39,20 +42,21 @@ namespace Pathfinding.ConsoleApp.View.GraphCreateViews
                 .DisposeWith(disposables);
 
             cancelButton.MouseClick += OnCancelClicked;
-            this.messenger.Register<OpenGraphCreateViewRequest>(this, OnOpenCreateGraphViewRequestRecieved);
+            messenger.Register<OpenGraphCreateViewRequest>(this, OnOpenCreateGraphViewRequestRecieved);
         }
 
         private void OnOpenCreateGraphViewRequestRecieved(object recipient,
             OpenGraphCreateViewRequest request)
         {
             Visible = true;
+            children.ForEach(x => x.Visible = true);
         }
 
         private void OnCancelClicked(MouseEventArgs e)
         {
             if (e.MouseEvent.Flags == MouseFlags.Button1Clicked)
             {
-                Visible = false;
+                Hide(e);
                 Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
             }
         }
@@ -60,6 +64,7 @@ namespace Pathfinding.ConsoleApp.View.GraphCreateViews
         private Unit Hide(MouseEventArgs e)
         {
             Visible = false;
+            children.ForEach(x => x.Visible = false);
             return Unit.Default;
         }
     }

@@ -14,11 +14,11 @@ namespace Pathfinding.ConsoleApp.View.ButtonsFrameViews
     internal sealed partial class SaveGraphButton
     {
         private readonly IMessenger messenger;
-        private readonly SaveGraphButtonModel viewModel;
+        private readonly SaveGraphButtonViewModel viewModel;
         private readonly CompositeDisposable disposables = new CompositeDisposable();
 
         public SaveGraphButton([KeyFilter(KeyFilters.Views)]IMessenger messenger, 
-            SaveGraphButtonModel viewModel)
+            SaveGraphButtonViewModel viewModel)
         {
             this.messenger = messenger;
             this.viewModel = viewModel;

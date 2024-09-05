@@ -9,10 +9,10 @@ namespace Pathfinding.ConsoleApp.View.ButtonsFrameViews
 {
     internal sealed partial class DeleteGraphButton : Button
     {
-        private readonly DeleteGraphButtonModel viewModel;
+        private readonly DeleteGraphButtonViewModel viewModel;
         private readonly CompositeDisposable disposables = new CompositeDisposable();
 
-        public DeleteGraphButton(DeleteGraphButtonModel viewModel)
+        public DeleteGraphButton(DeleteGraphButtonViewModel viewModel)
         {
             this.viewModel = viewModel;
             Initialize();

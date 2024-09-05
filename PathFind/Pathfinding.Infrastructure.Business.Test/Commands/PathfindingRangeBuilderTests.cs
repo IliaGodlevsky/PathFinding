@@ -1,7 +1,6 @@
 ﻿using Pathfinding.Infrastructure.Business.Commands;
 using Pathfinding.Infrastructure.Business.Test.TestRealizations;
 using Pathfinding.Infrastructure.Data.Extensions;
-using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface.Commands;
 using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Shared.Extensions;
@@ -13,7 +12,7 @@ namespace Pathfinding.Infrastructure.Business.Test.Commands
     public sealed class PathfindingRangeBuilderTests
     {
         private readonly TestGraphAssemble assemble;
-        private PathfindingRange<TestVertex> range;
+        private TestPathfindingRange range;
         private readonly IPathfindingRangeCommand<TestVertex>[] commands;
 
         public PathfindingRangeBuilderTests()
@@ -36,7 +35,7 @@ namespace Pathfinding.Infrastructure.Business.Test.Commands
         [SetUp]
         public void Setup()
         {
-            range = new PathfindingRange<TestVertex>();
+            range = new TestPathfindingRange();
         }
 
         [Test]

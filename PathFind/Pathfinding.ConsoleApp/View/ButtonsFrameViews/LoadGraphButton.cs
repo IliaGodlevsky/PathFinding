@@ -10,9 +10,9 @@ namespace Pathfinding.ConsoleApp.View.ButtonsFrameViews
 {
     internal sealed partial class LoadGraphButton : Button
     {
-        private readonly LoadGraphButtonModel viewModel;
+        private readonly LoadGraphButtonViewModel viewModel;
 
-        public LoadGraphButton(LoadGraphButtonModel viewModel)
+        public LoadGraphButton(LoadGraphButtonViewModel viewModel)
         {
             this.viewModel = viewModel;
             Initialize();

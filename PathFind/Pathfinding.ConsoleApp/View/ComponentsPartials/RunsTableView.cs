@@ -47,7 +47,7 @@ namespace Pathfinding.ConsoleApp.View
                 ColumnStyles = columnStyles,
                 ShowHorizontalScrollIndicators = true
             };
-            table.Rows.Add(0, "Dijkstra's algorithm", 3461, 45, 251, TimeSpan.FromMilliseconds(15), "Default", "Euclidian", "-", "Success");
+            //table.Rows.Add(0, "Dijkstra's algorithm", 3461, 45, 251, TimeSpan.FromMilliseconds(15), "Default", "Euclidian", "-", "Success");
             table.AcceptChanges();
             FullRowSelect = true;
             X = 0;

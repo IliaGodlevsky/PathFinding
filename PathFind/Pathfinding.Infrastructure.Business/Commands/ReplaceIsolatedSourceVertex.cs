@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Commands
 {
-    [Order(3), Group(Constants.IncludeCommands)]
+    [Order(3)]
     public sealed class ReplaceIsolatedSourceVertex<TVertex> : IPathfindingRangeCommand<TVertex>
         where TVertex : IVertex
     {

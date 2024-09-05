@@ -27,6 +27,17 @@ namespace Pathfinding.ConsoleApp.View.GraphCreateViews
             BindTo(obstaclesInput, x => x.Obstacles, ObstaclesRange);
             BindTo(graphWidthInput, x => x.Width, WidthRange);
             BindTo(graphLengthInput, x => x.Length, LengthRange);
+            VisibleChanged += OnVisibilityChanged;
+        }
+
+        private void OnVisibilityChanged()
+        {
+            if (Visible)
+            {
+                graphWidthInput.Text = string.Empty;
+                graphLengthInput.Text = string.Empty;
+                obstaclesInput.Text = string.Empty;
+            }
         }
 
         private void BindTo(TextField field,

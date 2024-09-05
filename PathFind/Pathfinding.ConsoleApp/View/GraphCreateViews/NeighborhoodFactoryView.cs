@@ -5,33 +5,43 @@ using System.Reactive.Disposables;
 using ReactiveUI;
 using Terminal.Gui;
 using Pathfinding.ConsoleApp.ViewModel;
-using Pathfinding.Domain.Interface.Factories;
-using System.Collections.Generic;
 using ReactiveMarbles.ObservableEvents;
+using Pathfinding.ConsoleApp.ViewModel.GraphCreateViewModels;
 
 namespace Pathfinding.ConsoleApp.View.GraphCreateViews
 {
     internal sealed partial class NeighborhoodFactoryView : FrameView
     {
-        private readonly CompositeDisposable disposables = new CompositeDisposable();
+        private readonly CompositeDisposable disposables = new();
+        private readonly NeighborhoodFactoryViewModel factoryViewModel;
         private readonly CreateGraphViewModel viewModel;
 
         public NeighborhoodFactoryView(
-            IEnumerable<(string Name, INeighborhoodFactory Factory)> factories,
+            NeighborhoodFactoryViewModel factoryViewModel,
             CreateGraphViewModel viewModel)
         {
+            this.factoryViewModel = factoryViewModel;
             this.viewModel = viewModel;
             Initialize();
-            var neighbors = factories.Select(x => x.Factory).ToList();
-            neighborhoods.RadioLabels = factories
-                .Select(x => ustring.Make(x.Name))
+            var neighbors = factoryViewModel.Factories.Select(x => x.Value).ToList();
+            neighborhoods.RadioLabels = factoryViewModel.Factories.Keys
+                .Select(x => ustring.Make(x))
                 .ToArray();
             neighborhoods.Events().SelectedItemChanged
                 .Where(x => x.SelectedItem > -1)
                 .Select(x => neighbors[x.SelectedItem])
                 .BindTo(this.viewModel, x => x.NeighborhoodFactory)
                 .DisposeWith(disposables);
-            neighborhoods.SelectedItem = 0;
+            
+            VisibleChanged += OnVisibilityChanged;
+        }
+
+        private void OnVisibilityChanged()
+        {
+            if (Visible)
+            {
+                neighborhoods.SelectedItem = 0;
+            }
         }
     }
 }

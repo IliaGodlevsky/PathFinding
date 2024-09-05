@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Commands
 {
-    [Order(6), Group(Constants.IncludeCommands)]
+    [Order(6)]
     public sealed class IncludeTransitVertex<TVertex> : IPathfindingRangeCommand<TVertex>
         where TVertex : IVertex
     {

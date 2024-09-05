@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Commands
 {
-    [Order(2), Group(Constants.ExcludeCommands)]
+    [Order(2)]
     public class ExcludeTargetVertex<TVertex> : IPathfindingRangeCommand<TVertex>
         where TVertex : IVertex
     {

@@ -5,7 +5,7 @@ using Pathfinding.Shared;
 
 namespace Pathfinding.Infrastructure.Business.Commands
 {
-    [Order(2), Group(Constants.IncludeCommands)]
+    [Order(2)]
     public sealed class IncludeSourceVertex<TVertex> : IPathfindingRangeCommand<TVertex>
         where TVertex : IVertex
     {

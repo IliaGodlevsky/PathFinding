@@ -61,7 +61,6 @@
     <Compile Include="Extensions\MemberInfoExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
-    <Compile Include="GroupAttribute.cs" />
     <Compile Include="Interface\IInterruptable.cs" />
     <Compile Include="Interface\IPausable.cs" />
     <Compile Include="Interface\IProcess.cs" />

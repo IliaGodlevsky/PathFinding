@@ -13,7 +13,7 @@ using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
 {
-    internal sealed class DeleteGraphButtonModel : BaseViewModel
+    internal sealed class DeleteGraphButtonViewModel : BaseViewModel
     {
         private int graphId;
         private readonly IMessenger messenger;
@@ -28,7 +28,7 @@ namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
 
         public ReactiveCommand<MouseEventArgs, Unit> DeleteCommand { get; }
 
-        public DeleteGraphButtonModel([KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
+        public DeleteGraphButtonViewModel([KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
             IRequestService<VertexModel> service, 
             ILog logger)
         {

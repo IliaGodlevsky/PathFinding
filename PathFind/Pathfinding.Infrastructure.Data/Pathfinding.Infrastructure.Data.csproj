@@ -81,7 +81,6 @@
     <Compile Include="Extensions\CoordinateExtensions.cs" />
     <Compile Include="Extensions\GraphExtensions.cs" />
     <Compile Include="Extensions\GraphAssembleExtensions.cs" />
-    <Compile Include="Extensions\PathfindingRangeBuilderExtensions.cs" />
     <Compile Include="Extensions\PathfindingRangeExtensions.cs" />
     <Compile Include="Extensions\VertexExtension.cs" />
     <Compile Include="InMemory\InMemoryUnitOfWorkFactory.cs" />
@@ -116,7 +115,6 @@
     <Compile Include="Pathfinding\MooreNeighborhood.cs" />
     <Compile Include="Pathfinding\NullCost.cs" />
     <Compile Include="Pathfinding\NullVertex.cs" />
-    <Compile Include="Pathfinding\PathfindingRange.cs" />
     <Compile Include="Pathfinding\VertexCost.cs" />
     <Compile Include="Pathfinding\VonNeumannNeighborhood.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -7,24 +7,27 @@ using System.Reactive.Linq;
 using ReactiveUI;
 using Pathfinding.ConsoleApp.ViewModel;
 using System.Collections.Generic;
+using Pathfinding.ConsoleApp.ViewModel.GraphCreateViewModels;
 
 namespace Pathfinding.ConsoleApp.View.GraphCreateViews
 {
     internal sealed partial class SmoothLevelView : FrameView
     {
         private readonly CreateGraphViewModel viewModel;
+        private readonly SmoothLevelViewModel smoothLevelViewModel;
         private readonly CompositeDisposable disposables = new CompositeDisposable();
 
         public SmoothLevelView(CreateGraphViewModel viewModel,
-            IEnumerable<(string Name, int Level)> levels)
+            SmoothLevelViewModel smoothLevelViewModel)
         {
             this.viewModel = viewModel;
+            this.smoothLevelViewModel = smoothLevelViewModel;
             Initialize();
-            var smooths = levels
-                .Select(x => x.Level)
+            var smooths = smoothLevelViewModel.Levels
+                .Select(x => x.Value)
                 .ToArray();
-            smoothLevels.RadioLabels = levels
-                .Select(x => ustring.Make(x.Name))
+            smoothLevels.RadioLabels = smoothLevelViewModel.Levels.Keys
+                .Select(x => ustring.Make(x))
                 .ToArray();
             smoothLevels.Events()
                 .SelectedItemChanged
@@ -33,6 +36,15 @@ namespace Pathfinding.ConsoleApp.View.GraphCreateViews
                 .BindTo(viewModel, x => x.SmoothLevel)
                 .DisposeWith(disposables);
             smoothLevels.SelectedItem = 0;
+            VisibleChanged += OnVisibilityChanged;
+        }
+
+        private void OnVisibilityChanged()
+        {
+            if (Visible)
+            {
+                smoothLevels.SelectedItem = 0;
+            }
         }
     }
 }

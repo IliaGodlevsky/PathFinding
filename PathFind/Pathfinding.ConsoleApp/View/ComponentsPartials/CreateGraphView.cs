@@ -14,7 +14,6 @@ namespace Pathfinding.ConsoleApp.View.GraphCreateViews
             Width = Dim.Fill();
             Height = Dim.Fill();
             Visible = false;
-            ClearOnVisibleFalse = true;
             Border = new Border()
             {
                 BorderStyle = BorderStyle.None,

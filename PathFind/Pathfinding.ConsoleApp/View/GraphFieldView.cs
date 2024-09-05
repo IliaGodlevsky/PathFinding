@@ -16,10 +16,10 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphFieldView : FrameView
     {
-        private readonly Dictionary<Coordinate, VertexView> viewsMap = new();
         private readonly GraphFieldViewModel viewModel;
         private readonly PathfindingRangeViewModel rangeViewModel;
 
+        private readonly Dictionary<Coordinate, VertexView> viewsMap = new();
         private readonly CompositeDisposable disposables = new();
         private readonly CompositeDisposable vertexDisposables = new();
 
@@ -41,16 +41,18 @@ namespace Pathfinding.ConsoleApp.View
         {
             rangeViewModel.WhenAnyValue(expression)
                 .Where(x => x != null)
+                .Where(x => viewsMap.ContainsKey(x.Position))
                 .Do(x => action(viewsMap[x.Position]))
                 .Subscribe()
-                .DisposeWith(disposables);
+                .DisposeWith(vertexDisposables);
             rangeViewModel.WhenAnyValue(expression)
-               .Buffer(2, 1)
-               .Where(b => b[1] == null && b[0] != null)
-               .Select(b => b[0])
-               .Do(x => viewsMap[x.Position].VisualizeAsRegular())
-               .Subscribe()
-               .DisposeWith(disposables);
+                .Buffer(count: 2, skip: 1)
+                .Where(buffer => buffer[1] == null && buffer[0] != null)
+                .Select(buffer => buffer[0])
+                .Where(x => viewsMap.ContainsKey(x.Position))
+                .Do(x => viewsMap[x.Position].VisualizeAsRegular())
+                .Subscribe()
+                .DisposeWith(vertexDisposables);
         }
 
         private void OnTransitAdded(VertexModel vertex)
@@ -66,7 +68,7 @@ namespace Pathfinding.ConsoleApp.View
         private void SubscribeOnPathfindingRangeChanging()
         {
             rangeViewModel.Transit.ActOnEveryObject(OnTransitAdded, OnTransitRemoved)
-                .DisposeWith(disposables);
+                .DisposeWith(vertexDisposables);
             SubscribeOnRangeExtremumChanging(x => x.Source, x => x.VisualizeAsSource());
             SubscribeOnRangeExtremumChanging(x => x.Target, x => x.VisualizeAsTarget());
         }
@@ -79,12 +81,12 @@ namespace Pathfinding.ConsoleApp.View
             foreach (var vertex in graph)
             {
                 var view = new VertexView(vertex);
-                SubscribeToButton1Clicked(view);
-                SubscribeToButton3Clicked(view);
-                SubscribeOnWheelButton(view);
                 view.DisposeWith(vertexDisposables);
                 Add(view);
                 viewsMap.Add(vertex.Position, view);
+                SubscribeToButton1Clicked(view);
+                SubscribeToButton3Clicked(view);
+                SubscribeOnWheelButton(view);
             }
             SubscribeOnPathfindingRangeChanging();
             SetNeedsDisplay();

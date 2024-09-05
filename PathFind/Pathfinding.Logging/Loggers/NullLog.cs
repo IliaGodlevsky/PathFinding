@@ -1,63 +1,57 @@
-﻿using NLog;
-using Pathfinding.Logging.Interface;
+﻿using Pathfinding.Logging.Interface;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Pathfinding.Logging.Loggers
 {
-    public sealed class MailLog : ILog
+    public sealed class NullLog : ILog
     {
-        private readonly ILogger mailLogger;
-
-        public MailLog()
-        {
-            mailLogger = LogManager.GetLogger("Mail");
-        }
-
         public void Debug(string message)
         {
-            mailLogger.Debug(message);
+            
         }
 
         public void Error(Exception ex, string message = null)
         {
-            mailLogger.Error(ex, message);
+            
         }
 
         public void Error(string message)
         {
-            mailLogger.Error(message);
+            
         }
 
         public void Fatal(Exception ex, string message = null)
         {
-            mailLogger.Fatal(ex, message);
+            
         }
 
         public void Fatal(string message)
         {
-            mailLogger.Fatal(message);
+            
         }
 
         public void Info(string message)
         {
-            mailLogger.Info(message);
+            
         }
 
         public void Trace(string message)
         {
-            mailLogger.Trace(message);
+            
         }
 
         public void Warn(Exception ex, string message = null)
         {
-            mailLogger.Warn(ex, message);
+            
         }
 
         public void Warn(string message)
         {
-            mailLogger.Warn(message);
+            
         }
-
-
     }
 }

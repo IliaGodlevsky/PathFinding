@@ -25,6 +25,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private readonly IMessenger messenger;
         private readonly IRequestService<VertexModel> service;
         private readonly ILog logger;
+
         private int graphId;
         public int GraphId 
         {

@@ -7,15 +7,12 @@ using Pathfinding.ConsoleApp.Model.Factories;
 using Pathfinding.ConsoleApp.View;
 using Pathfinding.ConsoleApp.View.ButtonsFrameViews;
 using Pathfinding.ConsoleApp.View.GraphCreateViews;
-using Pathfinding.ConsoleApp.ViewModel;
-using Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Business;
 using Pathfinding.Infrastructure.Business.Commands;
 using Pathfinding.Infrastructure.Business.Mappings;
 using Pathfinding.Infrastructure.Business.Serializers;
 using Pathfinding.Infrastructure.Business.Serializers.Decorators;
-using Pathfinding.Infrastructure.Data.InMemory;
 using Pathfinding.Infrastructure.Data.LiteDb;
 using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
 using Pathfinding.Logging.Interface;
@@ -33,43 +30,22 @@ namespace Pathfinding.ConsoleApp.Injection
         public static IContainer BuildApp()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterType<MainView>().AsSelf().WithAttributeFiltering();
-            builder.RegisterType<RightPanelView>().Keyed<Terminal.Gui.View>(KeyFilters.MainWindow).WithAttributeFiltering();
-            builder.RegisterType<GraphFrameView>().Keyed<Terminal.Gui.View>(KeyFilters.RightPanel).WithAttributeFiltering();
-            builder.RegisterType<GraphsTableView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphFrame).WithAttributeFiltering();
-            builder.RegisterType<ButtonsFrameView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphFrame).WithAttributeFiltering();
-            builder.RegisterType<LoadGraphButton>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
-            builder.RegisterType<DeleteGraphButton>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
-            builder.RegisterType<SaveGraphButton>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
-            builder.RegisterType<NewGraphButton>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
-            builder.RegisterType<CreateGraphView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphFrame).WithAttributeFiltering();
-            builder.RegisterType<GraphNameView>().Keyed<Terminal.Gui.View>(KeyFilters.CreateGraphView).WithAttributeFiltering();
-            builder.RegisterType<GraphParametresView>().Keyed<Terminal.Gui.View>(KeyFilters.CreateGraphView).WithAttributeFiltering();
-            builder.RegisterType<NeighborhoodFactoryView>().Keyed<Terminal.Gui.View>(KeyFilters.CreateGraphView).WithAttributeFiltering();
-            builder.RegisterType<SmoothLevelView>().Keyed<Terminal.Gui.View>(KeyFilters.CreateGraphView).WithAttributeFiltering();
-            builder.RegisterType<GraphFieldView>().Keyed<Terminal.Gui.View>(KeyFilters.MainWindow).WithAttributeFiltering();
-            builder.RegisterType<GraphRunsView>().Keyed<Terminal.Gui.View>(KeyFilters.RightPanel).WithAttributeFiltering();
-            builder.RegisterType<RunsTableView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphRunsView).WithAttributeFiltering();
 
-            builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
-            builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
-            builder.RegisterComposite<Logs, ILog>().As<ILog>().SingleInstance();
+            builder.RegisterType<GraphFactory<VertexModel>>().As<IGraphFactory<VertexModel>>().SingleInstance();
+            builder.RegisterType<VertexModelFactory>().As<IVertexFactory<VertexModel>>().SingleInstance();
+            builder.RegisterType<GraphAssemble<VertexModel>>().As<IGraphAssemble<VertexModel>>().SingleInstance();
+
+            builder.RegisterInstance(new[] { ("No", 0), ("Low", 1), ("Medium", 2), ("High", 4) })
+                .As<IEnumerable<(string Name, int Level)>>().SingleInstance();
+            builder.RegisterInstance(new[] {
+                ("Moore", (INeighborhoodFactory)new MooreNeighborhoodFactory()),
+                ("Von Neimann", new VonNeumannNeighborhoodFactory())
+            }).As<IEnumerable<(string Name, INeighborhoodFactory Factory)>>().SingleInstance();
+
+            builder.Register(_ => new LiteDbInFileUnitOfWorkFactory("pathfinding.litedb")).As<IUnitOfWorkFactory>().SingleInstance();
 
             builder.RegisterAutoMapper();
-            //builder.RegisterType<InMemoryUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
-            builder.Register(_ => new LiteDbInFileUnitOfWorkFactory("pathfinding.litedb")).As<IUnitOfWorkFactory>().SingleInstance();
             builder.RegisterType<RequestService<VertexModel>>().As<IRequestService<VertexModel>>().SingleInstance();
-
-            builder.RegisterType<WeakReferenceMessenger>().Keyed<IMessenger>(KeyFilters.Views).SingleInstance().WithAttributeFiltering();
-            builder.RegisterType<WeakReferenceMessenger>().Keyed<IMessenger>(KeyFilters.ViewModels).SingleInstance().WithAttributeFiltering();
-
-            builder.RegisterType<CreateGraphViewModel>().AsSelf().SingleInstance().WithAttributeFiltering();
-            builder.RegisterType<SaveGraphButtonModel>().AsSelf().SingleInstance().WithAttributeFiltering();
-            builder.RegisterType<LoadGraphButtonModel>().AsSelf().SingleInstance().WithAttributeFiltering();
-            builder.RegisterType<GraphTableViewModel>().AsSelf().SingleInstance().WithAttributeFiltering();
-            builder.RegisterType<GraphFieldViewModel>().AsSelf().SingleInstance().WithAttributeFiltering();
-            builder.RegisterType<DeleteGraphButtonModel>().AsSelf().SingleInstance().WithAttributeFiltering();
-            builder.RegisterType<PathfindingRangeViewModel>().AsSelf().SingleInstance().WithAttributeFiltering();
 
             builder.RegisterType<IncludeSourceVertex<VertexModel>>().SingleInstance().WithAttributeFiltering()
                 .Keyed<IPathfindingRangeCommand<VertexModel>>(KeyFilters.IncludeCommands);
@@ -90,28 +66,48 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<ExcludeTransitVertex<VertexModel>>().SingleInstance().WithAttributeFiltering()
                 .Keyed<IPathfindingRangeCommand<VertexModel>>(KeyFilters.ExcludeCommands);
 
-            builder.RegisterType<GraphFactory<VertexModel>>().As<IGraphFactory<VertexModel>>().SingleInstance();
-            builder.RegisterType<VertexModelFactory>().As<IVertexFactory<VertexModel>>().SingleInstance();
-            builder.RegisterType<GraphAssemble<VertexModel>>().As<IGraphAssemble<VertexModel>>().SingleInstance();
-
             builder.RegisterType<JsonSerializer<PathfindingHistorySerializationModel>>()
                 .As<ISerializer<PathfindingHistorySerializationModel>>().SingleInstance();
 
             builder.RegisterDecorator<CompressSerializer<PathfindingHistorySerializationModel>,
                 ISerializer<PathfindingHistorySerializationModel>>();
 
-            builder.Register(_ => new List<(string Name, int Level)>()
-            {
-                ("No", 0), ("Low", 1), ("Medium", 2), ("High", 4)
-            }).As<IEnumerable<(string Name, int Level)>>().SingleInstance();
+            builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
+            builder.RegisterComposite<Logs, ILog>().As<ILog>().SingleInstance();
 
-            builder.Register(_ => new List<(string Name, INeighborhoodFactory Factory)>()
-            {
-                ("Moore", new MooreNeighborhoodFactory()),
-                ("Von Neimann", new VonNeumannNeighborhoodFactory())
-            }).As<IEnumerable<(string Name, INeighborhoodFactory Factory)>>().SingleInstance();
+            builder.RegisterType<WeakReferenceMessenger>().Keyed<IMessenger>(KeyFilters.Views).SingleInstance().WithAttributeFiltering();
+            builder.RegisterType<WeakReferenceMessenger>().Keyed<IMessenger>(KeyFilters.ViewModels).SingleInstance().WithAttributeFiltering();
+
+            builder.RegisterViewModels();
+
+            builder.RegisterType<MainView>().AsSelf().WithAttributeFiltering();
+
+            builder.RegisterType<RightPanelView>().Keyed<Terminal.Gui.View>(KeyFilters.MainWindow).WithAttributeFiltering();
+            builder.RegisterType<GraphFrameView>().Keyed<Terminal.Gui.View>(KeyFilters.RightPanel).WithAttributeFiltering();
+            builder.RegisterType<GraphsTableView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphFrame).WithAttributeFiltering();
+            builder.RegisterType<ButtonsFrameView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphFrame).WithAttributeFiltering();
+            builder.RegisterType<LoadGraphButton>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
+            builder.RegisterType<DeleteGraphButton>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
+            builder.RegisterType<SaveGraphButton>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
+            builder.RegisterType<NewGraphButton>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
+            builder.RegisterType<CreateGraphView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphFrame).WithAttributeFiltering();
+            builder.RegisterType<GraphNameView>().Keyed<Terminal.Gui.View>(KeyFilters.CreateGraphView).WithAttributeFiltering();
+            builder.RegisterType<GraphParametresView>().Keyed<Terminal.Gui.View>(KeyFilters.CreateGraphView).WithAttributeFiltering();
+            builder.RegisterType<NeighborhoodFactoryView>().Keyed<Terminal.Gui.View>(KeyFilters.CreateGraphView).WithAttributeFiltering();
+            builder.RegisterType<SmoothLevelView>().Keyed<Terminal.Gui.View>(KeyFilters.CreateGraphView).WithAttributeFiltering();
+            builder.RegisterType<GraphFieldView>().Keyed<Terminal.Gui.View>(KeyFilters.MainWindow).WithAttributeFiltering();
+            builder.RegisterType<GraphRunsView>().Keyed<Terminal.Gui.View>(KeyFilters.RightPanel).WithAttributeFiltering();
+            builder.RegisterType<RunsTableView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphRunsView).WithAttributeFiltering();
 
             return builder.Build();
+        }
+
+        private static void RegisterViewModels(this ContainerBuilder builder)
+        {
+            builder.RegisterAssemblyTypes(typeof(Program).Assembly)
+                .Where(x => x.Name.EndsWith("ViewModel")).AsSelf()
+                .SingleInstance().WithAttributeFiltering();
         }
 
         private static void RegisterAutoMapper(this ContainerBuilder builder)

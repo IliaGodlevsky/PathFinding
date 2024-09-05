@@ -126,13 +126,7 @@
     <Compile Include="Extensions\PriorityQueueExtensions.cs" />
     <Compile Include="Extensions\SimplePriorityQueueExtensions.cs" />
     <Compile Include="Extensions\UnitOfWorkExtensions.cs" />
-    <Compile Include="Layers\CostsVisualizationLayer.cs" />
     <Compile Include="Layers\Layers.cs" />
-    <Compile Include="Layers\ObstaclesVisualizationLayer.cs" />
-    <Compile Include="Layers\RangeVisualizationLayer.cs" />
-    <Compile Include="Layers\RestoreVisualStateLayer.cs" />
-    <Compile Include="Layers\SubAlgorithmVisualizationLayer.cs" />
-    <Compile Include="Layers\VisualizationLayer.cs" />
     <Compile Include="Mappings\AlgorithmRunMappingProfile.cs" />
     <Compile Include="Mappings\GraphMappingProfile.cs" />
     <Compile Include="Mappings\GraphStateMappingProfile.cs" />
@@ -157,7 +151,6 @@
     <Compile Include="Serializers\JsonSerializer.cs" />
     <Compile Include="Layers\SmoothLayer.cs" />
     <Compile Include="Layers\VertexCostLayer.cs" />
-    <Compile Include="VisualPathfindingRange.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pathfinding.Domain.Core\Pathfinding.Domain.Core.csproj">

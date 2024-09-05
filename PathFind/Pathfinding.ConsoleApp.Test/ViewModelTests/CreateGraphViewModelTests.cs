@@ -1,4 +1,6 @@
-﻿using Pathfinding.TestUtils.Attributes;
+﻿using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.Logging.Loggers;
+using Pathfinding.TestUtils.Attributes;
 
 namespace Pathfinding.ConsoleApp.Test.ViewModelTests
 {
@@ -7,7 +9,7 @@ namespace Pathfinding.ConsoleApp.Test.ViewModelTests
     {
         public void CreateGraphCommand_FullData_ShouldCreate()
         {
-            
+            var viewModel = new CreateGraphViewModel(null, null, null, new NullLog());
         }
     }
 }

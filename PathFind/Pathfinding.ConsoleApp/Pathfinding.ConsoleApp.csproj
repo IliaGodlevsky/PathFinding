@@ -66,12 +66,14 @@
     <Compile Include="Model\GraphParametresModel.cs" />
     <Compile Include="Model\RunModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
-    <Compile Include="ViewModel\ButtonsFrameViewModels\DeleteGraphButtonModel.cs" />
-    <Compile Include="ViewModel\ButtonsFrameViewModels\LoadGraphButtonModel.cs" />
-    <Compile Include="ViewModel\ButtonsFrameViewModels\SaveGraphButtonModel.cs" />
+    <Compile Include="ViewModel\ButtonsFrameViewModels\DeleteGraphButtonViewModel.cs" />
+    <Compile Include="ViewModel\ButtonsFrameViewModels\LoadGraphButtonViewModel.cs" />
+    <Compile Include="ViewModel\ButtonsFrameViewModels\SaveGraphButtonViewModel.cs" />
     <Compile Include="Model\Factories\VertexViewModelFactory.cs" />
     <Compile Include="ViewModel\ExportImportOptions.cs" />
     <Compile Include="ViewModel\GraphCreateViewModels\CreateGraphViewModel.cs" />
+    <Compile Include="ViewModel\GraphCreateViewModels\NeighborhoodFactoryViewModel.cs" />
+    <Compile Include="ViewModel\GraphCreateViewModels\SmoothLevelViewModel.cs" />
     <Compile Include="ViewModel\GraphFieldViewModel.cs" />
     <Compile Include="ViewModel\ImportExportViewModel.cs" />
     <Compile Include="ViewModel\PathfindingRangeViewModel.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="View\ButtonsFrameViews\LoadGraphButton.cs" />
     <Compile Include="View\ButtonsFrameViews\NewGraphButton.cs" />
     <Compile Include="View\ButtonsFrameViews\SaveGraphButton.cs" />
+    <Compile Include="View\ColorContants.cs" />
     <Compile Include="View\ComponentsPartials\ButtonsFrameView.cs" />
     <Compile Include="View\ComponentsPartials\CreateGraphView.cs" />
     <Compile Include="View\ComponentsPartials\DeleteGraphButton.cs" />

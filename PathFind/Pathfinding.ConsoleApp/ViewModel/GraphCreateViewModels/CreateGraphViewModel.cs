@@ -30,6 +30,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private readonly IGraphAssemble<VertexModel> graphAssemble;
         private readonly IMessenger messenger;
         private readonly ILog logger;
+
         private string name;
         public string Name 
         {

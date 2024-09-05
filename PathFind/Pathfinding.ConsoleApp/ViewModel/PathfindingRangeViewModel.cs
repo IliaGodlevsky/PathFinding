@@ -71,8 +71,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
             pathfindingRange = this;
             this.messenger = messenger;
             this.service = service;
-            this.includeCommands = includeCommands;
-            this.excludeCommands = excludeCommands;
+            this.includeCommands = includeCommands.OrderByOrderAttribute().ToReadOnly();
+            this.excludeCommands = excludeCommands.OrderByOrderAttribute().ToReadOnly();
             this.logger = logger;
             messenger.Register<IsVertexInRangeRequest>(this, OnVertexIsInRangeRecieved);
             messenger.Register<GraphDeletedMessage>(this, OnGraphDeleted);
@@ -107,16 +107,21 @@ namespace Pathfinding.ConsoleApp.ViewModel
             await ExecuteSafe(async () =>
             {
                 var range = (await service.ReadRangeAsync(GraphId))
-                    .Select(x => new { x.Id, x.VertexId })
+                    .Select(x => (x.Id, x.VertexId ))
                     .ToList();
                 var vertices = pathfindingRange.ToList();
                 var index = vertices.IndexOf(vertex);
-                range.Insert(index, new { Id = 0, VertexId = vertex.Id });
+                range.Insert(index, (Id: 0, VertexId: vertex.Id));
                 var request = new UpsertPathfindingRangeRequest()
                 {
                     GraphId = GraphId,
-                    Ranges = range.Select((x, i) => (x.Id, IsSource: i == 0, IsTarget: i == range.Count - 1 && range.Count > 1,
-                        VertexId: x.VertexId, Order: i)).ToList()
+                    Ranges = range.Select((x, i) => 
+                        (x.Id, 
+                        IsSource: i == 0, 
+                        IsTarget: i == range.Count - 1 && range.Count > 1,
+                        VertexId: x.VertexId, 
+                        Order: i))
+                    .ToList()
                 };
                 await service.UpsertRangeAsync(request);
             }, logger.Error);
@@ -164,17 +169,17 @@ namespace Pathfinding.ConsoleApp.ViewModel
             Transit.Clear();
         }
 
-        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private async void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
                     var added = (VertexModel)e.NewItems[0];
-                    AddRangeToStorage(added).GetAwaiter().GetResult();
+                    await AddRangeToStorage(added);
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     var removed = (VertexModel)e.OldItems[0];
-                    RemoveVertexFromStorage(removed).GetAwaiter().GetResult();
+                    await RemoveVertexFromStorage(removed);
                     break;
             }
         }

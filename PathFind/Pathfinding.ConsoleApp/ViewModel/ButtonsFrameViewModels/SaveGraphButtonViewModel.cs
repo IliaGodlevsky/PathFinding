@@ -15,7 +15,7 @@ using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
 {
-    internal sealed class SaveGraphButtonModel : ImportExportViewModel
+    internal sealed class SaveGraphButtonViewModel : ImportExportViewModel
     {
         private readonly IRequestService<VertexModel> service;
         private readonly ISerializer<PathfindingHistorySerializationModel> serializer;
@@ -38,7 +38,7 @@ namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
 
         public ReactiveCommand<MouseEventArgs, Unit> SaveGraphCommand { get; }
 
-        public SaveGraphButtonModel(IRequestService<VertexModel> service,
+        public SaveGraphButtonViewModel(IRequestService<VertexModel> service,
             ISerializer<PathfindingHistorySerializationModel> serializer,
             [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
             ILog logger)

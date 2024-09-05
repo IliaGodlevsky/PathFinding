@@ -7,11 +7,9 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        using (var container = Container.BuildApp())
-        {
-            Application.Init();
-            var mainView = container.Resolve<MainView>();
-            Application.Run(mainView);
-        }
+        using var container = Container.BuildApp();
+        Application.Init();
+        var mainView = container.Resolve<MainView>();
+        Application.Run(mainView);
     }
 }

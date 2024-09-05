@@ -14,7 +14,7 @@ using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
 {
-    internal sealed class LoadGraphButtonModel : BaseViewModel
+    internal sealed class LoadGraphButtonViewModel : BaseViewModel
     {
         private readonly IMessenger messenger;
         private readonly IRequestService<VertexModel> service;
@@ -30,7 +30,7 @@ namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
 
         public ReactiveCommand<MouseEventArgs, Unit> LoadGraphCommand { get; }
 
-        public LoadGraphButtonModel([KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
+        public LoadGraphButtonViewModel([KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
             ISerializer<PathfindingHistorySerializationModel> serializer,
             IRequestService<VertexModel> service,
             ILog logger)

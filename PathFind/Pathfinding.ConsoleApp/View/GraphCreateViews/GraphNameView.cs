@@ -19,6 +19,15 @@ namespace Pathfinding.ConsoleApp.View.GraphCreateViews
             nameField.Events().TextChanged.Select(_ => nameField.Text)
                 .BindTo(this.viewModel, x => x.Name)
                 .DisposeWith(disposables);
+            VisibleChanged += OnVisibilityChanged;
+        }
+
+        private void OnVisibilityChanged()
+        {
+            if (Visible)
+            {
+                nameField.Text = string.Empty;
+            }
         }
     }
 }
