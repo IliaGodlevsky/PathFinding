@@ -29,7 +29,7 @@ namespace Pathfinding.Service.Interface
 
         Task<IReadOnlyCollection<GraphInformationModel>> ReadAllGraphInfoAsync(CancellationToken token = default);
 
-        Task<PathfindingHistoryModel<T>> ReadPathfindingHistoryAsync(int graphId,
+        Task<IReadOnlyCollection<PathfindingHistoryModel<T>>> ReadPathfindingHistoriesAsync(IEnumerable<int> graphIds,
             CancellationToken token = default);
 
         Task<IReadOnlyCollection<PathfindingRangeModel>> ReadRangeAsync(int graphId,
@@ -44,7 +44,7 @@ namespace Pathfinding.Service.Interface
         Task<IReadOnlyCollection<PathfindingHistoryModel<T>>> CreatePathfindingHistoriesAsync(IEnumerable<PathfindingHistorySerializationModel> request,
             CancellationToken token = default);
 
-        Task<PathfindingHistorySerializationModel> ReadSerializationHistoryAsync(int graphId,
+        Task<IReadOnlyCollection<PathfindingHistorySerializationModel>> ReadSerializationHistoriesAsync(IEnumerable<int> graphIds,
             CancellationToken token = default);
 
         Task<GraphSerializationModel> ReadSerializationGraphAsync(int graphId,

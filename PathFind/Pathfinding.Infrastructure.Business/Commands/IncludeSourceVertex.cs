@@ -16,8 +16,7 @@ namespace Pathfinding.Infrastructure.Business.Commands
 
         public bool CanExecute(IPathfindingRange<TVertex> range, TVertex vertex)
         {
-            return range.Source == null
-                && range.CanBeInRange(vertex);
+            return range.Source == null && range.CanBeInRange(vertex);
         }
     }
 }

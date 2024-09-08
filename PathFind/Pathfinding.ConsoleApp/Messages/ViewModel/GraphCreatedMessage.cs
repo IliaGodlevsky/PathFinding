@@ -6,11 +6,11 @@ namespace Pathfinding.ConsoleApp.Messages.ViewModel
 {
     internal sealed class GraphCreatedMessage
     {
-        public GraphModel<VertexModel> Model { get; }
+        public GraphModel<VertexModel>[] Models { get; }
 
-        public GraphCreatedMessage(GraphModel<VertexModel> model)
+        public GraphCreatedMessage(GraphModel<VertexModel>[] models)
         {
-            Model = model;
+            Models = models;
         }
     }
 }

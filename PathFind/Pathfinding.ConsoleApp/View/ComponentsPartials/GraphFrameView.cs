@@ -18,6 +18,7 @@ namespace Pathfinding.ConsoleApp.View
             Border = new Border()
             {
                 BorderStyle = BorderStyle.Rounded,
+                BorderBrush = Color.Brown,
                 Padding = new Thickness(1, 0, 1, 0),
                 Title = "Graphs"
             };

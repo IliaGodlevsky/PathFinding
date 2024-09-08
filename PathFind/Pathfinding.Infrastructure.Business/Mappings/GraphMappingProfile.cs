@@ -50,7 +50,6 @@ namespace Pathfinding.Infrastructure.Business.Mappings
         {
             var vertices = context.Mapper
                         .Map<IEnumerable<T>>(serializationDto.Vertices)
-                        .OrderBy(x => x.Position)
                         .ToReadOnly();
             var graph = graphFactory.CreateGraph(vertices, serializationDto.DimensionSizes);
             return new() { Name = serializationDto.Name, Graph = graph };
@@ -58,7 +57,7 @@ namespace Pathfinding.Infrastructure.Business.Mappings
 
         private IGraph<T> Construct(GraphAssembleModel assembleDto, ResolutionContext context)
         {
-            var vertices = context.Mapper.Map<T[]>(assembleDto.Vertices).OrderBy(x => x.Position).ToArray();
+            var vertices = context.Mapper.Map<T[]>(assembleDto.Vertices).ToArray();
             var graph = graphFactory.CreateGraph(vertices, assembleDto.Dimensions);
             vertices.Zip(assembleDto.Vertices, (i, j) => (Vertex: i, Info: j))
                     .ForEach(i =>

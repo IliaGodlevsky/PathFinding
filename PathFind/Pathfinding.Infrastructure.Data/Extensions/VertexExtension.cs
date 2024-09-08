@@ -18,7 +18,7 @@ namespace Pathfinding.Infrastructure.Data.Extensions
 
         public static bool IsEqual(this IVertex self, IVertex vertex)
         {
-            return self.Cost.Equals(vertex.Cost)
+            return self.Cost.CurrentCost.Equals(vertex.Cost.CurrentCost)
                 && self.Position.Equals(vertex.Position)
                 && self.IsObstacle == vertex.IsObstacle;
         }

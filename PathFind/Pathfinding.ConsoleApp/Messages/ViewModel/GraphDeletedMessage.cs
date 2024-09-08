@@ -2,11 +2,11 @@
 {
     internal sealed class GraphDeletedMessage
     {
-        public int GraphId { get; }
+        public int[] GraphIds { get; }
 
-        public GraphDeletedMessage(int graphId)
+        public GraphDeletedMessage(int[] graphIds)
         {
-            GraphId = graphId;
+            GraphIds = graphIds;
         }
     }
 }

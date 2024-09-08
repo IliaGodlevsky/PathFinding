@@ -14,11 +14,12 @@ namespace Pathfinding.ConsoleApp.View
             X = 0;
             Y = Pos.Percent(50);
             Width = Dim.Fill();
-            Height = Dim.Percent(50);
+            Height = Dim.Fill();
             Border = new Border()
             {
                 BorderStyle = BorderStyle.Rounded,
                 Padding = new Thickness(1, 0, 1, 0),
+                BorderBrush = Color.BrightCyan,
                 Title = "Runs"
             };
         }

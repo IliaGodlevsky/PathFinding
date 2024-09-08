@@ -18,13 +18,6 @@ namespace Pathfinding.Service.Interface.Extensions
             return memory.ToArray();
         }
 
-        public static async Task<string> SerializeToStringAsync<T>(this ISerializer<T> serializer,
-            T item, CancellationToken token = default)
-        {
-            var bytes = await serializer.SerializeToBytesAsync(item, token).ConfigureAwait(false);
-            return Encoding.Default.GetString(bytes);
-        }
-
         public static async Task<T> DeserializeFromStringAsync<T>(this ISerializer<T> serializer,
             string item, CancellationToken token = default)
         {

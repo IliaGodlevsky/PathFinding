@@ -8,6 +8,8 @@ using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Service.Interface.Models.Serialization;
 using ReactiveUI;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
 using static Terminal.Gui.View;
@@ -19,7 +21,7 @@ namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
         private readonly IMessenger messenger;
         private readonly IRequestService<VertexModel> service;
         private readonly ILog logger;
-        private readonly ISerializer<PathfindingHistorySerializationModel> serializer;
+        private readonly ISerializer<List<PathfindingHistorySerializationModel>> serializer;
 
         private string filePath;
         public string FilePath
@@ -31,7 +33,7 @@ namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
         public ReactiveCommand<MouseEventArgs, Unit> LoadGraphCommand { get; }
 
         public LoadGraphButtonViewModel([KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
-            ISerializer<PathfindingHistorySerializationModel> serializer,
+            ISerializer<List<PathfindingHistorySerializationModel>> serializer,
             IRequestService<VertexModel> service,
             ILog logger)
         {
@@ -48,9 +50,12 @@ namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
             {
                 await ExecuteSafe(async () =>
                 {
-                    var graph = await serializer.DeserializeFromFileAsync(FilePath);
-                    var result = await service.CreatePathfindingHistoryAsync(graph);
-                    messenger.Send(new GraphCreatedMessage(result.Graph));
+                    var histories = await serializer.DeserializeFromFileAsync(FilePath)
+                        .ConfigureAwait(false);
+                    var result = await service.CreatePathfindingHistoriesAsync(histories)
+                        .ConfigureAwait(false);
+                    var graphs = result.Select(x => x.Graph).ToArray();
+                    messenger.Send(new GraphCreatedMessage(graphs));
                 }, logger.Error);
             }
         }

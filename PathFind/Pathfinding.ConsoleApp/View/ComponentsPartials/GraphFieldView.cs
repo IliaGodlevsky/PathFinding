@@ -10,7 +10,12 @@ namespace Pathfinding.ConsoleApp.View
             Y = 0;
             Width = Dim.Percent(75);
             Height = Dim.Fill();
-            Border = new Border();
+            Border = new Border()
+            {
+                BorderBrush = Color.BrightYellow,
+                BorderStyle = BorderStyle.Rounded,
+                Title = "Graph field"
+            };
         }
     }
 }

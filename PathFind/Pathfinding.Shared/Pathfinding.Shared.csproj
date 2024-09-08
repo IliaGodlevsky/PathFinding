@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlackWhole.cs" />
-    <Compile Include="CompositeUndo.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="EventArguments\ProcessEventArgs.cs" />
     <Compile Include="EventHandlers\ProcessEventHandler.cs" />
@@ -61,11 +60,7 @@
     <Compile Include="Extensions\MemberInfoExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Extensions\TimeSpanExtensions.cs" />
-    <Compile Include="Interface\IInterruptable.cs" />
-    <Compile Include="Interface\IPausable.cs" />
-    <Compile Include="Interface\IProcess.cs" />
     <Compile Include="Interface\IRandom.cs" />
-    <Compile Include="Interface\IUndo.cs" />
     <Compile Include="OrderAttribute.cs" />
     <Compile Include="Primitives\Coordinate.cs" />
     <Compile Include="Primitives\ExtendedObservableCollection.cs" />

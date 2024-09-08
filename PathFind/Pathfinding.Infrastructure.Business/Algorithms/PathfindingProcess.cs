@@ -1,30 +1,19 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Business.Algorithms.Events;
-using Pathfinding.Infrastructure.Business.Algorithms.Exceptions;
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Algorithms;
 using Pathfinding.Shared.EventHandlers;
-using Pathfinding.Shared.Interface;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public abstract class PathfindingProcess : IAlgorithm<IGraphPath>, IProcess, IPausable, IInterruptable, IDisposable
+    public abstract class PathfindingProcess : IAlgorithm<IGraphPath>, IDisposable
     {
         private sealed class NullProcess : PathfindingProcess
         {
             public override IGraphPath FindPath() => NullGraphPath.Instance;
-
-            public override void Interrupt() { }
-
-            public override void Pause() { }
-
-            public override void Resume() { }
-
-            protected override void WaitUntilResumed() { }
         }
 
         public static readonly PathfindingProcess Idle = new NullProcess();
@@ -34,23 +23,12 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
         public event SubPathFoundEventHandler SubPathFound;
         public event ProcessEventHandler Started;
         public event ProcessEventHandler Finished;
-        public event ProcessEventHandler Interrupted;
-        public event ProcessEventHandler Paused;
-        public event ProcessEventHandler Resumed;
-
-        private readonly AutoResetEvent pauseEvent;
-
-        public bool IsInProcess { get; private set; } = false;
-
-        public bool IsPaused { get; private set; } = false;
-
-        private bool IsInterrupted { get; set; } = false;
 
         private bool IsAlgorithmDisposed { get; set; } = false;
 
         protected PathfindingProcess()
         {
-            pauseEvent = new(true);
+            
         }
 
         public abstract IGraphPath FindPath();
@@ -62,50 +40,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             Finished = null;
             VertexEnqueued = null;
             VertexVisited = null;
-            Interrupted = null;
-            Paused = null;
-            Resumed = null;
             SubPathFound = null;
-            pauseEvent.Dispose();
-        }
-
-        public virtual void Interrupt()
-        {
-            if (IsInProcess)
-            {
-                pauseEvent.Set();
-                IsPaused = false;
-                IsInProcess = false;
-                IsInterrupted = true;
-                Interrupted?.Invoke(this, new());
-            }
-        }
-
-        public virtual void Pause()
-        {
-            if (!IsPaused && IsInProcess)
-            {
-                IsPaused = true;
-                Paused?.Invoke(this, new());
-            }
-        }
-
-        public virtual void Resume()
-        {
-            if (IsPaused && IsInProcess)
-            {
-                IsPaused = false;
-                pauseEvent.Set();
-                Resumed?.Invoke(this, new());
-            }
-        }
-
-        protected virtual void WaitUntilResumed()
-        {
-            if (IsPaused && IsInProcess)
-            {
-                pauseEvent.WaitOne();
-            }
         }
 
         protected void RaiseVertexVisited(IVertex vertex)
@@ -134,21 +69,11 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 
         protected virtual void PrepareForPathfinding()
         {
-            IsInProcess = true;
             Started?.Invoke(this, new());
-        }
-
-        protected void ThrowIfInterrupted()
-        {
-            if (IsInterrupted)
-            {
-                throw new AlgorithmInterruptedException(this);
-            }
         }
 
         protected virtual void CompletePathfinding()
         {
-            IsInProcess = false;
             Finished?.Invoke(this, new());
         }
     }

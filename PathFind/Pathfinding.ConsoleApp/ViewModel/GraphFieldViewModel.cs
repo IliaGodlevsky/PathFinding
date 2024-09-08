@@ -128,7 +128,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnGraphDeleted(object recipient, GraphDeletedMessage msg)
         {
-            if (msg.GraphId == GraphId)
+            if (msg.GraphIds.Contains(GraphId))
             {
                 GraphId = 0;
                 Graph = Graph<VertexModel>.Empty;

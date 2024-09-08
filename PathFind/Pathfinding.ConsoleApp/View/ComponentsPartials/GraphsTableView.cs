@@ -36,6 +36,7 @@ namespace Pathfinding.ConsoleApp.View
                 ShowVerticalHeaderLines = false,
                 ColumnStyles = columnStyles
             };
+            MultiSelect = true;
             FullRowSelect = true;
             X = 0;
             Y = Pos.Percent(0);

@@ -113,10 +113,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 var smoothLayer = Enumerable.Repeat(new SmoothLayer(new MeanCost()), SmoothLevel)
                     .To(x => new Layers(x.ToArray()));
                 var layers = new Layers(costLayer, obstacleLayer, neighborhoodLayer, smoothLayer);
-                var graph = await graphAssemble.AssembleGraphAsync(layers, Width, Length);
+                var graph = await graphAssemble.AssembleGraphAsync(layers, Width, Length).ConfigureAwait(false);
                 var request = new CreateGraphRequest<VertexModel>() { Graph = graph, Name = Name };
                 var graphModel = await service.CreateGraphAsync(request);
-                messenger.Send(new GraphCreatedMessage(graphModel));
+                messenger.Send(new GraphCreatedMessage(new[] { graphModel }));
             }, logger.Error);
         }
     }

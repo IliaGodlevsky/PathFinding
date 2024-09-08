@@ -2,11 +2,11 @@
 {
     internal sealed class GraphSelectedMessage
     {
-        public int GraphId { get; }
+        public int[] GraphIds { get; }
 
-        public GraphSelectedMessage(int graphId)
+        public GraphSelectedMessage(int[] graphId)
         {
-            GraphId = graphId;
+            GraphIds = graphId;
         }
     }
 }

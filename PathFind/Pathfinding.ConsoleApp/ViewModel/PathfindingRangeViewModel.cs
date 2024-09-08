@@ -208,7 +208,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnGraphDeleted(object recipient, GraphDeletedMessage msg)
         {
-            if (GraphId == msg.GraphId)
+            if (msg.GraphIds.Contains(GraphId))
             {
                 disposables.Clear();
                 ClearRange();

@@ -62,7 +62,13 @@
     <Compile Include="Messages\ViewModel\GraphSelectedMessage.cs" />
     <Compile Include="Messages\ViewModel\IsVertexInRangeRequest.cs" />
     <Compile Include="Messages\ViewModel\ObstaclesCountChangedMessage.cs" />
+    <Compile Include="Messages\ViewModel\QueryPathfindingRangeMessage.cs" />
+    <Compile Include="Messages\ViewModel\RunHistoryCreateMessage.cs" />
+    <Compile Include="Messages\View\IOpenViewMessage.cs" />
+    <Compile Include="Messages\View\OpenDijkstraAlgorithmCreateViewRequest.cs" />
     <Compile Include="Messages\View\OpenGraphCreateViewRequest.cs" />
+    <Compile Include="Messages\View\OpenRunCreateViewRequest.cs" />
+    <Compile Include="Messages\View\RunViewModelChangedMessage.cs" />
     <Compile Include="Model\GraphParametresModel.cs" />
     <Compile Include="Model\RunModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
@@ -70,18 +76,38 @@
     <Compile Include="ViewModel\ButtonsFrameViewModels\LoadGraphButtonViewModel.cs" />
     <Compile Include="ViewModel\ButtonsFrameViewModels\SaveGraphButtonViewModel.cs" />
     <Compile Include="Model\Factories\VertexViewModelFactory.cs" />
+    <Compile Include="ViewModel\CreateDijkstraRunViewModel.cs" />
+    <Compile Include="ViewModel\CreateRunViewModel.cs" />
     <Compile Include="ViewModel\ExportImportOptions.cs" />
     <Compile Include="ViewModel\GraphCreateViewModels\CreateGraphViewModel.cs" />
     <Compile Include="ViewModel\GraphCreateViewModels\NeighborhoodFactoryViewModel.cs" />
     <Compile Include="ViewModel\GraphCreateViewModels\SmoothLevelViewModel.cs" />
     <Compile Include="ViewModel\GraphFieldViewModel.cs" />
     <Compile Include="ViewModel\ImportExportViewModel.cs" />
+    <Compile Include="ViewModel\IRequireStepRulesViewModel.cs" />
+    <Compile Include="ViewModel\NewRunButtonViewModel.cs" />
     <Compile Include="ViewModel\PathfindingRangeViewModel.cs" />
-    <Compile Include="View\ButtonsFrameViews\ButtonsFrameView.cs" />
-    <Compile Include="View\ButtonsFrameViews\DeleteGraphButton.cs" />
-    <Compile Include="View\ButtonsFrameViews\LoadGraphButton.cs" />
-    <Compile Include="View\ButtonsFrameViews\NewGraphButton.cs" />
-    <Compile Include="View\ButtonsFrameViews\SaveGraphButton.cs" />
+    <Compile Include="ViewModel\PathfindingVisualizationViewModel.cs" />
+    <Compile Include="ViewModel\StepRulesViewModel.cs" />
+    <Compile Include="View\ComponentsPartials\AlgorithmsListView.cs" />
+    <Compile Include="View\ComponentsPartials\CreateRunButtonsFrame.cs" />
+    <Compile Include="View\ComponentsPartials\DeleteRunButton.cs" />
+    <Compile Include="View\ComponentsPartials\DijkstraAlgorithmView.cs" />
+    <Compile Include="View\ComponentsPartials\NewRunButton.cs" />
+    <Compile Include="View\ComponentsPartials\RunButtonsFrame.cs" />
+    <Compile Include="View\ComponentsPartials\StepRulesView.cs" />
+    <Compile Include="View\RightPanelViews\Runs\CreateRun\AlgorithmsListView.cs" />
+    <Compile Include="View\RightPanelViews\Runs\CreateRun\CreateRunButton.cs" />
+    <Compile Include="View\RightPanelViews\Runs\CreateRun\CreateRunButtonsFrame.cs" />
+    <Compile Include="View\RightPanelViews\Runs\CreateRun\CreateDijkstraRunView.cs" />
+    <Compile Include="View\RightPanelViews\Runs\CreateRun\CreateRunView.cs" />
+    <Compile Include="View\RightPanelViews\Runs\CreateRun\DijkstraAlgorithmView.cs" />
+    <Compile Include="View\RightPanelViews\Runs\CreateRun\StepRulesView.cs" />
+    <Compile Include="View\RightPanelViews\Graphs\ButtonFrame\ButtonsFrameView.cs" />
+    <Compile Include="View\RightPanelViews\Graphs\ButtonFrame\DeleteGraphButton.cs" />
+    <Compile Include="View\RightPanelViews\Graphs\ButtonFrame\LoadGraphButton.cs" />
+    <Compile Include="View\RightPanelViews\Graphs\ButtonFrame\NewGraphButton.cs" />
+    <Compile Include="View\RightPanelViews\Graphs\ButtonFrame\SaveGraphButton.cs" />
     <Compile Include="View\ColorContants.cs" />
     <Compile Include="View\ComponentsPartials\ButtonsFrameView.cs" />
     <Compile Include="View\ComponentsPartials\CreateGraphView.cs" />
@@ -98,17 +124,21 @@
     <Compile Include="View\ComponentsPartials\RunsTableView.cs" />
     <Compile Include="View\ComponentsPartials\SaveGraphButton.cs" />
     <Compile Include="View\ComponentsPartials\SmoothLevelView.cs" />
-    <Compile Include="View\GraphCreateViews\CreateGraphView.cs" />
-    <Compile Include="View\GraphCreateViews\GraphNameView.cs" />
-    <Compile Include="View\GraphCreateViews\GraphParametresView.cs" />
-    <Compile Include="View\GraphCreateViews\NeighborhoodFactoryView.cs" />
-    <Compile Include="View\GraphCreateViews\SmoothLevelView.cs" />
+    <Compile Include="View\RightPanelViews\Runs\ButtonFrame\DeleteRunButton.cs" />
+    <Compile Include="View\RightPanelViews\Graphs\CreateGraph\CreateGraphView.cs" />
+    <Compile Include="View\RightPanelViews\Graphs\CreateGraph\GraphNameView.cs" />
+    <Compile Include="View\RightPanelViews\Graphs\CreateGraph\GraphParametresView.cs" />
+    <Compile Include="View\RightPanelViews\Graphs\CreateGraph\NeighborhoodFactoryView.cs" />
+    <Compile Include="View\RightPanelViews\Graphs\CreateGraph\SmoothLevelView.cs" />
     <Compile Include="View\GraphFieldView.cs" />
-    <Compile Include="View\GraphFrameView.cs" />
-    <Compile Include="View\GraphRunsView.cs" />
-    <Compile Include="View\GraphsTableView.cs" />
+    <Compile Include="View\RightPanelViews\Graphs\GraphFrameView.cs" />
+    <Compile Include="View\RightPanelViews\Runs\GraphRunsView.cs" />
+    <Compile Include="View\RightPanelViews\Graphs\GraphsTableView.cs" />
     <Compile Include="View\ImportExportView.cs" />
-    <Compile Include="View\RunsTableView.cs" />
+    <Compile Include="View\RightPanelViews\Runs\ButtonFrame\NewRunButton.cs" />
+    <Compile Include="View\RightPanelViews\Runs\ButtonFrame\RunButtonsFrame.cs" />
+    <Compile Include="View\RightPanelViews\Runs\RunsTableView.cs" />
+    <Compile Include="View\RightPanelViews\Runs\RunView.cs" />
     <Compile Include="View\VertexView.cs" />
     <Compile Include="Model\VertexModel.cs" />
     <Compile Include="Program.cs" />
@@ -116,12 +146,14 @@
     <Compile Include="ViewModel\GraphTableViewModel.cs" />
     <Compile Include="View\ComponentsPartials\GraphsTableView.cs" />
     <Compile Include="View\MainView.cs" />
-    <Compile Include="View\RightPanelView.cs" />
+    <Compile Include="View\RightPanelViews\RightPanelView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ViewModel\RightPanelViewModels\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pathfinding.Domain.Core\Pathfinding.Domain.Core.csproj">
       <Project>{E0C71A1A-7DB7-426F-80DC-887F87F0AA13}</Project>
@@ -161,6 +193,9 @@
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm">
       <Version>8.2.2</Version>
+    </PackageReference>
+    <PackageReference Include="OptimizedPriorityQueue">
+      <Version>5.1.0</Version>
     </PackageReference>
     <PackageReference Include="ReactiveMarbles.ObservableEvents.SourceGenerator">
       <Version>1.3.1</Version>

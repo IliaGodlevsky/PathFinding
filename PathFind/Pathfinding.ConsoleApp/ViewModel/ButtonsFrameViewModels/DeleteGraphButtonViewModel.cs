@@ -7,6 +7,7 @@ using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using ReactiveUI;
 using System;
+using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
 using static Terminal.Gui.View;
@@ -15,15 +16,15 @@ namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
 {
     internal sealed class DeleteGraphButtonViewModel : BaseViewModel
     {
-        private int graphId;
         private readonly IMessenger messenger;
         private readonly IRequestService<VertexModel> service;
         private readonly ILog logger;
 
-        public int GraphId 
+        private int[] graphIds = Array.Empty<int>();
+        public int[] GraphIds 
         {
-            get => graphId;
-            set => this.RaiseAndSetIfChanged(ref graphId, value);
+            get => graphIds;
+            set => this.RaiseAndSetIfChanged(ref graphIds, value);
         }
 
         public ReactiveCommand<MouseEventArgs, Unit> DeleteCommand { get; }
@@ -41,22 +42,26 @@ namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
 
         private IObservable<bool> CanDelete()
         {
-            return this.WhenAnyValue(x => x.GraphId,
-                (graphId) => graphId > 0);
+            return this.WhenAnyValue(x => x.GraphIds,
+                (graphIds) => graphIds.Length > 0);
         }
 
         private async Task DeleteGraph(MouseEventArgs e)
         {
             await ExecuteSafe(async () =>
             {
-                await service.DeleteGraphAsync(GraphId);
-                messenger.Send(new GraphDeletedMessage(GraphId));
+                var isDeleted = await service.DeleteGraphsAsync(graphIds)
+                    .ConfigureAwait(false);
+                if (isDeleted)
+                {
+                    messenger.Send(new GraphDeletedMessage(graphIds.ToArray()));
+                }
             }, logger.Error);
         }
 
         private void OnGraphSelected(object recipient, GraphSelectedMessage msg)
         {
-            GraphId = msg.GraphId;
+            GraphIds = msg.GraphIds;
         }
     }
 }

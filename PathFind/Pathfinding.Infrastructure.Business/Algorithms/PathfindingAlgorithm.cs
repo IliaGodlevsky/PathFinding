@@ -43,8 +43,6 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
                     PrepareForSubPathfinding(range);
                     while (!IsDestination())
                     {
-                        ThrowIfInterrupted();
-                        WaitUntilResumed();
                         InspectVertex(CurrentVertex);
                         CurrentVertex = GetNextVertex();
                         VisitCurrentVertex();

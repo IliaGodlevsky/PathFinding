@@ -50,6 +50,7 @@
     <Reference Include="System.Linq.Async, Version=6.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Linq.Async.6.0.1\lib\net48\System.Linq.Async.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -77,19 +78,8 @@
     <Compile Include="Algorithms\Events\SubPathFoundEventHandler.cs" />
     <Compile Include="Algorithms\Events\VerticesEnqueuedEventArgs.cs" />
     <Compile Include="Algorithms\Events\VerticesEnqueuedEventHandler.cs" />
-    <Compile Include="Algorithms\Exceptions\AlgorithmInterruptedException.cs" />
     <Compile Include="Algorithms\Exceptions\DeadendVertexException.cs" />
     <Compile Include="Algorithms\Exceptions\PathfindingException.cs" />
-    <Compile Include="Algorithms\Factories\AStarAlgorithmFactory.cs" />
-    <Compile Include="Algorithms\Factories\AStarLeeAlgorithmFactory.cs" />
-    <Compile Include="Algorithms\Factories\CostGreedyAlgorithmFactory.cs" />
-    <Compile Include="Algorithms\Factories\DepthFirstAlgorithmFactory.cs" />
-    <Compile Include="Algorithms\Factories\DijkstraAlgorithmFactory.cs" />
-    <Compile Include="Algorithms\Factories\DistanceFirstAlgorithmFactory.cs" />
-    <Compile Include="Algorithms\Factories\HeuristicCostGreedyAlgorithmFactory.cs" />
-    <Compile Include="Algorithms\Factories\IDAStarAlgorithmFactory.cs" />
-    <Compile Include="Algorithms\Factories\LeeAlgorithmFactory.cs" />
-    <Compile Include="Algorithms\Factories\RandomAlgorithmFactory.cs" />
     <Compile Include="Algorithms\GraphPaths\CompositeGraphPath.cs" />
     <Compile Include="Algorithms\GraphPaths\GraphPath.cs" />
     <Compile Include="Algorithms\GraphPaths\NullGraphPath.cs" />
@@ -110,7 +100,6 @@
     <Compile Include="Algorithms\StepRules\LandscapeStepRule.cs" />
     <Compile Include="Algorithms\StepRules\WalkStepRule.cs" />
     <Compile Include="Algorithms\WaveAlgorithm.cs" />
-    <Compile Include="Commands\Constants.cs" />
     <Compile Include="Commands\ExcludeSourceVertex.cs" />
     <Compile Include="Commands\ExcludeTargetVertex.cs" />
     <Compile Include="Commands\ExcludeTransitVertex.cs" />
@@ -141,6 +130,7 @@
     <Compile Include="Layers\NeighborhoodLayer.cs" />
     <Compile Include="Layers\ObstacleLayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CachedRequestService.cs" />
     <Compile Include="RequestService.cs" />
     <Compile Include="Serializers\AesCrypto.cs" />
     <Compile Include="Serializers\Decorators\BufferedSerializer.cs" />
@@ -173,6 +163,9 @@
       <Project>{c57fe374-ec6d-4797-829e-a31697e08975}</Project>
       <Name>Pathfinding.Shared</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

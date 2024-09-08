@@ -1,5 +1,6 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
+using DynamicData;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
@@ -39,15 +40,16 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
-        private GraphParametresModel selected;
+        private GraphParametresModel[] selected;
 
-        public GraphParametresModel Selected
+        public GraphParametresModel[] Selected
         {
             get => selected;
             set
             {
                 this.RaiseAndSetIfChanged(ref selected, value);
-                messenger.Send(new GraphSelectedMessage(selected.Id));
+                var toSend = selected.Select(x => x.Id).ToArray();
+                messenger.Send(new GraphSelectedMessage(toSend));
             }
         }
 
@@ -88,17 +90,17 @@ namespace Pathfinding.ConsoleApp.ViewModel
             try
             {
                 return service.ReadAllGraphInfoAsync()
-                .GetAwaiter()
-                .GetResult()
-                .Select(x => new GraphParametresModel()
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Width = x.Dimensions.ElementAt(0),
-                    Length = x.Dimensions.ElementAt(1),
-                    Obstacles = x.ObstaclesCount
-                })
-                .ToList();
+                    .GetAwaiter()
+                    .GetResult()
+                    .Select(x => new GraphParametresModel()
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Width = x.Dimensions.ElementAt(0),
+                        Length = x.Dimensions.ElementAt(1),
+                        Obstacles = x.ObstaclesCount
+                    })
+                    .ToList();
             }
             catch (Exception ex)
             {
@@ -109,27 +111,38 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnGraphCreated(object recipient, GraphCreatedMessage msg)
         {
-            var parametres = new GraphParametresModel
+            if (msg.Models.Length > 0)
             {
-                Id = msg.Model.Id,
-                Name = msg.Model.Name,
-                Obstacles = msg.Model.Graph.GetObstaclesCount(),
-                Width = msg.Model.Graph.GetWidth(),
-                Length = msg.Model.Graph.GetLength()
-            };
-            Graphs.Add(parametres);
-            if (Graphs.Count == 1)
+                var parametres = msg.Models
+                    .Select(x => 
+                        new GraphParametresModel
+                        {
+                            Id = x.Id,
+                            Name = x.Name,
+                            Obstacles = x.Graph.GetObstaclesCount(),
+                            Width = x.Graph.GetWidth(),
+                            Length = x.Graph.GetLength()
+                        })
+                    .ToArray();
+                Graphs.Add(parametres);
+            }
+            if (Graphs.Count == 1 && msg.Models.Length > 0)
             {
-                Activated = parametres;
+                Activated = Graphs.First();
             }
         }
 
         private void OnGraphDeleted(object recipient, GraphDeletedMessage msg)
         {
-            var graph = Graphs.FirstOrDefault(x => x.Id == msg.GraphId);
-            if (graph != null)
+            var graphs = Graphs
+                .Where(x => msg.GraphIds.Contains(x.Id))
+                .ToList();
+            if (graphs.Count > 0)
             {
-                Graphs.Remove(graph);
+                foreach(var graph in graphs)
+                {
+                    Graphs.Remove(graph);
+                }
             }
         }
     }

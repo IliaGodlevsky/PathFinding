@@ -57,12 +57,18 @@ namespace Pathfinding.ConsoleApp.View
 
         private void OnTransitAdded(VertexModel vertex)
         {
-            viewsMap[vertex.Position].VisualizeAsTransit();
+            if (viewsMap.TryGetValue(vertex.Position, out var view))
+            {
+                viewsMap[vertex.Position].VisualizeAsTransit();
+            }
         }
 
         private void OnTransitRemoved(VertexModel vertex)
         {
-            viewsMap[vertex.Position].VisualizeAsRegular();
+            if (viewsMap.TryGetValue(vertex.Position, out var view))
+            {
+                viewsMap[vertex.Position].VisualizeAsRegular();
+            }
         }
 
         private void SubscribeOnPathfindingRangeChanging()
@@ -75,21 +81,28 @@ namespace Pathfinding.ConsoleApp.View
 
         private void RenderGraph(IGraph<VertexModel> graph)
         {
-            vertexDisposables.Clear();
             RemoveAll();
+            vertexDisposables.Clear();
             viewsMap.Clear();
-            foreach (var vertex in graph)
+            try
             {
-                var view = new VertexView(vertex);
-                view.DisposeWith(vertexDisposables);
-                Add(view);
-                viewsMap.Add(vertex.Position, view);
-                SubscribeToButton1Clicked(view);
-                SubscribeToButton3Clicked(view);
-                SubscribeOnWheelButton(view);
+                foreach (var vertex in graph)
+                {
+                    var view = new VertexView(vertex);
+                    view.DisposeWith(vertexDisposables);
+                    Add(view);
+                    viewsMap.Add(vertex.Position, view);
+                    SubscribeToButton1Clicked(view);
+                    SubscribeToButton3Clicked(view);
+                    SubscribeOnWheelButton(view);
+                }
+                SubscribeOnPathfindingRangeChanging();
+                SetNeedsDisplay();
             }
-            SubscribeOnPathfindingRangeChanging();
-            SetNeedsDisplay();
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
 
         private void SubscribeToButton1Clicked(VertexView view)

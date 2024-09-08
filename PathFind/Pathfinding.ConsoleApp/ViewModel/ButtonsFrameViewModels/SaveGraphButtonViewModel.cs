@@ -7,8 +7,11 @@ using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Service.Interface.Models.Serialization;
+using Pathfinding.Shared.Extensions;
 using ReactiveUI;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
 using static Terminal.Gui.View;
@@ -18,15 +21,15 @@ namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
     internal sealed class SaveGraphButtonViewModel : ImportExportViewModel
     {
         private readonly IRequestService<VertexModel> service;
-        private readonly ISerializer<PathfindingHistorySerializationModel> serializer;
+        private readonly ISerializer<List<PathfindingHistorySerializationModel>> serializer;
         private readonly IMessenger messenger;
         private readonly ILog logger;
 
-        private int graphId;
-        public int GraphId
+        private int[] graphIds = Array.Empty<int>();
+        public int[] GraphIds
         {
-            get => graphId;
-            set => this.RaiseAndSetIfChanged(ref graphId, value);
+            get => graphIds;
+            set => this.RaiseAndSetIfChanged(ref graphIds, value);
         }
 
         private string filePath;
@@ -39,7 +42,7 @@ namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
         public ReactiveCommand<MouseEventArgs, Unit> SaveGraphCommand { get; }
 
         public SaveGraphButtonViewModel(IRequestService<VertexModel> service,
-            ISerializer<PathfindingHistorySerializationModel> serializer,
+            ISerializer<List<PathfindingHistorySerializationModel>> serializer,
             [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
             ILog logger)
         {
@@ -54,8 +57,8 @@ namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
         private IObservable<bool> CanSave()
         {
             return this.WhenAnyValue(
-                x => x.GraphId,
-                graphId => graphId > 0);
+                x => x.GraphIds,
+                graphIds => graphIds.Length > 0);
         }
 
         private async Task SaveGraph(MouseEventArgs e)
@@ -64,8 +67,10 @@ namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
             {
                 await ExecuteSafe(async () =>
                 {
-                    var graph = await service.ReadSerializationHistoryAsync(GraphId);
-                    await serializer.SerializeToFileAsync(graph, FilePath);
+                    var graphs = await service.ReadSerializationHistoriesAsync(graphIds)
+                        .ConfigureAwait(false);
+                    await serializer.SerializeToFileAsync(graphs.ToList(), FilePath)
+                        .ConfigureAwait(false);
                     FilePath = string.Empty;
                 }, logger.Error);
             }
@@ -73,12 +78,12 @@ namespace Pathfinding.ConsoleApp.ViewModel.ButtonsFrameViewModels
 
         private void OnGraphSelected(object recipient, GraphSelectedMessage msg)
         {
-            GraphId = msg.GraphId;
+            GraphIds = msg.GraphIds;
         }
 
         private void OnGraphDeleted(object recipient, GraphDeletedMessage msg)
         {
-            GraphId = 0;
+            GraphIds = GraphIds.Except(msg.GraphIds).ToArray();
         }
     }
 }

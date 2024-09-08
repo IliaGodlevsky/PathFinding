@@ -185,19 +185,25 @@ namespace Pathfinding.Infrastructure.Business
             }, token);
         }
 
-        public async Task<PathfindingHistoryModel<T>> ReadPathfindingHistoryAsync(int graphId,
+        public async Task<IReadOnlyCollection<PathfindingHistoryModel<T>>> ReadPathfindingHistoriesAsync(IEnumerable<int> graphIds,
             CancellationToken token = default)
         {
-            return await Transaction<PathfindingHistoryModel<T>>(async (unitOfWork, t) =>
+            return await Transaction<List<PathfindingHistoryModel<T>>>(async (unitOfWork, t) =>
             {
-                var graph = await unitOfWork.ReadGraphAsync<T>(graphId, mapper, t);
-                var algorithms = await unitOfWork.GetAlgorithmRuns(graphId, mapper, t);
-                var range = await unitOfWork.GetRangeAsync(graphId, mapper, t);
-                return new() 
-                { 
-                    Graph = graph, 
-                    Algorithms = algorithms, 
-                    Range = range.Select(x => x.Position).ToReadOnly() };
+                var result = new List<PathfindingHistoryModel<T>>();
+                foreach (var graphId in graphIds)
+                {
+                    var graph = await unitOfWork.ReadGraphAsync<T>(graphId, mapper, t);
+                    var algorithms = await unitOfWork.GetAlgorithmRuns(graphId, mapper, t);
+                    var range = await unitOfWork.GetRangeAsync(graphId, mapper, t);
+                    result.Add(new()
+                    {
+                        Graph = graph,
+                        Algorithms = algorithms,
+                        Range = range.Select(x => x.Position).ToReadOnly()
+                    });
+                }
+                return result;
             }, token);
         }
 
@@ -258,11 +264,11 @@ namespace Pathfinding.Infrastructure.Business
             return mapper.Map<GraphSerializationModel>(result);
         }
 
-        public async Task<PathfindingHistorySerializationModel> ReadSerializationHistoryAsync(int graphId,
+        public async Task<IReadOnlyCollection<PathfindingHistorySerializationModel>> ReadSerializationHistoriesAsync(IEnumerable<int> graphIds,
             CancellationToken token = default)
         {
-            var result = await ReadPathfindingHistoryAsync(graphId, token);
-            return mapper.Map<PathfindingHistorySerializationModel>(result);
+            var result = await ReadPathfindingHistoriesAsync(graphIds, token);
+            return mapper.Map<List<PathfindingHistorySerializationModel>>(result);
         }
 
         public async Task<bool> RemoveNeighborsAsync(IReadOnlyDictionary<T, IReadOnlyCollection<T>> request,
@@ -379,16 +385,18 @@ namespace Pathfinding.Infrastructure.Business
                 try
                 {
                     unitOfWork.BeginTransaction();
-                    var result = await action(unitOfWork, token);
-                    await unitOfWork.CommitAsync(token);
+                    var result = await action(unitOfWork, token).ConfigureAwait(false);
+                    await unitOfWork.CommitAsync(token).ConfigureAwait(false);
                     return result;
                 }
                 catch (Exception)
                 {
-                    await unitOfWork.RollbackAsync(token);
+                    await unitOfWork.RollbackAsync(token).ConfigureAwait(false);
                     throw;
                 }
             }
         }
+
+        
     }
 }

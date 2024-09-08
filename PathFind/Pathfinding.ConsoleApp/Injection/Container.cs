@@ -7,8 +7,11 @@ using Pathfinding.ConsoleApp.Model.Factories;
 using Pathfinding.ConsoleApp.View;
 using Pathfinding.ConsoleApp.View.ButtonsFrameViews;
 using Pathfinding.ConsoleApp.View.GraphCreateViews;
+using Pathfinding.ConsoleApp.View.RightPanelViews.Runs.ButtonFrame;
+using Pathfinding.ConsoleApp.View.RightPanelViews.Runs.CreateRun;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Business;
+using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Infrastructure.Business.Commands;
 using Pathfinding.Infrastructure.Business.Mappings;
 using Pathfinding.Infrastructure.Business.Serializers;
@@ -41,11 +44,17 @@ namespace Pathfinding.ConsoleApp.Injection
                 ("Moore", (INeighborhoodFactory)new MooreNeighborhoodFactory()),
                 ("Von Neimann", new VonNeumannNeighborhoodFactory())
             }).As<IEnumerable<(string Name, INeighborhoodFactory Factory)>>().SingleInstance();
+            builder.RegisterInstance(new[]
+            {
+                ("Default", (IStepRule)new DefaultStepRule()),
+                ("Lanscape", new LandscapeStepRule())
+            }).As<IEnumerable<(string Name, IStepRule Rule)>>().SingleInstance();
 
             builder.Register(_ => new LiteDbInFileUnitOfWorkFactory("pathfinding.litedb")).As<IUnitOfWorkFactory>().SingleInstance();
 
             builder.RegisterAutoMapper();
             builder.RegisterType<RequestService<VertexModel>>().As<IRequestService<VertexModel>>().SingleInstance();
+            //builder.RegisterDecorator<CachedRequestService<VertexModel>, IRequestService<VertexModel>>(); causes error
 
             builder.RegisterType<IncludeSourceVertex<VertexModel>>().SingleInstance().WithAttributeFiltering()
                 .Keyed<IPathfindingRangeCommand<VertexModel>>(KeyFilters.IncludeCommands);
@@ -66,11 +75,11 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<ExcludeTransitVertex<VertexModel>>().SingleInstance().WithAttributeFiltering()
                 .Keyed<IPathfindingRangeCommand<VertexModel>>(KeyFilters.ExcludeCommands);
 
-            builder.RegisterType<JsonSerializer<PathfindingHistorySerializationModel>>()
-                .As<ISerializer<PathfindingHistorySerializationModel>>().SingleInstance();
+            builder.RegisterType<JsonSerializer<List<PathfindingHistorySerializationModel>>>()
+                .As<ISerializer<List<PathfindingHistorySerializationModel>>>().SingleInstance();
 
-            builder.RegisterDecorator<CompressSerializer<PathfindingHistorySerializationModel>,
-                ISerializer<PathfindingHistorySerializationModel>>();
+            builder.RegisterDecorator<CompressSerializer<List<PathfindingHistorySerializationModel>>,
+                ISerializer<List<PathfindingHistorySerializationModel>>>();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
@@ -99,6 +108,16 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<GraphFieldView>().Keyed<Terminal.Gui.View>(KeyFilters.MainWindow).WithAttributeFiltering();
             builder.RegisterType<GraphRunsView>().Keyed<Terminal.Gui.View>(KeyFilters.RightPanel).WithAttributeFiltering();
             builder.RegisterType<RunsTableView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphRunsView).WithAttributeFiltering();
+            builder.RegisterType<RunButtonsFrame>().Keyed<Terminal.Gui.View>(KeyFilters.GraphRunsView).WithAttributeFiltering();
+            builder.RegisterType<NewRunButton>().Keyed<Terminal.Gui.View>(KeyFilters.RunButtonsFrame).WithAttributeFiltering();
+            builder.RegisterType<DeleteRunButton>().Keyed<Terminal.Gui.View>(KeyFilters.RunButtonsFrame).WithAttributeFiltering();
+            builder.RegisterType<AlgorithmsListView>().Keyed<Terminal.Gui.View>(KeyFilters.CreateRunView).WithAttributeFiltering();
+            builder.RegisterType<CreateRunView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphRunsView).WithAttributeFiltering();
+            builder.RegisterType<CreateDijkstraRunView>().Keyed<Terminal.Gui.View>(KeyFilters.CreateRunView).WithAttributeFiltering();
+            builder.RegisterType<DijkstraAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
+            builder.RegisterType<StepRulesView>().Keyed<Terminal.Gui.View>(KeyFilters.CreateAlgorithmRunView).InstancePerDependency().WithAttributeFiltering();
+            builder.RegisterType<CreateRunButtonsFrame>().Keyed<Terminal.Gui.View>(KeyFilters.GraphRunsView).WithAttributeFiltering();
+            builder.RegisterType<CreateRunButton>().Keyed<Terminal.Gui.View>(KeyFilters.CreateRunButtonsFrame).WithAttributeFiltering();
 
             return builder.Build();
         }
@@ -107,6 +126,7 @@ namespace Pathfinding.ConsoleApp.Injection
         {
             builder.RegisterAssemblyTypes(typeof(Program).Assembly)
                 .Where(x => x.Name.EndsWith("ViewModel")).AsSelf()
+                .AsImplementedInterfaces()
                 .SingleInstance().WithAttributeFiltering();
         }
 

@@ -39,16 +39,17 @@ namespace Pathfinding.Infrastructure.Business.Layers
         private IReadOnlyCollection<IVertex> GetNeighboursWithinGraph(INeighborhood self,
             IGraph<IVertex> graph)
         {
-            int ReturnInRange(int coordinate, int index)
+            bool IsInRange(Coordinate coordinate)
             {
-                var range = new InclusiveValueRange<int>(graph.DimensionsSizes[index] - 1);
-                return range.ReturnInRange(coordinate, options);
+                return coordinate.CoordinatesValues
+                    .Juxtapose(graph.DimensionsSizes, (x, y) => x < y && x >= 0);
+
             }
-            return self.Select(x => x.CoordinatesValues.Select(ReturnInRange))
-                .Select(x => new Coordinate(x.ToArray()))
-                .Distinct()
-                .Select(graph.Get)
-                .ToReadOnly();
+            var selected = self.Where(IsInRange).ToArray();
+            var distinct = selected.Distinct().ToList();
+            var vertices = distinct.Select(graph.Get).ToList();
+            var values = vertices.ToReadOnly();
+            return values;
         }
     }
 }

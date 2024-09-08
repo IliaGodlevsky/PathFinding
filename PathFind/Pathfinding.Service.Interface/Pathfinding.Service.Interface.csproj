@@ -57,6 +57,7 @@
     <Compile Include="IRequestService.cs" />
     <Compile Include="ISerializer.cs" />
     <Compile Include="IStepRule.cs" />
+    <Compile Include="Models\ModelBuilder.cs" />
     <Compile Include="Models\Read\GraphIdsModel.cs" />
     <Compile Include="Models\Read\GraphInformationsModel.cs" />
     <Compile Include="Models\Read\PathfindingHistoriesModel.cs" />

@@ -53,6 +53,12 @@ namespace Pathfinding.Shared.Extensions
             foreach (var item in range) yield return item;
         }
 
+        public static IEnumerable<int> Iterate(this (int LowerValueRange, int UpperValueRange) range)
+        {
+            var valueRange = new InclusiveValueRange<int>(range.LowerValueRange, range.UpperValueRange);
+            return Iterate(valueRange);
+        }
+
         public static RangeEnumerator GetEnumerator(this InclusiveValueRange<int> range)
         {
             return new RangeEnumerator(range);

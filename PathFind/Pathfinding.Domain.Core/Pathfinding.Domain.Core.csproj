@@ -68,6 +68,7 @@
     <Compile Include="Neighbor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PathfindingRange.cs" />
+    <Compile Include="RunStatuses.cs" />
     <Compile Include="Statistics.cs" />
     <Compile Include="SubAlgorithm.cs" />
     <Compile Include="Vertex.cs" />
