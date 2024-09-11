@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Newtonsoft.Json;
 using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
@@ -21,6 +22,10 @@ namespace Pathfinding.Infrastructure.Business.Mappings
         public VerticesMappingProfile(IVertexFactory<T> vertexFactory)
         {
             this.vertexFactory = vertexFactory;
+            CreateMap<Coordinate, string>()
+                .ConvertUsing(x => CoordinateToString(x));
+            CreateMap<string, Coordinate>()
+                .ConvertUsing(x => FromStringToCoordinate(x));
             CreateMap<IVertexCost, VertexCostModel>()
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => x.CurrentCost))
                 .ForMember(x => x.UpperValueOfRange, opt => opt.MapFrom(x => x.CostRange.UpperValueOfRange))
@@ -30,11 +35,11 @@ namespace Pathfinding.Infrastructure.Business.Mappings
             CreateMap<VertexAssembleModel, T>()
                 .ConstructUsing(x => vertexFactory.CreateVertex(x.Coordinate));
             CreateMap<T, Vertex>()
-                .ForMember(x => x.Coordinates, opt => opt.MapFrom(x => x.Position.CoordinatesValues.ToArray()))
+                .ForMember(x => x.Coordinates, opt => opt.MapFrom(x => CoordinateToString(x.Position)))
                 .ForMember(x => x.UpperValueRange, opt => opt.MapFrom(x => x.Cost.CostRange.UpperValueOfRange))
                 .ForMember(x => x.LowerValueRange, opt => opt.MapFrom(x => x.Cost.CostRange.LowerValueOfRange))
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => x.Cost.CurrentCost));
-            CreateMap<Vertex, T>().ConstructUsing((x, context) => vertexFactory.CreateVertex(FromBytesToCoordinate(x, context)))
+            CreateMap<Vertex, T>().ConstructUsing((x, context) => vertexFactory.CreateVertex(FromStringToCoordinate(x)))
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => new VertexCost(x.Cost, new(x.UpperValueRange, x.LowerValueRange))));
             CreateMap<Vertex, VertexAssembleModel>()
                 .ForMember(x => x.Coordinate, opt => opt.MapFrom(x => x.Coordinates))
@@ -45,10 +50,22 @@ namespace Pathfinding.Infrastructure.Business.Mappings
             CreateMap<IEnumerable<VertexSerializationModel>, IEnumerable<T>>().ConstructUsing(ToVertices);
         }
 
-        private Coordinate FromBytesToCoordinate(Vertex entity,
-            ResolutionContext context)
+        private string CoordinateToString(Coordinate coord)
         {
-            var coordinates = context.Mapper.Map<IEnumerable<int>>(entity.Coordinates).ToArray();
+            var array = coord.CoordinatesValues.ToList();
+            var serialized = JsonConvert.SerializeObject(array);
+            return serialized;
+        }
+
+        private Coordinate FromStringToCoordinate(string coordinate)
+        {
+            var deserialized = JsonConvert.DeserializeObject<List<int>>(coordinate);
+            return new Coordinate(deserialized);
+        }
+
+        private Coordinate FromStringToCoordinate(Vertex entity)
+        {
+            var coordinates = JsonConvert.DeserializeObject<int[]>(entity.Coordinates);
             return new Coordinate(coordinates);
         }
 

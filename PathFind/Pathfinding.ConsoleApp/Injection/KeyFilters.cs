@@ -16,8 +16,8 @@ namespace Pathfinding.ConsoleApp.Injection
         public const string ExcludeCommands = nameof(ExcludeCommands);
         public const string RunButtonsFrame = nameof(RunButtonsFrame);
         public const string AlgorithmsListView = nameof(AlgorithmsListView);
-        public const string CreateRunView = nameof(CreateRunView);
-        public const string CreateAlgorithmRunView = nameof(CreateAlgorithmRunView);
+        public const string NewRunView = nameof(NewRunView);
+        public const string AlgorithmParametresView = nameof(AlgorithmParametresView);
         public const string CreateRunButtonsFrame = nameof(CreateRunButtonsFrame);
     }
 }

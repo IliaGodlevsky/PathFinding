@@ -10,6 +10,7 @@ internal class Program
         using var container = Container.BuildApp();
         Application.Init();
         var mainView = container.Resolve<MainView>();
-        Application.Run(mainView);
+        Application.Top.Add(mainView);
+        Application.Run(x => true);
     }
 }

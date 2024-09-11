@@ -40,7 +40,7 @@ namespace Pathfinding.Infrastructure.Business.Extensions
                     GraphState = mapper.Map<GraphStateModel>(state),
                     SubAlgorithms = mapper.Map<List<SubAlgorithmModel>>(subs),
                     Run = mapper.Map<AlgorithmRunModel>(runEntity),
-                    Statistics = mapper.Map<RunStatisticsModel>(stats)
+                    Statistics = mapper.Map<RunStatisticsModel>(stats) with { AlgorithmId = runHistory.Statistics.AlgorithmId}
                 };
             }).ToArrayAsync(token));
         }

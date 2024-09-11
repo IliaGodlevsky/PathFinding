@@ -19,6 +19,7 @@ namespace Pathfinding.ConsoleApp.View.RightPanelViews.Runs.CreateRun
                 BorderStyle = BorderStyle.Rounded,
                 Title = "Step rules"
             };
+            Visible = false;
             Add(stepRules);
         }
     }

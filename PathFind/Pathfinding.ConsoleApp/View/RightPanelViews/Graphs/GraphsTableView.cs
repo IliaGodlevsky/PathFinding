@@ -13,13 +13,14 @@ using System.Data;
 using System;
 using Pathfinding.Shared.Extensions;
 using System.Collections.Generic;
+using Pathfinding.ConsoleApp.Messages.View;
 
 namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphsTableView
     {
         private readonly GraphTableViewModel viewModel;
-        private readonly CompositeDisposable disposables = new CompositeDisposable();
+        private readonly CompositeDisposable disposables = new ();
         private readonly Dictionary<int, IDisposable> modelChangingSubs = new();
         private readonly IMessenger messenger;
 
@@ -49,6 +50,12 @@ namespace Pathfinding.ConsoleApp.View
                           .ToArray())
                 .BindTo(viewModel, x => x.Selected)
                 .DisposeWith(disposables);
+            MouseClick += MouseEntered;
+        }
+
+        private void MouseEntered(MouseEventArgs e)
+        {
+            messenger.Send(new CloseAlgorithmViewMessage());
         }
 
         private GraphParametresModel GetParametresModel(int selectedRow)

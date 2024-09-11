@@ -2,6 +2,7 @@
 using Pathfinding.Infrastructure.Business.Mappings;
 using Pathfinding.Infrastructure.Business.Serializers;
 using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
+using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Shared.Primitives;
 
@@ -16,12 +17,14 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations
             var visitedVerticesSerializer = new JsonSerializer<IEnumerable<VisitedVerticesModel>>();
             var coordinateModelSerializer = new JsonSerializer<IEnumerable<CoordinateModel>>();
             var intArraySerializer = new JsonSerializer<IEnumerable<int>>();
+            var coordinateCostPairSerializer = new JsonSerializer<IEnumerable<CostCoordinatePair>>();
 
             var profiles = new Profile[]
             {
                 new UntitledMappingProfile(coordinateModelSerializer,
                     intArraySerializer,
-                    visitedVerticesSerializer),
+                    visitedVerticesSerializer,
+                    coordinateCostPairSerializer),
                 new SubAlgorithmsMappingProfile(),
                 new StatisticsMappingProfile(),
                 new HistoryMappingProfile<TestVertex>(),

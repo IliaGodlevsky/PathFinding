@@ -7,10 +7,12 @@ namespace Pathfinding.Service.Interface.Models.Read
     {
         public int AlgorithmRunId { get; set; }
 
+        public IReadOnlyCollection<Coordinate> Regulars { get; set; }
+
         public IReadOnlyCollection<Coordinate> Obstacles { get; set; }
 
         public IReadOnlyCollection<Coordinate> Range { get; set; }
 
-        public IReadOnlyCollection<int> Costs { get; set; }
+        public IReadOnlyCollection<(Coordinate Position, int Cost)> Costs { get; set; }
     }
 }

@@ -11,6 +11,13 @@ using Pathfinding.Shared.Primitives;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.Shared.Extensions;
+using System.Runtime.CompilerServices;
+using Pathfinding.ConsoleApp.Messages.ViewModel;
+using CommunityToolkit.Mvvm.Messaging;
+using Autofac.Features.AttributeFilters;
+using Pathfinding.ConsoleApp.Injection;
+using Pathfinding.ConsoleApp.Messages.View;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -24,7 +31,8 @@ namespace Pathfinding.ConsoleApp.View
         private readonly CompositeDisposable vertexDisposables = new();
 
         public GraphFieldView(GraphFieldViewModel viewModel,
-            PathfindingRangeViewModel rangeViewModel)
+            PathfindingRangeViewModel rangeViewModel,
+            [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
             this.viewModel = viewModel;
             this.rangeViewModel = rangeViewModel;
@@ -34,6 +42,18 @@ namespace Pathfinding.ConsoleApp.View
                 .Do(RenderGraph)
                 .Subscribe()
                 .DisposeWith(disposables);
+            messenger.Register<OpenRunViewMessage>(this, OnOpenRunViewRecieved);
+            messenger.Register<CloseAlgorithmViewMessage>(this, OnCloseRunViewMessage);
+        }
+
+        private void OnOpenRunViewRecieved(object recipient, OpenRunViewMessage msg)
+        {
+            Visible = false;
+        }
+
+        private void OnCloseRunViewMessage(object recipient, CloseAlgorithmViewMessage msg)
+        {
+            Visible = true;
         }
 
         private void SubscribeOnRangeExtremumChanging(Expression<Func<PathfindingRangeViewModel, VertexModel>> expression,
@@ -84,25 +104,23 @@ namespace Pathfinding.ConsoleApp.View
             RemoveAll();
             vertexDisposables.Clear();
             viewsMap.Clear();
-            try
+
+            foreach (var vertex in graph)
             {
-                foreach (var vertex in graph)
-                {
-                    var view = new VertexView(vertex);
-                    view.DisposeWith(vertexDisposables);
-                    Add(view);
-                    viewsMap.Add(vertex.Position, view);
-                    SubscribeToButton1Clicked(view);
-                    SubscribeToButton3Clicked(view);
-                    SubscribeOnWheelButton(view);
-                }
-                SubscribeOnPathfindingRangeChanging();
-                SetNeedsDisplay();
+                var view = new VertexView(vertex);
+                view.DisposeWith(vertexDisposables);
+                viewsMap.Add(vertex.Position, view);
+                SubscribeToButton1Clicked(view);
+                SubscribeToButton3Clicked(view);
+                SubscribeOnWheelButton(view);
             }
-            catch(Exception ex)
+
+            Application.MainLoop.Invoke(() =>
             {
-                Console.WriteLine(ex.ToString());
-            }
+                Add(viewsMap.Values.ToArray());
+            });
+
+            SubscribeOnPathfindingRangeChanging();
         }
 
         private void SubscribeToButton1Clicked(VertexView view)

@@ -89,6 +89,9 @@ namespace Pathfinding.Service.Interface
         Task<bool> DeleteGraphAsync(int graphId,
             CancellationToken token = default);
 
+        Task<bool> DeleteRunsAsync(IEnumerable<int> runIds,
+            CancellationToken token = default);
+
         Task<bool> DeleteGraphsAsync(IEnumerable<int> ids,
             CancellationToken token = default);
     }

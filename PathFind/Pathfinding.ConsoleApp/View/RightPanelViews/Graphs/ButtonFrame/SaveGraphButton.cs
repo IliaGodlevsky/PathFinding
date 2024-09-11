@@ -27,7 +27,7 @@ namespace Pathfinding.ConsoleApp.View.ButtonsFrameViews
             Initialize();
             var commandObservable = viewModel.SaveGraphCommand.CanExecute;
             var clickObservable = this.Events().MouseClick;
-            clickObservable.CombineLatest(commandObservable)
+            clickObservable.Zip(commandObservable)
                 .Where(x => x.First.MouseEvent.Flags == MouseFlags.Button1Clicked
                     && x.Second == true)
                 .Select(x => x.First)

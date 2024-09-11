@@ -1,10 +1,8 @@
-﻿using Pathfinding.Domain.Core;
-using Pathfinding.Domain.Interface;
+﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Shared.Primitives;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,8 +23,9 @@ namespace Pathfinding.Service.Interface.Models
         {
             request.GraphState = new CreateGraphStateRequest()
             {
-                Costs = graph.Select(x=>x.Cost.CurrentCost).ToArray(),
-                Obstacles = graph.Where(x=>x.IsObstacle).Select(x=>x.Position).ToArray(),
+                Costs = graph.Select(x => (x.Position, x.Cost.CurrentCost)).ToArray(),
+                Obstacles = graph.Where(x => x.IsObstacle).Select(x => x.Position).ToArray(),
+                Regulars = graph.Where(x => !x.IsObstacle).Select(x => x.Position).ToArray(),
                 Range = range.ToArray()
             };
             return request;

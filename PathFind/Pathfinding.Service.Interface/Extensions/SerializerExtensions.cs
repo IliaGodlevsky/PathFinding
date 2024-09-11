@@ -1,7 +1,4 @@
 ﻿using System.IO;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,14 +13,6 @@ namespace Pathfinding.Service.Interface.Extensions
             await serializer.SerializeToAsync(item, memory, token)
                 .ConfigureAwait(false);
             return memory.ToArray();
-        }
-
-        public static async Task<T> DeserializeFromStringAsync<T>(this ISerializer<T> serializer,
-            string item, CancellationToken token = default)
-        {
-            var bytes = Encoding.Default.GetBytes(item);
-            var result = await serializer.DeserializeFromBytes(bytes, token).ConfigureAwait(false);
-            return result;
         }
 
         public static async Task<T> DeserializeFromBytes<T>(this ISerializer<T> serializer,
@@ -48,39 +37,6 @@ namespace Pathfinding.Service.Interface.Extensions
             using var fileStream = File.OpenRead(filePath);
             return await self.DeserializeFromAsync(fileStream, token)
                 .ConfigureAwait(false);
-        }
-
-        public static async Task SerializeToNetworkAsync<T>(this ISerializer<T> self,
-            T value, string host, int port, CancellationToken token = default)
-        {
-            using var client = new TcpClient(host, port);
-            using var networkStream = client.GetStream();
-            await self.SerializeToAsync(value, networkStream, token)
-                .ConfigureAwait(false);
-        }
-
-        public static async Task SerializeToNetworkAsync<T>(this ISerializer<T> self,
-            T value, (string Host, int Port) address, CancellationToken token = default)
-        {
-            await self.SerializeToNetworkAsync(value, address.Host, address.Port, token);
-        }
-
-        public static async Task<T> DeserializeFromNetwork<T>(this ISerializer<T> self,
-            int port, CancellationToken token = default)
-        {
-            var listener = new TcpListener(IPAddress.Any, port);
-            try
-            {
-                listener.Start();
-                using var client = listener.AcceptTcpClient();
-                using var networkStream = client.GetStream();
-                return await self.DeserializeFromAsync(networkStream, token)
-                    .ConfigureAwait(false);
-            }
-            finally
-            {
-                listener.Stop();
-            }
         }
     }
 }

@@ -10,6 +10,8 @@
 
         public byte[] Obstacles { get; set; }
 
+        public byte[] Regulars { get; set; }
+
         public byte[] Range { get; set; }
     }
 }

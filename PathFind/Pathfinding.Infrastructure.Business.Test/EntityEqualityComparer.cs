@@ -60,6 +60,7 @@ namespace Pathfinding.Infrastructure.Business.Test
         public static bool AreEqual(CreateGraphStateRequest request, GraphStateModel model)
         {
             return request.Obstacles.SequenceEqual(model.Obstacles)
+                && request.Regulars.SequenceEqual(model.Regulars)
                 && request.Range.SequenceEqual(model.Range)
                 && request.Costs.SequenceEqual(model.Costs);
         }

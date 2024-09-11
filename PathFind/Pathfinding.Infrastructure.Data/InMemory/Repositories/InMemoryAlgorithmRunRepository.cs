@@ -1,5 +1,6 @@
 ﻿using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface.Repositories;
+using Pathfinding.Infrastructure.Data.Pathfinding;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -39,6 +40,14 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
         {
             int result = set.Count(x => x.GraphId == graphId);
             return await Task.FromResult(result);
+        }
+
+        public async Task<bool> DeleteByRunIdsAsync(IEnumerable<int> runIds, CancellationToken token = default)
+        {
+            var ids = runIds.ToArray();
+            var toDelete = set.Where(x => ids.Contains(x.Id)).Select(x => x.Id).ToHashSet();
+            var deleted = set.RemoveWhere(x => toDelete.Contains(x.Id));
+            return await Task.FromResult(deleted > 0);
         }
     }
 }

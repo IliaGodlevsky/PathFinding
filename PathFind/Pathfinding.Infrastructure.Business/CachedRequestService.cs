@@ -110,6 +110,11 @@ namespace Pathfinding.Infrastructure.Business
             return await service.DeleteRangeAsync(graphId, token);
         }
 
+        public async Task<bool> DeleteRunsAsync(IEnumerable<int> runIds, CancellationToken token = default)
+        {
+            return await service.DeleteRunsAsync(runIds, token);
+        }
+
         public async Task<IReadOnlyCollection<GraphInformationModel>> ReadAllGraphInfoAsync(CancellationToken token = default)
         {
             return await service.ReadAllGraphInfoAsync(token);

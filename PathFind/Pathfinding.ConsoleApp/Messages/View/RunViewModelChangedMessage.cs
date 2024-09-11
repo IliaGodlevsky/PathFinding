@@ -4,9 +4,9 @@ namespace Pathfinding.ConsoleApp.Messages.View
 {
     internal sealed class RunViewModelChangedMessage
     {
-        public CreateRunViewModel RunViewModel { get; }
+        public CreateRunButtonViewModel RunViewModel { get; }
 
-        public RunViewModelChangedMessage(CreateRunViewModel runViewModel)
+        public RunViewModelChangedMessage(CreateRunButtonViewModel runViewModel)
         {
             RunViewModel = runViewModel;
         }

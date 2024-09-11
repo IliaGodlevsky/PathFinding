@@ -7,7 +7,7 @@ using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    internal sealed partial class GraphRunsView
+    internal sealed partial class RunsFrame
     {
         private void Initialize()
         {

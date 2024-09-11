@@ -17,9 +17,14 @@ namespace Pathfinding.ConsoleApp.View
         public VertexView(VertexModel viewModel)
         {
             disposables = new CompositeDisposable();
+            X = viewModel.Position.GetX() * LabelWidth;
+            Y = viewModel.Position.GetY();
+            Width = LabelWidth;
+            Data = viewModel;
+
             viewModel.WhenAnyValue(x => x.IsObstacle)
-                .Select(x => x 
-                    ? Create(ColorContants.ObstacleVertexColor) 
+                .Select(x => x
+                    ? Create(ColorContants.ObstacleVertexColor)
                     : Create(ColorContants.RegularVertexColor))
                 .BindTo(this, x => x.ColorScheme)
                 .DisposeWith(disposables);
@@ -28,10 +33,6 @@ namespace Pathfinding.ConsoleApp.View
                 .Do(x => Text = x)
                 .Subscribe()
                 .DisposeWith(disposables);
-            X = viewModel.Position.GetX() * LabelWidth;
-            Y = viewModel.Position.GetY();
-            Width = LabelWidth;
-            Data = viewModel;
         }
 
         public void VisualizeAsSource()

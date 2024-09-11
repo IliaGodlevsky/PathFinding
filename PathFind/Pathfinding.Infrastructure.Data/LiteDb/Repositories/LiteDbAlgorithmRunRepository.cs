@@ -1,6 +1,7 @@
 ﻿using LiteDB;
 using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface.Repositories;
+using Pathfinding.Infrastructure.Data.Pathfinding;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -35,14 +36,19 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
         public async Task<bool> DeleteByGraphIdAsync(int graphId, CancellationToken token = default)
         {
             var runs = await ReadByGraphIdAsync(graphId, token);
-            var ids = runs
-                .Select(x => new BsonValue(x.Id))
-                .ToArray();
+            return await DeleteByRunIdsAsync(runs.Select(x => x.Id), token);
+            
+        }
+
+        public async Task<bool> DeleteByRunIdsAsync(IEnumerable<int> runIds, CancellationToken token = default)
+        {
+            var ids = runIds.Select(x => new BsonValue(x)).ToArray();
             var query = Query.In(AlgorithmRunId, ids);
             statistics.DeleteMany(query);
             graphStates.DeleteMany(query);
             subAlgorithms.DeleteMany(query);
-            return collection.DeleteMany(x => x.GraphId == graphId) > 0;
+            var runQuery = Query.In("_id", ids);
+            return await Task.FromResult(collection.DeleteMany(runQuery) > 0);
         }
 
         public async Task<IEnumerable<AlgorithmRun>> ReadByGraphIdAsync(int graphId, CancellationToken token = default)

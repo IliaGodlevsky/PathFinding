@@ -8,6 +8,7 @@ namespace Pathfinding.ConsoleApp.View
     internal sealed partial class RunsTableView : TableView
     {
         private readonly DataTable table = new DataTable();
+
         private void Initialize()
         {
             table.Columns.AddRange(new DataColumn[]
@@ -47,8 +48,7 @@ namespace Pathfinding.ConsoleApp.View
                 ColumnStyles = columnStyles,
                 ShowHorizontalScrollIndicators = true
             };
-            //table.Rows.Add(0, "Dijkstra's algorithm", 3461, 45, 251, TimeSpan.FromMilliseconds(15), "Default", "Euclidian", "-", "Success");
-            table.AcceptChanges();
+            MultiSelect = true;
             FullRowSelect = true;
             X = 0;
             Y = Pos.Percent(0);

@@ -363,6 +363,14 @@ namespace Pathfinding.Infrastructure.Business
             }, token);
         }
 
+        public Task<bool> DeleteRunsAsync(IEnumerable<int> runIds, CancellationToken token = default)
+        {
+            return Transaction(async (unit, t) =>
+            {
+                return await unit.RunRepository.DeleteByRunIdsAsync(runIds, t);
+            }, token);
+        }
+
         private IReadOnlyCollection<PathfindingRange> SelectRangeEntities(IEnumerable<(int Order, T Vertex)> vertices, int graphId)
         {
             var items = vertices.ToList();
@@ -397,6 +405,6 @@ namespace Pathfinding.Infrastructure.Business
             }
         }
 
-        
+
     }
 }

@@ -53,7 +53,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.service = service;
             this.logger = logger;
             messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
-            messenger.Register<GraphDeletedMessage>(this, OnGraphDeleted);
+            messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             ReverseVertexCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(ReverseVertex);
             IncreaseVertexCostCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(IncreaseVertexCost);
             DecreaseVertexCostCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(DecreaseVertexCost);
@@ -126,7 +126,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             GraphId = msg.GraphId;
         }
 
-        private void OnGraphDeleted(object recipient, GraphDeletedMessage msg)
+        private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
         {
             if (msg.GraphIds.Contains(GraphId))
             {

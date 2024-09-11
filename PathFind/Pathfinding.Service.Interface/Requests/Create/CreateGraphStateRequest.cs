@@ -7,10 +7,12 @@ namespace Pathfinding.Service.Interface.Requests.Create
     {
         public int AlgorithmRunId { get; set; }
 
+        public IReadOnlyCollection<Coordinate> Regulars { get; set; }
+
         public IReadOnlyCollection<Coordinate> Obstacles { get; set; }
 
         public IReadOnlyCollection<Coordinate> Range { get; set; }
 
-        public IReadOnlyCollection<int> Costs { get; set; }
+        public IReadOnlyCollection<(Coordinate, int)> Costs { get; set; }
     }
 }

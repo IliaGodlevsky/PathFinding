@@ -95,7 +95,14 @@ namespace Pathfinding.Infrastructure.Business.Test
             {
                 Obstacles = GenerateCoordinateModels(),
                 Range = GenerateCoordinateModels(),
-                Costs = random.GenerateNumbers(range, 25).ToList()
+                Costs = random.GenerateCoordinates((9, 1), 2, 25)
+                    .Zip(random.GenerateNumbers(range, 25),
+                    (x, y) => new CostCoordinatePair
+                    {
+                        Position = new CoordinateModel() { Coordinate = x.CoordinatesValues.ToArray() },
+                        Cost = y
+                    })
+                    .ToList()
             };
             return model;
         }
@@ -190,7 +197,11 @@ namespace Pathfinding.Infrastructure.Business.Test
         {
             request.GraphState = new()
             {
-                Costs = random.GenerateNumbers((9, 1), Limit).ToList(),
+                Costs = random.GenerateCoordinates((9, 1), 2, 25)
+                    .Zip(random.GenerateNumbers(range, 25),
+                    (x, y) => (Position : x, Cost: y))
+                    .ToList(),
+                Regulars = random.GenerateCoordinates(range, 2, Limit).ToList(),
                 Obstacles = random.GenerateCoordinates(range, 2, Limit).ToList(),
                 Range = random.GenerateCoordinates(range, 2, Limit).ToList()
             };

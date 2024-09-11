@@ -2,14 +2,14 @@
 
 namespace Pathfinding.ConsoleApp.View.RightPanelViews.Runs.CreateRun
 {
-    internal sealed partial class CreateRunButtonsFrame
+    internal sealed partial class RunCreationButtonsFrame
     {
         private void Initialize()
         {
-            X = Pos.Percent(30) + 1;
-            Y = Pos.Percent(80) + 1;
+            X = 0;
+            Y = Pos.Percent(90);
             Width = Dim.Fill();
-            Height = Dim.Percent(20);
+            Height = Dim.Fill();
             Visible = false;
         }
     }

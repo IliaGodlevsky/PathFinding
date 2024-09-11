@@ -2,7 +2,7 @@
 
 namespace Pathfinding.ConsoleApp.View.RightPanelViews.Runs.ButtonFrame
 {
-    internal partial class RunButtonsFrame
+    internal partial class RunsTableButtonsFrame
     {
         private void Initialize()
         {
