@@ -14,7 +14,7 @@ namespace Pathfinding.ConsoleApp.View
             table.Columns.AddRange(new DataColumn[]
             {
                 new DataColumn("Id", typeof(int)),
-                new DataColumn("Name", typeof(string)),
+                new DataColumn("Algorithm", typeof(string)),
                 new DataColumn("Visited", typeof(int)),
                 new DataColumn("Steps", typeof(int)),
                 new DataColumn("Cost", typeof(double)),
@@ -28,7 +28,7 @@ namespace Pathfinding.ConsoleApp.View
             var columnStyles = new Dictionary<DataColumn, ColumnStyle>()
             {
                 { table.Columns["Id"], new ColumnStyle() { Visible = false } },
-                { table.Columns["Name"], new ColumnStyle() { Alignment = TextAlignment.Centered } },
+                { table.Columns["Algorithm"], new ColumnStyle() { Alignment = TextAlignment.Left } },
                 { table.Columns["Visited"], new ColumnStyle() { Alignment = TextAlignment.Centered } },
                 { table.Columns["Steps"], new ColumnStyle() { Alignment = TextAlignment.Centered } },
                 { table.Columns["Cost"], new ColumnStyle() { Alignment = TextAlignment.Centered } },

@@ -1,6 +1,6 @@
 ﻿using Terminal.Gui;
 
-namespace Pathfinding.ConsoleApp.View.RightPanelViews.Runs.CreateRun.NewRunViews.AlgorithmSettingsViews
+namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class HeuristicsView : FrameView
     {
@@ -12,7 +12,7 @@ namespace Pathfinding.ConsoleApp.View.RightPanelViews.Runs.CreateRun.NewRunViews
             heuristics.Y = 1;
             X = Pos.Percent(45);
             Y = 0;
-            Height = Dim.Percent(33);
+            Height = Dim.Percent(40);
             Width = Dim.Percent(55);
             Border = new Border()
             {

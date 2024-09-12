@@ -1,6 +1,6 @@
 ﻿using Terminal.Gui;
 
-namespace Pathfinding.ConsoleApp.View.RightPanelViews.Runs.ButtonFrame
+namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class DeleteRunButton
     {

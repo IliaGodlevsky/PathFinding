@@ -1,6 +1,6 @@
 ﻿using Terminal.Gui;
 
-namespace Pathfinding.ConsoleApp.View.GraphCreateViews
+namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphParametresView
     {

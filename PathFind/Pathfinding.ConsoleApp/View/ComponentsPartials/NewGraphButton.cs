@@ -1,6 +1,6 @@
 ﻿using Terminal.Gui;
 
-namespace Pathfinding.ConsoleApp.View.ButtonsFrameViews
+namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class NewGraphButton
     {

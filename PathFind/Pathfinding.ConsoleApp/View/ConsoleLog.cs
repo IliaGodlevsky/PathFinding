@@ -2,7 +2,7 @@
 using System;
 using Terminal.Gui;
 
-namespace Pathfinding.ConsoleApp
+namespace Pathfinding.ConsoleApp.View
 {
     internal sealed class ConsoleLog : ILog
     {

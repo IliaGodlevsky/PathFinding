@@ -10,7 +10,7 @@ namespace Pathfinding.ConsoleApp.View
         public const Color TargetVertexColor = Color.BrightRed;
         public const Color TranstiVertexColor = Color.BrightGreen;
         public const Color ObstacleVertexColor = Color.Black;
-        public const Color VisitedVertexColor = Color.White;
+        public const Color VisitedVertexColor = Color.Gray;
         public const Color EnqueuedVertexColor = Color.Cyan;
         public const Color PathVertexColor = Color.Brown;
         public const Color CrossedPathColor = Color.Red;

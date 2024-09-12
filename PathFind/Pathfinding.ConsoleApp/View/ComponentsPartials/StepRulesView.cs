@@ -1,6 +1,6 @@
 ﻿using Terminal.Gui;
 
-namespace Pathfinding.ConsoleApp.View.RightPanelViews.Runs.CreateRun
+namespace Pathfinding.ConsoleApp.View
 {
     internal partial class StepRulesView
     {

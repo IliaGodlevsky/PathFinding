@@ -19,5 +19,7 @@ namespace Pathfinding.ConsoleApp.Injection
         public const string NewRunView = nameof(NewRunView);
         public const string AlgorithmParametresView = nameof(AlgorithmParametresView);
         public const string CreateRunButtonsFrame = nameof(CreateRunButtonsFrame);
+        public const string SmoothLevels = nameof(SmoothLevels);
+        public const string SpreadLevels = nameof(SpreadLevels);
     }
 }
