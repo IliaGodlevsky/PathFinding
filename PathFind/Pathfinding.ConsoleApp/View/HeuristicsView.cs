@@ -16,7 +16,6 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class HeuristicsView : FrameView
     {
-        private readonly IMessenger messenger;
         private readonly HeuristicsViewModel viewModel;
         private readonly ustring[] radioLabels;
 
@@ -26,7 +25,6 @@ namespace Pathfinding.ConsoleApp.View
             HeuristicsViewModel viewModel) 
         {
             Initialize();
-            this.messenger = messenger;
             this.viewModel = viewModel;
             var heuristicsNames = viewModel.Heuristics.Keys.ToArray();
             radioLabels = heuristicsNames.Select(x => ustring.Make(x)).ToArray();

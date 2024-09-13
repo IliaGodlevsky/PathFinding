@@ -18,7 +18,7 @@ namespace Pathfinding.ConsoleApp.View
         private static readonly InclusiveValueRange<int> ObstaclesRange = (99, 0);
 
         private readonly CreateGraphViewModel viewModel;
-        private readonly CompositeDisposable disposables = new CompositeDisposable();
+        private readonly CompositeDisposable disposables = new();
 
         public GraphParametresView(CreateGraphViewModel viewModel)
         {

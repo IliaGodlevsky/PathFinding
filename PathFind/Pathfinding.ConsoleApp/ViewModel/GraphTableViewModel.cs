@@ -21,8 +21,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private readonly IMessenger messenger;
         private readonly ILog logger;
 
-        private GraphParametresModel activated;
-        public GraphParametresModel Activated
+        private GraphInfoModel activated;
+        public GraphInfoModel Activated
         {
             get => activated;
             set
@@ -40,9 +40,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
-        private GraphParametresModel[] selected;
+        private GraphInfoModel[] selected;
 
-        public GraphParametresModel[] Selected
+        public GraphInfoModel[] Selected
         {
             get => selected;
             set
@@ -53,7 +53,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
-        public ObservableCollection<GraphParametresModel> Graphs { get; } = new();
+        public ObservableCollection<GraphInfoModel> Graphs { get; } = new();
 
         public GraphTableViewModel(
             IRequestService<VertexModel> service, 
@@ -85,14 +85,14 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
-        private List<GraphParametresModel> GetGraphs()
+        private List<GraphInfoModel> GetGraphs()
         {
             try
             {
                 return service.ReadAllGraphInfoAsync()
                     .GetAwaiter()
                     .GetResult()
-                    .Select(x => new GraphParametresModel()
+                    .Select(x => new GraphInfoModel()
                     {
                         Id = x.Id,
                         Name = x.Name,
@@ -115,7 +115,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             {
                 var parametres = msg.Models
                     .Select(x => 
-                        new GraphParametresModel
+                        new GraphInfoModel
                         {
                             Id = x.Id,
                             Name = x.Name,

@@ -18,7 +18,6 @@ namespace Pathfinding.ConsoleApp.View
         private readonly CompositeDisposable disposables = new();
 
         private readonly SpreadViewModel stepRulesViewModel;
-        private readonly IMessenger messenger;
         private readonly ustring[] radioLabels;
 
         public SpreadView(SpreadViewModel stepRulesViewModel,
@@ -26,7 +25,6 @@ namespace Pathfinding.ConsoleApp.View
         {
             Initialize();
             this.stepRulesViewModel = stepRulesViewModel;
-            this.messenger = messenger;
             spreadLevels.RadioLabels = stepRulesViewModel.SpreadLevels
                 .Keys.Select(x => ustring.Make(x))
                 .ToArray();

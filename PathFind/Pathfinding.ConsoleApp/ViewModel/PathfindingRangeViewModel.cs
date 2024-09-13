@@ -22,13 +22,11 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal sealed class PathfindingRangeViewModel : BaseViewModel, IPathfindingRange<VertexModel>
     {
-        private readonly IMessenger messenger;
         private readonly CompositeDisposable disposables = new();
         private readonly IRequestService<VertexModel> service;
         private readonly IEnumerable<IPathfindingRangeCommand<VertexModel>> includeCommands;
@@ -54,9 +52,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref target, value);
         }
 
-        public ReactiveCommand<MouseEventArgs, Unit> AddToRangeCommand { get; }
+        public ReactiveCommand<VertexModel, Unit> AddToRangeCommand { get; }
 
-        public ReactiveCommand<MouseEventArgs, Unit> RemoveFromRangeCommand { get; }
+        public ReactiveCommand<VertexModel, Unit> RemoveFromRangeCommand { get; }
 
         public ObservableCollection<VertexModel> Transit { get; private set; } = new();
         
@@ -69,16 +67,15 @@ namespace Pathfinding.ConsoleApp.ViewModel
             ILog logger)
         {
             pathfindingRange = this;
-            this.messenger = messenger;
             this.service = service;
             this.includeCommands = includeCommands.OrderByOrderAttribute().ToReadOnly();
             this.excludeCommands = excludeCommands.OrderByOrderAttribute().ToReadOnly();
             this.logger = logger;
             messenger.Register<IsVertexInRangeRequest>(this, OnVertexIsInRangeRecieved);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
-            messenger.Register<GraphActivatedMessage>(this, async (r, msg) => await OnGraphActivated(r, msg));
-            AddToRangeCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(AddVertexToRange);
-            RemoveFromRangeCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(RemoveVertexFromRange);
+            messenger.Register<GraphActivatedMessage>(this, async (r, msg) => await OnGraphActivated(msg));
+            AddToRangeCommand = ReactiveCommand.CreateFromTask<VertexModel>(AddVertexToRange);
+            RemoveFromRangeCommand = ReactiveCommand.CreateFromTask<VertexModel>(RemoveVertexFromRange);
         }
 
         public IEnumerator<VertexModel> GetEnumerator()
@@ -86,9 +83,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
             return Transit.Prepend(Source).Append(Target).GetEnumerator();
         }
 
-        private async Task AddVertexToRange(MouseEventArgs e)
+        private async Task AddVertexToRange(VertexModel vertex)
         {
-            var vertex = (VertexModel)e.MouseEvent.View.Data;
             includeCommands.ExecuteFirst(pathfindingRange, vertex);
             await Task.CompletedTask;
         }
@@ -119,7 +115,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                         (x.Id, 
                         IsSource: i == 0, 
                         IsTarget: i == range.Count - 1 && range.Count > 1,
-                        VertexId: x.VertexId, 
+                        x.VertexId, 
                         Order: i))
                     .ToList()
                 };
@@ -127,9 +123,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }, logger.Error);
         }
 
-        private async Task RemoveVertexFromRange(MouseEventArgs e)
+        private async Task RemoveVertexFromRange(VertexModel vertex)
         {
-            var vertex = (VertexModel)e.MouseEvent.View.Data;
             excludeCommands.ExecuteFirst(pathfindingRange, vertex);
             await Task.CompletedTask;
         }
@@ -184,7 +179,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
-        private async Task OnGraphActivated(object recipient, GraphActivatedMessage msg)
+        private async Task OnGraphActivated(GraphActivatedMessage msg)
         {
             await ExecuteSafe(async () =>
             {

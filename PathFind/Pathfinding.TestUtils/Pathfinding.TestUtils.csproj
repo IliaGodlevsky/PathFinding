@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=4.0.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.4.1.0\lib\net462\nunit.framework.dll</HintPath>
     </Reference>
@@ -65,6 +68,28 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TestRealizations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pathfinding.Domain.Interface\Pathfinding.Domain.Interface.csproj">
+      <Project>{BEE15FAF-F9D2-432A-A8BB-6D1BE7FE2888}</Project>
+      <Name>Pathfinding.Domain.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Infrastructure.Business\Pathfinding.Infrastructure.Business.csproj">
+      <Project>{365C8661-CC5E-4D80-9BAD-340895E10D3C}</Project>
+      <Name>Pathfinding.Infrastructure.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Infrastructure.Data\Pathfinding.Infrastructure.Data.csproj">
+      <Project>{8C4C7A00-A654-45BA-B0C7-E9C6FE6CFEEB}</Project>
+      <Name>Pathfinding.Infrastructure.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Service.Interface\Pathfinding.Service.Interface.csproj">
+      <Project>{EC4CAA5A-1164-45C7-83AA-0B551D485832}</Project>
+      <Name>Pathfinding.Service.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Shared\Pathfinding.Shared.csproj">
+      <Project>{C57FE374-EC6D-4797-829E-A31697E08975}</Project>
+      <Name>Pathfinding.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

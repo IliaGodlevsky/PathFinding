@@ -2,8 +2,14 @@
 {
     public class UpdateGraphInfoRequest
     {
-        public int Id { get; set; }
+        public int Id { get; }
 
-        public int ObstaclesCount { get; set; }
+        public int ObstaclesCount { get; }
+
+        public UpdateGraphInfoRequest(int id, int obstaclesCount)
+        {
+            Id = id;
+            ObstaclesCount = obstaclesCount;
+        }
     }
 }

@@ -1,6 +1,6 @@
-﻿using Pathfinding.Domain.Core;
+﻿using LiteDB;
+using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface.Repositories;
-using Pathfinding.Infrastructure.Data.Pathfinding;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -14,6 +14,19 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
 
         private readonly HashSet<AlgorithmRun> set = new(EntityComparer<int>.Interface);
 
+        private readonly InMemoryStatisicsRepository statistics;
+        private readonly InMemoryGraphStateRepository graphStates;
+        private readonly InMemorySubAlgorithmRepository subAlgorithms;
+
+        public InMemoryAlgorithmRunRepository(InMemoryStatisicsRepository statistics, 
+            InMemoryGraphStateRepository graphStates,
+            InMemorySubAlgorithmRepository subAlgorithms)
+        {
+            this.statistics = statistics;
+            this.graphStates = graphStates;
+            this.subAlgorithms = subAlgorithms;
+        }
+
         public async Task<AlgorithmRun> CreateAsync(AlgorithmRun entity,
             CancellationToken token = default)
         {
@@ -25,6 +38,10 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
         public async Task<bool> DeleteByGraphIdAsync(int graphId,
             CancellationToken token = default)
         {
+            var runIds = set.Where(x => x.GraphId == graphId).Select(x => x.Id).ToHashSet();
+            await statistics.DeleteByRunIdsAsync(runIds, token);
+            await graphStates.DeleteByRunIdsAsync(runIds, token);
+            await subAlgorithms.DeleteByRunIdsAsync(runIds, token);
             var deleted = set.RemoveWhere(x => x.GraphId == graphId);
             return await Task.FromResult(deleted > 0);
         }
@@ -47,6 +64,9 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
             var ids = runIds.ToArray();
             var toDelete = set.Where(x => ids.Contains(x.Id)).Select(x => x.Id).ToHashSet();
             var deleted = set.RemoveWhere(x => toDelete.Contains(x.Id));
+            await statistics.DeleteByRunIdsAsync(ids, token);
+            await graphStates.DeleteByRunIdsAsync(ids, token);
+            await subAlgorithms.DeleteByRunIdsAsync(ids, token);
             return await Task.FromResult(deleted > 0);
         }
     }

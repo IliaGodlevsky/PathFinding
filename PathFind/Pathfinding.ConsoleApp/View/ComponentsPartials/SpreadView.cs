@@ -1,11 +1,10 @@
-﻿using Pathfinding.Service.Interface;
-using Terminal.Gui;
+﻿using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class SpreadView
     {
-        private readonly RadioGroup spreadLevels = new RadioGroup();
+        private readonly RadioGroup spreadLevels = new();
 
         private void Initialize()
         {
@@ -18,7 +17,7 @@ namespace Pathfinding.ConsoleApp.View
             Border = new Border()
             {
                 BorderStyle = BorderStyle.Rounded,
-                Title = "Spread levels"
+                Title = "Spread"
             };
             Visible = false;
             Add(spreadLevels);

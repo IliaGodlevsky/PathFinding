@@ -1,5 +1,4 @@
-﻿using Pathfinding.ConsoleApp.Model;
-using Pathfinding.Domain.Interface.Factories;
+﻿using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Shared.Primitives;
 
 namespace Pathfinding.ConsoleApp.Model.Factories

@@ -44,9 +44,9 @@ namespace Pathfinding.ConsoleApp.View
                 .Select(x => x.First)
                 .Do(async x =>
                 {
-                    messenger.Send(new OpenRunViewMessage());
-                    await viewModel.CreateRunCommand.Execute(x);
+                    messenger.Send(new OpenAlgorithmRunViewMessage());
                     messenger.Send(new CloseRunCreationViewMessage());
+                    await viewModel.CreateRunCommand.Execute(x);
                     disposables.Clear();
                 })
                 .Subscribe()

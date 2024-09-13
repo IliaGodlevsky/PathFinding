@@ -2,7 +2,7 @@
 
 namespace Pathfinding.ConsoleApp.Model
 {
-    internal sealed class GraphParametresModel : ReactiveObject
+    internal sealed class GraphInfoModel : ReactiveObject
     {
         private int obstacles;
         private string name;

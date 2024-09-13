@@ -55,10 +55,10 @@ namespace Pathfinding.ConsoleApp.View
 
         private void MouseEntered(MouseEventArgs e)
         {
-            messenger.Send(new CloseAlgorithmViewMessage());
+            messenger.Send(new CloseAlgorithmRunViewMessage());
         }
 
-        private GraphParametresModel GetParametresModel(int selectedRow)
+        private GraphInfoModel GetParametresModel(int selectedRow)
         {
             return new()
             {
@@ -70,7 +70,7 @@ namespace Pathfinding.ConsoleApp.View
             };
         }
 
-        private void AddToTable(GraphParametresModel model)
+        private void AddToTable(GraphInfoModel model)
         {
             table.Rows.Add(model.Id, model.Name, 
                 model.Width, model.Length, model.Obstacles);
@@ -90,7 +90,7 @@ namespace Pathfinding.ConsoleApp.View
             table.AcceptChanges();
         }
 
-        private void RemoveFromTable(GraphParametresModel model)
+        private void RemoveFromTable(GraphInfoModel model)
         {
             var row = table.Rows.Find(model.Id);
             var index = table.Rows.IndexOf(row);
@@ -102,7 +102,7 @@ namespace Pathfinding.ConsoleApp.View
             if (table.Rows.Count > 0)
             {
                 SelectedCellChangedEventArgs args = index == table.Rows.Count
-                    ? args = new(table, 0, 0, index, index - 1)
+                    ? new(table, 0, 0, index, index - 1)
                     : new(table, 0, 0, index, index);
                 OnSelectedCellChanged(args);
                 SetSelection(0, args.NewRow, false);

@@ -2,7 +2,6 @@
 using Pathfinding.Infrastructure.Business.Mappings;
 using Pathfinding.Infrastructure.Business.Serializers;
 using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
-using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Shared.Primitives;
 

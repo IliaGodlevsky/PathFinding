@@ -26,5 +26,12 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
         {
             return await Task.FromResult(set.FirstOrDefault(x => x.AlgorithmRunId == runId));
         }
+
+        public async Task<bool> DeleteByRunIdsAsync(IEnumerable<int> runIds, CancellationToken token = default)
+        {
+            var ids = runIds.ToHashSet();
+            int deleted = set.RemoveWhere(x => ids.Contains(x.AlgorithmRunId));
+            return await Task.FromResult(ids.Count == deleted);
+        }
     }
 }

@@ -102,7 +102,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 });
         }
 
-        public async Task CreateGraph(MouseEventArgs e)
+        private async Task CreateGraph(MouseEventArgs e)
         {
             await ExecuteSafe(async () =>
             {

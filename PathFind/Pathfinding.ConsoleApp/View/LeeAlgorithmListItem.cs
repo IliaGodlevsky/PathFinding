@@ -25,7 +25,6 @@ namespace Pathfinding.ConsoleApp.View
         {
             if (e.MouseEvent.Flags == MouseFlags.Button1Clicked)
             {
-                messenger.Send(new OpenRunCreationViewMessage());
                 messenger.Send(new CloseStepRulesViewMessage());
                 messenger.Send(new CloseHeuristicsViewMessage());
                 messenger.Send(new CloseSpreadViewMessage());

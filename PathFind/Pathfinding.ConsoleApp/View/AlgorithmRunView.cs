@@ -4,7 +4,6 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel;
-using Pathfinding.Shared.Primitives;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -19,13 +18,10 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class AlgorithmRunView : FrameView
     {
-        private static readonly InclusiveValueRange<int> renderRange = (1000, 30);
-
         private readonly CompositeDisposable vertexDisposables = new();
         private readonly CompositeDisposable disposables = new();
 
         private readonly AlgorithmRunViewModel viewModel;
-        private readonly IMessenger messenger;
 
         private int RenderSpeed { get; set; } = 45;
 
@@ -44,21 +40,20 @@ namespace Pathfinding.ConsoleApp.View
                 Title = "Run field"
             };
             this.viewModel = viewModel;
-            this.messenger = messenger;
             viewModel.WhenAnyValue(x => x.GraphState)
                 .Do(RenderGraphState)
                 .Subscribe()
                 .DisposeWith(disposables);
-            messenger.Register<OpenRunViewMessage>(this, OnOpen);
-            messenger.Register<CloseAlgorithmViewMessage>(this, OnCloseAlgorithmViewMessage);
+            messenger.Register<OpenAlgorithmRunViewMessage>(this, OnOpen);
+            messenger.Register<CloseAlgorithmRunViewMessage>(this, OnCloseAlgorithmViewMessage);
         }
 
-        private void OnOpen(object recipient, OpenRunViewMessage msg)
+        private void OnOpen(object recipient, OpenAlgorithmRunViewMessage msg)
         {
             Visible = true;
         }
 
-        private void OnCloseAlgorithmViewMessage(object recipient, CloseAlgorithmViewMessage msg)
+        private void OnCloseAlgorithmViewMessage(object recipient, CloseAlgorithmRunViewMessage msg)
         {
             Visible = false;
             RemoveAll();
@@ -71,7 +66,7 @@ namespace Pathfinding.ConsoleApp.View
             RemoveAll();
             vertexDisposables.Clear();
 
-            var children = new List<RunVertexView>(graphState.Count);
+            var children = new List<Terminal.Gui.View>(graphState.Count);
             foreach (var vertex in graphState)
             {
                 var view = new RunVertexView(vertex);
@@ -80,27 +75,20 @@ namespace Pathfinding.ConsoleApp.View
             }
 
             Add(children.ToArray());
-            SetNeedsDisplay();
 
-            this.Events()
-                .MouseEnter
-                .Do(async x => await Visualize(x))
+            this.Events().MouseEnter
+                .Do(async x => await Visualize())
                 .Subscribe()
                 .DisposeWith(vertexDisposables);
         }
 
-        private async Task Visualize(MouseEventArgs e)
+        private async Task Visualize()
         {
-            int i = 0;
             while (viewModel.Remained > 0)
             {
-                await viewModel.VisualizeNextCommand.Execute();
-                if (++i % RenderSpeed == 0)
-                {
-                    Application.Refresh();
-                }
+                await viewModel.VisualizeNextCommand.Execute(RenderSpeed);
+                Application.Refresh();
             }
-            Application.Refresh();
         }
     }
 }

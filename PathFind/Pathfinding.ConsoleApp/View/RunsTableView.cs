@@ -28,7 +28,7 @@ namespace Pathfinding.ConsoleApp.View
             viewModel.Runs.ActOnEveryObject(OnAdded, OnRemoved);
             this.Events().CellActivated
                 .Select(x => GetRunModel(x.Row))
-                .Do(x => messenger.Send(new OpenRunViewMessage()))
+                .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
                 .InvokeCommand(viewModel, x => x.ActivateRunCommand)
                 .DisposeWith(disposables);
             this.Events().SelectedCellChanged

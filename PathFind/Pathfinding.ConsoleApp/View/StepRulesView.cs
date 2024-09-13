@@ -19,7 +19,6 @@ namespace Pathfinding.ConsoleApp.View
         private readonly CompositeDisposable disposables = new();
 
         private readonly StepRulesViewModel stepRulesViewModel;
-        private readonly IMessenger messenger;
         private readonly ustring[] radioLabels;
 
         public StepRulesView(StepRulesViewModel stepRulesViewModel,
@@ -27,7 +26,6 @@ namespace Pathfinding.ConsoleApp.View
         {
             Initialize();
             this.stepRulesViewModel = stepRulesViewModel;
-            this.messenger = messenger;
             stepRules.RadioLabels = stepRulesViewModel.StepRules
                 .Keys.Select(x => ustring.Make(x))
                 .ToArray();

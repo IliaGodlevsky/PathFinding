@@ -28,15 +28,23 @@ namespace Pathfinding.Infrastructure.Data.InMemory
 
         public InMemoryUnitOfWork()
         {
-            GraphRepository = new InMemoryGraphParametresRepository();
-            RunRepository = new InMemoryAlgorithmRunRepository();
+            var graphState = new InMemoryGraphStateRepository();
+            var neighbours = new InMemoryNeighborsRepository();
+            var vertices = new InMemoryVerticesRepository();
+            var range = new InMemoryRangeRepository();
+            var subs = new InMemorySubAlgorithmRepository();
+            var statistics = new InMemoryStatisicsRepository();
+            var runs = new InMemoryAlgorithmRunRepository(statistics, graphState, subs);
             AlgorithmsRepository = new InMemoryAlgorithmsRepository();
-            GraphStateRepository = new InMemoryGraphStateRepository();
-            NeighborsRepository = new InMemoryNeighborsRepository();
-            VerticesRepository = new InMemoryVerticesRepository();
-            RangeRepository = new InMemoryRangeRepository();
-            SubAlgorithmRepository = new InMemorySubAlgorithmRepository();
-            StatisticsRepository = new InMemoryStatisicsRepository();
+            GraphStateRepository = graphState;
+            NeighborsRepository = neighbours;
+            VerticesRepository = vertices;
+            RangeRepository = range;
+            SubAlgorithmRepository = subs;
+            StatisticsRepository = statistics;
+            RunRepository = runs;
+            GraphRepository = new InMemoryGraphParametresRepository(neighbours,
+                runs, range, vertices);
         }
 
         public void BeginTransaction()

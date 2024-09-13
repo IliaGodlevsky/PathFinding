@@ -2,8 +2,14 @@
 {
     internal sealed class ObstaclesCountChangedMessage
     {
-        public int GraphId { get; set; }
+        public int GraphId { get; }
 
-        public int Delta { get; set; }
+        public int Delta { get; }
+
+        public ObstaclesCountChangedMessage(int graphId, int delta)
+        {
+            GraphId = graphId;
+            Delta = delta;
+        }
     }
 }

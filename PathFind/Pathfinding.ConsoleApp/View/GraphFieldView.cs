@@ -11,8 +11,6 @@ using Pathfinding.Shared.Primitives;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Pathfinding.ConsoleApp.Model;
-using Pathfinding.Shared.Extensions;
-using System.Runtime.CompilerServices;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using CommunityToolkit.Mvvm.Messaging;
 using Autofac.Features.AttributeFilters;
@@ -42,16 +40,16 @@ namespace Pathfinding.ConsoleApp.View
                 .Do(RenderGraph)
                 .Subscribe()
                 .DisposeWith(disposables);
-            messenger.Register<OpenRunViewMessage>(this, OnOpenRunViewRecieved);
-            messenger.Register<CloseAlgorithmViewMessage>(this, OnCloseRunViewMessage);
+            messenger.Register<OpenAlgorithmRunViewMessage>(this, OnOpenRunViewRecieved);
+            messenger.Register<CloseAlgorithmRunViewMessage>(this, OnCloseRunViewMessage);
         }
 
-        private void OnOpenRunViewRecieved(object recipient, OpenRunViewMessage msg)
+        private void OnOpenRunViewRecieved(object recipient, OpenAlgorithmRunViewMessage msg)
         {
             Visible = false;
         }
 
-        private void OnCloseRunViewMessage(object recipient, CloseAlgorithmViewMessage msg)
+        private void OnCloseRunViewMessage(object recipient, CloseAlgorithmRunViewMessage msg)
         {
             Visible = true;
         }
@@ -79,7 +77,7 @@ namespace Pathfinding.ConsoleApp.View
         {
             if (viewsMap.TryGetValue(vertex.Position, out var view))
             {
-                viewsMap[vertex.Position].VisualizeAsTransit();
+                view.VisualizeAsTransit();
             }
         }
 
@@ -87,7 +85,7 @@ namespace Pathfinding.ConsoleApp.View
         {
             if (viewsMap.TryGetValue(vertex.Position, out var view))
             {
-                viewsMap[vertex.Position].VisualizeAsRegular();
+                view.VisualizeAsRegular();
             }
         }
 
@@ -127,12 +125,14 @@ namespace Pathfinding.ConsoleApp.View
         {
             view.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Pressed)
+                .Select(x => (VertexModel)x.MouseEvent.View.Data)
                 .InvokeCommand(rangeViewModel, x => x.AddToRangeCommand)
                 .DisposeWith(vertexDisposables);
 
             view.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button1Pressed)
                        && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonCtrl))
+                .Select(x => (VertexModel)x.MouseEvent.View.Data)
                 .InvokeCommand(rangeViewModel, x => x.RemoveFromRangeCommand)
                 .DisposeWith(vertexDisposables);
         }
@@ -143,6 +143,7 @@ namespace Pathfinding.ConsoleApp.View
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button3Pressed)
                          && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonCtrl)
                          || x.MouseEvent.Flags == MouseFlags.Button3Clicked)
+                .Select(x=> (VertexModel)x.MouseEvent.View.Data)
                 .InvokeCommand(viewModel, x => x.ReverseVertexCommand)
                 .DisposeWith(vertexDisposables);
         }
@@ -151,10 +152,12 @@ namespace Pathfinding.ConsoleApp.View
         {
             view.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.WheeledDown))
+                .Select(x => (VertexModel)x.MouseEvent.View.Data)
                 .InvokeCommand(viewModel, x => x.DecreaseVertexCostCommand)
                 .DisposeWith(vertexDisposables);
             view.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.WheeledUp))
+                .Select(x => (VertexModel)x.MouseEvent.View.Data)
                 .InvokeCommand(viewModel, x => x.IncreaseVertexCostCommand)
                 .DisposeWith(vertexDisposables);
         }

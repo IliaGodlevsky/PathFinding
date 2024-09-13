@@ -10,8 +10,6 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class AlgorithmSettingsView : FrameView
     {
-        private readonly IMessenger messenger;
-
         public AlgorithmSettingsView([KeyFilter(KeyFilters.AlgorithmParametresView)] IEnumerable<Terminal.Gui.View> children,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
@@ -21,7 +19,6 @@ namespace Pathfinding.ConsoleApp.View
             Height = Dim.Percent(90);
             Visible = false;
             Border = new();
-            this.messenger = messenger;
             Add(children.ToArray());
             messenger.Register<OpenRunCreationViewMessage>(this, OnOpenRunCreationView);
             messenger.Register<CloseRunCreationViewMessage>(this, OnCloseRunCreationView);

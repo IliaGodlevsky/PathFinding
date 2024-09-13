@@ -13,6 +13,22 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
 
         private readonly HashSet<Graph> set = new(EntityComparer<int>.Interface);
 
+        private readonly InMemoryNeighborsRepository neighborsRepository;
+        private readonly InMemoryAlgorithmRunRepository algorithmRunRepository;
+        private readonly InMemoryRangeRepository rangeRepository;
+        private readonly InMemoryVerticesRepository verticesRepository;
+
+        public InMemoryGraphParametresRepository(InMemoryNeighborsRepository neighborsRepository,
+            InMemoryAlgorithmRunRepository algorithmRunRepository,
+            InMemoryRangeRepository rangeRepository,
+            InMemoryVerticesRepository verticesRepository)
+        {
+            this.algorithmRunRepository = algorithmRunRepository;
+            this.rangeRepository = rangeRepository;
+            this.verticesRepository = verticesRepository;
+            this.neighborsRepository = neighborsRepository;
+        }
+
         public Task<Graph> CreateAsync(Graph graph,
             CancellationToken token = default)
         {
@@ -21,19 +37,27 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
             return Task.FromResult(graph);
         }
 
-        public Task<bool> DeleteAsync(int graphId,
+        public async Task<bool> DeleteAsync(int graphId,
             CancellationToken token = default)
         {
+            // Order sensitive. Do not change the order of deleting
+            // Reason: some repositories need the presence of values in the database
+            await neighborsRepository.DeleteByGraphIdAsync(graphId, token);
+            await rangeRepository.DeleteByGraphIdAsync(graphId, token);
+            await verticesRepository.DeleteVerticesByGraphIdAsync(graphId, token);
+            await algorithmRunRepository.DeleteByGraphIdAsync(graphId, token);
             var deleted = set.RemoveWhere(x => x.Id == graphId);
-            return Task.FromResult(deleted == 1);
+            return await Task.FromResult(deleted == 1);
         }
 
         public async Task<bool> DeleteAsync(IEnumerable<int> graphIds,
             CancellationToken token = default)
         {
-            var ids = graphIds.ToHashSet();
-            var deleted = set.RemoveWhere(x => ids.Contains(x.Id));
-            return await Task.FromResult(deleted == ids.Count);
+            foreach (var graphId in graphIds)
+            {
+                await DeleteAsync(graphId, token);
+            }
+            return true;
         }
 
         public IAsyncEnumerable<Graph> GetAll(CancellationToken token = default)

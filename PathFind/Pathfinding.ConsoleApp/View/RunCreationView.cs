@@ -4,23 +4,17 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class RunCreationView : FrameView
     {
-        private readonly IEnumerable<Terminal.Gui.View> children;
-        private readonly IMessenger messenger;
-
         public RunCreationView([KeyFilter(KeyFilters.NewRunView)]IEnumerable<Terminal.Gui.View> children,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
             Initialize();
             Add(children.ToArray());
-            this.children = children;
-            this.messenger = messenger;
             messenger.Register<OpenRunCreationViewMessage>(this, OnOpenRunViewRequest);
             messenger.Register<CloseRunCreationViewMessage>(this, OnClose);
         }

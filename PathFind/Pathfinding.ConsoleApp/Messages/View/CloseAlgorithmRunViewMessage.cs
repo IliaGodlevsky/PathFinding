@@ -1,6 +1,6 @@
 ﻿namespace Pathfinding.ConsoleApp.Messages.View
 {
-    internal sealed class CloseAlgorithmViewMessage
+    internal sealed class CloseAlgorithmRunViewMessage
     {
     }
 }
