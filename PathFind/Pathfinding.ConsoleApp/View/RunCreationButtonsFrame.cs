@@ -12,8 +12,8 @@ namespace Pathfinding.ConsoleApp.View
     {
         private readonly IMessenger messenger;
 
-        public RunCreationButtonsFrame([KeyFilter(KeyFilters.CreateRunButtonsFrame)]IEnumerable<Terminal.Gui.View> children,
-            [KeyFilter(KeyFilters.Views)]IMessenger messenger)
+        public RunCreationButtonsFrame([KeyFilter(KeyFilters.CreateRunButtonsFrame)] IEnumerable<Terminal.Gui.View> children,
+            [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
             Initialize();
             Add(children.ToArray());

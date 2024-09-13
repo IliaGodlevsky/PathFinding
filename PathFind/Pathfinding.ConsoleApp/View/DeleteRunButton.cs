@@ -1,9 +1,9 @@
-﻿using System.Reactive.Disposables;
-using Terminal.Gui;
+﻿using Pathfinding.ConsoleApp.ViewModel;
 using ReactiveMarbles.ObservableEvents;
-using System.Reactive.Linq;
 using ReactiveUI;
-using Pathfinding.ConsoleApp.ViewModel;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {

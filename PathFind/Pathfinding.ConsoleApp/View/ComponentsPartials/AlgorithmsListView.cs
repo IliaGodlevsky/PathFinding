@@ -1,5 +1,4 @@
-﻿using Pathfinding.Domain.Core;
-using Terminal.Gui;
+﻿using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {

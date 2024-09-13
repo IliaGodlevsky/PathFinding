@@ -1,10 +1,10 @@
-﻿using ReactiveUI;
+﻿using Pathfinding.ConsoleApp.Model;
+using Pathfinding.Infrastructure.Data.Extensions;
+using ReactiveUI;
+using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Terminal.Gui;
-using System;
-using Pathfinding.ConsoleApp.Model;
-using Pathfinding.Infrastructure.Data.Extensions;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -57,8 +57,11 @@ namespace Pathfinding.ConsoleApp.View
 
         private ColorScheme Create(Color foreground)
         {
-            return new() { Normal 
-                = Application.Driver.MakeAttribute(foreground, ColorContants.BackgroundColor) };
+            return new()
+            {
+                Normal
+                = Application.Driver.MakeAttribute(foreground, ColorContants.BackgroundColor)
+            };
         }
 
         protected override void Dispose(bool disposing)

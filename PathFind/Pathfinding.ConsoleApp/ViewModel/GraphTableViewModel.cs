@@ -56,8 +56,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public ObservableCollection<GraphInfoModel> Graphs { get; } = new();
 
         public GraphTableViewModel(
-            IRequestService<VertexModel> service, 
-            [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
+            IRequestService<VertexModel> service,
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ILog logger)
         {
             this.service = service;
@@ -114,7 +114,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             if (msg.Models.Length > 0)
             {
                 var parametres = msg.Models
-                    .Select(x => 
+                    .Select(x =>
                         new GraphInfoModel
                         {
                             Id = x.Id,
@@ -139,7 +139,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 .ToList();
             if (graphs.Count > 0)
             {
-                foreach(var graph in graphs)
+                foreach (var graph in graphs)
                 {
                     Graphs.Remove(graph);
                 }

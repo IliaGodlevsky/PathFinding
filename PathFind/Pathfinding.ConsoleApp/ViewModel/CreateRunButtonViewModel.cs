@@ -1,28 +1,28 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Domain.Core;
+using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Infrastructure.Business.Algorithms.Events;
 using Pathfinding.Infrastructure.Business.Algorithms.Exceptions;
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
+using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Service.Interface.Models;
+using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Shared.Primitives;
 using ReactiveUI;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System;
+using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
 using static Terminal.Gui.View;
-using Pathfinding.ConsoleApp.Messages.ViewModel;
-using Pathfinding.Domain.Interface;
-using System.Linq;
-using Pathfinding.Infrastructure.Business.Extensions;
-using Pathfinding.Service.Interface.Models.Undefined;
-using Pathfinding.Service.Interface.Extensions;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
@@ -32,7 +32,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         protected readonly IMessenger messenger;
         protected readonly ILog logger;
 
-        protected abstract string AlgorithmId { get;  }
+        protected abstract string AlgorithmId { get; }
 
         public ReactiveCommand<MouseEventArgs, Unit> CreateRunCommand { get; }
 
@@ -65,7 +65,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         }
 
         protected CreateRunButtonViewModel(IRequestService<VertexModel> service,
-            IMessenger messenger, 
+            IMessenger messenger,
             ILog logger)
         {
             this.messenger = messenger;

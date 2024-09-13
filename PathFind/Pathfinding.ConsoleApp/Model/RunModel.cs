@@ -7,7 +7,7 @@ namespace Pathfinding.ConsoleApp.Model
     {
         public int RunId { get; set; }
 
-        public string Name{ get; set; }
+        public string Name { get; set; }
 
         public int Visited { get; set; }
 

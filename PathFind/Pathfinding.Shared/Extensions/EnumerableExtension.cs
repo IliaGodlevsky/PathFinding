@@ -1,10 +1,8 @@
 ﻿using Pathfinding.Shared.Extensions;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -154,7 +152,7 @@ namespace Pathfinding.Shared.Extensions
         }
 
         public static async Task<T> ToAsync<T>(this IEnumerable<T> items,
-            Func<IEnumerable<T>, CancellationToken, Task<T>> selector, 
+            Func<IEnumerable<T>, CancellationToken, Task<T>> selector,
             CancellationToken token = default)
         {
             return await selector(items, token);

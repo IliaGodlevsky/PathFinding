@@ -22,7 +22,7 @@ namespace Pathfinding.Infrastructure.Business.Mappings
             CreateMap<IReadOnlyCollection<(Coordinate Position, int Cost)>, IReadOnlyCollection<CostCoordinatePair>>()
                 .ConvertUsing((x, y, context) =>
                 {
-                    return x.Select(i=> new CostCoordinatePair()
+                    return x.Select(i => new CostCoordinatePair()
                     {
                         Position = context.Mapper.Map<CoordinateModel>(i.Position),
                         Cost = i.Cost

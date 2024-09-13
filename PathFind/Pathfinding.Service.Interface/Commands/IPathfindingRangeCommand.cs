@@ -1,5 +1,4 @@
 ﻿using Pathfinding.Domain.Interface;
-using System.Collections.Generic;
 
 namespace Pathfinding.Service.Interface.Commands
 {

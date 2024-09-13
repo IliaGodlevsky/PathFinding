@@ -1,7 +1,4 @@
-﻿using Pathfinding.Domain.Core;
-using Terminal.Gui;
-
-namespace Pathfinding.ConsoleApp.View
+﻿namespace Pathfinding.ConsoleApp.View
 {
     internal partial class DijkstraAlgorithmListItem
     {

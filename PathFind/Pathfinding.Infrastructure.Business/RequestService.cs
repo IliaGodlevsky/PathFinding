@@ -105,7 +105,7 @@ namespace Pathfinding.Infrastructure.Business
         public async Task<IReadOnlyCollection<AlgorithmRunHistoryModel>> CreateRunHistoriesAsync(IEnumerable<CreateAlgorithmRunHistoryRequest> histories,
             CancellationToken token = default)
         {
-            return await Transaction(async (unitOfWork, t)=> 
+            return await Transaction(async (unitOfWork, t) =>
             {
                 var result = await unitOfWork.AddHistoryAsync(mapper, histories);
                 return mapper.Map<AlgorithmRunHistoryModel[]>(result).ToReadOnly();

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Pathfinding.Service.Interface.Models.Undefined
+﻿namespace Pathfinding.Service.Interface.Models.Undefined
 {
     public class CostCoordinatePair
     {

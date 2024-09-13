@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class CreateDijkstraRunViewModel 
+    internal sealed class CreateDijkstraRunViewModel
         : CreateRunButtonViewModel, IRequireStepRuleViewModel
     {
         private (string Name, IStepRule Rule) stepRule;
@@ -23,9 +23,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         protected override string AlgorithmId { get; } = "Dijkstra's";
 
-        public CreateDijkstraRunViewModel(IRequestService<VertexModel> service, 
-            [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
-            ILog logger) 
+        public CreateDijkstraRunViewModel(IRequestService<VertexModel> service,
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
+            ILog logger)
             : base(service, messenger, logger)
         {
         }

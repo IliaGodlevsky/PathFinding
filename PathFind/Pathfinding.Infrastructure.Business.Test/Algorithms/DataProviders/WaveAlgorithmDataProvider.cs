@@ -1,7 +1,5 @@
-﻿using Pathfinding.Infrastructure.Business.Layers;
-using Pathfinding.Infrastructure.Business.Test.TestRealizations;
+﻿using Pathfinding.Infrastructure.Business.Test.TestRealizations;
 using Pathfinding.Infrastructure.Data.Extensions;
-using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
 using Pathfinding.Shared.Primitives;
 using System.Collections;
 

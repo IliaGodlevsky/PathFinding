@@ -15,30 +15,30 @@ namespace Pathfinding.ConsoleApp.ViewModel
         IRequireStepRuleViewModel, IRequireHeuristicsViewModel, IRequireSpreadViewModel
     {
         private (string Name, IStepRule Rule) stepRule;
-        public (string Name, IStepRule Rule) StepRule 
+        public (string Name, IStepRule Rule) StepRule
         {
             get => stepRule;
             set => this.RaiseAndSetIfChanged(ref stepRule, value);
         }
 
         private (string Name, IHeuristic Heuristic) heuristic;
-        public (string Name, IHeuristic Heuristic) Heuristic 
+        public (string Name, IHeuristic Heuristic) Heuristic
         {
             get => heuristic;
             set => this.RaiseAndSetIfChanged(ref heuristic, value);
         }
 
         private (string Name, int Spread) spreadLevel;
-        public (string Name, int Spread) SpreadLevel 
-        { 
+        public (string Name, int Spread) SpreadLevel
+        {
             get => spreadLevel;
-            set => this.RaiseAndSetIfChanged(ref spreadLevel, value); 
+            set => this.RaiseAndSetIfChanged(ref spreadLevel, value);
         }
 
         protected override string AlgorithmId => "IDA*";
 
-        public CreateIDAStarRunViewModel(IRequestService<VertexModel> service, 
-            [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger, 
+        public CreateIDAStarRunViewModel(IRequestService<VertexModel> service,
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ILog logger) : base(service, messenger, logger)
         {
         }

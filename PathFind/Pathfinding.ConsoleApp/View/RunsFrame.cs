@@ -8,7 +8,7 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class RunsFrame : FrameView
     {
-        public RunsFrame([KeyFilter(KeyFilters.GraphRunsView)]IEnumerable<Terminal.Gui.View> children)
+        public RunsFrame([KeyFilter(KeyFilters.GraphRunsView)] IEnumerable<Terminal.Gui.View> children)
         {
             Initialize();
             Add(children.AsArray());

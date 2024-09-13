@@ -1,18 +1,18 @@
-﻿using Pathfinding.ConsoleApp.Model;
-using ReactiveUI;
-using Terminal.Gui;
-using ReactiveMarbles.ObservableEvents;
-using System.Reactive.Linq;
-using System.Reactive.Disposables;
-using System.Linq;
-using Pathfinding.Shared.Extensions;
-using System.Data;
-using System;
-using Pathfinding.ConsoleApp.ViewModel;
-using Pathfinding.ConsoleApp.Messages.ViewModel;
+﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
-using Autofac.Features.AttributeFilters;
 using Pathfinding.ConsoleApp.Injection;
+using Pathfinding.ConsoleApp.Messages.ViewModel;
+using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.Shared.Extensions;
+using ReactiveMarbles.ObservableEvents;
+using ReactiveUI;
+using System;
+using System.Data;
+using System.Linq;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -22,7 +22,7 @@ namespace Pathfinding.ConsoleApp.View
         private readonly RunsTableViewModel viewModel;
 
         public RunsTableView(RunsTableViewModel viewModel,
-            [KeyFilter(KeyFilters.Views)]IMessenger messenger)
+            [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
             Initialize();
             viewModel.Runs.ActOnEveryObject(OnAdded, OnRemoved);
@@ -65,8 +65,8 @@ namespace Pathfinding.ConsoleApp.View
 
         private void OnAdded(RunModel model)
         {
-            table.Rows.Add(model.RunId, model.Name,  model.Visited, 
-                model.Steps, model.Cost, model.Elapsed, model.StepRule, 
+            table.Rows.Add(model.RunId, model.Name, model.Visited,
+                model.Steps, model.Cost, model.Elapsed, model.StepRule,
                 model.Heuristics, model.Spread, model.Status);
             table.AcceptChanges();
             SetNeedsDisplay();

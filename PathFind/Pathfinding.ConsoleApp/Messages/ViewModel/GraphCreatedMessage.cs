@@ -1,5 +1,4 @@
 ﻿using Pathfinding.ConsoleApp.Model;
-using Pathfinding.ConsoleApp.ViewModel;
 using Pathfinding.Service.Interface.Models.Read;
 
 namespace Pathfinding.ConsoleApp.Messages.ViewModel

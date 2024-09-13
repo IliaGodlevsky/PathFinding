@@ -1,6 +1,5 @@
 ﻿using Pathfinding.Infrastructure.Business.Test.TestRealizations;
 using Pathfinding.Service.Interface.Extensions;
-using Pathfinding.Service.Interface.Models.Serialization;
 using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.TestUtils.Attributes;
 

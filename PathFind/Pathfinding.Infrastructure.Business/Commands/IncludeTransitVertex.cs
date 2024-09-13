@@ -2,7 +2,6 @@
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface.Commands;
 using Pathfinding.Shared;
-using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Commands
 {

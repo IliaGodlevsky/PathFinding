@@ -18,7 +18,7 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
         private readonly InMemoryGraphStateRepository graphStates;
         private readonly InMemorySubAlgorithmRepository subAlgorithms;
 
-        public InMemoryAlgorithmRunRepository(InMemoryStatisicsRepository statistics, 
+        public InMemoryAlgorithmRunRepository(InMemoryStatisicsRepository statistics,
             InMemoryGraphStateRepository graphStates,
             InMemorySubAlgorithmRepository subAlgorithms)
         {

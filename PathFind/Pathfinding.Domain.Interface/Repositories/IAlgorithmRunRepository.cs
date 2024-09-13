@@ -16,7 +16,7 @@ namespace Pathfinding.Domain.Interface.Repositories
         Task<bool> DeleteByGraphIdAsync(int graphId,
             CancellationToken token = default);
 
-        Task<bool> DeleteByRunIdsAsync(IEnumerable<int> runIds, 
+        Task<bool> DeleteByRunIdsAsync(IEnumerable<int> runIds,
             CancellationToken token = default);
 
         Task<int> ReadCount(int graphId,

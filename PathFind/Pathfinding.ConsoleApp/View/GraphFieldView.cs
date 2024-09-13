@@ -1,21 +1,21 @@
-﻿using Pathfinding.ConsoleApp.ViewModel;
+﻿using Autofac.Features.AttributeFilters;
+using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.ConsoleApp.Injection;
+using Pathfinding.ConsoleApp.Messages.View;
+using Pathfinding.ConsoleApp.Messages.ViewModel;
+using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.ViewModel;
 using Pathfinding.Domain.Interface;
+using Pathfinding.Shared.Primitives;
+using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Terminal.Gui;
-using ReactiveMarbles.ObservableEvents;
-using Pathfinding.Shared.Primitives;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using Pathfinding.ConsoleApp.Model;
-using Pathfinding.ConsoleApp.Messages.ViewModel;
-using CommunityToolkit.Mvvm.Messaging;
-using Autofac.Features.AttributeFilters;
-using Pathfinding.ConsoleApp.Injection;
-using Pathfinding.ConsoleApp.Messages.View;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -143,7 +143,7 @@ namespace Pathfinding.ConsoleApp.View
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button3Pressed)
                          && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonCtrl)
                          || x.MouseEvent.Flags == MouseFlags.Button3Clicked)
-                .Select(x=> (VertexModel)x.MouseEvent.View.Data)
+                .Select(x => (VertexModel)x.MouseEvent.View.Data)
                 .InvokeCommand(viewModel, x => x.ReverseVertexCommand)
                 .DisposeWith(vertexDisposables);
         }

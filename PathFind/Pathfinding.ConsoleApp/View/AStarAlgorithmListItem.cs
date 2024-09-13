@@ -4,7 +4,6 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.ViewModel;
-using System.Xml.Linq;
 using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View

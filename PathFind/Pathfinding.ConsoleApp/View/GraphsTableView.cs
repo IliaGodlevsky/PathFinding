@@ -1,31 +1,31 @@
-﻿using Pathfinding.ConsoleApp.ViewModel;
+﻿using Autofac.Features.AttributeFilters;
+using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.ConsoleApp.Injection;
+using Pathfinding.ConsoleApp.Messages.View;
+using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.Shared.Extensions;
+using ReactiveMarbles.ObservableEvents;
+using ReactiveUI;
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reactive.Disposables;
-using ReactiveMarbles.ObservableEvents;
 using System.Reactive.Linq;
-using ReactiveUI;
-using Pathfinding.ConsoleApp.Model;
 using Terminal.Gui;
-using Autofac.Features.AttributeFilters;
-using Pathfinding.ConsoleApp.Injection;
-using CommunityToolkit.Mvvm.Messaging;
-using System.Data;
-using System;
-using Pathfinding.Shared.Extensions;
-using System.Collections.Generic;
-using Pathfinding.ConsoleApp.Messages.View;
 
 namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphsTableView
     {
         private readonly GraphTableViewModel viewModel;
-        private readonly CompositeDisposable disposables = new ();
+        private readonly CompositeDisposable disposables = new();
         private readonly Dictionary<int, IDisposable> modelChangingSubs = new();
         private readonly IMessenger messenger;
 
-        public GraphsTableView(GraphTableViewModel viewModel, 
-            [KeyFilter(KeyFilters.Views)]IMessenger messenger)
+        public GraphsTableView(GraphTableViewModel viewModel,
+            [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
             this.viewModel = viewModel;
             this.messenger = messenger;
@@ -41,10 +41,10 @@ namespace Pathfinding.ConsoleApp.View
             this.Events().SelectedCellChanged
                 .Where(x => x.NewRow > -1)
                 .Select(x => (
-                            MultiSelectedRegions.Count > 0 
+                            MultiSelectedRegions.Count > 0
                             ? MultiSelectedRegions
                                 .SelectMany(x => (x.Rect.Top, x.Rect.Bottom - 1).Iterate())
-                                .Select(GetParametresModel) 
+                                .Select(GetParametresModel)
                             : GetParametresModel(x.NewRow).Enumerate()
                             )
                           .ToArray())
@@ -72,7 +72,7 @@ namespace Pathfinding.ConsoleApp.View
 
         private void AddToTable(GraphInfoModel model)
         {
-            table.Rows.Add(model.Id, model.Name, 
+            table.Rows.Add(model.Id, model.Name,
                 model.Width, model.Length, model.Obstacles);
             table.AcceptChanges();
             SetNeedsDisplay();

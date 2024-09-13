@@ -1,17 +1,17 @@
-﻿using Pathfinding.ConsoleApp.ViewModel;
-using System.Linq;
-using Terminal.Gui;
-using ReactiveMarbles.ObservableEvents;
-using System.Reactive.Linq;
-using ReactiveUI;
-using System.Reactive.Disposables;
-using System.Collections.Generic;
+﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
-using Autofac.Features.AttributeFilters;
 using Pathfinding.ConsoleApp.Injection;
-using System.Reactive;
 using Pathfinding.ConsoleApp.Messages.View;
+using Pathfinding.ConsoleApp.ViewModel;
 using Pathfinding.Shared.Extensions;
+using ReactiveMarbles.ObservableEvents;
+using ReactiveUI;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reactive;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -22,9 +22,9 @@ namespace Pathfinding.ConsoleApp.View
         private readonly CompositeDisposable disposables = new();
         private readonly Terminal.Gui.View[] children;
 
-        public CreateGraphView([KeyFilter(KeyFilters.CreateGraphView)]IEnumerable<Terminal.Gui.View> children,
+        public CreateGraphView([KeyFilter(KeyFilters.CreateGraphView)] IEnumerable<Terminal.Gui.View> children,
             CreateGraphViewModel viewModel,
-            [KeyFilter(KeyFilters.Views)]IMessenger messenger)
+            [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
             this.viewModel = viewModel;
             this.messenger = messenger;

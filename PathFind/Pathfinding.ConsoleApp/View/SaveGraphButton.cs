@@ -1,14 +1,14 @@
-﻿using Terminal.Gui;
-using ReactiveMarbles.ObservableEvents;
-using System.Reactive.Linq;
-using ReactiveUI;
-using System.Reactive.Disposables;
-using System.Threading.Tasks;
+﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
-using Autofac.Features.AttributeFilters;
 using Pathfinding.ConsoleApp.Injection;
-using System.Collections.Generic;
 using Pathfinding.ConsoleApp.ViewModel;
+using ReactiveMarbles.ObservableEvents;
+using ReactiveUI;
+using System.Collections.Generic;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -18,7 +18,7 @@ namespace Pathfinding.ConsoleApp.View
         private readonly SaveGraphButtonViewModel viewModel;
         private readonly CompositeDisposable disposables = new();
 
-        public SaveGraphButton([KeyFilter(KeyFilters.Views)]IMessenger messenger, 
+        public SaveGraphButton([KeyFilter(KeyFilters.Views)] IMessenger messenger,
             SaveGraphButtonViewModel viewModel)
         {
             this.messenger = messenger;

@@ -13,7 +13,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
     internal sealed class CreateRandomAlgorithmRunViewModel : CreateRunButtonViewModel
     {
         public CreateRandomAlgorithmRunViewModel(IRequestService<VertexModel> service,
-            [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger, ILog logger) 
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger, ILog logger)
             : base(service, messenger, logger)
         {
         }
@@ -22,7 +22,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         protected override void AppendStatistics(RunStatisticsModel model)
         {
-            
+
         }
 
         protected override PathfindingProcess GetAlgorithm(IEnumerable<VertexModel> pathfindingRange)

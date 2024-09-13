@@ -8,7 +8,7 @@ namespace Pathfinding.ConsoleApp.View
     {
         public void Debug(string message)
         {
-            
+
         }
 
         public void Error(Exception ex, string message = null)
@@ -33,12 +33,12 @@ namespace Pathfinding.ConsoleApp.View
 
         public void Info(string message)
         {
-            
+
         }
 
         public void Trace(string message)
         {
-            
+
         }
 
         public void Warn(Exception ex, string message = null)

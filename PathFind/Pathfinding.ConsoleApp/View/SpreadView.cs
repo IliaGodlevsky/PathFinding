@@ -4,12 +4,12 @@ using NStack;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.ViewModel;
+using ReactiveMarbles.ObservableEvents;
+using ReactiveUI;
 using System.Linq;
 using System.Reactive.Disposables;
-using Terminal.Gui;
-using ReactiveMarbles.ObservableEvents;
 using System.Reactive.Linq;
-using ReactiveUI;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {

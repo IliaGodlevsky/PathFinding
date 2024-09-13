@@ -6,14 +6,14 @@ namespace Pathfinding.ConsoleApp.Model
     internal sealed class RunVertexModel : ReactiveObject
     {
         private int cost;
-        public int Cost 
+        public int Cost
         {
             get => cost;
             set => this.RaiseAndSetIfChanged(ref cost, value);
         }
 
         private bool isObstacle;
-        public bool IsObstacle 
+        public bool IsObstacle
         {
             get => isObstacle;
             set => this.RaiseAndSetIfChanged(ref isObstacle, value);
@@ -22,10 +22,10 @@ namespace Pathfinding.ConsoleApp.Model
         public Coordinate Position { get; set; }
 
         private bool isVisited;
-        public bool IsVisited 
+        public bool IsVisited
         {
             get => isVisited;
-            set 
+            set
             {
                 if (!IsRange() && !IsPathVertex())
                 {
@@ -39,10 +39,10 @@ namespace Pathfinding.ConsoleApp.Model
         }
 
         private bool isEnqueued;
-        public bool IsEnqueued 
+        public bool IsEnqueued
         {
             get => isEnqueued;
-            set 
+            set
             {
                 if (!IsRange() && !IsPathVertex())
                 {
@@ -56,10 +56,10 @@ namespace Pathfinding.ConsoleApp.Model
         }
 
         private bool isPath;
-        public bool IsPath 
+        public bool IsPath
         {
             get => isPath;
-            set  
+            set
             {
                 if (!IsRange())
                 {
@@ -83,14 +83,14 @@ namespace Pathfinding.ConsoleApp.Model
         }
 
         private bool isSource;
-        public bool IsSource 
+        public bool IsSource
         {
             get => isSource;
             set => this.RaiseAndSetIfChanged(ref isSource, value);
         }
 
         private bool isTarget;
-        public bool IsTarget 
+        public bool IsTarget
         {
             get => isTarget;
             set => this.RaiseAndSetIfChanged(ref isTarget, value);
@@ -99,7 +99,7 @@ namespace Pathfinding.ConsoleApp.Model
         private bool isTransit;
         public bool IsTransit
         {
-            get=> isTransit;
+            get => isTransit;
             set => this.RaiseAndSetIfChanged(ref isTransit, value);
         }
 

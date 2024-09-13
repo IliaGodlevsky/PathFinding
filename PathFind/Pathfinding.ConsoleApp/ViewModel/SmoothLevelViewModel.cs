@@ -10,7 +10,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
     {
         public IReadOnlyDictionary<string, int> Levels { get; set; }
 
-        public SmoothLevelViewModel([KeyFilter(KeyFilters.SmoothLevels)]IEnumerable<(string Name, int Level)> levels)
+        public SmoothLevelViewModel([KeyFilter(KeyFilters.SmoothLevels)] IEnumerable<(string Name, int Level)> levels)
         {
             Levels = levels.ToDictionary(x => x.Name, x => x.Level);
         }

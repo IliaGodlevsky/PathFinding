@@ -1,16 +1,16 @@
-﻿using NStack;
-using Pathfinding.ConsoleApp.ViewModel;
-using System.Linq;
-using Terminal.Gui;
-using ReactiveMarbles.ObservableEvents;
-using System.Reactive.Linq;
-using System.Data;
-using ReactiveUI;
-using System.Reactive.Disposables;
+﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
-using Autofac.Features.AttributeFilters;
+using NStack;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
+using Pathfinding.ConsoleApp.ViewModel;
+using ReactiveMarbles.ObservableEvents;
+using ReactiveUI;
+using System.Data;
+using System.Linq;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -22,7 +22,7 @@ namespace Pathfinding.ConsoleApp.View
         private readonly ustring[] radioLabels;
 
         public StepRulesView(StepRulesViewModel stepRulesViewModel,
-            [KeyFilter(KeyFilters.Views)]IMessenger messenger)
+            [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
             Initialize();
             this.stepRulesViewModel = stepRulesViewModel;

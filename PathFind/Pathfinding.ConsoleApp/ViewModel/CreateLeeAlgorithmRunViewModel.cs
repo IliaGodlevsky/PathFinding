@@ -12,8 +12,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal sealed class CreateLeeAlgorithmRunViewModel : CreateRunButtonViewModel
     {
-        public CreateLeeAlgorithmRunViewModel(IRequestService<VertexModel> service, 
-            [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger, ILog logger) 
+        public CreateLeeAlgorithmRunViewModel(IRequestService<VertexModel> service,
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger, ILog logger)
             : base(service, messenger, logger)
         {
         }
@@ -22,7 +22,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         protected override void AppendStatistics(RunStatisticsModel model)
         {
-            
+
         }
 
         protected override PathfindingProcess GetAlgorithm(IEnumerable<VertexModel> pathfindingRange)

@@ -1,18 +1,18 @@
-﻿using Pathfinding.Service.Interface.Models.Read;
-using Pathfinding.Service.Interface.Requests.Create;
-using System.Threading.Tasks;
-using System.Threading;
+﻿using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface;
-using Pathfinding.Domain.Core;
+using Pathfinding.Service.Interface.Models.Read;
+using Pathfinding.Service.Interface.Models.Serialization;
+using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Shared.Extensions;
 using System.Linq;
-using Pathfinding.Service.Interface.Models.Serialization;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Pathfinding.Service.Interface.Extensions
 {
     public static class RequestServiceExtensions
     {
-        public static async Task<PathfindingHistoryModel<T>> CreatePathfindingHistoryAsync<T>(this IRequestService<T> service, 
+        public static async Task<PathfindingHistoryModel<T>> CreatePathfindingHistoryAsync<T>(this IRequestService<T> service,
             CreatePathfindingHistoryRequest<T> request, CancellationToken token = default)
             where T : IVertex, IEntity<int>
         {

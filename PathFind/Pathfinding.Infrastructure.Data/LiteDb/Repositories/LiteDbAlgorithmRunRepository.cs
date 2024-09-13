@@ -1,7 +1,6 @@
 ﻿using LiteDB;
 using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface.Repositories;
-using Pathfinding.Infrastructure.Data.Pathfinding;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -37,7 +36,7 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
         {
             var runs = await ReadByGraphIdAsync(graphId, token);
             return await DeleteByRunIdsAsync(runs.Select(x => x.Id), token);
-            
+
         }
 
         public async Task<bool> DeleteByRunIdsAsync(IEnumerable<int> runIds, CancellationToken token = default)

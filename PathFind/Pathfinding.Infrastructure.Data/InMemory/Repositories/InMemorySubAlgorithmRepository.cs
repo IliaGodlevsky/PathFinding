@@ -31,7 +31,7 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
             return await Task.FromResult(result);
         }
 
-        public async Task<bool> DeleteByRunIdsAsync(IEnumerable<int> runIds, 
+        public async Task<bool> DeleteByRunIdsAsync(IEnumerable<int> runIds,
             CancellationToken token = default)
         {
             var ids = runIds.ToHashSet();

@@ -1,7 +1,7 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Business.Layers;
-using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
 using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
 using Pathfinding.Shared.Primitives;
 using System.Collections;
 

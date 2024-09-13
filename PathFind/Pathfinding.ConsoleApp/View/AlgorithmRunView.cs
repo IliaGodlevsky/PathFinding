@@ -1,18 +1,18 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
+using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel;
+using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using Terminal.Gui;
-using ReactiveMarbles.ObservableEvents;
 using System.Threading.Tasks;
-using Pathfinding.ConsoleApp.Messages.View;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -26,7 +26,7 @@ namespace Pathfinding.ConsoleApp.View
         private int RenderSpeed { get; set; } = 45;
 
         public AlgorithmRunView(AlgorithmRunViewModel viewModel,
-            [KeyFilter(KeyFilters.Views)]IMessenger messenger)
+            [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
             Visible = false;
             X = 0;

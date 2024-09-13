@@ -25,7 +25,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private readonly ILog logger;
 
         private int graphId;
-        public int GraphId 
+        public int GraphId
         {
             get => graphId;
             set => this.RaiseAndSetIfChanged(ref graphId, value);

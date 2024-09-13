@@ -39,7 +39,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private IGraph<VertexModel> Graph { get; set; }
 
         private VertexModel source;
-        public VertexModel Source 
+        public VertexModel Source
         {
             get => source;
             set => this.RaiseAndSetIfChanged(ref source, value);
@@ -57,13 +57,13 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public ReactiveCommand<VertexModel, Unit> RemoveFromRangeCommand { get; }
 
         public ObservableCollection<VertexModel> Transit { get; private set; } = new();
-        
+
         IList<VertexModel> IPathfindingRange<VertexModel>.Transit => Transit;
 
-        public PathfindingRangeViewModel([KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
+        public PathfindingRangeViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             IRequestService<VertexModel> service,
-            [KeyFilter(KeyFilters.IncludeCommands)]IEnumerable<IPathfindingRangeCommand<VertexModel>> includeCommands,
-            [KeyFilter(KeyFilters.ExcludeCommands)]IEnumerable<IPathfindingRangeCommand<VertexModel>> excludeCommands,
+            [KeyFilter(KeyFilters.IncludeCommands)] IEnumerable<IPathfindingRangeCommand<VertexModel>> includeCommands,
+            [KeyFilter(KeyFilters.ExcludeCommands)] IEnumerable<IPathfindingRangeCommand<VertexModel>> excludeCommands,
             ILog logger)
         {
             pathfindingRange = this;
@@ -103,7 +103,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             await ExecuteSafe(async () =>
             {
                 var range = (await service.ReadRangeAsync(GraphId))
-                    .Select(x => (x.Id, x.VertexId ))
+                    .Select(x => (x.Id, x.VertexId))
                     .ToList();
                 var vertices = pathfindingRange.ToList();
                 var index = vertices.IndexOf(vertex);
@@ -111,11 +111,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 var request = new UpsertPathfindingRangeRequest()
                 {
                     GraphId = GraphId,
-                    Ranges = range.Select((x, i) => 
-                        (x.Id, 
-                        IsSource: i == 0, 
+                    Ranges = range.Select((x, i) =>
+                        (x.Id,
+                        IsSource: i == 0,
                         IsTarget: i == range.Count - 1 && range.Count > 1,
-                        x.VertexId, 
+                        x.VertexId,
                         Order: i))
                     .ToList()
                 };

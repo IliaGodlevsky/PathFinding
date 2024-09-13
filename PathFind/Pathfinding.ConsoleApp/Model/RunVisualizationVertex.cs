@@ -25,7 +25,7 @@
 
         private sealed class TargetVisualizationVertex : RunVisualizationVertex
         {
-            public TargetVisualizationVertex(RunVertexModel vertex) 
+            public TargetVisualizationVertex(RunVertexModel vertex)
                 : base(vertex)
             {
             }

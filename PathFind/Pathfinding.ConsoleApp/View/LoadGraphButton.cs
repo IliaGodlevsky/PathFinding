@@ -1,10 +1,10 @@
-﻿using Terminal.Gui;
+﻿using Pathfinding.ConsoleApp.ViewModel;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
+using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using Pathfinding.ConsoleApp.ViewModel;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {

@@ -1,13 +1,13 @@
-﻿using System.Reactive.Disposables;
-using ReactiveMarbles.ObservableEvents;
-using System.Reactive.Linq;
-using ReactiveUI;
-using Terminal.Gui;
-using System.Linq.Expressions;
-using System;
-using Pathfinding.Shared.Primitives;
+﻿using Pathfinding.ConsoleApp.ViewModel;
 using Pathfinding.Shared.Extensions;
-using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.Shared.Primitives;
+using ReactiveMarbles.ObservableEvents;
+using ReactiveUI;
+using System;
+using System.Linq.Expressions;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {

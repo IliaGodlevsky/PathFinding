@@ -10,7 +10,7 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class RunCreationView : FrameView
     {
-        public RunCreationView([KeyFilter(KeyFilters.NewRunView)]IEnumerable<Terminal.Gui.View> children,
+        public RunCreationView([KeyFilter(KeyFilters.NewRunView)] IEnumerable<Terminal.Gui.View> children,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
             Initialize();

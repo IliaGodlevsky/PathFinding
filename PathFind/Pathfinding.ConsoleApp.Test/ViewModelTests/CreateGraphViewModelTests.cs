@@ -38,7 +38,7 @@ namespace Pathfinding.ConsoleApp.Test.ViewModelTests
 
         [Test]
         public async Task CreateGraphCommand_FullData_ShouldCreate()
-        {           
+        {
             GraphCreatedMessage? message = null;
             messenger.Register<GraphCreatedMessage>(this, (r, msg) =>
             {

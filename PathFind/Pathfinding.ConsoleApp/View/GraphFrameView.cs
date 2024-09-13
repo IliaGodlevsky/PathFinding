@@ -8,7 +8,7 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphFrameView : FrameView
     {
-        public GraphFrameView([KeyFilter(KeyFilters.GraphFrame)]IEnumerable<Terminal.Gui.View> children)
+        public GraphFrameView([KeyFilter(KeyFilters.GraphFrame)] IEnumerable<Terminal.Gui.View> children)
         {
             Initialize();
             Add(children.ToArray());

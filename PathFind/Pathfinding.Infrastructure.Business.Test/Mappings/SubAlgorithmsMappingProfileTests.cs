@@ -2,7 +2,6 @@
 using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Test.TestRealizations;
 using Pathfinding.Service.Interface.Models.Read;
-using Pathfinding.Shared.Extensions;
 using Pathfinding.TestUtils.Attributes;
 
 namespace Pathfinding.Infrastructure.Business.Test.Mappings
@@ -53,7 +52,7 @@ namespace Pathfinding.Infrastructure.Business.Test.Mappings
                     "The order of mapped value is not equal to the original one");
                 Assert.That(mapped.AlgorithmRunId, Is.EqualTo(createRequest.AlgorithmRunId),
                     "The algorithm run id of mapped value is not equal to the original one");
-                Assert.That(mapped.Visited.Length, Is.GreaterThan(0), 
+                Assert.That(mapped.Visited.Length, Is.GreaterThan(0),
                     "The visited coordinates are empty");
             });
         }

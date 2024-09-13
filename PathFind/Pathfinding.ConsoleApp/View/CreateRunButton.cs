@@ -2,14 +2,14 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
+using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.ViewModel;
+using ReactiveMarbles.ObservableEvents;
+using System;
 using System.Linq;
 using System.Reactive.Disposables;
-using Terminal.Gui;
-using ReactiveMarbles.ObservableEvents;
 using System.Reactive.Linq;
-using Pathfinding.ConsoleApp.Messages.ViewModel;
-using System;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -18,14 +18,14 @@ namespace Pathfinding.ConsoleApp.View
         private readonly IMessenger messenger;
         private readonly CompositeDisposable disposables = new();
 
-        public CreateRunButton([KeyFilter(KeyFilters.Views)]IMessenger messenger)
+        public CreateRunButton([KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
             X = Pos.Percent(15);
             Y = 0;
             Text = "Create";
             this.messenger = messenger;
             messenger.Register<RunViewModelChangedMessage>(this, OnRunViewModelChanged);
-            
+
         }
 
         private void OnRunViewModelChanged(object recipient, RunViewModelChangedMessage msg)

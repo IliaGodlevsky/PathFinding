@@ -10,7 +10,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
     {
         public IReadOnlyDictionary<string, int> SpreadLevels { get; }
 
-        public SpreadViewModel([KeyFilter(KeyFilters.SpreadLevels)]IEnumerable<(string Name, int Spread)> spreadLevels)
+        public SpreadViewModel([KeyFilter(KeyFilters.SpreadLevels)] IEnumerable<(string Name, int Spread)> spreadLevels)
         {
             SpreadLevels = spreadLevels.ToDictionary(x => x.Name, x => x.Spread).AsReadOnly();
         }

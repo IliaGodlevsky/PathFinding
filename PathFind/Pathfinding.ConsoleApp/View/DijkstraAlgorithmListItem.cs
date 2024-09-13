@@ -12,7 +12,7 @@ namespace Pathfinding.ConsoleApp.View
         private readonly IMessenger messenger;
         private readonly CreateDijkstraRunViewModel viewModel;
 
-        public DijkstraAlgorithmListItem([KeyFilter(KeyFilters.Views)]IMessenger messenger,
+        public DijkstraAlgorithmListItem([KeyFilter(KeyFilters.Views)] IMessenger messenger,
             CreateDijkstraRunViewModel viewModel)
         {
             Initialize();

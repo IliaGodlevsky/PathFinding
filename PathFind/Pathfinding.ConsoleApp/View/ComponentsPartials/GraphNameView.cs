@@ -26,7 +26,7 @@ namespace Pathfinding.ConsoleApp.View
             nameField.X = Pos.Percent(15) + 1;
             nameField.Y = 1;
             nameField.Width = Dim.Fill();
-            
+
             Add(nameField, nameLabel);
         }
     }

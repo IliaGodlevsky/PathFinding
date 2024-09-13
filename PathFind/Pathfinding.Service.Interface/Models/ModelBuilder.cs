@@ -1,5 +1,4 @@
 ﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Shared.Primitives;
@@ -42,9 +41,9 @@ namespace Pathfinding.Service.Interface.Models
             return request;
         }
 
-        public static CreateAlgorithmRunHistoryRequest WithStatistics (this CreateAlgorithmRunHistoryRequest request, 
-            string algorithmId, IGraphPath path, int visited, string resultStatus, 
-            TimeSpan elapsed, string stepRule = null, 
+        public static CreateAlgorithmRunHistoryRequest WithStatistics(this CreateAlgorithmRunHistoryRequest request,
+            string algorithmId, IGraphPath path, int visited, string resultStatus,
+            TimeSpan elapsed, string stepRule = null,
             string heuristics = null, int? spread = null)
         {
             request.Statistics = new RunStatisticsModel()

@@ -21,7 +21,7 @@ namespace Pathfinding.Shared.Primitives
             base.Items.Add(item);
         }
 
-        public void ClearSuppress() 
+        public void ClearSuppress()
         {
             base.Items.Clear();
         }

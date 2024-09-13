@@ -11,7 +11,7 @@ namespace Pathfinding.ConsoleApp.View
         private const Color ForegroundColor = Color.Gray;
         private const Color BackgroundColor = ColorContants.BackgroundColor;
 
-        public MainView([KeyFilter(KeyFilters.MainWindow)]IEnumerable<Terminal.Gui.View> children)
+        public MainView([KeyFilter(KeyFilters.MainWindow)] IEnumerable<Terminal.Gui.View> children)
         {
             X = 0;
             Y = 0;

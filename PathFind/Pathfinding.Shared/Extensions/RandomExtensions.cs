@@ -52,8 +52,8 @@ namespace Pathfinding.Shared.Extensions
             }
         }
 
-        public static IEnumerable<Coordinate> GenerateCoordinates(this IRandom random, 
-            InclusiveValueRange<int> range, int dimensions,  int limit)
+        public static IEnumerable<Coordinate> GenerateCoordinates(this IRandom random,
+            InclusiveValueRange<int> range, int dimensions, int limit)
         {
             while (limit-- > 0)
             {

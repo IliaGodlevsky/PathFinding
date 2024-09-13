@@ -17,7 +17,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
     internal sealed class AlgorithmRunViewModel : ReactiveObject
     {
         private IReadOnlyCollection<RunVertexModel> graphState = Array.Empty<RunVertexModel>();
-        public IReadOnlyCollection<RunVertexModel> GraphState 
+        public IReadOnlyCollection<RunVertexModel> GraphState
         {
             get => graphState;
             set => this.RaiseAndSetIfChanged(ref graphState, value);
@@ -29,7 +29,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public ReactiveCommand<int, Unit> VisualizeNextCommand { get; }
 
-        public AlgorithmRunViewModel([KeyFilter(KeyFilters.ViewModels)]IMessenger messenger)
+        public AlgorithmRunViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger)
         {
             messenger.Register<RunCreatedMessaged>(this, OnRunCreated);
             messenger.Register<RunActivatedMessage>(this, OnRunActivated);
@@ -49,7 +49,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 msg.Run.Algorithms);
         }
 
-        private IReadOnlyCollection <RunVertexModel> GenerateVerticesToVisualize(GraphStateModel graphState,
+        private IReadOnlyCollection<RunVertexModel> GenerateVerticesToVisualize(GraphStateModel graphState,
             IEnumerable<SubAlgorithmModel> subAlgorithms)
         {
             var graph = CreateGraph(graphState);

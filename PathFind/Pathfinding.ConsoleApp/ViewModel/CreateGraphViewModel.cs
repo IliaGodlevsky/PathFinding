@@ -32,52 +32,52 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private readonly ILog logger;
 
         private string name;
-        public string Name 
+        public string Name
         {
             get => name;
             set => this.RaiseAndSetIfChanged(ref name, value);
         }
 
         private int width;
-        public int Width 
+        public int Width
         {
             get => width;
             set => this.RaiseAndSetIfChanged(ref width, value);
         }
 
         private int length;
-        public int Length 
+        public int Length
         {
             get => length;
             set => this.RaiseAndSetIfChanged(ref length, value);
         }
 
         private int obstacles;
-        public int Obstacles 
+        public int Obstacles
         {
             get => obstacles;
             set => this.RaiseAndSetIfChanged(ref obstacles, value);
         }
 
         private int smoothLevel;
-        public int SmoothLevel 
+        public int SmoothLevel
         {
             get => smoothLevel;
             set => this.RaiseAndSetIfChanged(ref smoothLevel, value);
         }
 
         private INeighborhoodFactory neighborhoodFactory;
-        public INeighborhoodFactory NeighborhoodFactory 
+        public INeighborhoodFactory NeighborhoodFactory
         {
             get => neighborhoodFactory;
-            set => this.RaiseAndSetIfChanged(ref neighborhoodFactory, value); 
+            set => this.RaiseAndSetIfChanged(ref neighborhoodFactory, value);
         }
 
         public ReactiveCommand<MouseEventArgs, Unit> CreateCommand { get; }
 
         public CreateGraphViewModel(IRequestService<VertexModel> service,
             IGraphAssemble<VertexModel> graphAssemble,
-            [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ILog logger)
         {
             this.service = service;

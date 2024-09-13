@@ -1,6 +1,4 @@
-﻿using System.Dynamic;
-
-namespace Pathfinding.ConsoleApp.Injection
+﻿namespace Pathfinding.ConsoleApp.Injection
 {
     internal class KeyFilters
     {

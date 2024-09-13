@@ -4,13 +4,13 @@ using NStack;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
+using Pathfinding.ConsoleApp.ViewModel;
+using ReactiveMarbles.ObservableEvents;
+using ReactiveUI;
 using System.Linq;
 using System.Reactive.Disposables;
-using Terminal.Gui;
-using ReactiveMarbles.ObservableEvents;
 using System.Reactive.Linq;
-using ReactiveUI;
-using Pathfinding.ConsoleApp.ViewModel;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -21,8 +21,8 @@ namespace Pathfinding.ConsoleApp.View
 
         private readonly CompositeDisposable disposables = new();
 
-        public HeuristicsView([KeyFilter(KeyFilters.Views)]IMessenger messenger,
-            HeuristicsViewModel viewModel) 
+        public HeuristicsView([KeyFilter(KeyFilters.Views)] IMessenger messenger,
+            HeuristicsViewModel viewModel)
         {
             Initialize();
             this.viewModel = viewModel;

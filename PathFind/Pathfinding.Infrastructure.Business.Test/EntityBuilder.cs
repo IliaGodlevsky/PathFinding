@@ -1,10 +1,10 @@
-﻿using Pathfinding.Service.Interface.Requests.Create;
-using Pathfinding.Shared.Primitives;
-using Pathfinding.Shared.Random;
-using Pathfinding.Shared.Extensions;
+﻿using Pathfinding.Infrastructure.Business.Test.TestRealizations;
 using Pathfinding.Service.Interface.Models.Serialization;
 using Pathfinding.Service.Interface.Models.Undefined;
-using Pathfinding.Infrastructure.Business.Test.TestRealizations;
+using Pathfinding.Service.Interface.Requests.Create;
+using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Primitives;
+using Pathfinding.Shared.Random;
 
 namespace Pathfinding.Infrastructure.Business.Test
 {
@@ -199,7 +199,7 @@ namespace Pathfinding.Infrastructure.Business.Test
             {
                 Costs = random.GenerateCoordinates((9, 1), 2, 25)
                     .Zip(random.GenerateNumbers(range, 25),
-                    (x, y) => (Position : x, Cost: y))
+                    (x, y) => (Position: x, Cost: y))
                     .ToList(),
                 Regulars = random.GenerateCoordinates(range, 2, Limit).ToList(),
                 Obstacles = random.GenerateCoordinates(range, 2, Limit).ToList(),
@@ -240,7 +240,7 @@ namespace Pathfinding.Infrastructure.Business.Test
             var runHistories = new List<CreateAlgorithmRunHistoryRequest>();
             while (count-- > 0)
             {
-                var runHistory = 
+                var runHistory =
                     CreateAlgorithmRunHistoryRequest()
                     .WithRandomRun()
                     .WithRandomGraphState()

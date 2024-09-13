@@ -35,10 +35,10 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<VertexModelFactory>().As<IVertexFactory<VertexModel>>().SingleInstance();
             builder.RegisterType<GraphAssemble<VertexModel>>().As<IGraphAssemble<VertexModel>>().SingleInstance();
 
-            builder.RegisterInstance(new[] 
-            { 
-                ("No", 0), 
-                ("Low", 1), 
+            builder.RegisterInstance(new[]
+            {
+                ("No", 0),
+                ("Low", 1),
                 ("Medium", 2),
                 ("High", 4),
                 ("Extreme", 6)
@@ -54,7 +54,7 @@ namespace Pathfinding.ConsoleApp.Injection
                 ("Highest", 6),
                 ("Extreme", 8)
             }).Keyed<IEnumerable<(string Name, int Level)>>(KeyFilters.SpreadLevels).SingleInstance();
-            builder.RegisterInstance(new[] 
+            builder.RegisterInstance(new[]
             {
                 ("Moore", (INeighborhoodFactory)new MooreNeighborhoodFactory()),
                 ("Von Neimann", new VonNeumannNeighborhoodFactory())

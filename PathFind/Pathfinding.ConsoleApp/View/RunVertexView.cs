@@ -23,7 +23,7 @@ namespace Pathfinding.ConsoleApp.View
             X = model.Position.GetX() * LabelWidth;
             Y = model.Position.GetY();
             Width = LabelWidth;
-            
+
             BindTo(x => x.IsObstacle, ColorContants.ObstacleVertexColor, 0);
             BindTo(x => x.IsTarget, ColorContants.TargetVertexColor);
             BindTo(x => x.IsSource, ColorContants.SourceVertexColor);
@@ -47,7 +47,7 @@ namespace Pathfinding.ConsoleApp.View
             };
         }
 
-        private void BindTo(Expression<Func<RunVertexModel, bool>> expression, 
+        private void BindTo(Expression<Func<RunVertexModel, bool>> expression,
             Color toColor, int toSkip = 1)
         {
             model.WhenAnyValue(expression)

@@ -10,7 +10,7 @@ namespace Pathfinding.ConsoleApp.View
     {
         private readonly IMessenger messenger;
 
-        public CloseRunCreationViewButton([KeyFilter(KeyFilters.Views)]IMessenger messenger)
+        public CloseRunCreationViewButton([KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
             X = Pos.Percent(65);
             Y = 0;
@@ -21,10 +21,10 @@ namespace Pathfinding.ConsoleApp.View
 
         private void OnClicked(MouseEventArgs e)
         {
-            if(e.MouseEvent.Flags == MouseFlags.Button1Clicked)
+            if (e.MouseEvent.Flags == MouseFlags.Button1Clicked)
             {
                 messenger.Send(new CloseRunCreationViewMessage());
             }
-        } 
+        }
     }
 }
