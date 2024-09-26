@@ -224,6 +224,9 @@
     <PackageReference Include="CommunityToolkit.Mvvm">
       <Version>8.2.2</Version>
     </PackageReference>
+    <PackageReference Include="LiteDB">
+      <Version>5.0.21</Version>
+    </PackageReference>
     <PackageReference Include="OptimizedPriorityQueue">
       <Version>5.1.0</Version>
     </PackageReference>

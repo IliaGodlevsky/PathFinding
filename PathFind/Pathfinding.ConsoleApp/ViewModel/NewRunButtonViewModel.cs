@@ -13,7 +13,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public bool CanCreate() => graphId > 0;
 
         private int graphId;
-        private int GraphId
+        public int GraphId
         {
             get => graphId;
             set => this.RaiseAndSetIfChanged(ref graphId, value);

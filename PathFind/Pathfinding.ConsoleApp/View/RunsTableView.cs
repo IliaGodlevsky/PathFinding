@@ -85,7 +85,7 @@ namespace Pathfinding.ConsoleApp.View
                 if (table.Rows.Count > 0)
                 {
                     SelectedCellChangedEventArgs args = index == table.Rows.Count
-                        ? args = new(table, 0, 0, index, index - 1)
+                        ? new(table, 0, 0, index, index - 1)
                         : new(table, 0, 0, index, index);
                     OnSelectedCellChanged(args);
                     SetSelection(0, args.NewRow, false);

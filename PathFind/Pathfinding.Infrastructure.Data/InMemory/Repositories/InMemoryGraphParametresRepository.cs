@@ -60,9 +60,9 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
             return true;
         }
 
-        public IAsyncEnumerable<Graph> GetAll(CancellationToken token = default)
+        public async Task<IEnumerable<Graph>> GetAll(CancellationToken token = default)
         {
-            return set.ToAsyncEnumerable();
+            return await Task.FromResult(set);
         }
 
         public async Task<Graph> ReadAsync(int graphId,

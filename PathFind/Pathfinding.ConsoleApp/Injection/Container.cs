@@ -2,6 +2,7 @@
 using Autofac.Features.AttributeFilters;
 using AutoMapper;
 using CommunityToolkit.Mvvm.Messaging;
+using LiteDB;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.Model.Factories;
 using Pathfinding.ConsoleApp.View;
@@ -27,7 +28,7 @@ namespace Pathfinding.ConsoleApp.Injection
 {
     internal static class Container
     {
-        public static IContainer BuildApp()
+        public static IContainer BuildApp(string[] args)
         {
             var builder = new ContainerBuilder();
 
@@ -51,8 +52,8 @@ namespace Pathfinding.ConsoleApp.Injection
                 ("Low", 3),
                 ("Medium", 4),
                 ("High", 5),
-                ("Highest", 6),
-                ("Extreme", 8)
+                ("Highest", 7),
+                ("Extreme", 10)
             }).Keyed<IEnumerable<(string Name, int Level)>>(KeyFilters.SpreadLevels).SingleInstance();
             builder.RegisterInstance(new[]
             {
@@ -72,8 +73,12 @@ namespace Pathfinding.ConsoleApp.Injection
                 ("Cosine", new CosineDistance())
             }).As<IEnumerable<(string Name, IHeuristic Heuristic)>>().SingleInstance();
 
-            builder.Register(_ => new LiteDbInFileUnitOfWorkFactory("pathfinding.litedb")).As<IUnitOfWorkFactory>().SingleInstance();
-            //builder.RegisterType<LiteDbInMemoryUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
+            builder.RegisterInstance(new ConnectionString()
+            {
+                Filename = "pathfinding.litedb",
+                Connection = ConnectionType.Shared
+            }).As<ConnectionString>().SingleInstance();
+            builder.RegisterType<LiteDbInFileUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
 
             builder.RegisterAutoMapper();
             builder.RegisterType<RequestService<VertexModel>>().As<IRequestService<VertexModel>>().SingleInstance();
@@ -155,9 +160,8 @@ namespace Pathfinding.ConsoleApp.Injection
         private static void RegisterViewModels(this ContainerBuilder builder)
         {
             builder.RegisterAssemblyTypes(typeof(Program).Assembly)
-                .Where(x => x.Name.EndsWith("ViewModel"))
-                .AsSelf().AsImplementedInterfaces().SingleInstance()
-                .WithAttributeFiltering();
+                .Where(x => x.Name.EndsWith("ViewModel")).AsSelf()
+                .AsImplementedInterfaces().SingleInstance().WithAttributeFiltering();
         }
 
         private static void RegisterAutoMapper(this ContainerBuilder builder)

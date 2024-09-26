@@ -1,4 +1,4 @@
-﻿using Pathfinding.Infrastructure.Data.InMemory;
+﻿using Pathfinding.Infrastructure.Business.Test.TestRealizations.TestDb;
 
 namespace Pathfinding.Infrastructure.Business.Test.TestRealizations
 {
@@ -6,7 +6,7 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations
     {
         public static RequestService<TestVertex> GetForTest()
         {
-            var unitOfWork = new InMemoryUnitOfWorkFactory();
+            var unitOfWork = new TestUnitOfWorkFactory();
             var mapper = TestMapper.Interface.Mapper;
             return new RequestService<TestVertex>(mapper, unitOfWork);
         }

@@ -10,7 +10,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 {
     public class AStarAlgorithm : DijkstraAlgorithm
     {
-        private readonly Dictionary<Coordinate, double> accumulatedCosts;
+        protected readonly Dictionary<Coordinate, double> accumulatedCosts;
         protected readonly Dictionary<Coordinate, double> heuristics;
         protected readonly IHeuristic heuristic;
 

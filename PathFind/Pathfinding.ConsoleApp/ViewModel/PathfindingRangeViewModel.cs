@@ -56,7 +56,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public ReactiveCommand<VertexModel, Unit> RemoveFromRangeCommand { get; }
 
-        public ObservableCollection<VertexModel> Transit { get; private set; } = new();
+        public ObservableCollection<VertexModel> Transit { get; } = new();
 
         IList<VertexModel> IPathfindingRange<VertexModel>.Transit => Transit;
 
@@ -131,10 +131,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private async Task RemoveVertexFromStorage(VertexModel vertex)
         {
-            await ExecuteSafe(async () =>
-            {
-                await service.DeleteRangeAsync(vertex.Enumerate());
-            }, logger.Error);
+            await ExecuteSafe(async () 
+                => await service.DeleteRangeAsync(vertex.Enumerate()), logger.Error);
         }
 
         private void SubscribeOnRangeExtremumsAdding(Expression<Func<PathfindingRangeViewModel, VertexModel>> expression)

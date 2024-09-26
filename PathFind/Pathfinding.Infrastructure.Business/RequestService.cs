@@ -141,7 +141,7 @@ namespace Pathfinding.Infrastructure.Business
         {
             return await Transaction(async (unitOfWork, t) =>
             {
-                var result = await unitOfWork.GraphRepository.GetAll(t).ToListAsync(token);
+                var result = (await unitOfWork.GraphRepository.GetAll(t)).ToList();
                 return mapper.Map<GraphInformationModel[]>(result).ToReadOnly();
             }, token);
         }
@@ -179,9 +179,9 @@ namespace Pathfinding.Infrastructure.Business
         {
             return await Transaction(async (unitOfWork, t) =>
             {
-                return await unitOfWork.GraphRepository.GetAll()
+                return (await unitOfWork.GraphRepository.GetAll())
                     .Select(x => x.Id)
-                    .ToListAsync(token);
+                    .ToList();
             }, token);
         }
 

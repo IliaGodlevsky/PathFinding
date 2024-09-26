@@ -25,8 +25,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public Queue<RunVisualizationVertex> Vertices { get; } = new();
 
-        public int Remained => Vertices.Count;
-
         public ReactiveCommand<int, Unit> VisualizeNextCommand { get; }
 
         public AlgorithmRunViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger)
@@ -81,8 +79,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private Dictionary<Coordinate, RunVertexModel> CreateGraph(GraphStateModel model)
         {
-            var graph = model.Costs
-                .ToDictionary(x => x.Position, x => x.Cost);
+            var graph = model.Costs.ToDictionary(x => x.Position, x => x.Cost);
             var obstacles = model.Obstacles
                 .Select(x => new RunVertexModel
                 {
@@ -97,8 +94,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     IsObstacle = false,
                     Cost = graph[x]
                 });
-            return obstacles.Concat(regulars)
-                .ToDictionary(x => x.Position, x => x);
+            return obstacles.Concat(regulars).ToDictionary(x => x.Position, x => x);
         }
     }
 }

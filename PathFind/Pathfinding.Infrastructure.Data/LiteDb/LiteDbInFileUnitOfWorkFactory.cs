@@ -1,13 +1,14 @@
-﻿using Pathfinding.Domain.Interface;
+﻿using LiteDB;
+using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
 
 namespace Pathfinding.Infrastructure.Data.LiteDb
 {
     public sealed class LiteDbInFileUnitOfWorkFactory : IUnitOfWorkFactory
     {
-        private readonly string connectionString;
+        private readonly ConnectionString connectionString;
 
-        public LiteDbInFileUnitOfWorkFactory(string connectionString)
+        public LiteDbInFileUnitOfWorkFactory(ConnectionString connectionString)
         {
             this.connectionString = connectionString;
         }

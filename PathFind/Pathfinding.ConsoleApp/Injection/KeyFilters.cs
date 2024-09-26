@@ -1,6 +1,6 @@
 ﻿namespace Pathfinding.ConsoleApp.Injection
 {
-    internal class KeyFilters
+    internal static class KeyFilters
     {
         public const string RightPanel = nameof(RightPanel);
         public const string MainWindow = nameof(MainWindow);

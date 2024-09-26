@@ -35,7 +35,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 
         protected override IVertex GetNextVertex()
         {
-            storage.OrderByDescending(v => heuristics[v.Position])
+            storage.OrderBy(v => accumulatedCosts[v.Position])
                 .Take(ToStashCount)
                 .Select(GetStashItem)
                 .ForEach(AddToStash);

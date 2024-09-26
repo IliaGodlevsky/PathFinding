@@ -8,6 +8,7 @@ using Pathfinding.Infrastructure.Business.Algorithms.Events;
 using Pathfinding.Infrastructure.Business.Algorithms.Exceptions;
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Business.Extensions;
+using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Extensions;
@@ -64,6 +65,15 @@ namespace Pathfinding.ConsoleApp.ViewModel
             ActivatedGraphId = msg.GraphId;
         }
 
+        private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
+        {
+            if (msg.GraphIds.Contains(ActivatedGraphId))
+            {
+                ActivatedGraph = Graph<VertexModel>.Empty;
+                ActivatedGraphId = 0;
+            }
+        }
+
         protected CreateRunButtonViewModel(IRequestService<VertexModel> service,
             IMessenger messenger,
             ILog logger)
@@ -73,6 +83,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.logger = logger;
             CreateRunCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(CreateRun, CanCreate());
             messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
+            messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
         }
 
         protected abstract PathfindingProcess GetAlgorithm(IEnumerable<VertexModel> pathfindingRange);

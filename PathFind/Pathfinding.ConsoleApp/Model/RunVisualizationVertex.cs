@@ -16,10 +16,7 @@
 
         private RunVertexModel Vertex { get; }
 
-        protected RunVisualizationVertex(RunVertexModel vertex)
-        {
-            Vertex = vertex;
-        }
+        protected RunVisualizationVertex(RunVertexModel vertex) => Vertex = vertex;
 
         public abstract void SetVisualizationFlag();
 
@@ -30,10 +27,7 @@
             {
             }
 
-            public override void SetVisualizationFlag()
-            {
-                Vertex.IsTarget = true;
-            }
+            public override void SetVisualizationFlag() => Vertex.IsTarget = true;
         }
 
         private sealed class SourceVisualizationVertex : RunVisualizationVertex
@@ -43,10 +37,7 @@
             {
             }
 
-            public override void SetVisualizationFlag()
-            {
-                Vertex.IsSource = true;
-            }
+            public override void SetVisualizationFlag() => Vertex.IsSource = true;
         }
 
         private sealed class TransitVisualizationVertex : RunVisualizationVertex
@@ -56,10 +47,7 @@
             {
             }
 
-            public override void SetVisualizationFlag()
-            {
-                Vertex.IsTransit = true;
-            }
+            public override void SetVisualizationFlag() => Vertex.IsTransit = true;
         }
 
         private sealed class EnqueuedVisualizationVertex : RunVisualizationVertex
@@ -69,10 +57,7 @@
             {
             }
 
-            public override void SetVisualizationFlag()
-            {
-                Vertex.IsEnqueued = true;
-            }
+            public override void SetVisualizationFlag() => Vertex.IsEnqueued = true;
         }
 
         private sealed class VisitedVisualizationVertex : RunVisualizationVertex
@@ -82,10 +67,7 @@
             {
             }
 
-            public override void SetVisualizationFlag()
-            {
-                Vertex.IsVisited = true;
-            }
+            public override void SetVisualizationFlag() => Vertex.IsVisited = true;
         }
 
         private sealed class PathVisualizationVertex : RunVisualizationVertex
@@ -95,10 +77,7 @@
             {
             }
 
-            public override void SetVisualizationFlag()
-            {
-                Vertex.IsPath = true;
-            }
+            public override void SetVisualizationFlag() => Vertex.IsPath = true;
         }
     }
 }

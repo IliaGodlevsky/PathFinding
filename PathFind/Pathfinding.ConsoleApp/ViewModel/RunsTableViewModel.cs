@@ -47,7 +47,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.messenger = messenger;
             this.service = service;
             this.logger = logger;
-
             ActivateRunCommand = ReactiveCommand.CreateFromTask<RunModel>(ActivateRun);
 
             messenger.Register<RunHistoriesUploadedMessage>(this, OnRunUploaded);

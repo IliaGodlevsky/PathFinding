@@ -12,7 +12,7 @@ using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.TestUtils.Attributes;
 using System.Reactive.Linq;
 
-namespace Pathfinding.ConsoleApp.Test.ViewModelTests
+namespace Pathfinding.ConsoleApp.Test
 {
     [TestFixture, UnitTest]
     public class CreateGraphViewModelTests
@@ -58,7 +58,8 @@ namespace Pathfinding.ConsoleApp.Test.ViewModelTests
 
             Assert.Multiple(() =>
             {
-                service.Verify(service => service.CreateGraphAsync(It.IsAny<CreateGraphRequest<VertexModel>>(),
+                service.Verify(service => service.CreateGraphAsync(
+                    It.IsAny<CreateGraphRequest<VertexModel>>(),
                     It.IsAny<CancellationToken>()), Times.Once);
                 Assert.That(message, Is.Not.Null);
                 Assert.That(canExecute, Is.True);

@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pathfinding.ConsoleApp\Pathfinding.ConsoleApp.csproj" />
+    <ProjectReference Include="..\Pathfinding.Infrastructure.Data\Pathfinding.Infrastructure.Data.csproj" />
     <ProjectReference Include="..\Pathfinding.TestUtils\Pathfinding.TestUtils.csproj" />
   </ItemGroup>
 

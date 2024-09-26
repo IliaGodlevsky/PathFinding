@@ -19,6 +19,6 @@ namespace Pathfinding.Domain.Interface.Repositories
 
         Task<bool> UpdateAsync(Graph graph, CancellationToken token = default);
 
-        IAsyncEnumerable<Graph> GetAll(CancellationToken token = default);
+        Task<IEnumerable<Graph>> GetAll(CancellationToken token = default);
     }
 }

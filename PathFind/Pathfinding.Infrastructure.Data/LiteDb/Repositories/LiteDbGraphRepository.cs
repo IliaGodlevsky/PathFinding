@@ -52,9 +52,9 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             return true;
         }
 
-        public IAsyncEnumerable<Graph> GetAll(CancellationToken token = default)
+        public async Task<IEnumerable<Graph>> GetAll(CancellationToken token = default)
         {
-            return collection.FindAll().ToAsyncEnumerable();
+            return await Task.FromResult(collection.FindAll());
         }
 
         public async Task<Graph> ReadAsync(int graphId, CancellationToken token = default)

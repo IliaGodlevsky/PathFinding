@@ -12,33 +12,16 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
+using System.Threading.Tasks;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class GraphTableViewModel : ReactiveObject
+    internal sealed class GraphTableViewModel : BaseViewModel
     {
         private readonly IRequestService<VertexModel> service;
         private readonly IMessenger messenger;
         private readonly ILog logger;
-
-        private GraphInfoModel activated;
-        public GraphInfoModel Activated
-        {
-            get => activated;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref activated, value);
-                try
-                {
-                    var graph = service.ReadGraphAsync(activated.Id).GetAwaiter().GetResult();
-                    messenger.Send(new GraphActivatedMessage(graph.Id, graph.Graph));
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex);
-                }
-            }
-        }
 
         private GraphInfoModel[] selected;
 
@@ -53,6 +36,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
+        public ReactiveCommand<GraphInfoModel, Unit> ActivateGraphCommand { get; }
+
         public ObservableCollection<GraphInfoModel> Graphs { get; } = new();
 
         public GraphTableViewModel(
@@ -63,9 +48,19 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.service = service;
             this.messenger = messenger;
             this.logger = logger;
-            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
+            messenger.Register<GraphCreatedMessage>(this, async (r, msg) => await OnGraphCreated(r, msg));
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<ObstaclesCountChangedMessage>(this, OnObstaclesCountChanged);
+            ActivateGraphCommand = ReactiveCommand.CreateFromTask<GraphInfoModel>(ActivatedGraph);
+        }
+
+        private async Task ActivatedGraph(GraphInfoModel model)
+        {
+            await ExecuteSafe(async () =>
+            {
+                var graph = await service.ReadGraphAsync(model.Id);
+                messenger.Send(new GraphActivatedMessage(graph.Id, graph.Graph));
+            }, logger.Error);
         }
 
         public void LoadGraphs()
@@ -109,7 +104,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
-        private void OnGraphCreated(object recipient, GraphCreatedMessage msg)
+        private async Task OnGraphCreated(object recipient, GraphCreatedMessage msg)
         {
             if (msg.Models.Length > 0)
             {
@@ -125,10 +120,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
                         })
                     .ToArray();
                 Graphs.Add(parametres);
-            }
-            if (Graphs.Count == 1 && msg.Models.Length > 0)
-            {
-                Activated = Graphs.First();
+                if (Graphs.Count == 1)
+                {
+                    await ActivatedGraph(Graphs.First());
+                }
             }
         }
 

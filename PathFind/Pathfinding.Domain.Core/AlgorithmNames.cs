@@ -8,14 +8,14 @@ namespace Pathfinding.Domain.Core
     {
         public static readonly ReadOnlyCollection<string> All;
 
-        public const string Dijkstra = nameof(Languages.DijkstraAlgorithm);
-        public const string AStar = nameof(Languages.AStarAlgorithm);
-        public const string IDAStar = nameof(Languages.IDAStarAlgorithm);
-        public const string Random = nameof(Languages.RandomAlgorithm);
-        public const string Lee = nameof(Languages.LeeAlgorithm);
-        public const string AStarLee = nameof(Languages.AStarLeeAlgorithm);
-        public const string Depth = nameof(Languages.DepthFirstAlgorithm);
-        public const string Cost = nameof(Languages.CostGreedyAlgorithm);
+        public static readonly string Dijkstra = Languages.DijkstraAlgorithm;
+        public static readonly string AStar = Languages.AStarAlgorithm;
+        public static readonly string IDAStar = Languages.IDAStarAlgorithm;
+        public static readonly string Random = Languages.RandomAlgorithm;
+        public static readonly string Lee = Languages.LeeAlgorithm;
+        public static readonly string AStarLee = Languages.AStarLeeAlgorithm;
+        public static readonly string Depth = Languages.DepthFirstAlgorithm;
+        public static readonly string Cost = Languages.CostGreedyAlgorithm;
 
         static AlgorithmNames()
         {

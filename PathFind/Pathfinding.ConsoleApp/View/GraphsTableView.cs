@@ -36,7 +36,7 @@ namespace Pathfinding.ConsoleApp.View
             this.Events().CellActivated
                 .Select(x => GetParametresModel(x.Row))
                 .DistinctUntilChanged(x => x.Id)
-                .BindTo(this.viewModel, x => x.Activated)
+                .InvokeCommand(viewModel, x => x.ActivateGraphCommand)
                 .DisposeWith(disposables);
             this.Events().SelectedCellChanged
                 .Where(x => x.NewRow > -1)

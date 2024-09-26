@@ -31,6 +31,11 @@ namespace Pathfinding.Infrastructure.Data.LiteDb
         public IAlgorithmRunRepository RunRepository { get; }
 
         public LiteDbUnitOfWork(string connectionString)
+            : this(new ConnectionString(connectionString))
+        {
+        }
+
+        public LiteDbUnitOfWork(ConnectionString connectionString) 
             : this(new LiteDatabase(connectionString))
         {
         }

@@ -66,7 +66,7 @@ namespace Pathfinding.ConsoleApp.View
             RemoveAll();
             vertexDisposables.Clear();
 
-            var children = new List<Terminal.Gui.View>(graphState.Count);
+            var children = new List<RunVertexView>(graphState.Count);
             foreach (var vertex in graphState)
             {
                 var view = new RunVertexView(vertex);
@@ -84,7 +84,7 @@ namespace Pathfinding.ConsoleApp.View
 
         private async Task Visualize()
         {
-            while (viewModel.Remained > 0)
+            while (viewModel.Vertices.Count > 0)
             {
                 await viewModel.VisualizeNextCommand.Execute(RenderSpeed);
                 Application.Refresh();

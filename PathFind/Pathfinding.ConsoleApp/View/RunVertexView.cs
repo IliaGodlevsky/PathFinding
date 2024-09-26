@@ -36,6 +36,7 @@ namespace Pathfinding.ConsoleApp.View
                 .Select(x => ustring.Make(x.ToString()))
                 .BindTo(this, x => x.Text)
                 .DisposeWith(disposables);
+            Data = model;
         }
 
         private ColorScheme Create(Color foreground)
