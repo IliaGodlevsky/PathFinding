@@ -5,10 +5,11 @@ using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
-using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Service.Interface.Models.Serialization;
 using ReactiveUI;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
     {
         private readonly IMessenger messenger;
         private readonly IRequestService<VertexModel> service;
+        private readonly Func<string, Stream> fileStreamProvider;
         private readonly ILog logger;
         private readonly ISerializer<List<PathfindingHistorySerializationModel>> serializer;
 
@@ -35,12 +37,22 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public LoadGraphButtonViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ISerializer<List<PathfindingHistorySerializationModel>> serializer,
             IRequestService<VertexModel> service,
+            ILog logger) : this(messenger, serializer, 
+                service, path => File.OpenRead(path), logger)
+        {
+        }
+
+        public LoadGraphButtonViewModel(IMessenger messenger,
+            ISerializer<List<PathfindingHistorySerializationModel>> serializer,
+            IRequestService<VertexModel> service,
+            Func<string, Stream> fileStreamProvider,
             ILog logger)
         {
             this.messenger = messenger;
             this.serializer = serializer;
             this.service = service;
             this.logger = logger;
+            this.fileStreamProvider = fileStreamProvider;
             LoadGraphCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(LoadGraph);
         }
 
@@ -50,7 +62,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
             {
                 await ExecuteSafe(async () =>
                 {
-                    var histories = await serializer.DeserializeFromFileAsync(FilePath)
+                    using var fileStream = fileStreamProvider(FilePath);
+                    var histories = await serializer.DeserializeFromAsync(fileStream)
                         .ConfigureAwait(false);
                     var result = await service.CreatePathfindingHistoriesAsync(histories)
                         .ConfigureAwait(false);

@@ -48,7 +48,6 @@
     <Compile Include="Extensions\RequestServiceExtensions.cs" />
     <Compile Include="Extensions\SerializerExtensions.cs" />
     <Compile Include="IAlgorithm.cs" />
-    <Compile Include="IAlgorithmFactory.cs" />
     <Compile Include="ICrypto.cs" />
     <Compile Include="IGraphPath.cs" />
     <Compile Include="IHeuristic.cs" />
@@ -102,7 +101,6 @@
     <Compile Include="Requests\Create\UpsertPathfindingRangeRequest.cs" />
     <Compile Include="Requests\Delete\DeleteNeighborsRequest.cs" />
     <Compile Include="Requests\Delete\DeleteRangeRequest.cs" />
-    <Compile Include="Requests\FindPathRequest.cs" />
     <Compile Include="Requests\Read\ReadGraphRequest.cs" />
     <Compile Include="Requests\Read\ReadRunCountRequest.cs" />
     <Compile Include="Requests\Read\ReadRunStatisiticsRequest.cs" />

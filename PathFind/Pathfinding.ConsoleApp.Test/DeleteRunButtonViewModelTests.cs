@@ -11,7 +11,7 @@ using System.Reactive.Linq;
 namespace Pathfinding.ConsoleApp.Test
 {
     [TestFixture, UnitTest]
-    public class DeleteGraphButtonViewModelTests
+    internal class DeleteRunButtonViewModelTests
     {
         private Mock<IRequestService<VertexModel>> service;
         private IMessenger messenger;
@@ -21,45 +21,34 @@ namespace Pathfinding.ConsoleApp.Test
         {
             messenger = new WeakReferenceMessenger();
             service = new Mock<IRequestService<VertexModel>>();
-            service.Setup(x => x.DeleteGraphsAsync(
+            service.Setup(x => x.DeleteRunsAsync(
                 It.IsAny<int[]>(),
                 It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
         }
 
         [Test]
-        public async Task DeleteCommand_SelectedGraphs_ShouldDelete()
+        public async Task DeleteCommand_SelectedRuns_ShouldDelete()
         {
-            var viewModel = new DeleteGraphButtonViewModel(messenger,
+            var viewModel = new DeleteRunButtonViewModel(messenger,
                 service.Object, new NullLog());
             int[] ids = new[] { 1, 2 };
             bool isDeleted = false;
-            void OnDeleted(object recipient, GraphsDeletedMessage msg)
+            void OnDeleted(object recipient, RunsDeletedMessage msg)
             {
-                isDeleted = msg.GraphIds.SequenceEqual(ids);
+                isDeleted = msg.RunIds.SequenceEqual(ids);
             }
-            messenger.Register<GraphsDeletedMessage>(this, OnDeleted);
-            messenger.Send(new GraphSelectedMessage(ids));
+            messenger.Register<RunsDeletedMessage>(this, OnDeleted);
+            messenger.Send(new RunSelectedMessage(ids));
 
-            await viewModel.DeleteCommand.Execute();
+            await viewModel.DeleteRunCommand.Execute();
 
             Assert.Multiple(() =>
             {
-                service.Verify(x => x.DeleteGraphsAsync(
+                service.Verify(x => x.DeleteRunsAsync(
                     It.IsAny<int[]>(),
                     It.IsAny<CancellationToken>()), Times.Once);
                 Assert.That(isDeleted);
             });
-        }
-
-        [Test]
-        public async Task DeleteCommand_NoSelectedGraph_CantExecute()
-        {
-            var viewModel = new DeleteGraphButtonViewModel(messenger,
-                service.Object, new NullLog());
-
-            var canExecute = await viewModel.DeleteCommand.CanExecute.FirstOrDefaultAsync();
-
-            Assert.That(canExecute, Is.False);
         }
     }
 }

@@ -52,9 +52,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.logger = logger;
             messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
-            ReverseVertexCommand = ReactiveCommand.CreateFromTask<VertexModel>(ReverseVertex);
-            IncreaseVertexCostCommand = ReactiveCommand.CreateFromTask<VertexModel>(IncreaseVertexCost);
-            DecreaseVertexCostCommand = ReactiveCommand.CreateFromTask<VertexModel>(DecreaseVertexCost);
+            var canExecute = this.WhenAnyValue(x => x.GraphId, x => x.Graph,
+                (id, graph) => id > 0 && graph != null);
+            ReverseVertexCommand = ReactiveCommand.CreateFromTask<VertexModel>(ReverseVertex, canExecute);
+            IncreaseVertexCostCommand = ReactiveCommand.CreateFromTask<VertexModel>(IncreaseVertexCost, canExecute);
+            DecreaseVertexCostCommand = ReactiveCommand.CreateFromTask<VertexModel>(DecreaseVertexCost, canExecute);
         }
 
         private async Task ReverseVertex(VertexModel vertex)

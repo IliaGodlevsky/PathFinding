@@ -12,16 +12,14 @@ namespace Pathfinding.Infrastructure.Business.Layers
     public sealed class NeighborhoodLayer : ILayer
     {
         private readonly INeighborhoodFactory factory;
-        private readonly ReturnOptions options;
 
-        public NeighborhoodLayer(INeighborhoodFactory factory, ReturnOptions options)
+        public NeighborhoodLayer(INeighborhoodFactory factory)
         {
             this.factory = factory ?? new MooreNeighborhoodFactory();
-            this.options = options ?? ReturnOptions.Limit;
         }
 
         public NeighborhoodLayer()
-            : this(new MooreNeighborhoodFactory(), ReturnOptions.Limit)
+            : this(new MooreNeighborhoodFactory())
         {
 
         }

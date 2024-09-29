@@ -109,7 +109,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 var random = new CongruentialRandom();
                 var costLayer = new VertexCostLayer(CostRange, range => new VertexCost(random.NextInt(range), range));
                 var obstacleLayer = new ObstacleLayer(random, Obstacles);
-                var neighborhoodLayer = new NeighborhoodLayer(NeighborhoodFactory, ReturnOptions.Limit);
+                var neighborhoodLayer = new NeighborhoodLayer(NeighborhoodFactory);
                 var smoothLayer = Enumerable.Repeat(new SmoothLayer(new MeanCost()), SmoothLevel)
                     .To(x => new Layers(x.ToArray()));
                 var layers = new Layers(costLayer, obstacleLayer, neighborhoodLayer, smoothLayer);

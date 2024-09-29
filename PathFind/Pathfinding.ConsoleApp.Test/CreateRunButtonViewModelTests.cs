@@ -18,20 +18,44 @@ using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Logging.Loggers;
+using Pathfinding.TestUtils.Attributes;
+using Pathfinding.Service.Interface.Models.Undefined;
+using Pathfinding.Infrastructure.Business.Algorithms;
+using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
+using Moq.Protected;
 
-namespace Pathfinding.ConsoleApp.Test.CreateRunTests
+namespace Pathfinding.ConsoleApp.Test
 {
-    internal abstract class CreateRunButtonViewModelTests
+    [TestFixture, UnitTest]
+    internal class CreateRunButtonViewModelTests
     {
-        protected IMessenger messenger;
-        protected Mock<IRequestService<VertexModel>> service;
+        private sealed class TestCreateRunButtonViewModel : CreateRunButtonViewModel
+        {
+            public TestCreateRunButtonViewModel(IRequestService<VertexModel> service,
+                IMessenger messenger, ILog logger) : base(service, messenger, logger)
+            {
+            }
+
+            protected override string AlgorithmId => "Test";
+
+            protected override void AppendStatistics(RunStatisticsModel model)
+            {
+
+            }
+
+            protected override PathfindingProcess GetAlgorithm(IEnumerable<VertexModel> pathfindingRange)
+            {
+                var algorithm = new Mock<PathfindingProcess>();
+                algorithm.Setup(x => x.FindPath()).Returns(NullGraphPath.Instance);
+                return algorithm.Object;
+            }
+        }
+
+        private IMessenger messenger;
+        private Mock<IRequestService<VertexModel>> service;
         private readonly IGraph<VertexModel> graph;
-        private readonly IReadOnlyCollection<PathfindingRangeModel> pathfindingRange;
 
-        protected abstract CreateRunButtonViewModel GetViewModel(IMessenger messenger,
-            IRequestService<VertexModel> service, ILog logger);
-
-        protected CreateRunButtonViewModelTests()
+        public CreateRunButtonViewModelTests()
         {
             var random = new CongruentialRandom();
             var costLayer = new VertexCostLayer((9, 1), range => new VertexCost(random.NextInt(range), range));
@@ -42,7 +66,14 @@ namespace Pathfinding.ConsoleApp.Test.CreateRunTests
             var graphFactory = new GraphFactory<VertexModel>();
             var assemble = new GraphAssemble<VertexModel>(vertexFactory, graphFactory);
             graph = assemble.AssembleGraph(layers, 25, 35);
-            pathfindingRange = new List<PathfindingRangeModel>()
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            service = new Mock<IRequestService<VertexModel>>();
+            IReadOnlyCollection<PathfindingRangeModel> pathfindingRange 
+                = new List<PathfindingRangeModel>()
             {
                 new() { Order = 1, Position = new Coordinate(0, 0) },
                 new() { Order = 2, Position = new Coordinate(3, 4) },
@@ -50,35 +81,32 @@ namespace Pathfinding.ConsoleApp.Test.CreateRunTests
                 new() { Order = 4, Position = new Coordinate(12, 15) },
                 new() { Order = 5, Position = new Coordinate(20, 20) }
             };
-        }
-
-        [SetUp]
-        public void SetUp()
-        {
-            service = new Mock<IRequestService<VertexModel>>();
             service.Setup(x => x.ReadRangeAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(pathfindingRange));
             IReadOnlyCollection<AlgorithmRunHistoryModel> result =
                 new AlgorithmRunHistoryModel().Enumerate().ToArray();
-            service.Setup(x => x.CreateRunHistoriesAsync(It.IsAny<IEnumerable<CreateAlgorithmRunHistoryRequest>>(),
-                    It.IsAny<CancellationToken>())).Returns(Task.FromResult(result));
+            service.Setup(x => x.CreateRunHistoriesAsync(
+                    It.IsAny<IEnumerable<CreateAlgorithmRunHistoryRequest>>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(result));
             messenger = new WeakReferenceMessenger();
         }
 
         [Test]
         public async Task CreateRunCommand_NoActivatedGraph_CantExecute()
         {
-            var viewModel = GetViewModel(messenger, service.Object, new NullLog());
+            var viewModel = new TestCreateRunButtonViewModel(service.Object,
+                messenger, new NullLog());
             var canExecute = await viewModel.CreateRunCommand.CanExecute.FirstOrDefaultAsync();
 
             Assert.That(canExecute, Is.False);
-
         }
 
         [Test]
         public async Task CreateRunCommand_HasActivatedGraph_ShouldExecute()
         {
-            var viewModel = GetViewModel(messenger, service.Object, new NullLog());
+            var viewModel = new TestCreateRunButtonViewModel(service.Object,
+                messenger, new NullLog());
             bool isRunSent = false;
             void OnRunCreated(object recipient, RunCreatedMessaged msg)
             {

@@ -8,8 +8,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal sealed class NewRunButtonViewModel : ReactiveObject
     {
-        private readonly IMessenger messenger;
-
         public bool CanCreate() => graphId > 0;
 
         private int graphId;
@@ -21,7 +19,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public NewRunButtonViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger)
         {
-            this.messenger = messenger;
             messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
         }
 

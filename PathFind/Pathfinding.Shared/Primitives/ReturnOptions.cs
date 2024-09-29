@@ -10,13 +10,6 @@ namespace Pathfinding.Shared.Primitives
         public static readonly ReturnOptions Limit = new LimitReturnOptions();
         public static readonly ReturnOptions Cycle = new CycleReturnOptions();
 
-        public static readonly IReadOnlyCollection<ReturnOptions> Options;
-
-        static ReturnOptions()
-        {
-            Options = new List<ReturnOptions>() { Limit, Cycle }.AsReadOnly();
-        }
-
         internal T ReturnInRange<T>(T value, InclusiveValueRange<T> range)
             where T : IComparable<T>
         {

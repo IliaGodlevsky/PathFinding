@@ -76,7 +76,7 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterInstance(new ConnectionString()
             {
                 Filename = "pathfinding.litedb",
-                Connection = ConnectionType.Shared
+                Connection = ConnectionType.Direct
             }).As<ConnectionString>().SingleInstance();
             builder.RegisterType<LiteDbInFileUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
 
@@ -142,6 +142,7 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<RunCreationView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphRunsView).WithAttributeFiltering();
             builder.RegisterType<AlgorithmSettingsView>().Keyed<Terminal.Gui.View>(KeyFilters.NewRunView).WithAttributeFiltering();
             builder.RegisterType<DijkstraAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
+            builder.RegisterType<CostGreedyAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<AStarAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<LeeAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<IDAStarAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
