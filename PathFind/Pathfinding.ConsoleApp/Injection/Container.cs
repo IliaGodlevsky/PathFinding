@@ -6,6 +6,7 @@ using LiteDB;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.Model.Factories;
 using Pathfinding.ConsoleApp.View;
+using Pathfinding.ConsoleApp.ViewModel;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Business;
 using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
@@ -28,7 +29,7 @@ namespace Pathfinding.ConsoleApp.Injection
 {
     internal static class Container
     {
-        public static IContainer BuildApp(string[] args)
+        public static ILifetimeScope BuildApp(string[] args)
         {
             var builder = new ContainerBuilder();
 
@@ -103,11 +104,13 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<ExcludeTransitVertex<VertexModel>>().SingleInstance().WithAttributeFiltering()
                 .Keyed<IPathfindingRangeCommand<VertexModel>>(KeyFilters.ExcludeCommands);
 
+            builder.RegisterGenericDecorator(typeof(BufferedSerializer<>), typeof(ISerializer<>));
             builder.RegisterGenericDecorator(typeof(CompressSerializer<>), typeof(ISerializer<>));
 
             builder.RegisterType<JsonSerializer<List<PathfindingHistorySerializationModel>>>()
                 .As<ISerializer<List<PathfindingHistorySerializationModel>>>().SingleInstance();
 
+            //builder.RegisterType<NullLog>().As<ILog>().SingleInstance();
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().As<ILog>().SingleInstance();
@@ -160,7 +163,7 @@ namespace Pathfinding.ConsoleApp.Injection
 
         private static void RegisterViewModels(this ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(typeof(Program).Assembly)
+            builder.RegisterAssemblyTypes(typeof(BaseViewModel).Assembly)
                 .Where(x => x.Name.EndsWith("ViewModel")).AsSelf()
                 .AsImplementedInterfaces().SingleInstance().WithAttributeFiltering();
         }

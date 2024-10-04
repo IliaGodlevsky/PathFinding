@@ -31,7 +31,7 @@ namespace Pathfinding.Infrastructure.Business.Mappings
             CreateMap<IReadOnlyCollection<CostCoordinatePair>, IReadOnlyCollection<(Coordinate Position, int Cost)>>()
                 .ConvertUsing((x, y, context) =>
                 {
-                    return x.Select(i => (Position: context.Mapper.Map<Coordinate>(i.Position), Cost: i.Cost)).ToArray();
+                    return x.Select(i => (Position: context.Mapper.Map<Coordinate>(i.Position), i.Cost)).ToArray();
                 });
             CreateMap<byte[], IReadOnlyCollection<(Coordinate, int)>>()
                 .ConvertUsing((x, y, context) => FromBytes(coordinateCostSerializer, context, x));
@@ -78,12 +78,12 @@ namespace Pathfinding.Infrastructure.Business.Mappings
         private byte[] ToBytes(ISerializer<IEnumerable<int>> intArraySerializer,
             IReadOnlyCollection<int> coordinate)
         {
-            return intArraySerializer.SerializeToBytesAsync(coordinate).Result;
+            return intArraySerializer.SerializeToBytesAsync(coordinate).GetAwaiter().GetResult();
         }
 
         private IReadOnlyCollection<int> FromBytes(ISerializer<IEnumerable<int>> intArraySerializer, byte[] bytes)
         {
-            return intArraySerializer.DeserializeFromBytes(bytes).Result.ToReadOnly();
+            return intArraySerializer.DeserializeFromBytes(bytes).GetAwaiter().GetResult().ToReadOnly();
         }
     }
 }

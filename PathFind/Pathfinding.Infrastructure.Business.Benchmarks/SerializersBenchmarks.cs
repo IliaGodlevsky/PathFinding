@@ -28,6 +28,16 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
             await compress.SerializeToAsync(toSerialize, memory);
         }
 
+        [Benchmark]
+        public async Task BufferedCompressingSerializerBenchmark()
+        {
+            var serializer = new JsonSerializer<Dictionary<string, object>>();
+            var buffer = new BufferedSerializer<Dictionary<string, object>>(serializer);
+            var compress = new CompressSerializer<Dictionary<string, object>>(buffer);
+            var memory = new MemoryStream();
+            await compress.SerializeToAsync(toSerialize, memory);
+        }
+
         [Benchmark(Baseline = true)]
         public async Task RegularSerializerBenchmark()
         {

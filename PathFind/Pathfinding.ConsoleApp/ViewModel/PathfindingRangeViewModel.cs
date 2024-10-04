@@ -42,23 +42,47 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public VertexModel Source
         {
             get => source;
-            set => this.RaiseAndSetIfChanged(ref source, value);
+            set
+            {
+                var previous = source;
+                this.RaiseAndSetIfChanged(ref source, value);
+                if (previous != null && source == null)
+                {
+                    previous.IsSource = false;
+                }
+                else if (previous == null && source != null)
+                {
+                    source.IsSource = true;
+                }
+            }
         }
 
         private VertexModel target;
         public VertexModel Target
         {
             get => target;
-            set => this.RaiseAndSetIfChanged(ref target, value);
+            set
+            {
+                var previous = target;
+                this.RaiseAndSetIfChanged(ref target, value);
+                if (previous != null && target == null)
+                {
+                    previous.IsTarget = false;
+                }
+                else if (previous == null && target != null)
+                {
+                    target.IsTarget = true;
+                }
+            }
         }
-
-        public ReactiveCommand<VertexModel, Unit> AddToRangeCommand { get; }
-
-        public ReactiveCommand<VertexModel, Unit> RemoveFromRangeCommand { get; }
 
         public ObservableCollection<VertexModel> Transit { get; } = new();
 
         IList<VertexModel> IPathfindingRange<VertexModel>.Transit => Transit;
+
+        public ReactiveCommand<VertexModel, Unit> AddToRangeCommand { get; }
+
+        public ReactiveCommand<VertexModel, Unit> RemoveFromRangeCommand { get; }
 
         public PathfindingRangeViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             IRequestService<VertexModel> service,
@@ -74,8 +98,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<IsVertexInRangeRequest>(this, OnVertexIsInRangeRecieved);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<GraphActivatedMessage>(this, async (r, msg) => await OnGraphActivated(msg));
-            AddToRangeCommand = ReactiveCommand.CreateFromTask<VertexModel>(AddVertexToRange);
-            RemoveFromRangeCommand = ReactiveCommand.CreateFromTask<VertexModel>(RemoveVertexFromRange);
+            AddToRangeCommand = ReactiveCommand.Create<VertexModel>(AddVertexToRange);
+            RemoveFromRangeCommand = ReactiveCommand.Create<VertexModel>(RemoveVertexFromRange);
+            Transit.ActOnEveryObject(OnTransitAdded, OnTransitRemoved);
         }
 
         public IEnumerator<VertexModel> GetEnumerator()
@@ -83,10 +108,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
             return Transit.Prepend(Source).Append(Target).GetEnumerator();
         }
 
-        private async Task AddVertexToRange(VertexModel vertex)
+        private void AddVertexToRange(VertexModel vertex)
         {
             includeCommands.ExecuteFirst(pathfindingRange, vertex);
-            await Task.CompletedTask;
         }
 
         private void SubcribeToEvents()
@@ -123,10 +147,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }, logger.Error);
         }
 
-        private async Task RemoveVertexFromRange(VertexModel vertex)
+        private void RemoveVertexFromRange(VertexModel vertex)
         {
             excludeCommands.ExecuteFirst(pathfindingRange, vertex);
-            await Task.CompletedTask;
         }
 
         private async Task RemoveVertexFromStorage(VertexModel vertex)
@@ -176,6 +199,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     break;
             }
         }
+
+        private void OnTransitAdded(VertexModel transit) => transit.IsTransit = true;
+
+        private void OnTransitRemoved(VertexModel transit) => transit.IsTransit = false;
 
         private async Task OnGraphActivated(GraphActivatedMessage msg)
         {

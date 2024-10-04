@@ -1,5 +1,6 @@
 ﻿using Autofac.Features.AttributeFilters;
 using Pathfinding.ConsoleApp.Injection;
+using Pathfinding.Shared.Extensions;
 using ReactiveMarbles.ObservableEvents;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace Pathfinding.ConsoleApp.View
         public AlgorithmsListView([KeyFilter(KeyFilters.AlgorithmsListView)] IEnumerable<Terminal.Gui.View> children)
         {
             Initialize();
-            var names = children.ToDictionary(x => x.Text, x => x);
+            var names = children.OrderByOrderAttribute().ToDictionary(x => x.Text, x => x);
             algorithms.RadioLabels = names.Keys.ToArray();
             algorithms.Events().SelectedItemChanged
                 .Where(x => x.SelectedItem > -1)

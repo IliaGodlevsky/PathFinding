@@ -59,7 +59,6 @@
     <Compile Include="Extensions\RandomExtensions.cs" />
     <Compile Include="Extensions\MemberInfoExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
-    <Compile Include="Extensions\TimeSpanExtensions.cs" />
     <Compile Include="Interface\IRandom.cs" />
     <Compile Include="OrderAttribute.cs" />
     <Compile Include="Primitives\Coordinate.cs" />

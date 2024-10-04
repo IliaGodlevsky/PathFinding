@@ -23,7 +23,7 @@ namespace Pathfinding.ConsoleApp.View
 
         private readonly AlgorithmRunViewModel viewModel;
 
-        private int RenderSpeed { get; set; } = 45;
+        private int VerticesToVisualizePerTime { get; set; } = 75;
 
         public AlgorithmRunView(AlgorithmRunViewModel viewModel,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger)
@@ -74,7 +74,10 @@ namespace Pathfinding.ConsoleApp.View
                 view.DisposeWith(vertexDisposables);
             }
 
-            Add(children.ToArray());
+            Application.MainLoop.Invoke(() =>
+            {
+                Add(children.ToArray());
+            });
 
             this.Events().MouseEnter
                 .Do(async x => await Visualize())
@@ -84,9 +87,10 @@ namespace Pathfinding.ConsoleApp.View
 
         private async Task Visualize()
         {
+            var command = viewModel.VisualizeNextCommand;
             while (viewModel.Vertices.Count > 0)
             {
-                await viewModel.VisualizeNextCommand.Execute(RenderSpeed);
+                await command.Execute(VerticesToVisualizePerTime);
                 Application.Refresh();
             }
         }

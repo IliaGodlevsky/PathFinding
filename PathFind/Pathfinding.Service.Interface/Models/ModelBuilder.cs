@@ -42,17 +42,12 @@ namespace Pathfinding.Service.Interface.Models
         }
 
         public static CreateAlgorithmRunHistoryRequest WithStatistics(this CreateAlgorithmRunHistoryRequest request,
-            string algorithmId, IGraphPath path, int visited, string resultStatus,
-            TimeSpan elapsed, string stepRule = null,
-            string heuristics = null, int? spread = null)
+            string algorithmId, IGraphPath path, int visited, string resultStatus, TimeSpan elapsed)
         {
             request.Statistics = new RunStatisticsModel()
             {
                 AlgorithmId = algorithmId,
                 Cost = path.Cost,
-                StepRule = stepRule,
-                Heuristics = heuristics,
-                Spread = spread,
                 Elapsed = elapsed,
                 Steps = path.Count,
                 ResultStatus = resultStatus,

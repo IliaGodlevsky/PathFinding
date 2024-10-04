@@ -21,10 +21,8 @@ namespace Pathfinding.Infrastructure.Business.Serializers.Decorators
         {
             try
             {
-                using (var compressionStream = new GZipStream(stream, CompressionMode.Decompress, leaveOpen: true))
-                {
-                    return await serializer.DeserializeFromAsync(compressionStream, token).ConfigureAwait(false);
-                }
+                using var compressionStream = new GZipStream(stream, CompressionMode.Decompress, leaveOpen: true);
+                return await serializer.DeserializeFromAsync(compressionStream, token).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -36,10 +34,8 @@ namespace Pathfinding.Infrastructure.Business.Serializers.Decorators
         {
             try
             {
-                using (var compressionStream = new GZipStream(stream, CompressionMode.Compress, leaveOpen: true))
-                {
-                    await serializer.SerializeToAsync(graph, compressionStream, token).ConfigureAwait(false);
-                }
+                using var compressionStream = new GZipStream(stream, CompressionMode.Compress, leaveOpen: true);
+                await serializer.SerializeToAsync(graph, compressionStream, token).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

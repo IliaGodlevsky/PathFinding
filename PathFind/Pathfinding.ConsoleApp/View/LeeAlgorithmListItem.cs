@@ -3,10 +3,12 @@ using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.Shared;
 using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
+    [Order(5)]
     internal sealed class LeeAlgorithmListItem : Label
     {
         private readonly IMessenger messenger;

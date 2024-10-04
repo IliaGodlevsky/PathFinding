@@ -40,13 +40,9 @@ namespace Pathfinding.Infrastructure.Business.Serializers.Decorators
         {
             try
             {
-                using (var decryptor = algorithm.CreateDecryptor(crypto.Key, crypto.IV))
-                {
-                    using (var cryptoStream = new CryptoStream(stream, decryptor, CryptoStreamMode.Read, leaveOpen: true))
-                    {
-                        return await serializer.DeserializeFromAsync(cryptoStream, token);
-                    }
-                }
+                using var decryptor = algorithm.CreateDecryptor(crypto.Key, crypto.IV);
+                using var cryptoStream = new CryptoStream(stream, decryptor, CryptoStreamMode.Read, leaveOpen: true);
+                return await serializer.DeserializeFromAsync(cryptoStream, token).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -58,13 +54,9 @@ namespace Pathfinding.Infrastructure.Business.Serializers.Decorators
         {
             try
             {
-                using (var encryptor = algorithm.CreateEncryptor(crypto.Key, crypto.IV))
-                {
-                    using (var cryptoStream = new CryptoStream(stream, encryptor, CryptoStreamMode.Write, leaveOpen: true))
-                    {
-                        await serializer.SerializeToAsync(graph, cryptoStream, token);
-                    }
-                }
+                using var encryptor = algorithm.CreateEncryptor(crypto.Key, crypto.IV);
+                using var cryptoStream = new CryptoStream(stream, encryptor, CryptoStreamMode.Write, leaveOpen: true);
+                await serializer.SerializeToAsync(graph, cryptoStream, token).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

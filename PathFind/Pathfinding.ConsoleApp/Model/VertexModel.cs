@@ -9,17 +9,56 @@ namespace Pathfinding.ConsoleApp.Model
 {
     public class VertexModel : ReactiveObject, IVertex, IEntity<int>
     {
-        private IVertexCost cost;
-        private bool isObstacle;
-
         public int Id { get; set; }
 
+        private bool isObstacle;
         public bool IsObstacle
         {
             get => isObstacle;
             set => this.RaiseAndSetIfChanged(ref isObstacle, value);
         }
 
+        private bool isRegular;
+        public bool IsRegular
+        {
+            get => isRegular;
+            set => this.RaiseAndSetIfChanged(ref isRegular, value);
+        }
+
+        private bool isSource;
+        public bool IsSource
+        {
+            get => isSource;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref isSource, value);
+                if (!isSource) IsRegular = true;
+            }
+        }
+
+        private bool isTarget;
+        public bool IsTarget 
+        {
+            get => isTarget;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref isTarget, value);
+                if (!isTarget) IsRegular = true;
+            }
+        }
+
+        private bool isTransit;
+        public bool IsTransit 
+        {
+            get => isTransit;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref isTransit, value);
+                if (!isTransit) IsRegular = true;
+            }
+        }
+
+        private IVertexCost cost;
         public IVertexCost Cost
         {
             get => cost;

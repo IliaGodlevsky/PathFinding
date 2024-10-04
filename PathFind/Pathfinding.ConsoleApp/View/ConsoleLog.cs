@@ -33,7 +33,7 @@ namespace Pathfinding.ConsoleApp.View
 
         public void Info(string message)
         {
-
+            MessageBox.Query(50, 7, "Info", message, "OK");
         }
 
         public void Trace(string message)

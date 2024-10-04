@@ -11,11 +11,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
+using System.Reactive.Linq;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal sealed class AlgorithmRunViewModel : ReactiveObject
     {
+        internal enum PathfindingStatus { Visited, Enqueued, Source, Transit, Target, Path }
+
         private IReadOnlyCollection<RunVertexModel> graphState = Array.Empty<RunVertexModel>();
         public IReadOnlyCollection<RunVertexModel> GraphState
         {
@@ -23,7 +26,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref graphState, value);
         }
 
-        public Queue<RunVisualizationVertex> Vertices { get; } = new();
+        public Queue<(RunVertexModel Model, PathfindingStatus Status)> Vertices { get; } = new();
 
         public ReactiveCommand<int, Unit> VisualizeNextCommand { get; }
 
@@ -40,7 +43,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 msg.Model.SubAlgorithms);
         }
 
-        private void OnRunActivated(object sender, RunActivatedMessage msg)
+        private void OnRunActivated(object recipient, RunActivatedMessage msg)
         {
             Vertices.Clear();
             GraphState = GenerateVerticesToVisualize(msg.Run.GraphState,
@@ -53,17 +56,17 @@ namespace Pathfinding.ConsoleApp.ViewModel
             var graph = CreateGraph(graphState);
             var range = graphState.Range.ToList();
             range.Skip(1).Take(range.Count - 2)
-                .ForEach(x => Vertices.Enqueue(RunVisualizationVertex.GetTransit(graph[x])));
-            Vertices.Enqueue(RunVisualizationVertex.GetSource(graph[range[0]]));
-            Vertices.Enqueue(RunVisualizationVertex.GetTarget(graph[range[range.Count - 1]]));
+                .ForEach(transit => Vertices.Enqueue((graph[transit], PathfindingStatus.Transit)));
+            Vertices.Enqueue((graph[range[0]], PathfindingStatus.Source));
+            Vertices.Enqueue((graph[range[range.Count - 1]], PathfindingStatus.Target));
             foreach (var sub in subAlgorithms)
             {
                 foreach (var (Visited, Enqueued) in sub.Visited)
                 {
-                    Vertices.Enqueue(RunVisualizationVertex.GetVisited(graph[Visited]));
-                    Enqueued.ForEach(x => Vertices.Enqueue(RunVisualizationVertex.GetEnqueued(graph[x])));
+                    Vertices.Enqueue((graph[Visited], PathfindingStatus.Visited));
+                    Enqueued.ForEach(enqueued => Vertices.Enqueue((graph[enqueued], PathfindingStatus.Enqueued)));
                 }
-                sub.Path.ForEach(x => Vertices.Enqueue(RunVisualizationVertex.GetPath(graph[x])));
+                sub.Path.ForEach(path => Vertices.Enqueue((graph[path], PathfindingStatus.Path)));
             }
             return graph.Values;
         }
@@ -73,7 +76,16 @@ namespace Pathfinding.ConsoleApp.ViewModel
             while (number-- > 0 && Vertices.Count > 0)
             {
                 var toVisualize = Vertices.Dequeue();
-                toVisualize.SetVisualizationFlag();
+                var model = toVisualize.Model;
+                switch (toVisualize.Status)
+                {
+                    case PathfindingStatus.Transit: model.IsTransit = true; break;
+                    case PathfindingStatus.Source: model.IsSource = true; break;
+                    case PathfindingStatus.Path: model.IsPath = true; break;
+                    case PathfindingStatus.Target: model.IsTarget = true; break;
+                    case PathfindingStatus.Enqueued: model.IsEnqueued = true; break;
+                    case PathfindingStatus.Visited: model.IsVisited = true; break;
+                }
             }
         }
 

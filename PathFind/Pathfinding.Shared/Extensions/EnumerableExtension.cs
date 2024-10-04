@@ -44,16 +44,6 @@ namespace Pathfinding.Shared.Extensions
             };
         }
 
-        public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> collection)
-        {
-            return collection switch
-            {
-                ObservableCollection<T> observable => observable,
-                List<T> list => new ObservableCollection<T>(list),
-                _ => new ObservableCollection<T>(collection),
-            };
-        }
-
         public static void AddRange<T>(this ICollection<T> collection, IEnumerable<T> items)
         {
             items.ForEach(collection.Add);
@@ -79,12 +69,6 @@ namespace Pathfinding.Shared.Extensions
             return collection;
         }
 
-        public static T[] ForWhole<T>(this T[] collection, Action<T[]> action)
-        {
-            action(collection);
-            return collection;
-        }
-
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T, int> action)
         {
             int i = 0;
@@ -95,11 +79,6 @@ namespace Pathfinding.Shared.Extensions
             }
             return collection;
         }
-
-        //public static bool Juxtapose<T>(this IEnumerable<T> self, IEnumerable<T> second, Func<T, T, bool> predicate)
-        //{
-        //    return self.SequenceEqual(second, new MatchComparer<T>(predicate));
-        //}
 
         public static bool Juxtapose<T, U>(this IEnumerable<T> self, IEnumerable<U> second, Func<T, U, bool> predicate)
         {
@@ -144,18 +123,6 @@ namespace Pathfinding.Shared.Extensions
             {
                 yield return defaultValue;
             }
-        }
-
-        public static T To<T>(this IEnumerable<T> items, Func<IEnumerable<T>, T> selector)
-        {
-            return selector(items);
-        }
-
-        public static async Task<T> ToAsync<T>(this IEnumerable<T> items,
-            Func<IEnumerable<T>, CancellationToken, Task<T>> selector,
-            CancellationToken token = default)
-        {
-            return await selector(items, token);
         }
 
         public static async Task<U> ToAsync<T, U>(this IEnumerable<T> items,

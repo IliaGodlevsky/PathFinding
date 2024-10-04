@@ -169,10 +169,8 @@ namespace Pathfinding.Infrastructure.Business
 
         public async Task<int> ReadGraphCountAsync(CancellationToken token = default)
         {
-            using (var unitOfWork = factory())
-            {
-                return await unitOfWork.GraphRepository.ReadCountAsync(token);
-            }
+            using var unitOfWork = factory();
+            return await unitOfWork.GraphRepository.ReadCountAsync(token);
         }
 
         public async Task<IReadOnlyCollection<int>> ReadGraphIdsAsync(CancellationToken token = default)
@@ -388,20 +386,18 @@ namespace Pathfinding.Infrastructure.Business
         private async Task<TParam> Transaction<TParam>(Func<IUnitOfWork, CancellationToken, Task<TParam>> action,
             CancellationToken token = default)
         {
-            using (var unitOfWork = factory())
+            using var unitOfWork = factory();
+            try
             {
-                try
-                {
-                    unitOfWork.BeginTransaction();
-                    var result = await action(unitOfWork, token).ConfigureAwait(false);
-                    await unitOfWork.CommitAsync(token).ConfigureAwait(false);
-                    return result;
-                }
-                catch (Exception)
-                {
-                    await unitOfWork.RollbackAsync(token).ConfigureAwait(false);
-                    throw;
-                }
+                unitOfWork.BeginTransaction();
+                var result = await action(unitOfWork, token).ConfigureAwait(false);
+                await unitOfWork.CommitAsync(token).ConfigureAwait(false);
+                return result;
+            }
+            catch (Exception)
+            {
+                await unitOfWork.RollbackAsync(token).ConfigureAwait(false);
+                throw;
             }
         }
 

@@ -62,7 +62,6 @@
     <Compile Include="Messages\View\CloseAlgorithmRunViewMessage.cs" />
     <Compile Include="Messages\View\SpreadViewModelChangedMessage.cs" />
     <Compile Include="Model\RunVertexModel.cs" />
-    <Compile Include="Model\RunVisualizationVertex.cs" />
     <Compile Include="ViewModel\CreateCostGreedyRunViewModel.cs" />
     <Compile Include="ViewModel\CreateIDAStarRunViewModel.cs" />
     <Compile Include="ViewModel\CreateLeeAlgorithmRunViewModel.cs" />

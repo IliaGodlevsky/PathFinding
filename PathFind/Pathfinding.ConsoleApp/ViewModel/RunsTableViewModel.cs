@@ -59,7 +59,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private async Task ActivateRun(RunModel model)
         {
-            var run = await service.ReadRunInfoAsync(model.RunId).ConfigureAwait(false);
+            var run = await Task.Run(() => service.ReadRunInfoAsync(model.RunId))
+                .ConfigureAwait(false);
             messenger.Send(new RunActivatedMessage(run));
         }
 

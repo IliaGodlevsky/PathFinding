@@ -15,12 +15,10 @@ namespace Pathfinding.Infrastructure.Business.Serializers
         {
             try
             {
-                using (var reader = new StreamReader(stream, Encoding.Default, false, 1024, leaveOpen: true))
-                {
-                    string deserialized = await reader.ReadToEndAsync().ConfigureAwait(false);
-                    var dtos = await Task.Run(() => JsonConvert.DeserializeObject<T>(deserialized), token).ConfigureAwait(false);
-                    return dtos;
-                }
+                using var reader = new StreamReader(stream, Encoding.Default, false, 1024, leaveOpen: true);
+                string deserialized = await reader.ReadToEndAsync().ConfigureAwait(false);
+                var dtos = await Task.Run(() => JsonConvert.DeserializeObject<T>(deserialized), token).ConfigureAwait(false);
+                return dtos;
             }
             catch (Exception ex)
             {
@@ -32,11 +30,9 @@ namespace Pathfinding.Infrastructure.Business.Serializers
         {
             try
             {
-                using (var writer = new StreamWriter(stream, Encoding.Default, 1024, leaveOpen: true))
-                {
-                    string serialized = await Task.Run(() => JsonConvert.SerializeObject(item), token).ConfigureAwait(false);
-                    await writer.WriteAsync(serialized).ConfigureAwait(false);
-                }
+                using var writer = new StreamWriter(stream, Encoding.Default, 1024, leaveOpen: true);
+                string serialized = await Task.Run(() => JsonConvert.SerializeObject(item), token).ConfigureAwait(false);
+                await writer.WriteAsync(serialized).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

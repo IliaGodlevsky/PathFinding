@@ -24,7 +24,6 @@ namespace Pathfinding.ConsoleApp.View
         private readonly GraphFieldViewModel viewModel;
         private readonly PathfindingRangeViewModel rangeViewModel;
 
-        private readonly Dictionary<Coordinate, VertexView> viewsMap = new();
         private readonly CompositeDisposable disposables = new();
         private readonly CompositeDisposable vertexDisposables = new();
 
@@ -54,71 +53,26 @@ namespace Pathfinding.ConsoleApp.View
             Visible = true;
         }
 
-        private void SubscribeOnRangeExtremumChanging(Expression<Func<PathfindingRangeViewModel, VertexModel>> expression,
-            Action<VertexView> action)
-        {
-            rangeViewModel.WhenAnyValue(expression)
-                .Where(x => x != null)
-                .Where(x => viewsMap.ContainsKey(x.Position))
-                .Do(x => action(viewsMap[x.Position]))
-                .Subscribe()
-                .DisposeWith(vertexDisposables);
-            rangeViewModel.WhenAnyValue(expression)
-                .Buffer(count: 2, skip: 1)
-                .Where(buffer => buffer[1] == null && buffer[0] != null)
-                .Select(buffer => buffer[0])
-                .Where(x => viewsMap.ContainsKey(x.Position))
-                .Do(x => viewsMap[x.Position].VisualizeAsRegular())
-                .Subscribe()
-                .DisposeWith(vertexDisposables);
-        }
-
-        private void OnTransitAdded(VertexModel vertex)
-        {
-            if (viewsMap.TryGetValue(vertex.Position, out var view))
-            {
-                view.VisualizeAsTransit();
-            }
-        }
-
-        private void OnTransitRemoved(VertexModel vertex)
-        {
-            if (viewsMap.TryGetValue(vertex.Position, out var view))
-            {
-                view.VisualizeAsRegular();
-            }
-        }
-
-        private void SubscribeOnPathfindingRangeChanging()
-        {
-            rangeViewModel.Transit.ActOnEveryObject(OnTransitAdded, OnTransitRemoved)
-                .DisposeWith(vertexDisposables);
-            SubscribeOnRangeExtremumChanging(x => x.Source, x => x.VisualizeAsSource());
-            SubscribeOnRangeExtremumChanging(x => x.Target, x => x.VisualizeAsTarget());
-        }
-
         private void RenderGraph(IGraph<VertexModel> graph)
         {
             RemoveAll();
             vertexDisposables.Clear();
-            viewsMap.Clear();
 
+            var views = new List<VertexView>();
             foreach (var vertex in graph)
             {
                 var view = new VertexView(vertex);
                 view.DisposeWith(vertexDisposables);
-                viewsMap.Add(vertex.Position, view);
                 SubscribeToButton1Clicked(view);
                 SubscribeToButton3Clicked(view);
                 SubscribeOnWheelButton(view);
+                views.Add(view);
             }
 
             Application.MainLoop.Invoke(() =>
             {
-                Add(viewsMap.Values.ToArray());
+                Add(views.ToArray());
             });
-
-            SubscribeOnPathfindingRangeChanging();
         }
 
         private void SubscribeToButton1Clicked(VertexView view)

@@ -74,12 +74,6 @@ namespace Pathfinding.Shared.Extensions
             return valueRange.UpperValueOfRange - valueRange.LowerValueOfRange;
         }
 
-        public static bool Contains<T>(this InclusiveValueRange<T> self, T value)
-            where T : IComparable<T>
-        {
-            return value.IsBetween(self.UpperValueOfRange, self.LowerValueOfRange);
-        }
-
         public static T ReturnInRange<T>(this InclusiveValueRange<T> self, T value, ReturnOptions options)
             where T : IComparable<T>
         {

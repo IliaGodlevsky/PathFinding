@@ -92,7 +92,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private async Task CreateRun(MouseEventArgs e)
         {
-            var range = await service.ReadRangeAsync(ActivatedGraphId);
+            var range = await Task.Run(() => service.ReadRangeAsync(ActivatedGraphId))
+                .ConfigureAwait(false);
 
             if (range.Count > 0)
             {
@@ -106,23 +107,27 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     visitedVertices.Add((e.Current, e.Enqueued));
                 }
 
-                void OnSubPathFound(object sender, SubPathFoundEventArgs args)
+                void AddSubAlgorithm(IReadOnlyCollection<Coordinate> path = null)
                 {
                     ModelBuilder.CreateSubAlgorithmRequest()
                         .WithOrder(subAlgorithms.Count)
-                        .WithPath(args.SubPath)
+                        .WithPath(path ?? Array.Empty<Coordinate>())
                         .WithVisitedVertices(visitedVertices.ToList())
                         .AddTo(subAlgorithms);
                     visitedVertices.Clear();
+                }
+
+                void OnSubPathFound(object sender, SubPathFoundEventArgs args)
+                {
+                    AddSubAlgorithm(args.SubPath);
                 }
 
                 string status = RunStatuses.Success;
                 var stopwatch = new Stopwatch();
                 var pathfindingRange = range
                     .OrderBy(x => x.Order)
-                    .Select(x => x.Position)
-                    .Select(ActivatedGraph.Get)
-                    .ToList();
+                    .Select(x => ActivatedGraph.Get(x.Position))
+                    .ToArray();
                 var algorithm = GetAlgorithm(pathfindingRange);
 
                 algorithm.SubPathFound += OnSubPathFound;
@@ -138,11 +143,13 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 {
                     status = RunStatuses.Failure;
                     logger.Warn(ex);
+                    AddSubAlgorithm();
                 }
                 catch (Exception ex)
                 {
-                    logger.Error(ex);
                     status = RunStatuses.Failure;
+                    logger.Error(ex);
+                    AddSubAlgorithm();
                 }
                 finally
                 {
@@ -162,10 +169,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
                 await ExecuteSafe(async () =>
                 {
-                    var result = await service.CreateRunHistoryAsync(request)
+                    var result = await Task.Run(() => service.CreateRunHistoryAsync(request))
                         .ConfigureAwait(false);
                     messenger.Send(new RunCreatedMessaged(result));
-                }, logger.Error);
+                }, logger.Error).ConfigureAwait(false);
             }
         }
     }

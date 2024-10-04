@@ -19,38 +19,6 @@ namespace Pathfinding.Shared.Extensions
             return self.GetOrDefault(key, () => defaultValue);
         }
 
-        public static TValue GetOrEmpty<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> self, TKey key)
-            where TValue : IEnumerable, new()
-        {
-            return self.GetOrDefault(key, () => new());
-        }
-
-        public static TValue TryGetOrAddNew<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key)
-            where TValue : new()
-        {
-            if (self.TryGetValue(key, out var value))
-            {
-                return value;
-            }
-
-            value = new();
-            self.Add(key, value);
-            return value;
-        }
-
-        public static HashSet<TValue> TryGetOrAddNew<TKey, TValue>(this IDictionary<TKey, HashSet<TValue>> self, TKey key, IEqualityComparer<TValue> comparer)
-            where TValue : new()
-        {
-            if (self.TryGetValue(key, out var value))
-            {
-                return value;
-            }
-
-            value = new(comparer);
-            self.Add(key, value);
-            return value;
-        }
-
         public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> dictionary)
         {
             switch (dictionary)

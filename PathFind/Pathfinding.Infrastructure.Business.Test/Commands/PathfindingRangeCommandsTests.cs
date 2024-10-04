@@ -9,13 +9,13 @@ using Pathfinding.TestUtils.Attributes;
 namespace Pathfinding.Infrastructure.Business.Test.Commands
 {
     [TestFixture, UnitTest]
-    public sealed class PathfindingRangeBuilderTests
+    public sealed class PathfindingRangeCommandsTests
     {
         private readonly TestGraphAssemble assemble;
         private TestPathfindingRange range;
         private readonly IPathfindingRangeCommand<TestVertex>[] commands;
 
-        public PathfindingRangeBuilderTests()
+        public PathfindingRangeCommandsTests()
         {
             assemble = new();
             commands = new IPathfindingRangeCommand<TestVertex>[]
