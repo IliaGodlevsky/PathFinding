@@ -14,14 +14,11 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class SaveGraphButton
     {
-        private readonly IMessenger messenger;
         private readonly SaveGraphButtonViewModel viewModel;
         private readonly CompositeDisposable disposables = new();
 
-        public SaveGraphButton([KeyFilter(KeyFilters.Views)] IMessenger messenger,
-            SaveGraphButtonViewModel viewModel)
+        public SaveGraphButton(SaveGraphButtonViewModel viewModel)
         {
-            this.messenger = messenger;
             this.viewModel = viewModel;
             Initialize();
             var commandObservable = viewModel.SaveGraphCommand.CanExecute;

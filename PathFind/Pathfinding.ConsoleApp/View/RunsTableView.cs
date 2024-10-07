@@ -19,7 +19,6 @@ namespace Pathfinding.ConsoleApp.View
     internal sealed partial class RunsTableView : TableView
     {
         private readonly CompositeDisposable disposables = new();
-        private readonly RunsTableViewModel viewModel;
 
         public RunsTableView(RunsTableViewModel viewModel,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger)
@@ -27,6 +26,7 @@ namespace Pathfinding.ConsoleApp.View
             Initialize();
             viewModel.Runs.ActOnEveryObject(OnAdded, OnRemoved);
             this.Events().CellActivated
+                .Where(x => x.Row <= table.Rows.Count - 1)
                 .Select(x => GetRunModel(x.Row))
                 .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
                 .InvokeCommand(viewModel, x => x.ActivateRunCommand)
@@ -43,7 +43,6 @@ namespace Pathfinding.ConsoleApp.View
                           .ToArray())
                 .BindTo(viewModel, x => x.Selected)
                 .DisposeWith(disposables);
-            this.viewModel = viewModel;
         }
 
         private RunModel GetRunModel(int selectedRow)

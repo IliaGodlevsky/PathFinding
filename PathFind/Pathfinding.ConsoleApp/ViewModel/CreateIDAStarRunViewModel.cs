@@ -48,7 +48,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             model.Heuristics = Heuristic.Name;
             model.StepRule = StepRule.Name;
-            model.Spread = SpreadLevel.Spread;
+            model.Spread = SpreadLevel.Name;
         }
 
         protected override PathfindingProcess GetAlgorithm(IEnumerable<VertexModel> pathfindingRange)

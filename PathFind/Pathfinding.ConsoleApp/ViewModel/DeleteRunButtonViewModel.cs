@@ -50,7 +50,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             await ExecuteSafe(async () =>
             {
-                var isDeleted = await service.DeleteRunsAsync(RunsIds);
+                var isDeleted = await Task.Run(() => service.DeleteRunsAsync(RunsIds))
+                    .ConfigureAwait(false);
                 if (isDeleted)
                 {
                     messenger.Send(new RunsDeletedMessage(RunsIds.ToArray()));

@@ -22,6 +22,6 @@ namespace Pathfinding.Domain.Core
 
         public int? Visited { get; set; } = null;
 
-        public int? Spread { get; set; } = null;
+        public string Spread { get; set; } = null;
     }
 }

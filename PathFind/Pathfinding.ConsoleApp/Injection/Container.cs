@@ -29,7 +29,9 @@ namespace Pathfinding.ConsoleApp.Injection
 {
     internal static class Container
     {
+#pragma warning disable IDE0060
         public static ILifetimeScope BuildApp(string[] args)
+#pragma warning restore IDE0060
         {
             var builder = new ContainerBuilder();
 
@@ -54,7 +56,7 @@ namespace Pathfinding.ConsoleApp.Injection
                 ("Medium", 4),
                 ("High", 5),
                 ("Highest", 7),
-                ("Extreme", 10)
+                ("Extreme", 14)
             }).Keyed<IEnumerable<(string Name, int Level)>>(KeyFilters.SpreadLevels).SingleInstance();
             builder.RegisterInstance(new[]
             {
@@ -110,8 +112,8 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<JsonSerializer<List<PathfindingHistorySerializationModel>>>()
                 .As<ISerializer<List<PathfindingHistorySerializationModel>>>().SingleInstance();
 
-            //builder.RegisterType<NullLog>().As<ILog>().SingleInstance();
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
+            //builder.RegisterType<NullLog>().As<ILog>().SingleInstance();
             builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().As<ILog>().SingleInstance();
 
@@ -145,9 +147,13 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<RunCreationView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphRunsView).WithAttributeFiltering();
             builder.RegisterType<AlgorithmSettingsView>().Keyed<Terminal.Gui.View>(KeyFilters.NewRunView).WithAttributeFiltering();
             builder.RegisterType<DijkstraAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
+            builder.RegisterType<DistanceFirstAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
+            builder.RegisterType<HeuristicsCostAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<CostGreedyAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
+            builder.RegisterType<DepthFirstAlgorithmListView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<AStarAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<LeeAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
+            builder.RegisterType<AStarLeeAlgorithmListView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<IDAStarAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<RandomAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<StepRulesView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmParametresView).WithAttributeFiltering();

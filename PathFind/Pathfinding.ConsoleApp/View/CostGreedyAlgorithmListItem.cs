@@ -8,13 +8,14 @@ using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    [Order(6)]
+    [Order(7)]
     internal sealed class CostGreedyAlgorithmListItem : Label
     {
         private readonly IMessenger messenger;
         private readonly CreateCostGreedyRunViewModel viewModel;
 
-        public CostGreedyAlgorithmListItem([KeyFilter(KeyFilters.Views)] IMessenger messenger,
+        public CostGreedyAlgorithmListItem(
+            [KeyFilter(KeyFilters.Views)] IMessenger messenger,
             CreateCostGreedyRunViewModel viewModel)
         {
             Text = "Cost";

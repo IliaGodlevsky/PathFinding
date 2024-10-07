@@ -25,7 +25,6 @@ namespace Pathfinding.ConsoleApp.View
             Text = "Create";
             this.messenger = messenger;
             messenger.Register<RunViewModelChangedMessage>(this, OnRunViewModelChanged);
-
         }
 
         private void OnRunViewModelChanged(object recipient, RunViewModelChangedMessage msg)

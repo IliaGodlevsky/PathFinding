@@ -2,7 +2,7 @@
 
 namespace Pathfinding.ConsoleApp.View
 {
-    internal static class ColorContants
+    internal static class ColorConstants
     {
         public const Color BackgroundColor = Color.Black;
         public const Color RegularVertexColor = Color.DarkGray;

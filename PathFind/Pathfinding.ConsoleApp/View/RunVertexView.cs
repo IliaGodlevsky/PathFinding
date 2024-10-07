@@ -24,14 +24,14 @@ namespace Pathfinding.ConsoleApp.View
             Y = model.Position.GetY();
             Width = LabelWidth;
 
-            BindTo(x => x.IsObstacle, ColorContants.ObstacleVertexColor, 0);
-            BindTo(x => x.IsTarget, ColorContants.TargetVertexColor);
-            BindTo(x => x.IsSource, ColorContants.SourceVertexColor);
-            BindTo(x => x.IsTransit, ColorContants.TranstiVertexColor);
-            BindTo(x => x.IsPath, ColorContants.PathVertexColor);
-            BindTo(x => x.IsVisited, ColorContants.VisitedVertexColor);
-            BindTo(x => x.IsEnqueued, ColorContants.EnqueuedVertexColor);
-            BindTo(x => x.IsCrossedPath, ColorContants.CrossedPathColor);
+            BindTo(x => x.IsObstacle, ColorConstants.ObstacleVertexColor, 0);
+            BindTo(x => x.IsTarget, ColorConstants.TargetVertexColor);
+            BindTo(x => x.IsSource, ColorConstants.SourceVertexColor);
+            BindTo(x => x.IsTransit, ColorConstants.TranstiVertexColor);
+            BindTo(x => x.IsPath, ColorConstants.PathVertexColor);
+            BindTo(x => x.IsVisited, ColorConstants.VisitedVertexColor);
+            BindTo(x => x.IsEnqueued, ColorConstants.EnqueuedVertexColor);
+            BindTo(x => x.IsCrossedPath, ColorConstants.CrossedPathColor);
             model.WhenAnyValue(x => x.Cost)
                 .Select(x => ustring.Make(x.ToString()))
                 .BindTo(this, x => x.Text)
@@ -44,7 +44,7 @@ namespace Pathfinding.ConsoleApp.View
             return new()
             {
                 Normal
-                = Application.Driver.MakeAttribute(foreground, ColorContants.BackgroundColor)
+                = Application.Driver.MakeAttribute(foreground, ColorConstants.BackgroundColor)
             };
         }
 
@@ -53,7 +53,7 @@ namespace Pathfinding.ConsoleApp.View
         {
             model.WhenAnyValue(expression)
                .Skip(toSkip)
-               .Select(x => x ? Create(toColor) : Create(ColorContants.RegularVertexColor))
+               .Select(x => x ? Create(toColor) : Create(ColorConstants.RegularVertexColor))
                .BindTo(this, x => x.ColorScheme)
                .DisposeWith(disposables);
         }

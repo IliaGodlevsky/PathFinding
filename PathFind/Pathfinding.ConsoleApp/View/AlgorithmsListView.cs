@@ -23,7 +23,7 @@ namespace Pathfinding.ConsoleApp.View
                 {
                     var key = algorithms.RadioLabels[x.SelectedItem];
                     var element = names[key];
-                    var @event = new Terminal.Gui.MouseEvent() { Flags = MouseFlags.Button1Clicked };
+                    var @event = new MouseEvent() { Flags = MouseFlags.Button1Clicked };
                     element.OnMouseEvent(@event);
                 })
                 .Subscribe();

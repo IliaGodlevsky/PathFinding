@@ -22,7 +22,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
     {
         private readonly IRequestService<VertexModel> service;
         private readonly ISerializer<List<PathfindingHistorySerializationModel>> serializer;
-        private readonly IMessenger messenger;
         private readonly ILog logger;
 
         private int[] graphIds = Array.Empty<int>();

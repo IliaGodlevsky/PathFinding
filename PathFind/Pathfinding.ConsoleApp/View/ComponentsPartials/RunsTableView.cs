@@ -35,7 +35,7 @@ namespace Pathfinding.ConsoleApp.View
                 { table.Columns["Elapsed"], new ColumnStyle() { Format = @"ss\.fff", Alignment = TextAlignment.Centered } },
                 { table.Columns["Step"], new ColumnStyle() { Alignment = TextAlignment.Centered } },
                 { table.Columns["Logic"], new ColumnStyle() { Alignment = TextAlignment.Centered } },
-                { table.Columns["Spread"], new ColumnStyle() { Alignment = TextAlignment.Centered } },
+                { table.Columns["Spread"], new ColumnStyle() { Alignment = TextAlignment.Left } },
                 { table.Columns["Status"], new ColumnStyle() { Alignment = TextAlignment.Centered } }
             };
             Style = new TableStyle()
@@ -53,7 +53,7 @@ namespace Pathfinding.ConsoleApp.View
             X = 0;
             Y = Pos.Percent(0);
             Width = Dim.Fill();
-            Height = Dim.Percent(70);
+            Height = Dim.Percent(90);
             Table = table;
         }
     }

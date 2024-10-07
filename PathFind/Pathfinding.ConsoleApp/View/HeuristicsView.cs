@@ -26,8 +26,7 @@ namespace Pathfinding.ConsoleApp.View
         {
             Initialize();
             this.viewModel = viewModel;
-            var heuristicsNames = viewModel.Heuristics.Keys.ToArray();
-            radioLabels = heuristicsNames.Select(x => ustring.Make(x)).ToArray();
+            radioLabels = viewModel.Heuristics.Keys.Select(ustring.Make).ToArray();
             heuristics.RadioLabels = radioLabels;
             messenger.Register<HeuristicsViewModelChangedMessage>(this, OnViewModelChanged);
             messenger.Register<OpenHeuristicsViewMessage>(this, OnOpen);

@@ -21,7 +21,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
     {
         private readonly IMessenger messenger;
         private readonly IRequestService<VertexModel> service;
-        private readonly Func<string, Stream> fileStreamProvider;
+        private readonly Func<string, Stream> streamProvider;
         private readonly ILog logger;
         private readonly ISerializer<List<PathfindingHistorySerializationModel>> serializer;
 
@@ -38,21 +38,21 @@ namespace Pathfinding.ConsoleApp.ViewModel
             ISerializer<List<PathfindingHistorySerializationModel>> serializer,
             IRequestService<VertexModel> service,
             ILog logger) : this(messenger, serializer, 
-                service, path => File.OpenRead(path), logger)
+                service, File.OpenRead, logger)
         {
         }
 
         public LoadGraphButtonViewModel(IMessenger messenger,
             ISerializer<List<PathfindingHistorySerializationModel>> serializer,
             IRequestService<VertexModel> service,
-            Func<string, Stream> fileStreamProvider,
+            Func<string, Stream> streamProvider,
             ILog logger)
         {
             this.messenger = messenger;
             this.serializer = serializer;
             this.service = service;
             this.logger = logger;
-            this.fileStreamProvider = fileStreamProvider;
+            this.streamProvider = streamProvider;
             LoadGraphCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(LoadGraph);
         }
 
@@ -62,13 +62,14 @@ namespace Pathfinding.ConsoleApp.ViewModel
             {
                 await ExecuteSafe(async () =>
                 {
-                    using var fileStream = fileStreamProvider(FilePath);
+                    using var fileStream = streamProvider(FilePath);
                     var histories = await serializer.DeserializeFromAsync(fileStream)
                         .ConfigureAwait(false);
                     var result = await service.CreatePathfindingHistoriesAsync(histories)
                         .ConfigureAwait(false);
                     var graphs = result.Select(x => x.Graph).ToArray();
                     messenger.Send(new GraphCreatedMessage(graphs));
+                    logger.Info(graphs.Length > 0 ? "Graphs were loaded" : "Graph was loaded");
                 }, logger.Error);
             }
         }

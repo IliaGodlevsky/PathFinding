@@ -5,7 +5,6 @@ using System;
 using System.Linq.Expressions;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Windows;
 using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
@@ -14,13 +13,11 @@ namespace Pathfinding.ConsoleApp.View
     {
         private const int LabelWidth = 3;
 
-        private readonly CompositeDisposable disposables;
-
+        private readonly CompositeDisposable disposables = new();
         private readonly VertexModel model;
 
         public VertexView(VertexModel model)
         {
-            disposables = new CompositeDisposable();
             X = model.Position.GetX() * LabelWidth;
             Y = model.Position.GetY();
             Width = LabelWidth;
@@ -28,14 +25,14 @@ namespace Pathfinding.ConsoleApp.View
             this.model = model;
             model.WhenAnyValue(x => x.IsObstacle)
                .Select(x => x 
-                            ? Create(ColorContants.ObstacleVertexColor) 
-                            : Create(ColorContants.RegularVertexColor))
+                            ? Create(ColorConstants.ObstacleVertexColor) 
+                            : Create(ColorConstants.RegularVertexColor))
                .BindTo(this, x => x.ColorScheme)
                .DisposeWith(disposables);
-            BindTo(x => x.IsRegular, ColorContants.RegularVertexColor);
-            BindTo(x => x.IsTarget, ColorContants.TargetVertexColor);
-            BindTo(x => x.IsSource, ColorContants.SourceVertexColor);
-            BindTo(x => x.IsTransit, ColorContants.TranstiVertexColor);
+            BindTo(x => x.IsRegular, ColorConstants.RegularVertexColor);
+            BindTo(x => x.IsTarget, ColorConstants.TargetVertexColor);
+            BindTo(x => x.IsSource, ColorConstants.SourceVertexColor);
+            BindTo(x => x.IsTransit, ColorConstants.TranstiVertexColor);
             
             model.WhenAnyValue(x => x.Cost)
                 .Select(x => x.CurrentCost.ToString())
@@ -48,7 +45,7 @@ namespace Pathfinding.ConsoleApp.View
         {
             return new()
             {
-                Normal = Application.Driver.MakeAttribute(foreground, ColorContants.BackgroundColor)
+                Normal = Application.Driver.MakeAttribute(foreground, ColorConstants.BackgroundColor)
             };
         }
 

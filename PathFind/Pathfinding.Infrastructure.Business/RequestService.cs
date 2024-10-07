@@ -81,7 +81,7 @@ namespace Pathfinding.Infrastructure.Business
                     })
                     .ToListAsync(token);
                 return models.ToReadOnly();
-            }, token);
+            }, token).ConfigureAwait(false);
         }
 
         public async Task<IReadOnlyCollection<PathfindingHistoryModel<T>>> CreatePathfindingHistoriesAsync(IEnumerable<PathfindingHistorySerializationModel> request,

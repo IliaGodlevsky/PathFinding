@@ -113,7 +113,7 @@ namespace Pathfinding.Infrastructure.Business.Test
             {
                 AlgorithmRunId = random.NextInt(10, 1),
                 AlgorithmSpeed = TimeSpan.FromMilliseconds(random.NextDouble((5, 1))),
-                Spread = random.NextInt((5, 1)),
+                Spread = "Test",
                 Cost = random.NextDouble((1500, 250)),
                 Steps = random.NextInt((145, 20)),
                 StepRule = "Euclidian",
@@ -213,7 +213,7 @@ namespace Pathfinding.Infrastructure.Business.Test
             request.Statistics = new()
             {
                 AlgorithmId = AlgorithnName,
-                Spread = random.NextInt((5, 1)),
+                Spread = "Test",
                 Cost = random.NextDouble((1500, 250)),
                 Steps = random.NextInt((145, 20)),
                 StepRule = "Euclidian",

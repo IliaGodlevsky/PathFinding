@@ -2,23 +2,26 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
+using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.ViewModel;
 using Pathfinding.Shared;
 using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    [Order(1)]
-    internal sealed partial class DijkstraAlgorithmListItem : Label
+    [Order(6)]
+    internal sealed class AStarLeeAlgorithmListView : Label
     {
         private readonly IMessenger messenger;
-        private readonly CreateDijkstraRunViewModel viewModel;
+        private readonly CreateAStarLeeRunViewModel viewModel;
 
-        public DijkstraAlgorithmListItem(
+        public AStarLeeAlgorithmListView(
             [KeyFilter(KeyFilters.Views)] IMessenger messenger,
-            CreateDijkstraRunViewModel viewModel)
+            CreateAStarLeeRunViewModel viewModel)
         {
-            Initialize();
+            Text = "A* lee";
+            Y = 1;
+            X = 0;
             this.messenger = messenger;
             this.viewModel = viewModel;
             MouseClick += OnViewClicked;
@@ -28,10 +31,10 @@ namespace Pathfinding.ConsoleApp.View
         {
             if (e.MouseEvent.Flags == MouseFlags.Button1Clicked)
             {
-                messenger.Send(new OpenStepRuleViewMessage());
-                messenger.Send(new CloseHeuristicsViewMessage());
+                messenger.Send(new CloseStepRulesViewMessage());
+                messenger.Send(new OpenHeuristicsViewMessage());
                 messenger.Send(new CloseSpreadViewMessage());
-                messenger.Send(new StepRuleViewModelChangedMessage(viewModel));
+                messenger.Send(new HeuristicsViewModelChangedMessage(viewModel));
                 messenger.Send(new RunViewModelChangedMessage(viewModel));
             }
         }

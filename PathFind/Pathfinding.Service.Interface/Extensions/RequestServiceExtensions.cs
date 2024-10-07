@@ -17,7 +17,7 @@ namespace Pathfinding.Service.Interface.Extensions
             where T : IVertex, IEntity<int>
         {
             var result = await service.CreatePathfindingHistoriesAsync(request.Enumerate(), token);
-            return result.First();
+            return result.Single();
         }
 
         public static async Task<AlgorithmRunHistoryModel> CreateRunHistoryAsync<T>(this IRequestService<T> service,
@@ -26,7 +26,7 @@ namespace Pathfinding.Service.Interface.Extensions
             where T : IVertex, IEntity<int>
         {
             var result = await service.CreateRunHistoriesAsync(request.Enumerate(), token);
-            return result.First();
+            return result.Single();
         }
 
         public static async Task<PathfindingHistoryModel<T>> CreatePathfindingHistoryAsync<T>(this IRequestService<T> service,
@@ -35,7 +35,7 @@ namespace Pathfinding.Service.Interface.Extensions
             where T : IVertex, IEntity<int>
         {
             var result = await service.CreatePathfindingHistoriesAsync(model.Enumerate(), token);
-            return result.First();
+            return result.Single();
         }
     }
 }

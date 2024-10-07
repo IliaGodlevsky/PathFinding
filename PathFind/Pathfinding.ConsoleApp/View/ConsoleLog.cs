@@ -6,6 +6,14 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed class ConsoleLog : ILog
     {
+        private void QueryMessageBox(string title, string message)
+        {
+            Application.MainLoop.Invoke(() =>
+            {
+                MessageBox.Query(title, message, "Ok");
+            });
+        }
+
         public void Debug(string message)
         {
 
@@ -13,27 +21,27 @@ namespace Pathfinding.ConsoleApp.View
 
         public void Error(Exception ex, string message = null)
         {
-            MessageBox.Query(50, 7, "Error", ex.Message, "OK");
+            QueryMessageBox("Error", ex.Message);
         }
 
         public void Error(string message)
         {
-            MessageBox.Query(50, 7, "Error", message, "OK");
+            QueryMessageBox("Error", message);
         }
 
         public void Fatal(Exception ex, string message = null)
         {
-            MessageBox.Query(50, 7, "Fatal", ex.Message, "OK");
+            QueryMessageBox("Fatal", ex.Message);
         }
 
         public void Fatal(string message)
         {
-            MessageBox.Query(50, 7, "Error", message, "OK");
+            QueryMessageBox("Fatal", message);
         }
 
         public void Info(string message)
         {
-            MessageBox.Query(50, 7, "Info", message, "OK");
+            QueryMessageBox("Info", message);
         }
 
         public void Trace(string message)
@@ -43,12 +51,12 @@ namespace Pathfinding.ConsoleApp.View
 
         public void Warn(Exception ex, string message = null)
         {
-            MessageBox.Query(50, 7, "Warn", ex.Message, "OK");
+            QueryMessageBox("Warn", ex.Message);
         }
 
         public void Warn(string message)
         {
-            MessageBox.Query(50, 7, "Error", message, "OK");
+            QueryMessageBox("Warn", message);
         }
     }
 }

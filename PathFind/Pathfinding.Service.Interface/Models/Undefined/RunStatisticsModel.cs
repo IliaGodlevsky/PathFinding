@@ -22,6 +22,6 @@ namespace Pathfinding.Service.Interface.Models.Undefined
 
         public double? Cost { get; set; } = null;
 
-        public int? Spread { get; set; } = null;
+        public string Spread { get; set; } = null;
     }
 }

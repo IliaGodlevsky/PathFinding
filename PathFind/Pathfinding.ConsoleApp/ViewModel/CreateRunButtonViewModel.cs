@@ -112,7 +112,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     ModelBuilder.CreateSubAlgorithmRequest()
                         .WithOrder(subAlgorithms.Count)
                         .WithPath(path ?? Array.Empty<Coordinate>())
-                        .WithVisitedVertices(visitedVertices.ToList())
+                        .WithVisitedVertices(visitedVertices.ToArray())
                         .AddTo(subAlgorithms);
                     visitedVertices.Clear();
                 }
@@ -123,7 +123,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 }
 
                 string status = RunStatuses.Success;
-                var stopwatch = new Stopwatch();
                 var pathfindingRange = range
                     .OrderBy(x => x.Order)
                     .Select(x => ActivatedGraph.Get(x.Position))
@@ -133,8 +132,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 algorithm.SubPathFound += OnSubPathFound;
                 algorithm.VertexEnqueued += OnVertexEnqueued;
 
-                stopwatch.Start();
                 var path = NullGraphPath.Interface;
+                var stopwatch = Stopwatch.StartNew();
                 try
                 {
                     path = await algorithm.FindPathAsync();
@@ -162,8 +161,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     .WithRun(ActivatedGraphId, AlgorithmId)
                     .WithSubAlgorithms(subAlgorithms)
                     .WithStatistics(AlgorithmId, path,
-                        visitedCount, status,
-                        stopwatch.Elapsed);
+                        visitedCount, status, stopwatch.Elapsed);
 
                 AppendStatistics(request.Statistics);
 
@@ -173,6 +171,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
                         .ConfigureAwait(false);
                     messenger.Send(new RunCreatedMessaged(result));
                 }, logger.Error).ConfigureAwait(false);
+            }
+            else
+            {
+                logger.Info("Pathfinding range is not set");
             }
         }
     }

@@ -15,7 +15,8 @@ namespace Pathfinding.ConsoleApp.View
         private readonly IMessenger messenger;
         private readonly CreateIDAStarRunViewModel viewModel;
 
-        public IDAStarAlgorithmListItem([KeyFilter(KeyFilters.Views)] IMessenger messenger,
+        public IDAStarAlgorithmListItem(
+            [KeyFilter(KeyFilters.Views)] IMessenger messenger,
             CreateIDAStarRunViewModel viewModel)
         {
             Text = "IDA*";

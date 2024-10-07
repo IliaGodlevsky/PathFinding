@@ -62,7 +62,11 @@
     <Compile Include="Messages\View\CloseAlgorithmRunViewMessage.cs" />
     <Compile Include="Messages\View\SpreadViewModelChangedMessage.cs" />
     <Compile Include="Model\RunVertexModel.cs" />
+    <Compile Include="ViewModel\CreateAStarLeeRunViewModel.cs" />
     <Compile Include="ViewModel\CreateCostGreedyRunViewModel.cs" />
+    <Compile Include="ViewModel\CreateDepthAlgorithmRunViewModel.cs" />
+    <Compile Include="ViewModel\CreateDistanceFirstRunViewModel.cs" />
+    <Compile Include="ViewModel\CreateHeuristicsCostRunViewModel.cs" />
     <Compile Include="ViewModel\CreateIDAStarRunViewModel.cs" />
     <Compile Include="ViewModel\CreateLeeAlgorithmRunViewModel.cs" />
     <Compile Include="ViewModel\IRequireHeuristicsViewModel.cs" />
@@ -73,9 +77,13 @@
     <Compile Include="ViewModel\CreateRandomAlgorithmRunViewModel.cs" />
     <Compile Include="ViewModel\RunsTableViewModel.cs" />
     <Compile Include="ViewModel\SpreadViewModel.cs" />
+    <Compile Include="View\AStarLeeAlgorithmListView.cs" />
     <Compile Include="View\CloseRunCreationViewButton.cs" />
     <Compile Include="View\ComponentsPartials\HeuristicsView.cs" />
     <Compile Include="View\CostGreedyAlgorithmListItem.cs" />
+    <Compile Include="View\DepthFirstAlgorithmListView.cs" />
+    <Compile Include="View\DistanceFirstAlgorithmListItem.cs" />
+    <Compile Include="View\HeuristicsCostAlgorithmListItem.cs" />
     <Compile Include="View\RandomAlgorithmListItem.cs" />
     <Compile Include="View\ComponentsPartials\SpreadView.cs" />
     <Compile Include="View\ConsoleLog.cs" />
@@ -142,7 +150,7 @@
     <Compile Include="View\LoadGraphButton.cs" />
     <Compile Include="View\NewGraphButton.cs" />
     <Compile Include="View\SaveGraphButton.cs" />
-    <Compile Include="View\ColorContants.cs" />
+    <Compile Include="View\ColorConstants.cs" />
     <Compile Include="View\ComponentsPartials\ButtonsFrameView.cs" />
     <Compile Include="View\ComponentsPartials\CreateGraphView.cs" />
     <Compile Include="View\ComponentsPartials\DeleteGraphButton.cs" />

@@ -34,6 +34,7 @@ namespace Pathfinding.ConsoleApp.View
                 .DisposeWith(disposables);
             viewModel.LoadGraphs();
             this.Events().CellActivated
+                .Where(x => x.Row <= table.Rows.Count - 1)
                 .Select(x => GetParametresModel(x.Row))
                 .DistinctUntilChanged(x => x.Id)
                 .InvokeCommand(viewModel, x => x.ActivateGraphCommand)

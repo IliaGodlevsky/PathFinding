@@ -9,7 +9,7 @@ namespace Pathfinding.ConsoleApp.View
     internal sealed class MainView : Window
     {
         private const Color ForegroundColor = Color.Gray;
-        private const Color BackgroundColor = ColorContants.BackgroundColor;
+        private const Color BackgroundColor = ColorConstants.BackgroundColor;
 
         public MainView([KeyFilter(KeyFilters.MainWindow)] IEnumerable<Terminal.Gui.View> children)
         {
@@ -17,11 +17,7 @@ namespace Pathfinding.ConsoleApp.View
             Y = 0;
             Height = Dim.Fill();
             Width = Dim.Fill();
-            Border = new Border()
-            {
-                BorderStyle = BorderStyle.Rounded,
-                BorderBrush = Color.Green
-            };
+            Border = new();
             Add(children.ToArray());
             Loaded += OnActivate;
         }

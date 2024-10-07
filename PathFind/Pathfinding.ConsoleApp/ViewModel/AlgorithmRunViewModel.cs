@@ -17,8 +17,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal sealed class AlgorithmRunViewModel : ReactiveObject
     {
-        internal enum PathfindingStatus { Visited, Enqueued, Source, Transit, Target, Path }
-
         private IReadOnlyCollection<RunVertexModel> graphState = Array.Empty<RunVertexModel>();
         public IReadOnlyCollection<RunVertexModel> GraphState
         {
@@ -26,7 +24,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref graphState, value);
         }
 
-        public Queue<(RunVertexModel Model, PathfindingStatus Status)> Vertices { get; } = new();
+        private Queue<Action> Vertices { get; } = new();
+
+        public int Remained => Vertices.Count;
 
         public ReactiveCommand<int, Unit> VisualizeNextCommand { get; }
 
@@ -39,54 +39,39 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnRunCreated(object recipient, RunCreatedMessaged msg)
         {
-            GraphState = GenerateVerticesToVisualize(msg.Model.GraphState,
-                msg.Model.SubAlgorithms);
+            GraphState = GenerateVerticesToVisualize(msg.Model.GraphState, msg.Model.SubAlgorithms);
         }
 
         private void OnRunActivated(object recipient, RunActivatedMessage msg)
         {
-            Vertices.Clear();
-            GraphState = GenerateVerticesToVisualize(msg.Run.GraphState,
-                msg.Run.Algorithms);
+            GraphState = GenerateVerticesToVisualize(msg.Run.GraphState, msg.Run.Algorithms);
         }
 
         private IReadOnlyCollection<RunVertexModel> GenerateVerticesToVisualize(GraphStateModel graphState,
             IEnumerable<SubAlgorithmModel> subAlgorithms)
         {
+            Vertices.Clear();
             var graph = CreateGraph(graphState);
             var range = graphState.Range.ToList();
             range.Skip(1).Take(range.Count - 2)
-                .ForEach(transit => Vertices.Enqueue((graph[transit], PathfindingStatus.Transit)));
-            Vertices.Enqueue((graph[range[0]], PathfindingStatus.Source));
-            Vertices.Enqueue((graph[range[range.Count - 1]], PathfindingStatus.Target));
+                .ForEach(transit => Vertices.Enqueue(() => graph[transit].IsTransit = true));
+            Vertices.Enqueue(() => graph[range[0]].IsSource = true);
+            Vertices.Enqueue(() => graph[range[range.Count - 1]].IsTarget = true);
             foreach (var sub in subAlgorithms)
             {
                 foreach (var (Visited, Enqueued) in sub.Visited)
                 {
-                    Vertices.Enqueue((graph[Visited], PathfindingStatus.Visited));
-                    Enqueued.ForEach(enqueued => Vertices.Enqueue((graph[enqueued], PathfindingStatus.Enqueued)));
+                    Vertices.Enqueue(() => graph[Visited].IsVisited = true);
+                    Enqueued.ForEach(enqueued => Vertices.Enqueue(() => graph[enqueued].IsEnqueued = true));
                 }
-                sub.Path.ForEach(path => Vertices.Enqueue((graph[path], PathfindingStatus.Path)));
+                sub.Path.ForEach(path => Vertices.Enqueue(() => graph[path].IsPath = true));
             }
             return graph.Values;
         }
 
         private void VisualizeNext(int number)
         {
-            while (number-- > 0 && Vertices.Count > 0)
-            {
-                var toVisualize = Vertices.Dequeue();
-                var model = toVisualize.Model;
-                switch (toVisualize.Status)
-                {
-                    case PathfindingStatus.Transit: model.IsTransit = true; break;
-                    case PathfindingStatus.Source: model.IsSource = true; break;
-                    case PathfindingStatus.Path: model.IsPath = true; break;
-                    case PathfindingStatus.Target: model.IsTarget = true; break;
-                    case PathfindingStatus.Enqueued: model.IsEnqueued = true; break;
-                    case PathfindingStatus.Visited: model.IsVisited = true; break;
-                }
-            }
+            while (number-- > 0 && Remained > 0) Vertices.Dequeue().Invoke();
         }
 
         private Dictionary<Coordinate, RunVertexModel> CreateGraph(GraphStateModel model)

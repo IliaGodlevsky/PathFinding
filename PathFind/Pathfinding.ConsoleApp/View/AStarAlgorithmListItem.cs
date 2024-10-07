@@ -15,7 +15,8 @@ namespace Pathfinding.ConsoleApp.View
         private readonly IMessenger messenger;
         private readonly CreateAStarRunViewModel viewModel;
 
-        public AStarAlgorithmListItem([KeyFilter(KeyFilters.Views)] IMessenger messenger,
+        public AStarAlgorithmListItem(
+            [KeyFilter(KeyFilters.Views)] IMessenger messenger,
             CreateAStarRunViewModel viewModel)
         {
             Text = "A*";
