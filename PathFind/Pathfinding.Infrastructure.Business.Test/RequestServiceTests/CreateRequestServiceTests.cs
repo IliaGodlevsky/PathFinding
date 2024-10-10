@@ -17,7 +17,9 @@ namespace Pathfinding.Infrastructure.Business.Test.RequestServiceTests
             var request = new CreateGraphRequest<TestVertex>()
             {
                 Graph = TestGraph.Interface,
-                Name = GraphName
+                Name = GraphName,
+                Neighborhood = "Test",
+                SmoothLevel = "Test"
             };
 
             var result = await service.CreateGraphAsync(request);
@@ -43,6 +45,8 @@ namespace Pathfinding.Infrastructure.Business.Test.RequestServiceTests
             Assert.Multiple(() =>
             {
                 Assert.That(result.Name, Is.EqualTo(model.Name));
+                Assert.That(result.Neighborhood, Is.EqualTo(model.Neighborhood));
+                Assert.That(result.SmoothLevel, Is.EqualTo(model.SmoothLevel));
                 Assert.That(result.Id, Is.GreaterThan(0));
                 Assert.That(result.Graph.All(x => x.Id > 0), Is.True);
                 Assert.That(result.Id, Is.GreaterThan(0));

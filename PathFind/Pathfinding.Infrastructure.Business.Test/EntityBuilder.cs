@@ -31,6 +31,8 @@ namespace Pathfinding.Infrastructure.Business.Test
         {
             DimensionSizes = TestGraph.Interface.DimensionsSizes,
             Name = GraphName,
+            SmoothLevel = "Test",
+            Neighborhood = "Test",
             Vertices = TestMapper.Instance.Mapper
                     .Map<VertexSerializationModel[]>(TestGraph.Interface.ToArray())
         };
@@ -74,6 +76,8 @@ namespace Pathfinding.Infrastructure.Business.Test
             model.Graph = new()
             {
                 Name = GraphName,
+                Neighborhood = "Test",
+                SmoothLevel = "Test",
                 DimensionSizes = TestGraph.Instance.DimensionsSizes,
                 Vertices = mapper.Map<List<VertexSerializationModel>>(vertices)
             };
@@ -231,6 +235,8 @@ namespace Pathfinding.Infrastructure.Business.Test
             {
                 Graph = TestGraph.Interface,
                 Name = GraphName,
+                SmoothLevel = "Test",
+                Neighborhood = "Test"
             };
             return request;
         }

@@ -39,15 +39,15 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations.TestDb.Repos
             CancellationToken token = default)
         {
             var dictionary = new Dictionary<int, IReadOnlyCollection<Neighbor>>();
-            dictionary.Add(1, new[] 
-            { 
-                new Neighbor() 
-                { 
-                    GraphId = 1, 
-                    Id = 1, 
-                    NeighborId = 2, 
-                    VertexId = 1 
-                } 
+            dictionary.Add(1, new[]
+            {
+                new Neighbor()
+                {
+                    GraphId = 1,
+                    Id = 1,
+                    NeighborId = 2,
+                    VertexId = 1
+                }
             });
             return await Task.FromResult(dictionary);
         }

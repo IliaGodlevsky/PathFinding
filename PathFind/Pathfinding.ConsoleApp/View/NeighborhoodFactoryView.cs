@@ -22,13 +22,16 @@ namespace Pathfinding.ConsoleApp.View
             this.factoryViewModel = factoryViewModel;
             this.viewModel = viewModel;
             Initialize();
-            var neighbors = factoryViewModel.Factories.Select(x => x.Value).ToList();
             neighborhoods.RadioLabels = factoryViewModel.Factories.Keys
                 .Select(x => ustring.Make(x))
                 .ToArray();
             neighborhoods.Events().SelectedItemChanged
                 .Where(x => x.SelectedItem > -1)
-                .Select(x => neighbors[x.SelectedItem])
+                .Select(x =>
+                {
+                    var pair = factoryViewModel.Factories.ElementAt(x.SelectedItem);
+                    return (Name: pair.Key, Factory: pair.Value);
+                })
                 .BindTo(this.viewModel, x => x.NeighborhoodFactory)
                 .DisposeWith(disposables);
             neighborhoods.SelectedItem = 0;

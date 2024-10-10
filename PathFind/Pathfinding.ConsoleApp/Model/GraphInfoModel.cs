@@ -15,6 +15,10 @@ namespace Pathfinding.ConsoleApp.Model
             set => this.RaiseAndSetIfChanged(ref name, value);
         }
 
+        public string Neighborhood { get; set; }
+
+        public string SmoothLevel { get; set; }
+
         public int Width { get; set; }
 
         public int Length { get; set; }

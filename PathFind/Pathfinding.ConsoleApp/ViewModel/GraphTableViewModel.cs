@@ -92,6 +92,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     {
                         Id = x.Id,
                         Name = x.Name,
+                        Neighborhood = x.Neighborhood,
+                        SmoothLevel = x.SmoothLevel,
                         Width = x.Dimensions.ElementAt(0),
                         Length = x.Dimensions.ElementAt(1),
                         Obstacles = x.ObstaclesCount
@@ -117,7 +119,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
                             Name = x.Name,
                             Obstacles = x.Graph.GetObstaclesCount(),
                             Width = x.Graph.GetWidth(),
-                            Length = x.Graph.GetLength()
+                            Length = x.Graph.GetLength(),
+                            SmoothLevel = x.SmoothLevel,
+                            Neighborhood = x.Neighborhood
                         })
                     .ToArray();
                 Graphs.Add(parametres);

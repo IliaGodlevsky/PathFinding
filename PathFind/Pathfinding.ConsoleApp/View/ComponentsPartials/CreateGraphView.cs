@@ -20,7 +20,7 @@ namespace Pathfinding.ConsoleApp.View
                 BorderThickness = new Thickness(0)
             };
 
-            createButton.X = Pos.Percent(27);
+            createButton.X = Pos.Percent(35);
             createButton.Y = Pos.Percent(85) + 1;
             cancelButton.X = Pos.Right(createButton) + 2;
             cancelButton.Y = Pos.Percent(85) + 1;

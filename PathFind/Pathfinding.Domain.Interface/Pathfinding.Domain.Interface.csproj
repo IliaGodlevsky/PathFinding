@@ -56,7 +56,7 @@
     <Compile Include="IGraph.cs" />
     <Compile Include="Factories\IGraphAssemble.cs" />
     <Compile Include="Factories\IGraphFactory.cs" />
-    <Compile Include="Factories\INeighborhood.cs" />
+    <Compile Include="INeighborhood.cs" />
     <Compile Include="Factories\INeighborhoodFactory.cs" />
     <Compile Include="IPathfindingRange.cs" />
     <Compile Include="Factories\IUnitOfWorkFactory.cs" />

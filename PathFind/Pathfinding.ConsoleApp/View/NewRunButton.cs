@@ -3,9 +3,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.ViewModel;
-using ReactiveUI;
-using System.Reactive.Disposables;
-using System.Reactive.Linq;
 using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View

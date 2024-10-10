@@ -15,21 +15,21 @@ namespace Pathfinding.ConsoleApp.ViewModel
         IRequireHeuristicsViewModel, IRequireStepRuleViewModel
     {
         private (string Name, IHeuristic Heuristic) heuristic;
-        public (string Name, IHeuristic Heuristic) Heuristic 
+        public (string Name, IHeuristic Heuristic) Heuristic
         {
-            get => heuristic; 
+            get => heuristic;
             set => this.RaiseAndSetIfChanged(ref heuristic, value);
         }
 
         private (string Name, IStepRule StepRule) stepRule;
-        public (string Name, IStepRule Rule) StepRule 
+        public (string Name, IStepRule Rule) StepRule
         {
             get => stepRule;
             set => this.RaiseAndSetIfChanged(ref stepRule, value);
         }
 
         public CreateHeuristicsCostRunViewModel(IRequestService<VertexModel> service,
-            [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger, ILog logger) 
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger, ILog logger)
             : base(service, messenger, logger)
         {
         }
@@ -44,7 +44,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         protected override PathfindingProcess GetAlgorithm(IEnumerable<VertexModel> pathfindingRange)
         {
-            return new HeuristicCostGreedyAlgorithm(pathfindingRange, 
+            return new HeuristicCostGreedyAlgorithm(pathfindingRange,
                 heuristic.Heuristic, stepRule.StepRule);
         }
     }

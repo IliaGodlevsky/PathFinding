@@ -9,7 +9,6 @@ using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.TestUtils.Attributes;
-using ReactiveUI;
 
 namespace Pathfinding.ConsoleApp.Test
 {
@@ -25,11 +24,11 @@ namespace Pathfinding.ConsoleApp.Test
         {
             graphs = new Dictionary<int, GraphModel<VertexModel>>()
             {
-                { 1, new(){ Id = 1, Name = "Test1",  Graph = Graph<VertexModel>.Empty } },
-                { 2, new(){ Id = 2, Name = "Test2",  Graph = Graph<VertexModel>.Empty } },
-                { 3, new(){ Id = 3, Name = "Test3",  Graph = Graph<VertexModel>.Empty } },
-                { 4, new(){ Id = 4, Name = "Test4",  Graph = Graph<VertexModel>.Empty } },
-                { 5, new(){ Id = 5, Name = "Test5",  Graph = Graph<VertexModel>.Empty } },
+                { 1, new(){ Id = 1, Name = "Test1", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<VertexModel>.Empty } },
+                { 2, new(){ Id = 2, Name = "Test2", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<VertexModel>.Empty } },
+                { 3, new(){ Id = 3, Name = "Test3", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<VertexModel>.Empty } },
+                { 4, new(){ Id = 4, Name = "Test4", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<VertexModel>.Empty } },
+                { 5, new(){ Id = 5, Name = "Test5", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<VertexModel>.Empty } },
             };
         }
 
@@ -94,6 +93,8 @@ namespace Pathfinding.ConsoleApp.Test
         {
             graphsTable.Graphs.AddRange(graphs.Values.Select(x => new GraphInfoModel()
             {
+                Neighborhood = "Test",
+                SmoothLevel = "Test",
                 Id = x.Id,
                 Width = 0,
                 Length = 0,

@@ -35,7 +35,7 @@ namespace Pathfinding.Infrastructure.Data.LiteDb
         {
         }
 
-        public LiteDbUnitOfWork(ConnectionString connectionString) 
+        public LiteDbUnitOfWork(ConnectionString connectionString)
             : this(new LiteDatabase(connectionString))
         {
         }

@@ -1,7 +1,4 @@
-﻿using Autofac.Features.AttributeFilters;
-using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.ConsoleApp.Injection;
-using Pathfinding.ConsoleApp.ViewModel;
+﻿using Pathfinding.ConsoleApp.ViewModel;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System.Collections.Generic;

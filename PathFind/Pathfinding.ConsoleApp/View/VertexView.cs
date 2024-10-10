@@ -24,8 +24,8 @@ namespace Pathfinding.ConsoleApp.View
             Data = model;
             this.model = model;
             model.WhenAnyValue(x => x.IsObstacle)
-               .Select(x => x 
-                            ? Create(ColorConstants.ObstacleVertexColor) 
+               .Select(x => x
+                            ? Create(ColorConstants.ObstacleVertexColor)
                             : Create(ColorConstants.RegularVertexColor))
                .BindTo(this, x => x.ColorScheme)
                .DisposeWith(disposables);
@@ -33,7 +33,7 @@ namespace Pathfinding.ConsoleApp.View
             BindTo(x => x.IsTarget, ColorConstants.TargetVertexColor);
             BindTo(x => x.IsSource, ColorConstants.SourceVertexColor);
             BindTo(x => x.IsTransit, ColorConstants.TranstiVertexColor);
-            
+
             model.WhenAnyValue(x => x.Cost)
                 .Select(x => x.CurrentCost.ToString())
                 .Do(x => Text = x)

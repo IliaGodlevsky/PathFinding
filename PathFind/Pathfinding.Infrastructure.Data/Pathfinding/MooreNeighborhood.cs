@@ -1,4 +1,4 @@
-﻿using Pathfinding.Domain.Interface.Factories;
+﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
 using System;

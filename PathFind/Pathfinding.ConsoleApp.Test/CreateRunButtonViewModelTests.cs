@@ -1,28 +1,27 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Moq;
+using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.Model.Factories;
 using Pathfinding.ConsoleApp.ViewModel;
 using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Business.Layers;
-using Pathfinding.Infrastructure.Data.Pathfinding;
-using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
-using Pathfinding.Service.Interface;
-using Pathfinding.Shared.Primitives;
-using Pathfinding.Shared.Random;
-using Pathfinding.Infrastructure.Data.Extensions;
-using Pathfinding.Service.Interface.Models.Read;
-using Pathfinding.Shared.Extensions;
-using System.Reactive.Linq;
-using Pathfinding.ConsoleApp.Messages.ViewModel;
-using Pathfinding.Service.Interface.Requests.Create;
-using Pathfinding.Logging.Interface;
-using Pathfinding.Logging.Loggers;
-using Pathfinding.TestUtils.Attributes;
-using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
-using Moq.Protected;
+using Pathfinding.Infrastructure.Business.Layers;
+using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Infrastructure.Data.Pathfinding;
+using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
+using Pathfinding.Logging.Interface;
+using Pathfinding.Logging.Loggers;
+using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Models.Read;
+using Pathfinding.Service.Interface.Models.Undefined;
+using Pathfinding.Service.Interface.Requests.Create;
+using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Primitives;
+using Pathfinding.Shared.Random;
+using Pathfinding.TestUtils.Attributes;
+using System.Reactive.Linq;
 
 namespace Pathfinding.ConsoleApp.Test
 {
@@ -72,7 +71,7 @@ namespace Pathfinding.ConsoleApp.Test
         public void SetUp()
         {
             service = new Mock<IRequestService<VertexModel>>();
-            IReadOnlyCollection<PathfindingRangeModel> pathfindingRange 
+            IReadOnlyCollection<PathfindingRangeModel> pathfindingRange
                 = new List<PathfindingRangeModel>()
             {
                 new() { Order = 1, Position = new Coordinate(0, 0) },

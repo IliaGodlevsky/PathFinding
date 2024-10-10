@@ -15,14 +15,14 @@ namespace Pathfinding.ConsoleApp.ViewModel
         IRequireHeuristicsViewModel
     {
         private (string Name, IHeuristic Heuristic) heuristic;
-        public (string Name, IHeuristic Heuristic) Heuristic 
+        public (string Name, IHeuristic Heuristic) Heuristic
         {
             get => heuristic;
             set => this.RaiseAndSetIfChanged(ref heuristic, value);
         }
 
         public CreateDistanceFirstRunViewModel(IRequestService<VertexModel> service,
-            [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger, ILog logger) : base(service, messenger, logger)
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger, ILog logger) : base(service, messenger, logger)
         {
         }
 

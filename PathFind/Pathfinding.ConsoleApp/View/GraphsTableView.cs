@@ -13,7 +13,6 @@ using System.Data;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -34,13 +33,13 @@ namespace Pathfinding.ConsoleApp.View
                 .DisposeWith(disposables);
             viewModel.LoadGraphs();
             this.Events().CellActivated
-                .Where(x => x.Row <= table.Rows.Count - 1)
+                .Where(x => x.Row < table.Rows.Count)
                 .Select(x => GetParametresModel(x.Row))
                 .DistinctUntilChanged(x => x.Id)
                 .InvokeCommand(viewModel, x => x.ActivateGraphCommand)
                 .DisposeWith(disposables);
             this.Events().SelectedCellChanged
-                .Where(x => x.NewRow > -1)
+                .Where(x => x.NewRow > -1 && x.NewRow < table.Rows.Count)
                 .Select(x => (
                             MultiSelectedRegions.Count > 0
                             ? MultiSelectedRegions
@@ -63,21 +62,23 @@ namespace Pathfinding.ConsoleApp.View
         {
             return new()
             {
-                Width = (int)table.Rows[selectedRow]["Width"],
-                Length = (int)table.Rows[selectedRow]["Length"],
-                Name = (string)table.Rows[selectedRow]["Name"],
-                Id = (int)table.Rows[selectedRow]["Id"],
-                Obstacles = (int)table.Rows[selectedRow]["Obstacles"]
+                Width = (int)table.Rows[selectedRow][WidthCol],
+                Length = (int)table.Rows[selectedRow][LengthCol],
+                Name = (string)table.Rows[selectedRow][NameCol],
+                SmoothLevel = (string)table.Rows[selectedRow][SmoothCol],
+                Neighborhood = (string)table.Rows[selectedRow][NeighborsCol],
+                Id = (int)table.Rows[selectedRow][IdCol],
+                Obstacles = (int)table.Rows[selectedRow][ObstaclesCol]
             };
         }
 
         private void AddToTable(GraphInfoModel model)
         {
             table.Rows.Add(model.Id, model.Name,
-                model.Width, model.Length, model.Obstacles);
+                model.Width, model.Length, model.Neighborhood,
+                model.SmoothLevel, model.Obstacles);
             table.AcceptChanges();
             SetNeedsDisplay();
-            Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
             var sub = model.WhenAnyValue(c => c.Obstacles)
                 .Do(x => UpdateGraphInTable(model.Id, x))
                 .Subscribe();
@@ -87,7 +88,7 @@ namespace Pathfinding.ConsoleApp.View
         private void UpdateGraphInTable(int id, int obstacles)
         {
             var row = table.Rows.Find(id);
-            row["Obstacles"] = obstacles;
+            row[ObstaclesCol] = obstacles;
             table.AcceptChanges();
         }
 
@@ -109,7 +110,6 @@ namespace Pathfinding.ConsoleApp.View
                 SetSelection(0, args.NewRow, false);
             }
             SetNeedsDisplay();
-            Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
         }
     }
 }

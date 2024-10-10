@@ -16,14 +16,14 @@ namespace Pathfinding.ConsoleApp.ViewModel
         IRequireStepRuleViewModel
     {
         private (string Name, IStepRule Rule) stepRule;
-        public (string Name, IStepRule Rule) StepRule 
+        public (string Name, IStepRule Rule) StepRule
         {
             get => stepRule;
             set => this.RaiseAndSetIfChanged(ref stepRule, value);
         }
 
         public CreateCostGreedyRunViewModel(IRequestService<VertexModel> service,
-            [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger, ILog logger) : base(service, messenger, logger)
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger, ILog logger) : base(service, messenger, logger)
         {
         }
 

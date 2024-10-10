@@ -27,12 +27,12 @@ namespace Pathfinding.ConsoleApp.View
             viewModel.Runs.ActOnEveryObject(OnAdded, OnRemoved);
             this.Events().CellActivated
                 .Where(x => x.Row <= table.Rows.Count - 1)
-                .Select(x => GetRunModel(x.Row))
                 .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
+                .Select(x => GetRunModel(x.Row))
                 .InvokeCommand(viewModel, x => x.ActivateRunCommand)
                 .DisposeWith(disposables);
             this.Events().SelectedCellChanged
-                .Where(x => x.NewRow > -1)
+                .Where(x => x.NewRow > -1 && x.NewRow < table.Rows.Count)
                 .Select(x => (
                             MultiSelectedRegions.Count > 0
                             ? MultiSelectedRegions
@@ -49,16 +49,16 @@ namespace Pathfinding.ConsoleApp.View
         {
             return new()
             {
-                RunId = (int)table.Rows[selectedRow]["Id"],
-                Name = (string)table.Rows[selectedRow]["Algorithm"],
-                Visited = (int)table.Rows[selectedRow]["Visited"],
-                Steps = (int)table.Rows[selectedRow]["Steps"],
-                Cost = (double)table.Rows[selectedRow]["Cost"],
-                Elapsed = (TimeSpan)table.Rows[selectedRow]["Elapsed"],
-                StepRule = (string)table.Rows[selectedRow]["Step"],
-                Heuristics = (string)table.Rows[selectedRow]["Logic"],
-                Spread = (string)table.Rows[selectedRow]["Spread"],
-                Status = (string)table.Rows[selectedRow]["Status"]
+                RunId = (int)table.Rows[selectedRow][IdCol],
+                Name = (string)table.Rows[selectedRow][AlgorithmCol],
+                Visited = (int)table.Rows[selectedRow][VisitedCol],
+                Steps = (int)table.Rows[selectedRow][StepsCol],
+                Cost = (double)table.Rows[selectedRow][CostCol],
+                Elapsed = (TimeSpan)table.Rows[selectedRow][ElapsedCol],
+                StepRule = (string)table.Rows[selectedRow][StepCol],
+                Heuristics = (string)table.Rows[selectedRow][LogicCol],
+                Spread = (string)table.Rows[selectedRow][SpreadCol],
+                Status = (string)table.Rows[selectedRow][StatusCol]
             };
         }
 
@@ -69,7 +69,6 @@ namespace Pathfinding.ConsoleApp.View
                 model.Heuristics, model.Spread, model.Status);
             table.AcceptChanges();
             SetNeedsDisplay();
-            Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
         }
 
         private void OnRemoved(RunModel model)
@@ -90,7 +89,6 @@ namespace Pathfinding.ConsoleApp.View
                     SetSelection(0, args.NewRow, false);
                 }
                 SetNeedsDisplay();
-                Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
             }
         }
     }

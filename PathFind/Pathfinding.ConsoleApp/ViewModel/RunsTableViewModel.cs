@@ -65,7 +65,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     .ConfigureAwait(false);
                 messenger.Send(new RunActivatedMessage(run));
             }, logger.Error).ConfigureAwait(false);
-            
         }
 
         private async Task OnGraphActivatedMessage(object recipient, GraphActivatedMessage msg)

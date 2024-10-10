@@ -33,7 +33,7 @@ namespace Pathfinding.ConsoleApp.View
             Visible = false;
             X = 0;
             Y = 0;
-            Width = Dim.Percent(75);
+            Width = Dim.Percent(67);
             Height = Dim.Fill();
             Border = new Border()
             {
@@ -50,6 +50,11 @@ namespace Pathfinding.ConsoleApp.View
             messenger.Register<CloseAlgorithmRunViewMessage>(this, OnCloseAlgorithmViewMessage);
         }
 
+        private void SetName(string name)
+        {
+            Border.Title = name;
+        }
+
         private void OnOpen(object recipient, OpenAlgorithmRunViewMessage msg)
         {
             Visible = true;
@@ -64,10 +69,11 @@ namespace Pathfinding.ConsoleApp.View
 
         private void RenderGraphState(IReadOnlyCollection<RunVertexModel> graphState)
         {
-            Application.MainLoop.Invoke(RemoveAll);
+            RemoveAll();
             vertexDisposables.Clear();
             var children = new List<RunVertexView>(graphState.Count);
             VerticesToVisualizePerTime = IntialSpeed;
+
             foreach (var vertex in graphState)
             {
                 var view = new RunVertexView(vertex);

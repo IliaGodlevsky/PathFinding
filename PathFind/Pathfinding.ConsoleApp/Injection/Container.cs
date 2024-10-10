@@ -61,7 +61,7 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterInstance(new[]
             {
                 ("Moore", (INeighborhoodFactory)new MooreNeighborhoodFactory()),
-                ("Von Neimann", new VonNeumannNeighborhoodFactory())
+                ("Neumann", new VonNeumannNeighborhoodFactory())
             }).As<IEnumerable<(string Name, INeighborhoodFactory Factory)>>().SingleInstance();
             builder.RegisterInstance(new[]
             {
@@ -79,7 +79,8 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterInstance(new ConnectionString()
             {
                 Filename = "pathfinding.litedb",
-                Connection = ConnectionType.Direct
+                Connection = ConnectionType.Shared,
+                AutoRebuild = true
             }).As<ConnectionString>().SingleInstance();
             builder.RegisterType<LiteDbInFileUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
 

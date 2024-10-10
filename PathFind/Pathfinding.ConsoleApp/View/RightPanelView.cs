@@ -10,9 +10,9 @@ namespace Pathfinding.ConsoleApp.View
     {
         public RightPanelView([KeyFilter(KeyFilters.RightPanel)] IEnumerable<Terminal.Gui.View> children)
         {
-            X = Pos.Percent(75);
+            X = Pos.Percent(67);
             Y = 0;
-            Width = Dim.Percent(25);
+            Width = Dim.Percent(33);
             Height = Dim.Fill();
             Border = new Border();
 

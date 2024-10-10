@@ -37,6 +37,19 @@ namespace Pathfinding.ConsoleApp.View
                 .Do(RenderGraph)
                 .Subscribe()
                 .DisposeWith(disposables);
+            viewModel.WhenAnyValue(x => x.Name)
+                .Where(x => !string.IsNullOrEmpty(x))
+                .Do(x => Application.MainLoop.Invoke(() =>
+                {
+                    Border = new Border()
+                    {
+                        BorderBrush = Color.BrightYellow,
+                        BorderStyle = BorderStyle.Rounded,
+                        Title = x
+                    };
+                }))
+                .Subscribe()
+                .DisposeWith(disposables);
             messenger.Register<OpenAlgorithmRunViewMessage>(this, OnOpenRunViewRecieved);
             messenger.Register<CloseAlgorithmRunViewMessage>(this, OnCloseRunViewMessage);
         }

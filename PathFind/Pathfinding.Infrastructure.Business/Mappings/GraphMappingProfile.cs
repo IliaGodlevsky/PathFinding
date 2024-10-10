@@ -37,11 +37,10 @@ namespace Pathfinding.Infrastructure.Business.Mappings
             CreateMap<GraphModel<T>, CreateGraphRequest<T>>();
             CreateMap<GraphModel<T>, GraphSerializationModel>()
                 .ForMember(x => x.DimensionSizes, opt => opt.MapFrom(x => x.Graph.DimensionsSizes))
-                .ForMember(x => x.Vertices, opt => opt.MapFrom(x => x.Graph.ToArray()))
-                .ForMember(x => x.Name, opt => opt.MapFrom(x => x.Name));
+                .ForMember(x => x.Vertices, opt => opt.MapFrom(x => x.Graph.ToArray()));
             CreateMap<CreateGraphFromSerializationRequest, CreateGraphRequest<T>>();
             CreateMap<CreateGraphRequest<T>, GraphSerializationModel>()
-                .ConvertUsing((x, y, context) => context.Mapper.Map<GraphSerializationModel>(x.Graph) with { Name = x.Name });
+                .ConvertUsing((x, y, context) => context.Mapper.Map<GraphSerializationModel>(x.Graph) with { Name = x.Name, Neighborhood = x.Neighborhood, SmoothLevel = x.SmoothLevel });
             CreateMap<Graph, GraphInformationModel>()
                 .ForMember(x => x.Dimensions, opt => opt.MapFrom(x => JsonConvert.DeserializeObject<int[]>(x.Dimensions)));
         }
@@ -52,7 +51,13 @@ namespace Pathfinding.Infrastructure.Business.Mappings
                         .Map<IEnumerable<T>>(serializationDto.Vertices)
                         .ToReadOnly();
             var graph = graphFactory.CreateGraph(vertices, serializationDto.DimensionSizes);
-            return new() { Name = serializationDto.Name, Graph = graph };
+            return new()
+            {
+                Name = serializationDto.Name,
+                Graph = graph,
+                Neighborhood = serializationDto.Neighborhood,
+                SmoothLevel = serializationDto.SmoothLevel
+            };
         }
 
         private IGraph<T> Construct(GraphAssembleModel assembleDto, ResolutionContext context)

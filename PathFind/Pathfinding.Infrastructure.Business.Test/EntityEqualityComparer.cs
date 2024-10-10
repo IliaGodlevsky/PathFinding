@@ -12,6 +12,8 @@ namespace Pathfinding.Infrastructure.Business.Test
         {
             return request.Graph.SequenceEqual(model.Graph)
                 && request.Name == model.Name
+                && request.Neighborhood == model.Neighborhood
+                && request.SmoothLevel == model.SmoothLevel
                 && request.Graph.DimensionsSizes.SequenceEqual(model.Graph.DimensionsSizes);
         }
 

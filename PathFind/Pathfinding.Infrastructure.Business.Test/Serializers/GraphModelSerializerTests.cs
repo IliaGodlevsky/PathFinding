@@ -48,6 +48,8 @@ namespace Pathfinding.Infrastructure.Business.Test.Serializers
                 Assert.That(result.Vertices is null, Is.True);
                 Assert.That(result.DimensionSizes is null, Is.True);
                 Assert.That(result.Name is null, Is.True);
+                Assert.That(result.Neighborhood is null, Is.True);
+                Assert.That(result.SmoothLevel is null, Is.True);
             });
         }
 
@@ -78,6 +80,8 @@ namespace Pathfinding.Infrastructure.Business.Test.Serializers
                 }), Is.True);
                 Assert.That(result.DimensionSizes.SequenceEqual(model.DimensionSizes), Is.True);
                 Assert.That(result.Name == model.Name, Is.True);
+                Assert.That(result.SmoothLevel == model.SmoothLevel, Is.True);
+                Assert.That(result.Neighborhood == model.Neighborhood, Is.True);
             });
         }
     }

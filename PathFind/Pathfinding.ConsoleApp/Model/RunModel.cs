@@ -24,5 +24,10 @@ namespace Pathfinding.ConsoleApp.Model
         public string Spread { get; set; }
 
         public string Status { get; set; }
+
+        public object[] GetParametres()
+        {
+            return new object[] { };
+        }
     }
 }

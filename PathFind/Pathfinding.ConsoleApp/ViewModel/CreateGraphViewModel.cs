@@ -59,15 +59,15 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref obstacles, value);
         }
 
-        private int smoothLevel;
-        public int SmoothLevel
+        private (string Name, int SmoothLevel) level;
+        public (string Name, int SmoothLevel) SmoothLevel
         {
-            get => smoothLevel;
-            set => this.RaiseAndSetIfChanged(ref smoothLevel, value);
+            get => level;
+            set => this.RaiseAndSetIfChanged(ref level, value);
         }
 
-        private INeighborhoodFactory neighborhoodFactory;
-        public INeighborhoodFactory NeighborhoodFactory
+        private (string Name, INeighborhoodFactory Factory) neighborhoodFactory;
+        public (string Name, INeighborhoodFactory Factory) NeighborhoodFactory
         {
             get => neighborhoodFactory;
             set => this.RaiseAndSetIfChanged(ref neighborhoodFactory, value);
@@ -97,7 +97,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 x => x.NeighborhoodFactory,
                 (width, length, obstacles, name, factory) =>
                 {
-                    return width > 0 && length > 0 && obstacles >= 0 && factory != null
+                    return width > 0 && length > 0 && obstacles >= 0 && factory.Factory != null
                         && !string.IsNullOrEmpty(name);
                 });
         }
@@ -109,12 +109,18 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 var random = new CongruentialRandom();
                 var costLayer = new VertexCostLayer(CostRange, range => new VertexCost(random.NextInt(range), range));
                 var obstacleLayer = new ObstacleLayer(random, Obstacles);
-                var neighborhoodLayer = new NeighborhoodLayer(NeighborhoodFactory);
-                var smoothLayer = Enumerable.Repeat(new SmoothLayer(new MeanCost()), SmoothLevel)
+                var neighborhoodLayer = new NeighborhoodLayer(NeighborhoodFactory.Factory);
+                var smoothLayer = Enumerable.Repeat(new SmoothLayer(new MeanCost()), SmoothLevel.SmoothLevel)
                     .To(x => new Layers(x.ToArray()));
                 var layers = new Layers(costLayer, obstacleLayer, neighborhoodLayer, smoothLayer);
                 var graph = await graphAssemble.AssembleGraphAsync(layers, Width, Length).ConfigureAwait(false);
-                var request = new CreateGraphRequest<VertexModel>() { Graph = graph, Name = Name };
+                var request = new CreateGraphRequest<VertexModel>()
+                {
+                    Graph = graph,
+                    Name = Name,
+                    Neighborhood = NeighborhoodFactory.Name,
+                    SmoothLevel = SmoothLevel.Name
+                };
                 var graphModel = await Task.Run(() => service.CreateGraphAsync(request))
                     .ConfigureAwait(false);
                 messenger.Send(new GraphCreatedMessage(new[] { graphModel }));

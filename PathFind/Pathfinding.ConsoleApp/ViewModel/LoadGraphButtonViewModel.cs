@@ -37,7 +37,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public LoadGraphButtonViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ISerializer<List<PathfindingHistorySerializationModel>> serializer,
             IRequestService<VertexModel> service,
-            ILog logger) : this(messenger, serializer, 
+            ILog logger) : this(messenger, serializer,
                 service, File.OpenRead, logger)
         {
         }

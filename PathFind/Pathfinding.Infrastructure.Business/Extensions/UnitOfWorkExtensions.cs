@@ -99,7 +99,9 @@ namespace Pathfinding.Infrastructure.Business.Extensions
             {
                 Graph = result,
                 Id = graphEntity.Id,
-                Name = graphEntity.Name
+                Name = graphEntity.Name,
+                Neighborhood = graphEntity.Neighborhood,
+                SmoothLevel = graphEntity.SmoothLevel
             };
         }
 

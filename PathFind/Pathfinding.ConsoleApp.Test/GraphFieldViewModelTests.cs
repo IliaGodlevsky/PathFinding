@@ -1,22 +1,22 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Moq;
+using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.Model.Factories;
+using Pathfinding.ConsoleApp.ViewModel;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Business.Layers;
+using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
+using Pathfinding.Logging.Loggers;
 using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Requests.Update;
+using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Random;
 using Pathfinding.TestUtils.Attributes;
-using Pathfinding.Infrastructure.Data.Extensions;
-using Pathfinding.Shared.Extensions;
-using Pathfinding.ConsoleApp.ViewModel;
-using Pathfinding.Logging.Loggers;
-using Pathfinding.ConsoleApp.Messages.ViewModel;
-using System.Reactive.Linq;
-using Pathfinding.Service.Interface.Requests.Update;
 using System.Collections;
+using System.Reactive.Linq;
 
 namespace Pathfinding.ConsoleApp.Test
 {

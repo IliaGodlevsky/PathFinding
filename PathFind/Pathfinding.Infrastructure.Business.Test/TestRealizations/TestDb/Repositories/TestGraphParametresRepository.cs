@@ -37,6 +37,8 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations.TestDb.Repos
                 Dimensions = "[25,35]",
                 Id = graphId,
                 Name = "TEST",
+                SmoothLevel = "TEST",
+                Neighborhood = "TEST",
                 ObstaclesCount = 1
             };
             return await Task.FromResult(result);

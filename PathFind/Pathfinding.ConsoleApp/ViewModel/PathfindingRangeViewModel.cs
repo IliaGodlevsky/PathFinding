@@ -154,7 +154,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private async Task RemoveVertexFromStorage(VertexModel vertex)
         {
-            await ExecuteSafe(async () 
+            await ExecuteSafe(async ()
                 => await service.DeleteRangeAsync(vertex.Enumerate()), logger.Error);
         }
 

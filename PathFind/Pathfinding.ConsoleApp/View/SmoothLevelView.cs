@@ -21,16 +21,17 @@ namespace Pathfinding.ConsoleApp.View
             this.viewModel = viewModel;
             this.smoothLevelViewModel = smoothLevelViewModel;
             Initialize();
-            var smooths = smoothLevelViewModel.Levels
-                .Select(x => x.Value)
-                .ToArray();
             smoothLevels.RadioLabels = smoothLevelViewModel.Levels.Keys
                 .Select(x => ustring.Make(x))
                 .ToArray();
             smoothLevels.Events()
                 .SelectedItemChanged
                 .Where(x => x.SelectedItem > -1)
-                .Select(x => smooths[x.SelectedItem])
+                .Select(x =>
+                {
+                    var pair = smoothLevelViewModel.Levels.ElementAt(x.SelectedItem);
+                    return (Name: pair.Key, SmoothLevel: pair.Value);
+                })
                 .BindTo(viewModel, x => x.SmoothLevel)
                 .DisposeWith(disposables);
             smoothLevels.SelectedItem = 0;

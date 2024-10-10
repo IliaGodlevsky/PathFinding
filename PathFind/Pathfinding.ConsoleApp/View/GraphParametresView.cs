@@ -13,7 +13,7 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphParametresView : FrameView
     {
-        private static readonly InclusiveValueRange<int> WidthRange = (58, 1);
+        private static readonly InclusiveValueRange<int> WidthRange = (52, 1);
         private static readonly InclusiveValueRange<int> LengthRange = (51, 1);
         private static readonly InclusiveValueRange<int> ObstaclesRange = (99, 0);
 

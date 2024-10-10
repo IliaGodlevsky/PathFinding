@@ -37,7 +37,7 @@ namespace Pathfinding.ConsoleApp.Model
         }
 
         private bool isTarget;
-        public bool IsTarget 
+        public bool IsTarget
         {
             get => isTarget;
             set
@@ -48,7 +48,7 @@ namespace Pathfinding.ConsoleApp.Model
         }
 
         private bool isTransit;
-        public bool IsTransit 
+        public bool IsTransit
         {
             get => isTransit;
             set

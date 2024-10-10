@@ -8,7 +8,7 @@ namespace Pathfinding.ConsoleApp.View
         {
             X = 0;
             Y = 0;
-            Width = Dim.Percent(75);
+            Width = Dim.Percent(67);
             Height = Dim.Fill();
             Border = new Border()
             {
