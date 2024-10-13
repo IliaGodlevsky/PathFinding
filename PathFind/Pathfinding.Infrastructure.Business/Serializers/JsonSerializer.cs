@@ -17,8 +17,8 @@ namespace Pathfinding.Infrastructure.Business.Serializers
             {
                 using var reader = new StreamReader(stream, Encoding.Default, false, 1024, leaveOpen: true);
                 string deserialized = await reader.ReadToEndAsync().ConfigureAwait(false);
-                var dtos = await Task.Run(() => JsonConvert.DeserializeObject<T>(deserialized), token).ConfigureAwait(false);
-                return dtos;
+                return await Task.Run(() => JsonConvert.DeserializeObject<T>(deserialized), token)
+                    .ConfigureAwait(false);
             }
             catch (Exception ex)
             {

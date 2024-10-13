@@ -89,11 +89,6 @@ namespace Pathfinding.ConsoleApp.View
             {
                 Add(children.ToArray());
             });
-
-            this.Events().MouseClick
-                .Do(async x => await Visualize())
-                .Subscribe()
-                .DisposeWith(vertexDisposables);
         }
 
         private async Task Visualize()

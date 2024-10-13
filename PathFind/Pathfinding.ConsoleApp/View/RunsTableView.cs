@@ -69,6 +69,7 @@ namespace Pathfinding.ConsoleApp.View
                 model.Heuristics, model.Spread, model.Status);
             table.AcceptChanges();
             SetNeedsDisplay();
+            Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
         }
 
         private void OnRemoved(RunModel model)
@@ -89,6 +90,7 @@ namespace Pathfinding.ConsoleApp.View
                     SetSelection(0, args.NewRow, false);
                 }
                 SetNeedsDisplay();
+                Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
             }
         }
     }

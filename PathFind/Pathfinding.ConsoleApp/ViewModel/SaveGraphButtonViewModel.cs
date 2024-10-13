@@ -21,7 +21,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
     internal sealed class SaveGraphButtonViewModel : BaseViewModel
     {
         private readonly IRequestService<VertexModel> service;
-        private readonly ISerializer<List<PathfindingHistorySerializationModel>> serializer;
+        private readonly ISerializer<IEnumerable<PathfindingHistorySerializationModel>> serializer;
         private readonly ILog logger;
 
         private int[] graphIds = Array.Empty<int>();
@@ -41,7 +41,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public ReactiveCommand<MouseEventArgs, Unit> SaveGraphCommand { get; }
 
         public SaveGraphButtonViewModel(IRequestService<VertexModel> service,
-            ISerializer<List<PathfindingHistorySerializationModel>> serializer,
+            ISerializer<IEnumerable<PathfindingHistorySerializationModel>> serializer,
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ILog logger)
         {

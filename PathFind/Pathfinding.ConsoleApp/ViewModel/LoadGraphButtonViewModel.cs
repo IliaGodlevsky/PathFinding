@@ -23,7 +23,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private readonly IRequestService<VertexModel> service;
         private readonly Func<string, Stream> streamProvider;
         private readonly ILog logger;
-        private readonly ISerializer<List<PathfindingHistorySerializationModel>> serializer;
+        private readonly ISerializer<IEnumerable<PathfindingHistorySerializationModel>> serializer;
 
         private string filePath;
         public string FilePath
@@ -35,7 +35,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public ReactiveCommand<MouseEventArgs, Unit> LoadGraphCommand { get; }
 
         public LoadGraphButtonViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
-            ISerializer<List<PathfindingHistorySerializationModel>> serializer,
+            ISerializer<IEnumerable<PathfindingHistorySerializationModel>> serializer,
             IRequestService<VertexModel> service,
             ILog logger) : this(messenger, serializer,
                 service, File.OpenRead, logger)
@@ -43,7 +43,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         }
 
         public LoadGraphButtonViewModel(IMessenger messenger,
-            ISerializer<List<PathfindingHistorySerializationModel>> serializer,
+            ISerializer<IEnumerable<PathfindingHistorySerializationModel>> serializer,
             IRequestService<VertexModel> service,
             Func<string, Stream> streamProvider,
             ILog logger)

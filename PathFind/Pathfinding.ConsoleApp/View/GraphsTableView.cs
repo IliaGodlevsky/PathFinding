@@ -13,6 +13,7 @@ using System.Data;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -35,7 +36,6 @@ namespace Pathfinding.ConsoleApp.View
             this.Events().CellActivated
                 .Where(x => x.Row < table.Rows.Count)
                 .Select(x => GetParametresModel(x.Row))
-                .DistinctUntilChanged(x => x.Id)
                 .InvokeCommand(viewModel, x => x.ActivateGraphCommand)
                 .DisposeWith(disposables);
             this.Events().SelectedCellChanged
@@ -83,6 +83,7 @@ namespace Pathfinding.ConsoleApp.View
                 .Do(x => UpdateGraphInTable(model.Id, x))
                 .Subscribe();
             modelChangingSubs.Add(model.Id, sub);
+            Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
         }
 
         private void UpdateGraphInTable(int id, int obstacles)
@@ -110,6 +111,7 @@ namespace Pathfinding.ConsoleApp.View
                 SetSelection(0, args.NewRow, false);
             }
             SetNeedsDisplay();
+            Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
         }
     }
 }

@@ -44,10 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\IPathfindingRangeCommand.cs" />
+    <Compile Include="Extensions\BinarySerializableExtensions.cs" />
     <Compile Include="Extensions\PathfindingRangeCommandExtensions.cs" />
     <Compile Include="Extensions\RequestServiceExtensions.cs" />
     <Compile Include="Extensions\SerializerExtensions.cs" />
     <Compile Include="IAlgorithm.cs" />
+    <Compile Include="IBinarySerializable.cs" />
     <Compile Include="ICrypto.cs" />
     <Compile Include="IGraphPath.cs" />
     <Compile Include="IHeuristic.cs" />
@@ -62,6 +64,7 @@
     <Compile Include="Models\Read\PathfindingHistoriesModel.cs" />
     <Compile Include="Models\Read\PathfindingRangeModel.cs" />
     <Compile Include="Models\Read\RunStatisticsModels.cs" />
+    <Compile Include="Models\Serialization\PathfindingHistoriesSerializationModel.cs" />
     <Compile Include="Models\Undefined\CostCoordinatePair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\Create\CreateAlgorithmRunRequest.cs" />

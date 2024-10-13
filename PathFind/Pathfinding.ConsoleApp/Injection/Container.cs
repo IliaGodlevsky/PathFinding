@@ -29,9 +29,7 @@ namespace Pathfinding.ConsoleApp.Injection
 {
     internal static class Container
     {
-#pragma warning disable IDE0060
         public static ILifetimeScope BuildApp(string[] args)
-#pragma warning restore IDE0060
         {
             var builder = new ContainerBuilder();
 
@@ -110,8 +108,8 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterGenericDecorator(typeof(BufferedSerializer<>), typeof(ISerializer<>));
             builder.RegisterGenericDecorator(typeof(CompressSerializer<>), typeof(ISerializer<>));
 
-            builder.RegisterType<JsonSerializer<List<PathfindingHistorySerializationModel>>>()
-                .As<ISerializer<List<PathfindingHistorySerializationModel>>>().SingleInstance();
+            builder.RegisterType<BinarySerializer<PathfindingHistorySerializationModel>>()
+                .As<ISerializer<IEnumerable<PathfindingHistorySerializationModel>>>().SingleInstance();
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             //builder.RegisterType<NullLog>().As<ILog>().SingleInstance();
@@ -177,13 +175,13 @@ namespace Pathfinding.ConsoleApp.Injection
 
         private static void RegisterAutoMapper(this ContainerBuilder builder)
         {
-            builder.RegisterType<JsonSerializer<IEnumerable<VisitedVerticesModel>>>()
+            builder.RegisterType<BinarySerializer<VisitedVerticesModel>>()
                 .As<ISerializer<IEnumerable<VisitedVerticesModel>>>().SingleInstance();
-            builder.RegisterType<JsonSerializer<IEnumerable<CoordinateModel>>>()
+            builder.RegisterType<BinarySerializer<CoordinateModel>>()
                 .As<ISerializer<IEnumerable<CoordinateModel>>>().SingleInstance();
-            builder.RegisterType<JsonSerializer<IEnumerable<int>>>()
+            builder.RegisterType<BinaryIntArraySerializer>()
                 .As<ISerializer<IEnumerable<int>>>().SingleInstance();
-            builder.RegisterType<JsonSerializer<IEnumerable<CostCoordinatePair>>>()
+            builder.RegisterType<BinarySerializer<CostCoordinatePair>>()
                 .As<ISerializer<IEnumerable<CostCoordinatePair>>>().SingleInstance();
 
             builder.RegisterType<SubAlgorithmsMappingProfile>().As<Profile>().SingleInstance();

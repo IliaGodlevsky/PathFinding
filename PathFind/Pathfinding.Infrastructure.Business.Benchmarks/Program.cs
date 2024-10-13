@@ -6,9 +6,9 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
     {
         static void Main(string[] args)
         {
-            BenchmarkRunner.Run<WaveAlgorithmsBenchmarks>();
-            BenchmarkRunner.Run<HeuristicsBenchmarks>();
-            BenchmarkRunner.Run<StepRulesBenchmarks>();
+            //BenchmarkRunner.Run<WaveAlgorithmsBenchmarks>();
+            //BenchmarkRunner.Run<HeuristicsBenchmarks>();
+            //BenchmarkRunner.Run<StepRulesBenchmarks>();
             BenchmarkRunner.Run<SerializersBenchmarks>();
         }
     }

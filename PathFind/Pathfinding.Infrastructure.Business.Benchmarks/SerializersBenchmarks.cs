@@ -2,8 +2,11 @@
 using Pathfinding.Infrastructure.Business.Benchmarks.Data;
 using Pathfinding.Infrastructure.Business.Serializers;
 using Pathfinding.Infrastructure.Business.Serializers.Decorators;
+using Pathfinding.Shared.Extensions;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 namespace Pathfinding.Infrastructure.Business.Benchmarks
@@ -11,19 +14,37 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
     [MemoryDiagnoser]
     public class SerializersBenchmarks
     {
-        private static Dictionary<string, object> toSerialize;
+        private static Serializable toSerialize;
 
         [GlobalSetup]
         public void Setup()
         {
-            toSerialize = SerializationDataProvider.Data;
+            toSerialize = new Serializable()
+            {
+                Size = 50,
+                Cost = 123.54,
+                Name = "Something in the way",
+                Strength = 45.3f,
+                Values = Enumerable.Range(0, 350).ToList()
+            };
+            for (int i = 0; i < 200; i++)
+            {
+                toSerialize.Serializables.Add(new Serializable()
+                {
+                    Size = 50,
+                    Cost = 123.54,
+                    Name = "Something in the way",
+                    Strength = 45.3f,
+                    Values = Enumerable.Range(0, 350).ToList()
+                });
+            }
         }
 
         [Benchmark]
         public async Task CompressingSerializerBenchmark()
         {
-            var serializer = new JsonSerializer<Dictionary<string, object>>();
-            var compress = new CompressSerializer<Dictionary<string, object>>(serializer);
+            var serializer = new JsonSerializer<Serializable>();
+            var compress = new CompressSerializer<Serializable>(serializer);
             var memory = new MemoryStream();
             await compress.SerializeToAsync(toSerialize, memory);
         }
@@ -31,36 +52,44 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
         [Benchmark]
         public async Task BufferedCompressingSerializerBenchmark()
         {
-            var serializer = new JsonSerializer<Dictionary<string, object>>();
-            var buffer = new BufferedSerializer<Dictionary<string, object>>(serializer);
-            var compress = new CompressSerializer<Dictionary<string, object>>(buffer);
+            var serializer = new JsonSerializer<Serializable>();
+            var buffer = new BufferedSerializer<Serializable>(serializer);
+            var compress = new CompressSerializer<Serializable>(buffer);
             var memory = new MemoryStream();
             await compress.SerializeToAsync(toSerialize, memory);
         }
 
-        [Benchmark(Baseline = true)]
+        [Benchmark]
         public async Task RegularSerializerBenchmark()
         {
-            var serializer = new JsonSerializer<Dictionary<string, object>>();
+            var serializer = new JsonSerializer<Serializable>();
             var memory = new MemoryStream();
             await serializer.SerializeToAsync(toSerialize, memory);
+        }
+
+        [Benchmark(Baseline = true)]
+        public async Task RegularBinarySerializerBenchmark()
+        {
+            var serializer = new BinarySerializer<Serializable>();
+            var memory = new MemoryStream();
+            await serializer.SerializeToAsync(toSerialize.Enumerate(), memory);
         }
 
         [Benchmark]
         public async Task CryptoSerializerBenchmark()
         {
-            var serializer = new JsonSerializer<Dictionary<string, object>>();
-            var crypto = new CryptoSerializer<Dictionary<string, object>>(serializer);
+            var serializer = new JsonSerializer<Serializable>();
+            var crypto = new CryptoSerializer<Serializable>(serializer);
             var memory = new MemoryStream();
-            await serializer.SerializeToAsync(toSerialize, memory);
+            await crypto.SerializeToAsync(toSerialize, memory);
         }
 
         [Benchmark]
         public async Task CryptoCompressSerializerBenchmark()
         {
-            var serializer = new JsonSerializer<Dictionary<string, object>>();
-            var compress = new CompressSerializer<Dictionary<string, object>>(serializer);
-            var crypto = new CryptoSerializer<Dictionary<string, object>>(compress);
+            var serializer = new JsonSerializer<Serializable>();
+            var compress = new CompressSerializer<Serializable>(serializer);
+            var crypto = new CryptoSerializer<Serializable>(compress);
             var memory = new MemoryStream();
             await crypto.SerializeToAsync(toSerialize, memory);
         }

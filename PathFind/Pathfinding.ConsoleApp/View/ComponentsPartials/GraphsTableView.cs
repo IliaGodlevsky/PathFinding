@@ -35,7 +35,7 @@ namespace Pathfinding.ConsoleApp.View
                 { table.Columns[NameCol], new() { MinWidth = 31, MaxWidth = 31, Alignment = TextAlignment.Left } },
                 { table.Columns[WidthCol], new() { Alignment = TextAlignment.Centered } },
                 { table.Columns[LengthCol], new() { Alignment = TextAlignment.Centered } },
-                { table.Columns[NeighborsCol], new() { Alignment = TextAlignment.Centered } },
+                { table.Columns[NeighborsCol], new() { Alignment = TextAlignment.Left } },
                 { table.Columns[SmoothCol], new() { Alignment = TextAlignment.Left } },
                 { table.Columns[ObstaclesCol], new() { Alignment = TextAlignment.Centered } }
             };

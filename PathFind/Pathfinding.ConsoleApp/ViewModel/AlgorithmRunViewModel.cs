@@ -47,16 +47,17 @@ namespace Pathfinding.ConsoleApp.ViewModel
             GraphState = GenerateVerticesToVisualize(msg.Run.GraphState, msg.Run.Algorithms);
         }
 
-        private IReadOnlyCollection<RunVertexModel> GenerateVerticesToVisualize(GraphStateModel graphState,
+        private IReadOnlyCollection<RunVertexModel> GenerateVerticesToVisualize(
+            GraphStateModel graphState,
             IEnumerable<SubAlgorithmModel> subAlgorithms)
         {
             Vertices.Clear();
             var graph = CreateGraph(graphState);
-            var range = graphState.Range.ToList();
-            range.Skip(1).Take(range.Count - 2)
+            var range = graphState.Range.ToArray();
+            range.Skip(1).Take(range.Length - 2)
                 .ForEach(transit => Vertices.Enqueue(() => graph[transit].IsTransit = true));
             Vertices.Enqueue(() => graph[range[0]].IsSource = true);
-            Vertices.Enqueue(() => graph[range[range.Count - 1]].IsTarget = true);
+            Vertices.Enqueue(() => graph[range[range.Length - 1]].IsTarget = true);
             foreach (var sub in subAlgorithms)
             {
                 foreach (var (Visited, Enqueued) in sub.Visited)

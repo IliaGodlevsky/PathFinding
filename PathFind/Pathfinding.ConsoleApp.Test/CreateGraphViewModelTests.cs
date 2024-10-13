@@ -25,10 +25,10 @@ namespace Pathfinding.ConsoleApp.Test
                 .Setup(x => x.AssembleGraph(It.IsAny<IReadOnlyList<int>>()))
                 .Returns(Graph<VertexModel>.Empty);
             var viewModel = mock.Create<CreateGraphViewModel>();
-            viewModel.NeighborhoodFactory = new MooreNeighborhoodFactory();
+            viewModel.NeighborhoodFactory = ("Test", new MooreNeighborhoodFactory());
             viewModel.Name = "Test";
             viewModel.Length = 1;
-            viewModel.SmoothLevel = 0;
+            viewModel.SmoothLevel = ("Test", 1);
             viewModel.Width = 1;
             viewModel.Obstacles = 1;
 
@@ -53,10 +53,10 @@ namespace Pathfinding.ConsoleApp.Test
             using var mock = AutoMock.GetLoose();
             var viewModel = mock.Create<CreateGraphViewModel>();
 
-            viewModel.NeighborhoodFactory = new MooreNeighborhoodFactory();
+            viewModel.NeighborhoodFactory = ("Test", new MooreNeighborhoodFactory());
             viewModel.Name = "Test";
             viewModel.Length = 1;
-            viewModel.SmoothLevel = 0;
+            viewModel.SmoothLevel = ("Test", 1);
             viewModel.Width = 1;
             viewModel.Obstacles = 1;
 

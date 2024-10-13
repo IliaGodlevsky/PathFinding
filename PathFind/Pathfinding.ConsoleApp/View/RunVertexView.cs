@@ -32,6 +32,7 @@ namespace Pathfinding.ConsoleApp.View
             BindTo(x => x.IsVisited, ColorConstants.VisitedVertexColor);
             BindTo(x => x.IsEnqueued, ColorConstants.EnqueuedVertexColor);
             BindTo(x => x.IsCrossedPath, ColorConstants.CrossedPathColor);
+
             model.WhenAnyValue(x => x.Cost)
                 .Select(x => ustring.Make(x.ToString()))
                 .BindTo(this, x => x.Text)

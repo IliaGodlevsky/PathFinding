@@ -15,6 +15,7 @@ using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Service.Interface.Models;
 using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Service.Interface.Requests.Create;
+using Pathfinding.Shared.EventArguments;
 using Pathfinding.Shared.Primitives;
 using ReactiveUI;
 using System;
@@ -101,12 +102,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 int visitedCount = 0;
                 var visitedVertices = new List<(Coordinate Visited, IReadOnlyList<Coordinate> Enqueued)>();
 
-                void OnVertexEnqueued(object sender, VerticesEnqueuedEventArgs e)
-                {
-                    visitedCount++;
-                    visitedVertices.Add((e.Current, e.Enqueued));
-                }
-
                 void AddSubAlgorithm(IReadOnlyCollection<Coordinate> path = null)
                 {
                     ModelBuilder.CreateSubAlgorithmRequest()
@@ -116,9 +111,13 @@ namespace Pathfinding.ConsoleApp.ViewModel
                         .AddTo(subAlgorithms);
                     visitedVertices.Clear();
                 }
-
-                void OnSubPathFound(object sender, SubPathFoundEventArgs args)
+                void OnVertexEnqueued(object sender, VerticesEnqueuedEventArgs e)
                 {
+                    visitedCount++;
+                    visitedVertices.Add((e.Current, e.Enqueued));
+                }
+                void OnSubPathFound(object sender, SubPathFoundEventArgs args) 
+                { 
                     AddSubAlgorithm(args.SubPath);
                 }
 
@@ -127,7 +126,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     .OrderBy(x => x.Order)
                     .Select(x => ActivatedGraph.Get(x.Position))
                     .ToArray();
-                var algorithm = GetAlgorithm(pathfindingRange);
+
+                using var algorithm = GetAlgorithm(pathfindingRange);
 
                 algorithm.SubPathFound += OnSubPathFound;
                 algorithm.VertexEnqueued += OnVertexEnqueued;
@@ -153,7 +153,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 finally
                 {
                     stopwatch.Stop();
-                    algorithm.Dispose();
                 }
 
                 var request = ModelBuilder.CreateRunHistoryRequest()

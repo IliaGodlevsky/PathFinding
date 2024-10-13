@@ -36,7 +36,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         protected override PathfindingProcess GetAlgorithm(IEnumerable<VertexModel> pathfindingRange)
         {
-            return new DepthFirstAlgorithm(pathfindingRange, heuristic.Heuristic);
+            return new DepthFirstAlgorithm(pathfindingRange);
         }
     }
 }
