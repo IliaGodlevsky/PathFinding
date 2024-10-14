@@ -5,25 +5,26 @@ using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public sealed class DistanceFirstAlgorithm : GreedyAlgorithm
+    public sealed class LocatorAlgorithm : GreedyAlgorithm
     {
         private readonly IHeuristic heuristic;
 
-        public DistanceFirstAlgorithm(IEnumerable<IVertex> pathfindingRange, IHeuristic heuristic)
+        public LocatorAlgorithm(IEnumerable<IVertex> pathfindingRange,
+            IHeuristic heuristic) 
             : base(pathfindingRange)
         {
             this.heuristic = heuristic;
         }
 
-        public DistanceFirstAlgorithm(IEnumerable<IVertex> pathfindingRange)
-            : this(pathfindingRange, new EuclidianDistance())
+        public LocatorAlgorithm(IEnumerable<IVertex> pathfindingRange)
+            : this(pathfindingRange, new ManhattanDistance())
         {
 
         }
 
         protected override double CalculateGreed(IVertex vertex)
         {
-            return heuristic.Calculate(vertex, CurrentRange.Target);
+            return heuristic.Calculate(vertex, CurrentRange.Source);
         }
     }
 }

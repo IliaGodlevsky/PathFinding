@@ -13,7 +13,7 @@ namespace Pathfinding.ConsoleApp.View
                 Padding = new Thickness(0)
             };
             X = 0;
-            Y = Pos.Percent(87);
+            Y = Pos.Percent(90);
             Width = Dim.Fill();
             Height = Dim.Percent(15);
         }

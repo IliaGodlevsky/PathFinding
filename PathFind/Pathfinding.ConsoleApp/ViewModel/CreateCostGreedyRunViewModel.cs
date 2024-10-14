@@ -27,7 +27,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
         }
 
-        protected override string AlgorithmId => AlgorithmNames.Cost;
+        protected override string AlgorithmId => "Cost";
 
         protected override void AppendStatistics(RunStatisticsModel model)
         {

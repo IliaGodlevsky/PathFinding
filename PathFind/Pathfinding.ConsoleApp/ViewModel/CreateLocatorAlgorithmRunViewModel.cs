@@ -11,32 +11,24 @@ using System.Collections.Generic;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class CreateDepthAlgorithmRunViewModel : CreateRunButtonViewModel,
-        IRequireHeuristicsViewModel
+    internal sealed class CreateLocatorAlgorithmRunViewModel : CreateRunButtonViewModel
     {
-        private (string Name, IHeuristic Heuristic) heuristic;
-        public (string Name, IHeuristic Heuristic) Heuristic
-        {
-            get => heuristic;
-            set => this.RaiseAndSetIfChanged(ref heuristic, value);
-        }
-
-        public CreateDepthAlgorithmRunViewModel(IRequestService<VertexModel> service,
+        public CreateLocatorAlgorithmRunViewModel(IRequestService<VertexModel> service,
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ILog logger) : base(service, messenger, logger)
         {
         }
 
-        protected override string AlgorithmId { get; } = "Depth";
+        protected override string AlgorithmId { get; } = "Locator";
 
         protected override void AppendStatistics(RunStatisticsModel model)
         {
-            model.Heuristics = heuristic.Name;
+            
         }
 
         protected override PathfindingProcess GetAlgorithm(IEnumerable<VertexModel> pathfindingRange)
         {
-            return new DepthFirstAlgorithm(pathfindingRange);
+            return new LocatorAlgorithm(pathfindingRange);
         }
     }
 }

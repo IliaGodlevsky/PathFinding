@@ -85,7 +85,9 @@
     <Compile Include="Algorithms\AStarLeeAlgorithm.cs" />
     <Compile Include="Algorithms\BreadthFirstAlgorithm.cs" />
     <Compile Include="Algorithms\CostGreedyAlgorithm.cs" />
+    <Compile Include="Algorithms\LocatorAlgorithm.cs" />
     <Compile Include="Algorithms\DepthFirstAlgorithm.cs" />
+    <Compile Include="Algorithms\DepthRandomAlgorithm.cs" />
     <Compile Include="Algorithms\DijkstraAlgorithm.cs" />
     <Compile Include="Algorithms\DistanceFirstAlgorithm.cs" />
     <Compile Include="Algorithms\Events\PathfindingEventArgs.cs" />
@@ -99,8 +101,9 @@
     <Compile Include="Algorithms\GraphPaths\CompositeGraphPath.cs" />
     <Compile Include="Algorithms\GraphPaths\GraphPath.cs" />
     <Compile Include="Algorithms\GraphPaths\NullGraphPath.cs" />
+    <Compile Include="Algorithms\DepthAlgorithm.cs" />
     <Compile Include="Algorithms\GreedyAlgorithm.cs" />
-    <Compile Include="Algorithms\HeuristicCostGreedyAlgorithm.cs" />
+    <Compile Include="Algorithms\DistanceCostGreedyAlgorithm.cs" />
     <Compile Include="Algorithms\Heuristics\ChebyshevDistance.cs" />
     <Compile Include="Algorithms\Heuristics\CosineDistance.cs" />
     <Compile Include="Algorithms\Heuristics\Distance.cs" />

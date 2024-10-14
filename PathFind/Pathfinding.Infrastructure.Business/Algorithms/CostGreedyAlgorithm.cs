@@ -29,7 +29,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
                 CurrentRange.Target, stepRule);
         }
 
-        protected override double CalculateHeuristic(IVertex vertex)
+        protected override double CalculateGreed(IVertex vertex)
         {
             return stepRule.CalculateStepCost(vertex, CurrentVertex);
         }

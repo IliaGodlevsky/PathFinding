@@ -34,7 +34,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
         }
 
-        protected override string AlgorithmId { get; } = "Distance+";
+        protected override string AlgorithmId { get; } = "DFS dist+";
 
         protected override void AppendStatistics(RunStatisticsModel model)
         {
@@ -44,7 +44,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         protected override PathfindingProcess GetAlgorithm(IEnumerable<VertexModel> pathfindingRange)
         {
-            return new HeuristicCostGreedyAlgorithm(pathfindingRange,
+            return new DistanceCostGreedyAlgorithm(pathfindingRange,
                 heuristic.Heuristic, stepRule.StepRule);
         }
     }

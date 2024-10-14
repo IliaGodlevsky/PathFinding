@@ -18,7 +18,7 @@ namespace Pathfinding.ConsoleApp.View
             [KeyFilter(KeyFilters.Views)] IMessenger messenger,
             CreateCostGreedyRunViewModel viewModel)
         {
-            Text = "Cost";
+            Text = "DFS cost";
             Y = 1;
             X = 0;
             this.messenger = messenger;

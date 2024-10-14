@@ -148,8 +148,10 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<DijkstraAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<DistanceFirstAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<HeuristicsCostAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
+            builder.RegisterType<DepthRandomAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<CostGreedyAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
-            builder.RegisterType<DepthFirstAlgorithmListView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
+            builder.RegisterType<LocatorAlgorithmListView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
+            builder.RegisterType<DepthFirstAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<AStarAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<LeeAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<AStarLeeAlgorithmListView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();

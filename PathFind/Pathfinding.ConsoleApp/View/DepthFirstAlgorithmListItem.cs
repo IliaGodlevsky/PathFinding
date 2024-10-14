@@ -2,24 +2,23 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
-using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.ViewModel;
 using Pathfinding.Shared;
 using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    [Order(12)]
-    internal sealed class HeuristicsCostAlgorithmListItem : Label
+    [Order(9)]
+    internal sealed class DepthFirstAlgorithmListItem : Label
     {
         private readonly IMessenger messenger;
-        private readonly CreateHeuristicsCostRunViewModel viewModel;
+        private readonly CreateDepthFirstAlgorithmRunViewModel viewModel;
 
-        public HeuristicsCostAlgorithmListItem(
+        public DepthFirstAlgorithmListItem(
             [KeyFilter(KeyFilters.Views)] IMessenger messenger,
-            CreateHeuristicsCostRunViewModel viewModel)
+            CreateDepthFirstAlgorithmRunViewModel viewModel)
         {
-            Text = "DFS dist+";
+            Text = "DFS";
             Y = 1;
             X = 0;
             this.messenger = messenger;
@@ -31,11 +30,9 @@ namespace Pathfinding.ConsoleApp.View
         {
             if (e.MouseEvent.Flags == MouseFlags.Button1Clicked)
             {
-                messenger.Send(new OpenStepRuleViewMessage());
-                messenger.Send(new OpenHeuristicsViewMessage());
+                messenger.Send(new CloseStepRulesViewMessage());
+                messenger.Send(new CloseHeuristicsViewMessage());
                 messenger.Send(new CloseSpreadViewMessage());
-                messenger.Send(new StepRuleViewModelChangedMessage(viewModel));
-                messenger.Send(new HeuristicsViewModelChangedMessage(viewModel));
                 messenger.Send(new RunViewModelChangedMessage(viewModel));
             }
         }

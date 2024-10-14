@@ -8,19 +8,19 @@ using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public sealed class HeuristicCostGreedyAlgorithm : GreedyAlgorithm
+    public sealed class DistanceCostGreedyAlgorithm : GreedyAlgorithm
     {
         private readonly IStepRule stepRule;
         private readonly IHeuristic heuristic;
 
-        public HeuristicCostGreedyAlgorithm(IEnumerable<IVertex> pathfindingRange,
+        public DistanceCostGreedyAlgorithm(IEnumerable<IVertex> pathfindingRange,
             IHeuristic heuristic, IStepRule stepRule) : base(pathfindingRange)
         {
             this.stepRule = stepRule;
             this.heuristic = heuristic;
         }
 
-        public HeuristicCostGreedyAlgorithm(IEnumerable<IVertex> pathfindingRange)
+        public DistanceCostGreedyAlgorithm(IEnumerable<IVertex> pathfindingRange)
             : this(pathfindingRange, new ChebyshevDistance(), new DefaultStepRule())
         {
 
@@ -32,7 +32,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
                 CurrentRange.Target, stepRule);
         }
 
-        protected override double CalculateHeuristic(IVertex vertex)
+        protected override double CalculateGreed(IVertex vertex)
         {
             double heuristicResult = heuristic.Calculate(vertex, CurrentRange.Target);
             double stepCost = stepRule.CalculateStepCost(vertex, CurrentVertex);

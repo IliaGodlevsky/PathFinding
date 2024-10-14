@@ -26,7 +26,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
         }
 
-        protected override string AlgorithmId { get; } = "Distance";
+        protected override string AlgorithmId { get; } = "DFS dist";
 
         protected override void AppendStatistics(RunStatisticsModel model)
         {

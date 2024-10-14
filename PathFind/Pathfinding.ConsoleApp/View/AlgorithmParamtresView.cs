@@ -13,7 +13,7 @@ namespace Pathfinding.ConsoleApp.View
         public AlgorithmSettingsView([KeyFilter(KeyFilters.AlgorithmParametresView)] IEnumerable<Terminal.Gui.View> children,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
-            X = Pos.Percent(30);
+            X = Pos.Percent(33);
             Y = 0;
             Width = Dim.Fill();
             Height = Dim.Percent(90);

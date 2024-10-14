@@ -14,7 +14,7 @@ namespace Pathfinding.ConsoleApp.View
             algorithms.Height = Dim.Fill();
             X = 0;
             Y = 0;
-            Width = Dim.Percent(30);
+            Width = Dim.Percent(33);
             Height = Dim.Percent(87);
             Border = new Border()
             {

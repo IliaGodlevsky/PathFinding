@@ -9,7 +9,7 @@ using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    [Order(9)]
+    [Order(11)]
     internal sealed class DistanceFirstAlgorithmListItem : Label
     {
         private readonly IMessenger messenger;
@@ -19,7 +19,7 @@ namespace Pathfinding.ConsoleApp.View
             [KeyFilter(KeyFilters.Views)] IMessenger messenger,
             CreateDistanceFirstRunViewModel viewModel)
         {
-            Text = "Distance";
+            Text = "DFS dist";
             Y = 1;
             X = 0;
             this.messenger = messenger;

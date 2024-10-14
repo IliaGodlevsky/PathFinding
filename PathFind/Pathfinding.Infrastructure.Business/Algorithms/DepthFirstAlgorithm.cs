@@ -1,30 +1,19 @@
-﻿using Pathfinding.Domain.Core;
-using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
-using Pathfinding.Infrastructure.Business.Extensions;
+﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Pathfinding;
-using Pathfinding.Service.Interface;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public sealed class DepthFirstAlgorithm : GreedyAlgorithm
+    public sealed class DepthFirstAlgorithm : DepthAlgorithm
     {
         public DepthFirstAlgorithm(IEnumerable<IVertex> pathfindingRange)
             : base(pathfindingRange)
         {
         }
 
-        protected override double CalculateHeuristic(IVertex vertex)
+        protected override IVertex GetVertex(IReadOnlyCollection<IVertex> neighbors)
         {
-            return 0;
-        }
-
-        protected override IVertex GetNextVertex()
-        {
-            var neighbors = GetUnvisitedNeighbours(CurrentVertex);
-            Enqueued(CurrentVertex, neighbors);
             return neighbors.FirstOrDefault() ?? NullVertex.Interface;
         }
     }
