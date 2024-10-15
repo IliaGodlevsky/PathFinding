@@ -29,22 +29,33 @@ namespace Pathfinding.ConsoleApp.Model
         public bool IsSource
         {
             get => isSource;
-            set => this.RaiseAndSetIfChanged(ref isSource, value);
+            set
+            {
+                this.RaiseAndSetIfChanged(ref isSource, value);
+                if (!isSource) IsRegular = true;
+            }
         }
 
         private bool isTarget;
         public bool IsTarget
         {
             get => isTarget;
-            set => this.RaiseAndSetIfChanged(ref isTarget, value);
-            
+            set
+            {
+                this.RaiseAndSetIfChanged(ref isTarget, value);
+                if (!isTarget) IsRegular = true;
+            }
         }
 
         private bool isTransit;
         public bool IsTransit
         {
             get => isTransit;
-            set => this.RaiseAndSetIfChanged(ref isTransit, value);
+            set
+            {
+                this.RaiseAndSetIfChanged(ref isTransit, value);
+                if (!isTransit) IsRegular = true;
+            }
         }
 
         private IVertexCost cost;

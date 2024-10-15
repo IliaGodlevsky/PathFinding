@@ -53,8 +53,8 @@ namespace Pathfinding.ConsoleApp.View
 
         private void RenderGraph(IGraph<VertexModel> graph)
         {
-            vertexDisposables.Clear();
             RemoveAll();
+            vertexDisposables.Clear();
 
             var views = new List<VertexView>();
             foreach (var vertex in graph)

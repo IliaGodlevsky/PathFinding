@@ -18,7 +18,7 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class AlgorithmRunView : FrameView
     {
-        private const int IntialSpeed = 75;
+        private const int IntialSpeed = 50;
 
         private readonly CompositeDisposable vertexDisposables = new();
         private readonly CompositeDisposable disposables = new();

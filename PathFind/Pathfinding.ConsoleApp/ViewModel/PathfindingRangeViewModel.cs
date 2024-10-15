@@ -45,16 +45,16 @@ namespace Pathfinding.ConsoleApp.ViewModel
             get => source;
             set
             {
-                if (value != null && source == null)
-                {
-                    value.IsSource = true;
-                }
-                else if (value == null && source != null)
-                {
-                    source.IsSource = false;
-                    source.IsRegular = true;
-                }
+                var previous = source;
                 this.RaiseAndSetIfChanged(ref source, value);
+                if (previous != null && source == null)
+                {
+                    previous.IsSource = false;
+                }
+                else if (previous == null && source != null)
+                {
+                    source.IsSource = true;
+                }
             }
         }
 
@@ -64,17 +64,16 @@ namespace Pathfinding.ConsoleApp.ViewModel
             get => target;
             set
             {
-                if (value != null && target == null)
-                {
-                    value.IsTarget = true;
-                }
-                else if (value == null && target != null)
-                {
-                    target.IsTarget = false;
-                    target.IsRegular = true;
-                }
+                var previous = target;
                 this.RaiseAndSetIfChanged(ref target, value);
-                
+                if (previous != null && target == null)
+                {
+                    previous.IsTarget = false;
+                }
+                else if (previous == null && target != null)
+                {
+                    target.IsTarget = true;
+                }
             }
         }
 
@@ -217,11 +216,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnTransitAdded(VertexModel transit) => transit.IsTransit = true;
 
-        private void OnTransitRemoved(VertexModel transit)
-        {
-            transit.IsTransit = false;
-            transit.IsRegular = true;
-        }
+        private void OnTransitRemoved(VertexModel transit) => transit.IsTransit = false;
 
         private async Task OnGraphActivated(GraphActivatedMessage msg)
         {
