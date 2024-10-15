@@ -131,7 +131,6 @@
     <Compile Include="Commands\ReplaceTransitIsolatedVertex.cs" />
     <Compile Include="Extensions\AlgorithmExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
-    <Compile Include="Extensions\GraphPathExtensions.cs" />
     <Compile Include="Extensions\PriorityQueueExtensions.cs" />
     <Compile Include="Extensions\SimplePriorityQueueExtensions.cs" />
     <Compile Include="Extensions\UnitOfWorkExtensions.cs" />

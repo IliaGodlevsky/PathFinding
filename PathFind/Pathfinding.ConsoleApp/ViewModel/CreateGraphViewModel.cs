@@ -110,10 +110,12 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 var costLayer = new VertexCostLayer(CostRange, range => new VertexCost(random.NextInt(range), range));
                 var obstacleLayer = new ObstacleLayer(random, Obstacles);
                 var neighborhoodLayer = new NeighborhoodLayer(NeighborhoodFactory.Factory);
-                var smoothLayer = Enumerable.Repeat(new SmoothLayer(new MeanCost()), SmoothLevel.SmoothLevel)
+                var smoothLayer = Enumerable
+                    .Repeat(new SmoothLayer(new MeanCost()), SmoothLevel.SmoothLevel)
                     .To(x => new Layers(x.ToArray()));
                 var layers = new Layers(costLayer, obstacleLayer, neighborhoodLayer, smoothLayer);
-                var graph = await graphAssemble.AssembleGraphAsync(layers, Width, Length).ConfigureAwait(false);
+                var graph = await graphAssemble.AssembleGraphAsync(layers, Width, Length)
+                    .ConfigureAwait(false);
                 var request = new CreateGraphRequest<VertexModel>()
                 {
                     Graph = graph,

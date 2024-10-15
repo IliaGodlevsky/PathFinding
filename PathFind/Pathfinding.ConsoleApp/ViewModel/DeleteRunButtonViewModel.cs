@@ -56,7 +56,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 {
                     messenger.Send(new RunsDeletedMessage(RunsIds.ToArray()));
                 }
-            }, logger.Error);
+            }, logger.Error).ConfigureAwait(false);
         }
 
         private void OnRunsSelected(object recipient, RunSelectedMessage msg)

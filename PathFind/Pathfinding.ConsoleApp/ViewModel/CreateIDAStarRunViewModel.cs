@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Model;
-using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
@@ -36,7 +35,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref spreadLevel, value);
         }
 
-        protected override string AlgorithmId => AlgorithmNames.IDAStar;
+        protected override string AlgorithmId => "IDA*";
 
         public CreateIDAStarRunViewModel(IRequestService<VertexModel> service,
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,

@@ -1,13 +1,13 @@
 ﻿using Pathfinding.Infrastructure.Business.Serializers.Exceptions;
-using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Extensions;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Serializers
 {

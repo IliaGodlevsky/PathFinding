@@ -1,5 +1,5 @@
-﻿using System.IO;
-using Pathfinding.Service.Interface.Extensions;
+﻿using Pathfinding.Service.Interface.Extensions;
+using System.IO;
 
 namespace Pathfinding.Service.Interface.Models.Undefined
 {

@@ -1,8 +1,6 @@
 ﻿using Pathfinding.Service.Interface.Extensions;
-using Pathfinding.Shared.Extensions;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
 
 namespace Pathfinding.Service.Interface.Models.Serialization
 {

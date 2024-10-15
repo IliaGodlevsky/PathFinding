@@ -86,7 +86,6 @@
     <Compile Include="InMemory\InMemoryUnitOfWorkFactory.cs" />
     <Compile Include="InMemory\Repositories\EntityComparer.cs" />
     <Compile Include="InMemory\Repositories\InMemoryAlgorithmRunRepository.cs" />
-    <Compile Include="InMemory\Repositories\InMemoryAlgorithmsRepository.cs" />
     <Compile Include="InMemory\Repositories\InMemoryGraphParametresRepository.cs" />
     <Compile Include="InMemory\Repositories\InMemoryGraphStateRepository.cs" />
     <Compile Include="InMemory\Repositories\InMemoryNeighborsRepository.cs" />
@@ -99,7 +98,6 @@
     <Compile Include="LiteDb\LiteDbInMemoryUnitOfWorkFactory.cs" />
     <Compile Include="LiteDb\LiteDbUnitOfWork.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbRangeRepository.cs" />
-    <Compile Include="LiteDb\Repositories\LiteDbAlgorithmRepository.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbAlgorithmRunRepository.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbGraphRepository.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbGraphStateRepository.cs" />

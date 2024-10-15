@@ -19,22 +19,20 @@ namespace Pathfinding.ConsoleApp.View
             this.Events()
                 .MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
-                .Do(async x => await OnLoadButtonClicked(x))
+                .Do(async x => await OnLoadButtonClicked())
                 .InvokeCommand(viewModel, x => x.LoadGraphCommand);
         }
 
-        private async Task OnLoadButtonClicked(MouseEventArgs e)
+        private async Task OnLoadButtonClicked()
         {
             var allowedTypes = new List<string>() { ".json" };
-            using (var dialog = new OpenDialog("Import", string.Empty, allowedTypes))
+            using var dialog = new OpenDialog("Import", string.Empty, allowedTypes);
+            dialog.Width = Dim.Percent(45);
+            dialog.Height = Dim.Percent(55);
+            Application.Run(dialog);
+            if (!dialog.Canceled && dialog.FilePath != null)
             {
-                dialog.Width = Dim.Percent(45);
-                dialog.Height = Dim.Percent(55);
-                Application.Run(dialog);
-                if (!dialog.Canceled && dialog.FilePath != null)
-                {
-                    viewModel.FilePath = dialog.FilePath.ToString();
-                }
+                viewModel.FilePath = dialog.FilePath.ToString();
             }
             await Task.CompletedTask;
         }

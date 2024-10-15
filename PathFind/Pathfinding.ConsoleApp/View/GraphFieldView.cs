@@ -87,6 +87,13 @@ namespace Pathfinding.ConsoleApp.View
                 .Select(x => (VertexModel)x.MouseEvent.View.Data)
                 .InvokeCommand(rangeViewModel, x => x.RemoveFromRangeCommand)
                 .DisposeWith(vertexDisposables);
+
+            view.Events().MouseClick
+                .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button1DoubleClicked)
+                       && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonCtrl)
+                       && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonAlt))
+                .InvokeCommand(rangeViewModel, x => x.DeletePathfindingRange)
+                .DisposeWith(vertexDisposables);
         }
 
         private void SubscribeToButton3Clicked(VertexView view)

@@ -18,12 +18,8 @@ namespace Pathfinding.ConsoleApp.View
         {
             this.viewModel = viewModel;
             Initialize();
-            var commandObservable = viewModel.SaveGraphCommand.CanExecute;
-            var clickObservable = this.Events().MouseClick;
-            clickObservable.Zip(commandObservable)
-                .Where(x => x.First.MouseEvent.Flags == MouseFlags.Button1Clicked
-                    && x.Second == true)
-                .Select(x => x.First)
+            this.Events().MouseClick
+                .Where(x => viewModel.GraphIds.Length > 0)
                 .Do(async x => await OnSaveButtonClicked())
                 .InvokeCommand(viewModel, x => x.SaveGraphCommand)
                 .DisposeWith(disposables);
@@ -32,15 +28,13 @@ namespace Pathfinding.ConsoleApp.View
         private async Task OnSaveButtonClicked()
         {
             var allowedTypes = new List<string>() { ".json" };
-            using (var dialog = new SaveDialog("Export", "", allowedTypes))
+            using var dialog = new SaveDialog("Export", "Enter file name", allowedTypes);
+            dialog.Width = Dim.Percent(45);
+            dialog.Height = Dim.Percent(55);
+            Application.Run(dialog);
+            if (!dialog.Canceled && dialog.FileName != null)
             {
-                dialog.Width = Dim.Percent(45);
-                dialog.Height = Dim.Percent(55);
-                Application.Run(dialog);
-                if (!dialog.Canceled && dialog.FileName != null)
-                {
-                    viewModel.FilePath = dialog.FilePath.ToString();
-                }
+                viewModel.FilePath = dialog.FilePath.ToString();
             }
             await Task.CompletedTask;
         }

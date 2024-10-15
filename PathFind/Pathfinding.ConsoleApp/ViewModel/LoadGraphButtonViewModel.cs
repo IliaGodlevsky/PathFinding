@@ -53,25 +53,28 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.service = service;
             this.logger = logger;
             this.streamProvider = streamProvider;
-            LoadGraphCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(LoadGraph);
+            LoadGraphCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(LoadGraph, CanLoad());
+        }
+
+        private IObservable<bool> CanLoad()
+        {
+            return this.WhenAnyValue(x => x.FilePath,
+                path => !string.IsNullOrEmpty(path));
         }
 
         private async Task LoadGraph(MouseEventArgs e)
         {
-            if (!string.IsNullOrEmpty(FilePath))
+            await ExecuteSafe(async () =>
             {
-                await ExecuteSafe(async () =>
-                {
-                    using var fileStream = streamProvider(FilePath);
-                    var histories = await serializer.DeserializeFromAsync(fileStream)
-                        .ConfigureAwait(false);
-                    var result = await service.CreatePathfindingHistoriesAsync(histories)
-                        .ConfigureAwait(false);
-                    var graphs = result.Select(x => x.Graph).ToArray();
-                    messenger.Send(new GraphCreatedMessage(graphs));
-                    logger.Info(graphs.Length > 0 ? "Graphs were loaded" : "Graph was loaded");
-                }, logger.Error);
-            }
+                using var fileStream = streamProvider(FilePath);
+                var histories = await serializer.DeserializeFromAsync(fileStream)
+                    .ConfigureAwait(false);
+                var result = await service.CreatePathfindingHistoriesAsync(histories)
+                    .ConfigureAwait(false);
+                var graphs = result.Select(x => x.Graph).ToArray();
+                messenger.Send(new GraphCreatedMessage(graphs));
+                logger.Info(graphs.Length > 0 ? "Graphs were loaded" : "Graph was loaded");
+            }, logger.Error).ConfigureAwait(false);
         }
     }
 }

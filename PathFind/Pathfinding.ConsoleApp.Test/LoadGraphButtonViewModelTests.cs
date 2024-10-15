@@ -37,16 +37,21 @@ namespace Pathfinding.ConsoleApp.Test
 
                 var viewModel = mock.Create<LoadGraphButtonViewModel>();
                 viewModel.FilePath = filePath;
+                bool canExecute = await viewModel.LoadGraphCommand.CanExecute.FirstOrDefaultAsync();
 
-                await viewModel.LoadGraphCommand.Execute();
+                if (canExecute)
+                {
+                    await viewModel.LoadGraphCommand.Execute();
+                }
 
                 Assert.Multiple(() =>
                 {
+                    Assert.That(canExecute == shouldLoad);
                     mock.Mock<IRequestService<VertexModel>>()
                         .Verify(x => x.CreatePathfindingHistoriesAsync(
                             It.IsAny<IEnumerable<PathfindingHistorySerializationModel>>(),
                             It.IsAny<CancellationToken>()), methodCalls);
-                    mock.Mock<ISerializer<List<PathfindingHistorySerializationModel>>>()
+                    mock.Mock<ISerializer<IEnumerable<PathfindingHistorySerializationModel>>>()
                         .Verify(x => x.DeserializeFromAsync(
                             It.IsAny<Stream>(),
                             It.IsAny<CancellationToken>()), methodCalls);

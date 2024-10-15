@@ -26,7 +26,7 @@ namespace Pathfinding.Service.Interface.Extensions
         public static async Task SerializeToFileAsync<T>(this ISerializer<T> self,
             T value, string filePath, CancellationToken token = default)
         {
-            using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+            using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
             await self.SerializeToAsync(value, fileStream, token)
                 .ConfigureAwait(false);
         }

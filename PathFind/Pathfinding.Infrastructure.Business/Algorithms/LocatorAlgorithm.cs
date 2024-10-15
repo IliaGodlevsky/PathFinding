@@ -10,7 +10,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
         private readonly IHeuristic heuristic;
 
         public LocatorAlgorithm(IEnumerable<IVertex> pathfindingRange,
-            IHeuristic heuristic) 
+            IHeuristic heuristic)
             : base(pathfindingRange)
         {
             this.heuristic = heuristic;

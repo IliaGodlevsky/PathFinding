@@ -56,7 +56,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 {
                     messenger.Send(new GraphsDeletedMessage(graphIds.ToArray()));
                 }
-            }, logger.Error);
+            }, logger.Error).ConfigureAwait(false);
         }
 
         private void OnGraphSelected(object recipient, GraphSelectedMessage msg)

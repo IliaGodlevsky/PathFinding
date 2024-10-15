@@ -15,7 +15,6 @@ using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Service.Interface.Models;
 using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Service.Interface.Requests.Create;
-using Pathfinding.Shared.EventArguments;
 using Pathfinding.Shared.Primitives;
 using ReactiveUI;
 using System;
@@ -116,8 +115,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     visitedCount++;
                     visitedVertices.Add((e.Current, e.Enqueued));
                 }
-                void OnSubPathFound(object sender, SubPathFoundEventArgs args) 
-                { 
+                void OnSubPathFound(object sender, SubPathFoundEventArgs args)
+                {
                     AddSubAlgorithm(args.SubPath);
                 }
 

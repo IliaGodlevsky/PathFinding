@@ -12,7 +12,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
     {
         private readonly IRandom random;
 
-        public DepthRandomAlgorithm(IEnumerable<IVertex> pathfindingRange) 
+        public DepthRandomAlgorithm(IEnumerable<IVertex> pathfindingRange)
             : this(pathfindingRange, new XorshiftRandom())
         {
         }

@@ -1,5 +1,5 @@
-﻿using Pathfinding.Service.Interface.Models.Undefined;
-using Pathfinding.Service.Interface.Extensions;
+﻿using Pathfinding.Service.Interface.Extensions;
+using Pathfinding.Service.Interface.Models.Undefined;
 using System.Collections.Generic;
 using System.IO;
 

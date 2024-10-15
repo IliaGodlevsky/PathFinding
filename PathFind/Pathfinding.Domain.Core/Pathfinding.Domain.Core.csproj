@@ -60,11 +60,6 @@
     <Compile Include="Graph.cs" />
     <Compile Include="GraphState.cs" />
     <Compile Include="IEntity.cs" />
-    <Compile Include="Languages.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Languages.resx</DependentUpon>
-    </Compile>
     <Compile Include="Neighbor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PathfindingRange.cs" />
@@ -72,12 +67,6 @@
     <Compile Include="Statistics.cs" />
     <Compile Include="SubAlgorithm.cs" />
     <Compile Include="Vertex.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Languages.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Languages.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -57,23 +57,22 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             return this.WhenAnyValue(
                 x => x.GraphIds,
-                graphIds => graphIds.Length > 0);
+                x => x.FilePath,
+                (graphIds, path) => graphIds.Length > 0 && !string.IsNullOrEmpty(path));
         }
 
         private async Task SaveGraph(MouseEventArgs e)
         {
-            if (!string.IsNullOrEmpty(FilePath))
+            await ExecuteSafe(async () =>
             {
-                await ExecuteSafe(async () =>
-                {
-                    var graphs = await service.ReadSerializationHistoriesAsync(graphIds)
-                        .ConfigureAwait(false);
-                    await serializer.SerializeToFileAsync(graphs.ToList(), FilePath)
-                        .ConfigureAwait(false);
-                    FilePath = string.Empty;
-                    logger.Info(graphs.Count == 1 ? "Graph was saved" : "Graphs were saved");
-                }, logger.Error);
-            }
+                var graphs = await service.ReadSerializationHistoriesAsync(graphIds)
+                    .ConfigureAwait(false);
+                await serializer.SerializeToFileAsync(graphs.ToList(), FilePath)
+                    .ConfigureAwait(false);
+                FilePath = string.Empty;
+                logger.Info(graphs.Count == 1 ? "Graph was saved" : "Graphs were saved");
+            }, logger.Error).ConfigureAwait(false);
+
         }
 
         private void OnGraphSelected(object recipient, GraphSelectedMessage msg)

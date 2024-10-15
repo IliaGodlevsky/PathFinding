@@ -18,11 +18,11 @@ namespace Pathfinding.Service.Interface.Extensions
             serializable.Serialize(writer);
         }
 
-        public static T ReadSerializable<T>(this BinaryReader reader) 
+        public static T ReadSerializable<T>(this BinaryReader reader)
             where T : IBinarySerializable, new()
         {
             T item = new();
-            item.Deserialize(reader); 
+            item.Deserialize(reader);
             return item;
         }
 

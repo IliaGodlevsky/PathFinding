@@ -22,6 +22,7 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
@@ -84,6 +85,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public ReactiveCommand<VertexModel, Unit> RemoveFromRangeCommand { get; }
 
+        public ReactiveCommand<MouseEventArgs, Unit> DeletePathfindingRange { get; }
+
         public PathfindingRangeViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             IRequestService<VertexModel> service,
             [KeyFilter(KeyFilters.IncludeCommands)] IEnumerable<IPathfindingRangeCommand<VertexModel>> includeCommands,
@@ -100,6 +103,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<GraphActivatedMessage>(this, async (r, msg) => await OnGraphActivated(msg));
             AddToRangeCommand = ReactiveCommand.Create<VertexModel>(AddVertexToRange);
             RemoveFromRangeCommand = ReactiveCommand.Create<VertexModel>(RemoveVertexFromRange);
+            DeletePathfindingRange = ReactiveCommand.CreateFromTask<MouseEventArgs>(DeleteRange);
             Transit.ActOnEveryObject(OnTransitAdded, OnTransitRemoved);
         }
 
@@ -180,9 +184,19 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void ClearRange()
         {
-            source = null;
-            target = null;
-            Transit.Clear();
+            Source = null;
+            Target = null;
+            while (Transit.Count > 0) Transit.RemoveAt(0);
+        }
+
+        private async Task DeleteRange(MouseEventArgs args)
+        {
+            var result = await Task.Run(() => service.DeleteRangeAsync(GraphId))
+                .ConfigureAwait(false);
+            if (result)
+            {
+                ClearRange();
+            }
         }
 
         private async void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

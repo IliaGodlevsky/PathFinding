@@ -6,7 +6,6 @@ using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Undefined;
-using ReactiveUI;
 using System.Collections.Generic;
 
 namespace Pathfinding.ConsoleApp.ViewModel
@@ -23,7 +22,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         protected override void AppendStatistics(RunStatisticsModel model)
         {
-            
+
         }
 
         protected override PathfindingProcess GetAlgorithm(IEnumerable<VertexModel> pathfindingRange)
