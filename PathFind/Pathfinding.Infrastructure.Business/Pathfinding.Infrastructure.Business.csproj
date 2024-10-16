@@ -85,6 +85,7 @@
     <Compile Include="Algorithms\AStarLeeAlgorithm.cs" />
     <Compile Include="Algorithms\BreadthFirstAlgorithm.cs" />
     <Compile Include="Algorithms\CostGreedyAlgorithm.cs" />
+    <Compile Include="Algorithms\Events\VertexProcessedEventHandler.cs" />
     <Compile Include="Algorithms\LocatorAlgorithm.cs" />
     <Compile Include="Algorithms\DepthFirstAlgorithm.cs" />
     <Compile Include="Algorithms\DepthRandomAlgorithm.cs" />
@@ -94,8 +95,7 @@
     <Compile Include="Algorithms\Events\PathfindingEventHandler.cs" />
     <Compile Include="Algorithms\Events\SubPathFoundEventArgs.cs" />
     <Compile Include="Algorithms\Events\SubPathFoundEventHandler.cs" />
-    <Compile Include="Algorithms\Events\VerticesEnqueuedEventArgs.cs" />
-    <Compile Include="Algorithms\Events\VerticesEnqueuedEventHandler.cs" />
+    <Compile Include="Algorithms\Events\VerticesVisitedEventArgs.cs" />
     <Compile Include="Algorithms\Exceptions\DeadendVertexException.cs" />
     <Compile Include="Algorithms\Exceptions\PathfindingException.cs" />
     <Compile Include="Algorithms\GraphPaths\CompositeGraphPath.cs" />

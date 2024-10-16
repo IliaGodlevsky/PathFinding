@@ -47,9 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlackWhole.cs" />
-    <Compile Include="Disposable.cs" />
-    <Compile Include="EventArguments\ProcessEventArgs.cs" />
-    <Compile Include="EventHandlers\ProcessEventHandler.cs" />
     <Compile Include="Exceptions\SingletonException.cs" />
     <Compile Include="Extensions\EnumerableExtension.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />

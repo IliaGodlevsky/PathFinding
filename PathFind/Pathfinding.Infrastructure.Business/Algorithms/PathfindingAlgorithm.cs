@@ -3,7 +3,6 @@ using Pathfinding.Domain.Interface.Comparers;
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
-using Pathfinding.Shared;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
 using System.Collections.Generic;
@@ -23,35 +22,31 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 
         protected (IVertex Source, IVertex Target) CurrentRange { get; set; }
 
-        protected IVertex CurrentVertex { get; set; } = NullVertex.Instance;
+        protected IVertex CurrentVertex { get; set; } = NullVertex.Interface;
 
         protected PathfindingAlgorithm(IEnumerable<IVertex> pathfindingRange)
         {
             this.pathfindingRange = pathfindingRange;
-            CurrentRange = (NullVertex.Instance, NullVertex.Instance);
+            CurrentRange = (NullVertex.Interface, NullVertex.Interface);
         }
 
         public sealed override IGraphPath FindPath()
         {
             ThrowIfDisposed();
             var subPaths = new List<IGraphPath>();
-            using (Disposable.Use(CompletePathfinding))
+            foreach (var range in GetSubRanges())
             {
-                PrepareForPathfinding();
-                foreach (var range in GetSubRanges())
+                PrepareForSubPathfinding(range);
+                while (!IsDestination())
                 {
-                    PrepareForSubPathfinding(range);
-                    while (!IsDestination())
-                    {
-                        InspectVertex(CurrentVertex);
-                        CurrentVertex = GetNextVertex();
-                        VisitCurrentVertex();
-                    }
-                    var subPath = GetSubPath();
-                    subPaths.Add(subPath);
-                    RaiseSubPathFound(subPath);
-                    DropState();
+                    InspectCurrentVertex();
+                    CurrentVertex = GetNextVertex();
+                    VisitCurrentVertex();
                 }
+                var subPath = GetSubPath();
+                subPaths.Add(subPath);
+                RaiseSubPathFound(subPath);
+                DropState();
             }
             return CreatePath(subPaths);
         }
@@ -64,7 +59,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 
         protected abstract IVertex GetNextVertex();
 
-        protected abstract void InspectVertex(IVertex vertex);
+        protected abstract void InspectCurrentVertex();
 
         protected abstract void VisitCurrentVertex();
 
@@ -82,12 +77,6 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
         protected virtual IGraphPath GetSubPath()
         {
             return new GraphPath(traces.ToDictionary(), CurrentRange.Target);
-        }
-
-        protected virtual void Enqueued(IVertex vertex,
-            IEnumerable<IVertex> vertices)
-        {
-            RaiseVertexEnqueued(vertex, vertices);
         }
 
         protected virtual void DropState()

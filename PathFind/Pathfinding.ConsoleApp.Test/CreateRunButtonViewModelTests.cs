@@ -35,12 +35,7 @@ namespace Pathfinding.ConsoleApp.Test
             {
             }
 
-            protected override string AlgorithmId => "Test";
-
-            protected override void AppendStatistics(RunStatisticsModel model)
-            {
-
-            }
+            public override string AlgorithmId => "Test";
 
             protected override PathfindingProcess GetAlgorithm(IEnumerable<VertexModel> pathfindingRange)
             {

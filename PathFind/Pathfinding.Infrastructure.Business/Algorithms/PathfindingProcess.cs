@@ -2,7 +2,6 @@
 using Pathfinding.Infrastructure.Business.Algorithms.Events;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Algorithms;
-using Pathfinding.Shared.EventHandlers;
 using System;
 using System.Collections.Generic;
 
@@ -10,11 +9,8 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 {
     public abstract class PathfindingProcess : IAlgorithm<IGraphPath>, IDisposable
     {
-        public event VerticesEnqueuedEventHandler VertexEnqueued;
-        public event PathfindingEventHandler VertexVisited;
+        public event VertexProcessedEventHandler VertexProcessed;
         public event SubPathFoundEventHandler SubPathFound;
-        public event ProcessEventHandler Started;
-        public event ProcessEventHandler Finished;
 
         private bool IsAlgorithmDisposed { get; set; } = false;
 
@@ -23,22 +19,14 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
         public virtual void Dispose()
         {
             IsAlgorithmDisposed = true;
-            Started = null;
-            Finished = null;
-            VertexEnqueued = null;
-            VertexVisited = null;
+            VertexProcessed = null;
             SubPathFound = null;
         }
 
-        protected void RaiseVertexVisited(IVertex vertex)
-        {
-            VertexVisited?.Invoke(this, new(vertex));
-        }
-
-        protected void RaiseVertexEnqueued(IVertex vertex,
+        protected void RaiseVertexProcessed(IVertex vertex,
             IEnumerable<IVertex> vertices)
         {
-            VertexEnqueued?.Invoke(this, new(vertex, vertices));
+            VertexProcessed?.Invoke(this, new(vertex, vertices));
         }
 
         protected void RaiseSubPathFound(IGraphPath subPath)
@@ -52,16 +40,6 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             {
                 throw new ObjectDisposedException(GetType().Name);
             }
-        }
-
-        protected virtual void PrepareForPathfinding()
-        {
-            Started?.Invoke(this, new());
-        }
-
-        protected virtual void CompletePathfinding()
-        {
-            Finished?.Invoke(this, new());
         }
     }
 }

@@ -110,7 +110,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                         .AddTo(subAlgorithms);
                     visitedVertices.Clear();
                 }
-                void OnVertexEnqueued(object sender, VerticesEnqueuedEventArgs e)
+                void OnVertexEnqueued(object sender, VerticesProcessedEventArgs e)
                 {
                     visitedCount++;
                     visitedVertices.Add((e.Current, e.Enqueued));
@@ -129,7 +129,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 using var algorithm = GetAlgorithm(pathfindingRange);
 
                 algorithm.SubPathFound += OnSubPathFound;
-                algorithm.VertexEnqueued += OnVertexEnqueued;
+                algorithm.VertexProcessed += OnVertexEnqueued;
 
                 var path = NullGraphPath.Interface;
                 var stopwatch = Stopwatch.StartNew();

@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.Events
 {
-    public class VerticesEnqueuedEventArgs : PathfindingEventArgs
+    public class VerticesProcessedEventArgs : PathfindingEventArgs
     {
         public IReadOnlyList<Coordinate> Enqueued { get; }
 
-        public VerticesEnqueuedEventArgs(IVertex current, IEnumerable<IVertex> enqueued)
+        public VerticesProcessedEventArgs(IVertex current, IEnumerable<IVertex> enqueued)
             : base(current)
         {
             Enqueued = enqueued.Select(x => x.Position)

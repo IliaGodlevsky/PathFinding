@@ -17,7 +17,7 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations
             return NullVertex.Interface;
         }
 
-        protected override void InspectVertex(IVertex vertex)
+        protected override void InspectCurrentVertex(IVertex vertex)
         {
 
         }

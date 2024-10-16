@@ -1,4 +1,5 @@
-﻿using Pathfinding.Domain.Interface;
+﻿using Pathfinding.Domain.Core;
+using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
@@ -20,21 +21,15 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
         protected override IVertex GetNextVertex()
         {
             var neighbours = GetUnvisitedNeighbours(CurrentVertex);
-            Enqueued(CurrentVertex, neighbours);
+            RaiseVertexProcessed(CurrentVertex, neighbours);
             return GetVertex(neighbours);
         }
 
         protected override void PrepareForSubPathfinding((IVertex Source, IVertex Target) range)
         {
             base.PrepareForSubPathfinding(range);
-            VisitVertex(CurrentVertex);
-        }
-
-        private void VisitVertex(IVertex vertex)
-        {
-            visited.Add(vertex);
-            RaiseVertexVisited(vertex);
-            storage.Push(vertex);
+            visited.Add(CurrentVertex);
+            storage.Push(CurrentVertex);
         }
 
         protected override void DropState()
@@ -51,14 +46,15 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             }
             else
             {
-                VisitVertex(CurrentVertex);
+                visited.Add(CurrentVertex);
+                storage.Push(CurrentVertex);
                 traces[CurrentVertex.Position] = PreviousVertex;
             }
         }
 
-        protected override void InspectVertex(IVertex vertex)
+        protected override void InspectCurrentVertex()
         {
-            PreviousVertex = vertex;
+            PreviousVertex = CurrentVertex;
         }
     }
 }

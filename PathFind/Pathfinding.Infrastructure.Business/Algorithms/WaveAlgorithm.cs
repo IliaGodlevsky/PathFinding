@@ -23,7 +23,6 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
         protected override void VisitCurrentVertex()
         {
             visited.Add(CurrentVertex);
-            RaiseVertexVisited(CurrentVertex);
         }
 
         protected virtual void RelaxNeighbours(IReadOnlyCollection<IVertex> vertices)
@@ -31,10 +30,10 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             vertices.ForEach(RelaxVertex);
         }
 
-        protected override void InspectVertex(IVertex vertex)
+        protected override void InspectCurrentVertex()
         {
-            var neighbours = GetUnvisitedNeighbours(vertex);
-            Enqueued(vertex, neighbours);
+            var neighbours = GetUnvisitedNeighbours(CurrentVertex);
+            RaiseVertexProcessed(CurrentVertex, neighbours);
             RelaxNeighbours(neighbours);
         }
     }
