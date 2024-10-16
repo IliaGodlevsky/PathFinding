@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithm.cs" />
     <Compile Include="AlgorithmNames.cs" />
     <Compile Include="AlgorithmRun.cs" />
     <Compile Include="Graph.cs" />
