@@ -60,12 +60,7 @@
     <Compile Include="ISerializer.cs" />
     <Compile Include="IStepRule.cs" />
     <Compile Include="Models\ModelBuilder.cs" />
-    <Compile Include="Models\Read\GraphIdsModel.cs" />
-    <Compile Include="Models\Read\GraphInformationsModel.cs" />
-    <Compile Include="Models\Read\PathfindingHistoriesModel.cs" />
     <Compile Include="Models\Read\PathfindingRangeModel.cs" />
-    <Compile Include="Models\Read\RunStatisticsModels.cs" />
-    <Compile Include="Models\Serialization\PathfindingHistoriesSerializationModel.cs" />
     <Compile Include="Models\Undefined\CostCoordinatePair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\Create\CreateAlgorithmRunRequest.cs" />
@@ -75,8 +70,6 @@
     <Compile Include="Requests\Create\CreateGraphsFromSerializationRequest.cs" />
     <Compile Include="Requests\Create\CreateGraphStateRequest.cs" />
     <Compile Include="Requests\Create\CreateNeighborsRequest.cs" />
-    <Compile Include="Requests\Create\CreatePathfindingHistoriesFromSerializationRequest.cs" />
-    <Compile Include="Requests\Create\CreatePathfindingHistoriesRequest.cs" />
     <Compile Include="Requests\Create\CreatePathfindingHistoryRequest.cs" />
     <Compile Include="Requests\Create\CreatePathfindingRangeRequest.cs" />
     <Compile Include="Requests\Create\CreateSubAlgorithmRequest.cs" />
@@ -103,13 +96,7 @@
     <Compile Include="Models\Undefined\VertexCostModel.cs" />
     <Compile Include="Models\Undefined\VisitedVerticesModel.cs" />
     <Compile Include="Requests\Create\UpsertPathfindingRangeRequest.cs" />
-    <Compile Include="Requests\Delete\DeleteNeighborsRequest.cs" />
-    <Compile Include="Requests\Delete\DeleteRangeRequest.cs" />
-    <Compile Include="Requests\Read\ReadGraphRequest.cs" />
-    <Compile Include="Requests\Read\ReadRunCountRequest.cs" />
-    <Compile Include="Requests\Read\ReadRunStatisiticsRequest.cs" />
     <Compile Include="Requests\Update\UpdateGraphInfoRequest.cs" />
-    <Compile Include="Requests\Update\UpdateRangeRequest.cs" />
     <Compile Include="Requests\Update\UpdateVerticesRequest.cs" />
   </ItemGroup>
   <ItemGroup />

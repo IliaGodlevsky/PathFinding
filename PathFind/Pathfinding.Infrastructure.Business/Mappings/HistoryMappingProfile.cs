@@ -14,12 +14,9 @@ namespace Pathfinding.Infrastructure.Business.Mappings
         public HistoryMappingProfile()
         {
             CreateMap<PathfindingHistoryModel<T>, PathfindingHistorySerializationModel>();
-            CreateMap<CreatePathfindingHistoriesFromSerializationRequest, CreatePathfindingHistoriesRequest<T>>();
             CreateMap<PathfindingHistorySerializationModel, CreatePathfindingHistoryRequest<T>>();
             CreateMap<CreatePathfindingHistoryRequest<T>, PathfindingHistoryModel<T>>();
             CreateMap<PathfindingHistoryModel<T>, CreatePathfindingHistoryRequest<T>>();
-            CreateMap<IEnumerable<PathfindingHistoryModel<T>>, PathfindingHistoriesModel<T>>()
-                .ConstructUsing(x => new PathfindingHistoriesModel<T>() { Models = x.ToList() });
         }
     }
 }

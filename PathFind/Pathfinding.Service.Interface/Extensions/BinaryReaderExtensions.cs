@@ -54,18 +54,14 @@ namespace Pathfinding.Service.Interface.Extensions
         public static void Write(this BinaryWriter writer, IReadOnlyCollection<int> array)
         {
             writer.Write(array.Count);
-            array.ForEach(x => writer.Write(x));
+            array.ForEach(writer.Write);
         }
 
         public static IReadOnlyList<int> ReadArray(this BinaryReader reader)
         {
             int count = reader.ReadInt32();
             var array = new List<int>(count);
-            for (int i = 0; i < count; i++)
-            {
-                int value = reader.ReadInt32();
-                array.Add(value);
-            }
+            while (count-- > 0) array.Add(reader.ReadInt32());
             return array.AsReadOnly();
         }
     }
