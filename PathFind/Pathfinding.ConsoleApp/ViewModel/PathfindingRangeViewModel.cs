@@ -130,7 +130,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             await ExecuteSafe(async () =>
             {
-                var range = (await service.ReadRangeAsync(GraphId))
+                var range = (await Task.Run(()=> service.ReadRangeAsync(GraphId))
+                    .ConfigureAwait(false))
                     .Select(x => (x.Id, x.VertexId))
                     .ToList();
                 var vertices = pathfindingRange.ToList();
@@ -147,8 +148,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
                         Order: i))
                     .ToList()
                 };
-                await service.UpsertRangeAsync(request);
-            }, logger.Error);
+                await Task.Run(() => service.UpsertRangeAsync(request))
+                    .ConfigureAwait(false);
+            }, logger.Error).ConfigureAwait(false);
         }
 
         private void RemoveVertexFromRange(VertexModel vertex)
@@ -158,8 +160,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private async Task RemoveVertexFromStorage(VertexModel vertex)
         {
-            await ExecuteSafe(async ()
-                => await service.DeleteRangeAsync(vertex.Enumerate()), logger.Error);
+            await ExecuteSafe(async () => await Task.Run(() => service.DeleteRangeAsync(vertex.Enumerate())
+                ).ConfigureAwait(false),
+                logger.Error).ConfigureAwait(false);
         }
 
         private void SubscribeOnRangeExtremumsAdding(Expression<Func<PathfindingRangeViewModel, VertexModel>> expression)
@@ -227,7 +230,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 ClearRange();
                 Graph = msg.Graph;
                 GraphId = msg.GraphId;
-                var range = await service.ReadRangeAsync(GraphId);
+                var range = await Task.Run(() => service.ReadRangeAsync(GraphId))
+                    .ConfigureAwait(false);
                 var src = range.FirstOrDefault(x => x.IsSource);
                 Source = src != null ? Graph.Get(src.Position) : null;
                 var tgt = range.FirstOrDefault(x => x.IsTarget);
@@ -237,7 +241,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     .ToList();
                 Transit.AddRange(transit);
                 SubcribeToEvents();
-            }, logger.Error);
+            }, logger.Error).ConfigureAwait(false);
         }
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)

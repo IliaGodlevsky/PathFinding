@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
@@ -12,13 +13,14 @@ namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal sealed class CreateLeeAlgorithmRunViewModel : CreateRunButtonViewModel
     {
-        public CreateLeeAlgorithmRunViewModel(IRequestService<VertexModel> service,
+        public CreateLeeAlgorithmRunViewModel(
+            IRequestService<VertexModel> service,
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger, ILog logger)
             : base(service, messenger, logger)
         {
         }
 
-        protected override string AlgorithmId => "Lee";
+        public override string AlgorithmId => AlgorithmNames.Lee;
 
         protected override void AppendStatistics(RunStatisticsModel model)
         {

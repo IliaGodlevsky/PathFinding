@@ -149,7 +149,6 @@
     <Compile Include="Layers\NeighborhoodLayer.cs" />
     <Compile Include="Layers\ObstacleLayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CachedRequestService.cs" />
     <Compile Include="RequestService.cs" />
     <Compile Include="Serializers\AesCrypto.cs" />
     <Compile Include="Serializers\BinarySerializer.cs" />

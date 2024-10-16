@@ -18,7 +18,7 @@ namespace Pathfinding.ConsoleApp.View
             [KeyFilter(KeyFilters.Views)] IMessenger messenger,
             CreateDepthFirstAlgorithmRunViewModel viewModel)
         {
-            Text = "DFS";
+            Text = viewModel.AlgorithmId;
             Y = 1;
             X = 0;
             this.messenger = messenger;

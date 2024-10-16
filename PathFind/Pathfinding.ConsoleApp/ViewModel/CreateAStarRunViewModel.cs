@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
@@ -34,7 +35,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
         }
 
-        protected override string AlgorithmId => "A*";
+        public override string AlgorithmId => AlgorithmNames.AStar;
 
         protected override void AppendStatistics(RunStatisticsModel model)
         {

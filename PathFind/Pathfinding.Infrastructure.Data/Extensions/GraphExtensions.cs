@@ -1,5 +1,4 @@
 ﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,17 +23,6 @@ namespace Pathfinding.Infrastructure.Data.Extensions
             where TVertex : IVertex
         {
             return graph.DimensionsSizes.ElementAtOrDefault(1);
-        }
-
-        public static void ApplyCosts<T>(this IEnumerable<T> graph, IEnumerable<int> costs)
-            where T : IVertex
-        {
-            foreach (var (Vertex, Price) in graph.Zip(costs, (v, p) => (Vertex: v, Price: p)))
-            {
-                var range = Vertex.Cost.CostRange;
-                int cost = range.ReturnInRange(Price);
-                Vertex.Cost.CurrentCost = cost;
-            }
         }
 
         public static IEnumerable<TVertex> GetObstacles<TVertex>(this IGraph<TVertex> graph)

@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
@@ -20,7 +21,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
         }
 
-        protected override string AlgorithmId { get; } = "DFS";
+        public override string AlgorithmId { get; } = AlgorithmNames.DepthFirst;
 
         protected override void AppendStatistics(RunStatisticsModel model)
         {

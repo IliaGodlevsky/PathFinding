@@ -17,7 +17,7 @@ namespace Pathfinding.ConsoleApp.View
         public LeeAlgorithmListItem([KeyFilter(KeyFilters.Views)] IMessenger messenger,
             CreateLeeAlgorithmRunViewModel viewModel)
         {
-            Text = "Lee";
+            Text = viewModel.AlgorithmId;
             this.messenger = messenger;
             this.viewModel = viewModel;
             MouseClick += OnViewClicked;

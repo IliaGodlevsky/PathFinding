@@ -19,7 +19,7 @@ namespace Pathfinding.ConsoleApp.View
             [KeyFilter(KeyFilters.Views)] IMessenger messenger,
             CreateIDAStarRunViewModel viewModel)
         {
-            Text = "IDA*";
+            Text = viewModel.AlgorithmId;
             Y = 2;
             X = 0;
             this.messenger = messenger;

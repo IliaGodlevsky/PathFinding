@@ -44,7 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\IPathfindingRangeCommand.cs" />
-    <Compile Include="Extensions\BinarySerializableExtensions.cs" />
+    <Compile Include="Extensions\BinaryReaderExtensions.cs" />
+    <Compile Include="Extensions\BinaryWriterExtensions.cs" />
     <Compile Include="Extensions\PathfindingRangeCommandExtensions.cs" />
     <Compile Include="Extensions\RequestServiceExtensions.cs" />
     <Compile Include="Extensions\SerializerExtensions.cs" />

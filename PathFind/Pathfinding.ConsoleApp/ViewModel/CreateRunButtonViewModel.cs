@@ -33,7 +33,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         protected readonly IMessenger messenger;
         protected readonly ILog logger;
 
-        protected abstract string AlgorithmId { get; }
+        public abstract string AlgorithmId { get; }
 
         public ReactiveCommand<MouseEventArgs, Unit> CreateRunCommand { get; }
 
@@ -88,7 +88,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         protected abstract PathfindingProcess GetAlgorithm(IEnumerable<VertexModel> pathfindingRange);
 
-        protected abstract void AppendStatistics(RunStatisticsModel model);
+        protected virtual void AppendStatistics(RunStatisticsModel model) { }
 
         private async Task CreateRun(MouseEventArgs e)
         {

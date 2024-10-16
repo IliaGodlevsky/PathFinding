@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
@@ -21,13 +22,15 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref heuristic, value);
         }
 
-        public CreateAStarLeeRunViewModel(IRequestService<VertexModel> service,
-            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger, ILog logger)
+        public CreateAStarLeeRunViewModel(
+            IRequestService<VertexModel> service,
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
+            ILog logger)
             : base(service, messenger, logger)
         {
         }
 
-        protected override string AlgorithmId { get; } = "A* lee";
+        public override string AlgorithmId { get; } = AlgorithmNames.AStarLee;
 
         protected override void AppendStatistics(RunStatisticsModel model)
         {

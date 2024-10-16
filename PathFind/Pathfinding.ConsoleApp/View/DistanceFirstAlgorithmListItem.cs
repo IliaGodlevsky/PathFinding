@@ -19,7 +19,7 @@ namespace Pathfinding.ConsoleApp.View
             [KeyFilter(KeyFilters.Views)] IMessenger messenger,
             CreateDistanceFirstRunViewModel viewModel)
         {
-            Text = "DFS dist";
+            Text = viewModel.AlgorithmId;
             Y = 1;
             X = 0;
             this.messenger = messenger;

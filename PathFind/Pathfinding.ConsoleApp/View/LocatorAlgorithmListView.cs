@@ -18,7 +18,7 @@ namespace Pathfinding.ConsoleApp.View
             [KeyFilter(KeyFilters.Views)] IMessenger messenger,
             CreateLocatorAlgorithmRunViewModel viewModel)
         {
-            Text = "Locator";
+            Text = viewModel.AlgorithmId;
             Y = 1;
             X = 0;
             this.messenger = messenger;

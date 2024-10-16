@@ -17,7 +17,7 @@ namespace Pathfinding.ConsoleApp.View
         public RandomAlgorithmListItem([KeyFilter(KeyFilters.Views)] IMessenger messenger,
             CreateRandomAlgorithmRunViewModel viewModel)
         {
-            Text = "Random";
+            Text = viewModel.AlgorithmId;
             Y = 1;
             X = 0;
             this.messenger = messenger;

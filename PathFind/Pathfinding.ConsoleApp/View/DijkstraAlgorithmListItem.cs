@@ -18,6 +18,7 @@ namespace Pathfinding.ConsoleApp.View
             [KeyFilter(KeyFilters.Views)] IMessenger messenger,
             CreateDijkstraRunViewModel viewModel)
         {
+            Text = viewModel.AlgorithmId;
             Initialize();
             this.messenger = messenger;
             this.viewModel = viewModel;

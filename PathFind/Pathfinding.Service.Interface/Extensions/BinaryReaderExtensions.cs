@@ -5,19 +5,8 @@ using System.IO;
 
 namespace Pathfinding.Service.Interface.Extensions
 {
-    public static class BinarySerializableExtensions
+    public static class BinaryReaderExtensions
     {
-        public static void Write(this BinaryWriter writer, IReadOnlyCollection<IBinarySerializable> collection)
-        {
-            writer.Write(collection.Count);
-            collection.ForEach(x => writer.Write(x));
-        }
-
-        public static void Write(this BinaryWriter writer, IBinarySerializable serializable)
-        {
-            serializable.Serialize(writer);
-        }
-
         public static T ReadSerializable<T>(this BinaryReader reader)
             where T : IBinarySerializable, new()
         {
@@ -38,29 +27,10 @@ namespace Pathfinding.Service.Interface.Extensions
             return list.AsReadOnly();
         }
 
-        public static void WriteNullableString(this BinaryWriter writer, string value)
-        {
-            bool isNull = string.IsNullOrEmpty(value);
-            writer.Write(isNull);
-            if (!isNull)
-            {
-                writer.Write(value);
-            }
-        }
-
         public static string ReadNullableString(this BinaryReader reader)
         {
             bool isNull = reader.ReadBoolean();
             return isNull ? string.Empty : reader.ReadString();
-        }
-
-        public static void WriteNullableInt(this BinaryWriter writer, int? value)
-        {
-            writer.Write(value.HasValue);
-            if (value.HasValue)
-            {
-                writer.Write(value.Value);
-            }
         }
 
         public static int? ReadNullableInt(this BinaryReader reader)
@@ -69,28 +39,10 @@ namespace Pathfinding.Service.Interface.Extensions
             return hasValue ? reader.ReadInt32() : null;
         }
 
-        public static void WriteNullableTimeSpan(this BinaryWriter writer, TimeSpan? time)
-        {
-            writer.Write(time.HasValue);
-            if (time.HasValue)
-            {
-                writer.Write(time.Value.TotalMilliseconds);
-            }
-        }
-
         public static TimeSpan? ReadNullableTimeSpan(this BinaryReader reader)
         {
             bool hasValue = reader.ReadBoolean();
             return hasValue ? TimeSpan.FromMilliseconds(reader.ReadDouble()) : null;
-        }
-
-        public static void WriteNullableDouble(this BinaryWriter writer, double? value)
-        {
-            writer.Write(value.HasValue);
-            if (value.HasValue)
-            {
-                writer.Write(value.Value);
-            }
         }
 
         public static double? ReadNullableDouble(this BinaryReader reader)

@@ -10,8 +10,7 @@ namespace Pathfinding.Service.Interface.Extensions
             T item, CancellationToken token = default)
         {
             using var memory = new MemoryStream();
-            await serializer.SerializeToAsync(item, memory, token)
-                .ConfigureAwait(false);
+            await serializer.SerializeToAsync(item, memory, token).ConfigureAwait(false);
             return memory.ToArray();
         }
 
@@ -19,24 +18,21 @@ namespace Pathfinding.Service.Interface.Extensions
             byte[] item, CancellationToken token = default)
         {
             using var memory = new MemoryStream(item);
-            return await serializer.DeserializeFromAsync(memory, token)
-                .ConfigureAwait(false);
+            return await serializer.DeserializeFromAsync(memory, token).ConfigureAwait(false);
         }
 
         public static async Task SerializeToFileAsync<T>(this ISerializer<T> self,
             T value, string filePath, CancellationToken token = default)
         {
-            using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
-            await self.SerializeToAsync(value, fileStream, token)
-                .ConfigureAwait(false);
+            using var fileStream = File.OpenWrite(filePath);
+            await self.SerializeToAsync(value, fileStream, token).ConfigureAwait(false);
         }
 
         public static async Task<T> DeserializeFromFileAsync<T>(this ISerializer<T> self,
             string filePath, CancellationToken token = default)
         {
             using var fileStream = File.OpenRead(filePath);
-            return await self.DeserializeFromAsync(fileStream, token)
-                .ConfigureAwait(false);
+            return await self.DeserializeFromAsync(fileStream, token).ConfigureAwait(false);
         }
     }
 }

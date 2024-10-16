@@ -4,7 +4,7 @@
     {
         private void Initialize()
         {
-            Text = "Dijkstra";
+            
         }
     }
 }

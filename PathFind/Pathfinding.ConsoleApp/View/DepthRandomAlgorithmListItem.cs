@@ -18,7 +18,7 @@ namespace Pathfinding.ConsoleApp.View
             [KeyFilter(KeyFilters.Views)] IMessenger messenger,
             CreateDepthRandomAlgorithmRunViewModel viewModel)
         {
-            Text = "DFS rand";
+            Text = viewModel.AlgorithmId;
             Y = 1;
             X = 0;
             this.messenger = messenger;

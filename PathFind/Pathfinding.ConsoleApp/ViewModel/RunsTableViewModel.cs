@@ -69,7 +69,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private async Task OnGraphActivatedMessage(object recipient, GraphActivatedMessage msg)
         {
-            var statistics = await service.ReadRunStatisticsAsync(msg.GraphId);
+            var statistics = await Task.Run(() => service.ReadRunStatisticsAsync(msg.GraphId))
+                .ConfigureAwait(false);
             var models = statistics.Select(x => GetModel(x)).ToArray();
             ActivatedGraphId = msg.GraphId;
             while (Runs.Count > 0)
@@ -122,9 +123,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 Cost = model.Cost ?? 0,
                 Steps = model.Steps ?? 0,
                 Status = model.ResultStatus,
-                StepRule = model.StepRule ?? "",
-                Heuristics = model.Heuristics ?? "",
-                Spread = model.Spread?.ToString() ?? "",
+                StepRule = model.StepRule ?? string.Empty,
+                Heuristics = model.Heuristics ?? string.Empty,
+                Spread = model.Spread?.ToString() ?? string.Empty,
                 Elapsed = model.Elapsed ?? TimeSpan.FromMilliseconds(0),
                 Visited = model.Visited ?? 0
             };

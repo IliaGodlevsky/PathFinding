@@ -78,7 +78,6 @@ namespace Pathfinding.ConsoleApp.Injection
             }).As<IMapper>().SingleInstance();
 
             builder.RegisterType<RequestService<VertexModel>>().As<IRequestService<VertexModel>>().SingleInstance();
-            builder.RegisterDecorator<CachedRequestService<VertexModel>, IRequestService<VertexModel>>();
 
             builder.RegisterType<IncludeSourceVertex<VertexModel>>().SingleInstance().WithAttributeFiltering()
                 .Keyed<IPathfindingRangeCommand<VertexModel>>(KeyFilters.IncludeCommands);
