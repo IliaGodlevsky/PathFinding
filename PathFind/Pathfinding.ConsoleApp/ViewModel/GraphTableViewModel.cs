@@ -19,19 +19,19 @@ namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal sealed class GraphTableViewModel : BaseViewModel
     {
-        private readonly IRequestService<VertexModel> service;
+        private readonly IRequestService<GraphVertexModel> service;
         private readonly IMessenger messenger;
         private readonly ILog logger;
 
-        private GraphInfoModel[] selected;
+        private GraphInfoModel[] selectedGraphs;
 
-        public GraphInfoModel[] Selected
+        public GraphInfoModel[] SelectedGraphs
         {
-            get => selected;
+            get => selectedGraphs;
             set
             {
-                this.RaiseAndSetIfChanged(ref selected, value);
-                var toSend = selected.Select(x => x.Id).ToArray();
+                this.RaiseAndSetIfChanged(ref selectedGraphs, value);
+                var toSend = selectedGraphs.Select(x => x.Id).ToArray();
                 messenger.Send(new GraphSelectedMessage(toSend));
             }
         }
@@ -41,7 +41,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public ObservableCollection<GraphInfoModel> Graphs { get; } = new();
 
         public GraphTableViewModel(
-            IRequestService<VertexModel> service,
+            IRequestService<GraphVertexModel> service,
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ILog logger)
         {
@@ -136,13 +136,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
             var graphs = Graphs
                 .Where(x => msg.GraphIds.Contains(x.Id))
                 .ToList();
-            if (graphs.Count > 0)
-            {
-                foreach (var graph in graphs)
-                {
-                    Graphs.Remove(graph);
-                }
-            }
+            Graphs.Remove(graphs);
+
         }
     }
 }

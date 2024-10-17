@@ -21,7 +21,7 @@ namespace Pathfinding.ConsoleApp.View
         {
             if (e.MouseEvent.Flags == MouseFlags.Button1Clicked)
             {
-                messenger.Send(new OpenGraphCreateViewRequest());
+                messenger.Send(new OpenGraphAssembleViewMessage());
             }
         }
     }

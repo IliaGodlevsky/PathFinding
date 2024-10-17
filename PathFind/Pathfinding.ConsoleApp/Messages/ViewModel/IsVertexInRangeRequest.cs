@@ -2,15 +2,8 @@
 
 namespace Pathfinding.ConsoleApp.Messages.ViewModel
 {
-    internal sealed class IsVertexInRangeRequest
+    internal sealed record class IsVertexInRangeRequest(GraphVertexModel Vertex)
     {
-        public VertexModel Vertex { get; }
-
         public bool IsInRange { get; set; }
-
-        public IsVertexInRangeRequest(VertexModel vertex)
-        {
-            Vertex = vertex;
-        }
     }
 }

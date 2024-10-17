@@ -2,13 +2,5 @@
 
 namespace Pathfinding.ConsoleApp.Messages.ViewModel
 {
-    internal class RunActivatedMessage
-    {
-        public RunVisualizationModel Run { get; }
-
-        public RunActivatedMessage(RunVisualizationModel run)
-        {
-            Run = run;
-        }
-    }
+    internal sealed record class RunActivatedMessage(RunVisualizationModel Run);
 }

@@ -10,7 +10,7 @@ namespace Pathfinding.Service.Interface.Extensions
         public static void Write(this BinaryWriter writer, IReadOnlyCollection<IBinarySerializable> collection)
         {
             writer.Write(collection.Count);
-            collection.ForEach(x => writer.Write(x));
+            collection.ForEach(writer.Write);
         }
 
         public static void Write(this BinaryWriter writer, IBinarySerializable serializable)
@@ -18,31 +18,9 @@ namespace Pathfinding.Service.Interface.Extensions
             serializable.Serialize(writer);
         }
 
-        public static void WriteNullableInt(this BinaryWriter writer, int? value)
+        public static void WriteTimeSpan(this BinaryWriter writer, TimeSpan time)
         {
-            writer.Write(value.HasValue);
-            if (value.HasValue)
-            {
-                writer.Write(value.Value);
-            }
-        }
-
-        public static void WriteNullableDouble(this BinaryWriter writer, double? value)
-        {
-            writer.Write(value.HasValue);
-            if (value.HasValue)
-            {
-                writer.Write(value.Value);
-            }
-        }
-
-        public static void WriteNullableTimeSpan(this BinaryWriter writer, TimeSpan? time)
-        {
-            writer.Write(time.HasValue);
-            if (time.HasValue)
-            {
-                writer.Write(time.Value.TotalMilliseconds);
-            }
+            writer.Write(time.TotalMilliseconds);
         }
 
         public static void WriteNullableString(this BinaryWriter writer, string value)
@@ -53,6 +31,12 @@ namespace Pathfinding.Service.Interface.Extensions
             {
                 writer.Write(value);
             }
+        }
+
+        public static void Write(this BinaryWriter writer, IReadOnlyCollection<int> array)
+        {
+            writer.Write(array.Count);
+            array.ForEach(writer.Write);
         }
     }
 }

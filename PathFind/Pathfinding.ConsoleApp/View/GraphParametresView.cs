@@ -17,10 +17,10 @@ namespace Pathfinding.ConsoleApp.View
         private static readonly InclusiveValueRange<int> LengthRange = (54, 1);
         private static readonly InclusiveValueRange<int> ObstaclesRange = (99, 0);
 
-        private readonly CreateGraphViewModel viewModel;
+        private readonly GraphAssembleViewModel viewModel;
         private readonly CompositeDisposable disposables = new();
 
-        public GraphParametresView(CreateGraphViewModel viewModel)
+        public GraphParametresView(GraphAssembleViewModel viewModel)
         {
             this.viewModel = viewModel;
             Initialize();
@@ -41,7 +41,7 @@ namespace Pathfinding.ConsoleApp.View
         }
 
         private void BindTo(TextField field,
-            Expression<Func<CreateGraphViewModel, int>> expression,
+            Expression<Func<GraphAssembleViewModel, int>> expression,
             InclusiveValueRange<int> range)
         {
             field.Events()

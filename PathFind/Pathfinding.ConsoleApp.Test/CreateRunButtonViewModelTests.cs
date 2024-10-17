@@ -28,16 +28,16 @@ namespace Pathfinding.ConsoleApp.Test
     [TestFixture, UnitTest]
     internal class CreateRunButtonViewModelTests
     {
-        private sealed class TestCreateRunButtonViewModel : CreateRunButtonViewModel
+        private sealed class TestCreateRunButtonViewModel : PathfindingProcessViewModel
         {
-            public TestCreateRunButtonViewModel(IRequestService<VertexModel> service,
+            public TestCreateRunButtonViewModel(IRequestService<GraphVertexModel> service,
                 IMessenger messenger, ILog logger) : base(service, messenger, logger)
             {
             }
 
             public override string AlgorithmId => "Test";
 
-            protected override PathfindingProcess GetAlgorithm(IEnumerable<VertexModel> pathfindingRange)
+            protected override PathfindingProcess GetAlgorithm(IEnumerable<GraphVertexModel> pathfindingRange)
             {
                 var algorithm = new Mock<PathfindingProcess>();
                 algorithm.Setup(x => x.FindPath()).Returns(NullGraphPath.Instance);
@@ -46,8 +46,8 @@ namespace Pathfinding.ConsoleApp.Test
         }
 
         private IMessenger messenger;
-        private Mock<IRequestService<VertexModel>> service;
-        private readonly IGraph<VertexModel> graph;
+        private Mock<IRequestService<GraphVertexModel>> service;
+        private readonly IGraph<GraphVertexModel> graph;
 
         public CreateRunButtonViewModelTests()
         {
@@ -56,16 +56,16 @@ namespace Pathfinding.ConsoleApp.Test
             var obstacleLayer = new ObstacleLayer(random, 0);
             var neighborhoodLayer = new NeighborhoodLayer();
             var layers = new Layers(costLayer, obstacleLayer, neighborhoodLayer);
-            var vertexFactory = new VertexModelFactory();
-            var graphFactory = new GraphFactory<VertexModel>();
-            var assemble = new GraphAssemble<VertexModel>(vertexFactory, graphFactory);
+            var vertexFactory = new GraphVertexModelFactory();
+            var graphFactory = new GraphFactory<GraphVertexModel>();
+            var assemble = new GraphAssemble<GraphVertexModel>(vertexFactory, graphFactory);
             graph = assemble.AssembleGraph(layers, 25, 35);
         }
 
         [SetUp]
         public void SetUp()
         {
-            service = new Mock<IRequestService<VertexModel>>();
+            service = new Mock<IRequestService<GraphVertexModel>>();
             IReadOnlyCollection<PathfindingRangeModel> pathfindingRange
                 = new List<PathfindingRangeModel>()
             {
@@ -91,7 +91,7 @@ namespace Pathfinding.ConsoleApp.Test
         {
             var viewModel = new TestCreateRunButtonViewModel(service.Object,
                 messenger, new NullLog());
-            var canExecute = await viewModel.CreateRunCommand.CanExecute.FirstOrDefaultAsync();
+            var canExecute = await viewModel.StartAlgorithmCommand.CanExecute.FirstOrDefaultAsync();
 
             Assert.That(canExecute, Is.False);
         }
@@ -109,7 +109,7 @@ namespace Pathfinding.ConsoleApp.Test
             messenger.Register<RunCreatedMessaged>(this, OnRunCreated);
 
             messenger.Send(new GraphActivatedMessage(1, graph));
-            await viewModel.CreateRunCommand.Execute();
+            await viewModel.StartAlgorithmCommand.Execute();
 
             Assert.Multiple(() =>
             {

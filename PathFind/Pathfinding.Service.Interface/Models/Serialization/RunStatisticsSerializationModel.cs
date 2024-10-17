@@ -14,15 +14,15 @@ namespace Pathfinding.Service.Interface.Models.Serialization
 
         public string ResultStatus { get; set; } = string.Empty;
 
-        public TimeSpan? Elapsed { get; set; } = null;
+        public TimeSpan Elapsed { get; set; }
 
-        public int? Steps { get; set; } = null;
+        public int Steps { get; set; }
 
-        public double? Cost { get; set; } = null;
+        public double Cost { get; set; }
 
         public string Spread { get; set; } = null;
 
-        public int? Visited { get; set; } = null;
+        public int Visited { get; set; }
 
         public void Deserialize(BinaryReader reader)
         {
@@ -30,11 +30,11 @@ namespace Pathfinding.Service.Interface.Models.Serialization
             Heuristics = reader.ReadNullableString();
             StepRule = reader.ReadNullableString();
             ResultStatus = reader.ReadString();
-            Elapsed = reader.ReadNullableTimeSpan();
-            Steps = reader.ReadNullableInt();
-            Cost = reader.ReadNullableDouble();
+            Elapsed = reader.ReadTimeSpan();
+            Steps = reader.ReadInt32();
+            Cost = reader.ReadDouble();
             Spread = reader.ReadNullableString();
-            Visited = reader.ReadNullableInt();
+            Visited = reader.ReadInt32();
         }
 
         public void Serialize(BinaryWriter writer)
@@ -43,11 +43,11 @@ namespace Pathfinding.Service.Interface.Models.Serialization
             writer.WriteNullableString(Heuristics);
             writer.WriteNullableString(StepRule);
             writer.Write(ResultStatus);
-            writer.WriteNullableTimeSpan(Elapsed);
-            writer.WriteNullableInt(Steps);
-            writer.WriteNullableDouble(Cost);
+            writer.WriteTimeSpan(Elapsed);
+            writer.Write(Steps);
+            writer.Write(Cost);
             writer.WriteNullableString(Spread);
-            writer.WriteNullableInt(Visited);
+            writer.Write(Visited);
         }
     }
 }

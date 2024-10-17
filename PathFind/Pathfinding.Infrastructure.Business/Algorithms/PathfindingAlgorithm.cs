@@ -10,14 +10,14 @@ using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    using Traces = Dictionary<Coordinate, IVertex>;
-
     public abstract class PathfindingAlgorithm<TStorage> : PathfindingProcess
         where TStorage : new()
     {
         protected readonly IEnumerable<IVertex> pathfindingRange;
-        protected readonly HashSet<IVertex> visited = new(VertexEqualityComparer.Interface);
-        protected readonly Traces traces = new(CoordinateEqualityComparer.Interface);
+        protected readonly HashSet<IVertex> visited 
+            = new(VertexEqualityComparer.Interface);
+        protected readonly Dictionary<Coordinate, IVertex> traces
+            = new(CoordinateEqualityComparer.Interface);
         protected readonly TStorage storage = new();
 
         protected (IVertex Source, IVertex Target) CurrentRange { get; set; }

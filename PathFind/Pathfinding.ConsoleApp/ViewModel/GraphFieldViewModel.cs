@@ -21,7 +21,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
     internal sealed class GraphFieldViewModel : BaseViewModel
     {
         private readonly IMessenger messenger;
-        private readonly IRequestService<VertexModel> service;
+        private readonly IRequestService<GraphVertexModel> service;
         private readonly ILog logger;
 
         private int graphId;
@@ -31,21 +31,21 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref graphId, value);
         }
 
-        private IGraph<VertexModel> graph;
-        public IGraph<VertexModel> Graph
+        private IGraph<GraphVertexModel> graph;
+        public IGraph<GraphVertexModel> Graph
         {
             get => graph;
             set => this.RaiseAndSetIfChanged(ref graph, value);
         }
 
-        public ReactiveCommand<VertexModel, Unit> ReverseVertexCommand { get; }
+        public ReactiveCommand<GraphVertexModel, Unit> ReverseVertexCommand { get; }
 
-        public ReactiveCommand<VertexModel, Unit> IncreaseVertexCostCommand { get; }
+        public ReactiveCommand<GraphVertexModel, Unit> IncreaseVertexCostCommand { get; }
 
-        public ReactiveCommand<VertexModel, Unit> DecreaseVertexCostCommand { get; }
+        public ReactiveCommand<GraphVertexModel, Unit> DecreaseVertexCostCommand { get; }
 
         public GraphFieldViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
-            IRequestService<VertexModel> service, ILog logger)
+            IRequestService<GraphVertexModel> service, ILog logger)
         {
             this.messenger = messenger;
             this.service = service;
@@ -54,12 +54,12 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             var canExecute = this.WhenAnyValue(x => x.GraphId, x => x.Graph,
                 (id, graph) => id > 0 && graph != null);
-            ReverseVertexCommand = ReactiveCommand.CreateFromTask<VertexModel>(ReverseVertex, canExecute);
-            IncreaseVertexCostCommand = ReactiveCommand.CreateFromTask<VertexModel>(IncreaseVertexCost, canExecute);
-            DecreaseVertexCostCommand = ReactiveCommand.CreateFromTask<VertexModel>(DecreaseVertexCost, canExecute);
+            ReverseVertexCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(ReverseVertex, canExecute);
+            IncreaseVertexCostCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(IncreaseVertexCost, canExecute);
+            DecreaseVertexCostCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(DecreaseVertexCost, canExecute);
         }
 
-        private async Task ReverseVertex(VertexModel vertex)
+        private async Task ReverseVertex(GraphVertexModel vertex)
         {
             var inRangeRquest = new IsVertexInRangeRequest(vertex);
             messenger.Send(inRangeRquest);
@@ -67,7 +67,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             {
                 vertex.IsObstacle = !vertex.IsObstacle;
                 messenger.Send(new ObstaclesCountChangedMessage(graphId, vertex.IsObstacle ? 1 : -1));
-                var request = new UpdateVerticesRequest<VertexModel>(graphId,
+                var request = new UpdateVerticesRequest<GraphVertexModel>(graphId,
                     vertex.Enumerate().ToList());
                 await ExecuteSafe(async () =>
                 {
@@ -80,23 +80,23 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
-        private async Task IncreaseVertexCost(VertexModel vertex)
+        private async Task IncreaseVertexCost(GraphVertexModel vertex)
         {
             await ChangeVertexCost(vertex, 1);
         }
 
-        private async Task DecreaseVertexCost(VertexModel vertex)
+        private async Task DecreaseVertexCost(GraphVertexModel vertex)
         {
             await ChangeVertexCost(vertex, -1);
         }
 
-        private async Task ChangeVertexCost(VertexModel vertex, int delta)
+        private async Task ChangeVertexCost(GraphVertexModel vertex, int delta)
         {
             var cost = vertex.Cost.CurrentCost;
             cost += delta;
             cost = vertex.Cost.CostRange.ReturnInRange(cost);
             vertex.Cost = new VertexCost(cost, vertex.Cost.CostRange);
-            var request = new UpdateVerticesRequest<VertexModel>(GraphId,
+            var request = new UpdateVerticesRequest<GraphVertexModel>(GraphId,
                 vertex.Enumerate().ToList());
             await ExecuteSafe(async () => await service.UpdateVerticesAsync(request),
                 logger.Error);
@@ -113,7 +113,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             if (msg.GraphIds.Contains(GraphId))
             {
                 GraphId = 0;
-                Graph = Graph<VertexModel>.Empty;
+                Graph = Graph<GraphVertexModel>.Empty;
             }
         }
     }

@@ -9,10 +9,10 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphNameView : FrameView
     {
-        private readonly CreateGraphViewModel viewModel;
+        private readonly GraphAssembleViewModel viewModel;
         private readonly CompositeDisposable disposables = new();
 
-        public GraphNameView(CreateGraphViewModel viewModel)
+        public GraphNameView(GraphAssembleViewModel viewModel)
         {
             Initialize();
             this.viewModel = viewModel;

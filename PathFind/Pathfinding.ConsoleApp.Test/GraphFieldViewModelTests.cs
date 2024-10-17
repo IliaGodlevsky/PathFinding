@@ -24,13 +24,13 @@ namespace Pathfinding.ConsoleApp.Test
     internal class GraphFieldViewModelTests
     {
         private IMessenger messenger;
-        private Mock<IRequestService<VertexModel>> service;
-        private readonly IGraph<VertexModel> graph;
+        private Mock<IRequestService<GraphVertexModel>> service;
+        private readonly IGraph<GraphVertexModel> graph;
 
         [SetUp]
         public void SetUp()
         {
-            service = new Mock<IRequestService<VertexModel>>();
+            service = new Mock<IRequestService<GraphVertexModel>>();
             messenger = new WeakReferenceMessenger();
         }
 
@@ -41,9 +41,9 @@ namespace Pathfinding.ConsoleApp.Test
             var obstacleLayer = new ObstacleLayer(random, 0);
             var neighborhoodLayer = new NeighborhoodLayer();
             var layers = new Layers(costLayer, obstacleLayer, neighborhoodLayer);
-            var vertexFactory = new VertexModelFactory();
-            var graphFactory = new GraphFactory<VertexModel>();
-            var assemble = new GraphAssemble<VertexModel>(vertexFactory, graphFactory);
+            var vertexFactory = new GraphVertexModelFactory();
+            var graphFactory = new GraphFactory<GraphVertexModel>();
+            var assemble = new GraphAssemble<GraphVertexModel>(vertexFactory, graphFactory);
             graph = assemble.AssembleGraph(layers, 25, 35);
         }
 
@@ -72,7 +72,7 @@ namespace Pathfinding.ConsoleApp.Test
             Assert.Multiple(() =>
             {
                 service.Verify(x => x.UpdateVerticesAsync(
-                    It.IsAny<UpdateVerticesRequest<VertexModel>>(),
+                    It.IsAny<UpdateVerticesRequest<GraphVertexModel>>(),
                     It.IsAny<CancellationToken>()), serviceCallsCount);
                 service.Verify(x => x.UpdateObstaclesCountAsync(
                     It.IsAny<UpdateGraphInfoRequest>(),

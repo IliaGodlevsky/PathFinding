@@ -1,6 +1,4 @@
 ﻿namespace Pathfinding.ConsoleApp.Messages.ViewModel
 {
-    internal sealed class OpenAlgorithmRunViewMessage
-    {
-    }
+    internal sealed record class OpenAlgorithmRunViewMessage;
 }

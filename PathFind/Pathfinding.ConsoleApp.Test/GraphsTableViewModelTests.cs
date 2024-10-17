@@ -16,26 +16,26 @@ namespace Pathfinding.ConsoleApp.Test
     public class GraphsTableViewModelTests
     {
         private IMessenger messenger;
-        private Mock<IRequestService<VertexModel>> service;
+        private Mock<IRequestService<GraphVertexModel>> service;
         private GraphTableViewModel graphsTable;
-        private readonly Dictionary<int, GraphModel<VertexModel>> graphs;
+        private readonly Dictionary<int, GraphModel<GraphVertexModel>> graphs;
 
         public GraphsTableViewModelTests()
         {
-            graphs = new Dictionary<int, GraphModel<VertexModel>>()
+            graphs = new Dictionary<int, GraphModel<GraphVertexModel>>()
             {
-                { 1, new(){ Id = 1, Name = "Test1", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<VertexModel>.Empty } },
-                { 2, new(){ Id = 2, Name = "Test2", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<VertexModel>.Empty } },
-                { 3, new(){ Id = 3, Name = "Test3", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<VertexModel>.Empty } },
-                { 4, new(){ Id = 4, Name = "Test4", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<VertexModel>.Empty } },
-                { 5, new(){ Id = 5, Name = "Test5", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<VertexModel>.Empty } },
+                { 1, new(){ Id = 1, Name = "Test1", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<GraphVertexModel>.Empty } },
+                { 2, new(){ Id = 2, Name = "Test2", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<GraphVertexModel>.Empty } },
+                { 3, new(){ Id = 3, Name = "Test3", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<GraphVertexModel>.Empty } },
+                { 4, new(){ Id = 4, Name = "Test4", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<GraphVertexModel>.Empty } },
+                { 5, new(){ Id = 5, Name = "Test5", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<GraphVertexModel>.Empty } },
             };
         }
 
         [SetUp]
         public void SetUp()
         {
-            service = new Mock<IRequestService<VertexModel>>();
+            service = new Mock<IRequestService<GraphVertexModel>>();
             service.Setup(x => x.ReadGraphAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .Returns<int, CancellationToken>((x, t) => Task.FromResult(graphs[x]));
             messenger = new WeakReferenceMessenger();

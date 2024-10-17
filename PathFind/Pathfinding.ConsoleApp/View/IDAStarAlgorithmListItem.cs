@@ -13,11 +13,11 @@ namespace Pathfinding.ConsoleApp.View
     internal sealed class IDAStarAlgorithmListItem : Label
     {
         private readonly IMessenger messenger;
-        private readonly CreateIDAStarRunViewModel viewModel;
+        private readonly IDAStarAlgorithmViewModel viewModel;
 
         public IDAStarAlgorithmListItem(
             [KeyFilter(KeyFilters.Views)] IMessenger messenger,
-            CreateIDAStarRunViewModel viewModel)
+            IDAStarAlgorithmViewModel viewModel)
         {
             Text = viewModel.AlgorithmId;
             Y = 2;
@@ -36,7 +36,7 @@ namespace Pathfinding.ConsoleApp.View
                 messenger.Send(new OpenSpreadViewMessage());
                 messenger.Send(new StepRuleViewModelChangedMessage(viewModel));
                 messenger.Send(new HeuristicsViewModelChangedMessage(viewModel));
-                messenger.Send(new RunViewModelChangedMessage(viewModel));
+                messenger.Send(new PathfindingViewModelChangedMessage(viewModel));
                 messenger.Send(new SpreadViewModelChangedMessage(viewModel));
             }
         }

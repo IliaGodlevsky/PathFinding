@@ -27,15 +27,15 @@ namespace Pathfinding.ConsoleApp.Test
                     .AsSelf().SingleInstance();
             }))
             {
-                IReadOnlyCollection<PathfindingHistoryModel<VertexModel>> histories
-                    = new PathfindingHistoryModel<VertexModel>().Enumerate().ToArray();
-                mock.Mock<IRequestService<VertexModel>>()
+                IReadOnlyCollection<PathfindingHistoryModel<GraphVertexModel>> histories
+                    = new PathfindingHistoryModel<GraphVertexModel>().Enumerate().ToArray();
+                mock.Mock<IRequestService<GraphVertexModel>>()
                     .Setup(x => x.CreatePathfindingHistoriesAsync(
                         It.IsAny<IEnumerable<PathfindingHistorySerializationModel>>(),
                         It.IsAny<CancellationToken>()))
                     .Returns(Task.FromResult(histories));
 
-                var viewModel = mock.Create<LoadGraphButtonViewModel>();
+                var viewModel = mock.Create<GraphImportViewModel>();
                 viewModel.FilePath = filePath;
                 bool canExecute = await viewModel.LoadGraphCommand.CanExecute.FirstOrDefaultAsync();
 
@@ -47,7 +47,7 @@ namespace Pathfinding.ConsoleApp.Test
                 Assert.Multiple(() =>
                 {
                     Assert.That(canExecute == shouldLoad);
-                    mock.Mock<IRequestService<VertexModel>>()
+                    mock.Mock<IRequestService<GraphVertexModel>>()
                         .Verify(x => x.CreatePathfindingHistoriesAsync(
                             It.IsAny<IEnumerable<PathfindingHistorySerializationModel>>(),
                             It.IsAny<CancellationToken>()), methodCalls);

@@ -1,12 +1,4 @@
 ﻿namespace Pathfinding.ConsoleApp.Messages.ViewModel
 {
-    internal sealed class GraphsDeletedMessage
-    {
-        public int[] GraphIds { get; }
-
-        public GraphsDeletedMessage(int[] graphIds)
-        {
-            GraphIds = graphIds;
-        }
-    }
+    internal sealed record class GraphsDeletedMessage(int[] GraphIds);
 }

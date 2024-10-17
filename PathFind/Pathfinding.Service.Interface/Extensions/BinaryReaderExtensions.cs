@@ -33,29 +33,12 @@ namespace Pathfinding.Service.Interface.Extensions
             return isNull ? string.Empty : reader.ReadString();
         }
 
-        public static int? ReadNullableInt(this BinaryReader reader)
+        public static TimeSpan ReadTimeSpan(this BinaryReader reader)
         {
-            bool hasValue = reader.ReadBoolean();
-            return hasValue ? reader.ReadInt32() : null;
+            return TimeSpan.FromMilliseconds(reader.ReadDouble());
         }
 
-        public static TimeSpan? ReadNullableTimeSpan(this BinaryReader reader)
-        {
-            bool hasValue = reader.ReadBoolean();
-            return hasValue ? TimeSpan.FromMilliseconds(reader.ReadDouble()) : null;
-        }
 
-        public static double? ReadNullableDouble(this BinaryReader reader)
-        {
-            bool hasValue = reader.ReadBoolean();
-            return hasValue ? reader.ReadDouble() : null;
-        }
-
-        public static void Write(this BinaryWriter writer, IReadOnlyCollection<int> array)
-        {
-            writer.Write(array.Count);
-            array.ForEach(writer.Write);
-        }
 
         public static IReadOnlyList<int> ReadArray(this BinaryReader reader)
         {

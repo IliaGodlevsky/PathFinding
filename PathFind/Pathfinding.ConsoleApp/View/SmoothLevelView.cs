@@ -11,11 +11,11 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class SmoothLevelView : FrameView
     {
-        private readonly CreateGraphViewModel viewModel;
+        private readonly GraphAssembleViewModel viewModel;
         private readonly SmoothLevelViewModel smoothLevelViewModel;
         private readonly CompositeDisposable disposables = new CompositeDisposable();
 
-        public SmoothLevelView(CreateGraphViewModel viewModel,
+        public SmoothLevelView(GraphAssembleViewModel viewModel,
             SmoothLevelViewModel smoothLevelViewModel)
         {
             this.viewModel = viewModel;

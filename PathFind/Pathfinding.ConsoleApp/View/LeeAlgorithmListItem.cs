@@ -12,10 +12,10 @@ namespace Pathfinding.ConsoleApp.View
     internal sealed class LeeAlgorithmListItem : Label
     {
         private readonly IMessenger messenger;
-        private readonly CreateLeeAlgorithmRunViewModel viewModel;
+        private readonly LeeAlgorithmViewModel viewModel;
 
         public LeeAlgorithmListItem([KeyFilter(KeyFilters.Views)] IMessenger messenger,
-            CreateLeeAlgorithmRunViewModel viewModel)
+            LeeAlgorithmViewModel viewModel)
         {
             Text = viewModel.AlgorithmId;
             this.messenger = messenger;
@@ -30,7 +30,7 @@ namespace Pathfinding.ConsoleApp.View
                 messenger.Send(new CloseStepRulesViewMessage());
                 messenger.Send(new CloseHeuristicsViewMessage());
                 messenger.Send(new CloseSpreadViewMessage());
-                messenger.Send(new RunViewModelChangedMessage(viewModel));
+                messenger.Send(new PathfindingViewModelChangedMessage(viewModel));
             }
         }
     }

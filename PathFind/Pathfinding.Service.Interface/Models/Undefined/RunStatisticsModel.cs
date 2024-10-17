@@ -12,15 +12,15 @@ namespace Pathfinding.Service.Interface.Models.Undefined
 
         public string StepRule { get; set; } = null;
 
-        public int? Visited { get; set; } = null;
+        public int Visited { get; set; }
 
         public string ResultStatus { get; set; } = string.Empty;
 
-        public TimeSpan? Elapsed { get; set; } = null;
+        public TimeSpan Elapsed { get; set; }
 
-        public int? Steps { get; set; } = null;
+        public int Steps { get; set; }
 
-        public double? Cost { get; set; } = null;
+        public double Cost { get; set; }
 
         public string Spread { get; set; } = null;
     }

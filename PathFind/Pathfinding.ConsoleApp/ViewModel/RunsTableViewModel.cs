@@ -19,13 +19,13 @@ namespace Pathfinding.ConsoleApp.ViewModel
     internal sealed class RunsTableViewModel : BaseViewModel
     {
         private readonly IMessenger messenger;
-        private readonly IRequestService<VertexModel> service;
+        private readonly IRequestService<GraphVertexModel> service;
         private readonly ILog logger;
 
-        public ObservableCollection<RunModel> Runs { get; } = new();
+        public ObservableCollection<RunInfoModel> Runs { get; } = new();
 
-        private RunModel[] selected;
-        public RunModel[] Selected
+        private RunInfoModel[] selected;
+        public RunInfoModel[] Selected
         {
             get => selected;
             set
@@ -38,18 +38,17 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private int ActivatedGraphId { get; set; }
 
-        public ReactiveCommand<RunModel, Unit> ActivateRunCommand { get; }
+        public ReactiveCommand<RunInfoModel, Unit> ActivateRunCommand { get; }
 
         public RunsTableViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
-            IRequestService<VertexModel> service,
+            IRequestService<GraphVertexModel> service,
             ILog logger)
         {
             this.messenger = messenger;
             this.service = service;
             this.logger = logger;
-            ActivateRunCommand = ReactiveCommand.CreateFromTask<RunModel>(ActivateRun);
+            ActivateRunCommand = ReactiveCommand.CreateFromTask<RunInfoModel>(ActivateRun);
 
-            messenger.Register<RunHistoriesUploadedMessage>(this, OnRunUploaded);
             messenger.Register<RunCreatedMessaged>(this, OnRunCreated);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<GraphActivatedMessage>(this,
@@ -57,7 +56,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<RunsDeletedMessage>(this, OnRunsDeleteMessage);
         }
 
-        private async Task ActivateRun(RunModel model)
+        private async Task ActivateRun(RunInfoModel model)
         {
             await ExecuteSafe(async () =>
             {
@@ -71,7 +70,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             var statistics = await Task.Run(() => service.ReadRunStatisticsAsync(msg.GraphId))
                 .ConfigureAwait(false);
-            var models = statistics.Select(x => GetModel(x)).ToArray();
+            var models = statistics.Select(GetModel).ToArray();
             ActivatedGraphId = msg.GraphId;
             while (Runs.Count > 0)
             {
@@ -98,36 +97,25 @@ namespace Pathfinding.ConsoleApp.ViewModel
             Runs.Remove(toDelete);
         }
 
-        private void OnRunUploaded(object recipient, RunHistoriesUploadedMessage msg)
-        {
-            if (msg.Runs.Length > 0)
-            {
-                var models = msg.Runs
-                    .Select(x => x.Statistics)
-                    .Select(x => GetModel(x)).ToArray();
-                Runs.Add(models);
-            }
-        }
-
         private void OnRunCreated(object recipient, RunCreatedMessaged msg)
         {
             Runs.Add(GetModel(msg.Model.Statistics));
         }
 
-        private RunModel GetModel(RunStatisticsModel model)
+        private RunInfoModel GetModel(RunStatisticsModel model)
         {
             return new()
             {
                 RunId = model.AlgorithmRunId,
                 Name = model.AlgorithmId,
-                Cost = model.Cost ?? 0,
-                Steps = model.Steps ?? 0,
+                Cost = model.Cost,
+                Steps = model.Steps,
                 Status = model.ResultStatus,
-                StepRule = model.StepRule ?? string.Empty,
-                Heuristics = model.Heuristics ?? string.Empty,
-                Spread = model.Spread?.ToString() ?? string.Empty,
-                Elapsed = model.Elapsed ?? TimeSpan.FromMilliseconds(0),
-                Visited = model.Visited ?? 0
+                StepRule = model.StepRule,
+                Heuristics = model.Heuristics,
+                Spread = model.Spread,
+                Elapsed = model.Elapsed,
+                Visited = model.Visited
             };
         }
     }

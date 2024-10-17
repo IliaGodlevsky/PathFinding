@@ -21,10 +21,10 @@ namespace Pathfinding.ConsoleApp.Test
         public async Task CreateGraphCommand_FullData_ShouldCreate()
         {
             using var mock = AutoMock.GetLoose();
-            mock.Mock<IGraphAssemble<VertexModel>>()
+            mock.Mock<IGraphAssemble<GraphVertexModel>>()
                 .Setup(x => x.AssembleGraph(It.IsAny<IReadOnlyList<int>>()))
-                .Returns(Graph<VertexModel>.Empty);
-            var viewModel = mock.Create<CreateGraphViewModel>();
+                .Returns(Graph<GraphVertexModel>.Empty);
+            var viewModel = mock.Create<GraphAssembleViewModel>();
             viewModel.NeighborhoodFactory = ("Test", new MooreNeighborhoodFactory());
             viewModel.Name = "Test";
             viewModel.Length = 1;
@@ -36,9 +36,9 @@ namespace Pathfinding.ConsoleApp.Test
 
             Assert.Multiple(() =>
             {
-                mock.Mock<IRequestService<VertexModel>>()
+                mock.Mock<IRequestService<GraphVertexModel>>()
                     .Verify(service => service.CreateGraphAsync(
-                        It.IsAny<CreateGraphRequest<VertexModel>>(),
+                        It.IsAny<CreateGraphRequest<GraphVertexModel>>(),
                         It.IsAny<CancellationToken>()), Times.Once);
                 mock.Mock<IMessenger>()
                     .Verify(x => x.Send(
@@ -51,7 +51,7 @@ namespace Pathfinding.ConsoleApp.Test
         public async Task CanExecute_ValidData_ShouldReturnTrue()
         {
             using var mock = AutoMock.GetLoose();
-            var viewModel = mock.Create<CreateGraphViewModel>();
+            var viewModel = mock.Create<GraphAssembleViewModel>();
 
             viewModel.NeighborhoodFactory = ("Test", new MooreNeighborhoodFactory());
             viewModel.Name = "Test";
@@ -69,7 +69,7 @@ namespace Pathfinding.ConsoleApp.Test
         public async Task CanExecute_DataIsUnset_ShouldReturnFalse()
         {
             using var mock = AutoMock.GetLoose();
-            var viewModel = mock.Create<CreateGraphViewModel>();
+            var viewModel = mock.Create<GraphAssembleViewModel>();
 
             var canExecute = await viewModel.CreateCommand.CanExecute.FirstOrDefaultAsync();
 

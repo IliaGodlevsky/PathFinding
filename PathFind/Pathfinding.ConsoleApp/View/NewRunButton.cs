@@ -12,7 +12,8 @@ namespace Pathfinding.ConsoleApp.View
         private readonly IMessenger messenger;
         private readonly NewRunButtonViewModel viewModel;
 
-        public NewRunButton([KeyFilter(KeyFilters.Views)] IMessenger messenger,
+        public NewRunButton(
+            [KeyFilter(KeyFilters.Views)] IMessenger messenger,
             NewRunButtonViewModel viewModel)
         {
             Initialize();
@@ -25,7 +26,7 @@ namespace Pathfinding.ConsoleApp.View
         {
             if (e.MouseEvent.Flags == MouseFlags.Button1Clicked && viewModel.CanCreate())
             {
-                messenger.Send(new OpenRunCreationViewMessage());
+                messenger.Send(new OpenAlgorithmCreationViewMessage());
             }
         }
     }

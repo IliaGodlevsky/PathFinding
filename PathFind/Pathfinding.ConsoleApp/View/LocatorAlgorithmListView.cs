@@ -12,11 +12,11 @@ namespace Pathfinding.ConsoleApp.View
     internal sealed class LocatorAlgorithmListView : Label
     {
         private readonly IMessenger messenger;
-        private readonly CreateLocatorAlgorithmRunViewModel viewModel;
+        private readonly SnakeAlgorithmViewModel viewModel;
 
         public LocatorAlgorithmListView(
             [KeyFilter(KeyFilters.Views)] IMessenger messenger,
-            CreateLocatorAlgorithmRunViewModel viewModel)
+            SnakeAlgorithmViewModel viewModel)
         {
             Text = viewModel.AlgorithmId;
             Y = 1;
@@ -33,7 +33,7 @@ namespace Pathfinding.ConsoleApp.View
                 messenger.Send(new CloseStepRulesViewMessage());
                 messenger.Send(new CloseHeuristicsViewMessage());
                 messenger.Send(new CloseSpreadViewMessage());
-                messenger.Send(new RunViewModelChangedMessage(viewModel));
+                messenger.Send(new PathfindingViewModelChangedMessage(viewModel));
             }
         }
     }

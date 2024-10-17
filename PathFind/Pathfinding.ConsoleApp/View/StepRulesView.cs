@@ -33,7 +33,7 @@ namespace Pathfinding.ConsoleApp.View
             messenger.Register<StepRuleViewModelChangedMessage>(this, OnViewModelChanged);
             messenger.Register<OpenStepRuleViewMessage>(this, OnOpen);
             messenger.Register<CloseStepRulesViewMessage>(this, OnStepRulesViewClose);
-            messenger.Register<CloseRunCreationViewMessage>(this, OnRunCreationViewClosed);
+            messenger.Register<CloseAlgorithmCreationViewMessage>(this, OnRunCreationViewClosed);
         }
 
         private void OnViewModelChanged(object recipient, StepRuleViewModelChangedMessage msg)
@@ -62,7 +62,7 @@ namespace Pathfinding.ConsoleApp.View
             Visible = false;
         }
 
-        private void OnRunCreationViewClosed(object recipient, CloseRunCreationViewMessage msg)
+        private void OnRunCreationViewClosed(object recipient, CloseAlgorithmCreationViewMessage msg)
         {
             disposables.Clear();
             Visible = false;

@@ -45,24 +45,24 @@ namespace Pathfinding.ConsoleApp.View
                 .DisposeWith(disposables);
         }
 
-        private RunModel GetRunModel(int selectedRow)
+        private RunInfoModel GetRunModel(int selectedRow)
         {
             return new()
             {
                 RunId = (int)table.Rows[selectedRow][IdCol],
-                Name = (string)table.Rows[selectedRow][AlgorithmCol],
+                Name = table.Rows[selectedRow][AlgorithmCol].ToString(),
                 Visited = (int)table.Rows[selectedRow][VisitedCol],
                 Steps = (int)table.Rows[selectedRow][StepsCol],
                 Cost = (double)table.Rows[selectedRow][CostCol],
                 Elapsed = (TimeSpan)table.Rows[selectedRow][ElapsedCol],
-                StepRule = (string)table.Rows[selectedRow][StepCol],
-                Heuristics = (string)table.Rows[selectedRow][LogicCol],
-                Spread = (string)table.Rows[selectedRow][SpreadCol],
-                Status = (string)table.Rows[selectedRow][StatusCol]
+                StepRule = table.Rows[selectedRow][StepCol].ToString(),
+                Heuristics = table.Rows[selectedRow][LogicCol].ToString(),
+                Spread = table.Rows[selectedRow][SpreadCol].ToString(),
+                Status = table.Rows[selectedRow][StatusCol].ToString()
             };
         }
 
-        private void OnAdded(RunModel model)
+        private void OnAdded(RunInfoModel model)
         {
             table.Rows.Add(model.RunId, model.Name, model.Visited,
                 model.Steps, model.Cost, model.Elapsed, model.StepRule,
@@ -72,7 +72,7 @@ namespace Pathfinding.ConsoleApp.View
             Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
         }
 
-        private void OnRemoved(RunModel model)
+        private void OnRemoved(RunInfoModel model)
         {
             var row = table.Rows.Find(model.RunId);
             var index = table.Rows.IndexOf(row);

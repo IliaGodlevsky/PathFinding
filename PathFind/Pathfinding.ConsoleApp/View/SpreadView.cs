@@ -32,7 +32,7 @@ namespace Pathfinding.ConsoleApp.View
             messenger.Register<SpreadViewModelChangedMessage>(this, OnViewModelChanged);
             messenger.Register<OpenSpreadViewMessage>(this, OnOpen);
             messenger.Register<CloseSpreadViewMessage>(this, OnStepRulesViewClose);
-            messenger.Register<CloseRunCreationViewMessage>(this, OnRunCreationViewClosed);
+            messenger.Register<CloseAlgorithmCreationViewMessage>(this, OnRunCreationViewClosed);
         }
 
         private void OnViewModelChanged(object recipient, SpreadViewModelChangedMessage msg)
@@ -61,7 +61,7 @@ namespace Pathfinding.ConsoleApp.View
             Visible = false;
         }
 
-        private void OnRunCreationViewClosed(object recipient, CloseRunCreationViewMessage msg)
+        private void OnRunCreationViewClosed(object recipient, CloseAlgorithmCreationViewMessage msg)
         {
             disposables.Clear();
             Visible = false;

@@ -48,14 +48,14 @@ namespace Pathfinding.ConsoleApp.View
                             : GetParametresModel(x.NewRow).Enumerate()
                             )
                           .ToArray())
-                .BindTo(viewModel, x => x.Selected)
+                .BindTo(viewModel, x => x.SelectedGraphs)
                 .DisposeWith(disposables);
             MouseClick += MouseEntered;
         }
 
         private void MouseEntered(MouseEventArgs e)
         {
-            messenger.Send(new CloseAlgorithmRunViewMessage());
+            messenger.Send(new CloseAlgorithmRunFieldViewMessage());
         }
 
         private GraphInfoModel GetParametresModel(int selectedRow)

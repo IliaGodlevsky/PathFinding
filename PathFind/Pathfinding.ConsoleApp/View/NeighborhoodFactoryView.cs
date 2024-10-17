@@ -12,12 +12,12 @@ namespace Pathfinding.ConsoleApp.View
     internal sealed partial class NeighborhoodFactoryView : FrameView
     {
         private readonly CompositeDisposable disposables = new();
-        private readonly NeighborhoodFactoryViewModel factoryViewModel;
-        private readonly CreateGraphViewModel viewModel;
+        private readonly NeighborhoodFactoriesViewModel factoryViewModel;
+        private readonly GraphAssembleViewModel viewModel;
 
         public NeighborhoodFactoryView(
-            NeighborhoodFactoryViewModel factoryViewModel,
-            CreateGraphViewModel viewModel)
+            NeighborhoodFactoriesViewModel factoryViewModel,
+            GraphAssembleViewModel viewModel)
         {
             this.factoryViewModel = factoryViewModel;
             this.viewModel = viewModel;

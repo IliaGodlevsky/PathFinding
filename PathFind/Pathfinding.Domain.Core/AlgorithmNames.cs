@@ -7,7 +7,7 @@
         public const string AStar = "A*";
         public const string CostGreedy = "DFS cost";
         public const string DistanceFirst = "DFS dist";
-        public const string Locator = "Locator";
+        public const string Snake = "Snake";
         public const string AStarGreedy = "A* greedy";
         public const string DepthRandom = "DFS rand";
         public const string IDAStar = "IDA*";

@@ -37,29 +37,29 @@ namespace Pathfinding.ConsoleApp.View
                 .Do(RenderGraph)
                 .Subscribe()
                 .DisposeWith(disposables);
-            messenger.Register<OpenAlgorithmRunViewMessage>(this, OnOpenRunViewRecieved);
-            messenger.Register<CloseAlgorithmRunViewMessage>(this, OnCloseRunViewMessage);
+            messenger.Register<OpenAlgorithmRunViewMessage>(this, OnOpenAlgorithmRunView);
+            messenger.Register<CloseAlgorithmRunFieldViewMessage>(this, OnCloseAlgorithmRunField);
         }
 
-        private void OnOpenRunViewRecieved(object recipient, OpenAlgorithmRunViewMessage msg)
+        private void OnOpenAlgorithmRunView(object recipient, OpenAlgorithmRunViewMessage msg)
         {
             Visible = false;
         }
 
-        private void OnCloseRunViewMessage(object recipient, CloseAlgorithmRunViewMessage msg)
+        private void OnCloseAlgorithmRunField(object recipient, CloseAlgorithmRunFieldViewMessage msg)
         {
             Visible = true;
         }
 
-        private void RenderGraph(IGraph<VertexModel> graph)
+        private void RenderGraph(IGraph<GraphVertexModel> graph)
         {
             RemoveAll();
             vertexDisposables.Clear();
 
-            var views = new List<VertexView>();
+            var views = new List<GraphVertexView>();
             foreach (var vertex in graph)
             {
-                var view = new VertexView(vertex);
+                var view = new GraphVertexView(vertex);
                 view.DisposeWith(vertexDisposables);
                 SubscribeToButton1Clicked(view);
                 SubscribeToButton3Clicked(view);
@@ -73,18 +73,18 @@ namespace Pathfinding.ConsoleApp.View
             });
         }
 
-        private void SubscribeToButton1Clicked(VertexView view)
+        private void SubscribeToButton1Clicked(GraphVertexView view)
         {
             view.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Pressed)
-                .Select(x => (VertexModel)x.MouseEvent.View.Data)
+                .Select(x => (GraphVertexModel)x.MouseEvent.View.Data)
                 .InvokeCommand(rangeViewModel, x => x.AddToRangeCommand)
                 .DisposeWith(vertexDisposables);
 
             view.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button1Pressed)
                        && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonCtrl))
-                .Select(x => (VertexModel)x.MouseEvent.View.Data)
+                .Select(x => (GraphVertexModel)x.MouseEvent.View.Data)
                 .InvokeCommand(rangeViewModel, x => x.RemoveFromRangeCommand)
                 .DisposeWith(vertexDisposables);
 
@@ -96,27 +96,27 @@ namespace Pathfinding.ConsoleApp.View
                 .DisposeWith(vertexDisposables);
         }
 
-        private void SubscribeToButton3Clicked(VertexView view)
+        private void SubscribeToButton3Clicked(GraphVertexView view)
         {
             view.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button3Pressed)
                          && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonCtrl)
                          || x.MouseEvent.Flags == MouseFlags.Button3Clicked)
-                .Select(x => (VertexModel)x.MouseEvent.View.Data)
+                .Select(x => (GraphVertexModel)x.MouseEvent.View.Data)
                 .InvokeCommand(viewModel, x => x.ReverseVertexCommand)
                 .DisposeWith(vertexDisposables);
         }
 
-        private void SubscribeOnWheelButton(VertexView view)
+        private void SubscribeOnWheelButton(GraphVertexView view)
         {
             view.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.WheeledDown))
-                .Select(x => (VertexModel)x.MouseEvent.View.Data)
+                .Select(x => (GraphVertexModel)x.MouseEvent.View.Data)
                 .InvokeCommand(viewModel, x => x.DecreaseVertexCostCommand)
                 .DisposeWith(vertexDisposables);
             view.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.WheeledUp))
-                .Select(x => (VertexModel)x.MouseEvent.View.Data)
+                .Select(x => (GraphVertexModel)x.MouseEvent.View.Data)
                 .InvokeCommand(viewModel, x => x.IncreaseVertexCostCommand)
                 .DisposeWith(vertexDisposables);
         }

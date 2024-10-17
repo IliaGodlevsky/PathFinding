@@ -1,6 +1,4 @@
 ﻿namespace Pathfinding.ConsoleApp.Messages.View
 {
-    internal sealed class OpenSpreadViewMessage
-    {
-    }
+    internal sealed record class OpenSpreadViewMessage;
 }

@@ -31,7 +31,7 @@ namespace Pathfinding.ConsoleApp.View
             messenger.Register<HeuristicsViewModelChangedMessage>(this, OnViewModelChanged);
             messenger.Register<OpenHeuristicsViewMessage>(this, OnOpen);
             messenger.Register<CloseHeuristicsViewMessage>(this, OnHeuristicsViewClosed);
-            messenger.Register<CloseRunCreationViewMessage>(this, OnRunCreationViewClosed);
+            messenger.Register<CloseAlgorithmCreationViewMessage>(this, OnRunCreationViewClosed);
         }
 
         private void OnViewModelChanged(object recipient, HeuristicsViewModelChangedMessage msg)
@@ -60,7 +60,7 @@ namespace Pathfinding.ConsoleApp.View
             Visible = false;
         }
 
-        private void OnRunCreationViewClosed(object recipient, CloseRunCreationViewMessage msg)
+        private void OnRunCreationViewClosed(object recipient, CloseAlgorithmCreationViewMessage msg)
         {
             disposables.Clear();
             Visible = false;

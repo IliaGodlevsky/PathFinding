@@ -13,14 +13,14 @@ namespace Pathfinding.ConsoleApp.Test
     [TestFixture, UnitTest]
     internal class DeleteRunButtonViewModelTests
     {
-        private Mock<IRequestService<VertexModel>> service;
+        private Mock<IRequestService<GraphVertexModel>> service;
         private IMessenger messenger;
 
         [SetUp]
         public void SetUp()
         {
             messenger = new WeakReferenceMessenger();
-            service = new Mock<IRequestService<VertexModel>>();
+            service = new Mock<IRequestService<GraphVertexModel>>();
             service.Setup(x => x.DeleteRunsAsync(
                 It.IsAny<int[]>(),
                 It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));

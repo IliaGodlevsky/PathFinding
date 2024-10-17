@@ -13,14 +13,14 @@ namespace Pathfinding.ConsoleApp.Test
     [TestFixture, UnitTest]
     public class DeleteGraphButtonViewModelTests
     {
-        private Mock<IRequestService<VertexModel>> service;
+        private Mock<IRequestService<GraphVertexModel>> service;
         private IMessenger messenger;
 
         [SetUp]
         public void SetUp()
         {
             messenger = new WeakReferenceMessenger();
-            service = new Mock<IRequestService<VertexModel>>();
+            service = new Mock<IRequestService<GraphVertexModel>>();
             service.Setup(x => x.DeleteGraphsAsync(
                 It.IsAny<int[]>(),
                 It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
@@ -29,7 +29,7 @@ namespace Pathfinding.ConsoleApp.Test
         [Test]
         public async Task DeleteCommand_SelectedGraphs_ShouldDelete()
         {
-            var viewModel = new DeleteGraphButtonViewModel(messenger,
+            var viewModel = new GraphDeletionViewModel(messenger,
                 service.Object, new NullLog());
             int[] ids = new[] { 1, 2 };
             bool isDeleted = false;
@@ -54,7 +54,7 @@ namespace Pathfinding.ConsoleApp.Test
         [Test]
         public async Task DeleteCommand_NoSelectedGraph_CantExecute()
         {
-            var viewModel = new DeleteGraphButtonViewModel(messenger,
+            var viewModel = new GraphDeletionViewModel(messenger,
                 service.Object, new NullLog());
 
             var canExecute = await viewModel.DeleteCommand.CanExecute.FirstOrDefaultAsync();

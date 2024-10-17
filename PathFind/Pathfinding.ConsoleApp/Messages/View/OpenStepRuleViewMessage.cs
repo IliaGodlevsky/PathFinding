@@ -1,6 +1,4 @@
 ﻿namespace Pathfinding.ConsoleApp.Messages.View
 {
-    internal sealed class OpenStepRuleViewMessage
-    {
-    }
+    internal sealed record class OpenStepRuleViewMessage;
 }
