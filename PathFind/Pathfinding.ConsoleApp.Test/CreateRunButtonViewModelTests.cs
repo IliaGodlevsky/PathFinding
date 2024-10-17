@@ -15,7 +15,6 @@ using Pathfinding.Logging.Interface;
 using Pathfinding.Logging.Loggers;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Read;
-using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;

@@ -65,7 +65,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             await ExecuteSafe(async () =>
             {
-                var graphs = await service.ReadSerializationHistoriesAsync(graphIds)
+                var graphs = await Task.Run(() => service.ReadSerializationHistoriesAsync(graphIds))
                     .ConfigureAwait(false);
                 await serializer.SerializeToFileAsync(graphs.ToList(), FilePath)
                     .ConfigureAwait(false);

@@ -14,7 +14,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
         where TStorage : new()
     {
         protected readonly IEnumerable<IVertex> pathfindingRange;
-        protected readonly HashSet<IVertex> visited 
+        protected readonly HashSet<IVertex> visited
             = new(VertexEqualityComparer.Interface);
         protected readonly Dictionary<Coordinate, IVertex> traces
             = new(CoordinateEqualityComparer.Interface);

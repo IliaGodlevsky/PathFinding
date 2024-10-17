@@ -6,6 +6,7 @@ namespace Pathfinding.ConsoleApp.Messages.ViewModel
 {
     internal sealed class QueryPathfindingRangeMessage
     {
-        public IReadOnlyCollection<GraphVertexModel> PathfindingRange { get; set; } = Array.Empty<GraphVertexModel>();
+        public IReadOnlyCollection<GraphVertexModel> PathfindingRange { get; set; }
+            = Array.Empty<GraphVertexModel>();
     }
 }

@@ -22,8 +22,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref heuristic, value);
         }
 
-        public DistanceFirstAlgorithmViewModel(IRequestService<GraphVertexModel> service,
-            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger, ILog logger) : base(service, messenger, logger)
+        public DistanceFirstAlgorithmViewModel(
+            IRequestService<GraphVertexModel> service,
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
+            ILog logger) : base(service, messenger, logger)
         {
         }
 

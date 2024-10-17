@@ -3,8 +3,6 @@ using Pathfinding.Domain.Interface;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Serialization;
 using Pathfinding.Service.Interface.Requests.Create;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Mappings
 {

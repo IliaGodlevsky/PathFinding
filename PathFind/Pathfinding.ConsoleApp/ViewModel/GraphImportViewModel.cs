@@ -69,7 +69,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 using var fileStream = streamProvider(FilePath);
                 var histories = await serializer.DeserializeFromAsync(fileStream)
                     .ConfigureAwait(false);
-                var result = await service.CreatePathfindingHistoriesAsync(histories)
+                var result = await Task.Run(() => service.CreatePathfindingHistoriesAsync(histories))
                     .ConfigureAwait(false);
                 var graphs = result.Select(x => x.Graph).ToArray();
                 messenger.Send(new GraphCreatedMessage(graphs));

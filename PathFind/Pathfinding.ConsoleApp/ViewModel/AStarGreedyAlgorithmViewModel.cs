@@ -31,7 +31,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public AStarGreedyAlgorithmViewModel(
             IRequestService<GraphVertexModel> service,
-            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger, 
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ILog logger)
             : base(service, messenger, logger)
         {

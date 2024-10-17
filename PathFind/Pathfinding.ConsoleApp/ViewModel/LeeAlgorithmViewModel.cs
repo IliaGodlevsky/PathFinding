@@ -6,7 +6,6 @@ using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
-using Pathfinding.Service.Interface.Models.Undefined;
 using System.Collections.Generic;
 
 namespace Pathfinding.ConsoleApp.ViewModel
@@ -15,7 +14,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
     {
         public LeeAlgorithmViewModel(
             IRequestService<GraphVertexModel> service,
-            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger, 
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ILog logger)
             : base(service, messenger, logger)
         {

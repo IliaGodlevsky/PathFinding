@@ -149,7 +149,7 @@ namespace Pathfinding.Infrastructure.Business
         public async Task<GraphModel<T>> ReadGraphAsync(int graphId,
             CancellationToken token = default)
         {
-            return await Transaction(async (unitOfWork, t) 
+            return await Transaction(async (unitOfWork, t)
                 => await unitOfWork.ReadGraphAsync<T>(graphId, mapper, t), token)
                 .ConfigureAwait(false);
         }

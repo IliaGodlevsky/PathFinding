@@ -131,7 +131,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             await ExecuteSafe(async () =>
             {
-                var range = (await Task.Run(()=> service.ReadRangeAsync(GraphId))
+                var range = (await Task.Run(() => service.ReadRangeAsync(GraphId))
                     .ConfigureAwait(false))
                     .Select(x => (x.Id, x.VertexId))
                     .ToList();
