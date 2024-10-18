@@ -57,26 +57,15 @@ namespace Pathfinding.Shared.Extensions
         {
             while (limit-- > 0)
             {
-                int dims = dimensions;
-                var coordinateValues = new int[dimensions];
-                while (dims-- > 0)
-                {
-                    coordinateValues[dims] = random.NextInt(range);
-                }
-                yield return new Coordinate(coordinateValues);
+                yield return random.GenerateCoordinate(range, dimensions);
             }
         }
 
         public static Coordinate GenerateCoordinate(this IRandom random,
             InclusiveValueRange<int> range, int dimensions)
         {
-            int dims = dimensions;
-            var coordinateValues = new int[dimensions];
-            while (dims-- > 0)
-            {
-                coordinateValues[dims] = random.NextInt(range);
-            }
-            return new Coordinate(coordinateValues);
+            var coordinate = random.GenerateNumbers(range, dimensions);
+            return new Coordinate(coordinate);
         }
     }
 }

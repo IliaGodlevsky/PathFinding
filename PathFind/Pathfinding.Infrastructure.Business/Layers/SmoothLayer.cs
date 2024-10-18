@@ -1,19 +1,14 @@
-﻿using Pathfinding.Domain.Interface;
+﻿using Pathfinding.Domain.Core;
+using Pathfinding.Domain.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Extensions;
+using System;
 using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Layers
 {
     public sealed class SmoothLayer : ILayer
     {
-        private readonly IMeanCost meanCost;
-
-        public SmoothLayer(IMeanCost meanCost)
-        {
-            this.meanCost = meanCost;
-        }
-
         public void Overlay(IGraph<IVertex> graph)
         {
             var costs = graph.Select(GetAverageCost);
@@ -28,7 +23,16 @@ namespace Pathfinding.Infrastructure.Business.Layers
         private int GetAverageCost(IVertex vertex)
         {
             return (int)vertex.Neighbours
-                .Average(neighbour => meanCost.Calculate(neighbour, vertex));
+                .Average(neighbour => CalculateMeanCost(neighbour, vertex));
+        }
+
+        private double CalculateMeanCost(IVertex neighbor, IVertex vertex)
+        {
+            int neighbourCost = neighbor.Cost.CurrentCost;
+            int vertexCost = vertex.Cost.CurrentCost;
+            double averageCost = (vertexCost + neighbourCost) / 2;
+            double roundAverageCost = Math.Ceiling(averageCost);
+            return Convert.ToInt32(roundAverageCost);
         }
     }
 }

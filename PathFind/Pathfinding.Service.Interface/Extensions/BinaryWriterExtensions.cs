@@ -18,11 +18,6 @@ namespace Pathfinding.Service.Interface.Extensions
             serializable.Serialize(writer);
         }
 
-        public static void WriteTimeSpan(this BinaryWriter writer, TimeSpan time)
-        {
-            writer.Write(time.TotalMilliseconds);
-        }
-
         public static void WriteNullableString(this BinaryWriter writer, string value)
         {
             bool isNull = string.IsNullOrEmpty(value);

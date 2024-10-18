@@ -15,13 +15,11 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations
         {
             var visitedVerticesSerializer = new JsonSerializer<IEnumerable<VisitedVerticesModel>>();
             var coordinateModelSerializer = new JsonSerializer<IEnumerable<CoordinateModel>>();
-            var intArraySerializer = new JsonSerializer<IEnumerable<int>>();
             var coordinateCostPairSerializer = new JsonSerializer<IEnumerable<CostCoordinatePair>>();
 
             var profiles = new Profile[]
             {
                 new UntitledMappingProfile(coordinateModelSerializer,
-                    intArraySerializer,
                     visitedVerticesSerializer,
                     coordinateCostPairSerializer),
                 new SubAlgorithmsMappingProfile(),

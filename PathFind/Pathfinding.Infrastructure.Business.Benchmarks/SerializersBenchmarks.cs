@@ -72,24 +72,5 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
             var memory = new MemoryStream();
             await serializer.SerializeToAsync(toSerialize.Enumerate(), memory);
         }
-
-        [Benchmark]
-        public async Task CryptoSerializerBenchmark()
-        {
-            var serializer = new JsonSerializer<Serializable>();
-            var crypto = new CryptoSerializer<Serializable>(serializer);
-            var memory = new MemoryStream();
-            await crypto.SerializeToAsync(toSerialize, memory);
-        }
-
-        [Benchmark]
-        public async Task CryptoCompressSerializerBenchmark()
-        {
-            var serializer = new JsonSerializer<Serializable>();
-            var compress = new CompressSerializer<Serializable>(serializer);
-            var crypto = new CryptoSerializer<Serializable>(compress);
-            var memory = new MemoryStream();
-            await crypto.SerializeToAsync(toSerialize, memory);
-        }
     }
 }

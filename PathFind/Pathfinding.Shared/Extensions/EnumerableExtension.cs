@@ -101,11 +101,6 @@ namespace Pathfinding.Shared.Extensions
             return true;
         }
 
-        public static IEnumerable<T> Except<T>(this IEnumerable<T> collection, params T[] items)
-        {
-            return collection.Except(items.AsEnumerable());
-        }
-
         public static IEnumerable<T> TakeOrDefault<T>(this IEnumerable<T> collection, int number, T defaultValue = default)
         {
             int count = 0;

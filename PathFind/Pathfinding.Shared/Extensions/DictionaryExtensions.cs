@@ -20,11 +20,11 @@ namespace Pathfinding.Shared.Extensions
 
         public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> dictionary)
         {
-            switch (dictionary)
+            return dictionary switch
             {
-                case IDictionary<TKey, TValue> d: return new Dictionary<TKey, TValue>(d);
-                default: return dictionary.ToDictionary(item => item.Key, item => item.Value);
-            }
+                IDictionary<TKey, TValue> d => new Dictionary<TKey, TValue>(d),
+                _ => dictionary.ToDictionary(item => item.Key, item => item.Value),
+            };
         }
 
         public static IReadOnlyDictionary<TKey, TValue> AsReadOnly<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)

@@ -16,11 +16,6 @@ namespace Pathfinding.Infrastructure.Data.Extensions
             return coordinate.CoordinatesValues.ElementAtOrDefault(1);
         }
 
-        public static int GetZ(this Coordinate coordinate)
-        {
-            return coordinate.CoordinatesValues.ElementAtOrDefault(2);
-        }
-
         public static bool IsCardinal(this Coordinate self, Coordinate coordinate)
         {
             // Cardinal coordinate differs from the

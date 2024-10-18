@@ -51,11 +51,9 @@
     <Compile Include="Extensions\SerializerExtensions.cs" />
     <Compile Include="IAlgorithm.cs" />
     <Compile Include="IBinarySerializable.cs" />
-    <Compile Include="ICrypto.cs" />
     <Compile Include="IGraphPath.cs" />
     <Compile Include="IHeuristic.cs" />
     <Compile Include="ILayer.cs" />
-    <Compile Include="IMeanCost.cs" />
     <Compile Include="IRequestService.cs" />
     <Compile Include="ISerializer.cs" />
     <Compile Include="IStepRule.cs" />
@@ -65,9 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\Create\CreateAlgorithmRunRequest.cs" />
     <Compile Include="Requests\Create\CreateAlgorithmRunHistoryRequest.cs" />
-    <Compile Include="Requests\Create\CreateGraphFromSerializationRequest.cs" />
     <Compile Include="Requests\Create\CreateGraphRequest.cs" />
-    <Compile Include="Requests\Create\CreateGraphsFromSerializationRequest.cs" />
     <Compile Include="Requests\Create\CreateGraphStateRequest.cs" />
     <Compile Include="Requests\Create\CreateNeighborsRequest.cs" />
     <Compile Include="Requests\Create\CreatePathfindingHistoryRequest.cs" />
@@ -79,7 +75,6 @@
     <Compile Include="Models\Read\GraphModel.cs" />
     <Compile Include="Models\Read\GraphStateModel.cs" />
     <Compile Include="Models\Read\PathfindingHistoryModel.cs" />
-    <Compile Include="Models\Read\RunVisualizationModel.cs" />
     <Compile Include="Models\Read\SubAlgorithmModel.cs" />
     <Compile Include="Models\Serialization\AlgorithmRunHistorySerializationModel.cs" />
     <Compile Include="Models\Serialization\AlgorithmRunSerializationModel.cs" />

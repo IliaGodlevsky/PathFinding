@@ -187,7 +187,7 @@ namespace Pathfinding.Infrastructure.Business
         public async Task<IReadOnlyCollection<PathfindingHistoryModel<T>>> ReadPathfindingHistoriesAsync(IEnumerable<int> graphIds,
             CancellationToken token = default)
         {
-            return await Transaction<List<PathfindingHistoryModel<T>>>(async (unitOfWork, t) =>
+            return await Transaction(async (unitOfWork, t) =>
             {
                 var result = new List<PathfindingHistoryModel<T>>();
                 foreach (var graphId in graphIds)
@@ -222,17 +222,21 @@ namespace Pathfinding.Infrastructure.Business
                 => await unit.RunRepository.ReadCount(graphId, t), token).ConfigureAwait(false);
         }
 
-        public async Task<RunVisualizationModel> ReadRunInfoAsync(int runId,
+        public async Task<AlgorithmRunHistoryModel> ReadRunHistoryAsync(int runId,
             CancellationToken token = default)
         {
             return await Transaction(async (unit, t) =>
             {
                 var graphState = await unit.GraphStateRepository.ReadByRunIdAsync(runId, t);
                 var subAlgorithms = await unit.SubAlgorithmRepository.ReadByAlgorithmRunIdAsync(runId, t);
-                return new RunVisualizationModel()
+                var statistics = await unit.StatisticsRepository.ReadByAlgorithmRunIdAsync(runId, t);
+                var run = await unit.RunRepository.ReadAsync(runId, t);
+                return new AlgorithmRunHistoryModel()
                 {
                     GraphState = mapper.Map<GraphStateModel>(graphState),
-                    Algorithms = mapper.Map<SubAlgorithmModel[]>(subAlgorithms).ToReadOnly()
+                    SubAlgorithms = mapper.Map<SubAlgorithmModel[]>(subAlgorithms).ToReadOnly(),
+                    Statistics = mapper.Map<RunStatisticsModel>(statistics),
+                    Run = mapper.Map<AlgorithmRunModel>(run)
                 };
             }, token).ConfigureAwait(false);
         }

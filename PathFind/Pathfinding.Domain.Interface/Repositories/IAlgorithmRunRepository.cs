@@ -10,6 +10,9 @@ namespace Pathfinding.Domain.Interface.Repositories
         Task<AlgorithmRun> CreateAsync(AlgorithmRun entity,
             CancellationToken token = default);
 
+        Task<AlgorithmRun> ReadAsync(int id,
+            CancellationToken token = default);
+
         Task<IEnumerable<AlgorithmRun>> ReadByGraphIdAsync(int graphId,
             CancellationToken token = default);
 

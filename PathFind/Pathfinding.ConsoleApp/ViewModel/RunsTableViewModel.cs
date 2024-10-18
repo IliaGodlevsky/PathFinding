@@ -60,7 +60,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             await ExecuteSafe(async () =>
             {
-                var run = await Task.Run(() => service.ReadRunInfoAsync(model.RunId))
+                var run = await Task.Run(() => service.ReadRunHistoryAsync(model.RunId))
                     .ConfigureAwait(false);
                 messenger.Send(new RunActivatedMessage(run));
             }, logger.Error).ConfigureAwait(false);

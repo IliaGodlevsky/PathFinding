@@ -119,7 +119,6 @@
     <Compile Include="Algorithms\StepRules\LandscapeStepRule.cs" />
     <Compile Include="Algorithms\StepRules\WalkStepRule.cs" />
     <Compile Include="Algorithms\WaveAlgorithm.cs" />
-    <Compile Include="Serializers\BinaryIntArraySerializer.cs" />
     <Compile Include="Commands\ExcludeSourceVertex.cs" />
     <Compile Include="Commands\ExcludeTargetVertex.cs" />
     <Compile Include="Commands\ExcludeTransitVertex.cs" />
@@ -143,19 +142,13 @@
     <Compile Include="Mappings\SubAlgorithmsMappingProfile.cs" />
     <Compile Include="Mappings\UntitledMappingProfile.cs" />
     <Compile Include="Mappings\VerticesMappingProfile.cs" />
-    <Compile Include="MeanCosts\GeometricMeanCost.cs" />
-    <Compile Include="MeanCosts\MeanCost.cs" />
-    <Compile Include="MeanCosts\RootMeanSquareCost.cs" />
     <Compile Include="Layers\NeighborhoodLayer.cs" />
     <Compile Include="Layers\ObstacleLayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestService.cs" />
-    <Compile Include="Serializers\AesCrypto.cs" />
     <Compile Include="Serializers\BinarySerializer.cs" />
     <Compile Include="Serializers\Decorators\BufferedSerializer.cs" />
     <Compile Include="Serializers\Decorators\CompressSerializer.cs" />
-    <Compile Include="Serializers\Decorators\CryptoSerializer.cs" />
-    <Compile Include="Serializers\Decorators\ThreadSafeSerializer.cs" />
     <Compile Include="Serializers\Exceptions\SerializationException.cs" />
     <Compile Include="Serializers\JsonSerializer.cs" />
     <Compile Include="Layers\SmoothLayer.cs" />

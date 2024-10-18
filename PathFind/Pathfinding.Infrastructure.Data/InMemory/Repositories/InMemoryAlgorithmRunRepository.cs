@@ -69,5 +69,11 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
             await subAlgorithms.DeleteByRunIdsAsync(ids, token);
             return await Task.FromResult(deleted > 0);
         }
+
+        public async Task<AlgorithmRun> ReadAsync(int id, CancellationToken token = default)
+        {
+            set.TryGetValue(new AlgorithmRun() { Id = id }, out var result);
+            return await Task.FromResult(result);
+        }
     }
 }

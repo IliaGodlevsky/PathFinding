@@ -44,7 +44,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnRunActivated(object recipient, RunActivatedMessage msg)
         {
-            GraphState = GenerateVerticesToVisualize(msg.Run.GraphState, msg.Run.Algorithms);
+            GraphState = GenerateVerticesToVisualize(msg.Run.GraphState, msg.Run.SubAlgorithms);
         }
 
         private IReadOnlyCollection<RunVertexModel> GenerateVerticesToVisualize(

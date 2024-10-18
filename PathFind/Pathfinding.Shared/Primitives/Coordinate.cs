@@ -34,6 +34,13 @@ namespace Pathfinding.Shared.Primitives
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Coordinate(IEnumerable<int> coordinates)
+            : this(coordinates.ToArray())
+        {
+
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Coordinate(params int[] coordinates)
             : this((IReadOnlyList<int>)coordinates)
         {

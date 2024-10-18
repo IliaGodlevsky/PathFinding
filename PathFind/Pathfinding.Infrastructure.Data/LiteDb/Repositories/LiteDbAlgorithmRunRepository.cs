@@ -58,6 +58,12 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             return await Task.FromResult(result);
         }
 
+        public async Task<AlgorithmRun> ReadAsync(int runId, CancellationToken token = default)
+        {
+            var result = collection.FindById(runId);
+            return await Task.FromResult(result);
+        }
+
         public async Task<int> ReadCount(int graphId, CancellationToken token = default)
         {
             await Task.CompletedTask;

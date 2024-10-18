@@ -5,7 +5,6 @@ using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Business.Layers;
-using Pathfinding.Infrastructure.Business.MeanCosts;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
@@ -111,7 +110,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 var obstacleLayer = new ObstacleLayer(random, Obstacles);
                 var neighborhoodLayer = new NeighborhoodLayer(NeighborhoodFactory.Factory);
                 var smoothLayer = Enumerable
-                    .Repeat(new SmoothLayer(new MeanCost()), SmoothLevel.SmoothLevel)
+                    .Repeat(new SmoothLayer(), SmoothLevel.SmoothLevel)
                     .To(x => new Layers(x.ToArray()));
                 var layers = new Layers(costLayer, obstacleLayer, neighborhoodLayer, smoothLayer);
                 var graph = await graphAssemble.AssembleGraphAsync(layers, Width, Length)

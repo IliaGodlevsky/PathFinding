@@ -25,7 +25,7 @@ namespace Pathfinding.Service.Interface
         Task<IReadOnlyCollection<RunStatisticsModel>> ReadRunStatisticsAsync(int graphId,
             CancellationToken token = default);
 
-        Task<RunVisualizationModel> ReadRunInfoAsync(int runId, CancellationToken token = default);
+        Task<AlgorithmRunHistoryModel> ReadRunHistoryAsync(int runId, CancellationToken token = default);
 
         Task<IReadOnlyCollection<GraphInformationModel>> ReadAllGraphInfoAsync(CancellationToken token = default);
 

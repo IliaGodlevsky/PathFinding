@@ -19,10 +19,7 @@ namespace Pathfinding.Service.Interface.Extensions
         {
             int count = reader.ReadInt32();
             var list = new List<T>(count);
-            while (count-- > 0)
-            {
-                list.Add(reader.ReadSerializable<T>());
-            }
+            while (count-- > 0) list.Add(reader.ReadSerializable<T>());
             return list.AsReadOnly();
         }
 
@@ -31,13 +28,6 @@ namespace Pathfinding.Service.Interface.Extensions
             bool isNull = reader.ReadBoolean();
             return isNull ? string.Empty : reader.ReadString();
         }
-
-        public static TimeSpan ReadTimeSpan(this BinaryReader reader)
-        {
-            return TimeSpan.FromMilliseconds(reader.ReadDouble());
-        }
-
-
 
         public static IReadOnlyList<int> ReadArray(this BinaryReader reader)
         {

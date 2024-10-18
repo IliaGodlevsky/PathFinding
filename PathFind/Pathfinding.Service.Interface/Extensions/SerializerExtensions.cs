@@ -27,12 +27,5 @@ namespace Pathfinding.Service.Interface.Extensions
             using var fileStream = File.OpenWrite(filePath);
             await self.SerializeToAsync(value, fileStream, token).ConfigureAwait(false);
         }
-
-        public static async Task<T> DeserializeFromFileAsync<T>(this ISerializer<T> self,
-            string filePath, CancellationToken token = default)
-        {
-            using var fileStream = File.OpenRead(filePath);
-            return await self.DeserializeFromAsync(fileStream, token).ConfigureAwait(false);
-        }
     }
 }

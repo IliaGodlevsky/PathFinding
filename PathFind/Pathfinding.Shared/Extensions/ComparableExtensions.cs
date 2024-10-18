@@ -27,12 +27,5 @@ namespace Pathfinding.Shared.Extensions
         {
             return first.CompareTo(second) <= 0;
         }
-
-        public static bool IsBetween<T>(this T value, T upper, T lower)
-            where T : IComparable<T>
-        {
-            return value.IsLessOrEqualThan(upper)
-                && value.IsGreaterOrEqualThan(lower);
-        }
     }
 }

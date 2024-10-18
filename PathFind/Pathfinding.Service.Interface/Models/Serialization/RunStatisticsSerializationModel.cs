@@ -30,7 +30,7 @@ namespace Pathfinding.Service.Interface.Models.Serialization
             Heuristics = reader.ReadNullableString();
             StepRule = reader.ReadNullableString();
             ResultStatus = reader.ReadString();
-            Elapsed = reader.ReadTimeSpan();
+            Elapsed = TimeSpan.FromMilliseconds(reader.ReadDouble());
             Steps = reader.ReadInt32();
             Cost = reader.ReadDouble();
             Spread = reader.ReadNullableString();
@@ -43,7 +43,7 @@ namespace Pathfinding.Service.Interface.Models.Serialization
             writer.WriteNullableString(Heuristics);
             writer.WriteNullableString(StepRule);
             writer.Write(ResultStatus);
-            writer.WriteTimeSpan(Elapsed);
+            writer.Write(Elapsed.TotalMilliseconds);
             writer.Write(Steps);
             writer.Write(Cost);
             writer.WriteNullableString(Spread);

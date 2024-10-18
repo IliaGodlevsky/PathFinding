@@ -40,5 +40,15 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations.TestDb.Repos
         {
             return await Task.FromResult(true);
         }
+
+        public async Task<AlgorithmRun> ReadAsync(int id, CancellationToken token = default)
+        {
+            return await Task.FromResult(new AlgorithmRun() 
+            { 
+                Id = id, 
+                GraphId = 1, 
+                AlgorithmId = "TEST"
+            });
+        }
     }
 }

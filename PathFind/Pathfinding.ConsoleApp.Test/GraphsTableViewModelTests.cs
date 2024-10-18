@@ -93,8 +93,8 @@ namespace Pathfinding.ConsoleApp.Test
         {
             graphsTable.Graphs.AddRange(graphs.Values.Select(x => new GraphInfoModel()
             {
-                Neighborhood = "Test",
-                SmoothLevel = "Test",
+                Neighborhood = x.Neighborhood,
+                SmoothLevel = x.SmoothLevel,
                 Id = x.Id,
                 Width = 0,
                 Length = 0,

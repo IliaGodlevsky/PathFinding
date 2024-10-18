@@ -56,8 +56,6 @@ namespace Pathfinding.ConsoleApp.Injection
                 .As<ISerializer<IEnumerable<VisitedVerticesModel>>>().SingleInstance();
             builder.RegisterType<BinarySerializer<CoordinateModel>>()
                 .As<ISerializer<IEnumerable<CoordinateModel>>>().SingleInstance();
-            builder.RegisterType<BinaryIntArraySerializer>()
-                .As<ISerializer<IEnumerable<int>>>().SingleInstance();
             builder.RegisterType<BinarySerializer<CostCoordinatePair>>()
                 .As<ISerializer<IEnumerable<CostCoordinatePair>>>().SingleInstance();
 

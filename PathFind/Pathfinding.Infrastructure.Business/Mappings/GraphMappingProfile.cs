@@ -38,7 +38,6 @@ namespace Pathfinding.Infrastructure.Business.Mappings
             CreateMap<GraphModel<T>, GraphSerializationModel>()
                 .ForMember(x => x.DimensionSizes, opt => opt.MapFrom(x => x.Graph.DimensionsSizes))
                 .ForMember(x => x.Vertices, opt => opt.MapFrom(x => x.Graph.ToArray()));
-            CreateMap<CreateGraphFromSerializationRequest, CreateGraphRequest<T>>();
             CreateMap<CreateGraphRequest<T>, GraphSerializationModel>()
                 .ConvertUsing((x, y, context) => context.Mapper.Map<GraphSerializationModel>(x.Graph) with { Name = x.Name, Neighborhood = x.Neighborhood, SmoothLevel = x.SmoothLevel });
             CreateMap<Graph, GraphInformationModel>()
