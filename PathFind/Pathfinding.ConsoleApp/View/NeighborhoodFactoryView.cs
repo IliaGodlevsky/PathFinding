@@ -23,8 +23,7 @@ namespace Pathfinding.ConsoleApp.View
             this.viewModel = viewModel;
             Initialize();
             neighborhoods.RadioLabels = factoryViewModel.Factories.Keys
-                .Select(x => ustring.Make(x))
-                .ToArray();
+                .Select(ustring.Make).ToArray();
             neighborhoods.Events().SelectedItemChanged
                 .Where(x => x.SelectedItem > -1)
                 .Select(x =>

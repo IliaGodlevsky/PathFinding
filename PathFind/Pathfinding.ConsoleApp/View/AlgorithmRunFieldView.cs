@@ -18,7 +18,7 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class AlgorithmRunFieldView : FrameView
     {
-        private const int IntialSpeed = 75;
+        private const int IntialSpeed = 90;
 
         private readonly CompositeDisposable vertexDisposables = new();
         private readonly CompositeDisposable disposables = new();
@@ -88,7 +88,7 @@ namespace Pathfinding.ConsoleApp.View
 
         private async Task Visualize()
         {
-            var command = viewModel.VisualizeNextCommand;
+            var command = viewModel.ProcessNextCommand;
             while (viewModel.Remained > 0)
             {
                 await command.Execute(VerticesToVisualizePerTime);

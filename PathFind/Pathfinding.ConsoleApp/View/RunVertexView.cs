@@ -1,5 +1,4 @@
-﻿using NStack;
-using Pathfinding.ConsoleApp.Model;
+﻿using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Infrastructure.Data.Extensions;
 using ReactiveUI;
 using System;
@@ -39,11 +38,9 @@ namespace Pathfinding.ConsoleApp.View
 
         private ColorScheme Create(Color foreground)
         {
-            return new()
-            {
-                Normal
-                = Application.Driver.MakeAttribute(foreground, ColorConstants.BackgroundColor)
-            };
+            var driver = Application.Driver;
+            var attribute = driver.MakeAttribute(foreground, ColorConstants.BackgroundColor);
+            return new() { Normal = attribute };
         }
 
         private void BindTo(Expression<Func<RunVertexModel, bool>> expression,

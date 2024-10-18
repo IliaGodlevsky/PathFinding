@@ -28,13 +28,13 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public int Remained => Vertices.Count;
 
-        public ReactiveCommand<int, Unit> VisualizeNextCommand { get; }
+        public ReactiveCommand<int, Unit> ProcessNextCommand { get; }
 
         public AlgorithmRunFieldViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger)
         {
             messenger.Register<RunCreatedMessaged>(this, OnRunCreated);
             messenger.Register<RunActivatedMessage>(this, OnRunActivated);
-            VisualizeNextCommand = ReactiveCommand.Create<int>(VisualizeNext);
+            ProcessNextCommand = ReactiveCommand.Create<int>(ProcessNext);
         }
 
         private void OnRunCreated(object recipient, RunCreatedMessaged msg)
@@ -70,7 +70,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             return graph.Values;
         }
 
-        private void VisualizeNext(int number)
+        private void ProcessNext(int number)
         {
             while (number-- > 0 && Remained > 0) Vertices.Dequeue().Invoke();
         }
