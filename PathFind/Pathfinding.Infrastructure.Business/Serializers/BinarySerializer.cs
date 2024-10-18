@@ -19,7 +19,7 @@ namespace Pathfinding.Infrastructure.Business.Serializers
             try
             {
                 using var reader = new BinaryReader(stream, Encoding.Default, leaveOpen: true);
-                return await Task.Run(() => reader.ReadSerializableArray<T>(), token).ConfigureAwait(false);
+                return await Task.Run(reader.ReadSerializableArray<T>, token).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -32,7 +32,8 @@ namespace Pathfinding.Infrastructure.Business.Serializers
             try
             {
                 using var writer = new BinaryWriter(stream, Encoding.Default, leaveOpen: true);
-                await Task.Run(() => writer.Write(item.OfType<IBinarySerializable>().ToList()), token).ConfigureAwait(false);
+                var serializables = item.Cast<IBinarySerializable>().ToArray();
+                await Task.Run(() => writer.Write(serializables), token).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

@@ -27,9 +27,9 @@ using System.Collections.Generic;
 
 namespace Pathfinding.ConsoleApp.Injection
 {
-    internal static class Container
+    internal static class App
     {
-        public static ILifetimeScope BuildApp()
+        public static ILifetimeScope Build()
         {
             var builder = new ContainerBuilder();
 

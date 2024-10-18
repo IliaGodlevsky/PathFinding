@@ -91,7 +91,7 @@
     <Compile Include="View\RandomAlgorithmView.cs" />
     <Compile Include="View\ComponentsPartials\SpreadView.cs" />
     <Compile Include="View\ConsoleLog.cs" />
-    <Compile Include="Injection\Container.cs" />
+    <Compile Include="Injection\App.cs" />
     <Compile Include="Injection\KeyFilters.cs" />
     <Compile Include="Messages\ViewModel\GraphActivatedMessage.cs" />
     <Compile Include="Messages\ViewModel\GraphCreatedMessage.cs" />

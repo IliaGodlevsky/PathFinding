@@ -22,14 +22,9 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations.TestDb.Repos
                 Range = Array.Empty<byte>(),
                 Regulars = Array.Empty<byte>(),
                 Obstacles = Array.Empty<byte>(),
-                Costs = Array.Empty<byte>(),
+                Costs = Array.Empty<byte>()
             };
             return await Task.FromResult(state);
-        }
-
-        public async Task<bool> DeleteByRunIdsAsync(IEnumerable<int> runIds, CancellationToken token = default)
-        {
-            return await Task.FromResult(true);
         }
     }
 }

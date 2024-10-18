@@ -13,9 +13,9 @@ internal class Program
     private static void Main()
     {
         Application.Init();
-        using var container = Container.BuildApp();
-        var mainView = container.Resolve<MainView>();
-        Application.Top.Add(mainView);
+        using var scope = App.Build();
+        var main = scope.Resolve<MainView>();
+        Application.Top.Add(main);
         Application.Run(x => true);
     }
 }
