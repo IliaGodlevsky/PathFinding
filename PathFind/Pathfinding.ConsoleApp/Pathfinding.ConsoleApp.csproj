@@ -85,7 +85,7 @@
     <Compile Include="View\CostGreedyAlgorithmView.cs" />
     <Compile Include="View\DepthRandomAlgorithmView.cs" />
     <Compile Include="View\DepthFirstAlgorithmView.cs" />
-    <Compile Include="View\LocatorAlgorithmListView.cs" />
+    <Compile Include="View\SnakeAlgorithmView.cs" />
     <Compile Include="View\DistanceFirstAlgorithmView.cs" />
     <Compile Include="View\AStarGreedyAlgorithmView.cs" />
     <Compile Include="View\RandomAlgorithmView.cs" />
@@ -140,7 +140,7 @@
     <Compile Include="View\AlgorithmsView.cs" />
     <Compile Include="View\AStarAlgorithmView.cs" />
     <Compile Include="View\AlgorithmParametresView.cs" />
-    <Compile Include="View\IDAStarAlgorithmListItem.cs" />
+    <Compile Include="View\IDAStarAlgorithmView.cs" />
     <Compile Include="View\LeeAlgorithmListItem.cs" />
     <Compile Include="View\PathfindingProcessButtonsFrame.cs" />
     <Compile Include="View\AlgorithmCreationView.cs" />

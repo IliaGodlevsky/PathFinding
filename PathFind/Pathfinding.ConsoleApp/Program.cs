@@ -13,13 +13,7 @@ internal class Program
     private static void Main()
     {
         Application.Init();
-        using var container = Container.CreateBuilder()
-            .WithAlgorithms()
-            .WithImportExport()
-            .WithDatabase()
-            .WithLogging()
-            .WithTransitVertices()
-            .BuildApp();
+        using var container = Container.BuildApp();
         var mainView = container.Resolve<MainView>();
         Application.Top.Add(mainView);
         Application.Run(x => true);

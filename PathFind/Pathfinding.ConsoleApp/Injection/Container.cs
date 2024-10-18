@@ -29,14 +29,37 @@ namespace Pathfinding.ConsoleApp.Injection
 {
     internal static class Container
     {
-        public static ContainerBuilder CreateBuilder() => new();
-
-        public static ILifetimeScope BuildApp(this ContainerBuilder builder)
+        public static ILifetimeScope BuildApp()
         {
+            var builder = new ContainerBuilder();
+
             builder.RegisterType<GraphFactory<GraphVertexModel>>().As<IGraphFactory<GraphVertexModel>>().SingleInstance();
             builder.RegisterType<GraphVertexModelFactory>().As<IVertexFactory<GraphVertexModel>>().SingleInstance();
             builder.RegisterType<GraphAssemble<GraphVertexModel>>().As<IGraphAssemble<GraphVertexModel>>().SingleInstance();
 
+            builder.RegisterInstance(new[]
+            {
+                ("Default", (IStepRule)new DefaultStepRule()),
+                ("Lanscape", new LandscapeStepRule())
+            }).As<IEnumerable<(string Name, IStepRule Rule)>>().SingleInstance();
+            builder.RegisterInstance(new[]
+            {
+                ("Euclidian", (IHeuristic)new EuclidianDistance()),
+                ("Chebyshev", new ChebyshevDistance()),
+                ("Manhattan", new ManhattanDistance()),
+                ("Cosine", new CosineDistance())
+            }).As<IEnumerable<(string Name, IHeuristic Heuristic)>>().SingleInstance();
+            builder.RegisterInstance(new[]
+            {
+                ("No", 0),
+                ("Minimal", 1),
+                ("Lowest", 2),
+                ("Low", 3),
+                ("Medium", 4),
+                ("High", 5),
+                ("Highest", 7),
+                ("Extreme", 14)
+            }).Keyed<IEnumerable<(string Name, int Level)>>(KeyFilters.SpreadLevels).SingleInstance();
             builder.RegisterInstance(new[]
             {
                 ("No", 0),
@@ -75,6 +98,15 @@ namespace Pathfinding.ConsoleApp.Injection
                 return mappingConfig.CreateMapper(context.Resolve);
             }).As<IMapper>().SingleInstance();
 
+            builder.RegisterInstance(new ConnectionString()
+            {
+                Filename = "pathfinding.litedb",
+                AutoRebuild = true,
+                Connection = ConnectionType.Shared,
+                Upgrade = true
+            }).As<ConnectionString>().SingleInstance();
+            builder.RegisterType<LiteDbInFileUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
+
             builder.RegisterType<RequestService<GraphVertexModel>>().As<IRequestService<GraphVertexModel>>().SingleInstance();
 
             builder.RegisterType<IncludeSourceVertex<GraphVertexModel>>().SingleInstance().WithAttributeFiltering()
@@ -89,11 +121,19 @@ namespace Pathfinding.ConsoleApp.Injection
                 .Keyed<IPathfindingRangeCommand<GraphVertexModel>>(KeyFilters.ExcludeCommands);
             builder.RegisterType<ExcludeTargetVertex<GraphVertexModel>>().SingleInstance().WithAttributeFiltering()
                 .Keyed<IPathfindingRangeCommand<GraphVertexModel>>(KeyFilters.ExcludeCommands);
+            builder.RegisterType<IncludeTransitVertex<GraphVertexModel>>().SingleInstance().WithAttributeFiltering()
+                .Keyed<IPathfindingRangeCommand<GraphVertexModel>>(KeyFilters.IncludeCommands);
+            builder.RegisterType<ReplaceTransitIsolatedVertex<GraphVertexModel>>().SingleInstance().WithAttributeFiltering()
+                .Keyed<IPathfindingRangeCommand<GraphVertexModel>>(KeyFilters.IncludeCommands);
+            builder.RegisterType<ExcludeTransitVertex<GraphVertexModel>>().SingleInstance().WithAttributeFiltering()
+                .Keyed<IPathfindingRangeCommand<GraphVertexModel>>(KeyFilters.ExcludeCommands);
 
+            builder.RegisterType<BinarySerializer<PathfindingHistorySerializationModel>>()
+                .As<ISerializer<IEnumerable<PathfindingHistorySerializationModel>>>().SingleInstance();
             builder.RegisterGenericDecorator(typeof(BufferedSerializer<>), typeof(ISerializer<>));
             builder.RegisterGenericDecorator(typeof(CompressSerializer<>), typeof(ISerializer<>));
 
-            //builder.RegisterType<NullLog>().As<ILog>().SingleInstance();
+            builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().As<ILog>().SingleInstance();
 
@@ -118,6 +158,8 @@ namespace Pathfinding.ConsoleApp.Injection
 
             builder.RegisterType<DeleteGraphButton>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
             builder.RegisterType<NewGraphButton>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
+            builder.RegisterType<GraphImportView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
+            builder.RegisterType<GraphExportView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
 
             builder.RegisterType<GraphNameView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphAssembleView).WithAttributeFiltering();
             builder.RegisterType<GraphParametresView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphAssembleView).WithAttributeFiltering();
@@ -135,99 +177,27 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<AlgorithmsView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmCreationView).WithAttributeFiltering();
             builder.RegisterType<AlgorithmParametresView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmCreationView).WithAttributeFiltering();
 
-            builder.RegisterType<RandomAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
-
-            builder.RegisterType<PathfindingProcessView>().Keyed<Terminal.Gui.View>(KeyFilters.CreateRunButtonsFrame).WithAttributeFiltering();
-            builder.RegisterType<CloseAlgorithmCreationButton>().Keyed<Terminal.Gui.View>(KeyFilters.CreateRunButtonsFrame).WithAttributeFiltering();
-
-            return builder.Build();
-        }
-
-        public static ContainerBuilder WithAlgorithms(this ContainerBuilder builder)
-        {
             builder.RegisterType<DijkstraAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<DistanceFirstAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<AStarGreedyAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<DepthRandomAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<CostGreedyAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
-            builder.RegisterType<LocatorAlgorithmListView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
+            builder.RegisterType<SnakeAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<DepthFirstAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<AStarAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
-            builder.RegisterType<LeeAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
+            builder.RegisterType<LeeAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<AStarLeeAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
-            builder.RegisterType<IDAStarAlgorithmListItem>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
+            builder.RegisterType<IDAStarAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
+            builder.RegisterType<RandomAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
 
             builder.RegisterType<StepRulesView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmParametresView).WithAttributeFiltering();
             builder.RegisterType<HeuristicsView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmParametresView).WithAttributeFiltering();
             builder.RegisterType<SpreadView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmParametresView).WithAttributeFiltering();
 
-            builder.RegisterInstance(new[]
-            {
-                ("Default", (IStepRule)new DefaultStepRule()),
-                ("Lanscape", new LandscapeStepRule())
-            }).As<IEnumerable<(string Name, IStepRule Rule)>>().SingleInstance();
-            builder.RegisterInstance(new[]
-            {
-                ("Euclidian", (IHeuristic)new EuclidianDistance()),
-                ("Chebyshev", new ChebyshevDistance()),
-                ("Manhattan", new ManhattanDistance()),
-                ("Cosine", new CosineDistance())
-            }).As<IEnumerable<(string Name, IHeuristic Heuristic)>>().SingleInstance();
-            builder.RegisterInstance(new[]
-            {
-                ("No", 0),
-                ("Minimal", 1),
-                ("Lowest", 2),
-                ("Low", 3),
-                ("Medium", 4),
-                ("High", 5),
-                ("Highest", 7),
-                ("Extreme", 14)
-            }).Keyed<IEnumerable<(string Name, int Level)>>(KeyFilters.SpreadLevels).SingleInstance();
+            builder.RegisterType<PathfindingProcessView>().Keyed<Terminal.Gui.View>(KeyFilters.CreateRunButtonsFrame).WithAttributeFiltering();
+            builder.RegisterType<CloseAlgorithmCreationButton>().Keyed<Terminal.Gui.View>(KeyFilters.CreateRunButtonsFrame).WithAttributeFiltering();
 
-            return builder;
-        }
-
-        public static ContainerBuilder WithDatabase(this ContainerBuilder builder)
-        {
-            builder.RegisterInstance(new ConnectionString()
-            {
-                Filename = "pathfinding.litedb",
-                AutoRebuild = true,
-                Connection = ConnectionType.Shared,
-                Upgrade = true
-            }).As<ConnectionString>().SingleInstance();
-            builder.RegisterType<LiteDbInFileUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
-
-            return builder;
-        }
-
-        public static ContainerBuilder WithTransitVertices(this ContainerBuilder builder)
-        {
-            builder.RegisterType<IncludeTransitVertex<GraphVertexModel>>().SingleInstance().WithAttributeFiltering()
-                .Keyed<IPathfindingRangeCommand<GraphVertexModel>>(KeyFilters.IncludeCommands);
-            builder.RegisterType<ReplaceTransitIsolatedVertex<GraphVertexModel>>().SingleInstance().WithAttributeFiltering()
-                .Keyed<IPathfindingRangeCommand<GraphVertexModel>>(KeyFilters.IncludeCommands);
-            builder.RegisterType<ExcludeTransitVertex<GraphVertexModel>>().SingleInstance().WithAttributeFiltering()
-                .Keyed<IPathfindingRangeCommand<GraphVertexModel>>(KeyFilters.ExcludeCommands);
-
-            return builder;
-        }
-
-        public static ContainerBuilder WithImportExport(this ContainerBuilder builder)
-        {
-            builder.RegisterType<BinarySerializer<PathfindingHistorySerializationModel>>()
-                .As<ISerializer<IEnumerable<PathfindingHistorySerializationModel>>>().SingleInstance();
-            builder.RegisterType<GraphImportView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
-            builder.RegisterType<GraphExportView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
-
-            return builder;
-        }
-
-        public static ContainerBuilder WithLogging(this ContainerBuilder builder)
-        {
-            builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
-            return builder;
+            return builder.Build();
         }
     }
 }

@@ -2,24 +2,25 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
+using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.ViewModel;
 using Pathfinding.Shared;
 using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    [Order(9)]
-    internal sealed class LocatorAlgorithmListView : Label
+    [Order(3)]
+    internal sealed class IDAStarAlgorithmView : Label
     {
         private readonly IMessenger messenger;
-        private readonly SnakeAlgorithmViewModel viewModel;
+        private readonly IDAStarAlgorithmViewModel viewModel;
 
-        public LocatorAlgorithmListView(
+        public IDAStarAlgorithmView(
             [KeyFilter(KeyFilters.Views)] IMessenger messenger,
-            SnakeAlgorithmViewModel viewModel)
+            IDAStarAlgorithmViewModel viewModel)
         {
             Text = viewModel.AlgorithmId;
-            Y = 1;
+            Y = 2;
             X = 0;
             this.messenger = messenger;
             this.viewModel = viewModel;
@@ -30,10 +31,13 @@ namespace Pathfinding.ConsoleApp.View
         {
             if (e.MouseEvent.Flags == MouseFlags.Button1Clicked)
             {
-                messenger.Send(new CloseStepRulesViewMessage());
-                messenger.Send(new CloseHeuristicsViewMessage());
-                messenger.Send(new CloseSpreadViewMessage());
+                messenger.Send(new OpenStepRuleViewMessage());
+                messenger.Send(new OpenHeuristicsViewMessage());
+                messenger.Send(new OpenSpreadViewMessage());
+                messenger.Send(new StepRuleViewModelChangedMessage(viewModel));
+                messenger.Send(new HeuristicsViewModelChangedMessage(viewModel));
                 messenger.Send(new PathfindingViewModelChangedMessage(viewModel));
+                messenger.Send(new SpreadViewModelChangedMessage(viewModel));
             }
         }
     }

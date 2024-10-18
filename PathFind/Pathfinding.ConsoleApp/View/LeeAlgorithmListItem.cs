@@ -9,12 +9,12 @@ using Terminal.Gui;
 namespace Pathfinding.ConsoleApp.View
 {
     [Order(5)]
-    internal sealed class LeeAlgorithmListItem : Label
+    internal sealed class LeeAlgorithmView : Label
     {
         private readonly IMessenger messenger;
         private readonly LeeAlgorithmViewModel viewModel;
 
-        public LeeAlgorithmListItem([KeyFilter(KeyFilters.Views)] IMessenger messenger,
+        public LeeAlgorithmView([KeyFilter(KeyFilters.Views)] IMessenger messenger,
             LeeAlgorithmViewModel viewModel)
         {
             Text = viewModel.AlgorithmId;

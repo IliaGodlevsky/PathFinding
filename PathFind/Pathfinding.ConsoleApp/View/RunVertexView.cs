@@ -23,6 +23,7 @@ namespace Pathfinding.ConsoleApp.View
             X = model.Position.GetX() * LabelWidth;
             Y = model.Position.GetY();
             Width = LabelWidth;
+            Text = model.Cost.ToString();
 
             BindTo(x => x.IsObstacle, ColorConstants.ObstacleVertexColor, 0);
             BindTo(x => x.IsTarget, ColorConstants.TargetVertexColor);
@@ -33,10 +34,6 @@ namespace Pathfinding.ConsoleApp.View
             BindTo(x => x.IsEnqueued, ColorConstants.EnqueuedVertexColor);
             BindTo(x => x.IsCrossedPath, ColorConstants.CrossedPathColor);
 
-            model.WhenAnyValue(x => x.Cost)
-                .Select(x => ustring.Make(x.ToString()))
-                .BindTo(this, x => x.Text)
-                .DisposeWith(disposables);
             Data = model;
         }
 

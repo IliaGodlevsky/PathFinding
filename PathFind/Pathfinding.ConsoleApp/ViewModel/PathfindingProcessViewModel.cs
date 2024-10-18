@@ -109,11 +109,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
                         .WithPath(path ?? Array.Empty<Coordinate>())
                         .WithVisitedVertices(visitedVertices.ToArray())
                         .AddTo(subAlgorithms);
+                    visitedCount += visitedVertices.Count;
                     visitedVertices.Clear();
                 }
                 void OnVertexProcessed(object sender, VerticesProcessedEventArgs e)
                 {
-                    visitedCount++;
                     visitedVertices.Add((e.Current, e.Enqueued));
                 }
                 void OnSubPathFound(object sender, SubPathFoundEventArgs args)
