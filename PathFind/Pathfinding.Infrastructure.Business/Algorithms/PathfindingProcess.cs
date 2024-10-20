@@ -2,6 +2,7 @@
 using Pathfinding.Infrastructure.Business.Algorithms.Events;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Algorithms;
+using Pathfinding.Shared.Primitives;
 using System;
 using System.Collections.Generic;
 
@@ -29,7 +30,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             VertexProcessed?.Invoke(this, new(vertex, vertices));
         }
 
-        protected void RaiseSubPathFound(IGraphPath subPath)
+        protected void RaiseSubPathFound(IReadOnlyCollection<Coordinate> subPath)
         {
             SubPathFound?.Invoke(this, new(subPath));
         }

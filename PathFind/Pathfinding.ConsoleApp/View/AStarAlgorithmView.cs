@@ -9,7 +9,7 @@ using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    [Order(2)]
+    [Order(3)] 
     internal sealed class AStarAlgorithmView : Label
     {
         private readonly IMessenger messenger;

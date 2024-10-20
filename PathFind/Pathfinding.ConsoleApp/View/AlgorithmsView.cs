@@ -15,7 +15,8 @@ namespace Pathfinding.ConsoleApp.View
         public AlgorithmsView([KeyFilter(KeyFilters.AlgorithmsListView)] IEnumerable<Terminal.Gui.View> children)
         {
             Initialize();
-            var names = children.OrderByOrderAttribute().ToDictionary(x => x.Text, x => x);
+            var names = children.OrderByOrderAttribute()
+                .ToDictionary(x => x.Text, x => x);
             algorithms.RadioLabels = names.Keys.ToArray();
             algorithms.Events().SelectedItemChanged
                 .Where(x => x.SelectedItem > -1)

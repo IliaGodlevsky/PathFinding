@@ -8,18 +8,16 @@ using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    [Order(6)]
-    internal sealed class RandomAlgorithmView : Label
+    [Order(8)]
+    internal sealed class BidirectLeeAlgorithmView : Label
     {
         private readonly IMessenger messenger;
-        private readonly RandomAlgorithmViewModel viewModel;
+        private readonly BidirectLeeAlgorithmViewModel viewModel;
 
-        public RandomAlgorithmView([KeyFilter(KeyFilters.Views)] IMessenger messenger,
-            RandomAlgorithmViewModel viewModel)
+        public BidirectLeeAlgorithmView([KeyFilter(KeyFilters.Views)] IMessenger messenger,
+            BidirectLeeAlgorithmViewModel viewModel)
         {
             Text = viewModel.AlgorithmId;
-            Y = 1;
-            X = 0;
             this.messenger = messenger;
             this.viewModel = viewModel;
             MouseClick += OnViewClicked;

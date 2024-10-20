@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class AStarAlgorithmViewModel : PathfindingProcessViewModel,
+    internal sealed class BidirectAStarAlgorithmViewModel : PathfindingProcessViewModel,
         IRequireStepRuleViewModel, IRequireHeuristicsViewModel
     {
         private (string Name, IStepRule Rule) stepRule;
@@ -29,13 +29,13 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref heuristic, value);
         }
 
-        public AStarAlgorithmViewModel(IRequestService<GraphVertexModel> service,
+        public BidirectAStarAlgorithmViewModel(IRequestService<GraphVertexModel> service,
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ILog logger) : base(service, messenger, logger)
         {
         }
 
-        public override string AlgorithmId => AlgorithmNames.AStar;
+        public override string AlgorithmId => AlgorithmNames.BidirectAStar;
 
         protected override void AppendStatistics(RunStatisticsModel model)
         {
@@ -45,7 +45,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         protected override PathfindingProcess GetAlgorithm(IEnumerable<GraphVertexModel> pathfindingRange)
         {
-            return new AStarAlgorithm(pathfindingRange, 
+            return new BidirectAStarAlgorithm(pathfindingRange,
                 stepRule.Rule, heuristic.Heuristic);
         }
     }

@@ -8,14 +8,15 @@ using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    [Order(5)]
-    internal sealed class LeeAlgorithmView : Label
+    [Order(2)]
+    internal sealed class BidirectDijkstraAlgorithmView : Label
     {
         private readonly IMessenger messenger;
-        private readonly LeeAlgorithmViewModel viewModel;
+        private readonly BidirectDijkstraAlgorithmViewModel viewModel;
 
-        public LeeAlgorithmView([KeyFilter(KeyFilters.Views)] IMessenger messenger,
-            LeeAlgorithmViewModel viewModel)
+        public BidirectDijkstraAlgorithmView(
+            [KeyFilter(KeyFilters.Views)] IMessenger messenger,
+            BidirectDijkstraAlgorithmViewModel viewModel)
         {
             Text = viewModel.AlgorithmId;
             this.messenger = messenger;
@@ -27,9 +28,10 @@ namespace Pathfinding.ConsoleApp.View
         {
             if (e.MouseEvent.Flags == MouseFlags.Button1Clicked)
             {
-                messenger.Send(new CloseStepRulesViewMessage());
+                messenger.Send(new OpenStepRuleViewMessage());
                 messenger.Send(new CloseHeuristicsViewMessage());
                 messenger.Send(new CloseSpreadViewMessage());
+                messenger.Send(new StepRuleViewModelChangedMessage(viewModel));
                 messenger.Send(new PathfindingViewModelChangedMessage(viewModel));
             }
         }

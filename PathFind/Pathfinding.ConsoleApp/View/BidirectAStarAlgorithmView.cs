@@ -8,14 +8,15 @@ using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    [Order(6)]
-    internal sealed class RandomAlgorithmView : Label
+    [Order(4)]
+    internal sealed class BidirectAStarAlgorithmView : Label
     {
         private readonly IMessenger messenger;
-        private readonly RandomAlgorithmViewModel viewModel;
+        private readonly BidirectAStarAlgorithmViewModel viewModel;
 
-        public RandomAlgorithmView([KeyFilter(KeyFilters.Views)] IMessenger messenger,
-            RandomAlgorithmViewModel viewModel)
+        public BidirectAStarAlgorithmView(
+            [KeyFilter(KeyFilters.Views)] IMessenger messenger,
+            BidirectAStarAlgorithmViewModel viewModel)
         {
             Text = viewModel.AlgorithmId;
             Y = 1;
@@ -29,9 +30,11 @@ namespace Pathfinding.ConsoleApp.View
         {
             if (e.MouseEvent.Flags == MouseFlags.Button1Clicked)
             {
-                messenger.Send(new CloseStepRulesViewMessage());
-                messenger.Send(new CloseHeuristicsViewMessage());
+                messenger.Send(new OpenStepRuleViewMessage());
+                messenger.Send(new OpenHeuristicsViewMessage());
                 messenger.Send(new CloseSpreadViewMessage());
+                messenger.Send(new StepRuleViewModelChangedMessage(viewModel));
+                messenger.Send(new HeuristicsViewModelChangedMessage(viewModel));
                 messenger.Send(new PathfindingViewModelChangedMessage(viewModel));
             }
         }

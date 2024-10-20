@@ -85,7 +85,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             traces.Clear();
         }
 
-        protected IReadOnlyCollection<IVertex> GetUnvisitedNeighbours(IVertex vertex)
+        protected virtual IReadOnlyCollection<IVertex> GetUnvisitedNeighbours(IVertex vertex)
         {
             return vertex.Neighbours
                 .Where(v => !v.IsObstacle && !visited.Contains(v))

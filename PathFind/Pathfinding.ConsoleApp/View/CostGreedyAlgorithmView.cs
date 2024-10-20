@@ -8,7 +8,7 @@ using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    [Order(7)]
+    [Order(10)]
     internal sealed class CostGreedyAlgorithmView : Label
     {
         private readonly IMessenger messenger;

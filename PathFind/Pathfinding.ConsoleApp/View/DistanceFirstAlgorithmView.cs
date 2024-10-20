@@ -9,7 +9,7 @@ using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    [Order(11)]
+    [Order(12)]
     internal sealed class DistanceFirstAlgorithmView : Label
     {
         private readonly IMessenger messenger;

@@ -63,6 +63,9 @@
     <Compile Include="Messages\View\SpreadViewModelChangedMessage.cs" />
     <Compile Include="Model\RunVertexModel.cs" />
     <Compile Include="ViewModel\AStarLeeAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\BidirectAStarAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\BidirectDijkstraAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\BidirectLeeAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\CostGreedyAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\DepthFirstAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\DepthRandomAlgorithmViewModel.cs" />
@@ -80,11 +83,14 @@
     <Compile Include="ViewModel\RunsTableViewModel.cs" />
     <Compile Include="ViewModel\SpreadViewModel.cs" />
     <Compile Include="View\AStarLeeAlgorithmView.cs" />
+    <Compile Include="View\BidirectAStarAlgorithmView.cs" />
+    <Compile Include="View\BidirectDijkstraAlgorithmView.cs" />
     <Compile Include="View\CloseAlgorithmCreationButton.cs" />
     <Compile Include="View\ComponentsPartials\HeuristicsView.cs" />
     <Compile Include="View\CostGreedyAlgorithmView.cs" />
     <Compile Include="View\DepthRandomAlgorithmView.cs" />
     <Compile Include="View\DepthFirstAlgorithmView.cs" />
+    <Compile Include="View\BidirectLeeAlgorithmView.cs" />
     <Compile Include="View\SnakeAlgorithmView.cs" />
     <Compile Include="View\DistanceFirstAlgorithmView.cs" />
     <Compile Include="View\AStarGreedyAlgorithmView.cs" />
@@ -141,7 +147,7 @@
     <Compile Include="View\AStarAlgorithmView.cs" />
     <Compile Include="View\AlgorithmParametresView.cs" />
     <Compile Include="View\IDAStarAlgorithmView.cs" />
-    <Compile Include="View\LeeAlgorithmListItem.cs" />
+    <Compile Include="View\LeeAlgorithmView.cs" />
     <Compile Include="View\PathfindingProcessButtonsFrame.cs" />
     <Compile Include="View\AlgorithmCreationView.cs" />
     <Compile Include="View\DijkstraAlgorithmView.cs" />

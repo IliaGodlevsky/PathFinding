@@ -83,6 +83,12 @@
   <ItemGroup>
     <Compile Include="Algorithms\AStarAlgorithm.cs" />
     <Compile Include="Algorithms\AStarLeeAlgorithm.cs" />
+    <Compile Include="Algorithms\BidirectAStarAlgorithm.cs" />
+    <Compile Include="Algorithms\BidirectBreadthFirstAlgorithm.cs" />
+    <Compile Include="Algorithms\BidirectDijkstraAlgorithm.cs" />
+    <Compile Include="Algorithms\BidirectLeeAlgorithm.cs" />
+    <Compile Include="Algorithms\BidirectPathfindingAlgorithm.cs" />
+    <Compile Include="Algorithms\BidirectWaveAlgorithm.cs" />
     <Compile Include="Algorithms\BreadthFirstAlgorithm.cs" />
     <Compile Include="Algorithms\CostGreedyAlgorithm.cs" />
     <Compile Include="Algorithms\Events\VertexProcessedEventHandler.cs" />
