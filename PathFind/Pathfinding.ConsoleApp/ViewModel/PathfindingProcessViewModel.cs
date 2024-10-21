@@ -123,7 +123,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
                 string status = RunStatuses.Success;
 
-                using var algorithm = GetAlgorithm(pathfindingRange);
+                var algorithm = GetAlgorithm(pathfindingRange);
 
                 algorithm.SubPathFound += OnSubPathFound;
                 algorithm.VertexProcessed += OnVertexProcessed;
@@ -149,6 +149,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 finally
                 {
                     stopwatch.Stop();
+                    algorithm.SubPathFound -= OnSubPathFound;
+                    algorithm.VertexProcessed -= OnVertexProcessed;
                 }
 
                 var request = ModelBuilder.CreateRunHistoryRequest()

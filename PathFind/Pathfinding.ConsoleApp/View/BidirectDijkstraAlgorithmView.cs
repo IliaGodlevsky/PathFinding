@@ -8,7 +8,7 @@ using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    [Order(2)]
+    [Order(13)]
     internal sealed class BidirectDijkstraAlgorithmView : Label
     {
         private readonly IMessenger messenger;

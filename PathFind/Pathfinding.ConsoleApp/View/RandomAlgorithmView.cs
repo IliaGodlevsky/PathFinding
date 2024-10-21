@@ -8,7 +8,7 @@ using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    [Order(6)]
+    [Order(4)]
     internal sealed class RandomAlgorithmView : Label
     {
         private readonly IMessenger messenger;

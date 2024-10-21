@@ -8,7 +8,7 @@ using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    [Order(9)]
+    [Order(12)]
     internal sealed class DepthFirstAlgorithmView : Label
     {
         private readonly IMessenger messenger;

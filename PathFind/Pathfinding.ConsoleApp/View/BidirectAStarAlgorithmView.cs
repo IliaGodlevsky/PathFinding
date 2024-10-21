@@ -8,7 +8,7 @@ using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    [Order(4)]
+    [Order(14)]
     internal sealed class BidirectAStarAlgorithmView : Label
     {
         private readonly IMessenger messenger;

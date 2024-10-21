@@ -27,12 +27,6 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             CurrentRange = (NullVertex.Interface, NullVertex.Interface);
         }
 
-        public override void Dispose()
-        {
-            base.Dispose();
-            DropState();
-        }
-
         protected override bool IsDestination()
         {
             return CurrentVertex.Equals(CurrentRange.Target);

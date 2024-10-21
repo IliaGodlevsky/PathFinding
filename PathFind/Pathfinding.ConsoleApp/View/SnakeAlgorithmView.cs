@@ -8,7 +8,7 @@ using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    [Order(9)]
+    [Order(11)]
     internal sealed class SnakeAlgorithmView : Label
     {
         private readonly IMessenger messenger;

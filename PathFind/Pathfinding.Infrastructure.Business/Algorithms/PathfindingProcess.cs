@@ -4,19 +4,16 @@ using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Algorithms;
 using Pathfinding.Shared.Primitives;
-using System;
 using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public abstract class PathfindingProcess : IAlgorithm<IGraphPath>, IDisposable
+    public abstract class PathfindingProcess : IAlgorithm<IGraphPath>
     {
-        protected readonly IEnumerable<IVertex> pathfindingRange;
+        private readonly IEnumerable<IVertex> pathfindingRange;
 
         public event VertexProcessedEventHandler VertexProcessed;
         public event SubPathFoundEventHandler SubPathFound;
-
-        private bool IsAlgorithmDisposed { get; set; } = false;
 
         protected PathfindingProcess(IEnumerable<IVertex> pathfindingRange)
         {
@@ -25,7 +22,6 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 
         public virtual IGraphPath FindPath()
         {
-            ThrowIfDisposed();
             var subPaths = new List<IGraphPath>();
             foreach (var range in GetSubRanges())
             {
@@ -42,13 +38,6 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
                 DropState();
             }
             return CreatePath(subPaths);
-        }
-
-        public virtual void Dispose()
-        {
-            IsAlgorithmDisposed = true;
-            VertexProcessed = null;
-            SubPathFound = null;
         }
 
         protected abstract void MoveNextVertex();
@@ -74,14 +63,6 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
         protected void RaiseSubPathFound(IReadOnlyCollection<Coordinate> subPath)
         {
             SubPathFound?.Invoke(this, new(subPath));
-        }
-
-        protected void ThrowIfDisposed()
-        {
-            if (IsAlgorithmDisposed)
-            {
-                throw new ObjectDisposedException(GetType().Name);
-            }
         }
 
         private IEnumerable<(IVertex Source, IVertex Target)> GetSubRanges()

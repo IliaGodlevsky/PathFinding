@@ -8,7 +8,7 @@ using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    [Order(8)]
+    [Order(15)]
     internal sealed class BidirectLeeAlgorithmView : Label
     {
         private readonly IMessenger messenger;
