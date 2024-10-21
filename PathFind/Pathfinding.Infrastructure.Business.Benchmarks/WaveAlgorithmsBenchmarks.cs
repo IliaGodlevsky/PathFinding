@@ -32,6 +32,14 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
             algorithm.FindPath();
         }
 
+        [Benchmark]
+        public void BidirectAStarDijkstraAlgorithmBenchmark()
+        {
+            var algorithm = new BidirectAStarAlgorithm(range);
+
+            algorithm.FindPath();
+        }
+
 
         [Benchmark]
         public void AStarAlgorithmBenchmark()

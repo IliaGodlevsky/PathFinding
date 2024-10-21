@@ -37,9 +37,9 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             storage.Clear();
         }
 
-        protected override IVertex GetNextVertex()
+        protected override void MoveNextVertex()
         {
-            return storage.TryFirstOrThrowDeadEndVertexException();
+            CurrentVertex = storage.TryFirstOrThrowDeadEndVertexException();
         }
 
         protected override void PrepareForSubPathfinding((IVertex Source, IVertex Target) range)

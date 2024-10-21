@@ -33,7 +33,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             stashedVertices = new(VertexEqualityComparer.Interface);
         }
 
-        protected override IVertex GetNextVertex()
+        protected override void MoveNextVertex()
         {
             storage.OrderBy(v => accumulatedCosts[v.Position])
                 .Take(ToStashCount)
@@ -46,7 +46,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
                 stashedVertices.Clear();
                 next = storage.TryFirstOrThrowDeadEndVertexException();
             }
-            return next;
+            CurrentVertex = next;
         }
 
         private void AddToStash((IVertex Vertex, double Priority) stash)

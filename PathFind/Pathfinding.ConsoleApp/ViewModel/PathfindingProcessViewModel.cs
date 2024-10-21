@@ -132,7 +132,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 var stopwatch = Stopwatch.StartNew();
                 try
                 {
-                    path = await algorithm.FindPathAsync();
+                    path = algorithm.FindPath();
                 }
                 catch (PathfindingException ex)
                 {

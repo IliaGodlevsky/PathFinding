@@ -33,11 +33,10 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             backwardStorage.EnqueueOrUpdatePriority(Range.Target, default);
         }
 
-        protected override (IGraphPath Forward, IGraphPath Backward) GetSubPath()
+        protected override IGraphPath GetSubPath()
         {
-            var forward = new GraphPath(forwardTraces.ToDictionary(), Intersection, stepRule);
-            var backward = new GraphPath(backwardTraces.ToDictionary(), Intersection, stepRule);
-            return (forward, backward);
+            return new BidirectGraphPath(forwardTraces.ToDictionary(), 
+                backwardTraces.ToDictionary(), Intersection, stepRule);
         }
 
         protected override void DropState()
@@ -47,11 +46,11 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             backwardStorage.Clear();
         }
 
-        protected override (IVertex Forward, IVertex Backward) GetNextVertices()
+        protected override void MoveNextVertex()
         {
             var forward = forwardStorage.TryFirstOrThrowDeadEndVertexException();
             var backward = backwardStorage.TryFirstOrThrowDeadEndVertexException();
-            return (forward, backward);
+            Current = (forward, backward);
         }
 
         protected override void RelaxForwardVertex(IVertex vertex)

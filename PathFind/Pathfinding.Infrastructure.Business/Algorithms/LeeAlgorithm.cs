@@ -18,9 +18,9 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             storage.Clear();
         }
 
-        protected override IVertex GetNextVertex()
+        protected override void MoveNextVertex()
         {
-            return storage.DequeueOrThrowDeadEndVertexException();
+            CurrentVertex = storage.DequeueOrThrowDeadEndVertexException();
         }
 
         protected override void RelaxVertex(IVertex vertex)

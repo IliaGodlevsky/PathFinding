@@ -1,6 +1,8 @@
 ﻿using Pathfinding.Domain.Interface;
+using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Shared.Extensions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
@@ -19,10 +21,10 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
         protected override void PrepareForSubPathfinding((IVertex Source, IVertex Target) range)
         {
             base.PrepareForSubPathfinding(range);
-            VisitCurrentVertices();
+            VisitCurrentVertex();
         }
 
-        protected override void VisitCurrentVertices()
+        protected override void VisitCurrentVertex()
         {
             forwardVisited.Add(Current.Forward);
             backwardVisited.Add(Current.Backward);
@@ -38,7 +40,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             vertices.ForEach(RelaxBackwardVertex);
         }
 
-        protected override void InspectCurrentVertices()
+        protected override void InspectCurrentVertex()
         {
             var forwardNeighbors = GetForwardUnvisitedNeighbours();
             var backwardNeighbors = GetBackwardUnvisitedNeighbours();

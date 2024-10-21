@@ -17,11 +17,11 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 
         protected abstract IVertex GetVertex(IReadOnlyCollection<IVertex> neighbors);
 
-        protected override IVertex GetNextVertex()
+        protected override void MoveNextVertex()
         {
             var neighbours = GetUnvisitedNeighbours(CurrentVertex);
             RaiseVertexProcessed(CurrentVertex, neighbours);
-            return GetVertex(neighbours);
+            CurrentVertex = GetVertex(neighbours);
         }
 
         protected override void PrepareForSubPathfinding((IVertex Source, IVertex Target) range)

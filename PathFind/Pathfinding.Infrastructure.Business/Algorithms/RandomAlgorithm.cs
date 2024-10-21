@@ -29,17 +29,17 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             storage.Clear();
         }
 
-        protected override IVertex GetNextVertex()
+        protected override void MoveNextVertex()
         {
-            if (storage.Count > 0)
+            if (storage.Count == 0)
             {
-                int limit = storage.Count - 1;
-                int index = random.NextInt(limit);
-                var vertex = storage[index];
-                storage.RemoveAt(index);
-                return vertex;
+                throw new DeadendVertexException();
             }
-            throw new DeadendVertexException();
+            int limit = storage.Count - 1;
+            int index = random.NextInt(limit);
+            var vertex = storage[index];
+            storage.RemoveAt(index);
+            CurrentVertex = vertex;
         }
 
         protected override void RelaxVertex(IVertex vertex)

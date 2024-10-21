@@ -92,6 +92,7 @@
     <Compile Include="Algorithms\BreadthFirstAlgorithm.cs" />
     <Compile Include="Algorithms\CostGreedyAlgorithm.cs" />
     <Compile Include="Algorithms\Events\VertexProcessedEventHandler.cs" />
+    <Compile Include="Algorithms\GraphPaths\BidirectGraphPath.cs" />
     <Compile Include="Algorithms\SnakeAlgorithm.cs" />
     <Compile Include="Algorithms\DepthFirstAlgorithm.cs" />
     <Compile Include="Algorithms\DepthRandomAlgorithm.cs" />

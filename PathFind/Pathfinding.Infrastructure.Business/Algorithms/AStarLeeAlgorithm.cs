@@ -27,9 +27,9 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 
         }
 
-        protected override IVertex GetNextVertex()
+        protected override void MoveNextVertex()
         {
-            return storage.TryFirstOrThrowDeadEndVertexException();
+            CurrentVertex = storage.TryFirstOrThrowDeadEndVertexException();
         }
 
         protected override void DropState()

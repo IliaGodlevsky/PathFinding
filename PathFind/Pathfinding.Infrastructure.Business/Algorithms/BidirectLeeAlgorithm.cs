@@ -42,14 +42,14 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             base.RelaxBackwardVertex(vertex);
         }
 
-        protected override (IVertex Forward, IVertex Backward) GetNextVertices()
+        protected override void MoveNextVertex()
         {
             var forward = forwardStorage.DequeueOrThrowDeadEndVertexException();
             var backward = backwardStorage.DequeueOrThrowDeadEndVertexException();
-            return (forward, backward);
+            Current = (forward, backward);
         }
 
-        protected override void VisitCurrentVertices()
+        protected override void VisitCurrentVertex()
         {
             forwardVisited.Add(Current.Forward);
             backwardVisited.Add(Current.Backward);

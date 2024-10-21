@@ -1,5 +1,4 @@
 ﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Domain.Interface.Comparers;
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
@@ -20,8 +19,6 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
         protected readonly Dictionary<Coordinate, IVertex> forwardTraces;
         protected readonly Dictionary<Coordinate, IVertex> backwardTraces;
 
-        private readonly IEnumerable<IVertex> pathfindingRange;
-
         protected IVertex Intersection { get; set; } = NullVertex.Interface;
 
         protected (IVertex Forward, IVertex Backward) Current { get; set; }
@@ -29,8 +26,8 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
         protected (IVertex Source, IVertex Target) Range { get; set; }
 
         protected BidirectPathfindingAlgorithm(IEnumerable<IVertex> pathfindingRange)
+            : base(pathfindingRange)
         {
-            this.pathfindingRange = pathfindingRange;
             forwardVisited = new HashSet<IVertex>();
             backwardVisited = new HashSet<IVertex>();
             forwardTraces = new Dictionary<Coordinate, IVertex>();
@@ -39,54 +36,24 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             Current = (NullVertex.Instance, NullVertex.Interface);
         }
 
-        public override sealed IGraphPath FindPath()
-        {
-            ThrowIfDisposed();
-            var subPaths = new List<IGraphPath>();
-            foreach (var range in GetSubRanges())
-            {
-                PrepareForSubPathfinding(range);
-                while (!IsDestination())
-                {
-                    InspectCurrentVertices();
-                    Current = GetNextVertices();
-                    VisitCurrentVertices();
-                }
-                var subPath = GetSubPath();
-                subPaths.Add(subPath.Forward);
-                subPaths.Add(subPath.Backward);
-                RaiseSubPathFound(subPath.Forward);
-                RaiseSubPathFound(subPath.Backward);
-                DropState();
-            }
-            return new CompositeGraphPath(subPaths);
-        }
-
-        protected abstract void InspectCurrentVertices();
-
-        protected abstract (IVertex Forward, IVertex Backward) GetNextVertices();
-
-        protected abstract void VisitCurrentVertices();
-
-        protected virtual bool IsDestination()
+        protected override bool IsDestination()
         {
             return Intersection != NullVertex.Interface;
         }
 
-        protected virtual void PrepareForSubPathfinding((IVertex Source, IVertex Target) range)
+        protected override void PrepareForSubPathfinding((IVertex Source, IVertex Target) range)
         {
             Range = range;
             Current = (Range.Source, Range.Target);
         }
 
-        protected virtual (IGraphPath Forward, IGraphPath Backward) GetSubPath()
+        protected override IGraphPath GetSubPath()
         {
-            var forward = new GraphPath(forwardTraces.ToDictionary(), Intersection);
-            var backward = new GraphPath(backwardTraces.ToDictionary(), Intersection);
-            return (forward, backward);
+            return new BidirectGraphPath(forwardTraces.ToDictionary(),
+                backwardTraces.ToDictionary(), Intersection);
         }
 
-        protected virtual void DropState()
+        protected override void DropState()
         {
             forwardVisited.Clear();
             backwardVisited.Clear();
@@ -110,21 +77,6 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             return vertex.Neighbours
                 .Where(v => !v.IsObstacle && !visited.Contains(v))
                 .ToArray();
-        }
-
-        private IEnumerable<(IVertex Source, IVertex Target)> GetSubRanges()
-        {
-            using var iterator = pathfindingRange.GetEnumerator();
-            if (iterator.MoveNext())
-            {
-                var previous = iterator.Current;
-                while (iterator.MoveNext())
-                {
-                    var current = iterator.Current;
-                    yield return (previous, current);
-                    previous = iterator.Current;
-                }
-            }
         }
     }
 }
