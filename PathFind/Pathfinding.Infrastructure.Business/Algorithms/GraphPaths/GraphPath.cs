@@ -1,5 +1,6 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
+using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Extensions;
@@ -50,7 +51,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
             var vertex = target;
             vertices.Add(vertex);
             var parent = GetParentOrNullVertex(vertex);
-            while (AreNeighbours(parent, vertex))
+            while (parent.IsNeighbor(vertex))
             {
                 vertices.Add(parent);
                 vertex = parent;
@@ -77,11 +78,6 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
         private IVertex GetParentOrNullVertex(IVertex vertex)
         {
             return traces.GetOrDefault(vertex.Position, NullVertex.Instance);
-        }
-
-        private static bool AreNeighbours(IVertex self, IVertex candidate)
-        {
-            return self.Neighbours.Any(candidate.Equals);
         }
 
         public IEnumerator<Coordinate> GetEnumerator()

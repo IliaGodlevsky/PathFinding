@@ -8,12 +8,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Pathfinding.Infrastructure.Business.Extensions;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
 {
     public sealed class BidirectGraphPath : IGraphPath
     {
-        private readonly IReadOnlyDictionary<Coordinate, IVertex> forwardTraces;
+        private readonly IReadOnlyDictionary<Coordinate, IVertex> forwardTraces; 
         private readonly IReadOnlyDictionary<Coordinate, IVertex> backwardTraces;
         private readonly IVertex intersection;
         private readonly IStepRule stepRule;
@@ -58,7 +59,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
             var vertex = intersection;
             vertices.Add(vertex);
             var parent = GetParentOrNullVertex(vertex, forwardTraces);
-            while (AreNeighbours(parent, vertex))
+            while (parent.IsNeighbor(vertex))
             {
                 vertices.Add(parent);
                 vertex = parent;
@@ -67,7 +68,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
             vertex = intersection;
             parent = GetParentOrNullVertex(vertex, backwardTraces);
             var backward = new HashSet<IVertex>();
-            while (AreNeighbours(parent, vertex))
+            while (parent.IsNeighbor(vertex))
             {
                 backward.Add(parent);
                 vertex = parent;
@@ -98,11 +99,6 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
             IReadOnlyDictionary<Coordinate, IVertex> traces)
         {
             return traces.GetOrDefault(vertex.Position, NullVertex.Instance);
-        }
-
-        private static bool AreNeighbours(IVertex self, IVertex candidate)
-        {
-            return self.Neighbours.Any(candidate.Equals);
         }
 
         public IEnumerator<Coordinate> GetEnumerator()
