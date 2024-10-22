@@ -1,9 +1,11 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using Autofac;
+using Autofac.Extras.Moq;
+using CommunityToolkit.Mvvm.Messaging;
 using Moq;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel;
-using Pathfinding.Logging.Loggers;
+using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
 using Pathfinding.TestUtils.Attributes;
 using System.Reactive.Linq;
@@ -13,49 +15,45 @@ namespace Pathfinding.ConsoleApp.Test
     [TestFixture, UnitTest]
     public class DeleteGraphButtonViewModelTests
     {
-        private Mock<IRequestService<GraphVertexModel>> service;
-        private IMessenger messenger;
-
-        [SetUp]
-        public void SetUp()
-        {
-            messenger = new WeakReferenceMessenger();
-            service = new Mock<IRequestService<GraphVertexModel>>();
-            service.Setup(x => x.DeleteGraphsAsync(
-                It.IsAny<int[]>(),
-                It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
-        }
-
         [Test]
         public async Task DeleteCommand_SelectedGraphs_ShouldDelete()
         {
-            var viewModel = new GraphDeletionViewModel(messenger,
-                service.Object, new NullLog());
-            int[] ids = new[] { 1, 2 };
-            bool isDeleted = false;
-            void OnDeleted(object recipient, GraphsDeletedMessage msg)
-            {
-                isDeleted = msg.GraphIds.SequenceEqual(ids);
-            }
-            messenger.Register<GraphsDeletedMessage>(this, OnDeleted);
+            using var mock = AutoMock.GetLoose();
+            var ids = new[] { 1, 2 };
+            var viewModel = mock.Create<GraphDeletionViewModel>();
+            mock.Mock<IMessenger>().Setup(x => x.Send(
+                It.IsAny<GraphSelectedMessage>(),
+                It.IsAny<IsAnyToken>())).Callback<GraphSelectedMessage, object>((x, y) =>
+                {
+                    viewModel.GraphIds = new[] { 1, 2 };
+                });
+            mock.Mock<IRequestService<GraphVertexModel>>().Setup(x => x.DeleteGraphsAsync(
+                   It.IsAny<int[]>(),
+                   It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(true));
+
+            var messenger = mock.Container.Resolve<IMessenger>();
             messenger.Send(new GraphSelectedMessage(ids));
 
             await viewModel.DeleteCommand.Execute();
 
             Assert.Multiple(() =>
             {
-                service.Verify(x => x.DeleteGraphsAsync(
-                    It.IsAny<int[]>(),
+                mock.Mock<IRequestService<GraphVertexModel>>().Verify(x => x.DeleteGraphsAsync(
+                    It.Is<int[]>(x=>x.SequenceEqual(ids)),
                     It.IsAny<CancellationToken>()), Times.Once);
-                Assert.That(isDeleted);
+                mock.Mock<IMessenger>().Verify(x => x.Send(
+                    It.Is<GraphsDeletedMessage>(x => x.GraphIds.SequenceEqual(ids)),
+                    It.IsAny<IsAnyToken>()), Times.Once);
             });
         }
 
         [Test]
         public async Task DeleteCommand_NoSelectedGraph_CantExecute()
         {
-            var viewModel = new GraphDeletionViewModel(messenger,
-                service.Object, new NullLog());
+            using var mock = AutoMock.GetLoose();
+
+            var viewModel = mock.Create<GraphDeletionViewModel>();
 
             var canExecute = await viewModel.DeleteCommand.CanExecute.FirstOrDefaultAsync();
 

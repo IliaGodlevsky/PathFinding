@@ -44,11 +44,6 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations.TestDb.Repos
             return await Task.FromResult(result);
         }
 
-        public async Task<int> ReadCountAsync(CancellationToken token = default)
-        {
-            return await Task.FromResult(1);
-        }
-
         public async Task<bool> UpdateAsync(Graph graph,
             CancellationToken token = default)
         {

@@ -1,9 +1,10 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using Autofac;
+using Autofac.Extras.Moq;
+using CommunityToolkit.Mvvm.Messaging;
 using Moq;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel;
-using Pathfinding.Logging.Loggers;
 using Pathfinding.Service.Interface;
 using Pathfinding.TestUtils.Attributes;
 using System.Reactive.Linq;
@@ -13,41 +14,36 @@ namespace Pathfinding.ConsoleApp.Test
     [TestFixture, UnitTest]
     internal class DeleteRunButtonViewModelTests
     {
-        private Mock<IRequestService<GraphVertexModel>> service;
-        private IMessenger messenger;
-
-        [SetUp]
-        public void SetUp()
-        {
-            messenger = new WeakReferenceMessenger();
-            service = new Mock<IRequestService<GraphVertexModel>>();
-            service.Setup(x => x.DeleteRunsAsync(
-                It.IsAny<int[]>(),
-                It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
-        }
-
         [Test]
         public async Task DeleteCommand_SelectedRuns_ShouldDelete()
         {
-            var viewModel = new DeleteRunButtonViewModel(messenger,
-                service.Object, new NullLog());
-            int[] ids = new[] { 1, 2 };
-            bool isDeleted = false;
-            void OnDeleted(object recipient, RunsDeletedMessage msg)
-            {
-                isDeleted = msg.RunIds.SequenceEqual(ids);
-            }
-            messenger.Register<RunsDeletedMessage>(this, OnDeleted);
+            using var mock = AutoMock.GetLoose();
+            var ids = new[] { 1, 2 };
+            var viewModel = mock.Create<DeleteRunButtonViewModel>();
+            mock.Mock<IMessenger>().Setup(x => x.Send(
+                It.Is<RunSelectedMessage>(x => x.SelectedRuns.SequenceEqual(ids)),
+                It.IsAny<IsAnyToken>())).Callback<RunSelectedMessage, object>((x, y) =>
+                {
+                    viewModel.RunsIds = ids;
+                });
+            mock.Mock<IRequestService<GraphVertexModel>>().Setup(x => x.DeleteRunsAsync(
+                It.Is<int[]>(x => x.SequenceEqual(ids)),
+                It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
+
+            var messenger = mock.Container.Resolve<IMessenger>();
             messenger.Send(new RunSelectedMessage(ids));
 
             await viewModel.DeleteRunCommand.Execute();
 
             Assert.Multiple(() =>
             {
-                service.Verify(x => x.DeleteRunsAsync(
-                    It.IsAny<int[]>(),
-                    It.IsAny<CancellationToken>()), Times.Once);
-                Assert.That(isDeleted);
+                mock.Mock<IRequestService<GraphVertexModel>>()
+                    .Verify(x => x.DeleteRunsAsync(
+                        It.Is<int[]>(x => x.SequenceEqual(ids)),
+                        It.IsAny<CancellationToken>()), Times.Once);
+                mock.Mock<IMessenger>().Verify(x => x.Send(
+                    It.Is<RunsDeletedMessage>(x => x.RunIds.SequenceEqual(ids)),
+                    It.IsAny<IsAnyToken>()), Times.Once);
             });
         }
     }

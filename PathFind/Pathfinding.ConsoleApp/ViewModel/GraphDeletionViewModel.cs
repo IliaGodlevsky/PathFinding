@@ -43,7 +43,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private IObservable<bool> CanDelete()
         {
             return this.WhenAnyValue(x => x.GraphIds,
-                (graphIds) => graphIds.Length > 0);
+                (ids) => ids.Length > 0);
         }
 
         private async Task DeleteGraph(MouseEventArgs e)

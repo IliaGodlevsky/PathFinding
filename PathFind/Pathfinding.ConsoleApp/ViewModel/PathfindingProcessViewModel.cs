@@ -38,14 +38,14 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public ReactiveCommand<MouseEventArgs, Unit> StartAlgorithmCommand { get; }
 
         private int graphId;
-        private int GraphId
+        public int GraphId
         {
             get => graphId;
             set => this.RaiseAndSetIfChanged(ref graphId, value);
         }
 
         private IGraph<GraphVertexModel> graph;
-        private IGraph<GraphVertexModel> Graph
+        public IGraph<GraphVertexModel> Graph
         {
             get => graph;
             set => this.RaiseAndSetIfChanged(ref graph, value);
@@ -96,7 +96,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Send(msg);
             var pathfindingRange = msg.PathfindingRange;
 
-            if (pathfindingRange.Count > 0)
+            if (pathfindingRange.Count > 1)
             {
                 var subAlgorithms = new List<CreateSubAlgorithmRequest>();
                 int visitedCount = 0;

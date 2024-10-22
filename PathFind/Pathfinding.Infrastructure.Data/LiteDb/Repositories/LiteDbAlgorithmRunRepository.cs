@@ -63,11 +63,5 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             var result = collection.FindById(runId);
             return await Task.FromResult(result);
         }
-
-        public async Task<int> ReadCount(int graphId, CancellationToken token = default)
-        {
-            await Task.CompletedTask;
-            return collection.Count(x => x.GraphId == graphId);
-        }
     }
 }

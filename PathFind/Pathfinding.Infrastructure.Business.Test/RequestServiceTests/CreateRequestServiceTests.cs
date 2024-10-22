@@ -115,5 +115,21 @@ namespace Pathfinding.Infrastructure.Business.Test.RequestServiceTests
                 // TODO: Add more asserts
             });
         }
+
+        [Test]
+        public async Task CreateHistory_ModelInput_ShouldCreate()
+        {
+            var model = EntityBuilder
+                .CreatePathfindingHistoryRequest()
+                .WithRandomRange()
+                .WithRandomRunHistory()
+                .WithTestGraph();
+
+            var service = TestRequestServiceFactory.GetForTest();
+            var result = await service.CreatePathfindingHistoryAsync(model);
+
+            Assert.That(EntityEqualityComparer.AreEqual(model, result));
+            //TODO: Add more asserts
+        }
     }
 }

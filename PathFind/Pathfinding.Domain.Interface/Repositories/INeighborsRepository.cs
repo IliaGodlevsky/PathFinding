@@ -14,12 +14,6 @@ namespace Pathfinding.Domain.Interface.Repositories
             ReadNeighboursForVerticesAsync(IEnumerable<int> verticesIds,
             CancellationToken token = default);
 
-        Task<bool> DeleteNeighbourAsync(int vertexId,
-            int neighbourId, CancellationToken token = default);
-
-        Task<bool> DeleteNeighboursAsync(IEnumerable<(int VertexId, List<int> NeighborsIds)> neighbors,
-            CancellationToken token = default);
-
         Task<bool> DeleteByGraphIdAsync(int graphId, CancellationToken token = default);
     }
 }

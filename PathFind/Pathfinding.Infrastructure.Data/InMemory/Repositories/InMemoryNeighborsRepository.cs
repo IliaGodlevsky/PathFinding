@@ -31,23 +31,6 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
             return await Task.FromResult(result > 0);
         }
 
-        public async Task<bool> DeleteNeighbourAsync(int vertexId, int neighbourId,
-            CancellationToken token = default)
-        {
-            var result = set
-                .RemoveWhere(x => x.NeighborId == neighbourId && x.VertexId == vertexId);
-            return await Task.FromResult(result == 1);
-        }
-
-        public async Task<bool> DeleteNeighboursAsync(IEnumerable<(int VertexId, List<int> NeighborsIds)> neighbors,
-            CancellationToken token = default)
-        {
-            var n = neighbors.ToDictionary(x => x.VertexId, x => x.NeighborsIds);
-            var result = set
-                .RemoveWhere(x => n.ContainsKey(x.VertexId) && n[x.VertexId].Contains(x.NeighborId));
-            return await Task.FromResult(result > 0);
-        }
-
         public async Task<IReadOnlyDictionary<int, IReadOnlyCollection<Neighbor>>> ReadNeighboursForVerticesAsync(IEnumerable<int> verticesIds,
             CancellationToken token = default)
         {

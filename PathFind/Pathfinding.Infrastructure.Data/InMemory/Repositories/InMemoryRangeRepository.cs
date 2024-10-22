@@ -31,13 +31,6 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
             return await Task.FromResult(result > 0);
         }
 
-        public async Task<bool> DeleteByVertexIdAsync(int vertexId,
-            CancellationToken token = default)
-        {
-            var result = set.RemoveWhere(x => x.VertexId == vertexId);
-            return await Task.FromResult(result > 0);
-        }
-
         public async Task<bool> DeleteByVerticesIdsAsync(IEnumerable<int> verticesIds,
             CancellationToken token = default)
         {
@@ -52,27 +45,6 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
                 .OrderBy(x => x.Order)
                 .ToList();
             return await Task.FromResult(result);
-        }
-
-        public async Task<IEnumerable<PathfindingRange>> ReadByVerticesIdsAsync(IEnumerable<int> verticesIds,
-            CancellationToken token = default)
-        {
-            var result = set.Where(x => verticesIds.Contains(x.VertexId)).ToList();
-            return await Task.FromResult(result);
-        }
-
-        public async Task<bool> UpdateAsync(IEnumerable<PathfindingRange> entities,
-            CancellationToken token = default)
-        {
-            foreach (var entity in entities)
-            {
-                if (set.TryGetValue(entity, out var value))
-                {
-                    set.Remove(value);
-                    set.Add(entity);
-                }
-            }
-            return await Task.FromResult(true);
         }
 
         public async Task<IEnumerable<PathfindingRange>> UpsertAsync(IEnumerable<PathfindingRange> entities, CancellationToken token = default)

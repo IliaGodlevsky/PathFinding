@@ -42,10 +42,11 @@ namespace Pathfinding.ConsoleApp.Injection
                 ("Default", (IStepRule)new DefaultStepRule()),
                 ("Lanscape", new LandscapeStepRule())
             }).As<IEnumerable<(string Name, IStepRule Rule)>>().SingleInstance();
-            builder.RegisterInstance(new[]
+            builder.RegisterInstance(new []
             {
                 ("Euclidian", (IHeuristic)new EuclidianDistance()),
                 ("Chebyshev", new ChebyshevDistance()),
+                ("Diagonal", new DiagonalDistance()),
                 ("Manhattan", new ManhattanDistance()),
                 ("Cosine", new CosineDistance())
             }).As<IEnumerable<(string Name, IHeuristic Heuristic)>>().SingleInstance();

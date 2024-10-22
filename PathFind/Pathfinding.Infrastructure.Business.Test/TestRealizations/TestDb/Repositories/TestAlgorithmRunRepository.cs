@@ -31,11 +31,6 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations.TestDb.Repos
             return await Task.FromResult(result.Enumerate());
         }
 
-        public async Task<int> ReadCount(int graphId, CancellationToken token = default)
-        {
-            return await Task.FromResult(1);
-        }
-
         public async Task<bool> DeleteByRunIdsAsync(IEnumerable<int> runIds, CancellationToken token = default)
         {
             return await Task.FromResult(true);

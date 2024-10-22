@@ -35,17 +35,5 @@ namespace Pathfinding.Infrastructure.Business.Test.Mappings
 
             Assert.That(coordinateModel.Coordinate.SequenceEqual(mapped.CoordinatesValues), Is.True);
         }
-
-        [TestCaseSource(typeof(MappingTestsDataProvider), nameof(MappingTestsDataProvider.CoordinateValuesToBytes))]
-        public byte[] UntitledMapperProfile_CoordinateValuesToByte_ShouldMap(int[] coordinateValues)
-        {
-            return mapper.Map<byte[]>(coordinateValues);
-        }
-
-        [TestCaseSource(typeof(MappingTestsDataProvider), nameof(MappingTestsDataProvider.CoordinateToBytes))]
-        public byte[] UntitledMapperProfile_CoordinateToBytes_ShouldMap(Coordinate coordinate)
-        {
-            return mapper.Map<byte[]>(coordinate);
-        }
     }
 }

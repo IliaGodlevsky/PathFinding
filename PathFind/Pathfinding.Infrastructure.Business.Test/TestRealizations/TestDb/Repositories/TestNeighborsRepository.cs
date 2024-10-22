@@ -23,18 +23,6 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations.TestDb.Repos
             return await Task.FromResult(true);
         }
 
-        public async Task<bool> DeleteNeighbourAsync(int vertexId, int neighbourId,
-            CancellationToken token = default)
-        {
-            return await Task.FromResult(true);
-        }
-
-        public async Task<bool> DeleteNeighboursAsync(IEnumerable<(int VertexId, List<int> NeighborsIds)> neighbors,
-            CancellationToken token = default)
-        {
-            return await Task.FromResult(true);
-        }
-
         public async Task<IReadOnlyDictionary<int, IReadOnlyCollection<Neighbor>>> ReadNeighboursForVerticesAsync(IEnumerable<int> verticesIds,
             CancellationToken token = default)
         {

@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Pathfinding.Infrastructure.Business.Extensions;
+using Pathfinding.Infrastructure.Data.Extensions;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
 {
@@ -58,21 +59,21 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
             var vertices = new HashSet<IVertex>();
             var vertex = intersection;
             vertices.Add(vertex);
-            var parent = GetParentOrNullVertex(vertex, forwardTraces);
+            var parent = forwardTraces.GetOrNullVertex(vertex.Position);
             while (parent.IsNeighbor(vertex))
             {
                 vertices.Add(parent);
                 vertex = parent;
-                parent = GetParentOrNullVertex(vertex, forwardTraces);
+                parent = forwardTraces.GetOrNullVertex(vertex.Position);
             }
             vertex = intersection;
-            parent = GetParentOrNullVertex(vertex, backwardTraces);
+            parent = backwardTraces.GetOrNullVertex(vertex.Position);
             var backward = new HashSet<IVertex>();
             while (parent.IsNeighbor(vertex))
             {
                 backward.Add(parent);
                 vertex = parent;
-                parent = GetParentOrNullVertex(vertex, backwardTraces);
+                parent = backwardTraces.GetOrNullVertex(vertex.Position);
             }
             backward.Add(vertex);
             backward.Reverse();
@@ -93,12 +94,6 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
         private int GetCount()
         {
             return Path.Count == 0 ? 0 : Path.Count - 1;
-        }
-
-        private IVertex GetParentOrNullVertex(IVertex vertex, 
-            IReadOnlyDictionary<Coordinate, IVertex> traces)
-        {
-            return traces.GetOrDefault(vertex.Position, NullVertex.Instance);
         }
 
         public IEnumerator<Coordinate> GetEnumerator()

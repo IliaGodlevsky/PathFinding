@@ -23,12 +23,6 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations.TestDb.Repos
             return await Task.FromResult(true);
         }
 
-        public async Task<bool> DeleteByVertexIdAsync(int vertexId,
-            CancellationToken token = default)
-        {
-            return await Task.FromResult(true);
-        }
-
         public async Task<bool> DeleteByVerticesIdsAsync(IEnumerable<int> verticesIds,
             CancellationToken token = default)
         {
@@ -48,27 +42,6 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations.TestDb.Repos
                 VertexId = 1
             };
             return await Task.FromResult(range.Enumerate());
-        }
-
-        public async Task<IEnumerable<PathfindingRange>> ReadByVerticesIdsAsync(IEnumerable<int> verticesIds,
-            CancellationToken token = default)
-        {
-            var range = new PathfindingRange()
-            {
-                Id = 1,
-                GraphId = 1,
-                IsSource = false,
-                IsTarget = false,
-                Order = 1,
-                VertexId = 1
-            };
-            return await Task.FromResult(range.Enumerate());
-        }
-
-        public async Task<bool> UpdateAsync(IEnumerable<PathfindingRange> entities,
-            CancellationToken token = default)
-        {
-            return await Task.FromResult(true);
         }
 
         public async Task<IEnumerable<PathfindingRange>> UpsertAsync(IEnumerable<PathfindingRange> entities, CancellationToken token = default)

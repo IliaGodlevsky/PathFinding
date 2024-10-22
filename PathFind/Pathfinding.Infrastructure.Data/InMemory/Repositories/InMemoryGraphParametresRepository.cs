@@ -72,11 +72,6 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
             return await Task.FromResult(result);
         }
 
-        public async Task<int> ReadCountAsync(CancellationToken token = default)
-        {
-            return await Task.FromResult(set.Count);
-        }
-
         public async Task<bool> UpdateAsync(Graph graph,
             CancellationToken token = default)
         {

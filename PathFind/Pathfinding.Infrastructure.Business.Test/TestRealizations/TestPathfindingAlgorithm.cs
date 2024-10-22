@@ -12,9 +12,9 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations
         {
         }
 
-        protected override IVertex GetNextVertex()
+        protected override void MoveNextVertex()
         {
-            return NullVertex.Interface;
+
         }
 
         protected override void InspectCurrentVertex()

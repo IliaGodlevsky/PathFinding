@@ -23,14 +23,5 @@ namespace Pathfinding.Infrastructure.Business.Test.Algorithms
             Assert.That(path.SequenceEqual(expected), Is.True,
                 "The found path is not as the expected one");
         }
-
-        [Test]
-        public void PathfindingAlgorithm_Disposed_ShouldThrow()
-        {
-            var algorithm = new TestPathfindingAlgorithm();
-            algorithm.Dispose();
-
-            Assert.Throws<ObjectDisposedException>(() => algorithm.FindPath());
-        }
     }
 }

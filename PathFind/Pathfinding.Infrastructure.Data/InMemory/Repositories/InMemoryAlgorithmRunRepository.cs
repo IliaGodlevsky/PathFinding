@@ -53,12 +53,6 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
             return await Task.FromResult(result);
         }
 
-        public async Task<int> ReadCount(int graphId, CancellationToken token = default)
-        {
-            int result = set.Count(x => x.GraphId == graphId);
-            return await Task.FromResult(result);
-        }
-
         public async Task<bool> DeleteByRunIdsAsync(IEnumerable<int> runIds, CancellationToken token = default)
         {
             var ids = runIds.ToArray();

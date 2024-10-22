@@ -23,11 +23,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public override string AlgorithmId { get; } = AlgorithmNames.DepthFirst;
 
-        protected override void AppendStatistics(RunStatisticsModel model)
-        {
-
-        }
-
         protected override PathfindingProcess GetAlgorithm(IEnumerable<GraphVertexModel> pathfindingRange)
         {
             return new DepthFirstAlgorithm(pathfindingRange);

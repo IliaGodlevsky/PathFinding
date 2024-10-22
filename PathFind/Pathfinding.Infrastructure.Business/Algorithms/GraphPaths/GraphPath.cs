@@ -1,14 +1,12 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Infrastructure.Business.Extensions;
-using Pathfinding.Infrastructure.Data.Pathfinding;
+using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface;
-using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
 {
@@ -50,12 +48,12 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
             var vertices = new List<IVertex>();
             var vertex = target;
             vertices.Add(vertex);
-            var parent = GetParentOrNullVertex(vertex);
+            var parent = traces.GetOrNullVertex(vertex.Position);
             while (parent.IsNeighbor(vertex))
             {
                 vertices.Add(parent);
                 vertex = parent;
-                parent = GetParentOrNullVertex(vertex);
+                parent = traces.GetOrNullVertex(vertex.Position);
             }
             return vertices.AsReadOnly();
         }
@@ -73,11 +71,6 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
         private int GetCount()
         {
             return Path.Count == 0 ? 0 : Path.Count - 1;
-        }
-
-        private IVertex GetParentOrNullVertex(IVertex vertex)
-        {
-            return traces.GetOrDefault(vertex.Position, NullVertex.Instance);
         }
 
         public IEnumerator<Coordinate> GetEnumerator()

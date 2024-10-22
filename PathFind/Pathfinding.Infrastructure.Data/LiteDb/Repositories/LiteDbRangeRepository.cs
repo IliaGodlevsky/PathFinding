@@ -29,12 +29,6 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             return await Task.FromResult(deleted > 0);
         }
 
-        public async Task<bool> DeleteByVertexIdAsync(int vertexId, CancellationToken token = default)
-        {
-            int deleted = collection.DeleteMany(x => x.VertexId == vertexId);
-            return await Task.FromResult(deleted > 0);
-        }
-
         public async Task<bool> DeleteByVerticesIdsAsync(IEnumerable<int> verticesIds, CancellationToken token = default)
         {
             var ids = verticesIds.Select(x => new BsonValue(x)).ToArray();
@@ -49,19 +43,6 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
                 .Where(x => x.GraphId == graphId)
                 .OrderBy(x => x.Order)
                 .ToEnumerable();
-        }
-
-        public async Task<IEnumerable<PathfindingRange>> ReadByVerticesIdsAsync(IEnumerable<int> verticesIds, CancellationToken token = default)
-        {
-            var ids = verticesIds.Select(x => new BsonValue(x)).ToArray();
-            var query = Query.In(nameof(PathfindingRange.VertexId), ids);
-            return await Task.FromResult(collection.Find(query).OrderBy(x => x.Order));
-        }
-
-        public async Task<bool> UpdateAsync(IEnumerable<PathfindingRange> entities, CancellationToken token = default)
-        {
-            collection.Update(entities);
-            return await Task.FromResult(true);
         }
 
         public async Task<IEnumerable<PathfindingRange>> UpsertAsync(IEnumerable<PathfindingRange> entities, CancellationToken token = default)

@@ -41,22 +41,6 @@ namespace Pathfinding.Infrastructure.Business
             this.mapper = mapper;
         }
 
-        public async Task<bool> CreateNeighborsAsync(CreateNeighborsRequest<T> request, CancellationToken token = default)
-        {
-            return await Transaction(async (unitOfWork, t) =>
-            {
-                var list = request.Neighbors.SelectMany(neighborhood =>
-                    neighborhood.Value.Select(neighbor => new Neighbor
-                    {
-                        GraphId = request.GraphId,
-                        VertexId = neighborhood.Key.Id,
-                        NeighborId = neighbor.Id
-                    })).ToReadOnly();
-                await unitOfWork.NeighborsRepository.CreateAsync(list, t);
-                return true;
-            }, token);
-        }
-
         public async Task<IReadOnlyCollection<PathfindingHistoryModel<T>>> CreatePathfindingHistoriesAsync(IEnumerable<CreatePathfindingHistoryRequest<T>> request,
             CancellationToken token = default)
         {
@@ -91,17 +75,6 @@ namespace Pathfinding.Infrastructure.Business
             return await CreatePathfindingHistoriesAsync(requests, token);
         }
 
-        public async Task<bool> CreateRangeAsync(CreatePathfindingRangeRequest<T> request,
-            CancellationToken token = default)
-        {
-            return await Transaction(async (unitOfWork, t) =>
-            {
-                var list = SelectRangeEntities(request.Vertices, request.GraphId);
-                await unitOfWork.RangeRepository.CreateAsync(list, t);
-                return true;
-            }, token).ConfigureAwait(false);
-        }
-
         public async Task<IReadOnlyCollection<AlgorithmRunHistoryModel>> CreateRunHistoriesAsync(IEnumerable<CreateAlgorithmRunHistoryRequest> histories,
             CancellationToken token = default)
         {
@@ -110,13 +83,6 @@ namespace Pathfinding.Infrastructure.Business
                 var result = await unitOfWork.AddHistoryAsync(mapper, histories);
                 return mapper.Map<AlgorithmRunHistoryModel[]>(result).ToReadOnly();
             }, token).ConfigureAwait(false);
-        }
-
-        public async Task<bool> DeleteGraphAsync(int graphId,
-            CancellationToken token = default)
-        {
-            return await Transaction(async (unitOfWork, t)
-                => await unitOfWork.GraphRepository.DeleteAsync(graphId, t), token).ConfigureAwait(false);
         }
 
         public async Task<bool> DeleteRangeAsync(IEnumerable<T> request,
@@ -168,22 +134,6 @@ namespace Pathfinding.Infrastructure.Business
                 => await unitOfWork.AddGraphAsync<T>(mapper, graph, t), token).ConfigureAwait(false);
         }
 
-        public async Task<int> ReadGraphCountAsync(CancellationToken token = default)
-        {
-            using var unitOfWork = factory();
-            return await unitOfWork.GraphRepository.ReadCountAsync(token);
-        }
-
-        public async Task<IReadOnlyCollection<int>> ReadGraphIdsAsync(CancellationToken token = default)
-        {
-            return await Transaction(async (unitOfWork, t) =>
-            {
-                return (await unitOfWork.GraphRepository.GetAll())
-                    .Select(x => x.Id)
-                    .ToList();
-            }, token).ConfigureAwait(false);
-        }
-
         public async Task<IReadOnlyCollection<PathfindingHistoryModel<T>>> ReadPathfindingHistoriesAsync(IEnumerable<int> graphIds,
             CancellationToken token = default)
         {
@@ -213,13 +163,6 @@ namespace Pathfinding.Infrastructure.Business
             {
                 return await unitOfWork.GetRangeAsync(graphId, mapper, t);
             }, token).ConfigureAwait(false);
-        }
-
-        public async Task<int> ReadRunCountAsync(int graphId,
-            CancellationToken token = default)
-        {
-            return await Transaction(async (unit, t)
-                => await unit.RunRepository.ReadCount(graphId, t), token).ConfigureAwait(false);
         }
 
         public async Task<AlgorithmRunHistoryModel> ReadRunHistoryAsync(int runId,
@@ -260,30 +203,11 @@ namespace Pathfinding.Infrastructure.Business
             }, token);
         }
 
-        public async Task<GraphSerializationModel> ReadSerializationGraphAsync(int graphId,
-            CancellationToken token = default)
-        {
-            var result = await ReadGraphAsync(graphId, token);
-            return mapper.Map<GraphSerializationModel>(result);
-        }
-
         public async Task<IReadOnlyCollection<PathfindingHistorySerializationModel>> ReadSerializationHistoriesAsync(IEnumerable<int> graphIds,
             CancellationToken token = default)
         {
             var result = await ReadPathfindingHistoriesAsync(graphIds, token);
             return mapper.Map<List<PathfindingHistorySerializationModel>>(result);
-        }
-
-        public async Task<bool> RemoveNeighborsAsync(IReadOnlyDictionary<T, IReadOnlyCollection<T>> request,
-            CancellationToken token = default)
-        {
-            return await Transaction(async (unitOfWork, t) =>
-            {
-                var data = request
-                    .Select(x => (VertexId: x.Key.Id, Neighbors: x.Value.Select(x => x.Id).ToList()))
-                    .ToReadOnly();
-                return await unitOfWork.NeighborsRepository.DeleteNeighboursAsync(data, t);
-            }, token).ConfigureAwait(false);
         }
 
         public async Task<bool> UpdateObstaclesCountAsync(UpdateGraphInfoRequest request,
@@ -294,24 +218,6 @@ namespace Pathfinding.Infrastructure.Business
                 var entity = await unitOfWork.GraphRepository.ReadAsync(request.Id, t);
                 entity.ObstaclesCount = request.ObstaclesCount;
                 return await unitOfWork.GraphRepository.UpdateAsync(entity, t);
-            }, token).ConfigureAwait(false);
-        }
-
-        public async Task<bool> UpdateRangeAsync(IEnumerable<(int Order, T Vertex)> request,
-            CancellationToken token = default)
-        {
-            return await Transaction(async (unitOfWork, t) =>
-            {
-                var verts = request.Select(x => x.Vertex.Id).ToReadOnly();
-                var ranges = (await unitOfWork.RangeRepository
-                    .ReadByVerticesIdsAsync(verts, t))
-                    .OrderBy(x => x.VertexId)
-                    .ToReadOnly();
-                var orderedVertices = request
-                    .OrderBy(x => x.Vertex.Id)
-                    .ToReadOnly();
-                ranges.ForEach((x, i) => x.Order = orderedVertices[i].Order);
-                return await unitOfWork.RangeRepository.UpdateAsync(ranges, t);
             }, token).ConfigureAwait(false);
         }
 
@@ -332,19 +238,6 @@ namespace Pathfinding.Infrastructure.Business
         {
             return await Transaction(async (unitOfWork, t)
                 => await unitOfWork.GraphRepository.DeleteAsync(ids, t), token).ConfigureAwait(false);
-        }
-
-        public async Task<IReadOnlyCollection<GraphModel<T>>> CreateGraphsAsync(IEnumerable<GraphSerializationModel> request,
-            CancellationToken token = default)
-        {
-            return await Transaction(async (unitOfWork, t) =>
-            {
-                return await request
-                    .Select(mapper.Map<CreateGraphRequest<T>>)
-                    .ToAsyncEnumerable()
-                    .SelectAwait(async x => await unitOfWork.AddGraphAsync(mapper, x, token))
-                    .ToListAsync(t);
-            }, token).ConfigureAwait(false);
         }
 
         public async Task<bool> UpsertRangeAsync(UpsertPathfindingRangeRequest request,
@@ -405,7 +298,5 @@ namespace Pathfinding.Infrastructure.Business
                 throw;
             }
         }
-
-
     }
 }

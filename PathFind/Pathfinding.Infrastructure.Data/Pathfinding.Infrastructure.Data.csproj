@@ -70,6 +70,7 @@
     <Compile Include="Extensions\GraphExtensions.cs" />
     <Compile Include="Extensions\GraphAssembleExtensions.cs" />
     <Compile Include="Extensions\PathfindingRangeExtensions.cs" />
+    <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\VertexExtension.cs" />
     <Compile Include="InMemory\InMemoryUnitOfWorkFactory.cs" />
     <Compile Include="InMemory\Repositories\EntityComparer.cs" />
