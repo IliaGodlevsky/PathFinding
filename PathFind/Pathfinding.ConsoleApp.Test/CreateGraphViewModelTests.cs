@@ -4,10 +4,12 @@ using Moq;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
 using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.TestUtils.Attributes;
 using System.Reactive.Linq;
@@ -24,8 +26,12 @@ namespace Pathfinding.ConsoleApp.Test
             mock.Mock<IGraphAssemble<GraphVertexModel>>()
                 .Setup(x => x.AssembleGraph(It.IsAny<IReadOnlyList<int>>()))
                 .Returns(Graph<GraphVertexModel>.Empty);
+            mock.Mock<IRequestService<GraphVertexModel>>().Setup(service => service.CreateGraphAsync(
+                        It.IsAny<CreateGraphRequest<GraphVertexModel>>(),
+                        It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(ModelBuilder.CreateEmptyModel()));
             var viewModel = mock.Create<GraphAssembleViewModel>();
-            viewModel.NeighborhoodFactory = ("Test", new MooreNeighborhoodFactory());
+            viewModel.NeighborhoodFactory = (NeighborhoodNames.Moore, new MooreNeighborhoodFactory());
             viewModel.Name = "Test";
             viewModel.Length = 1;
             viewModel.SmoothLevel = ("Test", 1);

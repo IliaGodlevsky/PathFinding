@@ -15,6 +15,7 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
         {
             collection = db.GetCollection<Vertex>(DbTables.Vertices);
             collection.EnsureIndex(x => x.Id);
+            collection.EnsureIndex(x => x.GraphId);
         }
 
         public async Task<IEnumerable<Vertex>> CreateAsync(IEnumerable<Vertex> vertices, CancellationToken token = default)

@@ -53,6 +53,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>AppSettings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Injection\MetadataKeys.cs" />
     <Compile Include="Messages\View\HeuristicsViewModelChangedMessage.cs" />
     <Compile Include="Messages\View\OpenAlgorithmRunViewMessage.cs" />
     <Compile Include="Messages\ViewModel\RunActivatedMessage.cs" />
@@ -199,6 +205,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="AppSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>AppSettings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

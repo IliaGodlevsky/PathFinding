@@ -4,7 +4,6 @@ using DynamicData;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
-using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using ReactiveUI;
@@ -110,20 +109,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             if (msg.Models.Length > 0)
             {
-                var parametres = msg.Models
-                    .Select(x =>
-                        new GraphInfoModel
-                        {
-                            Id = x.Id,
-                            Name = x.Name,
-                            Obstacles = x.Graph.GetObstaclesCount(),
-                            Width = x.Graph.GetWidth(),
-                            Length = x.Graph.GetLength(),
-                            SmoothLevel = x.SmoothLevel,
-                            Neighborhood = x.Neighborhood
-                        })
-                    .ToArray();
-                Graphs.Add(parametres);
+                Graphs.Add(msg.Models);
                 if (Graphs.Count == 1)
                 {
                     await ActivatedGraph(Graphs.First());

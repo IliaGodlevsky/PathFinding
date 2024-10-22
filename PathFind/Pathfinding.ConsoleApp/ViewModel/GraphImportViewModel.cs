@@ -3,8 +3,12 @@ using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.Infrastructure.Business.Layers;
+using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Serialization;
 using ReactiveUI;
 using System;
@@ -71,7 +75,16 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     .ConfigureAwait(false);
                 var result = await Task.Run(() => service.CreatePathfindingHistoriesAsync(histories))
                     .ConfigureAwait(false);
-                var graphs = result.Select(x => x.Graph).ToArray();
+                var graphs = result.Select(x => new GraphInfoModel()
+                {
+                    Width = x.Graph.Graph.GetWidth(),
+                    Length = x.Graph.Graph.GetLength(),
+                    Name = x.Graph.Name,
+                    Neighborhood = x.Graph.Neighborhood,
+                    Id = x.Graph.Id,
+                    SmoothLevel = x.Graph.SmoothLevel,
+                    Obstacles = x.Graph.Graph.GetObstaclesCount()
+                }).ToArray();
                 messenger.Send(new GraphCreatedMessage(graphs));
                 logger.Info(graphs.Length > 0 ? "Graphs were loaded" : "Graph was loaded");
             }, logger.Error).ConfigureAwait(false);

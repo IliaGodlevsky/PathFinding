@@ -124,7 +124,17 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 };
                 var graphModel = await Task.Run(() => service.CreateGraphAsync(request))
                     .ConfigureAwait(false);
-                messenger.Send(new GraphCreatedMessage(new[] { graphModel }));
+                var info = new GraphInfoModel()
+                {
+                    Id = graphModel.Id,
+                    Name = Name,
+                    SmoothLevel = SmoothLevel.Name,
+                    Neighborhood = NeighborhoodFactory.Name,
+                    Obstacles = graphModel.Graph.GetObstaclesCount(),
+                    Width = Width,
+                    Length = Length
+                };
+                messenger.Send(new GraphCreatedMessage(new[] { info }));
             }, logger.Error).ConfigureAwait(false);
         }
     }

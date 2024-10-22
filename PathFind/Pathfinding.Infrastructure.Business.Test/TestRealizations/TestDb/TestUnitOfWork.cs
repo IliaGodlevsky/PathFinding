@@ -12,8 +12,6 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations.TestDb
 
         public IVerticesRepository VerticesRepository { get; }
 
-        public INeighborsRepository NeighborsRepository { get; }
-
         public IRangeRepository RangeRepository { get; }
 
         public IStatisticsRepository StatisticsRepository { get; }
@@ -25,7 +23,6 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations.TestDb
         public TestUnitOfWork()
         {
             GraphStateRepository = new TestGraphStateRepository();
-            NeighborsRepository = new TestNeighborsRepository();
             VerticesRepository = new TestVerticesRepository();
             RangeRepository = new TestRangeRepository();
             SubAlgorithmRepository = new TestSubAlgorithmRepository();

@@ -67,7 +67,6 @@
     <Compile Include="Repositories\IAlgorithmRunRepository.cs" />
     <Compile Include="Repositories\IGraphParametresRepository.cs" />
     <Compile Include="Repositories\IGraphStateRepository.cs" />
-    <Compile Include="Repositories\INeighborsRepository.cs" />
     <Compile Include="Repositories\IRangeRepository.cs" />
     <Compile Include="Repositories\IStatisticsRepository.cs" />
     <Compile Include="Repositories\ISubAlgorithmRepository.cs" />

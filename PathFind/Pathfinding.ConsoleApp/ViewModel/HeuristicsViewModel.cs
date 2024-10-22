@@ -1,4 +1,6 @@
-﻿using Pathfinding.Service.Interface;
+﻿using Autofac.Features.Metadata;
+using Pathfinding.ConsoleApp.Injection;
+using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +17,12 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 .ToDictionary(x => x.Name, x => x.Heuristic)
                 .AsReadOnly();
         }
+
+        
+        public HeuristicsViewModel(IEnumerable<Meta<IHeuristic>> heuristics)
+            : this(heuristics.Select(x => ((string)x.Metadata[MetadataKeys.NameKey], x.Value)))
+        {
+
+        } 
     }
 }

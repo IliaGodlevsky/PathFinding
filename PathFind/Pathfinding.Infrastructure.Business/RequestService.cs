@@ -3,7 +3,9 @@ using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Business.Extensions;
+using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Infrastructure.Data.InMemory;
+using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Serialization;
@@ -115,9 +117,16 @@ namespace Pathfinding.Infrastructure.Business
         public async Task<GraphModel<T>> ReadGraphAsync(int graphId,
             CancellationToken token = default)
         {
-            return await Transaction(async (unitOfWork, t)
-                => await unitOfWork.ReadGraphAsync<T>(graphId, mapper, t), token)
-                .ConfigureAwait(false);
+            return await Transaction(async (unitOfWork, t) => 
+            { 
+                var result = await unitOfWork.ReadGraphAsync<T>(graphId, mapper, t);
+                var factory = result.Neighborhood == NeighborhoodNames.Moore 
+                    ? (INeighborhoodFactory)new MooreNeighborhoodFactory() 
+                    : new VonNeumannNeighborhoodFactory();
+                var layer = new NeighborhoodLayer(factory);
+                layer.Overlay((IGraph<IVertex>)result.Graph);
+                return result;
+            }, token).ConfigureAwait(false);
         }
 
         public async Task<GraphModel<T>> CreateGraphAsync(GraphSerializationModel graph,

@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Features.AttributeFilters;
+using Autofac.Features.Metadata;
 using AutoMapper;
 using CommunityToolkit.Mvvm.Messaging;
 using LiteDB;
@@ -7,6 +8,7 @@ using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.Model.Factories;
 using Pathfinding.ConsoleApp.View;
 using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Business;
 using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
@@ -37,44 +39,32 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<GraphVertexModelFactory>().As<IVertexFactory<GraphVertexModel>>().SingleInstance();
             builder.RegisterType<GraphAssemble<GraphVertexModel>>().As<IGraphAssemble<GraphVertexModel>>().SingleInstance();
 
-            builder.RegisterInstance(new[]
-            {
-                ("Default", (IStepRule)new DefaultStepRule()),
-                ("Lanscape", new LandscapeStepRule())
-            }).As<IEnumerable<(string Name, IStepRule Rule)>>().SingleInstance();
-            builder.RegisterInstance(new []
-            {
-                ("Euclidian", (IHeuristic)new EuclidianDistance()),
-                ("Chebyshev", new ChebyshevDistance()),
-                ("Diagonal", new DiagonalDistance()),
-                ("Manhattan", new ManhattanDistance()),
-                ("Cosine", new CosineDistance())
-            }).As<IEnumerable<(string Name, IHeuristic Heuristic)>>().SingleInstance();
-            builder.RegisterInstance(new[]
-            {
-                ("No", 0),
-                ("Minimal", 1),
-                ("Lowest", 2),
-                ("Low", 3),
-                ("Medium", 4),
-                ("High", 5),
-                ("Highest", 7),
-                ("Extreme", 14)
-            }).Keyed<IEnumerable<(string Name, int Level)>>(KeyFilters.SpreadLevels).SingleInstance();
-            builder.RegisterInstance(new[]
-            {
-                ("No", 0),
-                ("Low", 1),
-                ("Medium", 2),
-                ("High", 4),
-                ("Extreme", 7)
-            }).Keyed<IEnumerable<(string Name, int Level)>>(KeyFilters.SmoothLevels).SingleInstance();
+            builder.RegisterType<DefaultStepRule>().As<IStepRule>().WithMetadata(MetadataKeys.NameKey, "Default").SingleInstance();
+            builder.RegisterType<LandscapeStepRule>().As<IStepRule>().WithMetadata(MetadataKeys.NameKey, "Lanscape").SingleInstance();
 
-            builder.RegisterInstance(new[]
-            {
-                ("Moore", (INeighborhoodFactory)new MooreNeighborhoodFactory()),
-                ("Neumann", new VonNeumannNeighborhoodFactory())
-            }).As<IEnumerable<(string Name, INeighborhoodFactory Factory)>>().SingleInstance();
+            builder.RegisterType<EuclidianDistance>().As<IHeuristic>().WithMetadata(MetadataKeys.NameKey, "Euclidian").SingleInstance();
+            builder.RegisterType<ChebyshevDistance>().As<IHeuristic>().WithMetadata(MetadataKeys.NameKey, "Chebyshev").SingleInstance();
+            builder.RegisterType<DiagonalDistance>().As<IHeuristic>().WithMetadata(MetadataKeys.NameKey, "Diagonal").SingleInstance();
+            builder.RegisterType<ManhattanDistance>().As<IHeuristic>().WithMetadata(MetadataKeys.NameKey, "Manhattan").SingleInstance();
+            builder.RegisterType<CosineDistance>().As<IHeuristic>().WithMetadata(MetadataKeys.NameKey, "Cosine").SingleInstance();
+
+            builder.RegisterInstance("No").Keyed<string>(KeyFilters.SpreadLevels).WithMetadata(MetadataKeys.LevelKey, 0).SingleInstance();
+            builder.RegisterInstance("Minimal").Keyed<string>(KeyFilters.SpreadLevels).WithMetadata(MetadataKeys.LevelKey, 1).SingleInstance();
+            builder.RegisterInstance("Lowest").Keyed<string>(KeyFilters.SpreadLevels).WithMetadata(MetadataKeys.LevelKey, 2).SingleInstance();
+            builder.RegisterInstance("Low").Keyed<string>(KeyFilters.SpreadLevels).WithMetadata(MetadataKeys.LevelKey, 3).SingleInstance();
+            builder.RegisterInstance("Medium").Keyed<string>(KeyFilters.SpreadLevels).WithMetadata(MetadataKeys.LevelKey, 4).SingleInstance();
+            builder.RegisterInstance("High").Keyed<string>(KeyFilters.SpreadLevels).WithMetadata(MetadataKeys.LevelKey, 5).SingleInstance();
+            builder.RegisterInstance("Highest").Keyed<string>(KeyFilters.SpreadLevels).WithMetadata(MetadataKeys.LevelKey, 7).SingleInstance();
+            builder.RegisterInstance("Extreme").Keyed<string>(KeyFilters.SpreadLevels).WithMetadata(MetadataKeys.LevelKey, 14).SingleInstance();
+
+            builder.RegisterInstance("No").Keyed<string>(KeyFilters.SmoothLevels).WithMetadata(MetadataKeys.SmoothKey, 0).SingleInstance();
+            builder.RegisterInstance("Low").Keyed<string>(KeyFilters.SmoothLevels).WithMetadata(MetadataKeys.SmoothKey, 1).SingleInstance();
+            builder.RegisterInstance("Meduim").Keyed<string>(KeyFilters.SmoothLevels).WithMetadata(MetadataKeys.SmoothKey, 2).SingleInstance();
+            builder.RegisterInstance("High").Keyed<string>(KeyFilters.SmoothLevels).WithMetadata(MetadataKeys.SmoothKey, 4).SingleInstance();
+            builder.RegisterInstance("Extreme").Keyed<string>(KeyFilters.SmoothLevels).WithMetadata(MetadataKeys.SmoothKey, 7).SingleInstance();
+
+            builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance().WithMetadata(MetadataKeys.NameKey, NeighborhoodNames.Moore);
+            builder.RegisterType<VonNeumannNeighborhoodFactory>().As<INeighborhoodFactory>().SingleInstance().WithMetadata(MetadataKeys.NameKey, NeighborhoodNames.VonNeumann);
 
             builder.RegisterType<BinarySerializer<VisitedVerticesModel>>()
                 .As<ISerializer<IEnumerable<VisitedVerticesModel>>>().SingleInstance();
@@ -99,13 +89,7 @@ namespace Pathfinding.ConsoleApp.Injection
                 return mappingConfig.CreateMapper(context.Resolve);
             }).As<IMapper>().SingleInstance();
 
-            builder.RegisterInstance(new ConnectionString()
-            {
-                Filename = "pathfinding.litedb",
-                AutoRebuild = true,
-                Connection = ConnectionType.Shared,
-                Upgrade = true
-            }).As<ConnectionString>().SingleInstance();
+            builder.RegisterInstance(new ConnectionString(AppSettings.Default.LiteDb)).As<ConnectionString>().SingleInstance();
             builder.RegisterType<LiteDbInFileUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
 
             builder.RegisterType<RequestService<GraphVertexModel>>().As<IRequestService<GraphVertexModel>>().SingleInstance();
@@ -142,7 +126,12 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<WeakReferenceMessenger>().Keyed<IMessenger>(KeyFilters.ViewModels).SingleInstance().WithAttributeFiltering();
 
             builder.RegisterAssemblyTypes(typeof(BaseViewModel).Assembly).Where(x => x.Name.EndsWith("ViewModel"))
-                .AsSelf().AsImplementedInterfaces().SingleInstance().WithAttributeFiltering();
+                .AsSelf().AsImplementedInterfaces().SingleInstance().WithAttributeFiltering().PreserveExistingDefaults();
+            builder.RegisterType<HeuristicsViewModel>().AsSelf().SingleInstance().UsingConstructor(typeof(IEnumerable<Meta<IHeuristic>>));
+            builder.RegisterType<StepRulesViewModel>().AsSelf().SingleInstance().UsingConstructor(typeof(IEnumerable<Meta<IStepRule>>));
+            builder.RegisterType<SpreadViewModel>().AsSelf().SingleInstance().UsingConstructor(typeof(IEnumerable<Meta<string>>)).WithAttributeFiltering();
+            builder.RegisterType<SmoothLevelViewModel>().AsSelf().SingleInstance().UsingConstructor(typeof(IEnumerable<Meta<string>>)).WithAttributeFiltering();
+            builder.RegisterType<NeighborhoodFactoriesViewModel>().AsSelf().SingleInstance().UsingConstructor(typeof(IEnumerable<Meta<INeighborhoodFactory>>));
 
             builder.RegisterType<MainView>().AsSelf().WithAttributeFiltering();
 

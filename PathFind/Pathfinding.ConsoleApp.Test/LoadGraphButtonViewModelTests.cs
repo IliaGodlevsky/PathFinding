@@ -5,7 +5,10 @@ using Moq;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.Domain.Core;
+using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Models;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Serialization;
 using Pathfinding.Shared.Extensions;
@@ -27,8 +30,11 @@ namespace Pathfinding.ConsoleApp.Test
                     .AsSelf().SingleInstance();
             }))
             {
-                IReadOnlyCollection<PathfindingHistoryModel<GraphVertexModel>> histories
-                    = new PathfindingHistoryModel<GraphVertexModel>().Enumerate().ToArray();
+                var history = new PathfindingHistoryModel<GraphVertexModel>()
+                {
+                    Graph = ModelBuilder.CreateEmptyModel()
+                }.Enumerate().ToArray();
+                IReadOnlyCollection<PathfindingHistoryModel<GraphVertexModel>> histories = history;
                 mock.Mock<IRequestService<GraphVertexModel>>()
                     .Setup(x => x.CreatePathfindingHistoriesAsync(
                         It.IsAny<IEnumerable<PathfindingHistorySerializationModel>>(),

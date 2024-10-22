@@ -70,10 +70,7 @@ namespace Pathfinding.Infrastructure.Business.Test.Serializers
                 Assert.That(result.Vertices.Count == model.Vertices.Count, Is.True);
                 Assert.That(result.Vertices.Juxtapose(model.Vertices, (x, y) =>
                 {
-                    return x.IsObstacle == y.IsObstacle
-                        && x.Neighbors.Juxtapose(y.Neighbors,
-                            (i, j) => i.Coordinate.SequenceEqual(j.Coordinate))
-                        && x.Cost.Cost == y.Cost.Cost
+                    return x.Cost.Cost == y.Cost.Cost
                         && x.Cost.UpperValueOfRange == y.Cost.UpperValueOfRange
                         && x.Cost.LowerValueOfRange == y.Cost.LowerValueOfRange
                         && x.Position.Coordinate.SequenceEqual(y.Position.Coordinate);

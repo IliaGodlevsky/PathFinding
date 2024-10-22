@@ -27,7 +27,7 @@ namespace Pathfinding.ConsoleApp.View
 
         private async Task OnSaveButtonClicked()
         {
-            var allowedTypes = new List<string>() { ".json" };
+            var allowedTypes = new List<string>() { ".json", ".dat" };
             using var dialog = new SaveDialog("Export", "Enter file name", allowedTypes);
             dialog.Width = Dim.Percent(45);
             dialog.Height = Dim.Percent(55);

@@ -3,6 +3,7 @@ using Moq;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Loggers;
 using Pathfinding.Service.Interface;
@@ -18,17 +19,17 @@ namespace Pathfinding.ConsoleApp.Test
         private IMessenger messenger;
         private Mock<IRequestService<GraphVertexModel>> service;
         private GraphTableViewModel graphsTable;
-        private readonly Dictionary<int, GraphModel<GraphVertexModel>> graphs;
+        private readonly Dictionary<int, GraphInfoModel> graphs;
 
         public GraphsTableViewModelTests()
         {
-            graphs = new Dictionary<int, GraphModel<GraphVertexModel>>()
+            graphs = new Dictionary<int, GraphInfoModel>()
             {
-                { 1, new(){ Id = 1, Name = "Test1", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<GraphVertexModel>.Empty } },
-                { 2, new(){ Id = 2, Name = "Test2", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<GraphVertexModel>.Empty } },
-                { 3, new(){ Id = 3, Name = "Test3", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<GraphVertexModel>.Empty } },
-                { 4, new(){ Id = 4, Name = "Test4", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<GraphVertexModel>.Empty } },
-                { 5, new(){ Id = 5, Name = "Test5", Neighborhood="Test", SmoothLevel = "Test", Graph = Graph<GraphVertexModel>.Empty } },
+                { 1, new() { Id = 1, Name = "Test1", Neighborhood="Test", SmoothLevel = "Test", Width = 1, Length = 1, Obstacles = 0 } },
+                { 2, new() { Id = 2, Name = "Test2", Neighborhood="Test", SmoothLevel = "Test", Width = 1, Length = 1, Obstacles = 0 } },
+                { 3, new() { Id = 3, Name = "Test3", Neighborhood="Test", SmoothLevel = "Test", Width = 1, Length = 1, Obstacles = 0 } },
+                { 4, new() { Id = 4, Name = "Test4", Neighborhood="Test", SmoothLevel = "Test", Width = 1, Length = 1, Obstacles = 0 } },
+                { 5, new() { Id = 5, Name = "Test5", Neighborhood="Test", SmoothLevel = "Test", Width = 1, Length = 1, Obstacles = 0 } },
             };
         }
 
@@ -37,7 +38,7 @@ namespace Pathfinding.ConsoleApp.Test
         {
             service = new Mock<IRequestService<GraphVertexModel>>();
             service.Setup(x => x.ReadGraphAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
-                .Returns<int, CancellationToken>((x, t) => Task.FromResult(graphs[x]));
+                .Returns<int, CancellationToken>((x, t) => Task.FromResult(ModelBuilder.CreateEmptyModel()));
             messenger = new WeakReferenceMessenger();
             graphsTable = new GraphTableViewModel(service.Object, messenger, new NullLog());
         }

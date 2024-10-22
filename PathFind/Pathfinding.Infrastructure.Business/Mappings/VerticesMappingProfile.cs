@@ -44,8 +44,7 @@ namespace Pathfinding.Infrastructure.Business.Mappings
             CreateMap<Vertex, VertexAssembleModel>()
                 .ForMember(x => x.Coordinate, opt => opt.MapFrom(x => x.Coordinates))
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => new VertexCost(x.Cost, new(x.UpperValueRange, x.LowerValueRange))));
-            CreateMap<T, VertexSerializationModel>()
-                .ForMember(x => x.Neighbors, opt => opt.MapFrom(x => x.Neighbours.GetCoordinates().ToReadOnly()));
+            CreateMap<T, VertexSerializationModel>();
             CreateMap<VertexSerializationModel, T>().ConstructUsing(x => vertexFactory.CreateVertex(new Coordinate(x.Position.Coordinate.ToArray())));
             CreateMap<IEnumerable<VertexSerializationModel>, IEnumerable<T>>().ConstructUsing(ToVertices);
         }
@@ -72,18 +71,7 @@ namespace Pathfinding.Infrastructure.Business.Mappings
         private IEnumerable<T> ToVertices(IEnumerable<VertexSerializationModel> dtos,
             ResolutionContext context)
         {
-            var vertices = dtos.Select(context.Mapper.Map<T>).ToDictionary(x => x.Position);
-            foreach (var dto in dtos)
-            {
-                var position = context.Mapper.Map<Coordinate>(dto.Position);
-                var vertex = vertices[position];
-                var neighbors = context.Mapper
-                    .Map<Coordinate[]>(dto.Neighbors)
-                    .Select(x => vertices[x])
-                    .ToReadOnly();
-                vertex.Neighbours.AddRange(neighbors.OfType<IVertex>());
-            }
-            return vertices.Values;
+            return dtos.Select(context.Mapper.Map<T>).ToList();
         }
     }
 }

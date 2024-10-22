@@ -41,13 +41,9 @@ namespace Pathfinding.Infrastructure.Business.Layers
             {
                 return coordinate.CoordinatesValues
                     .Juxtapose(graph.DimensionsSizes, (x, y) => x < y && x >= 0);
-
             }
-            var selected = self.Where(IsInRange).ToArray();
-            var distinct = selected.Distinct().ToList();
-            var vertices = distinct.Select(graph.Get).ToList();
-            var values = vertices.ToReadOnly();
-            return values;
+            return self.Where(IsInRange).Distinct()
+                .Select(graph.Get).ToList();
         }
     }
 }

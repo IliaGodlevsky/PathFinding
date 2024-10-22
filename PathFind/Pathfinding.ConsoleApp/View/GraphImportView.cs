@@ -25,7 +25,7 @@ namespace Pathfinding.ConsoleApp.View
 
         private async Task OnLoadButtonClicked()
         {
-            var allowedTypes = new List<string>() { ".json" };
+            var allowedTypes = new List<string>() { ".json", ".dat" };
             using var dialog = new OpenDialog("Import", string.Empty, allowedTypes);
             dialog.Width = Dim.Percent(45);
             dialog.Height = Dim.Percent(55);

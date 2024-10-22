@@ -1,4 +1,5 @@
 ﻿using Autofac.Features.AttributeFilters;
+using Autofac.Features.Metadata;
 using Pathfinding.ConsoleApp.Injection;
 using ReactiveUI;
 using System.Collections.Generic;
@@ -13,6 +14,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public SmoothLevelViewModel([KeyFilter(KeyFilters.SmoothLevels)] IEnumerable<(string Name, int Level)> levels)
         {
             Levels = levels.ToDictionary(x => x.Name, x => x.Level);
+        }
+
+        public SmoothLevelViewModel([KeyFilter(KeyFilters.SmoothLevels)] IEnumerable<Meta<string>> smoothLevels)
+        {
+            Levels = smoothLevels.ToDictionary(x => x.Value, x => (int)x.Metadata[MetadataKeys.SmoothKey]);
         }
     }
 }

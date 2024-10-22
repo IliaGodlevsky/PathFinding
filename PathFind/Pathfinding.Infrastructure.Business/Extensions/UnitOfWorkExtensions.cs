@@ -80,19 +80,12 @@ namespace Pathfinding.Infrastructure.Business.Extensions
                 .ReadVerticesByGraphIdAsync(graphId, token))
                 .ToDictionary(x => x.Id);
             var ids = vertexEntities.Select(x => x.Key).ToReadOnly();
-            var neighbors = (await unitOfWork.NeighborsRepository
-                .ReadNeighboursForVerticesAsync(ids, token))
-                .ToDictionary(x => x.Key, x => x.Value.Select(i => vertexEntities[i.NeighborId]).ToReadOnly());
             var informationDto = mapper.Map<GraphInformationModel>(graphEntity);
             var vertices = mapper.Map<VertexAssembleModel[]>(vertexEntities.Values);
-            var neighborhood = neighbors
-                    .ToDictionary(x => x.Key, x => mapper.Map<VertexAssembleModel[]>(x.Value)
-                    .ToReadOnly());
             var assembleDto = new GraphAssembleModel()
             {
                 Dimensions = informationDto.Dimensions,
-                Vertices = vertices,
-                Neighborhood = neighborhood
+                Vertices = vertices
             };
             var result = mapper.Map<IGraph<T>>(assembleDto);
             return new GraphModel<T>()
@@ -139,11 +132,6 @@ namespace Pathfinding.Infrastructure.Business.Extensions
             await unitOfWork.VerticesRepository.CreateAsync(vertices, token);
             vertices.Zip(graph.Graph, (x, y) => (Entity: x, Vertex: y))
                 .ForEach(x => x.Vertex.Id = x.Entity.Id);
-            var neighbors = graph.Graph
-                .SelectMany(x => x.Neighbours.OfType<IEntity<int>>()
-                    .Select(n => new Neighbor() { GraphId = graphEntity.Id, VertexId = x.Id, NeighborId = n.Id }))
-                    .ToReadOnly();
-            await unitOfWork.NeighborsRepository.CreateAsync(neighbors, token);
             var result = mapper.Map<GraphModel<T>>(graph);
             result.Id = graphEntity.Id;
             return result;

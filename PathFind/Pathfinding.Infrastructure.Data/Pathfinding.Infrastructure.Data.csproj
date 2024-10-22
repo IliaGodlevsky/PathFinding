@@ -77,7 +77,6 @@
     <Compile Include="InMemory\Repositories\InMemoryAlgorithmRunRepository.cs" />
     <Compile Include="InMemory\Repositories\InMemoryGraphParametresRepository.cs" />
     <Compile Include="InMemory\Repositories\InMemoryGraphStateRepository.cs" />
-    <Compile Include="InMemory\Repositories\InMemoryNeighborsRepository.cs" />
     <Compile Include="InMemory\Repositories\InMemoryRangeRepository.cs" />
     <Compile Include="InMemory\Repositories\InMemoryStatisicsRepository.cs" />
     <Compile Include="InMemory\Repositories\InMemorySubAlgorithmRepository.cs" />
@@ -90,7 +89,6 @@
     <Compile Include="LiteDb\Repositories\LiteDbAlgorithmRunRepository.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbGraphRepository.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbGraphStateRepository.cs" />
-    <Compile Include="LiteDb\Repositories\LiteDbNeighboursRepository.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbStatisticsRepository.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbSubAlgorithmsRepository.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbVerticesRepository.cs" />

@@ -62,15 +62,7 @@ namespace Pathfinding.Infrastructure.Business.Mappings
         private IGraph<T> Construct(GraphAssembleModel assembleDto, ResolutionContext context)
         {
             var vertices = context.Mapper.Map<T[]>(assembleDto.Vertices).ToArray();
-            var graph = graphFactory.CreateGraph(vertices, assembleDto.Dimensions);
-            vertices.Zip(assembleDto.Vertices, (i, j) => (Vertex: i, Info: j))
-                    .ForEach(i =>
-                    {
-                        var coordinates = assembleDto.Neighborhood[i.Info.Id]
-                            .Select(j => graph.Get(j.Coordinate));
-                        i.Vertex.Neighbours.AddRange(coordinates.OfType<IVertex>());
-                    });
-            return graph;
+            return graphFactory.CreateGraph(vertices, assembleDto.Dimensions);
         }
     }
 }

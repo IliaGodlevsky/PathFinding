@@ -12,12 +12,11 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
 
         private readonly HashSet<Graph> set = new(EntityComparer<int>.Interface);
 
-        private readonly InMemoryNeighborsRepository neighborsRepository;
         private readonly InMemoryAlgorithmRunRepository algorithmRunRepository;
         private readonly InMemoryRangeRepository rangeRepository;
         private readonly InMemoryVerticesRepository verticesRepository;
 
-        public InMemoryGraphParametresRepository(InMemoryNeighborsRepository neighborsRepository,
+        public InMemoryGraphParametresRepository(
             InMemoryAlgorithmRunRepository algorithmRunRepository,
             InMemoryRangeRepository rangeRepository,
             InMemoryVerticesRepository verticesRepository)
@@ -25,7 +24,6 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
             this.algorithmRunRepository = algorithmRunRepository;
             this.rangeRepository = rangeRepository;
             this.verticesRepository = verticesRepository;
-            this.neighborsRepository = neighborsRepository;
         }
 
         public Task<Graph> CreateAsync(Graph graph,
@@ -41,7 +39,6 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
         {
             // Order sensitive. Do not change the order of deleting
             // Reason: some repositories need the presence of values in the database
-            await neighborsRepository.DeleteByGraphIdAsync(graphId, token);
             await rangeRepository.DeleteByGraphIdAsync(graphId, token);
             await verticesRepository.DeleteVerticesByGraphIdAsync(graphId, token);
             await algorithmRunRepository.DeleteByGraphIdAsync(graphId, token);
