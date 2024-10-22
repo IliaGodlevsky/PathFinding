@@ -1,6 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
-using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Primitives;
 using Pathfinding.Shared.Extensions;
