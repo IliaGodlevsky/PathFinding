@@ -3,7 +3,6 @@ using Autofac.Features.AttributeFilters;
 using Autofac.Features.Metadata;
 using AutoMapper;
 using CommunityToolkit.Mvvm.Messaging;
-using LiteDB;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.Model.Factories;
 using Pathfinding.ConsoleApp.View;
@@ -17,8 +16,8 @@ using Pathfinding.Infrastructure.Business.Commands;
 using Pathfinding.Infrastructure.Business.Mappings;
 using Pathfinding.Infrastructure.Business.Serializers;
 using Pathfinding.Infrastructure.Business.Serializers.Decorators;
-using Pathfinding.Infrastructure.Data.LiteDb;
 using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
+using Pathfinding.Infrastructure.Data.Sqlite;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Logging.Loggers;
 using Pathfinding.Service.Interface;
@@ -89,8 +88,8 @@ namespace Pathfinding.ConsoleApp.Injection
                 return mappingConfig.CreateMapper(context.Resolve);
             }).As<IMapper>().SingleInstance();
 
-            builder.RegisterInstance(new ConnectionString(AppSettings.Default.LiteDb)).As<ConnectionString>().SingleInstance();
-            builder.RegisterType<LiteDbInFileUnitOfWorkFactory>().As<IUnitOfWorkFactory>().SingleInstance();
+            //builder.RegisterInstance(new ConnectionString(AppSettings.Default.LiteDb)).As<ConnectionString>().SingleInstance();
+            builder.Register(_=> new SqliteUnitOfWorkFactory(AppSettings.Default.Sqlite)).As<IUnitOfWorkFactory>().SingleInstance();
 
             builder.RegisterType<RequestService<GraphVertexModel>>().As<IRequestService<GraphVertexModel>>().SingleInstance();
 

@@ -14,7 +14,7 @@ namespace Pathfinding.Domain.Core
 
         public string ResultStatus { get; set; } = string.Empty;
 
-        public TimeSpan Elapsed { get; set; }
+        public double Elapsed { get; set; }
 
         public int Steps { get; set; }
 

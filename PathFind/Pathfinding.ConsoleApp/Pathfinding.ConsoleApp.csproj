@@ -263,6 +263,9 @@
     <PackageReference Include="ReactiveUI">
       <Version>20.1.1</Version>
     </PackageReference>
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3">
+      <Version>2.1.10</Version>
+    </PackageReference>
     <PackageReference Include="System.Reactive">
       <Version>6.0.1</Version>
     </PackageReference>

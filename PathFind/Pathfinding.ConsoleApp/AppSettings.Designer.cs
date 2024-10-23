@@ -31,5 +31,17 @@ namespace Pathfinding.ConsoleApp {
                 return ((string)(this["LiteDb"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=pathfinding.sqlite")]
+        public string Sqlite {
+            get {
+                return ((string)(this["Sqlite"]));
+            }
+            set {
+                this["Sqlite"] = value;
+            }
+        }
     }
 }

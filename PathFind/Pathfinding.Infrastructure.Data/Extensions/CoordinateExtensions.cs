@@ -20,16 +20,10 @@ namespace Pathfinding.Infrastructure.Data.Extensions
         {
             // Cardinal coordinate differs from the
             // central one only for single coordinate value
-            int limit = Math.Min(self.Count, coordinate.Count);
-            int differentCount = 0;
-            while (limit-- > 0 && differentCount <= 1)
-            {
-                if (self[limit] != coordinate[limit])
-                {
-                    differentCount++;
-                }
-            }
-            return differentCount == 1;
+            var difference = self.CoordinatesValues
+                .Zip(coordinate.CoordinatesValues, (x, y) => Math.Abs(x - y))
+                .Sum();
+            return difference == 1;
         }
     }
 }
