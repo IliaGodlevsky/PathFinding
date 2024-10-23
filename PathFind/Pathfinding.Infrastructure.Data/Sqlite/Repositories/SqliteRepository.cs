@@ -10,12 +10,18 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
 
         protected abstract string CreateTableScript { get; }
 
+        private static bool IsInitialized { get; set; }
+
         protected SqliteRepository(SqliteConnection connection,
             SqliteTransaction transaction)
         {
             this.connection= connection;
             this.transaction = transaction;
-            connection.Execute(CreateTableScript);
+            if (!IsInitialized)
+            {
+                connection.Execute(CreateTableScript);
+                IsInitialized = true;
+            }
         }
     }
 }

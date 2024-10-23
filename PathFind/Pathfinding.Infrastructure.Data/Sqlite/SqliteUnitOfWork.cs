@@ -2,7 +2,6 @@
 using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Repositories;
 using Pathfinding.Infrastructure.Data.Sqlite.Repositories;
-using SQLitePCL;
 using System.Threading;
 using System.Threading.Tasks;
 
