@@ -23,6 +23,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
             : this(heuristics.Select(x => ((string)x.Metadata[MetadataKeys.NameKey], x.Value)))
         {
 
-        } 
+        }
     }
 }

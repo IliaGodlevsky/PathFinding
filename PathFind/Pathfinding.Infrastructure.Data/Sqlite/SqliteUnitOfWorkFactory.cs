@@ -1,6 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
-using SQLitePCL;
 
 namespace Pathfinding.Infrastructure.Data.Sqlite
 {
@@ -10,7 +9,6 @@ namespace Pathfinding.Infrastructure.Data.Sqlite
 
         public SqliteUnitOfWorkFactory(string connectionString)
         {
-            Batteries.Init();
             this.connectionString = connectionString;
         }
 

@@ -11,14 +11,14 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
     internal sealed class SqliteSubAlgorithmsRepository : SqliteRepository, ISubAlgorithmRepository
     {
         protected override string CreateTableScript { get; } = @$"
-        CREATE TABLE IF NOT EXISTS {DbTables.SubAlgorithms} (
-            Id INTEGER PRIMARY KEY AUTOINCREMENT,
-            AlgorithmRunId INTEGER NOT NULL,
-            ""Order"" INTEGER NOT NULL,
-            Visited BLOB NOT NULL,
-            Path BLOB NOT NULL,
-            FOREIGN KEY (AlgorithmRunId) REFERENCES {DbTables.AlgorithmRuns}(Id) ON DELETE CASCADE
-        );";
+            CREATE TABLE IF NOT EXISTS {DbTables.SubAlgorithms} (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                AlgorithmRunId INTEGER NOT NULL,
+                ""Order"" INTEGER NOT NULL,
+                Visited BLOB NOT NULL,
+                Path BLOB NOT NULL,
+                FOREIGN KEY (AlgorithmRunId) REFERENCES {DbTables.AlgorithmRuns}(Id) ON DELETE CASCADE
+            );";
 
         public SqliteSubAlgorithmsRepository(SqliteConnection connection, 
             SqliteTransaction transaction) : base(connection, transaction)

@@ -168,10 +168,8 @@ namespace Pathfinding.Infrastructure.Business
         public async Task<IReadOnlyCollection<PathfindingRangeModel>> ReadRangeAsync(int graphId,
             CancellationToken token = default)
         {
-            return await Transaction(async (unitOfWork, t) =>
-            {
-                return await unitOfWork.GetRangeAsync(graphId, mapper, t);
-            }, token).ConfigureAwait(false);
+            return await Transaction(async (unitOfWork, t) 
+                => await unitOfWork.GetRangeAsync(graphId, mapper, t), token).ConfigureAwait(false);
         }
 
         public async Task<AlgorithmRunHistoryModel> ReadRunHistoryAsync(int runId,

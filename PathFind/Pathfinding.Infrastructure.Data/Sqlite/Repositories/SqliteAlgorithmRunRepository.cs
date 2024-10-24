@@ -12,10 +12,10 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
     {
         protected override string CreateTableScript { get; } 
             = @$"CREATE TABLE IF NOT EXISTS {DbTables.AlgorithmRuns} (
-                Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                GraphId INTEGER NOT NULL,
-                AlgorithmId TEXT NOT NULL,
-                FOREIGN KEY (GraphId) REFERENCES {DbTables.Graphs}(Id) ON DELETE CASCADE);";
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    GraphId INTEGER NOT NULL,
+                    AlgorithmId TEXT NOT NULL,
+                    FOREIGN KEY (GraphId) REFERENCES {DbTables.Graphs}(Id) ON DELETE CASCADE);";
 
         public SqliteAlgorithmRunRepository(SqliteConnection connection,
             SqliteTransaction transaction) 

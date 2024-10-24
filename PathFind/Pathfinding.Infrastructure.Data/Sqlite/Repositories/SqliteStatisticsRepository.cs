@@ -12,19 +12,19 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
     internal sealed class SqliteStatisticsRepository : SqliteRepository, IStatisticsRepository
     {
         protected override string CreateTableScript { get; } = $@"
-        CREATE TABLE IF NOT EXISTS {DbTables.Statistics} (
-            Id INTEGER PRIMARY KEY AUTOINCREMENT,
-            AlgorithmRunId INTEGER NOT NULL,
-            Heuristics TEXT,
-            StepRule TEXT,
-            ResultStatus TEXT NOT NULL DEFAULT '',
-            Elapsed REAL NOT NULL,
-            Steps INTEGER NOT NULL,
-            Cost REAL NOT NULL,
-            Visited INTEGER NOT NULL,
-            Spread TEXT,
-            FOREIGN KEY (AlgorithmRunId) REFERENCES {DbTables.AlgorithmRuns}(Id) ON DELETE CASCADE
-        );";
+            CREATE TABLE IF NOT EXISTS {DbTables.Statistics} (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                AlgorithmRunId INTEGER NOT NULL,
+                Heuristics TEXT,
+                StepRule TEXT,
+                ResultStatus TEXT NOT NULL DEFAULT '',
+                Elapsed REAL NOT NULL,
+                Steps INTEGER NOT NULL,
+                Cost REAL NOT NULL,
+                Visited INTEGER NOT NULL,
+                Spread TEXT,
+                FOREIGN KEY (AlgorithmRunId) REFERENCES {DbTables.AlgorithmRuns}(Id) ON DELETE CASCADE
+            );";
 
         public SqliteStatisticsRepository(SqliteConnection connection, 
             SqliteTransaction transaction) : base(connection, transaction)

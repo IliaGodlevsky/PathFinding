@@ -25,22 +25,10 @@ namespace Pathfinding.ConsoleApp {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Filename=pathfinding.litedb;AutoRebuild=true;Connection=shared;Upgrade=true;")]
-        public string LiteDb {
-            get {
-                return ((string)(this["LiteDb"]));
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=pathfinding.sqlite")]
-        public string Sqlite {
+        public string ConnectionString {
             get {
-                return ((string)(this["Sqlite"]));
-            }
-            set {
-                this["Sqlite"] = value;
+                return ((string)(this["ConnectionString"]));
             }
         }
     }

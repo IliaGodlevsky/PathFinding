@@ -13,8 +13,6 @@ namespace Pathfinding.Domain.Interface
 
         IVerticesRepository VerticesRepository { get; }
 
-        //INeighborsRepository NeighborsRepository { get; }
-
         IRangeRepository RangeRepository { get; }
 
         IStatisticsRepository StatisticsRepository { get; }
