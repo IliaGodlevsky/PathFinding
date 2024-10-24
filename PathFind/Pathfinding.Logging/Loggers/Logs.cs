@@ -1,5 +1,5 @@
 ﻿using Pathfinding.Logging.Interface;
-using Shared.Extensions;
+using Pathfinding.Shared.Extensions;
 using System;
 
 namespace Pathfinding.Logging.Loggers

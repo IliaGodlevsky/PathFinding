@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{76D95B30-D9EE-42CC-A797-F4FC78330B17}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Pathfinding.ConsoleApp</RootNamespace>
+    <AssemblyName>Pathfinding.ConsoleApp</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <LangVersion>latest</LangVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <LangVersion>latest</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>AppSettings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Injection\MetadataKeys.cs" />
+    <Compile Include="Messages\View\HeuristicsViewModelChangedMessage.cs" />
+    <Compile Include="Messages\View\OpenAlgorithmRunViewMessage.cs" />
+    <Compile Include="Messages\ViewModel\RunActivatedMessage.cs" />
+    <Compile Include="Messages\ViewModel\RunCreatedMessaged.cs" />
+    <Compile Include="Messages\ViewModel\RunsDeletedMessage.cs" />
+    <Compile Include="Messages\ViewModel\RunSelectedMessage.cs" />
+    <Compile Include="Messages\View\CloseAlgorithmRunFieldViewMessage.cs" />
+    <Compile Include="Messages\View\SpreadViewModelChangedMessage.cs" />
+    <Compile Include="Model\RunVertexModel.cs" />
+    <Compile Include="ViewModel\AStarLeeAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\BidirectAStarAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\BidirectDijkstraAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\BidirectLeeAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\CostGreedyAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\DepthFirstAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\DepthRandomAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\SnakeAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\DistanceFirstAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\AStarGreedyAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\IDAStarAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\LeeAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\IRequireHeuristicsViewModel.cs" />
+    <Compile Include="ViewModel\AStarAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\DeleteRunButtonViewModel.cs" />
+    <Compile Include="ViewModel\HeuristicsViewModel.cs" />
+    <Compile Include="ViewModel\IRequireSpreadViewModel.cs" />
+    <Compile Include="ViewModel\RandomAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\RunsTableViewModel.cs" />
+    <Compile Include="ViewModel\SpreadViewModel.cs" />
+    <Compile Include="View\AStarLeeAlgorithmView.cs" />
+    <Compile Include="View\BidirectAStarAlgorithmView.cs" />
+    <Compile Include="View\BidirectDijkstraAlgorithmView.cs" />
+    <Compile Include="View\CloseAlgorithmCreationButton.cs" />
+    <Compile Include="View\ComponentsPartials\HeuristicsView.cs" />
+    <Compile Include="View\CostGreedyAlgorithmView.cs" />
+    <Compile Include="View\DepthRandomAlgorithmView.cs" />
+    <Compile Include="View\DepthFirstAlgorithmView.cs" />
+    <Compile Include="View\BidirectLeeAlgorithmView.cs" />
+    <Compile Include="View\SnakeAlgorithmView.cs" />
+    <Compile Include="View\DistanceFirstAlgorithmView.cs" />
+    <Compile Include="View\AStarGreedyAlgorithmView.cs" />
+    <Compile Include="View\RandomAlgorithmView.cs" />
+    <Compile Include="View\ComponentsPartials\SpreadView.cs" />
+    <Compile Include="View\ConsoleLog.cs" />
+    <Compile Include="Injection\App.cs" />
+    <Compile Include="Injection\KeyFilters.cs" />
+    <Compile Include="Messages\ViewModel\GraphActivatedMessage.cs" />
+    <Compile Include="Messages\ViewModel\GraphCreatedMessage.cs" />
+    <Compile Include="Messages\ViewModel\GraphsDeletedMessage.cs" />
+    <Compile Include="Messages\ViewModel\GraphSelectedMessage.cs" />
+    <Compile Include="Messages\ViewModel\IsVertexInRangeRequest.cs" />
+    <Compile Include="Messages\ViewModel\ObstaclesCountChangedMessage.cs" />
+    <Compile Include="Messages\ViewModel\QueryPathfindingRangeMessage.cs" />
+    <Compile Include="Messages\View\CloseAlgorithmCreationViewMessage.cs" />
+    <Compile Include="Messages\View\CloseHeuristicsViewMessage.cs" />
+    <Compile Include="Messages\View\CloseSpreadViewMessage.cs" />
+    <Compile Include="Messages\View\CloseStepRulesViewMessage.cs" />
+    <Compile Include="Messages\View\OpenAlgorithmCreationViewMessage.cs" />
+    <Compile Include="Messages\View\OpenGraphAssembleViewMessage.cs" />
+    <Compile Include="Messages\View\OpenHeuristicsViewMessage.cs" />
+    <Compile Include="Messages\View\OpenSpreadViewMessage.cs" />
+    <Compile Include="Messages\View\OpenStepRuleViewMessage.cs" />
+    <Compile Include="Messages\View\PathfindingViewModelChangedMessage.cs" />
+    <Compile Include="Messages\View\StepRuleViewModelChangedMessage.cs" />
+    <Compile Include="Model\GraphInfoModel.cs" />
+    <Compile Include="Model\RunInfoModel.cs" />
+    <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\GraphDeletionViewModel.cs" />
+    <Compile Include="ViewModel\GraphImportViewModel.cs" />
+    <Compile Include="ViewModel\GraphExportViewModel.cs" />
+    <Compile Include="Model\Factories\GraphVertexModelFactory.cs" />
+    <Compile Include="ViewModel\DijkstraAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\PathfindingProcessViewModel.cs" />
+    <Compile Include="ViewModel\GraphAssembleViewModel.cs" />
+    <Compile Include="ViewModel\NeighborhoodFactoriesViewModel.cs" />
+    <Compile Include="ViewModel\SmoothLevelViewModel.cs" />
+    <Compile Include="ViewModel\GraphFieldViewModel.cs" />
+    <Compile Include="ViewModel\IRequireStepRulesViewModel.cs" />
+    <Compile Include="ViewModel\NewRunButtonViewModel.cs" />
+    <Compile Include="ViewModel\PathfindingRangeViewModel.cs" />
+    <Compile Include="ViewModel\AlgorithmRunFieldViewModel.cs" />
+    <Compile Include="ViewModel\StepRulesViewModel.cs" />
+    <Compile Include="View\ComponentsPartials\AlgorithmsView.cs" />
+    <Compile Include="View\ComponentsPartials\PathfindingProcessButtonsFrame.cs" />
+    <Compile Include="View\ComponentsPartials\DeleteRunButton.cs" />
+    <Compile Include="View\ComponentsPartials\NewRunButton.cs" />
+    <Compile Include="View\ComponentsPartials\RunsTableButtonsFrame.cs" />
+    <Compile Include="View\ComponentsPartials\StepRulesView.cs" />
+    <Compile Include="View\PathfindingProcessView.cs" />
+    <Compile Include="View\HeuristicsView.cs" />
+    <Compile Include="View\AlgorithmsView.cs" />
+    <Compile Include="View\AStarAlgorithmView.cs" />
+    <Compile Include="View\AlgorithmParametresView.cs" />
+    <Compile Include="View\IDAStarAlgorithmView.cs" />
+    <Compile Include="View\LeeAlgorithmView.cs" />
+    <Compile Include="View\PathfindingProcessButtonsFrame.cs" />
+    <Compile Include="View\AlgorithmCreationView.cs" />
+    <Compile Include="View\DijkstraAlgorithmView.cs" />
+    <Compile Include="View\SpreadView.cs" />
+    <Compile Include="View\StepRulesView.cs" />
+    <Compile Include="View\GraphTableButtonsFrame.cs" />
+    <Compile Include="View\DeleteGraphButton.cs" />
+    <Compile Include="View\GraphImportView.cs" />
+    <Compile Include="View\NewGraphButton.cs" />
+    <Compile Include="View\GraphExportView.cs" />
+    <Compile Include="View\ColorConstants.cs" />
+    <Compile Include="View\ComponentsPartials\GraphTableButtonsFrame.cs" />
+    <Compile Include="View\ComponentsPartials\GraphAssembleView.cs" />
+    <Compile Include="View\ComponentsPartials\DeleteGraphButton.cs" />
+    <Compile Include="View\ComponentsPartials\GraphFieldView.cs" />
+    <Compile Include="View\ComponentsPartials\GraphPanel.cs" />
+    <Compile Include="View\ComponentsPartials\GraphNameView.cs" />
+    <Compile Include="View\ComponentsPartials\GraphParametresView.cs" />
+    <Compile Include="View\ComponentsPartials\RunsPanel.cs" />
+    <Compile Include="View\ComponentsPartials\GraphImportView.cs" />
+    <Compile Include="View\ComponentsPartials\NeighborhoodFactoryView.cs" />
+    <Compile Include="View\ComponentsPartials\NewGraphButton.cs" />
+    <Compile Include="View\ComponentsPartials\RunsTableView.cs" />
+    <Compile Include="View\ComponentsPartials\GraphExportView.cs" />
+    <Compile Include="View\ComponentsPartials\SmoothLevelView.cs" />
+    <Compile Include="View\DeleteRunButton.cs" />
+    <Compile Include="View\GraphAssembleView.cs" />
+    <Compile Include="View\GraphNameView.cs" />
+    <Compile Include="View\GraphParametresView.cs" />
+    <Compile Include="View\NeighborhoodFactoryView.cs" />
+    <Compile Include="View\SmoothLevelView.cs" />
+    <Compile Include="View\GraphFieldView.cs" />
+    <Compile Include="View\GraphPanel.cs" />
+    <Compile Include="View\RunsPanel.cs" />
+    <Compile Include="View\GraphsTableView.cs" />
+    <Compile Include="View\NewRunButton.cs" />
+    <Compile Include="View\RunsTableButtonsFrame.cs" />
+    <Compile Include="View\RunsTableView.cs" />
+    <Compile Include="View\AlgorithmRunFieldView.cs" />
+    <Compile Include="View\RunVertexView.cs" />
+    <Compile Include="View\GraphVertexView.cs" />
+    <Compile Include="Model\GraphVertexModel.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\GraphTableViewModel.cs" />
+    <Compile Include="View\ComponentsPartials\GraphsTableView.cs" />
+    <Compile Include="View\MainView.cs" />
+    <Compile Include="View\RightPanelView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="AppSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>AppSettings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Pathfinding.Domain.Core\Pathfinding.Domain.Core.csproj">
+      <Project>{E0C71A1A-7DB7-426F-80DC-887F87F0AA13}</Project>
+      <Name>Pathfinding.Domain.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Domain.Interface\Pathfinding.Domain.Interface.csproj">
+      <Project>{BEE15FAF-F9D2-432A-A8BB-6D1BE7FE2888}</Project>
+      <Name>Pathfinding.Domain.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Infrastructure.Business\Pathfinding.Infrastructure.Business.csproj">
+      <Project>{365C8661-CC5E-4D80-9BAD-340895E10D3C}</Project>
+      <Name>Pathfinding.Infrastructure.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Infrastructure.Data\Pathfinding.Infrastructure.Data.csproj">
+      <Project>{8c4c7a00-a654-45ba-b0c7-e9c6fe6cfeeb}</Project>
+      <Name>Pathfinding.Infrastructure.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Logging\Pathfinding.Logging.csproj">
+      <Project>{37085E09-A2DA-4930-B219-1A3E385C5385}</Project>
+      <Name>Pathfinding.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Service.Interface\Pathfinding.Service.Interface.csproj">
+      <Project>{EC4CAA5A-1164-45C7-83AA-0B551D485832}</Project>
+      <Name>Pathfinding.Service.Interface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pathfinding.Shared\Pathfinding.Shared.csproj">
+      <Project>{C57FE374-EC6D-4797-829E-A31697E08975}</Project>
+      <Name>Pathfinding.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Autofac">
+      <Version>8.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="AutoMapper">
+      <Version>10.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Mvvm">
+      <Version>8.2.2</Version>
+    </PackageReference>
+    <PackageReference Include="LiteDB">
+      <Version>5.0.21</Version>
+    </PackageReference>
+    <PackageReference Include="OptimizedPriorityQueue">
+      <Version>5.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="ReactiveMarbles.ObservableEvents.SourceGenerator">
+      <Version>1.3.1</Version>
+    </PackageReference>
+    <PackageReference Include="ReactiveUI">
+      <Version>20.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3">
+      <Version>2.1.10</Version>
+    </PackageReference>
+    <PackageReference Include="System.Reactive">
+      <Version>6.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Terminal.Gui">
+      <Version>1.17.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
