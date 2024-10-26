@@ -67,7 +67,10 @@
     <Compile Include="Messages\ViewModel\RunSelectedMessage.cs" />
     <Compile Include="Messages\View\CloseAlgorithmRunFieldViewMessage.cs" />
     <Compile Include="Messages\View\SpreadViewModelChangedMessage.cs" />
+    <Compile Include="Model\Factories\RunVertexModelFactory.cs" />
     <Compile Include="Model\RunVertexModel.cs" />
+    <Compile Include="ViewModel\AlgorithmRunBaseViewModel.cs" />
+    <Compile Include="ViewModel\AlgorithmRunReviewFieldViewModel.cs" />
     <Compile Include="ViewModel\AStarLeeAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\BidirectAStarAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\BidirectDijkstraAlgorithmViewModel.cs" />
@@ -78,7 +81,6 @@
     <Compile Include="ViewModel\SnakeAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\DistanceFirstAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\AStarGreedyAlgorithmViewModel.cs" />
-    <Compile Include="ViewModel\IDAStarAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\LeeAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\IRequireHeuristicsViewModel.cs" />
     <Compile Include="ViewModel\AStarAlgorithmViewModel.cs" />
@@ -87,7 +89,6 @@
     <Compile Include="ViewModel\IRequireSpreadViewModel.cs" />
     <Compile Include="ViewModel\RandomAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\RunsTableViewModel.cs" />
-    <Compile Include="ViewModel\SpreadViewModel.cs" />
     <Compile Include="View\AStarLeeAlgorithmView.cs" />
     <Compile Include="View\BidirectAStarAlgorithmView.cs" />
     <Compile Include="View\BidirectDijkstraAlgorithmView.cs" />
@@ -101,7 +102,6 @@
     <Compile Include="View\DistanceFirstAlgorithmView.cs" />
     <Compile Include="View\AStarGreedyAlgorithmView.cs" />
     <Compile Include="View\RandomAlgorithmView.cs" />
-    <Compile Include="View\ComponentsPartials\SpreadView.cs" />
     <Compile Include="View\ConsoleLog.cs" />
     <Compile Include="Injection\App.cs" />
     <Compile Include="Injection\KeyFilters.cs" />
@@ -152,12 +152,10 @@
     <Compile Include="View\AlgorithmsView.cs" />
     <Compile Include="View\AStarAlgorithmView.cs" />
     <Compile Include="View\AlgorithmParametresView.cs" />
-    <Compile Include="View\IDAStarAlgorithmView.cs" />
     <Compile Include="View\LeeAlgorithmView.cs" />
     <Compile Include="View\PathfindingProcessButtonsFrame.cs" />
     <Compile Include="View\AlgorithmCreationView.cs" />
     <Compile Include="View\DijkstraAlgorithmView.cs" />
-    <Compile Include="View\SpreadView.cs" />
     <Compile Include="View\StepRulesView.cs" />
     <Compile Include="View\GraphTableButtonsFrame.cs" />
     <Compile Include="View\DeleteGraphButton.cs" />

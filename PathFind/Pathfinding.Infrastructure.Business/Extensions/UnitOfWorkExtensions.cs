@@ -27,19 +27,17 @@ namespace Pathfinding.Infrastructure.Business.Extensions
                 var runEntity = mapper.Map<AlgorithmRun>(runHistory.Run);
                 await unitOfWork.RunRepository.CreateAsync(runEntity, token);
                 var graphState = mapper.Map<GraphState>(runHistory.GraphState);
-                var subAlgorithms = mapper.Map<SubAlgorithm[]>(runHistory.SubAlgorithms);
                 var runStatistics = mapper.Map<Statistics>(runHistory.Statistics);
-                subAlgorithms.ForEach(x => x.AlgorithmRunId = runEntity.Id);
                 runStatistics.AlgorithmRunId = runEntity.Id;
                 graphState.AlgorithmRunId = runEntity.Id;
                 var state = await unitOfWork.GraphStateRepository.CreateAsync(graphState, token);
-                var subs = await unitOfWork.SubAlgorithmRepository.CreateAsync(subAlgorithms, token);
                 var stats = await unitOfWork.StatisticsRepository.CreateAsync(runStatistics, token);
+                var info = await unitOfWork.GraphRepository.ReadAsync(runHistory.Run.GraphId, token);
                 return new AlgorithmRunHistoryModel()
                 {
                     GraphState = mapper.Map<GraphStateModel>(state),
-                    SubAlgorithms = mapper.Map<List<SubAlgorithmModel>>(subs),
                     Run = mapper.Map<AlgorithmRunModel>(runEntity),
+                    GraphInfo = mapper.Map<GraphInformationModel>(info),
                     Statistics = mapper.Map<RunStatisticsModel>(stats) with { AlgorithmId = runHistory.Statistics.AlgorithmId }
                 };
             }).ToArrayAsync(token));
@@ -53,15 +51,16 @@ namespace Pathfinding.Infrastructure.Business.Extensions
             var algorithms = await unitofWork.RunRepository.ReadByGraphIdAsync(graphId, token);
             var readModels = mapper.Map<AlgorithmRunModel[]>(algorithms).ToReadOnly();
             var runHistories = new List<AlgorithmRunHistoryModel>();
+            var info = await unitofWork.GraphRepository.ReadAsync(graphId, token);
+            var mappedInfo = mapper.Map<GraphInformationModel>(info);
             foreach (var model in readModels)
             {
-                var subAlgorithms = await unitofWork.SubAlgorithmRepository.ReadByAlgorithmRunIdAsync(model.Id, token);
                 var graphState = await unitofWork.GraphStateRepository.ReadByRunIdAsync(model.Id, token);
                 var runStatistics = await unitofWork.StatisticsRepository.ReadByAlgorithmRunIdAsync(model.Id, token);
                 runHistories.Add(new AlgorithmRunHistoryModel()
                 {
+                    GraphInfo = mappedInfo,
                     Run = model,
-                    SubAlgorithms = mapper.Map<SubAlgorithmModel[]>(subAlgorithms),
                     GraphState = mapper.Map<GraphStateModel>(graphState),
                     Statistics = mapper.Map<RunStatisticsModel>(runStatistics)
                 });

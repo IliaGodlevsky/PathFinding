@@ -24,7 +24,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal sealed class GraphAssembleViewModel : BaseViewModel
     {
-        private static readonly InclusiveValueRange<int> CostRange = (9, 1);
+        private static readonly InclusiveValueRange<int> CostRange = (9, 0);
         private readonly IRequestService<GraphVertexModel> service;
         private readonly IGraphAssemble<GraphVertexModel> graphAssemble;
         private readonly IMessenger messenger;

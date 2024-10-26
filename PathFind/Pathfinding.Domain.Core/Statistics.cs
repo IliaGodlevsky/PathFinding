@@ -10,6 +10,8 @@ namespace Pathfinding.Domain.Core
 
         public string Heuristics { get; set; } = null;
 
+        public double? Weight { get; set; }
+
         public string StepRule { get; set; } = null;
 
         public string ResultStatus { get; set; } = string.Empty;
@@ -21,7 +23,5 @@ namespace Pathfinding.Domain.Core
         public double Cost { get; set; }
 
         public int Visited { get; set; }
-
-        public string Spread { get; set; } = null;
     }
 }

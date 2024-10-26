@@ -69,7 +69,6 @@
     <Compile Include="Repositories\IGraphStateRepository.cs" />
     <Compile Include="Repositories\IRangeRepository.cs" />
     <Compile Include="Repositories\IStatisticsRepository.cs" />
-    <Compile Include="Repositories\ISubAlgorithmRepository.cs" />
     <Compile Include="Repositories\IVerticesRepository.cs" />
   </ItemGroup>
   <ItemGroup>

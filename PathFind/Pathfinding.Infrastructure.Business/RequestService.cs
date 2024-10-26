@@ -178,14 +178,14 @@ namespace Pathfinding.Infrastructure.Business
             return await Transaction(async (unit, t) =>
             {
                 var graphState = await unit.GraphStateRepository.ReadByRunIdAsync(runId, t);
-                var subAlgorithms = await unit.SubAlgorithmRepository.ReadByAlgorithmRunIdAsync(runId, t);
                 var statistics = await unit.StatisticsRepository.ReadByAlgorithmRunIdAsync(runId, t);
                 var run = await unit.RunRepository.ReadAsync(runId, t);
+                var info = await unit.GraphRepository.ReadAsync(run.GraphId, t);
                 return new AlgorithmRunHistoryModel()
                 {
+                    GraphInfo = mapper.Map<GraphInformationModel>(info),
                     GraphState = mapper.Map<GraphStateModel>(graphState),
-                    SubAlgorithms = mapper.Map<SubAlgorithmModel[]>(subAlgorithms).ToReadOnly(),
-                    Statistics = mapper.Map<RunStatisticsModel>(statistics),
+                    Statistics = mapper.Map<RunStatisticsModel>(statistics) with { AlgorithmId = run.AlgorithmId },
                     Run = mapper.Map<AlgorithmRunModel>(run)
                 };
             }, token).ConfigureAwait(false);

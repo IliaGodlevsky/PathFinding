@@ -22,7 +22,7 @@ namespace Pathfinding.ConsoleApp.View
             X = model.Position.GetX() * LabelWidth;
             Y = model.Position.GetY();
             Width = LabelWidth;
-            Text = model.Cost.ToString();
+            Text = model.Cost.CurrentCost.ToString();
 
             BindTo(x => x.IsObstacle, ColorConstants.ObstacleVertexColor, 0);
             BindTo(x => x.IsTarget, ColorConstants.TargetVertexColor);

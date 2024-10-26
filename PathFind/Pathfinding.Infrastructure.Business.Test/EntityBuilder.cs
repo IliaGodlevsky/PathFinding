@@ -23,8 +23,6 @@ namespace Pathfinding.Infrastructure.Business.Test
 
         public static PathfindingHistorySerializationModel CreatePathfindingHistorySerializationModel() => new();
 
-        public static CreateSubAlgorithmRequest CreateSubAlgorithmRequest() => new();
-
         public static AlgorithmRunHistorySerializationModel CreateAlgorithmRunHistorySerializationModel() => new();
 
         public static GraphSerializationModel CreateGraphSerializationModelFull() => new()
@@ -36,38 +34,6 @@ namespace Pathfinding.Infrastructure.Business.Test
             Vertices = TestMapper.Instance.Mapper
                     .Map<VertexSerializationModel[]>(TestGraph.Interface.ToArray())
         };
-
-
-        public static CreateSubAlgorithmRequest WithOrder(this CreateSubAlgorithmRequest request, int order)
-        {
-            request.Order = order;
-            return request;
-        }
-
-        public static CreateSubAlgorithmRequest WithRunId(this CreateSubAlgorithmRequest request, int runId)
-        {
-            request.AlgorithmRunId = runId;
-            return request;
-        }
-
-        public static CreateSubAlgorithmRequest WithRandomVisited(this CreateSubAlgorithmRequest request, int count = 1)
-        {
-            var visited = new List<(Coordinate, IReadOnlyList<Coordinate>)>();
-            while (count-- > 0)
-            {
-                var visitedCoordinate = random.GenerateCoordinate(range, 2);
-                var enqueued = random.GenerateCoordinates(range, 2, Limit).ToList();
-                visited.Add((visitedCoordinate, enqueued));
-            }
-            request.Visited = visited;
-            return request;
-        }
-
-        public static CreateSubAlgorithmRequest WithRandomPath(this CreateSubAlgorithmRequest request)
-        {
-            request.Path = random.GenerateCoordinates(range, 2, Limit).ToList();
-            return request;
-        }
 
         public static PathfindingHistorySerializationModel WithTestGraph(this PathfindingHistorySerializationModel model)
         {
@@ -116,7 +82,7 @@ namespace Pathfinding.Infrastructure.Business.Test
             model.Statistics = new()
             {
                 AlgorithmRunId = random.NextInt(10, 1),
-                Spread = "Test",
+                Weight = 0,
                 Cost = random.NextDouble((1500, 250)),
                 Steps = random.NextInt((145, 20)),
                 StepRule = "Euclidian",
@@ -125,27 +91,6 @@ namespace Pathfinding.Infrastructure.Business.Test
                 ResultStatus = "Success",
                 Visited = random.NextInt((1000, 50))
             };
-            return model;
-        }
-
-        public static AlgorithmRunHistorySerializationModel WithRandomSubAlgorithm(this AlgorithmRunHistorySerializationModel model, int count = 1)
-        {
-            var subAlgorithms = new List<SubAlgorithmSerializationModel>();
-            while (count-- > 0)
-            {
-                var subAlgorithm = new SubAlgorithmSerializationModel()
-                {
-                    Order = count,
-                    Visited = new List<VisitedVerticesModel>()
-                    {
-                        new() { Current = GenerateCoordinateModel(), Enqueued = GenerateCoordinateModels() },
-                        new() { Current = GenerateCoordinateModel(), Enqueued = GenerateCoordinateModels() }
-                    },
-                    Path = GenerateCoordinateModels()
-                };
-                subAlgorithms.Add(subAlgorithm);
-            }
-            model.SubAlgorithms = subAlgorithms;
             return model;
         }
 
@@ -163,8 +108,7 @@ namespace Pathfinding.Infrastructure.Business.Test
                 var runHistory = CreateAlgorithmRunHistorySerializationModel()
                     .WithAlgorithmRun()
                     .WithRandomGraphState()
-                    .WithRandomStatistics()
-                    .WithRandomSubAlgorithm(2);
+                    .WithRandomStatistics();
                 algorithms.Add(runHistory);
             }
             model.Algorithms = algorithms;
@@ -178,21 +122,6 @@ namespace Pathfinding.Infrastructure.Business.Test
                 GraphId = random.NextInt(10, 1),
                 AlgorithmId = AlgorithnName
             };
-            return request;
-        }
-
-        public static CreateAlgorithmRunHistoryRequest WithRandomSubAlgorithm(this CreateAlgorithmRunHistoryRequest request, int count = 1)
-        {
-            var subAlgorithms = new List<CreateSubAlgorithmRequest>();
-            while (count-- > 0)
-            {
-                var createSubAlgorithmRequest = CreateSubAlgorithmRequest()
-                    .WithRandomPath()
-                    .WithRandomVisited(2)
-                    .WithOrder(count);
-                subAlgorithms.Add(createSubAlgorithmRequest);
-            }
-            request.SubAlgorithms = subAlgorithms;
             return request;
         }
 
@@ -216,7 +145,7 @@ namespace Pathfinding.Infrastructure.Business.Test
             request.Statistics = new()
             {
                 AlgorithmId = AlgorithnName,
-                Spread = "Test",
+                Weight = 0,
                 Cost = random.NextDouble((1500, 250)),
                 Steps = random.NextInt((145, 20)),
                 StepRule = "Euclidian",
@@ -249,8 +178,7 @@ namespace Pathfinding.Infrastructure.Business.Test
                     CreateAlgorithmRunHistoryRequest()
                     .WithRandomRun()
                     .WithRandomGraphState()
-                    .WithRandomStatisitics()
-                    .WithRandomSubAlgorithm(2);
+                    .WithRandomStatisitics();
                 runHistories.Add(runHistory);
             }
             request.Algorithms = runHistories;

@@ -8,8 +8,6 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations.TestDb
     {
         public IGraphParametresRepository GraphRepository { get; }
 
-        public ISubAlgorithmRepository SubAlgorithmRepository { get; }
-
         public IVerticesRepository VerticesRepository { get; }
 
         public IRangeRepository RangeRepository { get; }
@@ -25,7 +23,6 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations.TestDb
             GraphStateRepository = new TestGraphStateRepository();
             VerticesRepository = new TestVerticesRepository();
             RangeRepository = new TestRangeRepository();
-            SubAlgorithmRepository = new TestSubAlgorithmRepository();
             StatisticsRepository = new TestStatisicsRepository();
             RunRepository = new TestAlgorithmRunRepository();
             GraphRepository = new TestGraphParametresRepository();

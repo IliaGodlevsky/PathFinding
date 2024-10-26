@@ -21,7 +21,7 @@ namespace Pathfinding.ConsoleApp.Model
 
         public string Heuristics { get; set; }
 
-        public string Spread { get; set; }
+        public string Weight { get; set; }
 
         public string Status { get; set; }
     }

@@ -15,14 +15,12 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
         private readonly ILiteCollection<AlgorithmRun> collection;
         private readonly ILiteCollection<Statistics> statistics;
         private readonly ILiteCollection<GraphState> graphStates;
-        private readonly ILiteCollection<SubAlgorithm> subAlgorithms;
 
         public LiteDbAlgorithmRunRepository(ILiteDatabase db)
         {
             collection = db.GetCollection<AlgorithmRun>(DbTables.AlgorithmRuns);
             statistics = db.GetCollection<Statistics>(DbTables.Statistics);
             graphStates = db.GetCollection<GraphState>(DbTables.GraphStates);
-            subAlgorithms = db.GetCollection<SubAlgorithm>(DbTables.SubAlgorithms);
         }
 
         public async Task<AlgorithmRun> CreateAsync(AlgorithmRun entity,
@@ -45,7 +43,6 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             var query = Query.In(AlgorithmRunId, ids);
             statistics.DeleteMany(query);
             graphStates.DeleteMany(query);
-            subAlgorithms.DeleteMany(query);
             var runQuery = Query.In("_id", ids);
             return await Task.FromResult(collection.DeleteMany(runQuery) > 0);
         }

@@ -56,6 +56,7 @@
     <Compile Include="ILayer.cs" />
     <Compile Include="IRequestService.cs" />
     <Compile Include="ISerializer.cs" />
+    <Compile Include="ISpreadLevel.cs" />
     <Compile Include="IStepRule.cs" />
     <Compile Include="Models\ModelBuilder.cs" />
     <Compile Include="Models\Read\PathfindingRangeModel.cs" />
@@ -68,7 +69,6 @@
     <Compile Include="Requests\Create\CreateNeighborsRequest.cs" />
     <Compile Include="Requests\Create\CreatePathfindingHistoryRequest.cs" />
     <Compile Include="Requests\Create\CreatePathfindingRangeRequest.cs" />
-    <Compile Include="Requests\Create\CreateSubAlgorithmRequest.cs" />
     <Compile Include="Models\Read\AlgorithmRunHistoryModel.cs" />
     <Compile Include="Models\Read\AlgorithmRunModel.cs" />
     <Compile Include="Models\Read\GraphInformationModel.cs" />
@@ -82,7 +82,6 @@
     <Compile Include="Models\Serialization\GraphStateSerializationModel.cs" />
     <Compile Include="Models\Serialization\PathfindingHistorySerializationModel.cs" />
     <Compile Include="Models\Serialization\RunStatisticsSerializationModel.cs" />
-    <Compile Include="Models\Serialization\SubAlgorithmSerializationModel.cs" />
     <Compile Include="Models\Serialization\VertexSerializationModel.cs" />
     <Compile Include="Models\Undefined\CoordinateModel.cs" />
     <Compile Include="Models\Undefined\GraphAssembleModel.cs" />

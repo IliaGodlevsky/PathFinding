@@ -57,7 +57,7 @@ namespace Pathfinding.ConsoleApp.View
                 Elapsed = (TimeSpan)table.Rows[selectedRow][ElapsedCol],
                 StepRule = table.Rows[selectedRow][StepCol].ToString(),
                 Heuristics = table.Rows[selectedRow][LogicCol].ToString(),
-                Spread = table.Rows[selectedRow][SpreadCol].ToString(),
+                Weight = table.Rows[selectedRow][WeightCol].ToString(),
                 Status = table.Rows[selectedRow][StatusCol].ToString()
             };
         }
@@ -66,7 +66,7 @@ namespace Pathfinding.ConsoleApp.View
         {
             table.Rows.Add(model.RunId, model.Name, model.Visited,
                 model.Steps, model.Cost, model.Elapsed, model.StepRule,
-                model.Heuristics, model.Spread, model.Status);
+                model.Heuristics, model.Weight.ToString(), model.Status);
             table.AcceptChanges();
             SetNeedsDisplay();
             Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);

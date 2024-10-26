@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Pathfinding.Service.Interface.Extensions
 {
@@ -25,6 +26,16 @@ namespace Pathfinding.Service.Interface.Extensions
             if (!isNull)
             {
                 writer.Write(value);
+            }
+        }
+
+        public static void Write(this BinaryWriter writer, double? value)
+        {
+            bool hasValue = value.HasValue;
+            writer.Write(hasValue);
+            if (hasValue)
+            {
+                writer.Write(value.Value);
             }
         }
 

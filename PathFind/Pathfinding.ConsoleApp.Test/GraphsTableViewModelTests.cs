@@ -51,7 +51,7 @@ namespace Pathfinding.ConsoleApp.Test
             bool isActivated = false;
             void OnActivated(object recipient, GraphActivatedMessage msg)
             {
-                isActivated = msg.GraphId == 1;
+                isActivated = msg.Graph.Id == 1;
             }
 
             messenger.Register<GraphActivatedMessage>(this, OnActivated);
@@ -73,7 +73,7 @@ namespace Pathfinding.ConsoleApp.Test
             bool isActivated = false;
             void OnActivated(object recipient, GraphActivatedMessage msg)
             {
-                isActivated = msg.GraphId == 1;
+                isActivated = msg.Graph.Id == 1;
             }
             messenger.Register<GraphActivatedMessage>(this, OnActivated);
 

@@ -15,7 +15,7 @@ namespace Pathfinding.ConsoleApp.View
         private const string ElapsedCol = "Elapsed";
         private const string StepCol = "Step";
         private const string LogicCol = "Logic";
-        private const string SpreadCol = "Spread";
+        private const string WeightCol = "Weight";
         private const string StatusCol = "Status";
         private const string TimeFormat = @"ss\.fff";
 
@@ -33,7 +33,7 @@ namespace Pathfinding.ConsoleApp.View
                 new DataColumn(ElapsedCol, typeof(TimeSpan)),
                 new DataColumn(StepCol, typeof(string)),
                 new DataColumn(LogicCol, typeof(string)),
-                new DataColumn(SpreadCol, typeof(string)),
+                new DataColumn(WeightCol, typeof(string)),
                 new DataColumn(StatusCol, typeof(string))
             });
             table.PrimaryKey = new DataColumn[] { table.Columns[IdCol] };
@@ -47,7 +47,7 @@ namespace Pathfinding.ConsoleApp.View
                 { table.Columns[ElapsedCol], new() { Format = TimeFormat, Alignment = TextAlignment.Centered } },
                 { table.Columns[StepCol], new() { Alignment = TextAlignment.Centered } },
                 { table.Columns[LogicCol], new() { Alignment = TextAlignment.Centered } },
-                { table.Columns[SpreadCol], new() { Alignment = TextAlignment.Left } },
+                { table.Columns[WeightCol], new() { Alignment = TextAlignment.Left } },
                 { table.Columns[StatusCol], new() { Alignment = TextAlignment.Centered } }
             };
             Style = new TableStyle()

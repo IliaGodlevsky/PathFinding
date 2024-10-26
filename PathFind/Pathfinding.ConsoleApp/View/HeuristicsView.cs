@@ -4,6 +4,8 @@ using NStack;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Primitives;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System.Linq;
@@ -15,6 +17,9 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class HeuristicsView : FrameView
     {
+        private static readonly InclusiveValueRange<double> WeightRange = (5, 0);
+        private const double DefaultWeight = 1;
+
         private readonly HeuristicsViewModel viewModel;
         private readonly ustring[] radioLabels;
 
@@ -46,6 +51,14 @@ namespace Pathfinding.ConsoleApp.View
                .BindTo(msg.ViewModel, x => x.Heuristic)
                .DisposeWith(disposables);
             heuristics.SelectedItem = 0;
+            weightTextField.Events()
+                .TextChanging
+                .Where(x => double.TryParse(x.NewText.ToString(), out _))
+                .Select(x => WeightRange.ReturnInRange(double.Parse(x.NewText.ToString())))
+                .BindTo(msg.ViewModel, x => x.Weight)
+                .DisposeWith(disposables);
+            msg.ViewModel.Weight = DefaultWeight;
+            weightTextField.Text = DefaultWeight.ToString();
         }
 
         private void OnOpen(object recipient, OpenHeuristicsViewMessage msg)

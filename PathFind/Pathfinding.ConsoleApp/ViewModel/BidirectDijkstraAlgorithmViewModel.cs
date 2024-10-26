@@ -6,6 +6,7 @@ using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Models.Undefined;
 using ReactiveUI;
 using System.Collections.Generic;
 
@@ -28,6 +29,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
             [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger, ILog logger)
             : base(service, messenger, logger)
         {
+        }
+
+        protected override void AppendStatistics(RunStatisticsModel model)
+        {
+            model.StepRule = stepRule.Name;
         }
 
         protected override PathfindingProcess GetAlgorithm(IEnumerable<GraphVertexModel> pathfindingRange)

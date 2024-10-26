@@ -14,8 +14,6 @@ namespace Pathfinding.Infrastructure.Data.LiteDb
 
         public IGraphParametresRepository GraphRepository { get; }
 
-        public ISubAlgorithmRepository SubAlgorithmRepository { get; }
-
         public IVerticesRepository VerticesRepository { get; }
 
         public IRangeRepository RangeRepository { get; }
@@ -44,7 +42,6 @@ namespace Pathfinding.Infrastructure.Data.LiteDb
         public LiteDbUnitOfWork(ILiteDatabase db)
         {
             database = db;
-            SubAlgorithmRepository = new LiteDbSubAlgorithmRepository(database);
             GraphRepository = new LiteDbGraphRepository(database);
             VerticesRepository = new LiteDbVerticesRepository(database);
             RangeRepository = new LiteDbRangeRepository(database);

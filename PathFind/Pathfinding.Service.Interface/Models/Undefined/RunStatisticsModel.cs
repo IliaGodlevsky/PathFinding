@@ -10,6 +10,8 @@ namespace Pathfinding.Service.Interface.Models.Undefined
 
         public string Heuristics { get; set; } = null;
 
+        public double? Weight { get; set; }
+
         public string StepRule { get; set; } = null;
 
         public int Visited { get; set; }
@@ -21,7 +23,5 @@ namespace Pathfinding.Service.Interface.Models.Undefined
         public int Steps { get; set; }
 
         public double Cost { get; set; }
-
-        public string Spread { get; set; } = null;
     }
 }

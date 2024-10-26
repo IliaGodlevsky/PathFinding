@@ -64,7 +64,7 @@ namespace Pathfinding.ConsoleApp.Test
 
             mock.Mock<IMessenger>().Setup(x => x.Send(
                 It.IsAny<QueryPathfindingRangeMessage>(),
-                It.IsAny<IsAnyToken>())).Callback<QueryPathfindingRangeMessage, object>((x,y) =>
+                It.IsAny<IsAnyToken>())).Callback<QueryPathfindingRangeMessage, object>((x, y) =>
                 {
                     var source = new GraphVertexModel(Coordinate.Empty);
                     var target = new GraphVertexModel(Coordinate.Empty);
@@ -78,11 +78,10 @@ namespace Pathfinding.ConsoleApp.Test
                 It.IsAny<IsAnyToken>())).Callback<GraphActivatedMessage, object>((x, y) =>
                 {
                     viewModel.Graph = x.Graph;
-                    viewModel.GraphId = x.GraphId;
                 });
 
             var messenger = mock.Container.Resolve<IMessenger>();
-            messenger.Send(new GraphActivatedMessage(1, Graph<GraphVertexModel>.Empty));
+            messenger.Send(new GraphActivatedMessage(new() { Id = 1, Graph = Graph<GraphVertexModel>.Empty }));
             await viewModel.StartAlgorithmCommand.Execute();
 
             Assert.Multiple(() =>

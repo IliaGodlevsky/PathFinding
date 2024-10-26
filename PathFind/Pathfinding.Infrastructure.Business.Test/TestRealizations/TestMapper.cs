@@ -22,7 +22,6 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations
                 new UntitledMappingProfile(coordinateModelSerializer,
                     visitedVerticesSerializer,
                     coordinateCostPairSerializer),
-                new SubAlgorithmsMappingProfile(),
                 new StatisticsMappingProfile(),
                 new HistoryMappingProfile<TestVertex>(),
                 new GraphStateMappingProfile(),

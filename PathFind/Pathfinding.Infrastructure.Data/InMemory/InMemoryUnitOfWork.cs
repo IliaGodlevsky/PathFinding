@@ -10,8 +10,6 @@ namespace Pathfinding.Infrastructure.Data.InMemory
     {
         public IGraphParametresRepository GraphRepository { get; }
 
-        public ISubAlgorithmRepository SubAlgorithmRepository { get; }
-
         public IVerticesRepository VerticesRepository { get; }
 
         public IRangeRepository RangeRepository { get; }
@@ -27,13 +25,11 @@ namespace Pathfinding.Infrastructure.Data.InMemory
             var graphState = new InMemoryGraphStateRepository();
             var vertices = new InMemoryVerticesRepository();
             var range = new InMemoryRangeRepository();
-            var subs = new InMemorySubAlgorithmRepository();
             var statistics = new InMemoryStatisicsRepository();
-            var runs = new InMemoryAlgorithmRunRepository(statistics, graphState, subs);
+            var runs = new InMemoryAlgorithmRunRepository(statistics, graphState);
             GraphStateRepository = graphState;
             VerticesRepository = vertices;
             RangeRepository = range;
-            SubAlgorithmRepository = subs;
             StatisticsRepository = statistics;
             RunRepository = runs;
             GraphRepository = new InMemoryGraphParametresRepository(runs, range, vertices);

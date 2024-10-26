@@ -16,15 +16,12 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
 
         private readonly InMemoryStatisicsRepository statistics;
         private readonly InMemoryGraphStateRepository graphStates;
-        private readonly InMemorySubAlgorithmRepository subAlgorithms;
 
         public InMemoryAlgorithmRunRepository(InMemoryStatisicsRepository statistics,
-            InMemoryGraphStateRepository graphStates,
-            InMemorySubAlgorithmRepository subAlgorithms)
+            InMemoryGraphStateRepository graphStates)
         {
             this.statistics = statistics;
             this.graphStates = graphStates;
-            this.subAlgorithms = subAlgorithms;
         }
 
         public async Task<AlgorithmRun> CreateAsync(AlgorithmRun entity,
@@ -41,7 +38,6 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
             var runIds = set.Where(x => x.GraphId == graphId).Select(x => x.Id).ToHashSet();
             await statistics.DeleteByRunIdsAsync(runIds, token);
             await graphStates.DeleteByRunIdsAsync(runIds, token);
-            await subAlgorithms.DeleteByRunIdsAsync(runIds, token);
             var deleted = set.RemoveWhere(x => x.GraphId == graphId);
             return await Task.FromResult(deleted > 0);
         }
@@ -60,7 +56,6 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
             var deleted = set.RemoveWhere(x => toDelete.Contains(x.Id));
             await statistics.DeleteByRunIdsAsync(ids, token);
             await graphStates.DeleteByRunIdsAsync(ids, token);
-            await subAlgorithms.DeleteByRunIdsAsync(ids, token);
             return await Task.FromResult(deleted > 0);
         }
 

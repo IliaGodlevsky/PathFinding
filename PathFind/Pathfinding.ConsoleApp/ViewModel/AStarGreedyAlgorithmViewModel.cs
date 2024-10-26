@@ -4,6 +4,7 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Algorithms;
+using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Undefined;
@@ -29,6 +30,13 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref stepRule, value);
         }
 
+        private double weight;
+        public double Weight 
+        { 
+            get => weight; 
+            set => this.RaiseAndSetIfChanged(ref weight, value); 
+        }
+
         public AStarGreedyAlgorithmViewModel(
             IRequestService<GraphVertexModel> service,
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
@@ -43,12 +51,13 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             model.StepRule = stepRule.Name;
             model.Heuristics = heuristic.Name;
+            model.Weight = Weight;
         }
 
         protected override PathfindingProcess GetAlgorithm(IEnumerable<GraphVertexModel> pathfindingRange)
         {
             return new AStarGreedyAlgorithm(pathfindingRange,
-                heuristic.Heuristic, stepRule.StepRule);
+                heuristic.Heuristic.ToWeighted(Weight), stepRule.StepRule);
         }
     }
 }

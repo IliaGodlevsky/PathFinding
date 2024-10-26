@@ -2,19 +2,17 @@
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Domain.Core;
-using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Infrastructure.Business.Algorithms.Events;
 using Pathfinding.Infrastructure.Business.Algorithms.Exceptions;
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
-using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Service.Interface.Models;
+using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Undefined;
-using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Shared.Primitives;
 using ReactiveUI;
 using System;
@@ -37,40 +35,38 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public ReactiveCommand<MouseEventArgs, Unit> StartAlgorithmCommand { get; }
 
-        private int graphId;
-        public int GraphId
-        {
-            get => graphId;
-            set => this.RaiseAndSetIfChanged(ref graphId, value);
-        }
-
-        private IGraph<GraphVertexModel> graph;
-        public IGraph<GraphVertexModel> Graph
+        private GraphModel<GraphVertexModel> graph = GraphModel<GraphVertexModel>.Empty;
+        public GraphModel<GraphVertexModel> Graph
         {
             get => graph;
             set => this.RaiseAndSetIfChanged(ref graph, value);
         }
 
-        private IObservable<bool> CanStartAlgorithm()
+        protected virtual IObservable<bool> CanStartAlgorithm()
         {
             return this.WhenAnyValue(
-                x => x.GraphId,
-                x => x.Graph,
-                (id, graph) => id > 0 && graph != null);
+                x => x.Graph.Graph,
+                x => x.Graph.Id,
+                (graph, id) => id > 0 && graph != null);
         }
 
         private void OnGraphActivated(object recipient, GraphActivatedMessage msg)
         {
             Graph = msg.Graph;
-            GraphId = msg.GraphId;
         }
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
         {
-            if (msg.GraphIds.Contains(GraphId))
+            if (msg.GraphIds.Contains(Graph.Id))
             {
-                Graph = Graph<GraphVertexModel>.Empty;
-                GraphId = 0;
+                Graph = new() 
+                { 
+                    Graph = Graph<GraphVertexModel>.Empty, 
+                    Id = 0, 
+                    Name = string.Empty, 
+                    Neighborhood = string.Empty, 
+                    SmoothLevel = string.Empty 
+                };
             }
         }
 
@@ -98,17 +94,18 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
             if (pathfindingRange.Count > 1)
             {
-                var subAlgorithms = new List<CreateSubAlgorithmRequest>();
+                var subAlgorithms = new List<SubAlgorithmModel>();
                 int visitedCount = 0;
                 var visitedVertices = new List<(Coordinate Visited, IReadOnlyList<Coordinate> Enqueued)>();
 
                 void AddSubAlgorithm(IReadOnlyCollection<Coordinate> path = null)
                 {
-                    ModelBuilder.CreateSubAlgorithmRequest()
-                        .WithOrder(subAlgorithms.Count)
-                        .WithPath(path ?? Array.Empty<Coordinate>())
-                        .WithVisitedVertices(visitedVertices.ToArray())
-                        .AddTo(subAlgorithms);
+                    subAlgorithms.Add(new()
+                    {
+                        Order = subAlgorithms.Count,
+                        Visited = visitedVertices.ToArray(),
+                        Path = path ?? Array.Empty<Coordinate>()
+                    });
                     visitedCount += visitedVertices.Count;
                     visitedVertices.Clear();
                 }
@@ -155,8 +152,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
                 var request = ModelBuilder.CreateRunHistoryRequest()
                     .WithGraph(Graph, pathfindingRange.Select(x => x.Position))
-                    .WithRun(GraphId, AlgorithmId)
-                    .WithSubAlgorithms(subAlgorithms)
+                    .WithRun(Graph.Id, AlgorithmId)
                     .WithStatistics(AlgorithmId, path,
                         visitedCount, status, stopwatch.Elapsed);
 
@@ -166,7 +162,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 {
                     var result = await Task.Run(() => service.CreateRunHistoryAsync(request))
                         .ConfigureAwait(false);
-                    messenger.Send(new RunCreatedMessaged(result));
+                    messenger.Send(new RunCreatedMessaged(result, subAlgorithms));
                 }, logger.Error).ConfigureAwait(false);
             }
             else

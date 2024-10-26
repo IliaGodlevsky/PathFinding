@@ -46,13 +46,14 @@
     <Compile Include="AlgorithmRun.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="GraphState.cs" />
+    <Compile Include="HeuristicNames.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="NeighborhoodNames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PathfindingRange.cs" />
     <Compile Include="RunStatuses.cs" />
     <Compile Include="Statistics.cs" />
-    <Compile Include="SubAlgorithm.cs" />
+    <Compile Include="StepRuleNames.cs" />
     <Compile Include="Vertex.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

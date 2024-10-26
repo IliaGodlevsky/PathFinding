@@ -10,15 +10,12 @@ namespace Pathfinding.Service.Interface.Models.Serialization
 
         public RunStatisticsSerializationModel Statistics { get; set; }
 
-        public IReadOnlyCollection<SubAlgorithmSerializationModel> SubAlgorithms { get; set; }
-
         public GraphStateSerializationModel GraphState { get; set; }
 
         public void Deserialize(BinaryReader reader)
         {
             Run = reader.ReadSerializable<AlgorithmRunSerializationModel>();
             Statistics = reader.ReadSerializable<RunStatisticsSerializationModel>();
-            SubAlgorithms = reader.ReadSerializableArray<SubAlgorithmSerializationModel>();
             GraphState = reader.ReadSerializable<GraphStateSerializationModel>();
         }
 
@@ -26,7 +23,6 @@ namespace Pathfinding.Service.Interface.Models.Serialization
         {
             writer.Write(Run);
             writer.Write(Statistics);
-            writer.Write(SubAlgorithms);
             writer.Write(GraphState);
         }
     }

@@ -21,7 +21,6 @@ namespace Pathfinding.Infrastructure.Business.Test
             AlgorithmRunHistoryModel model)
         {
             return AreEqual(request.GraphState, model.GraphState)
-                && request.SubAlgorithms.Juxtapose(model.SubAlgorithms, AreEqual)
                 && request.Run.AlgorithmId == model.Run.AlgorithmId
                 && request.Run.GraphId == model.Run.GraphId
                 && AreEqual(request.Statistics, model.Statistics);
@@ -33,22 +32,10 @@ namespace Pathfinding.Infrastructure.Business.Test
                 && first.Heuristics == second.Heuristics
                 && first.Cost == second.Cost
                 && first.Elapsed == second.Elapsed
-                && first.Spread == second.Spread
+                && first.Weight == second.Weight
                 && first.StepRule == second.StepRule
                 && first.Steps == second.Steps
                 && first.Visited == second.Visited;
-        }
-
-        public static bool AreEqual(CreateSubAlgorithmRequest request,
-            SubAlgorithmModel model)
-        {
-            return request.Order == model.Order
-                && request.Path.SequenceEqual(model.Path)
-                && request.Visited.Juxtapose(model.Visited, (x, y) =>
-                {
-                    return x.Visited.Equals(y.Visited)
-                        && x.Enqueued.SequenceEqual(y.Enqueued);
-                });
         }
 
         public static bool AreEqual(CreatePathfindingHistoryRequest<TestVertex> request,

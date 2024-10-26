@@ -15,9 +15,6 @@ namespace Pathfinding.Infrastructure.Data.Sqlite
         public IGraphParametresRepository GraphRepository 
             => new SqliteGraphRepository(connection, transaction);
 
-        public ISubAlgorithmRepository SubAlgorithmRepository 
-            => new SqliteSubAlgorithmsRepository(connection, transaction);
-
         public IVerticesRepository VerticesRepository 
             => new SqliteVerticesRepository(connection, transaction);
 

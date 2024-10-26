@@ -58,7 +58,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             await ExecuteSafe(async () =>
             {
                 var graph = await service.ReadGraphAsync(model.Id);
-                messenger.Send(new GraphActivatedMessage(graph.Id, graph.Graph));
+                messenger.Send(new GraphActivatedMessage(graph));
             }, logger.Error);
         }
 

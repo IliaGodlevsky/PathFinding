@@ -1,4 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
+using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Shared.Primitives;
@@ -12,20 +13,14 @@ namespace Pathfinding.Service.Interface.Models
     {
         public static CreateAlgorithmRunHistoryRequest CreateRunHistoryRequest() => new CreateAlgorithmRunHistoryRequest();
 
-        public static CreateAlgorithmRunHistoryRequest WithSubAlgorithms(this CreateAlgorithmRunHistoryRequest request, IReadOnlyList<CreateSubAlgorithmRequest> subAlgorithms)
-        {
-            request.SubAlgorithms = subAlgorithms;
-            return request;
-        }
-
-        public static CreateAlgorithmRunHistoryRequest WithGraph<T>(this CreateAlgorithmRunHistoryRequest request, IGraph<T> graph, IEnumerable<Coordinate> range)
+        public static CreateAlgorithmRunHistoryRequest WithGraph<T>(this CreateAlgorithmRunHistoryRequest request, GraphModel<T> graph, IEnumerable<Coordinate> range)
             where T : IVertex
         {
             request.GraphState = new CreateGraphStateRequest()
             {
-                Costs = graph.Select(x => (x.Position, x.Cost.CurrentCost)).ToArray(),
-                Obstacles = graph.Where(x => x.IsObstacle).Select(x => x.Position).ToArray(),
-                Regulars = graph.Where(x => !x.IsObstacle).Select(x => x.Position).ToArray(),
+                Costs = graph.Graph.Select(x => (x.Position, x.Cost.CurrentCost)).ToArray(),
+                Obstacles = graph.Graph.Where(x => x.IsObstacle).Select(x => x.Position).ToArray(),
+                Regulars = graph.Graph.Where(x => !x.IsObstacle).Select(x => x.Position).ToArray(),
                 Range = range.ToArray()
             };
             return request;
@@ -53,35 +48,6 @@ namespace Pathfinding.Service.Interface.Models
                 ResultStatus = resultStatus,
                 Visited = visited
             };
-            return request;
-        }
-
-        public static CreateSubAlgorithmRequest CreateSubAlgorithmRequest() => new();
-
-        public static CreateSubAlgorithmRequest WithPath(this CreateSubAlgorithmRequest request, IReadOnlyCollection<Coordinate> subPath)
-        {
-            request.Path = subPath;
-            return request;
-        }
-
-        public static CreateSubAlgorithmRequest WithVisitedVertices(this CreateSubAlgorithmRequest request,
-            IReadOnlyCollection<(Coordinate, IReadOnlyList<Coordinate>)> visited)
-        {
-            request.Visited = visited;
-            return request;
-        }
-
-        public static CreateSubAlgorithmRequest WithOrder(this CreateSubAlgorithmRequest request,
-            int order)
-        {
-            request.Order = order;
-            return request;
-        }
-
-        public static CreateSubAlgorithmRequest AddTo(this CreateSubAlgorithmRequest request,
-            ICollection<CreateSubAlgorithmRequest> collection)
-        {
-            collection.Add(request);
             return request;
         }
     }

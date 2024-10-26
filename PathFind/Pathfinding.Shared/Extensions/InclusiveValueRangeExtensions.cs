@@ -85,5 +85,12 @@ namespace Pathfinding.Shared.Extensions
         {
             return self.ReturnInRange(value, ReturnOptions.Limit);
         }
+
+        public static bool Contains<T>(this InclusiveValueRange<T> range, T value)
+            where T : IComparable<T>
+        {
+            return value.IsLessOrEqualThan(range.UpperValueOfRange) 
+                && value.IsGreaterOrEqualThan(range.LowerValueOfRange);
+        }
     }
 }

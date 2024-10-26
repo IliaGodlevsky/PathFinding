@@ -229,8 +229,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 disposables.Clear();
                 Transit.CollectionChanged -= OnCollectionChanged;
                 ClearRange();
-                Graph = msg.Graph;
-                GraphId = msg.GraphId;
+                Graph = msg.Graph.Graph;
+                GraphId = msg.Graph.Id ;
                 var range = await Task.Run(() => service.ReadRangeAsync(GraphId))
                     .ConfigureAwait(false);
                 var src = range.FirstOrDefault(x => x.IsSource);

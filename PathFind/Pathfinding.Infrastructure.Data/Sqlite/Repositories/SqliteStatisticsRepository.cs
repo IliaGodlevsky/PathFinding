@@ -16,6 +16,7 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                 AlgorithmRunId INTEGER NOT NULL,
                 Heuristics TEXT,
+                Weight REAL,
                 StepRule TEXT,
                 ResultStatus TEXT NOT NULL DEFAULT '',
                 Elapsed REAL NOT NULL,
@@ -34,8 +35,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
         public async Task<Statistics> CreateAsync(Statistics entity, CancellationToken token = default)
         {
             const string query = @$"
-                INSERT INTO {DbTables.Statistics} (AlgorithmRunId, Heuristics, StepRule, ResultStatus, Elapsed, Steps, Cost, Visited, Spread)
-                VALUES (@AlgorithmRunId, @Heuristics, @StepRule, @ResultStatus, @Elapsed, @Steps, @Cost, @Visited, @Spread);
+                INSERT INTO {DbTables.Statistics} (AlgorithmRunId, Heuristics, StepRule, ResultStatus, Elapsed, Steps, Cost, Visited, Weight)
+                VALUES (@AlgorithmRunId, @Heuristics, @StepRule, @ResultStatus, @Elapsed, @Steps, @Cost, @Visited, @Weight);
                 SELECT last_insert_rowid();";
 
             var id = await connection.ExecuteScalarAsync<int>(

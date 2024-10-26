@@ -104,8 +104,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnGraphActivated(object recipient, GraphActivatedMessage msg)
         {
-            Graph = msg.Graph;
-            GraphId = msg.GraphId;
+            Graph = msg.Graph.Graph;
+            GraphId = msg.Graph.Id;
         }
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)

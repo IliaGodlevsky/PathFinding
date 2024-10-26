@@ -94,6 +94,8 @@
     <Compile Include="Algorithms\Events\VertexProcessedEventHandler.cs" />
     <Compile Include="Algorithms\GraphPaths\BidirectGraphPath.cs" />
     <Compile Include="Algorithms\Heuristics\DiagonalDistance.cs" />
+    <Compile Include="Algorithms\Heuristics\NotImplementedHeuristic.cs" />
+    <Compile Include="Algorithms\Heuristics\WeightedHeuristic.cs" />
     <Compile Include="Algorithms\SnakeAlgorithm.cs" />
     <Compile Include="Algorithms\DepthFirstAlgorithm.cs" />
     <Compile Include="Algorithms\DepthRandomAlgorithm.cs" />
@@ -115,7 +117,6 @@
     <Compile Include="Algorithms\Heuristics\Distance.cs" />
     <Compile Include="Algorithms\Heuristics\EuclidianDistance.cs" />
     <Compile Include="Algorithms\Heuristics\ManhattanDistance.cs" />
-    <Compile Include="Algorithms\IDAStarAlgorithm.cs" />
     <Compile Include="Algorithms\LeeAlgorithm.cs" />
     <Compile Include="Algorithms\PathfindingAlgorithm.cs" />
     <Compile Include="Algorithms\PathfindingProcess.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Algorithms\StepRules\CardinalStepRule.cs" />
     <Compile Include="Algorithms\StepRules\DefaultStepRule.cs" />
     <Compile Include="Algorithms\StepRules\LandscapeStepRule.cs" />
+    <Compile Include="Algorithms\StepRules\NotImplementedStepRule.cs" />
     <Compile Include="Algorithms\StepRules\WalkStepRule.cs" />
     <Compile Include="Algorithms\WaveAlgorithm.cs" />
     <Compile Include="Commands\ExcludeSourceVertex.cs" />
@@ -135,17 +137,18 @@
     <Compile Include="Commands\ReplaceIsolatedTargetVertex.cs" />
     <Compile Include="Commands\ReplaceTransitIsolatedVertex.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\HeuristicsExtensions.cs" />
     <Compile Include="Extensions\PriorityQueueExtensions.cs" />
     <Compile Include="Extensions\SimplePriorityQueueExtensions.cs" />
     <Compile Include="Extensions\UnitOfWorkExtensions.cs" />
     <Compile Include="Extensions\VertexExtensions.cs" />
+    <Compile Include="Layers\GraphStateLayer.cs" />
     <Compile Include="Layers\Layers.cs" />
     <Compile Include="Mappings\AlgorithmRunMappingProfile.cs" />
     <Compile Include="Mappings\GraphMappingProfile.cs" />
     <Compile Include="Mappings\GraphStateMappingProfile.cs" />
     <Compile Include="Mappings\HistoryMappingProfile.cs" />
     <Compile Include="Mappings\StatisticsMappingProfile.cs" />
-    <Compile Include="Mappings\SubAlgorithmsMappingProfile.cs" />
     <Compile Include="Mappings\UntitledMappingProfile.cs" />
     <Compile Include="Mappings\VerticesMappingProfile.cs" />
     <Compile Include="Layers\NeighborhoodLayer.cs" />
@@ -186,5 +189,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

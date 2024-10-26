@@ -1,7 +1,9 @@
-﻿namespace Pathfinding.ConsoleApp.ViewModel
+﻿using Pathfinding.Service.Interface;
+
+namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal interface IRequireSpreadViewModel
     {
-        (string Name, int Spread) SpreadLevel { get; set; }
+        (string Name, ISpreadLevel Spread) SpreadLevel { get; set; }
     }
 }

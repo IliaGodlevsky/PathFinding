@@ -1,7 +1,7 @@
 ﻿using Pathfinding.ConsoleApp.Model;
-using Pathfinding.Domain.Interface;
+using Pathfinding.Service.Interface.Models.Read;
 
 namespace Pathfinding.ConsoleApp.Messages.ViewModel
 {
-    internal sealed record class GraphActivatedMessage(int GraphId, IGraph<GraphVertexModel> Graph);
+    internal sealed record class GraphActivatedMessage(GraphModel<GraphVertexModel> Graph);
 }

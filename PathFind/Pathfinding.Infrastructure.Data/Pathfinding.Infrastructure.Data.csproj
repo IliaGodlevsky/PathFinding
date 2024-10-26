@@ -100,7 +100,6 @@
     <Compile Include="InMemory\Repositories\InMemoryGraphStateRepository.cs" />
     <Compile Include="InMemory\Repositories\InMemoryRangeRepository.cs" />
     <Compile Include="InMemory\Repositories\InMemoryStatisicsRepository.cs" />
-    <Compile Include="InMemory\Repositories\InMemorySubAlgorithmRepository.cs" />
     <Compile Include="InMemory\InMemoryUnitOfWork.cs" />
     <Compile Include="InMemory\Repositories\InMemoryVerticesRepository.cs" />
     <Compile Include="LiteDb\LiteDbInFileUnitOfWorkFactory.cs" />
@@ -111,7 +110,6 @@
     <Compile Include="LiteDb\Repositories\LiteDbGraphRepository.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbGraphStateRepository.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbStatisticsRepository.cs" />
-    <Compile Include="LiteDb\Repositories\LiteDbSubAlgorithmsRepository.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbVerticesRepository.cs" />
     <Compile Include="Pathfinding\Factories\GraphFactory.cs" />
     <Compile Include="Pathfinding\Factories\MooreNeighborhoodFactory.cs" />
@@ -131,7 +129,6 @@
     <Compile Include="Sqlite\Repositories\SqliteRangeRepository.cs" />
     <Compile Include="Sqlite\Repositories\SqliteRepository.cs" />
     <Compile Include="Sqlite\Repositories\SqliteStatisticsRepository.cs" />
-    <Compile Include="Sqlite\Repositories\SqliteSubAlgorithmsRepository.cs" />
     <Compile Include="Sqlite\SqliteUnitOfWorkFactory.cs" />
     <Compile Include="Sqlite\SqliteUnitOfWork.cs" />
     <Compile Include="Sqlite\Repositories\SqliteVerticesRepository.cs" />

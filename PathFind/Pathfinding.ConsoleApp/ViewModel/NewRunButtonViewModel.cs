@@ -24,7 +24,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnGraphActivated(object recipient, GraphActivatedMessage msg)
         {
-            GraphId = msg.GraphId;
+            GraphId = msg.Graph.Id;
         }
     }
 }

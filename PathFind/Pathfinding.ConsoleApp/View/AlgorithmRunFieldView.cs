@@ -23,11 +23,13 @@ namespace Pathfinding.ConsoleApp.View
         private readonly CompositeDisposable vertexDisposables = new();
         private readonly CompositeDisposable disposables = new();
 
-        private readonly AlgorithmRunFieldViewModel viewModel;
+        private readonly AlgorithmRunFieldViewModel runViewModel;
+        private readonly AlgorithmRunReviewFieldViewModel reviewViewModel;
 
         private int VerticesToVisualizePerTime { get; set; } = IntialSpeed;
 
         public AlgorithmRunFieldView(AlgorithmRunFieldViewModel viewModel,
+            AlgorithmRunReviewFieldViewModel reviewViewModel,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
             Visible = false;
@@ -41,9 +43,14 @@ namespace Pathfinding.ConsoleApp.View
                 BorderStyle = BorderStyle.Rounded,
                 Title = "Run field"
             };
-            this.viewModel = viewModel;
+            this.runViewModel = viewModel;
+            this.reviewViewModel = reviewViewModel;
             viewModel.WhenAnyValue(x => x.GraphState)
-                .Do(RenderGraphState)
+                .Do(x => RenderGraphState(x, viewModel))
+                .Subscribe()
+                .DisposeWith(disposables);
+            reviewViewModel.WhenAnyValue(x => x.GraphState)
+                .Do(x => RenderGraphState(x, reviewViewModel))
                 .Subscribe()
                 .DisposeWith(disposables);
             messenger.Register<OpenAlgorithmRunViewMessage>(this, OnOpen);
@@ -62,7 +69,8 @@ namespace Pathfinding.ConsoleApp.View
             vertexDisposables.Clear();
         }
 
-        private void RenderGraphState(IReadOnlyCollection<RunVertexModel> graphState)
+        private void RenderGraphState(IReadOnlyCollection<RunVertexModel> graphState,
+            AlgorithmRunBaseViewModel viewModel)
         {
             RemoveAll();
             vertexDisposables.Clear();
@@ -73,7 +81,7 @@ namespace Pathfinding.ConsoleApp.View
             {
                 var view = new RunVertexView(vertex);
                 view.Events().MouseClick
-                    .Do(async x => await Visualize())
+                    .Do(async x => await Visualize(viewModel))
                     .Subscribe()
                     .DisposeWith(vertexDisposables);
                 children.Add(view);
@@ -86,7 +94,7 @@ namespace Pathfinding.ConsoleApp.View
             });
         }
 
-        private async Task Visualize()
+        private async Task Visualize(AlgorithmRunBaseViewModel viewModel)
         {
             var command = viewModel.ProcessNextCommand;
             while (viewModel.Remained > 0)

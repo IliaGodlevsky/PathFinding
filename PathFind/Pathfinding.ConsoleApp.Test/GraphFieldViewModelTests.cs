@@ -52,7 +52,7 @@ namespace Pathfinding.ConsoleApp.Test
             bool shouldBeChanged, Times serviceCallsCount)
         {
             var viewModel = new GraphFieldViewModel(messenger, service.Object, new NullLog());
-            messenger.Send(new GraphActivatedMessage(1, graph));
+            messenger.Send(new GraphActivatedMessage(new() { Id = 1, Graph = graph }));
             void IsInRangeRecieved(object recipient, IsVertexInRangeRequest msg)
             {
                 msg.IsInRange = isInRange;
