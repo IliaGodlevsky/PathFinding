@@ -98,7 +98,6 @@
     <Compile Include="Algorithms\Heuristics\WeightedHeuristic.cs" />
     <Compile Include="Algorithms\SnakeAlgorithm.cs" />
     <Compile Include="Algorithms\DepthFirstAlgorithm.cs" />
-    <Compile Include="Algorithms\DepthRandomAlgorithm.cs" />
     <Compile Include="Algorithms\DijkstraAlgorithm.cs" />
     <Compile Include="Algorithms\DistanceFirstAlgorithm.cs" />
     <Compile Include="Algorithms\Events\SubPathFoundEventArgs.cs" />
@@ -120,7 +119,6 @@
     <Compile Include="Algorithms\LeeAlgorithm.cs" />
     <Compile Include="Algorithms\PathfindingAlgorithm.cs" />
     <Compile Include="Algorithms\PathfindingProcess.cs" />
-    <Compile Include="Algorithms\RandomAlgorithm.cs" />
     <Compile Include="Algorithms\StepRules\CardinalStepRule.cs" />
     <Compile Include="Algorithms\StepRules\DefaultStepRule.cs" />
     <Compile Include="Algorithms\StepRules\LandscapeStepRule.cs" />

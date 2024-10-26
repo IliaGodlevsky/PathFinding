@@ -28,7 +28,7 @@ namespace Pathfinding.ConsoleApp.View
             weightLabel.X = 1;
             weightTextField.X = Pos.Right(weightLabel) + 2;
             weightTextField.Y = Pos.Bottom(heuristics) + 1;
-            weightTextField.Width = Dim.Percent(37);
+            weightTextField.Width = Dim.Percent(20);
             var decimalSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
             weightTextField.KeyPress += (args) =>
             {

@@ -48,13 +48,5 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
 
             algorithm.FindPath();
         }
-
-        [Benchmark]
-        public void IDAStarAlgorithmBenchmark()
-        {
-            var algorithm = new IDAStarAlgorithm(range);
-
-            algorithm.FindPath();
-        }
     }
 }

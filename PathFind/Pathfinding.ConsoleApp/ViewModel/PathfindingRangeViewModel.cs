@@ -230,7 +230,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 Transit.CollectionChanged -= OnCollectionChanged;
                 ClearRange();
                 Graph = msg.Graph.Graph;
-                GraphId = msg.Graph.Id ;
+                GraphId = msg.Graph.Id;
                 var range = await Task.Run(() => service.ReadRangeAsync(GraphId))
                     .ConfigureAwait(false);
                 var src = range.FirstOrDefault(x => x.IsSource);

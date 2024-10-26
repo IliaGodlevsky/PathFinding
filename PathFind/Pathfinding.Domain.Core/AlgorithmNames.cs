@@ -11,11 +11,9 @@
         public const string DistanceFirst = "DFS dist";
         public const string Snake = "Snake";
         public const string AStarGreedy = "A* greedy";
-        public const string DepthRandom = "DFS rand";
         public const string IDAStar = "IDA*";
         public const string Lee = "Lee";
         public const string BidirectLee = "Bidirect Lee";
         public const string AStarLee = "A* lee";
-        public const string Random = "Random";
     }
 }

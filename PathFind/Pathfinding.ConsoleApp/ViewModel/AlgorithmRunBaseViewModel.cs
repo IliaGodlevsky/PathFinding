@@ -39,14 +39,14 @@ namespace Pathfinding.ConsoleApp.ViewModel
         }
 
         protected Queue<Action> GetVerticesStates(IEnumerable<SubAlgorithmModel> subAlgorithms,
-            IReadOnlyList<Coordinate> range,
+            IReadOnlyCollection<Coordinate> range,
             IGraph<RunVertexModel> graph)
         {
             var vertices = new Queue<Action>();
             range.Skip(1).Take(range.Count - 2)
                 .ForEach(transit => vertices.Enqueue(() => graph.Get(transit).IsTransit = true));
-            vertices.Enqueue(() => graph.Get(range[0]).IsSource = true);
-            vertices.Enqueue(() => graph.Get(range[range.Count - 1]).IsTarget = true);
+            vertices.Enqueue(() => graph.Get(range.First()).IsSource = true);
+            vertices.Enqueue(() => graph.Get(range.Last()).IsTarget = true);
             foreach (var sub in subAlgorithms)
             {
                 foreach (var (Visited, Enqueued) in sub.Visited)

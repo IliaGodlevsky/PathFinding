@@ -8,6 +8,8 @@ using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Infrastructure.Business.Algorithms.Events;
+using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
+using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
@@ -15,7 +17,6 @@ using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Undefined;
-using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
 using System;
 using System.Collections.Generic;
@@ -26,21 +27,15 @@ namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal sealed class AlgorithmRunReviewFieldViewModel : AlgorithmRunBaseViewModel
     {
-        private readonly IReadOnlyDictionary<string, IHeuristic> heuristics;
-        private readonly IReadOnlyDictionary<string, IStepRule> stepRules;
         private readonly ILog log;
 
         public AlgorithmRunReviewFieldViewModel(
             IGraphAssemble<RunVertexModel> graphAssemble,
-            StepRulesViewModel stepRulesViewModel,
-            HeuristicsViewModel heuristicViewModel,
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ILog log)
             : base(graphAssemble)
         {
             messenger.Register<RunActivatedMessage>(this, async (r, msg) => await OnRunActivated(r, msg));
-            this.heuristics = heuristicViewModel.Heuristics;
-            this.stepRules = stepRulesViewModel.StepRules;
             this.log = log;
         }
 
@@ -48,16 +43,17 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             var subAlgorithms = new List<SubAlgorithmModel>();
             var visitedVertices = new List<(Coordinate Visited, IReadOnlyList<Coordinate> Enqueued)>();
+            var rangeCoordinates = msg.Run.GraphState.Range;
 
             void AddSubAlgorithm(IReadOnlyCollection<Coordinate> path = null)
             {
                 subAlgorithms.Add(new()
                 {
                     Order = subAlgorithms.Count,
-                    Visited = visitedVertices.ToArray(),
+                    Visited = visitedVertices,
                     Path = path ?? Array.Empty<Coordinate>()
                 });
-                visitedVertices.Clear();
+                visitedVertices = new();
             }
             void OnVertexProcessed(object sender, VerticesProcessedEventArgs e)
             {
@@ -69,15 +65,22 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
 
             var graph = await CreateGraph(msg.Run);
-            var range = msg.Run.GraphState.Range.Select(graph.Get).ToArray();
-            var algorithm = GetAlgorithm(msg.Run.Statistics, range);
-
-            algorithm.SubPathFound += OnSubPathFound;
-            algorithm.VertexProcessed += OnVertexProcessed;
+            var range = rangeCoordinates.Select(graph.Get).ToArray();
 
             try
             {
-                algorithm.FindPath();
+                var algorithm = GetAlgorithm(msg.Run.Statistics, range);
+                algorithm.SubPathFound += OnSubPathFound;
+                algorithm.VertexProcessed += OnVertexProcessed;
+                try
+                {
+                    algorithm.FindPath();
+                }
+                finally
+                {
+                    algorithm.SubPathFound -= OnSubPathFound;
+                    algorithm.VertexProcessed -= OnVertexProcessed;
+                }
             }
             catch (NotImplementedException ex)
             {
@@ -88,51 +91,70 @@ namespace Pathfinding.ConsoleApp.ViewModel
             {
                 AddSubAlgorithm();
             }
-            finally
-            {
-                algorithm.SubPathFound -= OnSubPathFound;
-                algorithm.VertexProcessed -= OnVertexProcessed;
-            }
-            Vertices = GetVerticesStates(subAlgorithms, msg.Run.GraphState.Range.ToList(), graph);
+            Vertices = GetVerticesStates(subAlgorithms, rangeCoordinates, graph);
             GraphState = graph;
+        }
+
+        private IHeuristic GetHeuristic(RunStatisticsModel statistics)
+        {
+            switch (statistics.Heuristics)
+            {
+                case HeuristicNames.Euclidian:
+                    return new EuclidianDistance().ToWeighted(statistics.Weight);
+                case HeuristicNames.Chebyshev:
+                    return new ChebyshevDistance().ToWeighted(statistics.Weight);
+                case HeuristicNames.Diagonal:
+                    return new DiagonalDistance().ToWeighted(statistics.Weight);
+                case HeuristicNames.Manhattan:
+                    return new ManhattanDistance().ToWeighted(statistics.Weight);
+                case HeuristicNames.Cosine:
+                    return new CosineDistance().ToWeighted(statistics.Weight);
+                default:
+                    throw new NotImplementedException($"Unknown heuristic: {statistics.Heuristics}");
+            }
+        }
+
+        private IStepRule GetStepRule(RunStatisticsModel statistics)
+        {
+            switch (statistics.StepRule)
+            {
+                case StepRuleNames.Default:
+                    return new DefaultStepRule();
+                case StepRuleNames.Landscape:
+                    return new LandscapeStepRule();
+                default:
+                    throw new NotImplementedException($"Unknown step rule: {statistics.StepRule}");
+            }
         }
 
         private PathfindingProcess GetAlgorithm(RunStatisticsModel statistics, IReadOnlyCollection<RunVertexModel> range)
         {
-            var stepRule = stepRules.GetOrDefault(statistics.StepRule ?? string.Empty);
-            var heuristic = heuristics.GetOrDefault(statistics.Heuristics ?? string.Empty);
-            double? weight = statistics.Weight;
-
             switch (statistics.AlgorithmId)
             {
-                case AlgorithmNames.Dijkstra: 
-                    return new DijkstraAlgorithm(range, stepRule);
+                case AlgorithmNames.Dijkstra:
+                    return new DijkstraAlgorithm(range, GetStepRule(statistics));
                 case AlgorithmNames.BidirectDijkstra: 
-                    return new BidirectDijkstraAlgorithm(range, stepRule);
+                    return new BidirectDijkstraAlgorithm(range, GetStepRule(statistics));
                 case AlgorithmNames.DepthFirst: 
                     return new DepthFirstAlgorithm(range);
                 case AlgorithmNames.AStar: 
-                    return new AStarAlgorithm(range, stepRule, heuristic.ToWeighted(weight));
+                    return new AStarAlgorithm(range, GetStepRule(statistics), GetHeuristic(statistics));
                 case AlgorithmNames.BidirectAStar: 
-                    return new BidirectAStarAlgorithm(range, stepRule, heuristic.ToWeighted(weight));
+                    return new BidirectAStarAlgorithm(range, GetStepRule(statistics), GetHeuristic(statistics));
                 case AlgorithmNames.CostGreedy: 
-                    return new CostGreedyAlgorithm(range, stepRule);
+                    return new CostGreedyAlgorithm(range, GetStepRule(statistics));
                 case AlgorithmNames.DistanceFirst: 
-                    return new DistanceFirstAlgorithm(range, heuristic.ToWeighted(weight));
+                    return new DistanceFirstAlgorithm(range, GetHeuristic(statistics));
                 case AlgorithmNames.Snake: 
-                    return new SnakeAlgorithm(range, heuristic.ToWeighted(weight));
+                    return new SnakeAlgorithm(range, GetHeuristic(statistics));
                 case AlgorithmNames.AStarGreedy: 
-                    return new AStarGreedyAlgorithm(range, heuristic.ToWeighted(weight), stepRule);
-                case AlgorithmNames.DepthRandom: 
-                    return new DepthRandomAlgorithm(range);
+                    return new AStarGreedyAlgorithm(range, GetHeuristic(statistics), GetStepRule(statistics));
                 case AlgorithmNames.Lee: 
                     return new LeeAlgorithm(range);
                 case AlgorithmNames.BidirectLee: 
                     return new BidirectLeeAlgorithm(range);
                 case AlgorithmNames.AStarLee: 
-                    return new AStarLeeAlgorithm(range, heuristic.ToWeighted(weight));
-                case AlgorithmNames.Random:
-                    return new RandomAlgorithm(range);
+                    return new AStarLeeAlgorithm(range, GetHeuristic(statistics));
                 default: 
                     throw new NotImplementedException($"Unknown algorithm name: {statistics.AlgorithmId}");
             }

@@ -77,7 +77,6 @@
     <Compile Include="ViewModel\BidirectLeeAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\CostGreedyAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\DepthFirstAlgorithmViewModel.cs" />
-    <Compile Include="ViewModel\DepthRandomAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\SnakeAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\DistanceFirstAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\AStarGreedyAlgorithmViewModel.cs" />
@@ -87,7 +86,6 @@
     <Compile Include="ViewModel\DeleteRunButtonViewModel.cs" />
     <Compile Include="ViewModel\HeuristicsViewModel.cs" />
     <Compile Include="ViewModel\IRequireSpreadViewModel.cs" />
-    <Compile Include="ViewModel\RandomAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\RunsTableViewModel.cs" />
     <Compile Include="View\AStarLeeAlgorithmView.cs" />
     <Compile Include="View\BidirectAStarAlgorithmView.cs" />
@@ -95,13 +93,11 @@
     <Compile Include="View\CloseAlgorithmCreationButton.cs" />
     <Compile Include="View\ComponentsPartials\HeuristicsView.cs" />
     <Compile Include="View\CostGreedyAlgorithmView.cs" />
-    <Compile Include="View\DepthRandomAlgorithmView.cs" />
     <Compile Include="View\DepthFirstAlgorithmView.cs" />
     <Compile Include="View\BidirectLeeAlgorithmView.cs" />
     <Compile Include="View\SnakeAlgorithmView.cs" />
     <Compile Include="View\DistanceFirstAlgorithmView.cs" />
     <Compile Include="View\AStarGreedyAlgorithmView.cs" />
-    <Compile Include="View\RandomAlgorithmView.cs" />
     <Compile Include="View\ConsoleLog.cs" />
     <Compile Include="Injection\App.cs" />
     <Compile Include="Injection\KeyFilters.cs" />

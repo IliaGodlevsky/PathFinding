@@ -20,7 +20,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private async Task OnRunCreated(object recipient, RunCreatedMessaged msg)
         {
             var graph = await CreateGraph(msg.Model);
-            var range = msg.Model.GraphState.Range.ToList();
+            var range = msg.Model.GraphState.Range;
             Vertices = GetVerticesStates(msg.SubAlgorithms, range, graph);
             GraphState = graph;
         }

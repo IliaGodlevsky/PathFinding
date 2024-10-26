@@ -57,21 +57,6 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<CosineDistance>().As<IHeuristic>()
                 .WithMetadata(MetadataKeys.NameKey, HeuristicNames.Cosine).SingleInstance();
 
-            //builder.RegisterInstance(SpreadLevels.Maximum).As<ISpreadLevel>()
-            //    .WithMetadata(MetadataKeys.NameKey, "Maximum").SingleInstance();
-            //builder.RegisterInstance(SpreadLevels.Highest).As<ISpreadLevel>()
-            //    .WithMetadata(MetadataKeys.NameKey, "Highest").SingleInstance();
-            //builder.RegisterInstance(SpreadLevels.High).As<ISpreadLevel>()
-            //    .WithMetadata(MetadataKeys.NameKey, "High").SingleInstance();
-            //builder.RegisterInstance(SpreadLevels.Medium).As<ISpreadLevel>()
-            //    .WithMetadata(MetadataKeys.NameKey, "Medium").SingleInstance();
-            //builder.RegisterInstance(SpreadLevels.Low).As<ISpreadLevel>()
-            //    .WithMetadata(MetadataKeys.NameKey, "Low").SingleInstance();
-            //builder.RegisterInstance(SpreadLevels.Lowest).As<ISpreadLevel>()
-            //    .WithMetadata(MetadataKeys.NameKey, "Lowest").SingleInstance();
-            //builder.RegisterInstance(SpreadLevels.Minimal).As<ISpreadLevel>()
-            //    .WithMetadata(MetadataKeys.NameKey, "Minimal").SingleInstance();
-
             builder.RegisterInstance("No").Keyed<string>(KeyFilters.SmoothLevels)
                 .WithMetadata(MetadataKeys.SmoothKey, 0).SingleInstance();
             builder.RegisterInstance("Low").Keyed<string>(KeyFilters.SmoothLevels)
@@ -152,8 +137,6 @@ namespace Pathfinding.ConsoleApp.Injection
                 .UsingConstructor(typeof(IEnumerable<Meta<IHeuristic>>));
             builder.RegisterType<StepRulesViewModel>().AsSelf().SingleInstance()
                 .UsingConstructor(typeof(IEnumerable<Meta<IStepRule>>));
-            //builder.RegisterType<SpreadViewModel>().AsSelf().SingleInstance()
-            //    .UsingConstructor(typeof(IEnumerable<Meta<ISpreadLevel>>)).WithAttributeFiltering();
             builder.RegisterType<SmoothLevelViewModel>().AsSelf().SingleInstance()
                 .UsingConstructor(typeof(IEnumerable<Meta<string>>)).WithAttributeFiltering();
             builder.RegisterType<NeighborhoodFactoriesViewModel>().AsSelf().SingleInstance()
@@ -195,14 +178,11 @@ namespace Pathfinding.ConsoleApp.Injection
 
             builder.RegisterType<DijkstraAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<AStarAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
-            //builder.RegisterType<IDAStarAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
-            builder.RegisterType<RandomAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<LeeAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<AStarLeeAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<CostGreedyAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<DistanceFirstAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<AStarGreedyAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
-            builder.RegisterType<DepthRandomAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<SnakeAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<DepthFirstAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
             builder.RegisterType<BidirectDijkstraAlgorithmView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmsListView).WithAttributeFiltering();
@@ -211,7 +191,6 @@ namespace Pathfinding.ConsoleApp.Injection
 
             builder.RegisterType<StepRulesView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmParametresView).WithAttributeFiltering();
             builder.RegisterType<HeuristicsView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmParametresView).WithAttributeFiltering();
-            //builder.RegisterType<SpreadView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmParametresView).WithAttributeFiltering();
 
             builder.RegisterType<PathfindingProcessView>().Keyed<Terminal.Gui.View>(KeyFilters.CreateRunButtonsFrame).WithAttributeFiltering();
             builder.RegisterType<CloseAlgorithmCreationButton>().Keyed<Terminal.Gui.View>(KeyFilters.CreateRunButtonsFrame).WithAttributeFiltering();
