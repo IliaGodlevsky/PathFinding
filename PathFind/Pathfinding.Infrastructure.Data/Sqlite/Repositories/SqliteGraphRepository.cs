@@ -17,8 +17,7 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
                 Name TEXT NOT NULL,
                 Neighborhood TEXT NOT NULL,
                 SmoothLevel TEXT NOT NULL,
-                Dimensions TEXT NOT NULL,
-                ObstaclesCount INTEGER NOT NULL
+                Dimensions TEXT NOT NULL
             );";
 
         public SqliteGraphRepository(SqliteConnection connection, 
@@ -30,8 +29,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
         public async Task<Graph> CreateAsync(Graph graph, CancellationToken token = default)
         {
             const string query = @$"
-                INSERT INTO {DbTables.Graphs} (Name, Neighborhood, SmoothLevel, Dimensions, ObstaclesCount)
-                VALUES (@Name, @Neighborhood, @SmoothLevel, @Dimensions, @ObstaclesCount);
+                INSERT INTO {DbTables.Graphs} (Name, Neighborhood, SmoothLevel, Dimensions)
+                VALUES (@Name, @Neighborhood, @SmoothLevel, @Dimensions);
                 SELECT last_insert_rowid();";
 
             var id = await connection.ExecuteScalarAsync<int>(
@@ -81,14 +80,27 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
                 SET Name = @Name,
                     Neighborhood = @Neighborhood,
                     SmoothLevel = @SmoothLevel,
-                    Dimensions = @Dimensions,
-                    ObstaclesCount = @ObstaclesCount
+                    Dimensions = @Dimensions
                 WHERE Id = @Id";
 
             var affectedRows = await connection.ExecuteAsync(
                 new CommandDefinition(query, graph, transaction, cancellationToken: token));
 
             return affectedRows > 0;
+        }
+
+        public async Task<IReadOnlyDictionary<int, int>> ReadObstaclesCountAsync(IEnumerable<int> graphIds, CancellationToken token = default)
+        {
+            const string query = $@"
+                SELECT GraphId, COUNT(*) AS ObstacleCount 
+                FROM {DbTables.Vertices}
+                WHERE GraphId IN @GraphIds AND IsObstacle = 1
+                GROUP BY GraphId";
+
+            var result = await connection.QueryAsync<(int GraphId, int ObstacleCount)>(
+                new CommandDefinition(query, new { GraphIds = graphIds.ToArray() }, transaction, cancellationToken: token));
+
+            return result.ToDictionary(x => x.GraphId, x => x.ObstacleCount);
         }
     }
 }

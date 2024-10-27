@@ -75,9 +75,11 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
                 parent = backwardTraces.GetOrNullVertex(vertex.Position);
             }
             backward.Add(vertex);
-            backward.Reverse();
-            backward.AddRange(vertices);
-            return backward.ToReadOnly();
+            var result = backward
+                .Reverse()
+                .Concat(vertices)
+                .ToReadOnly();
+            return result;
         }
 
         private double GetCost()

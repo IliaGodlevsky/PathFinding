@@ -38,10 +38,14 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations.TestDb.Repos
                 Id = graphId,
                 Name = "TEST",
                 SmoothLevel = "TEST",
-                Neighborhood = "TEST",
-                ObstaclesCount = 1
+                Neighborhood = "TEST"
             };
             return await Task.FromResult(result);
+        }
+
+        public async Task<IReadOnlyDictionary<int, int>> ReadObstaclesCountAsync(IEnumerable<int> graphIds, CancellationToken token = default)
+        {
+            return await Task.FromResult(graphIds.ToDictionary(x => x, x => 1));
         }
 
         public async Task<bool> UpdateAsync(Graph graph,

@@ -56,7 +56,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         protected override PathfindingProcess GetAlgorithm(IEnumerable<GraphVertexModel> pathfindingRange)
         {
             return new BidirectAStarAlgorithm(pathfindingRange,
-                stepRule.Rule, heuristic.Heuristic.ToWeighted(Weight));
+                stepRule.Rule, heuristic.Heuristic.WithWeight(Weight));
         }
     }
 }

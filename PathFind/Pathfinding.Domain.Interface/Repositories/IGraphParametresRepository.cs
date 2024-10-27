@@ -7,6 +7,9 @@ namespace Pathfinding.Domain.Interface.Repositories
 {
     public interface IGraphParametresRepository
     {
+        Task<IReadOnlyDictionary<int, int>> ReadObstaclesCountAsync(IEnumerable<int> graphIds,
+            CancellationToken token = default);
+
         Task<Graph> ReadAsync(int graphId, CancellationToken token = default);
 
         Task<Graph> CreateAsync(Graph graph, CancellationToken token = default);

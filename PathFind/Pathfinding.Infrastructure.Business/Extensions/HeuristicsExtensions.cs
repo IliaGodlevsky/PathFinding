@@ -5,7 +5,7 @@ namespace Pathfinding.Infrastructure.Business.Extensions
 {
     public static class HeuristicsExtensions
     {
-        public static WeightedHeuristic ToWeighted(this IHeuristic heuristic, double? weight)
+        public static IHeuristic WithWeight(this IHeuristic heuristic, double? weight)
         {
             if (weight == null)
             {

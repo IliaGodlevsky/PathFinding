@@ -31,8 +31,7 @@ namespace Pathfinding.Infrastructure.Business.Mappings
                 .ForMember(x => x.Vertices, opt => opt.MapFrom(x => x.ToArray()));
             CreateMap<GraphSerializationModel, CreateGraphRequest<T>>().ConstructUsing(Construct);
             CreateMap<CreateGraphRequest<T>, Graph>()
-                .ForMember(x => x.Dimensions, opt => opt.MapFrom(x => JsonConvert.SerializeObject(x.Graph.DimensionsSizes)))
-                .ForMember(x => x.ObstaclesCount, opt => opt.MapFrom(x => x.Graph.GetObstaclesCount()));
+                .ForMember(x => x.Dimensions, opt => opt.MapFrom(x => JsonConvert.SerializeObject(x.Graph.DimensionsSizes)));
             CreateMap<CreateGraphRequest<T>, GraphModel<T>>();
             CreateMap<GraphModel<T>, CreateGraphRequest<T>>();
             CreateMap<GraphModel<T>, GraphSerializationModel>()

@@ -49,7 +49,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         protected override PathfindingProcess GetAlgorithm(IEnumerable<GraphVertexModel> pathfindingRange)
         {
             return new DistanceFirstAlgorithm(pathfindingRange,
-                heuristic.Heuristic.ToWeighted(Weight));
+                heuristic.Heuristic.WithWeight(Weight));
         }
     }
 }

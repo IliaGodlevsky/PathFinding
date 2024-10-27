@@ -74,9 +74,6 @@ namespace Pathfinding.ConsoleApp.Test
                 service.Verify(x => x.UpdateVerticesAsync(
                     It.IsAny<UpdateVerticesRequest<GraphVertexModel>>(),
                     It.IsAny<CancellationToken>()), serviceCallsCount);
-                service.Verify(x => x.UpdateObstaclesCountAsync(
-                    It.IsAny<UpdateGraphInfoRequest>(),
-                    It.IsAny<CancellationToken>()), serviceCallsCount);
                 Assert.That(isObstaclesChanged == shouldBeChanged);
                 Assert.That(vertex.IsObstacle == shouldBeChanged);
             });

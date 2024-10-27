@@ -29,9 +29,6 @@ namespace Pathfinding.Service.Interface
         Task<IReadOnlyCollection<PathfindingRangeModel>> ReadRangeAsync(int graphId,
             CancellationToken token = default);
 
-        Task<bool> UpdateObstaclesCountAsync(UpdateGraphInfoRequest request,
-            CancellationToken token = default);
-
         Task<IReadOnlyCollection<PathfindingHistoryModel<T>>> CreatePathfindingHistoriesAsync(IEnumerable<CreatePathfindingHistoryRequest<T>> request,
             CancellationToken token = default);
 

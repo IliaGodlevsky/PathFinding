@@ -50,7 +50,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         protected override PathfindingProcess GetAlgorithm(IEnumerable<GraphVertexModel> pathfindingRange)
         {
             return new AStarLeeAlgorithm(pathfindingRange,
-                heuristic.Heuristic.ToWeighted(Weight));
+                heuristic.Heuristic.WithWeight(Weight));
         }
     }
 }

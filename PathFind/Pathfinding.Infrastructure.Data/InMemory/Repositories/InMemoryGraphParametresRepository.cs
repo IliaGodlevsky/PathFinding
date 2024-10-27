@@ -1,5 +1,7 @@
 ﻿using Pathfinding.Domain.Core;
+using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Repositories;
+using Pathfinding.Infrastructure.Data.Pathfinding;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -82,6 +84,12 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
                 return await Task.FromResult(true);
             }
             return false;
+        }
+
+        public Task<IReadOnlyDictionary<int, int>> ReadObstaclesCountAsync(IEnumerable<int> graphIds,
+            CancellationToken token = default)
+        {
+            throw new KeyNotFoundException();
         }
     }
 }

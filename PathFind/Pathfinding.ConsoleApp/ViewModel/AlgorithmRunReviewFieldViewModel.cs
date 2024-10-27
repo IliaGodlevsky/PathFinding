@@ -99,11 +99,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             switch (statistics.Heuristics)
             {
-                case HeuristicNames.Euclidian: return new EuclidianDistance().ToWeighted(statistics.Weight);
-                case HeuristicNames.Chebyshev: return new ChebyshevDistance().ToWeighted(statistics.Weight);
-                case HeuristicNames.Diagonal: return new DiagonalDistance().ToWeighted(statistics.Weight);
-                case HeuristicNames.Manhattan: return new ManhattanDistance().ToWeighted(statistics.Weight);
-                case HeuristicNames.Cosine: return new CosineDistance().ToWeighted(statistics.Weight);
+                case HeuristicNames.Euclidian: return new EuclidianDistance().WithWeight(statistics.Weight);
+                case HeuristicNames.Chebyshev: return new ChebyshevDistance().WithWeight(statistics.Weight);
+                case HeuristicNames.Diagonal: return new DiagonalDistance().WithWeight(statistics.Weight);
+                case HeuristicNames.Manhattan: return new ManhattanDistance().WithWeight(statistics.Weight);
+                case HeuristicNames.Cosine: return new CosineDistance().WithWeight(statistics.Weight);
                 default: throw new NotImplementedException($"Unknown heuristic: {statistics.Heuristics}");
             }
         }

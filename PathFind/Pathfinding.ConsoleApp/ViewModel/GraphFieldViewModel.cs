@@ -71,11 +71,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     vertex.Enumerate().ToList());
                 await ExecuteSafe(async () =>
                 {
-                    await service.UpdateVerticesAsync(request);
-                    var obstacles = Graph.GetObstaclesCount();
-                    var graphRequest = new UpdateGraphInfoRequest(graphId, obstacles);
-                    await Task.Run(() => service.UpdateObstaclesCountAsync(graphRequest))
-                        .ConfigureAwait(false);
+                    await Task.Run(()=> service.UpdateVerticesAsync(request)).ConfigureAwait(false);
                 }, logger.Error);
             }
         }

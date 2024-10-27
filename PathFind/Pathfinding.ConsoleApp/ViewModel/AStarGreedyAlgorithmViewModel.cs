@@ -57,7 +57,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         protected override PathfindingProcess GetAlgorithm(IEnumerable<GraphVertexModel> pathfindingRange)
         {
             return new AStarGreedyAlgorithm(pathfindingRange,
-                heuristic.Heuristic.ToWeighted(Weight), stepRule.StepRule);
+                heuristic.Heuristic.WithWeight(Weight), stepRule.StepRule);
         }
     }
 }

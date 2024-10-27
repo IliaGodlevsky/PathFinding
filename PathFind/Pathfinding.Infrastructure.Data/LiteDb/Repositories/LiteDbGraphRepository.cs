@@ -63,6 +63,11 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             return await Task.FromResult(collection.Count());
         }
 
+        public Task<IReadOnlyDictionary<int, int>> ReadObstaclesCountAsync(IEnumerable<int> graphIds, CancellationToken token = default)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public async Task<bool> UpdateAsync(Graph graph, CancellationToken token = default)
         {
             return await Task.FromResult(collection.Update(graph));

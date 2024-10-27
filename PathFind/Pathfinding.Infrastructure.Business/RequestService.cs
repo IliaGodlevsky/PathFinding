@@ -110,7 +110,11 @@ namespace Pathfinding.Infrastructure.Business
             return await Transaction(async (unitOfWork, t) =>
             {
                 var result = (await unitOfWork.GraphRepository.GetAll(t)).ToList();
-                return mapper.Map<GraphInformationModel[]>(result).ToReadOnly();
+                var ids = result.Select(x => x.Id).ToList();
+                var obstaclesCount = await unitOfWork.GraphRepository.ReadObstaclesCountAsync(ids, token);
+                var infos = mapper.Map<GraphInformationModel[]>(result).ToReadOnly();
+                infos.ForEach(x => x.ObstaclesCount = obstaclesCount[x.Id]);
+                return infos;
             }, token).ConfigureAwait(false);
         }
 
@@ -217,16 +221,16 @@ namespace Pathfinding.Infrastructure.Business
             return mapper.Map<List<PathfindingHistorySerializationModel>>(result);
         }
 
-        public async Task<bool> UpdateObstaclesCountAsync(UpdateGraphInfoRequest request,
-            CancellationToken token = default)
-        {
-            return await Transaction(async (unitOfWork, t) =>
-            {
-                var entity = await unitOfWork.GraphRepository.ReadAsync(request.Id, t);
-                entity.ObstaclesCount = request.ObstaclesCount;
-                return await unitOfWork.GraphRepository.UpdateAsync(entity, t);
-            }, token).ConfigureAwait(false);
-        }
+        //public async Task<bool> UpdateObstaclesCountAsync(UpdateGraphInfoRequest request,
+        //    CancellationToken token = default)
+        //{
+        //    return await Transaction(async (unitOfWork, t) =>
+        //    {
+        //        var entity = await unitOfWork.GraphRepository.ReadAsync(request.Id, t);
+        //        entity.ObstaclesCount = request.ObstaclesCount;
+        //        return await unitOfWork.GraphRepository.UpdateAsync(entity, t);
+        //    }, token).ConfigureAwait(false);
+        //}
 
         public async Task<bool> UpdateVerticesAsync(UpdateVerticesRequest<T> request,
             CancellationToken token = default)
