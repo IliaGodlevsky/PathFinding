@@ -113,7 +113,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 Status = model.ResultStatus,
                 StepRule = model.StepRule,
                 Heuristics = model.Heuristics,
-                Weight = model.Weight.ToString(),
+                Weight = model.Weight?.ToString(),
                 Elapsed = model.Elapsed,
                 Visited = model.Visited
             };

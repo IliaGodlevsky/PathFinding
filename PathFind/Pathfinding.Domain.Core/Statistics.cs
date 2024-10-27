@@ -10,7 +10,7 @@ namespace Pathfinding.Domain.Core
 
         public string Heuristics { get; set; } = null;
 
-        public double? Weight { get; set; }
+        public double? Weight { get; set; } = null;
 
         public string StepRule { get; set; } = null;
 

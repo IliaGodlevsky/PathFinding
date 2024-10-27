@@ -66,7 +66,7 @@ namespace Pathfinding.ConsoleApp.View
         {
             table.Rows.Add(model.RunId, model.Name, model.Visited,
                 model.Steps, model.Cost, model.Elapsed, model.StepRule,
-                model.Heuristics, model.Weight.ToString(), model.Status);
+                model.Heuristics, model.Weight, model.Status);
             table.AcceptChanges();
             SetNeedsDisplay();
             Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);

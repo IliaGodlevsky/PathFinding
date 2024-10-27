@@ -99,18 +99,12 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             switch (statistics.Heuristics)
             {
-                case HeuristicNames.Euclidian:
-                    return new EuclidianDistance().ToWeighted(statistics.Weight);
-                case HeuristicNames.Chebyshev:
-                    return new ChebyshevDistance().ToWeighted(statistics.Weight);
-                case HeuristicNames.Diagonal:
-                    return new DiagonalDistance().ToWeighted(statistics.Weight);
-                case HeuristicNames.Manhattan:
-                    return new ManhattanDistance().ToWeighted(statistics.Weight);
-                case HeuristicNames.Cosine:
-                    return new CosineDistance().ToWeighted(statistics.Weight);
-                default:
-                    throw new NotImplementedException($"Unknown heuristic: {statistics.Heuristics}");
+                case HeuristicNames.Euclidian: return new EuclidianDistance().ToWeighted(statistics.Weight);
+                case HeuristicNames.Chebyshev: return new ChebyshevDistance().ToWeighted(statistics.Weight);
+                case HeuristicNames.Diagonal: return new DiagonalDistance().ToWeighted(statistics.Weight);
+                case HeuristicNames.Manhattan: return new ManhattanDistance().ToWeighted(statistics.Weight);
+                case HeuristicNames.Cosine: return new CosineDistance().ToWeighted(statistics.Weight);
+                default: throw new NotImplementedException($"Unknown heuristic: {statistics.Heuristics}");
             }
         }
 
@@ -118,12 +112,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             switch (statistics.StepRule)
             {
-                case StepRuleNames.Default:
-                    return new DefaultStepRule();
-                case StepRuleNames.Landscape:
-                    return new LandscapeStepRule();
-                default:
-                    throw new NotImplementedException($"Unknown step rule: {statistics.StepRule}");
+                case StepRuleNames.Default: return new DefaultStepRule();
+                case StepRuleNames.Landscape: return new LandscapeStepRule();
+                default: throw new NotImplementedException($"Unknown step rule: {statistics.StepRule}");
             }
         }
 
@@ -131,32 +122,19 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             switch (statistics.AlgorithmId)
             {
-                case AlgorithmNames.Dijkstra:
-                    return new DijkstraAlgorithm(range, GetStepRule(statistics));
-                case AlgorithmNames.BidirectDijkstra: 
-                    return new BidirectDijkstraAlgorithm(range, GetStepRule(statistics));
-                case AlgorithmNames.DepthFirst: 
-                    return new DepthFirstAlgorithm(range);
-                case AlgorithmNames.AStar: 
-                    return new AStarAlgorithm(range, GetStepRule(statistics), GetHeuristic(statistics));
-                case AlgorithmNames.BidirectAStar: 
-                    return new BidirectAStarAlgorithm(range, GetStepRule(statistics), GetHeuristic(statistics));
-                case AlgorithmNames.CostGreedy: 
-                    return new CostGreedyAlgorithm(range, GetStepRule(statistics));
-                case AlgorithmNames.DistanceFirst: 
-                    return new DistanceFirstAlgorithm(range, GetHeuristic(statistics));
-                case AlgorithmNames.Snake: 
-                    return new SnakeAlgorithm(range, GetHeuristic(statistics));
-                case AlgorithmNames.AStarGreedy: 
-                    return new AStarGreedyAlgorithm(range, GetHeuristic(statistics), GetStepRule(statistics));
-                case AlgorithmNames.Lee: 
-                    return new LeeAlgorithm(range);
-                case AlgorithmNames.BidirectLee: 
-                    return new BidirectLeeAlgorithm(range);
-                case AlgorithmNames.AStarLee: 
-                    return new AStarLeeAlgorithm(range, GetHeuristic(statistics));
-                default: 
-                    throw new NotImplementedException($"Unknown algorithm name: {statistics.AlgorithmId}");
+                case AlgorithmNames.Dijkstra: return new DijkstraAlgorithm(range, GetStepRule(statistics));
+                case AlgorithmNames.BidirectDijkstra: return new BidirectDijkstraAlgorithm(range, GetStepRule(statistics));
+                case AlgorithmNames.DepthFirst: return new DepthFirstAlgorithm(range);
+                case AlgorithmNames.AStar: return new AStarAlgorithm(range, GetStepRule(statistics), GetHeuristic(statistics));
+                case AlgorithmNames.BidirectAStar: return new BidirectAStarAlgorithm(range, GetStepRule(statistics), GetHeuristic(statistics));
+                case AlgorithmNames.CostGreedy: return new CostGreedyAlgorithm(range, GetStepRule(statistics));
+                case AlgorithmNames.DistanceFirst: return new DistanceFirstAlgorithm(range, GetHeuristic(statistics));
+                case AlgorithmNames.Snake: return new SnakeAlgorithm(range);
+                case AlgorithmNames.AStarGreedy: return new AStarGreedyAlgorithm(range, GetHeuristic(statistics), GetStepRule(statistics));
+                case AlgorithmNames.Lee: return new LeeAlgorithm(range);
+                case AlgorithmNames.BidirectLee: return new BidirectLeeAlgorithm(range);
+                case AlgorithmNames.AStarLee: return new AStarLeeAlgorithm(range, GetHeuristic(statistics));
+                default: throw new NotImplementedException($"Unknown algorithm name: {statistics.AlgorithmId}");
             }
         }
 
