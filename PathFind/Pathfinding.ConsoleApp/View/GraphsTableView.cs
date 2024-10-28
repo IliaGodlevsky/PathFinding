@@ -21,7 +21,7 @@ namespace Pathfinding.ConsoleApp.View
     {
         private readonly GraphTableViewModel viewModel;
         private readonly CompositeDisposable disposables = new();
-        private readonly Dictionary<int, IDisposable> modelChangingSubs = new();
+        private readonly Dictionary<int, CompositeDisposable> modelChangingSubs = new();
         private readonly IMessenger messenger;
 
         public GraphsTableView(GraphTableViewModel viewModel,
@@ -68,7 +68,8 @@ namespace Pathfinding.ConsoleApp.View
                 SmoothLevel = (string)table.Rows[selectedRow][SmoothCol],
                 Neighborhood = (string)table.Rows[selectedRow][NeighborsCol],
                 Id = (int)table.Rows[selectedRow][IdCol],
-                Obstacles = (int)table.Rows[selectedRow][ObstaclesCol]
+                Obstacles = (int)table.Rows[selectedRow][ObstaclesCol],
+                Status = (string)table.Rows[selectedRow][Status]
             };
         }
 
@@ -76,13 +77,19 @@ namespace Pathfinding.ConsoleApp.View
         {
             table.Rows.Add(model.Id, model.Name,
                 model.Width, model.Length, model.Neighborhood,
-                model.SmoothLevel, model.Obstacles);
+                model.SmoothLevel, model.Obstacles, model.Status);
             table.AcceptChanges();
             SetNeedsDisplay();
             var sub = model.WhenAnyValue(c => c.Obstacles)
                 .Do(x => UpdateGraphInTable(model.Id, x))
                 .Subscribe();
-            modelChangingSubs.Add(model.Id, sub);
+            var statusSub = model.WhenAnyValue(c => c.Status)
+                .Do(x => UpdateGraphStatus(model.Id, x))
+                .Subscribe();
+            var composite = new CompositeDisposable();
+            composite.Add(sub);
+            composite.Add(statusSub);
+            modelChangingSubs.Add(model.Id, composite);
             Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
         }
 
@@ -91,6 +98,15 @@ namespace Pathfinding.ConsoleApp.View
             var row = table.Rows.Find(id);
             row[ObstaclesCol] = obstacles;
             table.AcceptChanges();
+            SetNeedsDisplay();
+        }
+
+        private void UpdateGraphStatus(int id, string status)
+        {
+            var row = table.Rows.Find(id);
+            row[Status] = status;
+            table.AcceptChanges();
+            SetNeedsDisplay();
         }
 
         private void RemoveFromTable(GraphInfoModel model)

@@ -4,7 +4,6 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
@@ -31,6 +30,13 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref graphId, value);
         }
 
+        private bool isReadOnly;
+        public bool IsReadOnly
+        {
+            get => isReadOnly;
+            set => this.RaiseAndSetIfChanged(ref isReadOnly, value);
+        }
+
         private IGraph<GraphVertexModel> graph;
         public IGraph<GraphVertexModel> Graph
         {
@@ -52,8 +58,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.logger = logger;
             messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
-            var canExecute = this.WhenAnyValue(x => x.GraphId, x => x.Graph,
-                (id, graph) => id > 0 && graph != null);
+            messenger.Register<GraphBecameReadOnlyMessage>(this, OnGraphBecameReadonly);
+            var canExecute = this.WhenAnyValue(x => x.GraphId, x => x.Graph, x=>x.IsReadOnly,
+                (id, graph, isRead) => id > 0 && graph != null && !isRead);
             ReverseVertexCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(ReverseVertex, canExecute);
             IncreaseVertexCostCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(IncreaseVertexCost, canExecute);
             DecreaseVertexCostCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(DecreaseVertexCost, canExecute);
@@ -102,6 +109,12 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             Graph = msg.Graph.Graph;
             GraphId = msg.Graph.Id;
+            IsReadOnly = msg.Graph.IsReadOnly;
+        }
+
+        private void OnGraphBecameReadonly(object recipient, GraphBecameReadOnlyMessage msg)
+        {
+            IsReadOnly = msg.Became;
         }
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
@@ -110,6 +123,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             {
                 GraphId = 0;
                 Graph = Graph<GraphVertexModel>.Empty;
+                IsReadOnly = false;
             }
         }
     }

@@ -8,8 +8,6 @@ namespace Pathfinding.Service.Interface.Requests.Create
     {
         public CreateAlgorithmRunRequest Run { get; set; }
 
-        public CreateGraphStateRequest GraphState { get; set; }
-
         public RunStatisticsModel Statistics { get; set; }
     }
 }

@@ -24,7 +24,6 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations
                     coordinateCostPairSerializer),
                 new StatisticsMappingProfile(),
                 new HistoryMappingProfile<TestVertex>(),
-                new GraphStateMappingProfile(),
                 new VerticesMappingProfile<TestVertex>(new TestVertexFactory()),
                 new GraphMappingProfile<TestVertex>(new GraphFactory<TestVertex>()),
                 new AlgorithmRunMappingProfile()

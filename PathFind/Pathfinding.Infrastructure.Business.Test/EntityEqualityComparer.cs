@@ -20,8 +20,7 @@ namespace Pathfinding.Infrastructure.Business.Test
         public static bool AreEqual(CreateAlgorithmRunHistoryRequest request,
             AlgorithmRunHistoryModel model)
         {
-            return AreEqual(request.GraphState, model.GraphState)
-                && request.Run.AlgorithmId == model.Run.AlgorithmId
+            return request.Run.AlgorithmId == model.Run.AlgorithmId
                 && request.Run.GraphId == model.Run.GraphId
                 && AreEqual(request.Statistics, model.Statistics);
         }
@@ -44,14 +43,6 @@ namespace Pathfinding.Infrastructure.Business.Test
             return AreEqual(request.Graph, model.Graph)
                 && request.Algorithms.Juxtapose(model.Algorithms, AreEqual)
                 && request.Range.SequenceEqual(model.Range);
-        }
-
-        public static bool AreEqual(CreateGraphStateRequest request, GraphStateModel model)
-        {
-            return request.Obstacles.SequenceEqual(model.Obstacles)
-                && request.Regulars.SequenceEqual(model.Regulars)
-                && request.Range.SequenceEqual(model.Range)
-                && request.Costs.SequenceEqual(model.Costs);
         }
     }
 }

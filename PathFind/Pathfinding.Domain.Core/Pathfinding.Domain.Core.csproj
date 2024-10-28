@@ -45,7 +45,6 @@
     <Compile Include="AlgorithmNames.cs" />
     <Compile Include="AlgorithmRun.cs" />
     <Compile Include="Graph.cs" />
-    <Compile Include="GraphState.cs" />
     <Compile Include="HeuristicNames.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="NeighborhoodNames.cs" />

@@ -13,6 +13,7 @@ namespace Pathfinding.ConsoleApp.View
         private const string NeighborsCol = "Neighbors";
         private const string SmoothCol = "Smooth";
         private const string ObstaclesCol = "Obstacles";
+        private const string Status = "Status";
 
         private readonly DataTable table = new DataTable();
 
@@ -26,18 +27,20 @@ namespace Pathfinding.ConsoleApp.View
                 new DataColumn(LengthCol, typeof(int)),
                 new DataColumn(NeighborsCol, typeof(string)),
                 new DataColumn(SmoothCol, typeof(string)),
-                new DataColumn(ObstaclesCol, typeof(int))
+                new DataColumn(ObstaclesCol, typeof(int)),
+                new DataColumn(Status, typeof(string)),
             });
             table.PrimaryKey = new DataColumn[] { table.Columns[IdCol] };
             var columnStyles = new Dictionary<DataColumn, ColumnStyle>()
             {
                 { table.Columns[IdCol], new() { Visible = false } },
-                { table.Columns[NameCol], new() { MinWidth = 31, MaxWidth = 31, Alignment = TextAlignment.Left } },
+                { table.Columns[NameCol], new() { MinWidth = 24, MaxWidth = 24, Alignment = TextAlignment.Left } },
                 { table.Columns[WidthCol], new() { Alignment = TextAlignment.Centered } },
                 { table.Columns[LengthCol], new() { Alignment = TextAlignment.Centered } },
                 { table.Columns[NeighborsCol], new() { Alignment = TextAlignment.Left } },
                 { table.Columns[SmoothCol], new() { Alignment = TextAlignment.Left } },
-                { table.Columns[ObstaclesCol], new() { Alignment = TextAlignment.Centered } }
+                { table.Columns[ObstaclesCol], new() { Alignment = TextAlignment.Centered } },
+                { table.Columns[Status], new () { Alignment = TextAlignment.Centered } },
             };
             Style = new TableStyle()
             {

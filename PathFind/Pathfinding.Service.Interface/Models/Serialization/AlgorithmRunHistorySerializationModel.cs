@@ -10,20 +10,16 @@ namespace Pathfinding.Service.Interface.Models.Serialization
 
         public RunStatisticsSerializationModel Statistics { get; set; }
 
-        public GraphStateSerializationModel GraphState { get; set; }
-
         public void Deserialize(BinaryReader reader)
         {
             Run = reader.ReadSerializable<AlgorithmRunSerializationModel>();
             Statistics = reader.ReadSerializable<RunStatisticsSerializationModel>();
-            GraphState = reader.ReadSerializable<GraphStateSerializationModel>();
         }
 
         public void Serialize(BinaryWriter writer)
         {
             writer.Write(Run);
             writer.Write(Statistics);
-            writer.Write(GraphState);
         }
     }
 }

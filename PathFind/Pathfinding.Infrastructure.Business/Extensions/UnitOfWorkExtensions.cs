@@ -26,16 +26,12 @@ namespace Pathfinding.Infrastructure.Business.Extensions
             {
                 var runEntity = mapper.Map<AlgorithmRun>(runHistory.Run);
                 await unitOfWork.RunRepository.CreateAsync(runEntity, token);
-                var graphState = mapper.Map<GraphState>(runHistory.GraphState);
                 var runStatistics = mapper.Map<Statistics>(runHistory.Statistics);
                 runStatistics.AlgorithmRunId = runEntity.Id;
-                graphState.AlgorithmRunId = runEntity.Id;
-                var state = await unitOfWork.GraphStateRepository.CreateAsync(graphState, token);
                 var stats = await unitOfWork.StatisticsRepository.CreateAsync(runStatistics, token);
                 var info = await unitOfWork.GraphRepository.ReadAsync(runHistory.Run.GraphId, token);
                 return new AlgorithmRunHistoryModel()
                 {
-                    GraphState = mapper.Map<GraphStateModel>(state),
                     Run = mapper.Map<AlgorithmRunModel>(runEntity),
                     GraphInfo = mapper.Map<GraphInformationModel>(info),
                     Statistics = mapper.Map<RunStatisticsModel>(stats) with { AlgorithmId = runHistory.Statistics.AlgorithmId }
@@ -55,13 +51,11 @@ namespace Pathfinding.Infrastructure.Business.Extensions
             var mappedInfo = mapper.Map<GraphInformationModel>(info);
             foreach (var model in readModels)
             {
-                var graphState = await unitofWork.GraphStateRepository.ReadByRunIdAsync(model.Id, token);
                 var runStatistics = await unitofWork.StatisticsRepository.ReadByAlgorithmRunIdAsync(model.Id, token);
                 runHistories.Add(new AlgorithmRunHistoryModel()
                 {
                     GraphInfo = mappedInfo,
                     Run = model,
-                    GraphState = mapper.Map<GraphStateModel>(graphState),
                     Statistics = mapper.Map<RunStatisticsModel>(runStatistics)
                 });
             }
@@ -86,6 +80,7 @@ namespace Pathfinding.Infrastructure.Business.Extensions
                 Dimensions = informationDto.Dimensions,
                 Vertices = vertices
             };
+            var runs = await unitOfWork.RunRepository.ReadByGraphIdAsync(graphId, token);
             var result = mapper.Map<IGraph<T>>(assembleDto);
             return new GraphModel<T>()
             {
@@ -93,7 +88,8 @@ namespace Pathfinding.Infrastructure.Business.Extensions
                 Id = graphEntity.Id,
                 Name = graphEntity.Name,
                 Neighborhood = graphEntity.Neighborhood,
-                SmoothLevel = graphEntity.SmoothLevel
+                SmoothLevel = graphEntity.SmoothLevel,
+                IsReadOnly = runs.Any()
             };
         }
 

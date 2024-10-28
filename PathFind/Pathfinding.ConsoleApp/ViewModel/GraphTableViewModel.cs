@@ -50,6 +50,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<GraphCreatedMessage>(this, async (r, msg) => await OnGraphCreated(r, msg));
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<ObstaclesCountChangedMessage>(this, OnObstaclesCountChanged);
+            messenger.Register<GraphBecameReadOnlyMessage>(this, GraphBecameReadOnly);
             ActivateGraphCommand = ReactiveCommand.CreateFromTask<GraphInfoModel>(ActivatedGraph);
         }
 
@@ -79,6 +80,15 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
+        private void GraphBecameReadOnly(object recipient, GraphBecameReadOnlyMessage msg)
+        {
+            var graph = Graphs.FirstOrDefault(x => x.Id == msg.Id);
+            if (graph != null)
+            {
+                graph.Status = msg.Became ? "Readonly" : "Editable";
+            }
+        }
+
         private List<GraphInfoModel> GetGraphs()
         {
             try
@@ -94,7 +104,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                         SmoothLevel = x.SmoothLevel,
                         Width = x.Dimensions.ElementAt(0),
                         Length = x.Dimensions.ElementAt(1),
-                        Obstacles = x.ObstaclesCount
+                        Obstacles = x.ObstaclesCount,
+                        Status = x.IsReadOnly ? "Readonly" : "Editable"
                     })
                     .ToList();
             }
@@ -123,7 +134,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 .Where(x => msg.GraphIds.Contains(x.Id))
                 .ToList();
             Graphs.Remove(graphs);
-
         }
     }
 }

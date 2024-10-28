@@ -34,9 +34,6 @@ namespace Pathfinding.ConsoleApp.Injection
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<GraphFactory<RunVertexModel>>().As<IGraphFactory<RunVertexModel>>().SingleInstance();
-            builder.RegisterType<RunVertexModelFactory>().As<IVertexFactory<RunVertexModel>>().SingleInstance();
-            builder.RegisterType<GraphAssemble<RunVertexModel>>().As<IGraphAssemble<RunVertexModel>>().SingleInstance();
             builder.RegisterType<GraphFactory<GraphVertexModel>>().As<IGraphFactory<GraphVertexModel>>().SingleInstance();
             builder.RegisterType<GraphVertexModelFactory>().As<IVertexFactory<GraphVertexModel>>().SingleInstance();
             builder.RegisterType<GraphAssemble<GraphVertexModel>>().As<IGraphAssemble<GraphVertexModel>>().SingleInstance();
@@ -80,7 +77,6 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<BinarySerializer<CostCoordinatePair>>()
                 .As<ISerializer<IEnumerable<CostCoordinatePair>>>().SingleInstance();
 
-            builder.RegisterType<GraphStateMappingProfile>().As<Profile>().SingleInstance();
             builder.RegisterType<GraphMappingProfile<GraphVertexModel>>().As<Profile>().SingleInstance();
             builder.RegisterType<UntitledMappingProfile>().As<Profile>().SingleInstance();
             builder.RegisterType<HistoryMappingProfile<GraphVertexModel>>().As<Profile>().SingleInstance();

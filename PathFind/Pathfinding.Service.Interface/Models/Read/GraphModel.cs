@@ -16,6 +16,8 @@ namespace Pathfinding.Service.Interface.Models.Read
 
         public int Id { get; set; }
 
+        public bool IsReadOnly { get; set; }
+
         public string Name { get; set; }
 
         public string SmoothLevel { get; set; }

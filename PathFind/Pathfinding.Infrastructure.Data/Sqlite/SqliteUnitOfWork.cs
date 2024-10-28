@@ -24,9 +24,6 @@ namespace Pathfinding.Infrastructure.Data.Sqlite
         public IStatisticsRepository StatisticsRepository 
             => new SqliteStatisticsRepository(connection, transaction);
 
-        public IGraphStateRepository GraphStateRepository 
-            => new SqliteGraphStateRepository(connection, transaction);
-
         public IAlgorithmRunRepository RunRepository
             => new SqliteAlgorithmRunRepository(connection, transaction);
 

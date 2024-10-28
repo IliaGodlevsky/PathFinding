@@ -95,11 +95,20 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             var toDelete = Runs.Where(x => msg.RunIds.Contains(x.RunId)).ToArray();
             Runs.Remove(toDelete);
+            if (Runs.Count == 0)
+            {
+                messenger.Send(new GraphBecameReadOnlyMessage(ActivatedGraphId, false));
+            }
         }
 
         private void OnRunCreated(object recipient, RunCreatedMessaged msg)
         {
+            int previousCount = Runs.Count;
             Runs.Add(GetModel(msg.Model.Statistics));
+            if (previousCount == 0)
+            {
+                messenger.Send(new GraphBecameReadOnlyMessage(ActivatedGraphId, true));
+            }
         }
 
         private RunInfoModel GetModel(RunStatisticsModel model)

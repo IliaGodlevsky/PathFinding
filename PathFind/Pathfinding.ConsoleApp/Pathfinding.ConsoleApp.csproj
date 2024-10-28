@@ -59,6 +59,7 @@
       <DependentUpon>AppSettings.settings</DependentUpon>
     </Compile>
     <Compile Include="Injection\MetadataKeys.cs" />
+    <Compile Include="Messages\ViewModel\GraphBecameReadOnlyMessage.cs" />
     <Compile Include="Messages\View\HeuristicsViewModelChangedMessage.cs" />
     <Compile Include="Messages\View\OpenAlgorithmRunViewMessage.cs" />
     <Compile Include="Messages\ViewModel\RunActivatedMessage.cs" />

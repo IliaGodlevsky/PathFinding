@@ -28,5 +28,12 @@ namespace Pathfinding.ConsoleApp.Model
             get => obstacles;
             set => this.RaiseAndSetIfChanged(ref obstacles, value);
         }
+
+        private string status;
+        public string Status
+        {
+            get => status;
+            set => this.RaiseAndSetIfChanged(ref status, value);
+        }
     }
 }

@@ -59,24 +59,6 @@ namespace Pathfinding.Infrastructure.Business.Test
             return model;
         }
 
-        public static AlgorithmRunHistorySerializationModel WithRandomGraphState(this AlgorithmRunHistorySerializationModel model)
-        {
-            model.GraphState = new()
-            {
-                Obstacles = GenerateCoordinateModels(),
-                Range = GenerateCoordinateModels(),
-                Costs = random.GenerateCoordinates((9, 1), 2, 25)
-                    .Zip(random.GenerateNumbers(range, 25),
-                    (x, y) => new CostCoordinatePair
-                    {
-                        Position = new CoordinateModel() { Coordinate = x.CoordinatesValues.ToArray() },
-                        Cost = y
-                    })
-                    .ToList()
-            };
-            return model;
-        }
-
         public static AlgorithmRunHistorySerializationModel WithRandomStatistics(this AlgorithmRunHistorySerializationModel model)
         {
             model.Statistics = new()
@@ -107,7 +89,6 @@ namespace Pathfinding.Infrastructure.Business.Test
             {
                 var runHistory = CreateAlgorithmRunHistorySerializationModel()
                     .WithAlgorithmRun()
-                    .WithRandomGraphState()
                     .WithRandomStatistics();
                 algorithms.Add(runHistory);
             }
@@ -121,21 +102,6 @@ namespace Pathfinding.Infrastructure.Business.Test
             {
                 GraphId = random.NextInt(10, 1),
                 AlgorithmId = AlgorithnName
-            };
-            return request;
-        }
-
-        public static CreateAlgorithmRunHistoryRequest WithRandomGraphState(this CreateAlgorithmRunHistoryRequest request)
-        {
-            request.GraphState = new()
-            {
-                Costs = random.GenerateCoordinates((9, 1), 2, 25)
-                    .Zip(random.GenerateNumbers(range, 25),
-                    (x, y) => (Position: x, Cost: y))
-                    .ToList(),
-                Regulars = random.GenerateCoordinates(range, 2, Limit).ToList(),
-                Obstacles = random.GenerateCoordinates(range, 2, Limit).ToList(),
-                Range = random.GenerateCoordinates(range, 2, Limit).ToList()
             };
             return request;
         }
@@ -177,7 +143,6 @@ namespace Pathfinding.Infrastructure.Business.Test
                 var runHistory =
                     CreateAlgorithmRunHistoryRequest()
                     .WithRandomRun()
-                    .WithRandomGraphState()
                     .WithRandomStatisitics();
                 runHistories.Add(runHistory);
             }

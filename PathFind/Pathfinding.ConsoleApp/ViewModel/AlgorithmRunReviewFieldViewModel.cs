@@ -4,15 +4,13 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Domain.Core;
-using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Infrastructure.Business.Algorithms.Events;
 using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Infrastructure.Business.Extensions;
-using Pathfinding.Infrastructure.Business.Layers;
-using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
+using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Read;
@@ -21,7 +19,6 @@ using Pathfinding.Shared.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
@@ -29,21 +26,21 @@ namespace Pathfinding.ConsoleApp.ViewModel
     {
         private readonly ILog log;
 
-        public AlgorithmRunReviewFieldViewModel(
-            IGraphAssemble<RunVertexModel> graphAssemble,
-            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
+        public AlgorithmRunReviewFieldViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ILog log)
-            : base(graphAssemble)
+            : base(messenger)
         {
-            messenger.Register<RunActivatedMessage>(this, async (r, msg) => await OnRunActivated(r, msg));
+            messenger.Register<RunActivatedMessage>(this, OnRunActivated);
             this.log = log;
         }
 
-        private async Task OnRunActivated(object recipient, RunActivatedMessage msg)
+        private void OnRunActivated(object recipient, RunActivatedMessage msg)
         {
             var subAlgorithms = new List<SubAlgorithmModel>();
             var visitedVertices = new List<(Coordinate Visited, IReadOnlyList<Coordinate> Enqueued)>();
-            var rangeCoordinates = msg.Run.GraphState.Range;
+            var rangeMsg = new QueryPathfindingRangeMessage();
+            messenger.Send(rangeMsg);
+            var rangeCoordinates = rangeMsg.PathfindingRange;
 
             void AddSubAlgorithm(IReadOnlyCollection<Coordinate> path = null)
             {
@@ -64,8 +61,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 AddSubAlgorithm(args.SubPath);
             }
 
-            var graph = await CreateGraph(msg.Run);
-            var range = rangeCoordinates.Select(graph.Get).ToArray();
+            var graph = CreateGraph();
+            var range = rangeCoordinates.Select(x=> graph[x]).ToArray();
 
             try
             {
@@ -92,7 +89,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 AddSubAlgorithm();
             }
             Vertices = GetVerticesStates(subAlgorithms, rangeCoordinates, graph);
-            GraphState = graph;
+            GraphState = graph.Values;
         }
 
         private IHeuristic GetHeuristic(RunStatisticsModel statistics)
@@ -136,17 +133,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 case AlgorithmNames.AStarLee: return new AStarLeeAlgorithm(range, GetHeuristic(statistics));
                 default: throw new NotImplementedException($"Unknown algorithm name: {statistics.AlgorithmId}");
             }
-        }
-
-        protected override async Task<IGraph<RunVertexModel>> CreateGraph(AlgorithmRunHistoryModel model)
-        {
-            var graph = await base.CreateGraph(model);
-            var factory = model.GraphInfo.Neighborhood == NeighborhoodNames.Moore
-                ? (INeighborhoodFactory)new MooreNeighborhoodFactory()
-                : new VonNeumannNeighborhoodFactory();
-            var layer = new NeighborhoodLayer(factory);
-            layer.Overlay((IGraph<IVertex>)graph);
-            return graph;
         }
     }
 }

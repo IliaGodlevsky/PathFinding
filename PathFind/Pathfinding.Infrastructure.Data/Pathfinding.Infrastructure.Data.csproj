@@ -97,7 +97,6 @@
     <Compile Include="InMemory\Repositories\EntityComparer.cs" />
     <Compile Include="InMemory\Repositories\InMemoryAlgorithmRunRepository.cs" />
     <Compile Include="InMemory\Repositories\InMemoryGraphParametresRepository.cs" />
-    <Compile Include="InMemory\Repositories\InMemoryGraphStateRepository.cs" />
     <Compile Include="InMemory\Repositories\InMemoryRangeRepository.cs" />
     <Compile Include="InMemory\Repositories\InMemoryStatisicsRepository.cs" />
     <Compile Include="InMemory\InMemoryUnitOfWork.cs" />
@@ -108,7 +107,6 @@
     <Compile Include="LiteDb\Repositories\LiteDbRangeRepository.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbAlgorithmRunRepository.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbGraphRepository.cs" />
-    <Compile Include="LiteDb\Repositories\LiteDbGraphStateRepository.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbStatisticsRepository.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbVerticesRepository.cs" />
     <Compile Include="Pathfinding\Factories\GraphFactory.cs" />
@@ -125,7 +123,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sqlite\Repositories\SqliteAlgorithmRunRepository.cs" />
     <Compile Include="Sqlite\Repositories\SqliteGraphRepository.cs" />
-    <Compile Include="Sqlite\Repositories\SqliteGraphStateRepository.cs" />
     <Compile Include="Sqlite\Repositories\SqliteRangeRepository.cs" />
     <Compile Include="Sqlite\Repositories\SqliteRepository.cs" />
     <Compile Include="Sqlite\Repositories\SqliteStatisticsRepository.cs" />

@@ -8,6 +8,8 @@ namespace Pathfinding.Service.Interface.Models.Read
 
         public string Name { get; set; }
 
+        public bool IsReadOnly { get; set; }
+
         public string Neighborhood { get; set; }
 
         public string SmoothLevel { get; set; }

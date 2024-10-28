@@ -2,27 +2,25 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
-using Pathfinding.ConsoleApp.Model;
-using Pathfinding.Domain.Interface.Factories;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal sealed class AlgorithmRunFieldViewModel : AlgorithmRunBaseViewModel
     {
-        public AlgorithmRunFieldViewModel(IGraphAssemble<RunVertexModel> assemble,
-            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger) : base(assemble)
+        public AlgorithmRunFieldViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger) 
+            : base(messenger)
         {
-            messenger.Register<RunCreatedMessaged>(this, async (r, msg) => await OnRunCreated(r, msg));
+            messenger.Register<RunCreatedMessaged>(this, OnRunCreated);
         }
 
-        private async Task OnRunCreated(object recipient, RunCreatedMessaged msg)
+        private void OnRunCreated(object recipient, RunCreatedMessaged msg)
         {
-            var graph = await CreateGraph(msg.Model);
-            var range = msg.Model.GraphState.Range;
+            var graph = CreateGraph();
+            var rangeMsg = new QueryPathfindingRangeMessage();
+            messenger.Send(rangeMsg);
+            var range = rangeMsg.PathfindingRange;
             Vertices = GetVerticesStates(msg.SubAlgorithms, range, graph);
-            GraphState = graph;
+            GraphState = graph.Values;
         }
     }
 }

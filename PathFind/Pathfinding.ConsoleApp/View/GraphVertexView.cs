@@ -14,15 +14,15 @@ namespace Pathfinding.ConsoleApp.View
         private const int LabelWidth = 3;
 
         private readonly CompositeDisposable disposables = new();
-        private readonly GraphVertexModel model;
+        private GraphVertexModel model;
 
         public GraphVertexView(GraphVertexModel model)
         {
             X = model.Position.GetX() * LabelWidth;
             Y = model.Position.GetY();
             Width = LabelWidth;
-            Data = model;
             this.model = model;
+            Data = model;
             model.WhenAnyValue(x => x.IsObstacle)
                .Select(x => x
                             ? Create(ColorConstants.ObstacleVertexColor)
@@ -39,6 +39,10 @@ namespace Pathfinding.ConsoleApp.View
                 .Do(x => Text = x)
                 .Subscribe()
                 .DisposeWith(disposables);
+            if(!model.IsSource && !model.IsTarget && !model.IsTransit)
+            {
+                model.IsRegular = !model.IsObstacle;
+            }
         }
 
         private ColorScheme Create(Color foreground)
@@ -61,6 +65,8 @@ namespace Pathfinding.ConsoleApp.View
         protected override void Dispose(bool disposing)
         {
             disposables.Dispose();
+            model = null;
+            Data = null;
             base.Dispose(disposing);
         }
     }

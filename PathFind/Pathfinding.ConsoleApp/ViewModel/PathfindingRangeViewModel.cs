@@ -4,6 +4,7 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Domain.Interface;
+using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Commands;
@@ -38,6 +39,13 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private int GraphId { get; set; }
 
         private IGraph<GraphVertexModel> Graph { get; set; }
+
+        private bool isReadOnly;
+        public bool IsReadOnly
+        {
+            get => isReadOnly;
+            set => this.RaiseAndSetIfChanged(ref isReadOnly, value);
+        }
 
         private GraphVertexModel source;
         public GraphVertexModel Source
@@ -101,11 +109,18 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<IsVertexInRangeRequest>(this, OnVertexIsInRangeRecieved);
             messenger.Register<QueryPathfindingRangeMessage>(this, OnGetPathfindingRangeRecieved);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
+            messenger.Register<GraphBecameReadOnlyMessage>(this, OnGraphBecameReadonly);
             messenger.Register<GraphActivatedMessage>(this, async (r, msg) => await OnGraphActivated(msg));
-            AddToRangeCommand = ReactiveCommand.Create<GraphVertexModel>(AddVertexToRange);
-            RemoveFromRangeCommand = ReactiveCommand.Create<GraphVertexModel>(RemoveVertexFromRange);
-            DeletePathfindingRange = ReactiveCommand.CreateFromTask<MouseEventArgs>(DeleteRange);
+            AddToRangeCommand = ReactiveCommand.Create<GraphVertexModel>(AddVertexToRange, CanExecute());
+            RemoveFromRangeCommand = ReactiveCommand.Create<GraphVertexModel>(RemoveVertexFromRange, CanExecute());
+            DeletePathfindingRange = ReactiveCommand.CreateFromTask<MouseEventArgs>(DeleteRange, CanExecute());
             Transit.ActOnEveryObject(OnTransitAdded, OnTransitRemoved);
+        }
+
+        private IObservable<bool> CanExecute()
+        {
+            return this.WhenAnyValue(x => x.IsReadOnly,
+                isRead => !isRead);
         }
 
         public IEnumerator<GraphVertexModel> GetEnumerator()
@@ -231,6 +246,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 ClearRange();
                 Graph = msg.Graph.Graph;
                 GraphId = msg.Graph.Id;
+                IsReadOnly = msg.Graph.IsReadOnly;
                 var range = await Task.Run(() => service.ReadRangeAsync(GraphId))
                     .ConfigureAwait(false);
                 var src = range.FirstOrDefault(x => x.IsSource);
@@ -245,6 +261,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }, logger.Error).ConfigureAwait(false);
         }
 
+        private void OnGraphBecameReadonly(object recipient, GraphBecameReadOnlyMessage msg)
+        {
+            IsReadOnly = msg.Became;
+        }
+
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
         {
             if (msg.GraphIds.Contains(GraphId))
@@ -252,6 +273,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 disposables.Clear();
                 ClearRange();
                 GraphId = 0;
+                IsReadOnly = false;
+                Graph = Graph<GraphVertexModel>.Empty;
             }
         }
 
@@ -264,6 +287,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             msg.PathfindingRange = pathfindingRange
                 .Where(x => x is not null)
+                .Select(x => x.Position)
                 .ToList()
                 .AsReadOnly();
         }

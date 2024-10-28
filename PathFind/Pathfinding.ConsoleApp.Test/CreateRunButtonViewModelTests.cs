@@ -66,9 +66,7 @@ namespace Pathfinding.ConsoleApp.Test
                 It.IsAny<QueryPathfindingRangeMessage>(),
                 It.IsAny<IsAnyToken>())).Callback<QueryPathfindingRangeMessage, object>((x, y) =>
                 {
-                    var source = new GraphVertexModel(Coordinate.Empty);
-                    var target = new GraphVertexModel(Coordinate.Empty);
-                    x.PathfindingRange = new[] { source, target };
+                    x.PathfindingRange = new[] { Coordinate.Empty, Coordinate.Empty };
                 });
 
             var viewModel = mock.Create<TestCreateRunButtonViewModel>();

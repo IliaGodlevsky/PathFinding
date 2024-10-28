@@ -1,8 +1,8 @@
-﻿using Pathfinding.ConsoleApp.Model;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.ConsoleApp.Messages.ViewModel;
+using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Domain.Interface;
-using Pathfinding.Domain.Interface.Factories;
-using Pathfinding.Infrastructure.Business.Layers;
-using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
@@ -11,13 +11,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
-using System.Threading.Tasks;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal abstract class AlgorithmRunBaseViewModel : BaseViewModel
     {
-        private readonly IGraphAssemble<RunVertexModel> graphAssemble;
+        protected readonly IMessenger messenger;
 
         private IReadOnlyCollection<RunVertexModel> graphState = Array.Empty<RunVertexModel>();
         public IReadOnlyCollection<RunVertexModel> GraphState
@@ -26,37 +25,45 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref graphState, value);
         }
 
+        protected IGraph<GraphVertexModel> Graph { get; set; }
+
         protected Queue<Action> Vertices { get; set; } = new();
 
         public int Remained => Vertices.Count;
 
         public ReactiveCommand<int, Unit> ProcessNextCommand { get; }
 
-        protected AlgorithmRunBaseViewModel(IGraphAssemble<RunVertexModel> graphAssemble)
+        protected AlgorithmRunBaseViewModel(IMessenger messenger)
         {
-            this.graphAssemble = graphAssemble;
             ProcessNextCommand = ReactiveCommand.Create<int>(ProcessNext);
+            messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
+            this.messenger = messenger;
         }
 
         protected Queue<Action> GetVerticesStates(IEnumerable<SubAlgorithmModel> subAlgorithms,
             IReadOnlyCollection<Coordinate> range,
-            IGraph<RunVertexModel> graph)
+            IReadOnlyDictionary<Coordinate, RunVertexModel> graph)
         {
             var vertices = new Queue<Action>();
             range.Skip(1).Take(range.Count - 2)
-                .ForEach(transit => vertices.Enqueue(() => graph.Get(transit).IsTransit = true));
-            vertices.Enqueue(() => graph.Get(range.First()).IsSource = true);
-            vertices.Enqueue(() => graph.Get(range.Last()).IsTarget = true);
+                .ForEach(transit => vertices.Enqueue(() => graph[transit].IsTransit = true));
+            vertices.Enqueue(() => graph[range.First()].IsSource = true);
+            vertices.Enqueue(() => graph[range.Last()].IsTarget = true);
             foreach (var sub in subAlgorithms)
             {
                 foreach (var (Visited, Enqueued) in sub.Visited)
                 {
-                    vertices.Enqueue(() => graph.Get(Visited).IsVisited = true);
-                    Enqueued.ForEach(enqueued => vertices.Enqueue(() => graph.Get(enqueued).IsEnqueued = true));
+                    vertices.Enqueue(() => graph[Visited].IsVisited = true);
+                    Enqueued.ForEach(enqueued => vertices.Enqueue(() => graph[enqueued].IsEnqueued = true));
                 }
-                sub.Path.ForEach(path => vertices.Enqueue(() => graph.Get(path).IsPath = true));
+                sub.Path.ForEach(path => vertices.Enqueue(() => graph[path].IsPath = true));
             }
             return vertices;
+        }
+
+        private void OnGraphActivated(object recipient, GraphActivatedMessage msg)
+        {
+            Graph = msg.Graph.Graph;
         }
 
         private void ProcessNext(int number)
@@ -64,11 +71,29 @@ namespace Pathfinding.ConsoleApp.ViewModel
             while (number-- > 0 && Remained > 0) Vertices.Dequeue().Invoke();
         }
 
-        protected virtual async Task<IGraph<RunVertexModel>> CreateGraph(AlgorithmRunHistoryModel model)
+        protected Dictionary<Coordinate, RunVertexModel> CreateGraph()
         {
-            var layer = new GraphStateLayer(model.GraphState);
-            var graph = await graphAssemble.AssembleGraphAsync(layer, model.GraphInfo.Dimensions);
-            return graph;
+            var result = new Dictionary<Coordinate, RunVertexModel>();
+            foreach (var vertex in Graph)
+            {
+                var runVertex = new RunVertexModel()
+                {
+                    Position = vertex.Position,
+                    Cost = new VertexCost(vertex.Cost.CurrentCost, vertex.Cost.CostRange),
+                    IsObstacle = vertex.IsObstacle
+                };
+                result.Add(runVertex.Position, runVertex);
+            }
+            foreach (var vertex in Graph)
+            {
+                var runVertex = result[vertex.Position];
+                foreach (var neighbor in vertex.Neighbours)
+                {
+                    var runVertexNeighbor = result[neighbor.Position];
+                    runVertex.Neighbours.Add(runVertexNeighbor);
+                }
+            }
+            return result;
         }
     }
 }

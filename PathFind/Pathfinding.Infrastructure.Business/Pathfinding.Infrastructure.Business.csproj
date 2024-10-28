@@ -140,11 +140,9 @@
     <Compile Include="Extensions\SimplePriorityQueueExtensions.cs" />
     <Compile Include="Extensions\UnitOfWorkExtensions.cs" />
     <Compile Include="Extensions\VertexExtensions.cs" />
-    <Compile Include="Layers\GraphStateLayer.cs" />
     <Compile Include="Layers\Layers.cs" />
     <Compile Include="Mappings\AlgorithmRunMappingProfile.cs" />
     <Compile Include="Mappings\GraphMappingProfile.cs" />
-    <Compile Include="Mappings\GraphStateMappingProfile.cs" />
     <Compile Include="Mappings\HistoryMappingProfile.cs" />
     <Compile Include="Mappings\StatisticsMappingProfile.cs" />
     <Compile Include="Mappings\UntitledMappingProfile.cs" />

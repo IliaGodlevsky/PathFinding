@@ -120,7 +120,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
                 string status = RunStatuses.Success;
 
-                var algorithm = GetAlgorithm(pathfindingRange);
+                var vertices = pathfindingRange.Select(x => Graph.Graph.Get(x)).ToList();
+                var algorithm = GetAlgorithm(vertices);
 
                 algorithm.SubPathFound += OnSubPathFound;
                 algorithm.VertexProcessed += OnVertexProcessed;
@@ -142,7 +143,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     status = RunStatuses.Failure;
                     logger.Error(ex);
                     AddSubAlgorithm();
-                }
+                } 
                 finally
                 {
                     stopwatch.Stop();
@@ -151,7 +152,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 }
 
                 var request = ModelBuilder.CreateRunHistoryRequest()
-                    .WithGraph(Graph, pathfindingRange.Select(x => x.Position))
                     .WithRun(Graph.Id, AlgorithmId)
                     .WithStatistics(AlgorithmId, path,
                         visitedCount, status, stopwatch.Elapsed);

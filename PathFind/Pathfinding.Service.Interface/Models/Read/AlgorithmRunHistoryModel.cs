@@ -9,7 +9,5 @@ namespace Pathfinding.Service.Interface.Models.Read
         public RunStatisticsModel Statistics { get; set; }
 
         public GraphInformationModel GraphInfo { get; set; }
-
-        public GraphStateModel GraphState { get; set; }
     }
 }

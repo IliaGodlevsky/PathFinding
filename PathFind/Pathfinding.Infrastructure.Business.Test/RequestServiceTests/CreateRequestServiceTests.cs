@@ -80,7 +80,6 @@ namespace Pathfinding.Infrastructure.Business.Test.RequestServiceTests
             var request = EntityBuilder
                 .CreateAlgorithmRunHistoryRequest()
                 .WithRandomRun()
-                .WithRandomGraphState()
                 .WithRandomStatisitics();
 
             var service = TestRequestServiceFactory.GetForTest();

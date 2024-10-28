@@ -33,6 +33,7 @@ namespace Pathfinding.ConsoleApp.Model
             {
                 this.RaiseAndSetIfChanged(ref isSource, value);
                 if (!isSource) IsRegular = true;
+                else IsRegular = false;
             }
         }
 
@@ -44,6 +45,7 @@ namespace Pathfinding.ConsoleApp.Model
             {
                 this.RaiseAndSetIfChanged(ref isTarget, value);
                 if (!isTarget) IsRegular = true;
+                else IsRegular = false;
             }
         }
 
@@ -55,6 +57,7 @@ namespace Pathfinding.ConsoleApp.Model
             {
                 this.RaiseAndSetIfChanged(ref isTransit, value);
                 if (!isTransit) IsRegular = true;
+                else IsRegular = false;
             }
         }
 

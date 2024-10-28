@@ -14,13 +14,10 @@ namespace Pathfinding.Infrastructure.Business.Test.TestRealizations.TestDb
 
         public IStatisticsRepository StatisticsRepository { get; }
 
-        public IGraphStateRepository GraphStateRepository { get; }
-
         public IAlgorithmRunRepository RunRepository { get; }
 
         public TestUnitOfWork()
         {
-            GraphStateRepository = new TestGraphStateRepository();
             VerticesRepository = new TestVerticesRepository();
             RangeRepository = new TestRangeRepository();
             StatisticsRepository = new TestStatisicsRepository();
