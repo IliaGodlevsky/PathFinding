@@ -132,7 +132,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     Neighborhood = NeighborhoodFactory.Name,
                     Obstacles = graphModel.Graph.GetObstaclesCount(),
                     Width = Width,
-                    Length = Length
+                    Length = Length,
+                    Status = GraphStatuses.Editable
                 };
                 messenger.Send(new GraphCreatedMessage(new[] { info }));
             }, logger.Error).ConfigureAwait(false);

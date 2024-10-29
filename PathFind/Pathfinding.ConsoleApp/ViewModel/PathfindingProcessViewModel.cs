@@ -13,6 +13,7 @@ using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Service.Interface.Models;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Undefined;
+using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Shared.Primitives;
 using ReactiveUI;
 using System;
@@ -84,7 +85,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         protected abstract PathfindingProcess GetAlgorithm(IEnumerable<GraphVertexModel> pathfindingRange);
 
-        protected virtual void AppendStatistics(RunStatisticsModel model) { }
+        protected virtual void AppendStatistics(CreateStatisticsRequest request) { }
 
         private async Task StartAlgorithm(MouseEventArgs e)
         {
@@ -151,16 +152,15 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     algorithm.VertexProcessed -= OnVertexProcessed;
                 }
 
-                var request = ModelBuilder.CreateRunHistoryRequest()
-                    .WithRun(Graph.Id, AlgorithmId)
-                    .WithStatistics(AlgorithmId, path,
+                var request = ModelBuilder.CreateStatisticsRequest()
+                    .WithStatistics(Graph.Id, AlgorithmId, path,
                         visitedCount, status, stopwatch.Elapsed);
 
-                AppendStatistics(request.Statistics);
+                AppendStatistics(request);
 
                 await ExecuteSafe(async () =>
                 {
-                    var result = await Task.Run(() => service.CreateRunHistoryAsync(request))
+                    var result = await Task.Run(() => service.CreateStatisticsAsync(request))
                         .ConfigureAwait(false);
                     messenger.Send(new RunCreatedMessaged(result, subAlgorithms));
                 }, logger.Error).ConfigureAwait(false);

@@ -15,8 +15,6 @@ namespace Pathfinding.Domain.Interface
 
         IStatisticsRepository StatisticsRepository { get; }
 
-        IAlgorithmRunRepository RunRepository { get; }
-
         void BeginTransaction();
 
         void Rollback();

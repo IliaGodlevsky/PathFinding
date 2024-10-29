@@ -66,7 +66,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
             try
             {
-                var algorithm = GetAlgorithm(msg.Run.Statistics, range);
+                var algorithm = GetAlgorithm(msg.Run, range);
                 algorithm.SubPathFound += OnSubPathFound;
                 algorithm.VertexProcessed += OnVertexProcessed;
                 try
@@ -117,7 +117,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private PathfindingProcess GetAlgorithm(RunStatisticsModel statistics, IReadOnlyCollection<RunVertexModel> range)
         {
-            switch (statistics.AlgorithmId)
+            switch (statistics.AlgorithmName)
             {
                 case AlgorithmNames.Dijkstra: return new DijkstraAlgorithm(range, GetStepRule(statistics));
                 case AlgorithmNames.BidirectDijkstra: return new BidirectDijkstraAlgorithm(range, GetStepRule(statistics));
@@ -131,7 +131,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 case AlgorithmNames.Lee: return new LeeAlgorithm(range);
                 case AlgorithmNames.BidirectLee: return new BidirectLeeAlgorithm(range);
                 case AlgorithmNames.AStarLee: return new AStarLeeAlgorithm(range, GetHeuristic(statistics));
-                default: throw new NotImplementedException($"Unknown algorithm name: {statistics.AlgorithmId}");
+                default: throw new NotImplementedException($"Unknown algorithm name: {statistics.AlgorithmName}");
             }
         }
     }

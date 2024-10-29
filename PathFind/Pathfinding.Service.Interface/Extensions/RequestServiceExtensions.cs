@@ -2,6 +2,7 @@
 using Pathfinding.Domain.Interface;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Serialization;
+using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Shared.Extensions;
 using System.Linq;
@@ -17,15 +18,6 @@ namespace Pathfinding.Service.Interface.Extensions
             where T : IVertex, IEntity<int>
         {
             var result = await service.CreatePathfindingHistoriesAsync(request.Enumerate(), token);
-            return result.Single();
-        }
-
-        public static async Task<AlgorithmRunHistoryModel> CreateRunHistoryAsync<T>(this IRequestService<T> service,
-            CreateAlgorithmRunHistoryRequest request,
-            CancellationToken token = default)
-            where T : IVertex, IEntity<int>
-        {
-            var result = await service.CreateRunHistoriesAsync(request.Enumerate(), token);
             return result.Single();
         }
 

@@ -85,7 +85,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             var graph = Graphs.FirstOrDefault(x => x.Id == msg.Id);
             if (graph != null)
             {
-                graph.Status = msg.Became ? "Readonly" : "Editable";
+                graph.Status = msg.Became ? GraphStatuses.Readonly : GraphStatuses.Editable;
             }
         }
 
@@ -105,7 +105,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                         Width = x.Dimensions.ElementAt(0),
                         Length = x.Dimensions.ElementAt(1),
                         Obstacles = x.ObstaclesCount,
-                        Status = x.IsReadOnly ? "Readonly" : "Editable"
+                        Status = x.IsReadOnly ? GraphStatuses.Readonly : GraphStatuses.Editable
                     })
                     .ToList();
             }

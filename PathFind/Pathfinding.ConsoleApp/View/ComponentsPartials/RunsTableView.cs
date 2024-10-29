@@ -40,13 +40,13 @@ namespace Pathfinding.ConsoleApp.View
             var columnStyles = new Dictionary<DataColumn, ColumnStyle>()
             {
                 { table.Columns[IdCol], new() { Visible = false } },
-                { table.Columns[AlgorithmCol], new() { Alignment = TextAlignment.Left } },
+                { table.Columns[AlgorithmCol], new() { MinWidth = 12, MaxWidth = 12, Alignment = TextAlignment.Left } },
                 { table.Columns[VisitedCol], new() { Alignment = TextAlignment.Centered } },
                 { table.Columns[StepsCol], new() { Alignment = TextAlignment.Centered } },
                 { table.Columns[CostCol], new() { Alignment = TextAlignment.Centered } },
                 { table.Columns[ElapsedCol], new() { Format = TimeFormat, Alignment = TextAlignment.Centered } },
-                { table.Columns[StepCol], new() { Alignment = TextAlignment.Centered } },
-                { table.Columns[LogicCol], new() { Alignment = TextAlignment.Centered } },
+                { table.Columns[StepCol], new() { MinWidth = 9, MaxWidth = 9, Alignment = TextAlignment.Centered } },
+                { table.Columns[LogicCol], new() { MinWidth = 9, MaxWidth = 9, Alignment = TextAlignment.Centered } },
                 { table.Columns[WeightCol], new() { Alignment = TextAlignment.Left } },
                 { table.Columns[StatusCol], new() { Alignment = TextAlignment.Centered } }
             };

@@ -16,19 +16,15 @@ namespace Pathfinding.Infrastructure.Data.InMemory
 
         public IStatisticsRepository StatisticsRepository { get; }
 
-        public IAlgorithmRunRepository RunRepository { get; }
-
         public InMemoryUnitOfWork()
         {
             var vertices = new InMemoryVerticesRepository();
             var range = new InMemoryRangeRepository();
             var statistics = new InMemoryStatisicsRepository();
-            var runs = new InMemoryAlgorithmRunRepository(statistics);
             VerticesRepository = vertices;
             RangeRepository = range;
             StatisticsRepository = statistics;
-            RunRepository = runs;
-            GraphRepository = new InMemoryGraphParametresRepository(runs, range, vertices);
+            GraphRepository = new InMemoryGraphParametresRepository(range, vertices, statistics);
         }
 
         public void BeginTransaction()

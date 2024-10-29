@@ -4,9 +4,9 @@ namespace Pathfinding.Service.Interface.Models.Undefined
 {
     public record RunStatisticsModel
     {
-        public int AlgorithmRunId { get; set; }
+        public int Id { get; set; }
 
-        public string AlgorithmId { get; set; } = null;
+        public string AlgorithmName { get; set; }
 
         public string Heuristics { get; set; } = null;
 

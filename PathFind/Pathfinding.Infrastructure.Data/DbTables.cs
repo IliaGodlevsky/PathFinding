@@ -5,7 +5,6 @@
         public const string Graphs = "Graphs";
         public const string Ranges = "Ranges";
         public const string Vertices = "Vertices";
-        public const string AlgorithmRuns = "AlgorithmRuns";
         public const string Statistics = "Statistics";
     }
 }

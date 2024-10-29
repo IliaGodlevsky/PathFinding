@@ -60,7 +60,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             await ExecuteSafe(async () =>
             {
-                var run = await Task.Run(() => service.ReadRunHistoryAsync(model.RunId))
+                var run = await Task.Run(() => service.ReadStatisticAsync(model.RunId))
                     .ConfigureAwait(false);
                 messenger.Send(new RunActivatedMessage(run));
             }, logger.Error).ConfigureAwait(false);
@@ -68,7 +68,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private async Task OnGraphActivatedMessage(object recipient, GraphActivatedMessage msg)
         {
-            var statistics = await Task.Run(() => service.ReadRunStatisticsAsync(msg.Graph.Id))
+            var statistics = await Task.Run(() => service.ReadStatisticsAsync(msg.Graph.Id))
                 .ConfigureAwait(false);
             var models = statistics.Select(GetModel).ToArray();
             ActivatedGraphId = msg.Graph.Id;
@@ -104,7 +104,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private void OnRunCreated(object recipient, RunCreatedMessaged msg)
         {
             int previousCount = Runs.Count;
-            Runs.Add(GetModel(msg.Model.Statistics));
+            Runs.Add(GetModel(msg.Model));
             if (previousCount == 0)
             {
                 messenger.Send(new GraphBecameReadOnlyMessage(ActivatedGraphId, true));
@@ -115,8 +115,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             return new()
             {
-                RunId = model.AlgorithmRunId,
-                Name = model.AlgorithmId,
+                RunId = model.Id,
+                Name = model.AlgorithmName,
                 Cost = model.Cost,
                 Steps = model.Steps,
                 Status = model.ResultStatus,

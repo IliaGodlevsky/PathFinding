@@ -1,11 +1,9 @@
 ﻿using System;
 
-namespace Pathfinding.Domain.Core
+namespace Pathfinding.Service.Interface.Requests.Create
 {
-    public class Statistics : IEntity<int>
+    public class CreateStatisticsRequest
     {
-        public int Id { get; set; }
-
         public int GraphId { get; set; }
 
         public string AlgorithmName { get; set; }
@@ -16,14 +14,14 @@ namespace Pathfinding.Domain.Core
 
         public string StepRule { get; set; } = null;
 
+        public int Visited { get; set; }
+
         public string ResultStatus { get; set; } = string.Empty;
 
-        public double Elapsed { get; set; }
+        public TimeSpan Elapsed { get; set; }
 
         public int Steps { get; set; }
 
         public double Cost { get; set; }
-
-        public int Visited { get; set; }
     }
 }

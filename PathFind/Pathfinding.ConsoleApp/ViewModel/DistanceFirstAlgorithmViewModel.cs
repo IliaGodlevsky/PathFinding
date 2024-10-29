@@ -9,6 +9,7 @@ using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Undefined;
+using Pathfinding.Service.Interface.Requests.Create;
 using ReactiveUI;
 using System.Collections.Generic;
 
@@ -40,7 +41,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public override string AlgorithmId { get; } = AlgorithmNames.DistanceFirst;
 
-        protected override void AppendStatistics(RunStatisticsModel model)
+        protected override void AppendStatistics(CreateStatisticsRequest model)
         {
             model.Heuristics = heuristic.Name;
             model.Weight = Weight;

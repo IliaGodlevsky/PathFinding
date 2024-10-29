@@ -9,7 +9,7 @@ namespace Pathfinding.Service.Interface.Requests.Create
     {
         public CreateGraphRequest<T> Graph { get; set; }
 
-        public IReadOnlyCollection<CreateAlgorithmRunHistoryRequest> Algorithms { get; set; }
+        public IReadOnlyCollection<CreateStatisticsRequest> Statistics { get; set; }
 
         public IReadOnlyCollection<Coordinate> Range { get; set; }
     }

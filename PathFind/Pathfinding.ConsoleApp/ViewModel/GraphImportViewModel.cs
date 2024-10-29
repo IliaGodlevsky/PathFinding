@@ -83,7 +83,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     Neighborhood = x.Graph.Neighborhood,
                     Id = x.Graph.Id,
                     SmoothLevel = x.Graph.SmoothLevel,
-                    Obstacles = x.Graph.Graph.GetObstaclesCount()
+                    Obstacles = x.Graph.Graph.GetObstaclesCount(),
+                    Status = x.Graph.IsReadOnly ? GraphStatuses.Readonly : GraphStatuses.Editable
                 }).ToArray();
                 messenger.Send(new GraphCreatedMessage(graphs));
                 logger.Info(graphs.Length > 0 ? "Graphs were loaded" : "Graph was loaded");

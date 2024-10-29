@@ -9,21 +9,21 @@ namespace Pathfinding.Service.Interface.Models.Serialization
     {
         public GraphSerializationModel Graph { get; set; }
 
-        public IReadOnlyCollection<AlgorithmRunHistorySerializationModel> Algorithms { get; set; }
+        public IReadOnlyCollection<RunStatisticsSerializationModel> Statistics { get; set; }
 
         public IReadOnlyCollection<CoordinateModel> Range { get; set; }
 
         public void Deserialize(BinaryReader reader)
         {
             Graph = reader.ReadSerializable<GraphSerializationModel>();
-            Algorithms = reader.ReadSerializableArray<AlgorithmRunHistorySerializationModel>();
+            Statistics = reader.ReadSerializableArray<RunStatisticsSerializationModel>();
             Range = reader.ReadSerializableArray<CoordinateModel>();
         }
 
         public void Serialize(BinaryWriter writer)
         {
             writer.Write(Graph);
-            writer.Write(Algorithms);
+            writer.Write(Statistics);
             writer.Write(Range);
         }
     }

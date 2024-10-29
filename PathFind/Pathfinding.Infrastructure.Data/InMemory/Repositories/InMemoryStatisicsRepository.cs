@@ -24,23 +24,38 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
         public async Task<Statistics> ReadByAlgorithmRunIdAsync(int runId,
             CancellationToken token = default)
         {
-            var result = set.FirstOrDefault(x => x.AlgorithmRunId == runId);
+            var result = set.FirstOrDefault(x => x.Id == runId);
             return await Task.FromResult(result);
         }
 
-        public async Task<IEnumerable<Statistics>> ReadByRunIdsAsync(IEnumerable<int> runIds,
-            CancellationToken token = default)
+        public Task<IEnumerable<Statistics>> ReadByGraphIdAsync(int graphId, CancellationToken token = default)
         {
-            var result = set.Where(x => runIds.Contains(x.AlgorithmRunId)).ToList();
-            return await Task.FromResult(result);
+            throw new System.NotImplementedException();
         }
 
-        public async Task<bool> DeleteByRunIdsAsync(IEnumerable<int> runIds,
-            CancellationToken token = default)
+        public Task<int> ReadStatisticsCountAsync(int graphId, CancellationToken token = default)
         {
-            var ids = runIds.ToHashSet();
-            int deleted = set.RemoveWhere(x => runIds.Contains(x.AlgorithmRunId));
-            return await Task.FromResult(ids.Count == deleted);
+            throw new System.NotImplementedException();
+        }
+
+        public Task<IEnumerable<Statistics>> CreateAsync(IEnumerable<Statistics> statistics, CancellationToken token = default)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<bool> DeleteByGraphId(int graphId, CancellationToken token = default)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<bool> DeleteByIdsAsync(IEnumerable<int> ids, CancellationToken token = default)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Statistics> ReadByIdAsync(int runId, CancellationToken token = default)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

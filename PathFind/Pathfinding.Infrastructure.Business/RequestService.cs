@@ -53,15 +53,17 @@ namespace Pathfinding.Infrastructure.Business
                     {
                         var graph = history.Graph.Graph;
                         var model = await unitOfWork.AddGraphAsync(mapper, history.Graph, t);
-                        history.Algorithms.ForEach(x => x.Run.GraphId = model.Id);
-                        var runHistory = await unitOfWork.AddHistoryAsync(mapper, history.Algorithms, t);
+                        model.IsReadOnly = history.Statistics.Count > 0;
+                        var statistics = mapper.Map<List<Statistics>>(history.Statistics);
+                        statistics.ForEach(x => x.GraphId = model.Id);
+                        await unitOfWork.StatisticsRepository.CreateAsync(statistics, token);
                         var vertices = history.Range.Select((x, i) => (Order: i, Vertex: graph.Get(x)));
                         var entities = SelectRangeEntities(vertices, model.Id);
                         await unitOfWork.RangeRepository.CreateAsync(entities, t);
                         return new PathfindingHistoryModel<T>()
                         {
                             Graph = model,
-                            Algorithms = runHistory,
+                            Statistics = mapper.Map<List<RunStatisticsModel>>(statistics),
                             Range = history.Range
                         };
                     })
@@ -75,16 +77,6 @@ namespace Pathfinding.Infrastructure.Business
         {
             var requests = mapper.Map<List<CreatePathfindingHistoryRequest<T>>>(request);
             return await CreatePathfindingHistoriesAsync(requests, token);
-        }
-
-        public async Task<IReadOnlyCollection<AlgorithmRunHistoryModel>> CreateRunHistoriesAsync(IEnumerable<CreateAlgorithmRunHistoryRequest> histories,
-            CancellationToken token = default)
-        {
-            return await Transaction(async (unitOfWork, t) =>
-            {
-                var result = await unitOfWork.AddHistoryAsync(mapper, histories);
-                return mapper.Map<AlgorithmRunHistoryModel[]>(result).ToReadOnly();
-            }, token).ConfigureAwait(false);
         }
 
         public async Task<bool> DeleteRangeAsync(IEnumerable<T> request,
@@ -115,8 +107,8 @@ namespace Pathfinding.Infrastructure.Business
                 var infos = mapper.Map<GraphInformationModel[]>(result).ToReadOnly();
                 foreach (var info in infos)
                 {
-                    var runs = await unitOfWork.RunRepository.ReadByGraphIdAsync(info.Id, token);
-                    info.IsReadOnly = runs.Any();
+                    var runs = await unitOfWork.StatisticsRepository.ReadStatisticsCountAsync(info.Id, token);
+                    info.IsReadOnly = runs > 0;
                 }
                 infos.ForEach(x => x.ObstaclesCount = obstaclesCount[x.Id]);
                 return infos;
@@ -138,13 +130,6 @@ namespace Pathfinding.Infrastructure.Business
             }, token).ConfigureAwait(false);
         }
 
-        public async Task<GraphModel<T>> CreateGraphAsync(GraphSerializationModel graph,
-            CancellationToken token = default)
-        {
-            var mapped = mapper.Map<CreateGraphRequest<T>>(graph);
-            return await CreateGraphAsync(mapped, token);
-        }
-
         public async Task<GraphModel<T>> CreateGraphAsync(CreateGraphRequest<T> graph,
             CancellationToken token = default)
         {
@@ -161,12 +146,12 @@ namespace Pathfinding.Infrastructure.Business
                 foreach (var graphId in graphIds)
                 {
                     var graph = await unitOfWork.ReadGraphAsync<T>(graphId, mapper, t);
-                    var algorithms = await unitOfWork.GetAlgorithmRuns(graphId, mapper, t);
+                    var statistics = await unitOfWork.StatisticsRepository.ReadByGraphIdAsync(graphId, token);
                     var range = await unitOfWork.GetRangeAsync(graphId, mapper, t);
                     result.Add(new()
                     {
                         Graph = graph,
-                        Algorithms = algorithms,
+                        Statistics = mapper.Map<List<RunStatisticsModel>>(statistics),
                         Range = range.Select(x => x.Position).ToReadOnly()
                     });
                 }
@@ -181,39 +166,13 @@ namespace Pathfinding.Infrastructure.Business
                 => await unitOfWork.GetRangeAsync(graphId, mapper, t), token).ConfigureAwait(false);
         }
 
-        public async Task<AlgorithmRunHistoryModel> ReadRunHistoryAsync(int runId,
+        public async Task<IReadOnlyCollection<RunStatisticsModel>> ReadStatisticsAsync(int graphId,
             CancellationToken token = default)
         {
             return await Transaction(async (unit, t) =>
             {
-                var statistics = await unit.StatisticsRepository.ReadByAlgorithmRunIdAsync(runId, t);
-                var run = await unit.RunRepository.ReadAsync(runId, t);
-                var info = await unit.GraphRepository.ReadAsync(run.GraphId, t);
-                return new AlgorithmRunHistoryModel()
-                {
-                    GraphInfo = mapper.Map<GraphInformationModel>(info),
-                    Statistics = mapper.Map<RunStatisticsModel>(statistics) with { AlgorithmId = run.AlgorithmId },
-                    Run = mapper.Map<AlgorithmRunModel>(run)
-                };
-            }, token).ConfigureAwait(false);
-        }
-
-        public async Task<IReadOnlyCollection<RunStatisticsModel>> ReadRunStatisticsAsync(int graphId,
-            CancellationToken token = default)
-        {
-            return await Transaction(async (unit, t) =>
-            {
-                var runs = (await unit.RunRepository
-                    .ReadByGraphIdAsync(graphId, t))
-                    .OrderBy(x => x.Id)
-                    .ToReadOnly();
-                var statistics = (await unit.StatisticsRepository
-                    .ReadByRunIdsAsync(runs.Select(x => x.Id), t))
-                    .OrderBy(x => x.AlgorithmRunId)
-                    .ToReadOnly();
-                return mapper.Map<RunStatisticsModel[]>(statistics)
-                    .ForEach((x, i) => x.AlgorithmId = runs[i].AlgorithmId)
-                    .ToReadOnly();
+                var result = await unit.StatisticsRepository.ReadByGraphIdAsync(graphId, token).ConfigureAwait(false);
+                return mapper.Map<List<RunStatisticsModel>>(result);
             }, token);
         }
 
@@ -223,17 +182,6 @@ namespace Pathfinding.Infrastructure.Business
             var result = await ReadPathfindingHistoriesAsync(graphIds, token);
             return mapper.Map<List<PathfindingHistorySerializationModel>>(result);
         }
-
-        //public async Task<bool> UpdateObstaclesCountAsync(UpdateGraphInfoRequest request,
-        //    CancellationToken token = default)
-        //{
-        //    return await Transaction(async (unitOfWork, t) =>
-        //    {
-        //        var entity = await unitOfWork.GraphRepository.ReadAsync(request.Id, t);
-        //        entity.ObstaclesCount = request.ObstaclesCount;
-        //        return await unitOfWork.GraphRepository.UpdateAsync(entity, t);
-        //    }, token).ConfigureAwait(false);
-        //}
 
         public async Task<bool> UpdateVerticesAsync(UpdateVerticesRequest<T> request,
             CancellationToken token = default)
@@ -254,30 +202,11 @@ namespace Pathfinding.Infrastructure.Business
                 => await unitOfWork.GraphRepository.DeleteAsync(ids, t), token).ConfigureAwait(false);
         }
 
-        public async Task<bool> UpsertRangeAsync(UpsertPathfindingRangeRequest request,
-            CancellationToken token = default)
-        {
-            return await Transaction(async (unitOfWork, t) =>
-            {
-                var range = request.Ranges.Select(x => new PathfindingRange()
-                {
-                    Id = x.Id,
-                    IsSource = x.IsSource,
-                    IsTarget = x.IsTarget,
-                    VertexId = x.VertexId,
-                    GraphId = request.GraphId,
-                    Order = x.Order
-                }).ToList();
-                await unitOfWork.RangeRepository.UpsertAsync(range, t);
-                return true;
-            }, token).ConfigureAwait(false);
-        }
-
         public async Task<bool> DeleteRunsAsync(IEnumerable<int> runIds, CancellationToken token = default)
         {
             return await Transaction(async (unit, t) =>
             {
-                return await unit.RunRepository.DeleteByRunIdsAsync(runIds, t);
+                return await unit.StatisticsRepository.DeleteByIdsAsync(runIds, t);
             }, token).ConfigureAwait(false);
         }
 
@@ -311,6 +240,44 @@ namespace Pathfinding.Infrastructure.Business
                 await unitOfWork.RollbackAsync(token).ConfigureAwait(false);
                 throw;
             }
+        }
+
+        public async Task<bool> CreatePathfindingVertexAsync(int graphId, 
+            int vertexId, int index, CancellationToken token = default)
+        {
+            return await Transaction(async (unit, t) => 
+            {
+                var range = (await unit.RangeRepository.ReadByGraphIdAsync(graphId, t)).ToList();
+                var pathfindingRange = new PathfindingRange() { GraphId = graphId, Order = index, VertexId = vertexId };
+                range.Insert(index, pathfindingRange);
+                range.ForEach((x, i) =>
+                {
+                    x.IsSource = i == 0;
+                    x.IsTarget = i == range.Count - 1;
+                    x.Order = i;
+                });
+                await unit.RangeRepository.UpsertAsync(range, t);
+                return true;
+            }, token);
+        }
+
+        public async Task<RunStatisticsModel> CreateStatisticsAsync(CreateStatisticsRequest request, CancellationToken token = default)
+        {
+            return await Transaction(async (unit, t) =>
+            {
+                var statistics = mapper.Map<Statistics>(request);
+                var result = await unit.StatisticsRepository.CreateAsync(statistics, t);
+                return mapper.Map<RunStatisticsModel>(result);
+            }, token).ConfigureAwait(false);
+        }
+
+        public async Task<RunStatisticsModel> ReadStatisticAsync(int runId, CancellationToken token = default)
+        {
+            return await Transaction(async (unit, t) =>
+            {
+                var statistic = await unit.StatisticsRepository.ReadByIdAsync(runId, token);
+                return mapper.Map<RunStatisticsModel>(statistic);
+            }, token);
         }
     }
 }

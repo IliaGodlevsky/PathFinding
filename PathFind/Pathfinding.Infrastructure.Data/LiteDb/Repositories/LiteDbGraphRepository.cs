@@ -10,16 +10,16 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
     internal sealed class LiteDbGraphRepository : IGraphParametresRepository
     {
         private readonly ILiteCollection<Graph> collection;
-        private readonly LiteDbAlgorithmRunRepository algorithmRunRepository;
         private readonly LiteDbRangeRepository rangeRepository;
         private readonly LiteDbVerticesRepository verticesRepository;
+        private readonly LiteDbStatisticsRepository statisticsRepository;
 
         public LiteDbGraphRepository(ILiteDatabase db)
         {
             collection = db.GetCollection<Graph>(DbTables.Graphs);
-            algorithmRunRepository = new LiteDbAlgorithmRunRepository(db);
             rangeRepository = new LiteDbRangeRepository(db);
             verticesRepository = new LiteDbVerticesRepository(db);
+            statisticsRepository = new LiteDbStatisticsRepository(db);
         }
 
         public async Task<Graph> CreateAsync(Graph graph, CancellationToken token = default)
@@ -34,7 +34,7 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             // Reason: some repositories need the presence of values in the database
             await rangeRepository.DeleteByGraphIdAsync(graphId, token);
             await verticesRepository.DeleteVerticesByGraphIdAsync(graphId, token);
-            await algorithmRunRepository.DeleteByGraphIdAsync(graphId, token);
+            await statisticsRepository.DeleteByGraphId(graphId, token);
             return collection.Delete(graphId);
         }
 

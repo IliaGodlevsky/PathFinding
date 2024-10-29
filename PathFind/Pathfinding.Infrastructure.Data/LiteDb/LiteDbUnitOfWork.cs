@@ -20,8 +20,6 @@ namespace Pathfinding.Infrastructure.Data.LiteDb
 
         public IStatisticsRepository StatisticsRepository { get; }
 
-        public IAlgorithmRunRepository RunRepository { get; }
-
         public LiteDbUnitOfWork(string connectionString)
             : this(new ConnectionString(connectionString))
         {
@@ -44,7 +42,6 @@ namespace Pathfinding.Infrastructure.Data.LiteDb
             VerticesRepository = new LiteDbVerticesRepository(database);
             RangeRepository = new LiteDbRangeRepository(database);
             StatisticsRepository = new LiteDbStatisticsRepository(database);
-            RunRepository = new LiteDbAlgorithmRunRepository(database);
         }
 
         public void BeginTransaction()

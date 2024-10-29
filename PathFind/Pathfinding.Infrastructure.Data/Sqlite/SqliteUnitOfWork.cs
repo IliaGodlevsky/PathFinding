@@ -24,9 +24,6 @@ namespace Pathfinding.Infrastructure.Data.Sqlite
         public IStatisticsRepository StatisticsRepository 
             => new SqliteStatisticsRepository(connection, transaction);
 
-        public IAlgorithmRunRepository RunRepository
-            => new SqliteAlgorithmRunRepository(connection, transaction);
-
         public SqliteUnitOfWork(string connectionString)
         {
             connection = new SqliteConnection(connectionString);

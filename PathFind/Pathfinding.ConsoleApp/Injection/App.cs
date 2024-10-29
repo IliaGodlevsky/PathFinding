@@ -23,7 +23,6 @@ using Pathfinding.Logging.Loggers;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Commands;
 using Pathfinding.Service.Interface.Models.Serialization;
-using Pathfinding.Service.Interface.Models.Undefined;
 using System.Collections.Generic;
 
 namespace Pathfinding.ConsoleApp.Injection
@@ -70,17 +69,9 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<VonNeumannNeighborhoodFactory>().As<INeighborhoodFactory>()
                 .SingleInstance().WithMetadata(MetadataKeys.NameKey, NeighborhoodNames.VonNeumann);
 
-            builder.RegisterType<BinarySerializer<VisitedVerticesModel>>()
-                .As<ISerializer<IEnumerable<VisitedVerticesModel>>>().SingleInstance();
-            builder.RegisterType<BinarySerializer<CoordinateModel>>()
-                .As<ISerializer<IEnumerable<CoordinateModel>>>().SingleInstance();
-            builder.RegisterType<BinarySerializer<CostCoordinatePair>>()
-                .As<ISerializer<IEnumerable<CostCoordinatePair>>>().SingleInstance();
-
             builder.RegisterType<GraphMappingProfile<GraphVertexModel>>().As<Profile>().SingleInstance();
             builder.RegisterType<UntitledMappingProfile>().As<Profile>().SingleInstance();
             builder.RegisterType<HistoryMappingProfile<GraphVertexModel>>().As<Profile>().SingleInstance();
-            builder.RegisterType<AlgorithmRunMappingProfile>().As<Profile>().SingleInstance();
             builder.RegisterType<VerticesMappingProfile<GraphVertexModel>>().As<Profile>().SingleInstance();
             builder.RegisterType<StatisticsMappingProfile>().As<Profile>().SingleInstance();
 

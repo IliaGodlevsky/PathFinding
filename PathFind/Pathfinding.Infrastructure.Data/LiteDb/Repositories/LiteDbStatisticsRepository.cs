@@ -23,16 +23,46 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             return await Task.FromResult(entity);
         }
 
+        public Task<IEnumerable<Statistics>> CreateAsync(IEnumerable<Statistics> statistics, CancellationToken token = default)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<bool> DeleteByGraphId(int graphId, CancellationToken token = default)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<bool> DeleteByIdsAsync(IEnumerable<int> ids, CancellationToken token = default)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public async Task<Statistics> ReadByAlgorithmRunIdAsync(int runId, CancellationToken token = default)
         {
-            return await Task.FromResult(collection.FindOne(x => x.AlgorithmRunId == runId));
+            return await Task.FromResult(collection.FindOne(x => x.Id == runId));
+        }
+
+        public Task<IEnumerable<Statistics>> ReadByGraphIdAsync(int graphId, CancellationToken token = default)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<Statistics> ReadByIdAsync(int runId, CancellationToken token = default)
+        {
+            throw new System.NotImplementedException();
         }
 
         public async Task<IEnumerable<Statistics>> ReadByRunIdsAsync(IEnumerable<int> runIds, CancellationToken token = default)
         {
             var ids = runIds.Select(x => new BsonValue(x)).ToArray();
-            var query = Query.In(nameof(Statistics.AlgorithmRunId), ids);
+            var query = Query.In(nameof(Statistics.Id), ids);
             return await Task.FromResult(collection.Find(query).ToArray());
+        }
+
+        public Task<int> ReadStatisticsCountAsync(int graphId, CancellationToken token = default)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

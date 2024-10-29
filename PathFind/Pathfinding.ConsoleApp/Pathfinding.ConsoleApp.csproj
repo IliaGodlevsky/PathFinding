@@ -58,6 +58,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>AppSettings.settings</DependentUpon>
     </Compile>
+    <Compile Include="GraphStatuses.cs" />
     <Compile Include="Injection\MetadataKeys.cs" />
     <Compile Include="Messages\ViewModel\GraphBecameReadOnlyMessage.cs" />
     <Compile Include="Messages\View\HeuristicsViewModelChangedMessage.cs" />

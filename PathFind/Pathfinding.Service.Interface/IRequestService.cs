@@ -16,15 +16,18 @@ namespace Pathfinding.Service.Interface
     {
         Task<GraphModel<T>> ReadGraphAsync(int graphId, CancellationToken token = default);
 
-        Task<IReadOnlyCollection<RunStatisticsModel>> ReadRunStatisticsAsync(int graphId,
+        Task<IReadOnlyCollection<RunStatisticsModel>> ReadStatisticsAsync(int graphId,
             CancellationToken token = default);
 
-        Task<AlgorithmRunHistoryModel> ReadRunHistoryAsync(int runId, CancellationToken token = default);
+        Task<RunStatisticsModel> ReadStatisticAsync(int runId,
+            CancellationToken token = default);
 
         Task<IReadOnlyCollection<GraphInformationModel>> ReadAllGraphInfoAsync(CancellationToken token = default);
 
         Task<IReadOnlyCollection<PathfindingHistoryModel<T>>> ReadPathfindingHistoriesAsync(IEnumerable<int> graphIds,
             CancellationToken token = default);
+
+        Task<RunStatisticsModel> CreateStatisticsAsync(CreateStatisticsRequest request, CancellationToken token = default);
 
         Task<IReadOnlyCollection<PathfindingRangeModel>> ReadRangeAsync(int graphId,
             CancellationToken token = default);
@@ -38,20 +41,14 @@ namespace Pathfinding.Service.Interface
         Task<IReadOnlyCollection<PathfindingHistorySerializationModel>> ReadSerializationHistoriesAsync(IEnumerable<int> graphIds,
             CancellationToken token = default);
 
-        Task<GraphModel<T>> CreateGraphAsync(GraphSerializationModel graph,
-            CancellationToken token = default);
-
         Task<GraphModel<T>> CreateGraphAsync(CreateGraphRequest<T> graph,
-            CancellationToken token = default);
-
-        Task<IReadOnlyCollection<AlgorithmRunHistoryModel>> CreateRunHistoriesAsync(IEnumerable<CreateAlgorithmRunHistoryRequest> histories,
             CancellationToken token = default);
 
         Task<bool> UpdateVerticesAsync(UpdateVerticesRequest<T> request,
             CancellationToken token = default);
 
-        Task<bool> UpsertRangeAsync(UpsertPathfindingRangeRequest request,
-            CancellationToken token = default);
+        Task<bool> CreatePathfindingVertexAsync(int graphId,
+            int vertexId, int index, CancellationToken token = default);
 
         Task<bool> DeleteRangeAsync(IEnumerable<T> request,
             CancellationToken token = default);

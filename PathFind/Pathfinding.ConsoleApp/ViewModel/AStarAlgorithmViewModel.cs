@@ -9,6 +9,7 @@ using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Undefined;
+using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Shared.Primitives;
 using ReactiveUI;
 using System;
@@ -48,7 +49,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public override string AlgorithmId => AlgorithmNames.AStar;
 
-        protected override void AppendStatistics(RunStatisticsModel model)
+        protected override void AppendStatistics(CreateStatisticsRequest model)
         {
             model.StepRule = stepRule.Name;
             model.Heuristics = heuristic.Name;

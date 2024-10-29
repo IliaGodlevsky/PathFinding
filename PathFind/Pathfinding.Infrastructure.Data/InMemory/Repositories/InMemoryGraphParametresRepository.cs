@@ -1,8 +1,7 @@
 ﻿using Pathfinding.Domain.Core;
-using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Repositories;
-using Pathfinding.Infrastructure.Data.Pathfinding;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,18 +13,18 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
 
         private readonly HashSet<Graph> set = new(EntityComparer<int>.Interface);
 
-        private readonly InMemoryAlgorithmRunRepository algorithmRunRepository;
         private readonly InMemoryRangeRepository rangeRepository;
         private readonly InMemoryVerticesRepository verticesRepository;
+        private readonly InMemoryStatisicsRepository statisticsRepository;
 
         public InMemoryGraphParametresRepository(
-            InMemoryAlgorithmRunRepository algorithmRunRepository,
             InMemoryRangeRepository rangeRepository,
-            InMemoryVerticesRepository verticesRepository)
+            InMemoryVerticesRepository verticesRepository,
+            InMemoryStatisicsRepository statisticsRepository)
         {
-            this.algorithmRunRepository = algorithmRunRepository;
             this.rangeRepository = rangeRepository;
             this.verticesRepository = verticesRepository;
+            this.statisticsRepository = statisticsRepository;
         }
 
         public Task<Graph> CreateAsync(Graph graph,
@@ -43,7 +42,7 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
             // Reason: some repositories need the presence of values in the database
             await rangeRepository.DeleteByGraphIdAsync(graphId, token);
             await verticesRepository.DeleteVerticesByGraphIdAsync(graphId, token);
-            await algorithmRunRepository.DeleteByGraphIdAsync(graphId, token);
+            await statisticsRepository.DeleteByGraphId(graphId, token);
             var deleted = set.RemoveWhere(x => x.Id == graphId);
             return await Task.FromResult(deleted == 1);
         }
@@ -86,10 +85,17 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
             return false;
         }
 
-        public Task<IReadOnlyDictionary<int, int>> ReadObstaclesCountAsync(IEnumerable<int> graphIds,
+        public async Task<IReadOnlyDictionary<int, int>> ReadObstaclesCountAsync(IEnumerable<int> graphIds,
             CancellationToken token = default)
         {
-            throw new KeyNotFoundException();
+            var result = new Dictionary<int, int>();
+            foreach (var graph in graphIds)
+            {
+                var vertices = await verticesRepository.ReadVerticesByGraphIdAsync(graph, token);
+                int obstacles = vertices.Where(x => x.IsObstacle).Count();
+                result.Add(graph, obstacles);
+            }
+            return result;
         }
     }
 }

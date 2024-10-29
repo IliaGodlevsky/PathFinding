@@ -6,30 +6,19 @@ namespace Pathfinding.Service.Interface.Models
 {
     public static class ModelBuilder
     {
-        public static CreateAlgorithmRunHistoryRequest CreateRunHistoryRequest() => new CreateAlgorithmRunHistoryRequest();
+        public static CreateStatisticsRequest CreateStatisticsRequest() => new CreateStatisticsRequest();
 
-        public static CreateAlgorithmRunHistoryRequest WithRun(this CreateAlgorithmRunHistoryRequest request, int graphId, string algorithmId)
+        public static CreateStatisticsRequest WithStatistics(this CreateStatisticsRequest request,
+            int graphId, string algorithmName, IGraphPath path, 
+            int visited, string resultStatus, TimeSpan elapsed)
         {
-            request.Run = new CreateAlgorithmRunRequest()
-            {
-                GraphId = graphId,
-                AlgorithmId = algorithmId
-            };
-            return request;
-        }
-
-        public static CreateAlgorithmRunHistoryRequest WithStatistics(this CreateAlgorithmRunHistoryRequest request,
-            string algorithmId, IGraphPath path, int visited, string resultStatus, TimeSpan elapsed)
-        {
-            request.Statistics = new RunStatisticsModel()
-            {
-                AlgorithmId = algorithmId,
-                Cost = path.Cost,
-                Elapsed = elapsed,
-                Steps = path.Count,
-                ResultStatus = resultStatus,
-                Visited = visited
-            };
+            request.AlgorithmName = algorithmName;
+            request.Cost = path.Cost;
+            request.Elapsed = elapsed;
+            request.Steps = path.Count;
+            request.ResultStatus = resultStatus;
+            request.Visited = visited;
+            request.GraphId = graphId;
             return request;
         }
     }

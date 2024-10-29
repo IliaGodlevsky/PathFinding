@@ -146,25 +146,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             await ExecuteSafe(async () =>
             {
-                var range = (await Task.Run(() => service.ReadRangeAsync(GraphId))
-                    .ConfigureAwait(false))
-                    .Select(x => (x.Id, x.VertexId))
-                    .ToList();
                 var vertices = pathfindingRange.ToList();
                 var index = vertices.IndexOf(vertex);
-                range.Insert(index, (Id: 0, VertexId: vertex.Id));
-                var request = new UpsertPathfindingRangeRequest()
-                {
-                    GraphId = GraphId,
-                    Ranges = range.Select((x, i) =>
-                        (x.Id,
-                        IsSource: i == 0,
-                        IsTarget: i == range.Count - 1 && range.Count > 1,
-                        x.VertexId,
-                        Order: i))
-                    .ToList()
-                };
-                await Task.Run(() => service.UpsertRangeAsync(request))
+                await Task.Run(() => service.CreatePathfindingVertexAsync(GraphId, vertex.Id, index))
                     .ConfigureAwait(false);
             }, logger.Error).ConfigureAwait(false);
         }

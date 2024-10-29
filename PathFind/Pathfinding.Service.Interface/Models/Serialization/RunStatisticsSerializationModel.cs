@@ -6,7 +6,7 @@ namespace Pathfinding.Service.Interface.Models.Serialization
 {
     public class RunStatisticsSerializationModel : IBinarySerializable
     {
-        public int AlgorithmRunId { get; set; }
+        public string AlgorithmName { get; set; }
 
         public string Heuristics { get; set; } = null;
 
@@ -26,7 +26,7 @@ namespace Pathfinding.Service.Interface.Models.Serialization
 
         public void Deserialize(BinaryReader reader)
         {
-            AlgorithmRunId = reader.ReadInt32();
+            AlgorithmName = reader.ReadString();
             Heuristics = reader.ReadNullableString();
             Weight = reader.ReadNullableDouble();
             StepRule = reader.ReadNullableString();
@@ -39,7 +39,7 @@ namespace Pathfinding.Service.Interface.Models.Serialization
 
         public void Serialize(BinaryWriter writer)
         {
-            writer.Write(AlgorithmRunId);
+            writer.Write(AlgorithmName);
             writer.WriteNullableString(Heuristics);
             writer.Write(Weight);
             writer.WriteNullableString(StepRule);
