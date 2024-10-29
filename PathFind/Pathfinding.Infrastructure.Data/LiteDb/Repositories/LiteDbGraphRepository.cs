@@ -2,6 +2,7 @@
 using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,13 +14,16 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
         private readonly LiteDbRangeRepository rangeRepository;
         private readonly LiteDbVerticesRepository verticesRepository;
         private readonly LiteDbStatisticsRepository statisticsRepository;
+        private readonly ILiteCollection<Vertex> vertexCollection;
 
         public LiteDbGraphRepository(ILiteDatabase db)
         {
             collection = db.GetCollection<Graph>(DbTables.Graphs);
             rangeRepository = new LiteDbRangeRepository(db);
-            verticesRepository = new LiteDbVerticesRepository(db);
+            verticesRepository = new LiteDbVerticesRepository (db);
             statisticsRepository = new LiteDbStatisticsRepository(db);
+            vertexCollection = db.GetCollection<Vertex>(DbTables.Vertices);
+
         }
 
         public async Task<Graph> CreateAsync(Graph graph, CancellationToken token = default)
@@ -63,9 +67,12 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             return await Task.FromResult(collection.Count());
         }
 
-        public Task<IReadOnlyDictionary<int, int>> ReadObstaclesCountAsync(IEnumerable<int> graphIds, CancellationToken token = default)
+        public async Task<IReadOnlyDictionary<int, int>> ReadObstaclesCountAsync(IEnumerable<int> graphIds, CancellationToken token = default)
         {
-            throw new System.NotImplementedException();
+            return await Task.FromResult(vertexCollection
+                .Find(x => graphIds.Contains(x.GraphId) && x.IsObstacle)
+                .GroupBy(x => x.GraphId)
+                .ToDictionary(x => x.Key, x => x.Count()));
         }
 
         public async Task<bool> UpdateAsync(Graph graph, CancellationToken token = default)

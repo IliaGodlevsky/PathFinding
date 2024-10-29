@@ -15,7 +15,7 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             CREATE TABLE IF NOT EXISTS {DbTables.Statistics} (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                 GraphId INTEGER NOT NULL,
-                AlgorithmName INTEGER NOT NULL,
+                AlgorithmName TEXT NOT NULL,
                 Heuristics TEXT,
                 Weight REAL,
                 StepRule TEXT,

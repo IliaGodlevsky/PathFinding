@@ -10,52 +10,54 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
     internal sealed class InMemoryStatisicsRepository : IStatisticsRepository
     {
         private int id = 0;
-
         private readonly HashSet<Statistics> set = new(EntityComparer<int>.Instance);
 
-        public Task<Statistics> CreateAsync(Statistics entity,
-            CancellationToken token = default)
+        public Task<Statistics> CreateAsync(Statistics entity, CancellationToken token = default)
         {
             entity.Id = ++id;
             set.Add(entity);
             return Task.FromResult(entity);
         }
 
-        public async Task<Statistics> ReadByAlgorithmRunIdAsync(int runId,
-            CancellationToken token = default)
+        public Task<IEnumerable<Statistics>> CreateAsync(IEnumerable<Statistics> statistics, CancellationToken token = default)
         {
-            var result = set.FirstOrDefault(x => x.Id == runId);
-            return await Task.FromResult(result);
+            foreach (var entity in statistics)
+            {
+                entity.Id = ++id;
+                set.Add(entity);
+            }
+            return Task.FromResult(statistics);
         }
 
         public Task<IEnumerable<Statistics>> ReadByGraphIdAsync(int graphId, CancellationToken token = default)
         {
-            throw new System.NotImplementedException();
+            var results = set.Where(s => s.GraphId == graphId).ToList();
+            return Task.FromResult((IEnumerable<Statistics>)results);
         }
 
         public Task<int> ReadStatisticsCountAsync(int graphId, CancellationToken token = default)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<IEnumerable<Statistics>> CreateAsync(IEnumerable<Statistics> statistics, CancellationToken token = default)
-        {
-            throw new System.NotImplementedException();
+            var count = set.Count(s => s.GraphId == graphId);
+            return Task.FromResult(count);
         }
 
         public Task<bool> DeleteByGraphId(int graphId, CancellationToken token = default)
         {
-            throw new System.NotImplementedException();
+            var removed = set.RemoveWhere(s => s.GraphId == graphId) > 0;
+            return Task.FromResult(removed);
         }
 
         public Task<bool> DeleteByIdsAsync(IEnumerable<int> ids, CancellationToken token = default)
         {
-            throw new System.NotImplementedException();
+            var removed = set.RemoveWhere(s => ids.Contains(s.Id)) > 0;
+            return Task.FromResult(removed);
         }
 
-        public Task<Statistics> ReadByIdAsync(int runId, CancellationToken token = default)
+        public async Task<Statistics> ReadByIdAsync(int id, CancellationToken token = default)
         {
-            throw new System.NotImplementedException();
+            var tracking = new Statistics() { Id = id };
+            set.TryGetValue(tracking, out var statistics);
+            return await Task.FromResult(statistics);
         }
     }
 }

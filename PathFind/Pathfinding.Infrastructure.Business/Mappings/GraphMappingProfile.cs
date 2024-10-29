@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
-using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Serialization;
 using Pathfinding.Service.Interface.Models.Undefined;

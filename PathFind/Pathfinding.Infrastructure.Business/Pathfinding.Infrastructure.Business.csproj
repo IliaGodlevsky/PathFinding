@@ -94,7 +94,6 @@
     <Compile Include="Algorithms\Events\VertexProcessedEventHandler.cs" />
     <Compile Include="Algorithms\GraphPaths\BidirectGraphPath.cs" />
     <Compile Include="Algorithms\Heuristics\DiagonalDistance.cs" />
-    <Compile Include="Algorithms\Heuristics\NotImplementedHeuristic.cs" />
     <Compile Include="Algorithms\Heuristics\WeightedHeuristic.cs" />
     <Compile Include="Algorithms\SnakeAlgorithm.cs" />
     <Compile Include="Algorithms\DepthFirstAlgorithm.cs" />
@@ -122,7 +121,6 @@
     <Compile Include="Algorithms\StepRules\CardinalStepRule.cs" />
     <Compile Include="Algorithms\StepRules\DefaultStepRule.cs" />
     <Compile Include="Algorithms\StepRules\LandscapeStepRule.cs" />
-    <Compile Include="Algorithms\StepRules\NotImplementedStepRule.cs" />
     <Compile Include="Algorithms\StepRules\WalkStepRule.cs" />
     <Compile Include="Algorithms\WaveAlgorithm.cs" />
     <Compile Include="Commands\ExcludeSourceVertex.cs" />

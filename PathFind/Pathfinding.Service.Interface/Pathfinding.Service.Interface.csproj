@@ -47,7 +47,6 @@
     <Compile Include="Extensions\BinaryReaderExtensions.cs" />
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
     <Compile Include="Extensions\PathfindingRangeCommandExtensions.cs" />
-    <Compile Include="Extensions\RequestServiceExtensions.cs" />
     <Compile Include="Extensions\SerializerExtensions.cs" />
     <Compile Include="IAlgorithm.cs" />
     <Compile Include="IBinarySerializable.cs" />
@@ -78,7 +77,6 @@
     <Compile Include="Models\Undefined\VertexAssembleModel.cs" />
     <Compile Include="Models\Undefined\VertexCostModel.cs" />
     <Compile Include="Models\Undefined\VisitedVerticesModel.cs" />
-    <Compile Include="Requests\Create\UpsertPathfindingRangeRequest.cs" />
     <Compile Include="Requests\Update\UpdateVerticesRequest.cs" />
   </ItemGroup>
   <ItemGroup />

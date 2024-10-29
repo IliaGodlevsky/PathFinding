@@ -9,7 +9,6 @@ using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Commands;
 using Pathfinding.Service.Interface.Extensions;
-using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Shared.Extensions;
 using ReactiveUI;
 using System;

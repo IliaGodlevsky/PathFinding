@@ -82,7 +82,7 @@ namespace Pathfinding.ConsoleApp.Injection
                 return mappingConfig.CreateMapper(context.Resolve);
             }).As<IMapper>().SingleInstance();
 
-            builder.Register(_=> new SqliteUnitOfWorkFactory(AppSettings.Default.ConnectionString))
+            builder.Register(_ => new SqliteUnitOfWorkFactory(AppSettings.Default.ConnectionString))
                 .As<IUnitOfWorkFactory>().SingleInstance();
 
             builder.RegisterType<RequestService<GraphVertexModel>>().As<IRequestService<GraphVertexModel>>().SingleInstance();
