@@ -1,8 +1,6 @@
 ﻿using Pathfinding.Shared.Extensions;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Pathfinding.Service.Interface.Extensions
 {

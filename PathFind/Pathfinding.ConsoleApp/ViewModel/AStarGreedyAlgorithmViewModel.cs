@@ -7,9 +7,9 @@ using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
-using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Service.Interface.Requests.Create;
 using ReactiveUI;
+using System;
 using System.Collections.Generic;
 
 namespace Pathfinding.ConsoleApp.ViewModel
@@ -32,10 +32,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
         }
 
         private double weight;
-        public double Weight 
-        { 
-            get => weight; 
-            set => this.RaiseAndSetIfChanged(ref weight, value); 
+        public double Weight
+        {
+            get => weight;
+            set => this.RaiseAndSetIfChanged(ref weight, value);
         }
 
         public AStarGreedyAlgorithmViewModel(
@@ -47,6 +47,15 @@ namespace Pathfinding.ConsoleApp.ViewModel
         }
 
         public override string AlgorithmId { get; } = AlgorithmNames.AStarGreedy;
+
+        protected override IObservable<bool> CanStartAlgorithm()
+        {
+            return this.WhenAnyValue(
+                x => x.Graph.Graph,
+                x => x.Graph.Id,
+                x => x.Weight,
+                (graph, id, weight) => id > 0 && graph != null && weight > 0);
+        }
 
         protected override void AppendStatistics(CreateStatisticsRequest model)
         {

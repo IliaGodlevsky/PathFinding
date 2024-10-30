@@ -9,10 +9,8 @@ using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
-using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Service.Interface.Models;
 using Pathfinding.Service.Interface.Models.Read;
-using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Shared.Primitives;
 using ReactiveUI;
@@ -60,13 +58,13 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             if (msg.GraphIds.Contains(Graph.Id))
             {
-                Graph = new() 
-                { 
-                    Graph = Graph<GraphVertexModel>.Empty, 
-                    Id = 0, 
-                    Name = string.Empty, 
-                    Neighborhood = string.Empty, 
-                    SmoothLevel = string.Empty 
+                Graph = new()
+                {
+                    Graph = Graph<GraphVertexModel>.Empty,
+                    Id = 0,
+                    Name = string.Empty,
+                    Neighborhood = string.Empty,
+                    SmoothLevel = string.Empty
                 };
             }
         }
@@ -144,7 +142,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     status = RunStatuses.Failure;
                     logger.Error(ex);
                     AddSubAlgorithm();
-                } 
+                }
                 finally
                 {
                     stopwatch.Stop();

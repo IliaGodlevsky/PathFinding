@@ -118,11 +118,11 @@ namespace Pathfinding.Infrastructure.Business
         public async Task<GraphModel<T>> ReadGraphAsync(int graphId,
             CancellationToken token = default)
         {
-            return await Transaction(async (unitOfWork, t) => 
-            { 
+            return await Transaction(async (unitOfWork, t) =>
+            {
                 var result = await unitOfWork.ReadGraphAsync<T>(graphId, mapper, t);
-                var factory = result.Neighborhood == NeighborhoodNames.Moore 
-                    ? (INeighborhoodFactory)new MooreNeighborhoodFactory() 
+                var factory = result.Neighborhood == NeighborhoodNames.Moore
+                    ? (INeighborhoodFactory)new MooreNeighborhoodFactory()
                     : new VonNeumannNeighborhoodFactory();
                 var layer = new NeighborhoodLayer(factory);
                 layer.Overlay((IGraph<IVertex>)result.Graph);
@@ -162,7 +162,7 @@ namespace Pathfinding.Infrastructure.Business
         public async Task<IReadOnlyCollection<PathfindingRangeModel>> ReadRangeAsync(int graphId,
             CancellationToken token = default)
         {
-            return await Transaction(async (unitOfWork, t) 
+            return await Transaction(async (unitOfWork, t)
                 => await unitOfWork.GetRangeAsync(graphId, mapper, t), token).ConfigureAwait(false);
         }
 
@@ -242,10 +242,10 @@ namespace Pathfinding.Infrastructure.Business
             }
         }
 
-        public async Task<bool> CreatePathfindingVertexAsync(int graphId, 
+        public async Task<bool> CreatePathfindingVertexAsync(int graphId,
             int vertexId, int index, CancellationToken token = default)
         {
-            return await Transaction(async (unit, t) => 
+            return await Transaction(async (unit, t) =>
             {
                 var range = (await unit.RangeRepository.ReadByGraphIdAsync(graphId, t)).ToList();
                 var pathfindingRange = new PathfindingRange() { GraphId = graphId, Order = index, VertexId = vertexId };

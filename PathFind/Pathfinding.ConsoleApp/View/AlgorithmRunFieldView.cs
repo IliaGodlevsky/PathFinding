@@ -11,22 +11,17 @@ using System;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class AlgorithmRunFieldView : FrameView
     {
-        private const int IntialSpeed = 90;
+        private const int Speed = 75;
+        private const int MaxSpeed = int.MaxValue;
 
         private readonly CompositeDisposable vertexDisposables = new();
         private readonly CompositeDisposable disposables = new();
-
-        private readonly AlgorithmRunFieldViewModel runViewModel;
-        private readonly AlgorithmRunReviewFieldViewModel reviewViewModel;
-
-        private int VerticesToVisualizePerTime { get; set; } = IntialSpeed;
 
         public AlgorithmRunFieldView(AlgorithmRunFieldViewModel viewModel,
             AlgorithmRunReviewFieldViewModel reviewViewModel,
@@ -35,7 +30,7 @@ namespace Pathfinding.ConsoleApp.View
             Visible = false;
             X = 0;
             Y = 0;
-            Width = Dim.Percent(67);
+            Width = Dim.Percent(66);
             Height = Dim.Fill();
             Border = new Border()
             {
@@ -43,8 +38,6 @@ namespace Pathfinding.ConsoleApp.View
                 BorderStyle = BorderStyle.Rounded,
                 Title = "Run field"
             };
-            this.runViewModel = viewModel;
-            this.reviewViewModel = reviewViewModel;
             viewModel.WhenAnyValue(x => x.GraphState)
                 .Do(x => RenderGraphState(x, viewModel))
                 .Subscribe()
@@ -75,15 +68,30 @@ namespace Pathfinding.ConsoleApp.View
             RemoveAll();
             vertexDisposables.Clear();
             var children = new List<RunVertexView>(graphState.Count);
-            VerticesToVisualizePerTime = IntialSpeed;
 
             foreach (var vertex in graphState)
             {
                 var view = new RunVertexView(vertex);
                 view.Events().MouseClick
-                    .Do(async x => await Visualize(viewModel))
-                    .Subscribe()
+                    .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.WheeledUp))
+                    .Select(x => Speed)
+                    .InvokeCommand(viewModel, x => x.ProcessNextCommand)
                     .DisposeWith(vertexDisposables);
+                view.Events().MouseClick
+                    .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button1DoubleClicked))
+                    .Select(x => MaxSpeed)
+                    .InvokeCommand(viewModel, x => x.ProcessNextCommand)
+                    .DisposeWith(vertexDisposables);
+                view.Events().MouseClick
+                    .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button3DoubleClicked))
+                    .Select(x => MaxSpeed)
+                    .InvokeCommand(viewModel, x => x.ReverseNextCommand)
+                    .DisposeWith(vertexDisposables);
+                view.Events().MouseClick
+                   .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.WheeledDown))
+                   .Select(x => Speed)
+                   .InvokeCommand(viewModel, x => x.ReverseNextCommand)
+                   .DisposeWith(vertexDisposables);
                 children.Add(view);
                 view.DisposeWith(vertexDisposables);
             }
@@ -92,17 +100,6 @@ namespace Pathfinding.ConsoleApp.View
             {
                 Add(children.ToArray());
             });
-        }
-
-        private async Task Visualize(AlgorithmRunBaseViewModel viewModel)
-        {
-            var command = viewModel.ProcessNextCommand;
-            while (viewModel.Remained > 0)
-            {
-                await command.Execute(VerticesToVisualizePerTime);
-                VerticesToVisualizePerTime++;
-                Application.Refresh();
-            }
         }
     }
 }

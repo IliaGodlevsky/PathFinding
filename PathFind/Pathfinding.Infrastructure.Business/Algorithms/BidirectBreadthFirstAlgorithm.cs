@@ -1,13 +1,12 @@
 ﻿using Pathfinding.Domain.Interface;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
     public abstract class BidirectBreadthFirstAlgorithm<TStorage> : BidirectWaveAlgorithm<TStorage>
         where TStorage : new()
     {
-        protected BidirectBreadthFirstAlgorithm(IEnumerable<IVertex> pathfindingRange) 
+        protected BidirectBreadthFirstAlgorithm(IEnumerable<IVertex> pathfindingRange)
             : base(pathfindingRange)
         {
         }

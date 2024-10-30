@@ -60,7 +60,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
 
             var graph = CreateGraph();
-            var range = rangeCoordinates.Select(x=> graph[x]).ToArray();
+            var range = rangeCoordinates.Select(x => graph[x]).ToArray();
 
             try
             {

@@ -26,9 +26,11 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
                 Visited INTEGER NOT NULL,
                 Spread TEXT,
                 FOREIGN KEY (GraphId) REFERENCES {DbTables.Graphs}(Id) ON DELETE CASCADE
-            );";
+            );
+            CREATE INDEX IF NOT EXISTS idx_statistics_id ON {DbTables.Statistics}(Id);
+            CREATE INDEX IF NOT EXISTS idx_statistics_graphid ON {DbTables.Statistics}(GraphId);";
 
-        public SqliteStatisticsRepository(SqliteConnection connection, 
+        public SqliteStatisticsRepository(SqliteConnection connection,
             SqliteTransaction transaction) : base(connection, transaction)
         {
         }

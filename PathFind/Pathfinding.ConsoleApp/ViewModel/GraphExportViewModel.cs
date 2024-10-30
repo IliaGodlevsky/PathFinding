@@ -7,7 +7,6 @@ using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Service.Interface.Models.Serialization;
-using Pathfinding.Shared.Extensions;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;

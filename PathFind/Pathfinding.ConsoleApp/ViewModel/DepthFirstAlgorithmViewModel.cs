@@ -6,7 +6,6 @@ using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
-using Pathfinding.Service.Interface.Models.Undefined;
 using System.Collections.Generic;
 
 namespace Pathfinding.ConsoleApp.ViewModel

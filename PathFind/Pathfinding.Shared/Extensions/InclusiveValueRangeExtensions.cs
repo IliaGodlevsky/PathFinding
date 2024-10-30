@@ -89,7 +89,7 @@ namespace Pathfinding.Shared.Extensions
         public static bool Contains<T>(this InclusiveValueRange<T> range, T value)
             where T : IComparable<T>
         {
-            return value.IsLessOrEqualThan(range.UpperValueOfRange) 
+            return value.IsLessOrEqualThan(range.UpperValueOfRange)
                 && value.IsGreaterOrEqualThan(range.LowerValueOfRange);
         }
     }

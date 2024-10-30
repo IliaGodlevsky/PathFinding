@@ -1,5 +1,4 @@
-﻿using Pathfinding.Service.Interface.Models.Undefined;
-using Pathfinding.Service.Interface.Requests.Create;
+﻿using Pathfinding.Service.Interface.Requests.Create;
 using System;
 
 namespace Pathfinding.Service.Interface.Models
@@ -9,7 +8,7 @@ namespace Pathfinding.Service.Interface.Models
         public static CreateStatisticsRequest CreateStatisticsRequest() => new CreateStatisticsRequest();
 
         public static CreateStatisticsRequest WithStatistics(this CreateStatisticsRequest request,
-            int graphId, string algorithmName, IGraphPath path, 
+            int graphId, string algorithmName, IGraphPath path,
             int visited, string resultStatus, TimeSpan elapsed)
         {
             request.AlgorithmName = algorithmName;

@@ -53,8 +53,25 @@ namespace Pathfinding.ConsoleApp.View
             heuristics.SelectedItem = 0;
             weightTextField.Events()
                 .TextChanging
-                .Where(x => double.TryParse(x.NewText.ToString(), out _))
-                .Select(x => WeightRange.ReturnInRange(double.Parse(x.NewText.ToString())))
+                .Select(x =>
+                {
+                    if (string.IsNullOrEmpty(x.NewText.ToString()))
+                    {
+                        return -1;
+                    }
+                    else if (double.TryParse(x.NewText.ToString(), out var value)
+                        && !WeightRange.Contains(value))
+                    {
+                        var returned = WeightRange.ReturnInRange(value);
+                        x.NewText = returned.ToString();
+                        return returned;
+                    }
+                    else if (double.TryParse(x.NewText.ToString(), out var val))
+                    {
+                        return val;
+                    }
+                    return -1;
+                })
                 .BindTo(msg.ViewModel, x => x.Weight)
                 .DisposeWith(disposables);
             msg.ViewModel.Weight = DefaultWeight;

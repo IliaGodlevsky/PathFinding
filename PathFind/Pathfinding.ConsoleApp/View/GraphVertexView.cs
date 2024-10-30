@@ -39,7 +39,7 @@ namespace Pathfinding.ConsoleApp.View
                 .Do(x => Text = x)
                 .Subscribe()
                 .DisposeWith(disposables);
-            if(!model.IsSource && !model.IsTarget && !model.IsTransit)
+            if (!model.IsSource && !model.IsTarget && !model.IsTransit)
             {
                 model.IsRegular = !model.IsObstacle;
             }

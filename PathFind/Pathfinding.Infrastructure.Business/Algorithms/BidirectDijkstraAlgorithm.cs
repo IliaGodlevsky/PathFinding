@@ -14,7 +14,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
     {
         protected readonly IStepRule stepRule;
 
-        public BidirectDijkstraAlgorithm(IEnumerable<IVertex> pathfindingRange, IStepRule stepRule) 
+        public BidirectDijkstraAlgorithm(IEnumerable<IVertex> pathfindingRange, IStepRule stepRule)
             : base(pathfindingRange)
         {
             this.stepRule = stepRule;
@@ -35,7 +35,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 
         protected override IGraphPath GetSubPath()
         {
-            return new BidirectGraphPath(forwardTraces.ToDictionary(), 
+            return new BidirectGraphPath(forwardTraces.ToDictionary(),
                 backwardTraces.ToDictionary(), Intersection, stepRule);
         }
 

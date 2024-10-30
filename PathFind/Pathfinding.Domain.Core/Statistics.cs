@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Pathfinding.Domain.Core
+﻿namespace Pathfinding.Domain.Core
 {
     public class Statistics : IEntity<int>
     {

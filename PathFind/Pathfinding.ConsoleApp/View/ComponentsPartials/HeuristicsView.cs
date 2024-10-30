@@ -44,7 +44,10 @@ namespace Pathfinding.ConsoleApp.View
                 }
                 if (char.IsDigit(keyChar))
                 {
-                    return;
+                    if (weightTextField.Text.Length + 1 <= 4)
+                    {
+                        return;
+                    }
                 }
                 if (keyChar.ToString() == decimalSeparator
                   && !weightTextField.Text.ToString().Contains(decimalSeparator))

@@ -2,12 +2,13 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
+using System.Linq;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal sealed class AlgorithmRunFieldViewModel : AlgorithmRunBaseViewModel
     {
-        public AlgorithmRunFieldViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger) 
+        public AlgorithmRunFieldViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger)
             : base(messenger)
         {
             messenger.Register<RunCreatedMessaged>(this, OnRunCreated);
@@ -20,6 +21,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Send(rangeMsg);
             var range = rangeMsg.PathfindingRange;
             Vertices = GetVerticesStates(msg.SubAlgorithms, range, graph);
+            Processed = new(Vertices.Reverse());
             GraphState = graph.Values;
         }
     }

@@ -38,14 +38,14 @@ namespace Pathfinding.ConsoleApp.View
             var canExecute = viewModel.StartAlgorithmCommand.CanExecute;
             this.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
-                .Zip(viewModel.StartAlgorithmCommand.CanExecute)
-                .Where(x => x.Second)
-                .Select(x => x.First)
                 .Do(async x =>
                 {
-                    messenger.Send(new OpenAlgorithmRunViewMessage());
-                    messenger.Send(new CloseAlgorithmCreationViewMessage());
-                    await viewModel.StartAlgorithmCommand.Execute(x);
+                    if (await canExecute.FirstOrDefaultAsync())
+                    {
+                        messenger.Send(new OpenAlgorithmRunViewMessage());
+                        messenger.Send(new CloseAlgorithmCreationViewMessage());
+                        await viewModel.StartAlgorithmCommand.Execute(x);
+                    }
                 })
                 .Subscribe()
                 .DisposeWith(disposables);

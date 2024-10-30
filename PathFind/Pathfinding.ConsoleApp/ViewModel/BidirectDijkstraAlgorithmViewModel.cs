@@ -6,18 +6,17 @@ using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
-using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Service.Interface.Requests.Create;
 using ReactiveUI;
 using System.Collections.Generic;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class BidirectDijkstraAlgorithmViewModel 
+    internal sealed class BidirectDijkstraAlgorithmViewModel
         : PathfindingProcessViewModel, IRequireStepRuleViewModel
     {
         private (string Name, IStepRule Rule) stepRule;
-        public (string Name, IStepRule Rule) StepRule 
+        public (string Name, IStepRule Rule) StepRule
         {
             get => stepRule;
             set => this.RaiseAndSetIfChanged(ref stepRule, value);
@@ -26,8 +25,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public override string AlgorithmId { get; } = AlgorithmNames.BidirectDijkstra;
 
         public BidirectDijkstraAlgorithmViewModel(
-            IRequestService<GraphVertexModel> service, 
-            [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger, ILog logger)
+            IRequestService<GraphVertexModel> service,
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger, ILog logger)
             : base(service, messenger, logger)
         {
         }

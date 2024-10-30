@@ -18,10 +18,11 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
                 Neighborhood TEXT NOT NULL,
                 SmoothLevel TEXT NOT NULL,
                 Dimensions TEXT NOT NULL
-            );";
+            );
+            CREATE INDEX IF NOT EXISTS idx_graph_id ON {DbTables.Graphs}(Id);";
 
-        public SqliteGraphRepository(SqliteConnection connection, 
-            SqliteTransaction transaction) 
+        public SqliteGraphRepository(SqliteConnection connection,
+            SqliteTransaction transaction)
             : base(connection, transaction)
         {
         }

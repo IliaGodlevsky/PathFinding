@@ -27,38 +27,42 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         protected IGraph<GraphVertexModel> Graph { get; set; }
 
-        protected Queue<Action> Vertices { get; set; } = new();
+        protected Stack<Action<bool>> Processed { get; set; } = new();
 
-        public int Remained => Vertices.Count;
+        protected Stack<Action<bool>> Vertices { get; set; } = new();
 
         public ReactiveCommand<int, Unit> ProcessNextCommand { get; }
+
+        public ReactiveCommand<int, Unit> ReverseNextCommand { get; }
 
         protected AlgorithmRunBaseViewModel(IMessenger messenger)
         {
             ProcessNextCommand = ReactiveCommand.Create<int>(ProcessNext);
+            ReverseNextCommand = ReactiveCommand.Create<int>(ReverseNext);
             messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
             this.messenger = messenger;
         }
 
-        protected Queue<Action> GetVerticesStates(IEnumerable<SubAlgorithmModel> subAlgorithms,
+        protected Stack<Action<bool>> GetVerticesStates(IEnumerable<SubAlgorithmModel> subAlgorithms,
             IReadOnlyCollection<Coordinate> range,
             IReadOnlyDictionary<Coordinate, RunVertexModel> graph)
         {
-            var vertices = new Queue<Action>();
+            Processed.Clear();
+            var vertices = new Queue<Action<bool>>();
             range.Skip(1).Take(range.Count - 2)
-                .ForEach(transit => vertices.Enqueue(() => graph[transit].IsTransit = true));
-            vertices.Enqueue(() => graph[range.First()].IsSource = true);
-            vertices.Enqueue(() => graph[range.Last()].IsTarget = true);
+                .ForEach(transit => vertices.Enqueue(x => graph[transit].IsTransit = x));
+            vertices.Enqueue(x => graph[range.First()].IsSource = x);
+            vertices.Enqueue(x => graph[range.Last()].IsTarget = x);
             foreach (var sub in subAlgorithms)
             {
                 foreach (var (Visited, Enqueued) in sub.Visited)
                 {
-                    vertices.Enqueue(() => graph[Visited].IsVisited = true);
-                    Enqueued.ForEach(enqueued => vertices.Enqueue(() => graph[enqueued].IsEnqueued = true));
+                    vertices.Enqueue(x => graph[Visited].IsVisited = x);
+                    Enqueued.ForEach(enqueued => vertices.Enqueue(x => graph[enqueued].IsEnqueued = x));
                 }
-                sub.Path.ForEach(path => vertices.Enqueue(() => graph[path].IsPath = true));
+                sub.Path.ForEach(path => vertices.Enqueue(x => graph[path].IsPath = x));
             }
-            return vertices;
+            return new(vertices.Reverse());
         }
 
         private void OnGraphActivated(object recipient, GraphActivatedMessage msg)
@@ -68,7 +72,22 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void ProcessNext(int number)
         {
-            while (number-- > 0 && Remained > 0) Vertices.Dequeue().Invoke();
+            while (number-- > 0 && Vertices.Count > 0)
+            {
+                var action = Vertices.Pop();
+                Processed.Push(action);
+                action(true);
+            }
+        }
+
+        private void ReverseNext(int number)
+        {
+            while (number-- > 0 && Processed.Count > 0)
+            {
+                var action = Processed.Pop();
+                Vertices.Push(action);
+                action(false);
+            }
         }
 
         protected Dictionary<Coordinate, RunVertexModel> CreateGraph()

@@ -1,20 +1,20 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
+using Pathfinding.Infrastructure.Business.Extensions;
+using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface;
-using Pathfinding.Shared.Primitives;
 using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Primitives;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Pathfinding.Infrastructure.Business.Extensions;
-using Pathfinding.Infrastructure.Data.Extensions;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
 {
     public sealed class BidirectGraphPath : IGraphPath
     {
-        private readonly IReadOnlyDictionary<Coordinate, IVertex> forwardTraces; 
+        private readonly IReadOnlyDictionary<Coordinate, IVertex> forwardTraces;
         private readonly IReadOnlyDictionary<Coordinate, IVertex> backwardTraces;
         private readonly IVertex intersection;
         private readonly IStepRule stepRule;
@@ -30,8 +30,8 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
         public int Count => count.Value;
 
         public BidirectGraphPath(
-            IReadOnlyDictionary<Coordinate, IVertex> forwardTraces, 
-            IReadOnlyDictionary<Coordinate, IVertex> backwardTraces, 
+            IReadOnlyDictionary<Coordinate, IVertex> forwardTraces,
+            IReadOnlyDictionary<Coordinate, IVertex> backwardTraces,
             IVertex intersection,
             IStepRule stepRule)
         {
@@ -46,7 +46,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
 
         public BidirectGraphPath(
             IReadOnlyDictionary<Coordinate, IVertex> forwardTraces,
-            IReadOnlyDictionary<Coordinate, IVertex> backwardTraces, 
+            IReadOnlyDictionary<Coordinate, IVertex> backwardTraces,
             IVertex intersection)
             : this(forwardTraces, backwardTraces, intersection, new DefaultStepRule())
         {

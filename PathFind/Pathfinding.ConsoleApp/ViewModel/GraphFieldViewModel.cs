@@ -59,7 +59,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<GraphBecameReadOnlyMessage>(this, OnGraphBecameReadonly);
-            var canExecute = this.WhenAnyValue(x => x.GraphId, x => x.Graph, x=>x.IsReadOnly,
+            var canExecute = this.WhenAnyValue(x => x.GraphId, x => x.Graph, x => x.IsReadOnly,
                 (id, graph, isRead) => id > 0 && graph != null && !isRead);
             ReverseVertexCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(ReverseVertex, canExecute);
             IncreaseVertexCostCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(IncreaseVertexCost, canExecute);
@@ -78,7 +78,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     vertex.Enumerate().ToList());
                 await ExecuteSafe(async () =>
                 {
-                    await Task.Run(()=> service.UpdateVerticesAsync(request)).ConfigureAwait(false);
+                    await Task.Run(() => service.UpdateVerticesAsync(request)).ConfigureAwait(false);
                 }, logger.Error);
             }
         }

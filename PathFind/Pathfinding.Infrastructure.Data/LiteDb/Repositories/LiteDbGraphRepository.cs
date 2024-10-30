@@ -20,10 +20,10 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
         {
             collection = db.GetCollection<Graph>(DbTables.Graphs);
             rangeRepository = new LiteDbRangeRepository(db);
-            verticesRepository = new LiteDbVerticesRepository (db);
+            verticesRepository = new LiteDbVerticesRepository(db);
             statisticsRepository = new LiteDbStatisticsRepository(db);
             vertexCollection = db.GetCollection<Vertex>(DbTables.Vertices);
-
+            collection.EnsureIndex(x => x.Id);
         }
 
         public async Task<Graph> CreateAsync(Graph graph, CancellationToken token = default)

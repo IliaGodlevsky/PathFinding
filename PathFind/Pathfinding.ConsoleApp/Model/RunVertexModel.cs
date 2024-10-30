@@ -25,9 +25,13 @@ namespace Pathfinding.ConsoleApp.Model
             {
                 if (!IsRange() && !IsPathVertex())
                 {
-                    if (IsEnqueued)
+                    if (value && IsEnqueued)
                     {
                         IsEnqueued = false;
+                    }
+                    if (value == false && !IsVisited)
+                    {
+                        IsEnqueued = true;
                     }
                     this.RaiseAndSetIfChanged(ref isVisited, value);
                 }
@@ -42,7 +46,7 @@ namespace Pathfinding.ConsoleApp.Model
             {
                 if (!IsRange() && !IsPathVertex())
                 {
-                    if (IsVisited)
+                    if (value && IsVisited)
                     {
                         IsVisited = false;
                     }
@@ -60,6 +64,15 @@ namespace Pathfinding.ConsoleApp.Model
                 if (!IsRange())
                 {
                     if (!isPath)
+                    {
+                        this.RaiseAndSetIfChanged(ref isPath, value);
+                    }
+                    else if (IsCrossedPath && value == false)
+                    {
+                        IsCrossedPath = false;
+                        isPath = true;
+                    }
+                    else if (IsPath && value == false)
                     {
                         this.RaiseAndSetIfChanged(ref isPath, value);
                     }

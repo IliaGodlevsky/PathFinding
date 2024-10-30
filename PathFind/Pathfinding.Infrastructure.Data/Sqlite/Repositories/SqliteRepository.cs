@@ -13,7 +13,7 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
         protected SqliteRepository(SqliteConnection connection,
             SqliteTransaction transaction)
         {
-            this.connection= connection;
+            this.connection = connection;
             this.transaction = transaction;
             connection.Execute(CreateTableScript);
         }

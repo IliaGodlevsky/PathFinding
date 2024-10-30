@@ -20,10 +20,12 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
                 VertexId INTEGER NOT NULL,
                 ""Order"" INTEGER NOT NULL,
                 FOREIGN KEY (GraphId) REFERENCES {DbTables.Graphs}(Id) ON DELETE CASCADE
-            );";
+            );
+            CREATE INDEX IF NOT EXISTS idx_range_vertexid ON {DbTables.Ranges}(VertexId);
+            CREATE INDEX IF NOT EXISTS idx_range_graphid ON {DbTables.Ranges}(GraphId);";
 
-        public SqliteRangeRepository(SqliteConnection connection, 
-            SqliteTransaction transaction) 
+        public SqliteRangeRepository(SqliteConnection connection,
+            SqliteTransaction transaction)
             : base(connection, transaction)
         {
         }
@@ -86,7 +88,7 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
                 WHERE Id = @Id";
 
             await connection.ExecuteAsync(
-                new CommandDefinition(updateQuery, entities.Where(e => e.Id > 0).ToArray(), transaction, cancellationToken: token) );
+                new CommandDefinition(updateQuery, entities.Where(e => e.Id > 0).ToArray(), transaction, cancellationToken: token));
 
             const string insertQuery = @$"
                 INSERT INTO {DbTables.Ranges} 

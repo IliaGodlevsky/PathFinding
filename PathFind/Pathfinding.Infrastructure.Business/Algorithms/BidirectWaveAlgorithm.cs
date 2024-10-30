@@ -1,15 +1,13 @@
 ﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Shared.Extensions;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
     public abstract class BidirectWaveAlgorithm<TStorage> : BidirectPathfindingAlgorithm<TStorage>
         where TStorage : new()
     {
-        protected BidirectWaveAlgorithm(IEnumerable<IVertex> pathfindingRange) 
+        protected BidirectWaveAlgorithm(IEnumerable<IVertex> pathfindingRange)
             : base(pathfindingRange)
         {
         }

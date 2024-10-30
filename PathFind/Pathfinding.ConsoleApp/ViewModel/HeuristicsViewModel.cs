@@ -18,7 +18,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 .AsReadOnly();
         }
 
-        
+
         public HeuristicsViewModel(IEnumerable<Meta<IHeuristic>> heuristics)
             : this(heuristics.Select(x => ((string)x.Metadata[MetadataKeys.NameKey], x.Value)))
         {

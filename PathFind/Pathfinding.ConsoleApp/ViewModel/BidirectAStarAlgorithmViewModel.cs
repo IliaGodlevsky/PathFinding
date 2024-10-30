@@ -4,13 +4,12 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Algorithms;
-using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
-using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Service.Interface.Requests.Create;
 using ReactiveUI;
+using System;
 using System.Collections.Generic;
 
 namespace Pathfinding.ConsoleApp.ViewModel
@@ -46,6 +45,15 @@ namespace Pathfinding.ConsoleApp.ViewModel
         }
 
         public override string AlgorithmId => AlgorithmNames.BidirectAStar;
+
+        protected override IObservable<bool> CanStartAlgorithm()
+        {
+            return this.WhenAnyValue(
+                x => x.Graph.Graph,
+                x => x.Graph.Id,
+                x => x.Weight,
+                (graph, id, weight) => id > 0 && graph != null && weight > 0);
+        }
 
         protected override void AppendStatistics(CreateStatisticsRequest model)
         {

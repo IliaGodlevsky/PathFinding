@@ -4,13 +4,10 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Algorithms;
-using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
-using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Service.Interface.Requests.Create;
-using Pathfinding.Shared.Primitives;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -35,7 +32,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         }
 
         private double weight;
-        public double Weight 
+        public double Weight
         {
             get => weight;
             set => this.RaiseAndSetIfChanged(ref weight, value);
@@ -45,6 +42,18 @@ namespace Pathfinding.ConsoleApp.ViewModel
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ILog logger) : base(service, messenger, logger)
         {
+        }
+
+        protected override IObservable<bool> CanStartAlgorithm()
+        {
+            return this.WhenAnyValue(
+                x => x.Graph.Graph,
+                x => x.Graph.Id,
+                x => x.Weight,
+                (graph, id, weight) =>
+                {
+                    return id > 0 && graph != null && weight > 0;
+                });
         }
 
         public override string AlgorithmId => AlgorithmNames.AStar;

@@ -15,6 +15,8 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
         public LiteDbRangeRepository(ILiteDatabase db)
         {
             collection = db.GetCollection<PathfindingRange>(DbTables.Ranges);
+            collection.EnsureIndex(x => x.VertexId);
+            collection.EnsureIndex(x => x.GraphId);
         }
 
         public async Task<IEnumerable<PathfindingRange>> CreateAsync(IEnumerable<PathfindingRange> entities, CancellationToken token = default)

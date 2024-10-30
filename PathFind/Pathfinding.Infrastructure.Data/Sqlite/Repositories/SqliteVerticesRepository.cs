@@ -10,7 +10,7 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
 {
     internal sealed class SqliteVerticesRepository : SqliteRepository, IVerticesRepository
     {
-        protected override string CreateTableScript { get; } = 
+        protected override string CreateTableScript { get; } =
             @$"CREATE TABLE IF NOT EXISTS {DbTables.Vertices} (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                 GraphId INTEGER NOT NULL,
@@ -24,7 +24,7 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             CREATE INDEX IF NOT EXISTS idx_vertex_id ON {DbTables.Vertices}(Id);
             CREATE INDEX IF NOT EXISTS idx_vertex_graphid ON {DbTables.Vertices}(GraphId);";
 
-        public SqliteVerticesRepository(SqliteConnection connection, 
+        public SqliteVerticesRepository(SqliteConnection connection,
             SqliteTransaction transaction) : base(connection, transaction)
         {
         }

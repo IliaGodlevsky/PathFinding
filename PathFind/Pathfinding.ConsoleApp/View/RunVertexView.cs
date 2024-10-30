@@ -24,14 +24,14 @@ namespace Pathfinding.ConsoleApp.View
             Width = LabelWidth;
             Text = model.Cost.CurrentCost.ToString();
 
-            BindTo(x => x.IsObstacle, ColorConstants.ObstacleVertexColor, 0);
+            BindTo(x => x.IsObstacle, ColorConstants.ObstacleVertexColor, ColorConstants.RegularVertexColor, 0);
             BindTo(x => x.IsTarget, ColorConstants.TargetVertexColor);
             BindTo(x => x.IsSource, ColorConstants.SourceVertexColor);
             BindTo(x => x.IsTransit, ColorConstants.TranstiVertexColor);
-            BindTo(x => x.IsPath, ColorConstants.PathVertexColor);
+            BindTo(x => x.IsPath, ColorConstants.PathVertexColor, ColorConstants.VisitedVertexColor);
             BindTo(x => x.IsVisited, ColorConstants.VisitedVertexColor);
             BindTo(x => x.IsEnqueued, ColorConstants.EnqueuedVertexColor);
-            BindTo(x => x.IsCrossedPath, ColorConstants.CrossedPathColor);
+            BindTo(x => x.IsCrossedPath, ColorConstants.CrossedPathColor, ColorConstants.PathVertexColor);
 
             Data = model;
         }
@@ -44,11 +44,11 @@ namespace Pathfinding.ConsoleApp.View
         }
 
         private void BindTo(Expression<Func<RunVertexModel, bool>> expression,
-            Color toColor, int toSkip = 1)
+            Color toColor, Color falseColor = ColorConstants.RegularVertexColor, int toSkip = 1)
         {
             model.WhenAnyValue(expression)
                .Skip(toSkip)
-               .Select(x => x ? Create(toColor) : Create(ColorConstants.RegularVertexColor))
+               .Select(x => x ? Create(toColor) : Create(falseColor))
                .BindTo(this, x => x.ColorScheme)
                .DisposeWith(disposables);
         }

@@ -15,6 +15,8 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
         public LiteDbStatisticsRepository(ILiteDatabase db)
         {
             collection = db.GetCollection<Statistics>(DbTables.Statistics);
+            collection.EnsureIndex(x => x.GraphId);
+            collection.EnsureIndex(x => x.Id);
         }
 
         public async Task<Statistics> CreateAsync(Statistics entity, CancellationToken token = default)

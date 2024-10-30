@@ -15,7 +15,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
         private readonly Dictionary<Coordinate, double> backwardHeuristics;
         private readonly IHeuristic heuristic;
 
-        public BidirectAStarAlgorithm(IEnumerable<IVertex> pathfindingRange) 
+        public BidirectAStarAlgorithm(IEnumerable<IVertex> pathfindingRange)
             : this(pathfindingRange, new DefaultStepRule(), new ManhattanDistance())
         {
         }
