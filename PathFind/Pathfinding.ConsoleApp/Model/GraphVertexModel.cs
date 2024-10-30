@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.ConsoleApp.Model
 {
-    public class GraphVertexModel : ReactiveObject, IVertex, IEntity<int>
+    internal sealed class GraphVertexModel : ReactiveObject, IVertex, IEntity<int>
     {
         public int Id { get; set; }
 
@@ -32,8 +32,7 @@ namespace Pathfinding.ConsoleApp.Model
             set
             {
                 this.RaiseAndSetIfChanged(ref isSource, value);
-                if (!isSource) IsRegular = true;
-                else IsRegular = false;
+                IsRegular = !isSource;
             }
         }
 
@@ -44,8 +43,7 @@ namespace Pathfinding.ConsoleApp.Model
             set
             {
                 this.RaiseAndSetIfChanged(ref isTarget, value);
-                if (!isTarget) IsRegular = true;
-                else IsRegular = false;
+                IsRegular = !isTarget;
             }
         }
 
@@ -56,8 +54,7 @@ namespace Pathfinding.ConsoleApp.Model
             set
             {
                 this.RaiseAndSetIfChanged(ref isTransit, value);
-                if (!isTransit) IsRegular = true;
-                else IsRegular = false;
+                IsRegular = !isTransit;
             }
         }
 

@@ -24,14 +24,15 @@ namespace Pathfinding.ConsoleApp.View
             Width = LabelWidth;
             Text = model.Cost.CurrentCost.ToString();
 
-            BindTo(x => x.IsObstacle, ColorConstants.ObstacleVertexColor, ColorConstants.RegularVertexColor, 0);
+            BindTo(x => x.IsObstacle, ColorConstants.ObstacleVertexColor,
+                ColorConstants.RegularVertexColor, 0);
             BindTo(x => x.IsTarget, ColorConstants.TargetVertexColor);
             BindTo(x => x.IsSource, ColorConstants.SourceVertexColor);
             BindTo(x => x.IsTransit, ColorConstants.TranstiVertexColor);
-            BindTo(x => x.IsPath, ColorConstants.PathVertexColor, ColorConstants.VisitedVertexColor);
+            BindTo(x => x.IsPath, ColorConstants.PathVertexColor);
             BindTo(x => x.IsVisited, ColorConstants.VisitedVertexColor);
             BindTo(x => x.IsEnqueued, ColorConstants.EnqueuedVertexColor);
-            BindTo(x => x.IsCrossedPath, ColorConstants.CrossedPathColor, ColorConstants.PathVertexColor);
+            BindTo(x => x.IsCrossedPath, ColorConstants.CrossedPathColor);
 
             Data = model;
         }

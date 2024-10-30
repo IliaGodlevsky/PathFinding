@@ -23,17 +23,14 @@ namespace Pathfinding.ConsoleApp.Model
             get => isVisited;
             set
             {
-                if (!IsRange() && !IsPathVertex())
+                if (value && IsEnqueued)
                 {
-                    if (value && IsEnqueued)
-                    {
-                        IsEnqueued = false;
-                    }
-                    if (value == false && !IsVisited)
-                    {
-                        IsEnqueued = true;
-                    }
-                    this.RaiseAndSetIfChanged(ref isVisited, value);
+                    IsEnqueued = false;
+                }
+                this.RaiseAndSetIfChanged(ref isVisited, value);
+                if (!IsVisited)
+                {
+                    IsEnqueued = true;
                 }
             }
         }
@@ -44,14 +41,11 @@ namespace Pathfinding.ConsoleApp.Model
             get => isEnqueued;
             set
             {
-                if (!IsRange() && !IsPathVertex())
+                if (value && IsVisited)
                 {
-                    if (value && IsVisited)
-                    {
-                        IsVisited = false;
-                    }
-                    this.RaiseAndSetIfChanged(ref isEnqueued, value);
+                    IsVisited = false;
                 }
+                this.RaiseAndSetIfChanged(ref isEnqueued, value);
             }
         }
 
@@ -59,29 +53,7 @@ namespace Pathfinding.ConsoleApp.Model
         public bool IsPath
         {
             get => isPath;
-            set
-            {
-                if (!IsRange())
-                {
-                    if (!isPath)
-                    {
-                        this.RaiseAndSetIfChanged(ref isPath, value);
-                    }
-                    else if (IsCrossedPath && value == false)
-                    {
-                        IsCrossedPath = false;
-                        isPath = true;
-                    }
-                    else if (IsPath && value == false)
-                    {
-                        this.RaiseAndSetIfChanged(ref isPath, value);
-                    }
-                    else
-                    {
-                        IsCrossedPath = true;
-                    }
-                }
-            }
+            set => this.RaiseAndSetIfChanged(ref isPath, value);
         }
 
         private bool isCrossedPath;
@@ -115,16 +87,6 @@ namespace Pathfinding.ConsoleApp.Model
         public IVertexCost Cost { get; set; }
 
         public ICollection<IVertex> Neighbours { get; } = new HashSet<IVertex>();
-
-        private bool IsRange()
-        {
-            return IsSource || IsTarget || IsTransit;
-        }
-
-        private bool IsPathVertex()
-        {
-            return IsPath || IsCrossedPath;
-        }
 
         public bool Equals(IVertex other) => other.IsEqual(this);
 

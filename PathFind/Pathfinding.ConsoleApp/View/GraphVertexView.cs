@@ -9,7 +9,7 @@ using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    public class GraphVertexView : Label
+    internal sealed class GraphVertexView : Label
     {
         private const int LabelWidth = 3;
 

@@ -69,7 +69,6 @@
     <Compile Include="Messages\ViewModel\RunSelectedMessage.cs" />
     <Compile Include="Messages\View\CloseAlgorithmRunFieldViewMessage.cs" />
     <Compile Include="Messages\View\SpreadViewModelChangedMessage.cs" />
-    <Compile Include="Model\Factories\RunVertexModelFactory.cs" />
     <Compile Include="Model\RunVertexModel.cs" />
     <Compile Include="ViewModel\AlgorithmRunBaseViewModel.cs" />
     <Compile Include="ViewModel\AlgorithmRunReviewFieldViewModel.cs" />

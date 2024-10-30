@@ -11,13 +11,14 @@ using System;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class AlgorithmRunFieldView : FrameView
     {
-        private const int Speed = 75;
+        private const int Speed = 90;
         private const int MaxSpeed = int.MaxValue;
 
         private readonly CompositeDisposable vertexDisposables = new();
@@ -62,7 +63,8 @@ namespace Pathfinding.ConsoleApp.View
             vertexDisposables.Clear();
         }
 
-        private void RenderGraphState(IReadOnlyCollection<RunVertexModel> graphState,
+        private void RenderGraphState(
+            IReadOnlyCollection<RunVertexModel> graphState,
             AlgorithmRunBaseViewModel viewModel)
         {
             RemoveAll();
@@ -72,6 +74,11 @@ namespace Pathfinding.ConsoleApp.View
             foreach (var vertex in graphState)
             {
                 var view = new RunVertexView(vertex);
+                view.Events().MouseClick
+                    .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button2Clicked))
+                    .Do(async async => await ProcessAll(viewModel))
+                    .Subscribe()
+                    .DisposeWith(vertexDisposables);
                 view.Events().MouseClick
                     .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.WheeledUp))
                     .Select(x => Speed)
@@ -100,6 +107,17 @@ namespace Pathfinding.ConsoleApp.View
             {
                 Add(children.ToArray());
             });
+        }
+
+        private async Task ProcessAll(AlgorithmRunBaseViewModel viewModel)
+        {
+            var command = viewModel.ProcessNextCommand;
+            bool next = true;
+            while (next)
+            {
+                next = await command.Execute(Speed);
+                Application.Refresh();
+            }
         }
     }
 }
