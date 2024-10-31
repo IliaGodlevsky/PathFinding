@@ -21,32 +21,14 @@ namespace Pathfinding.ConsoleApp.Model
         public bool IsVisited
         {
             get => isVisited;
-            set
-            {
-                if (value && IsEnqueued)
-                {
-                    IsEnqueued = false;
-                }
-                this.RaiseAndSetIfChanged(ref isVisited, value);
-                if (!IsVisited)
-                {
-                    IsEnqueued = true;
-                }
-            }
+            set => this.RaiseAndSetIfChanged(ref isVisited, value);
         }
 
         private bool isEnqueued;
         public bool IsEnqueued
         {
             get => isEnqueued;
-            set
-            {
-                if (value && IsVisited)
-                {
-                    IsVisited = false;
-                }
-                this.RaiseAndSetIfChanged(ref isEnqueued, value);
-            }
+            set => this.RaiseAndSetIfChanged(ref isEnqueued, value);
         }
 
         private bool isPath;

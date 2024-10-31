@@ -9,8 +9,6 @@ using Pathfinding.Shared.Primitives;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
 using System.Linq;
 
 namespace Pathfinding.ConsoleApp.ViewModel
@@ -51,29 +49,43 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             Processed.Clear();
             var vertices = new Queue<Action<bool>>();
-
+            //TODO: Add comments, cause this algorithm requires an explanation
             range.Skip(1).Take(range.Count - 2)
                 .ForEach(transit => vertices.Enqueue(x => graph[transit].IsTransit = x));
             vertices.Enqueue(x => graph[range.First()].IsSource = x);
             vertices.Enqueue(x => graph[range.Last()].IsTarget = x);
-
+            var previousVisited = new HashSet<Coordinate>();
             var previousPaths = new HashSet<Coordinate>();
-            foreach (var sub in subAlgorithms)
+            var previousEnqueued = new HashSet<Coordinate>();
+            foreach (var subAlgorithm in subAlgorithms)
             {
-                foreach (var (Visited, Enqueued) in sub.Visited)
+                var visitedIgnore = range.Concat(previousPaths).ToArray();
+                foreach (var (Visited, Enqueued) in subAlgorithm.Visited)
                 {
-                    Visited.Enumerate().Except(range)
-                        .Except(previousPaths)
+                    Enqueued.Intersect(previousVisited)
+                        .Except(visitedIgnore)
+                        .ForEach(x => vertices.Enqueue(z => graph[x].IsVisited = !z));
+                    var intersect = Enqueued.Intersect(previousEnqueued)
+                        .Except(visitedIgnore)
+                        .ForEach(x => vertices.Enqueue(z => graph[x].IsVisited = !z))
+                        .ToList();
+                    Visited.Enumerate()
+                        .Except(visitedIgnore)
                         .ForEach(x => vertices.Enqueue(z => graph[x].IsVisited = z));
-                    Enqueued.Except(range).Except(previousPaths)
+                    Enqueued.Except(visitedIgnore)
+                        .Except(intersect)
                         .ForEach(enqueued => vertices.Enqueue(x => graph[enqueued].IsEnqueued = x));
                 }
-
-                sub.Path.Except(range).Intersect(previousPaths)
+                previousVisited.AddRange(subAlgorithm.Visited.Select(x => x.Visited));
+                previousEnqueued.AddRange(subAlgorithm.Visited.SelectMany(x => x.Enqueued));
+                var exceptRangePath = subAlgorithm.Path.Except(range).ToArray();
+                exceptRangePath
+                    .Intersect(previousPaths)
                     .ForEach(y => vertices.Enqueue(z => graph[y].IsCrossedPath = z));
-                sub.Path.Except(range).Except(previousPaths)
+                exceptRangePath
+                    .Except(previousPaths)
                     .ForEach(y => vertices.Enqueue(z => graph[y].IsPath = z));
-                previousPaths.AddRange(sub.Path);
+                previousPaths.AddRange(subAlgorithm.Path);
             }
             return new(vertices.Reverse());
         }

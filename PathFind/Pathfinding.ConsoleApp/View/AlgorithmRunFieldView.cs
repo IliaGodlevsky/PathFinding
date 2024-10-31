@@ -18,7 +18,7 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class AlgorithmRunFieldView : FrameView
     {
-        private const int Speed = 90;
+        private const int Speed = 125;
         private const int MaxSpeed = int.MaxValue;
 
         private readonly CompositeDisposable vertexDisposables = new();
@@ -74,31 +74,8 @@ namespace Pathfinding.ConsoleApp.View
             foreach (var vertex in graphState)
             {
                 var view = new RunVertexView(vertex);
-                view.Events().MouseClick
-                    .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button2Clicked))
-                    .Do(async async => await ProcessAll(viewModel))
-                    .Subscribe()
-                    .DisposeWith(vertexDisposables);
-                view.Events().MouseClick
-                    .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.WheeledUp))
-                    .Select(x => Speed)
-                    .InvokeCommand(viewModel, x => x.ProcessNextCommand)
-                    .DisposeWith(vertexDisposables);
-                view.Events().MouseClick
-                    .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button1DoubleClicked))
-                    .Select(x => MaxSpeed)
-                    .InvokeCommand(viewModel, x => x.ProcessNextCommand)
-                    .DisposeWith(vertexDisposables);
-                view.Events().MouseClick
-                    .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button3DoubleClicked))
-                    .Select(x => MaxSpeed)
-                    .InvokeCommand(viewModel, x => x.ReverseNextCommand)
-                    .DisposeWith(vertexDisposables);
-                view.Events().MouseClick
-                   .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.WheeledDown))
-                   .Select(x => Speed)
-                   .InvokeCommand(viewModel, x => x.ReverseNextCommand)
-                   .DisposeWith(vertexDisposables);
+                SubscribeOnProcessNext(view, viewModel);
+                SubscribeOnReverseNext(view, viewModel);
                 children.Add(view);
                 view.DisposeWith(vertexDisposables);
             }
@@ -107,6 +84,41 @@ namespace Pathfinding.ConsoleApp.View
             {
                 Add(children.ToArray());
             });
+        }
+
+        private void SubscribeOnProcessNext(RunVertexView view,
+            AlgorithmRunBaseViewModel viewModel)
+        {
+            view.Events().MouseClick
+                .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button2Clicked))
+                .Do(async async => await ProcessAll(viewModel))
+                .Subscribe()
+                .DisposeWith(vertexDisposables);
+            view.Events().MouseClick
+                .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.WheeledUp))
+                .Select(x => Speed)
+                .InvokeCommand(viewModel, x => x.ProcessNextCommand)
+                .DisposeWith(vertexDisposables);
+            view.Events().MouseClick
+                .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button1DoubleClicked))
+                .Select(x => MaxSpeed)
+                .InvokeCommand(viewModel, x => x.ProcessNextCommand)
+                .DisposeWith(vertexDisposables);
+        }
+
+        private void SubscribeOnReverseNext(RunVertexView view,
+            AlgorithmRunBaseViewModel viewModel)
+        {
+            view.Events().MouseClick
+                .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button3DoubleClicked))
+                .Select(x => MaxSpeed)
+                .InvokeCommand(viewModel, x => x.ReverseNextCommand)
+                .DisposeWith(vertexDisposables);
+            view.Events().MouseClick
+               .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.WheeledDown))
+               .Select(x => Speed)
+               .InvokeCommand(viewModel, x => x.ReverseNextCommand)
+               .DisposeWith(vertexDisposables);
         }
 
         private async Task ProcessAll(AlgorithmRunBaseViewModel viewModel)

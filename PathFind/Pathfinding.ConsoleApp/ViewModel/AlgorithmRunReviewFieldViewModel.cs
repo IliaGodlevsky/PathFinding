@@ -17,6 +17,7 @@ using Pathfinding.Shared.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
@@ -28,11 +29,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
             ILog log)
             : base(messenger)
         {
-            messenger.Register<RunActivatedMessage>(this, OnRunActivated);
+            messenger.Register<RunActivatedMessage>(this, async (r, msg) => await OnRunActivated(r, msg));
             this.log = log;
         }
 
-        private void OnRunActivated(object recipient, RunActivatedMessage msg)
+        private async Task OnRunActivated(object recipient, RunActivatedMessage msg)
         {
             var subAlgorithms = new List<SubAlgorithmModel>();
             var visitedVertices = new List<(Coordinate Visited, IReadOnlyList<Coordinate> Enqueued)>();
@@ -86,51 +87,51 @@ namespace Pathfinding.ConsoleApp.ViewModel
             {
                 AddSubAlgorithm();
             }
-            Vertices = GetVerticesStates(subAlgorithms, rangeCoordinates, graph);
+            Vertices = await Task.Run(() => GetVerticesStates(subAlgorithms, rangeCoordinates, graph));
             GraphState = graph.Values;
         }
 
         private IHeuristic GetHeuristic(RunStatisticsModel statistics)
         {
-            switch (statistics.Heuristics)
+            return statistics.Heuristics switch
             {
-                case HeuristicNames.Euclidian: return new EuclidianDistance().WithWeight(statistics.Weight);
-                case HeuristicNames.Chebyshev: return new ChebyshevDistance().WithWeight(statistics.Weight);
-                case HeuristicNames.Diagonal: return new DiagonalDistance().WithWeight(statistics.Weight);
-                case HeuristicNames.Manhattan: return new ManhattanDistance().WithWeight(statistics.Weight);
-                case HeuristicNames.Cosine: return new CosineDistance().WithWeight(statistics.Weight);
-                default: throw new NotImplementedException($"Unknown heuristic: {statistics.Heuristics}");
-            }
+                HeuristicNames.Euclidian => new EuclidianDistance().WithWeight(statistics.Weight),
+                HeuristicNames.Chebyshev => new ChebyshevDistance().WithWeight(statistics.Weight),
+                HeuristicNames.Diagonal => new DiagonalDistance().WithWeight(statistics.Weight),
+                HeuristicNames.Manhattan => new ManhattanDistance().WithWeight(statistics.Weight),
+                HeuristicNames.Cosine => new CosineDistance().WithWeight(statistics.Weight),
+                _ => throw new NotImplementedException($"Unknown heuristic: {statistics.Heuristics}"),
+            };
         }
 
         private IStepRule GetStepRule(RunStatisticsModel statistics)
         {
-            switch (statistics.StepRule)
+            return statistics.StepRule switch
             {
-                case StepRuleNames.Default: return new DefaultStepRule();
-                case StepRuleNames.Landscape: return new LandscapeStepRule();
-                default: throw new NotImplementedException($"Unknown step rule: {statistics.StepRule}");
-            }
+                StepRuleNames.Default => new DefaultStepRule(),
+                StepRuleNames.Landscape => new LandscapeStepRule(),
+                _ => throw new NotImplementedException($"Unknown step rule: {statistics.StepRule}"),
+            };
         }
 
         private PathfindingProcess GetAlgorithm(RunStatisticsModel statistics, IReadOnlyCollection<RunVertexModel> range)
         {
-            switch (statistics.AlgorithmName)
+            return statistics.AlgorithmName switch
             {
-                case AlgorithmNames.Dijkstra: return new DijkstraAlgorithm(range, GetStepRule(statistics));
-                case AlgorithmNames.BidirectDijkstra: return new BidirectDijkstraAlgorithm(range, GetStepRule(statistics));
-                case AlgorithmNames.DepthFirst: return new DepthFirstAlgorithm(range);
-                case AlgorithmNames.AStar: return new AStarAlgorithm(range, GetStepRule(statistics), GetHeuristic(statistics));
-                case AlgorithmNames.BidirectAStar: return new BidirectAStarAlgorithm(range, GetStepRule(statistics), GetHeuristic(statistics));
-                case AlgorithmNames.CostGreedy: return new CostGreedyAlgorithm(range, GetStepRule(statistics));
-                case AlgorithmNames.DistanceFirst: return new DistanceFirstAlgorithm(range, GetHeuristic(statistics));
-                case AlgorithmNames.Snake: return new SnakeAlgorithm(range);
-                case AlgorithmNames.AStarGreedy: return new AStarGreedyAlgorithm(range, GetHeuristic(statistics), GetStepRule(statistics));
-                case AlgorithmNames.Lee: return new LeeAlgorithm(range);
-                case AlgorithmNames.BidirectLee: return new BidirectLeeAlgorithm(range);
-                case AlgorithmNames.AStarLee: return new AStarLeeAlgorithm(range, GetHeuristic(statistics));
-                default: throw new NotImplementedException($"Unknown algorithm name: {statistics.AlgorithmName}");
-            }
+                AlgorithmNames.Dijkstra => new DijkstraAlgorithm(range, GetStepRule(statistics)),
+                AlgorithmNames.BidirectDijkstra => new BidirectDijkstraAlgorithm(range, GetStepRule(statistics)),
+                AlgorithmNames.DepthFirst => new DepthFirstAlgorithm(range),
+                AlgorithmNames.AStar => new AStarAlgorithm(range, GetStepRule(statistics), GetHeuristic(statistics)),
+                AlgorithmNames.BidirectAStar => new BidirectAStarAlgorithm(range, GetStepRule(statistics), GetHeuristic(statistics)),
+                AlgorithmNames.CostGreedy => new CostGreedyAlgorithm(range, GetStepRule(statistics)),
+                AlgorithmNames.DistanceFirst => new DistanceFirstAlgorithm(range, GetHeuristic(statistics)),
+                AlgorithmNames.Snake => new SnakeAlgorithm(range),
+                AlgorithmNames.AStarGreedy => new AStarGreedyAlgorithm(range, GetHeuristic(statistics), GetStepRule(statistics)),
+                AlgorithmNames.Lee => new LeeAlgorithm(range),
+                AlgorithmNames.BidirectLee => new BidirectLeeAlgorithm(range),
+                AlgorithmNames.AStarLee => new AStarLeeAlgorithm(range, GetHeuristic(statistics)),
+                _ => throw new NotImplementedException($"Unknown algorithm name: {statistics.AlgorithmName}"),
+            };
         }
     }
 }
