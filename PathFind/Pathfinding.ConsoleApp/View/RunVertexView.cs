@@ -28,12 +28,13 @@ namespace Pathfinding.ConsoleApp.View
             BindTo(x => x.IsTarget, ColorConstants.TargetVertexColor);
             BindTo(x => x.IsSource, ColorConstants.SourceVertexColor);
             BindTo(x => x.IsTransit, ColorConstants.TranstiVertexColor);
-            BindTo(x => x.IsPath, ColorConstants.PathVertexColor, ColorConstants.VisitedVertexColor);
-            BindTo(x => x.IsVisited, ColorConstants.VisitedVertexColor, ColorConstants.EnqueuedVertexColor);
+            BindTo(x => x.IsPath, ColorConstants.PathVertexColor, 
+                ColorConstants.VisitedVertexColor);
+            BindTo(x => x.IsVisited, ColorConstants.VisitedVertexColor, 
+                ColorConstants.EnqueuedVertexColor);
             BindTo(x => x.IsEnqueued, ColorConstants.EnqueuedVertexColor);
-            BindTo(x => x.IsCrossedPath, ColorConstants.CrossedPathColor, ColorConstants.PathVertexColor);
-
-            Data = model;
+            BindTo(x => x.IsCrossedPath, ColorConstants.CrossedPathColor, 
+                ColorConstants.PathVertexColor);
         }
 
         private ColorScheme Create(Color foreground)

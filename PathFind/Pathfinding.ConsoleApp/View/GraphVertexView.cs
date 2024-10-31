@@ -14,7 +14,7 @@ namespace Pathfinding.ConsoleApp.View
         private const int LabelWidth = 3;
 
         private readonly CompositeDisposable disposables = new();
-        private GraphVertexModel model;
+        private readonly GraphVertexModel model;
 
         public GraphVertexView(GraphVertexModel model)
         {
@@ -22,27 +22,20 @@ namespace Pathfinding.ConsoleApp.View
             Y = model.Position.GetY();
             Width = LabelWidth;
             this.model = model;
-            Data = model;
-            model.WhenAnyValue(x => x.IsObstacle)
-               .Select(x => x
-                            ? Create(ColorConstants.ObstacleVertexColor)
-                            : Create(ColorConstants.RegularVertexColor))
-               .BindTo(this, x => x.ColorScheme)
-               .DisposeWith(disposables);
-            BindTo(x => x.IsRegular, ColorConstants.RegularVertexColor);
-            BindTo(x => x.IsTarget, ColorConstants.TargetVertexColor);
-            BindTo(x => x.IsSource, ColorConstants.SourceVertexColor);
-            BindTo(x => x.IsTransit, ColorConstants.TranstiVertexColor);
+            BindTo(x => x.IsObstacle, ColorConstants.ObstacleVertexColor,
+                ColorConstants.RegularVertexColor, 0);
+            BindTo(x => x.IsTarget, ColorConstants.TargetVertexColor,
+                ColorConstants.RegularVertexColor, 1);
+            BindTo(x => x.IsSource, ColorConstants.SourceVertexColor, 
+                ColorConstants.RegularVertexColor, 1);
+            BindTo(x => x.IsTransit, ColorConstants.TranstiVertexColor,
+                ColorConstants.RegularVertexColor, 1);
 
             model.WhenAnyValue(x => x.Cost)
                 .Select(x => x.CurrentCost.ToString())
                 .Do(x => Text = x)
                 .Subscribe()
                 .DisposeWith(disposables);
-            if (!model.IsSource && !model.IsTarget && !model.IsTransit)
-            {
-                model.IsRegular = !model.IsObstacle;
-            }
         }
 
         private ColorScheme Create(Color foreground)
@@ -53,11 +46,12 @@ namespace Pathfinding.ConsoleApp.View
             };
         }
 
-        private void BindTo(Expression<Func<GraphVertexModel, bool>> expression, Color toColor)
+        private void BindTo(Expression<Func<GraphVertexModel, bool>> expression, Color toColor, 
+            Color falseColor, int skip)
         {
             model.WhenAnyValue(expression)
-               .Where(x => x)
-               .Select(x => Create(toColor))
+               .Skip(skip)
+               .Select(x => x ? Create(toColor) : Create(falseColor))
                .BindTo(this, x => x.ColorScheme)
                .DisposeWith(disposables);
         }
@@ -65,8 +59,6 @@ namespace Pathfinding.ConsoleApp.View
         protected override void Dispose(bool disposing)
         {
             disposables.Dispose();
-            model = null;
-            Data = null;
             base.Dispose(disposing);
         }
     }
