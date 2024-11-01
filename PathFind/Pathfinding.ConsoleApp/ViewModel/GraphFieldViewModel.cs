@@ -1,6 +1,7 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
+using Pathfinding.ConsoleApp.Messages;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Domain.Interface;
@@ -56,7 +57,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.messenger = messenger;
             this.service = service;
             this.logger = logger;
-            messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
+            messenger.Register<GraphActivatedMessage, int>(this, Tokens.GraphField, OnGraphActivated);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<GraphBecameReadOnlyMessage>(this, OnGraphBecameReadonly);
             var canExecute = this.WhenAnyValue(x => x.GraphId, x => x.Graph, x => x.IsReadOnly,

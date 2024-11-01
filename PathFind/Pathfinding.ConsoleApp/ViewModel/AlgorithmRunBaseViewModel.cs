@@ -2,6 +2,7 @@
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Domain.Interface;
+using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Shared.Extensions;
@@ -49,42 +50,48 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             Processed.Clear();
             var vertices = new Queue<Action<bool>>();
-            //TODO: Add comments, cause this algorithm requires an explanation
+            // TODO: Add comments, cause this algorithm requires an explanation
             range.Skip(1).Take(range.Count - 2)
                 .ForEach(transit => vertices.Enqueue(x => graph[transit].IsTransit = x));
             vertices.Enqueue(x => graph[range.First()].IsSource = x);
             vertices.Enqueue(x => graph[range.Last()].IsTarget = x);
+
             var previousVisited = new HashSet<Coordinate>();
             var previousPaths = new HashSet<Coordinate>();
             var previousEnqueued = new HashSet<Coordinate>();
+
             foreach (var subAlgorithm in subAlgorithms)
             {
+                // Vertices, that are ignored in marking as visited, enqueued or as path
                 var visitedIgnore = range.Concat(previousPaths).ToArray();
                 foreach (var (Visited, Enqueued) in subAlgorithm.Visited)
                 {
+                    // Looking for vertices from previous cycles, that currently are going to 
+                    // to be marked as enqueued, to mark them as unvisited
                     Enqueued.Intersect(previousVisited)
                         .Except(visitedIgnore)
                         .ForEach(x => vertices.Enqueue(z => graph[x].IsVisited = !z));
-                    var intersect = Enqueued.Intersect(previousEnqueued)
-                        .Except(visitedIgnore)
-                        .ForEach(x => vertices.Enqueue(z => graph[x].IsVisited = !z))
-                        .ToList();
                     Visited.Enumerate()
                         .Except(visitedIgnore)
                         .ForEach(x => vertices.Enqueue(z => graph[x].IsVisited = z));
+                    // Ignore previously enqueued vertices, cause they are already enqueued
                     Enqueued.Except(visitedIgnore)
-                        .Except(intersect)
+                        .Except(previousEnqueued)
                         .ForEach(enqueued => vertices.Enqueue(x => graph[enqueued].IsEnqueued = x));
                 }
-                previousVisited.AddRange(subAlgorithm.Visited.Select(x => x.Visited));
-                previousEnqueued.AddRange(subAlgorithm.Visited.SelectMany(x => x.Enqueued));
                 var exceptRangePath = subAlgorithm.Path.Except(range).ToArray();
+                // Take path vertices, that are previously already were marked as path
+                // and mark them as crossed path
                 exceptRangePath
                     .Intersect(previousPaths)
                     .ForEach(y => vertices.Enqueue(z => graph[y].IsCrossedPath = z));
+                // Take only vertices, that were merked as path only once
                 exceptRangePath
                     .Except(previousPaths)
                     .ForEach(y => vertices.Enqueue(z => graph[y].IsPath = z));
+
+                previousVisited.AddRange(subAlgorithm.Visited.Select(x => x.Visited));
+                previousEnqueued.AddRange(subAlgorithm.Visited.SelectMany(x => x.Enqueued));
                 previousPaths.AddRange(subAlgorithm.Path);
             }
             return new(vertices.Reverse());
@@ -122,9 +129,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
             var result = new Dictionary<Coordinate, RunVertexModel>();
             foreach (var vertex in Graph)
             {
-                var runVertex = new RunVertexModel()
+                var runVertex = new RunVertexModel(vertex.Position)
                 {
-                    Position = vertex.Position,
                     Cost = new VertexCost(vertex.Cost.CurrentCost, vertex.Cost.CostRange),
                     IsObstacle = vertex.IsObstacle
                 };

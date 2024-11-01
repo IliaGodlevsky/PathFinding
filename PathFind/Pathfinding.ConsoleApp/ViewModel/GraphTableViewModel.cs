@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Messaging;
 using DynamicData;
 using Pathfinding.ConsoleApp.Injection;
+using Pathfinding.ConsoleApp.Messages;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Logging.Interface;
@@ -59,6 +60,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
             await ExecuteSafe(async () =>
             {
                 var graph = await service.ReadGraphAsync(model.Id);
+                messenger.Send(new GraphActivatedMessage(graph), Tokens.GraphField);
+                messenger.Send(new GraphActivatedMessage(graph), Tokens.PathfindingRange);
                 messenger.Send(new GraphActivatedMessage(graph));
             }, logger.Error);
         }

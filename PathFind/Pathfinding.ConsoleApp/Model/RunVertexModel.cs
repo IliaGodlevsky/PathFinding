@@ -8,6 +8,11 @@ namespace Pathfinding.ConsoleApp.Model
 {
     internal sealed class RunVertexModel : ReactiveObject, IVertex
     {
+        public RunVertexModel(Coordinate position)
+        {
+            Position = position;
+        }
+
         private bool isObstacle;
         public bool IsObstacle
         {
@@ -15,7 +20,7 @@ namespace Pathfinding.ConsoleApp.Model
             set => this.RaiseAndSetIfChanged(ref isObstacle, value);
         }
 
-        public Coordinate Position { get; set; }
+        public Coordinate Position { get; }
 
         private bool isVisited;
         public bool IsVisited

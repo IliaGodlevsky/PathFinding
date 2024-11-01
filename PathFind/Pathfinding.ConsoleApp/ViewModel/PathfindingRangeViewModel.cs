@@ -1,6 +1,7 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
+using Pathfinding.ConsoleApp.Messages;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Domain.Interface;
@@ -53,14 +54,14 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set
             {
                 var previous = source;
-                this.RaiseAndSetIfChanged(ref source, value);
-                if (previous != null && source == null)
+                source = value;
+                if (value == null && previous != null)
                 {
                     previous.IsSource = false;
                 }
-                else if (previous == null && source != null)
+                else if(value != null)
                 {
-                    source.IsSource = true;
+                    value.IsSource = true;
                 }
             }
         }
@@ -72,14 +73,14 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set
             {
                 var previous = target;
-                this.RaiseAndSetIfChanged(ref target, value);
-                if (previous != null && target == null)
+                target = value;
+                if (value == null && previous != null)
                 {
                     previous.IsTarget = false;
                 }
-                else if (previous == null && target != null)
+                else if (value != null)
                 {
-                    target.IsTarget = true;
+                    value.IsTarget = true;
                 }
             }
         }
@@ -109,11 +110,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<QueryPathfindingRangeMessage>(this, OnGetPathfindingRangeRecieved);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<GraphBecameReadOnlyMessage>(this, OnGraphBecameReadonly);
-            messenger.Register<GraphActivatedMessage>(this, async (r, msg) => await OnGraphActivated(msg));
+            messenger.Register<GraphActivatedMessage, int>(this, Tokens.PathfindingRange, 
+                async (r, msg) => await OnGraphActivated(msg));
             AddToRangeCommand = ReactiveCommand.Create<GraphVertexModel>(AddVertexToRange, CanExecute());
             RemoveFromRangeCommand = ReactiveCommand.Create<GraphVertexModel>(RemoveVertexFromRange, CanExecute());
             DeletePathfindingRange = ReactiveCommand.CreateFromTask<MouseEventArgs>(DeleteRange, CanExecute());
-            Transit.ActOnEveryObject(OnTransitAdded, OnTransitRemoved);
         }
 
         private IObservable<bool> CanExecute()
@@ -132,13 +133,20 @@ namespace Pathfinding.ConsoleApp.ViewModel
             includeCommands.ExecuteFirst(pathfindingRange, vertex);
         }
 
-        private void SubcribeToEvents()
+        private void BindTo(Expression<Func< GraphVertexModel, bool>> expression,
+            GraphVertexModel model)
         {
-            Transit.CollectionChanged += OnCollectionChanged;
-            SubscribeOnRangeExtremumsRemoving(x => x.Source);
-            SubscribeOnRangeExtremumsRemoving(x => x.Target);
-            SubscribeOnRangeExtremumsAdding(x => x.Source);
-            SubscribeOnRangeExtremumsAdding(x => x.Target);
+            model.WhenAnyValue(expression).Skip(1)
+                .Select<bool, Func<GraphVertexModel, Task>>(x => x ? AddRangeToStorage : RemoveVertexFromStorage)
+                .Do(async x => await x(model))
+                .Subscribe().DisposeWith(disposables);
+        }
+
+        private void SubcribeToEvents(GraphVertexModel vertex)
+        {
+            BindTo(x => x.IsSource, vertex);
+            BindTo(x => x.IsTarget, vertex);
+            BindTo(x => x.IsTransit, vertex);
         }
 
         private async Task AddRangeToStorage(GraphVertexModel vertex)
@@ -164,26 +172,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 logger.Error).ConfigureAwait(false);
         }
 
-        private void SubscribeOnRangeExtremumsAdding(Expression<Func<PathfindingRangeViewModel, GraphVertexModel>> expression)
-        {
-            this.WhenAnyValue(expression)
-                .Skip(1)
-                .Where(x => x != null)
-                .Do(async x => await AddRangeToStorage(x))
-                .Subscribe()
-                .DisposeWith(disposables);
-        }
-
-        private void SubscribeOnRangeExtremumsRemoving(Expression<Func<PathfindingRangeViewModel, GraphVertexModel>> expression)
-        {
-            this.WhenAnyValue(expression)
-               .Buffer(2, 1)
-               .Select(b => b[0])
-               .Where(b => b != null)
-               .Subscribe(async x => await RemoveVertexFromStorage(x))
-               .DisposeWith(disposables);
-        }
-
         private void ClearRange()
         {
             Source = null;
@@ -200,25 +188,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 ClearRange();
             }
         }
-
-        private async void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    var added = (GraphVertexModel)e.NewItems[0];
-                    await AddRangeToStorage(added);
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    var removed = (GraphVertexModel)e.OldItems[0];
-                    await RemoveVertexFromStorage(removed);
-                    break;
-            }
-        }
-
-        private void OnTransitAdded(GraphVertexModel transit) => transit.IsTransit = true;
-
-        private void OnTransitRemoved(GraphVertexModel transit) => transit.IsTransit = false;
 
         private async Task OnGraphActivated(GraphActivatedMessage msg)
         {
@@ -240,7 +209,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     .Select(x => Graph.Get(x.Position))
                     .ToList();
                 Transit.AddRange(transit);
-                SubcribeToEvents();
+                Transit.CollectionChanged += OnCollectionChanged;
+                foreach (var vertex in Graph)
+                {
+                    SubcribeToEvents(vertex);
+                }
             }, logger.Error).ConfigureAwait(false);
         }
 
@@ -258,6 +231,21 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 GraphId = 0;
                 IsReadOnly = false;
                 Graph = Graph<GraphVertexModel>.Empty;
+            }
+        }
+
+        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    var added = (GraphVertexModel)e.NewItems[0];
+                    added.IsTransit = true;
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    var removed = (GraphVertexModel)e.OldItems[0];
+                    removed.IsTransit = false;
+                    break;
             }
         }
 
