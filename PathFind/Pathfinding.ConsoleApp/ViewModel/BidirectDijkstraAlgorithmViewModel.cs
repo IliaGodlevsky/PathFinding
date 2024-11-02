@@ -22,7 +22,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref stepRule, value);
         }
 
-        public override string AlgorithmId { get; } = AlgorithmNames.BidirectDijkstra;
+        public override string AlgorithmName { get; } = AlgorithmNames.BidirectDijkstra;
 
         public BidirectDijkstraAlgorithmViewModel(
             IRequestService<GraphVertexModel> service,

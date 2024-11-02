@@ -22,7 +22,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref stepRule, value);
         }
 
-        public override string AlgorithmId => AlgorithmNames.Dijkstra;
+        public override string AlgorithmName => AlgorithmNames.Dijkstra;
 
         public DijkstraAlgorithmViewModel(IRequestService<GraphVertexModel> service,
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,

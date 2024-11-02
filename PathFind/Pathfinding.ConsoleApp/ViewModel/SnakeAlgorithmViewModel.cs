@@ -19,7 +19,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
         }
 
-        public override string AlgorithmId { get; } = AlgorithmNames.Snake;
+        public override string AlgorithmName { get; } = AlgorithmNames.Snake;
 
         protected override PathfindingProcess GetAlgorithm(IEnumerable<GraphVertexModel> pathfindingRange)
         {

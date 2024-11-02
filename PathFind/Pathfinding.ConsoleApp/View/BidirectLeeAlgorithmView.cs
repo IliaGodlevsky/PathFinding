@@ -17,7 +17,7 @@ namespace Pathfinding.ConsoleApp.View
         public BidirectLeeAlgorithmView([KeyFilter(KeyFilters.Views)] IMessenger messenger,
             BidirectLeeAlgorithmViewModel viewModel)
         {
-            Text = viewModel.AlgorithmId;
+            Text = viewModel.AlgorithmName;
             this.messenger = messenger;
             this.viewModel = viewModel;
             MouseClick += OnViewClicked;

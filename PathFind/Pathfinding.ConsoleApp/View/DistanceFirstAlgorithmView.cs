@@ -18,7 +18,7 @@ namespace Pathfinding.ConsoleApp.View
             [KeyFilter(KeyFilters.Views)] IMessenger messenger,
             DistanceFirstAlgorithmViewModel viewModel)
         {
-            Text = viewModel.AlgorithmId;
+            Text = viewModel.AlgorithmName;
             Y = 1;
             X = 0;
             this.messenger = messenger;

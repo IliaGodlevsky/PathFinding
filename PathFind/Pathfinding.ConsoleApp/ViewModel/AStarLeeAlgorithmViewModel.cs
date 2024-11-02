@@ -39,7 +39,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
         }
 
-        public override string AlgorithmId { get; } = AlgorithmNames.AStarLee;
+        public override string AlgorithmName { get; } = AlgorithmNames.AStarLee;
 
         protected override void AppendStatistics(CreateStatisticsRequest model)
         {

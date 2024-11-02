@@ -100,7 +100,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 HeuristicNames.Diagonal => new DiagonalDistance().WithWeight(statistics.Weight),
                 HeuristicNames.Manhattan => new ManhattanDistance().WithWeight(statistics.Weight),
                 HeuristicNames.Cosine => new CosineDistance().WithWeight(statistics.Weight),
-                _ => throw new NotImplementedException($"Unknown heuristic: {statistics.Heuristics}"),
+                _ => throw new NotImplementedException($"Unknown heuristic: {statistics.Heuristics}")
             };
         }
 
@@ -110,7 +110,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             {
                 StepRuleNames.Default => new DefaultStepRule(),
                 StepRuleNames.Landscape => new LandscapeStepRule(),
-                _ => throw new NotImplementedException($"Unknown step rule: {statistics.StepRule}"),
+                _ => throw new NotImplementedException($"Unknown step rule: {statistics.StepRule}")
             };
         }
 
@@ -130,7 +130,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 AlgorithmNames.Lee => new LeeAlgorithm(range),
                 AlgorithmNames.BidirectLee => new BidirectLeeAlgorithm(range),
                 AlgorithmNames.AStarLee => new AStarLeeAlgorithm(range, GetHeuristic(statistics)),
-                _ => throw new NotImplementedException($"Unknown algorithm name: {statistics.AlgorithmName}"),
+                _ => throw new NotImplementedException($"Unknown algorithm name: {statistics.AlgorithmName}")
             };
         }
     }

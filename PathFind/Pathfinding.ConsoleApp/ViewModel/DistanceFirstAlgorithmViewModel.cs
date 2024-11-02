@@ -38,7 +38,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
         }
 
-        public override string AlgorithmId { get; } = AlgorithmNames.DistanceFirst;
+        public override string AlgorithmName { get; } = AlgorithmNames.DistanceFirst;
 
         protected override void AppendStatistics(CreateStatisticsRequest model)
         {

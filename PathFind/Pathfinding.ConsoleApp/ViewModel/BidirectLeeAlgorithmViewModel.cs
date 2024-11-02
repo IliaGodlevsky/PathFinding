@@ -20,7 +20,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
         }
 
-        public override string AlgorithmId => AlgorithmNames.BidirectLee;
+        public override string AlgorithmName => AlgorithmNames.BidirectLee;
 
         protected override PathfindingProcess GetAlgorithm(IEnumerable<GraphVertexModel> pathfindingRange)
         {

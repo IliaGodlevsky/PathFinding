@@ -18,7 +18,7 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class AlgorithmRunFieldView : FrameView
     {
-        private const int Speed = 125;
+        private const int Speed = 90;
         private const int MaxSpeed = int.MaxValue;
 
         private readonly CompositeDisposable vertexDisposables = new();

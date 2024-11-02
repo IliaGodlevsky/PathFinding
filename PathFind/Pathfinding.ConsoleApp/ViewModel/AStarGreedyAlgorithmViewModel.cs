@@ -46,7 +46,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
         }
 
-        public override string AlgorithmId { get; } = AlgorithmNames.AStarGreedy;
+        public override string AlgorithmName { get; } = AlgorithmNames.AStarGreedy;
 
         protected override IObservable<bool> CanStartAlgorithm()
         {

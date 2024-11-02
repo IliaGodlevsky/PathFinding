@@ -44,7 +44,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
         }
 
-        public override string AlgorithmId => AlgorithmNames.BidirectAStar;
+        public override string AlgorithmName => AlgorithmNames.BidirectAStar;
 
         protected override IObservable<bool> CanStartAlgorithm()
         {

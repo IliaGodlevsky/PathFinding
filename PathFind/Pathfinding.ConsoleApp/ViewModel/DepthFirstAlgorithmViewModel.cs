@@ -20,7 +20,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
         }
 
-        public override string AlgorithmId { get; } = AlgorithmNames.DepthFirst;
+        public override string AlgorithmName { get; } = AlgorithmNames.DepthFirst;
 
         protected override PathfindingProcess GetAlgorithm(IEnumerable<GraphVertexModel> pathfindingRange)
         {

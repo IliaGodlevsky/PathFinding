@@ -2,7 +2,6 @@
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Shared.Extensions;
@@ -16,6 +15,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal abstract class AlgorithmRunBaseViewModel : BaseViewModel
     {
+        protected enum RunState { Source, Target, Transit, Visited, Enqueued, Path, CrossPath }
+
         protected readonly IMessenger messenger;
 
         private IReadOnlyCollection<RunVertexModel> graphState = Array.Empty<RunVertexModel>();
@@ -27,9 +28,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         protected IGraph<GraphVertexModel> Graph { get; set; }
 
-        protected Stack<Action<bool>> Processed { get; set; } = new();
+        protected Stack<(RunVertexModel Vertex, RunState State, bool Value)> Processed { get; set; } = new();
 
-        protected Stack<Action<bool>> Vertices { get; set; } = new();
+        protected Stack<(RunVertexModel Vertex, RunState State, bool Value)> Vertices { get; set; } = new();
 
         public ReactiveCommand<int, bool> ProcessNextCommand { get; }
 
@@ -43,18 +44,20 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.messenger = messenger;
         }
 
-        protected Stack<Action<bool>> GetVerticesStates(
+        protected Stack<(RunVertexModel Vertex, RunState State, bool Value)> GetVerticesStates(
             IEnumerable<SubAlgorithmModel> subAlgorithms,
             IReadOnlyCollection<Coordinate> range,
             IReadOnlyDictionary<Coordinate, RunVertexModel> graph)
         {
             Processed.Clear();
-            var vertices = new Queue<Action<bool>>();
-            // TODO: Add comments, cause this algorithm requires an explanation
-            range.Skip(1).Take(range.Count - 2)
-                .ForEach(transit => vertices.Enqueue(x => graph[transit].IsTransit = x));
-            vertices.Enqueue(x => graph[range.First()].IsSource = x);
-            vertices.Enqueue(x => graph[range.Last()].IsTarget = x);
+            var vertices = new Queue<(RunVertexModel Vertex, RunState State, bool Value)>();
+
+            vertices.Enqueue((graph[range.First()], RunState.Source, true));
+            foreach (var transit in range.Skip(1).Take(range.Count - 2))
+            {
+                vertices.Enqueue((graph[transit], RunState.Transit, true));
+            }
+            vertices.Enqueue((graph[range.Last()], RunState.Target, true));
 
             var previousVisited = new HashSet<Coordinate>();
             var previousPaths = new HashSet<Coordinate>();
@@ -62,39 +65,51 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
             foreach (var subAlgorithm in subAlgorithms)
             {
-                // Vertices, that are ignored in marking as visited, enqueued or as path
                 var visitedIgnore = range.Concat(previousPaths).ToArray();
                 foreach (var (Visited, Enqueued) in subAlgorithm.Visited)
                 {
-                    // Looking for vertices from previous cycles, that currently are going to 
-                    // to be marked as enqueued, to mark them as unvisited
-                    Enqueued.Intersect(previousVisited)
-                        .Except(visitedIgnore)
-                        .ForEach(x => vertices.Enqueue(z => graph[x].IsVisited = !z));
-                    Visited.Enumerate()
-                        .Except(visitedIgnore)
-                        .ForEach(x => vertices.Enqueue(z => graph[x].IsVisited = z));
-                    // Ignore previously enqueued vertices, cause they are already enqueued
-                    Enqueued.Except(visitedIgnore)
-                        .Except(previousEnqueued)
-                        .ForEach(enqueued => vertices.Enqueue(x => graph[enqueued].IsEnqueued = x));
+                    foreach (var enqueued in Enqueued.Intersect(previousVisited).Except(visitedIgnore))
+                    {
+                        vertices.Enqueue((graph[enqueued], RunState.Visited, false));
+                    }
+                    foreach (var visited in Visited.Enumerate().Except(visitedIgnore))
+                    {
+                        vertices.Enqueue((graph[visited], RunState.Visited, true));
+                    }
+                    foreach (var enqueued in Enqueued.Except(visitedIgnore).Except(previousEnqueued))
+                    {
+                        vertices.Enqueue((graph[enqueued], RunState.Enqueued, true));
+                    }
                 }
                 var exceptRangePath = subAlgorithm.Path.Except(range).ToArray();
-                // Take path vertices, that are previously already were marked as path
-                // and mark them as crossed path
-                exceptRangePath
-                    .Intersect(previousPaths)
-                    .ForEach(y => vertices.Enqueue(z => graph[y].IsCrossedPath = z));
-                // Take only vertices, that were merked as path only once
-                exceptRangePath
-                    .Except(previousPaths)
-                    .ForEach(y => vertices.Enqueue(z => graph[y].IsPath = z));
+                foreach (var path in exceptRangePath.Intersect(previousPaths))
+                {
+                    vertices.Enqueue((graph[path], RunState.CrossPath, true));
+                }
+                foreach (var path in exceptRangePath.Except(previousPaths))
+                {
+                    vertices.Enqueue((graph[path], RunState.Path, true));
+                }
 
                 previousVisited.AddRange(subAlgorithm.Visited.Select(x => x.Visited));
                 previousEnqueued.AddRange(subAlgorithm.Visited.SelectMany(x => x.Enqueued));
                 previousPaths.AddRange(subAlgorithm.Path);
             }
             return new(vertices.Reverse());
+        }
+
+        private void SetState((RunVertexModel Vertex, RunState State, bool Value) tuple)
+        {
+            switch (tuple.State)
+            {
+                case RunState.Visited: tuple.Vertex.IsVisited = tuple.Value; break;
+                case RunState.Enqueued: tuple.Vertex.IsEnqueued = tuple.Value; break;
+                case RunState.CrossPath: tuple.Vertex.IsCrossedPath = tuple.Value; break;
+                case RunState.Path: tuple.Vertex.IsPath = tuple.Value; break;
+                case RunState.Source: tuple.Vertex.IsSource = tuple.Value; break;
+                case RunState.Target: tuple.Vertex.IsTarget = tuple.Value; break;
+                case RunState.Transit: tuple.Vertex.IsTransit = tuple.Value; break;
+            }
         }
 
         private void OnGraphActivated(object recipient, GraphActivatedMessage msg)
@@ -106,9 +121,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             while (number-- > 0 && Vertices.Count > 0)
             {
-                var action = Vertices.Pop();
-                Processed.Push(action);
-                action(true);
+                var state = Vertices.Pop();
+                Processed.Push((state.Vertex, state.State, !state.Value));
+                SetState(state);
             }
             return Vertices.Count > 0;
         }
@@ -117,9 +132,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             while (number-- > 0 && Processed.Count > 0)
             {
-                var action = Processed.Pop();
-                Vertices.Push(action);
-                action(false);
+                var state = Processed.Pop();
+                Vertices.Push((state.Vertex, state.State, !state.Value));
+                SetState(state);
             }
             return Processed.Count > 0;
         }

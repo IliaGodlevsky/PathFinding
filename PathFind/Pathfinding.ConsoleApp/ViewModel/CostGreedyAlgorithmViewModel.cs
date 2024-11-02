@@ -27,7 +27,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
         }
 
-        public override string AlgorithmId => AlgorithmNames.CostGreedy;
+        public override string AlgorithmName => AlgorithmNames.CostGreedy;
 
         protected override void AppendStatistics(CreateStatisticsRequest model)
         {

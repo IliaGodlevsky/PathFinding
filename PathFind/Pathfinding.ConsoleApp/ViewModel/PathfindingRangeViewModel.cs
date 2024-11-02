@@ -208,8 +208,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 var transit = range.Where(x => !x.IsSource && !x.IsTarget)
                     .Select(x => Graph.Get(x.Position))
                     .ToList();
-                Transit.AddRange(transit);
                 Transit.CollectionChanged += OnCollectionChanged;
+                Transit.AddRange(transit);
                 foreach (var vertex in Graph)
                 {
                     SubcribeToEvents(vertex);

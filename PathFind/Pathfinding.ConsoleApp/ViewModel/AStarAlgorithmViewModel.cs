@@ -56,7 +56,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 });
         }
 
-        public override string AlgorithmId => AlgorithmNames.AStar;
+        public override string AlgorithmName => AlgorithmNames.AStar;
 
         protected override void AppendStatistics(CreateStatisticsRequest model)
         {

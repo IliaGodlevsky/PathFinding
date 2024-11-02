@@ -30,7 +30,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         protected readonly IMessenger messenger;
         protected readonly ILog logger;
 
-        public abstract string AlgorithmId { get; }
+        public abstract string AlgorithmName { get; }
 
         public ReactiveCommand<MouseEventArgs, Unit> StartAlgorithmCommand { get; }
 
@@ -151,7 +151,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 }
 
                 var request = ModelBuilder.CreateStatisticsRequest()
-                    .WithStatistics(Graph.Id, AlgorithmId, path,
+                    .WithStatistics(Graph.Id, AlgorithmName, path,
                         visitedCount, status, stopwatch.Elapsed);
 
                 AppendStatistics(request);
