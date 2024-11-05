@@ -24,7 +24,6 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
                 Steps INTEGER NOT NULL,
                 Cost REAL NOT NULL,
                 Visited INTEGER NOT NULL,
-                Spread TEXT,
                 FOREIGN KEY (GraphId) REFERENCES {DbTables.Graphs}(Id) ON DELETE CASCADE
             );
             CREATE INDEX IF NOT EXISTS idx_statistics_id ON {DbTables.Statistics}(Id);
@@ -43,7 +42,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
                 SELECT last_insert_rowid();";
 
             var id = await connection.ExecuteScalarAsync<int>(
-                new CommandDefinition(query, entity, transaction, cancellationToken: token));
+                new CommandDefinition(query, entity, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
 
             entity.Id = id;
             return entity;
@@ -59,7 +59,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             foreach (var entity in statistics)
             {
                 entity.Id = await connection.ExecuteScalarAsync<int>(
-                    new CommandDefinition(query, entity, transaction, cancellationToken: token));
+                    new CommandDefinition(query, entity, transaction, cancellationToken: token))
+                    .ConfigureAwait(false);
             }
 
             return statistics;
@@ -70,8 +71,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             const string query = $"SELECT * FROM {DbTables.Statistics} WHERE GraphId = @GraphId";
 
             return await connection.QueryAsync<Statistics>(
-                new CommandDefinition(query, new { GraphId = graphId }, transaction, cancellationToken: token)
-            );
+                new CommandDefinition(query, new { GraphId = graphId }, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
         }
 
         public async Task<int> ReadStatisticsCountAsync(int graphId, CancellationToken token = default)
@@ -79,8 +80,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             const string query = $"SELECT COUNT(*) FROM {DbTables.Statistics} WHERE GraphId = @GraphId";
 
             return await connection.ExecuteScalarAsync<int>(
-                new CommandDefinition(query, new { GraphId = graphId }, transaction, cancellationToken: token)
-            );
+                new CommandDefinition(query, new { GraphId = graphId }, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
         }
 
         public async Task<bool> DeleteByGraphId(int graphId, CancellationToken token = default)
@@ -88,8 +89,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             const string query = $"DELETE FROM {DbTables.Statistics} WHERE GraphId = @GraphId";
 
             var rowsAffected = await connection.ExecuteAsync(
-                new CommandDefinition(query, new { GraphId = graphId }, transaction, cancellationToken: token)
-            );
+                new CommandDefinition(query, new { GraphId = graphId }, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
 
             return rowsAffected > 0;
         }
@@ -99,8 +100,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             const string query = $"DELETE FROM {DbTables.Statistics} WHERE Id IN @Ids";
 
             var rowsAffected = await connection.ExecuteAsync(
-                new CommandDefinition(query, new { Ids = ids.ToArray() }, transaction, cancellationToken: token)
-            );
+                new CommandDefinition(query, new { Ids = ids.ToArray() }, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
 
             return rowsAffected > 0;
         }
@@ -110,7 +111,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             const string query = $"SELECT * FROM {DbTables.Statistics} WHERE Id = @Id";
 
             var statistics = await connection.QuerySingleOrDefaultAsync<Statistics>(
-                new CommandDefinition(query, new { Id = id }, transaction, cancellationToken: token));
+                new CommandDefinition(query, new { Id = id }, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
 
             return statistics;
         }

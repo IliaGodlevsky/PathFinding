@@ -40,8 +40,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             foreach (var entity in entities)
             {
                 var id = await connection.ExecuteScalarAsync<int>(
-                    new CommandDefinition(query, entity, transaction, cancellationToken: token)
-                );
+                    new CommandDefinition(query, entity, transaction, cancellationToken: token))
+                    .ConfigureAwait(false);
                 entity.Id = id;
             }
 
@@ -53,7 +53,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             const string query = $"DELETE FROM {DbTables.Ranges} WHERE GraphId = @GraphId";
 
             var affectedRows = await connection.ExecuteAsync(
-                new CommandDefinition(query, new { GraphId = graphId }, transaction, cancellationToken: token));
+                new CommandDefinition(query, new { GraphId = graphId }, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
 
             return affectedRows > 0;
         }
@@ -63,7 +64,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             const string query = $"DELETE FROM {DbTables.Ranges} WHERE VertexId IN @VerticesIds";
 
             var affectedRows = await connection.ExecuteAsync(
-                new CommandDefinition(query, new { VerticesIds = verticesIds.ToArray() }, transaction, cancellationToken: token));
+                new CommandDefinition(query, new { VerticesIds = verticesIds.ToArray() }, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
 
             return affectedRows > 0;
         }
@@ -73,7 +75,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             const string query = $"SELECT * FROM {DbTables.Ranges} WHERE GraphId = @GraphId ORDER BY \"Order\"";
 
             return await connection.QueryAsync<PathfindingRange>(
-                new CommandDefinition(query, new { GraphId = graphId }, transaction, cancellationToken: token));
+                new CommandDefinition(query, new { GraphId = graphId }, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<PathfindingRange>> UpsertAsync(IEnumerable<PathfindingRange> entities, CancellationToken token = default)
@@ -88,7 +91,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
                 WHERE Id = @Id";
 
             await connection.ExecuteAsync(
-                new CommandDefinition(updateQuery, entities.Where(e => e.Id > 0).ToArray(), transaction, cancellationToken: token));
+                new CommandDefinition(updateQuery, entities.Where(e => e.Id > 0).ToArray(), transaction, cancellationToken: token))
+                .ConfigureAwait(false);
 
             const string insertQuery = @$"
                 INSERT INTO {DbTables.Ranges} 
@@ -99,7 +103,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             foreach (var entity in entities.Where(e => e.Id == 0))
             {
                 var newId = await connection.ExecuteScalarAsync<int>(
-                    new CommandDefinition(insertQuery, entity, transaction, cancellationToken: token));
+                    new CommandDefinition(insertQuery, entity, transaction, cancellationToken: token))
+                    .ConfigureAwait(false);
 
                 entity.Id = newId;
             }

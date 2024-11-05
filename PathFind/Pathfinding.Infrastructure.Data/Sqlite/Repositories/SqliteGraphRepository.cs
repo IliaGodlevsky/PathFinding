@@ -35,7 +35,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
                 SELECT last_insert_rowid();";
 
             var id = await connection.ExecuteScalarAsync<int>(
-                new CommandDefinition(query, graph, transaction, cancellationToken: token));
+                new CommandDefinition(query, graph, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
             graph.Id = id;
             return graph;
         }
@@ -45,7 +46,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             const string query = $"DELETE FROM {DbTables.Graphs} WHERE Id = @Id";
 
             var affectedRows = await connection.ExecuteAsync(
-                new CommandDefinition(query, new { Id = graphId }, transaction, cancellationToken: token));
+                new CommandDefinition(query, new { Id = graphId }, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
             return affectedRows > 0;
         }
 
@@ -54,7 +56,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             const string query = $"DELETE FROM {DbTables.Graphs} WHERE Id IN @Ids";
 
             var affectedRows = await connection.ExecuteAsync(
-                new CommandDefinition(query, new { Ids = graphIds.ToArray() }, transaction, cancellationToken: token));
+                new CommandDefinition(query, new { Ids = graphIds.ToArray() }, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
             return affectedRows > 0;
         }
 
@@ -63,7 +66,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             const string query = $"SELECT * FROM {DbTables.Graphs}";
 
             return await connection.QueryAsync<Graph>(
-                new CommandDefinition(query, transaction: transaction, cancellationToken: token));
+                new CommandDefinition(query, transaction: transaction, cancellationToken: token))
+                .ConfigureAwait(false);
         }
 
         public async Task<Graph> ReadAsync(int graphId, CancellationToken token = default)
@@ -71,7 +75,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             const string query = $"SELECT * FROM {DbTables.Graphs} WHERE Id = @Id";
 
             return await connection.QuerySingleOrDefaultAsync<Graph>(
-                new CommandDefinition(query, new { Id = graphId }, transaction, cancellationToken: token));
+                new CommandDefinition(query, new { Id = graphId }, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
         }
 
         public async Task<bool> UpdateAsync(Graph graph, CancellationToken token = default)
@@ -85,7 +90,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
                 WHERE Id = @Id";
 
             var affectedRows = await connection.ExecuteAsync(
-                new CommandDefinition(query, graph, transaction, cancellationToken: token));
+                new CommandDefinition(query, graph, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
 
             return affectedRows > 0;
         }
@@ -99,7 +105,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
                 GROUP BY GraphId";
 
             var result = await connection.QueryAsync<(int GraphId, int ObstacleCount)>(
-                new CommandDefinition(query, new { GraphIds = graphIds.ToArray() }, transaction, cancellationToken: token));
+                new CommandDefinition(query, new { GraphIds = graphIds.ToArray() }, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
 
             return result.ToDictionary(x => x.GraphId, x => x.ObstacleCount);
         }

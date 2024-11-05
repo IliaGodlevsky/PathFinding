@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
@@ -68,10 +69,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
             await ExecuteSafe(async () =>
             {
                 using var fileStream = streamProvider(FilePath);
-                var histories = await serializer.DeserializeFromAsync(fileStream)
-                    .ConfigureAwait(false);
-                var result = await Task.Run(() => service.CreatePathfindingHistoriesAsync(histories))
-                    .ConfigureAwait(false);
+                var histories = await serializer.DeserializeFromAsync(fileStream).ConfigureAwait(false);
+                var result = await service.CreatePathfindingHistoriesAsync(histories).ConfigureAwait(false);
                 var graphs = result.Select(x => new GraphInfoModel()
                 {
                     Width = x.Graph.Graph.GetWidth(),

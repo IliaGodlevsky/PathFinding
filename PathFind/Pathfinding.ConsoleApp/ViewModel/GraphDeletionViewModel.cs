@@ -29,7 +29,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public ReactiveCommand<MouseEventArgs, Unit> DeleteCommand { get; }
 
-        public GraphDeletionViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
+        public GraphDeletionViewModel(
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             IRequestService<GraphVertexModel> service,
             ILog logger)
         {
@@ -50,11 +51,13 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             await ExecuteSafe(async () =>
             {
-                var isDeleted = await Task.Run(() => service.DeleteGraphsAsync(graphIds))
+                var isDeleted = await service.DeleteGraphsAsync(graphIds)
                     .ConfigureAwait(false);
                 if (isDeleted)
                 {
-                    messenger.Send(new GraphsDeletedMessage(graphIds.ToArray()));
+                    var graphs = GraphIds.ToArray();
+                    GraphIds = Array.Empty<int>();
+                    messenger.Send(new GraphsDeletedMessage(graphs));
                 }
             }, logger.Error).ConfigureAwait(false);
         }

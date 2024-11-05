@@ -31,8 +31,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set
             {
                 this.RaiseAndSetIfChanged(ref selected, value);
-                var runs = selected.Select(x => x.RunId).ToArray();
-                messenger.Send(new RunSelectedMessage(runs));
+                messenger.Send(new RunSelectedMessage(selected));
             }
         }
 
@@ -60,7 +59,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             await ExecuteSafe(async () =>
             {
-                var run = await Task.Run(() => service.ReadStatisticAsync(model.RunId))
+                var run = await service.ReadStatisticAsync(model.RunId)
                     .ConfigureAwait(false);
                 messenger.Send(new RunActivatedMessage(run));
             }, logger.Error).ConfigureAwait(false);
@@ -68,14 +67,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private async Task OnGraphActivatedMessage(object recipient, GraphActivatedMessage msg)
         {
-            var statistics = await Task.Run(() => service.ReadStatisticsAsync(msg.Graph.Id))
+            var statistics = await service.ReadStatisticsAsync(msg.Graph.Id)
                 .ConfigureAwait(false);
             var models = statistics.Select(GetModel).ToArray();
             ActivatedGraphId = msg.Graph.Id;
-            while (Runs.Count > 0)
-            {
-                Runs.RemoveAt(0);
-            }
+            Runs.Clear();
             Runs.Add(models);
         }
 
@@ -83,10 +79,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             if (msg.GraphIds.Contains(ActivatedGraphId))
             {
-                while (Runs.Count > 0)
-                {
-                    Runs.RemoveAt(0);
-                }
+                Runs.Clear();
                 ActivatedGraphId = 0;
             }
         }
@@ -94,10 +87,14 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private void OnRunsDeleteMessage(object recipient, RunsDeletedMessage msg)
         {
             var toDelete = Runs.Where(x => msg.RunIds.Contains(x.RunId)).ToArray();
-            Runs.Remove(toDelete);
-            if (Runs.Count == 0)
+            if (toDelete.Length == Runs.Count)
             {
+                Runs.Clear();
                 messenger.Send(new GraphBecameReadOnlyMessage(ActivatedGraphId, false));
+            }
+            else
+            {
+                Runs.Remove(toDelete);
             }
         }
 

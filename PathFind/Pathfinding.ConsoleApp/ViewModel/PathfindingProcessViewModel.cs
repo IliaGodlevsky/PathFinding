@@ -6,7 +6,6 @@ using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Infrastructure.Business.Algorithms.Events;
 using Pathfinding.Infrastructure.Business.Algorithms.Exceptions;
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
-using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models;
@@ -58,14 +57,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             if (msg.GraphIds.Contains(Graph.Id))
             {
-                Graph = new()
-                {
-                    Graph = Graph<GraphVertexModel>.Empty,
-                    Id = 0,
-                    Name = string.Empty,
-                    Neighborhood = string.Empty,
-                    SmoothLevel = string.Empty
-                };
+                Graph = new();
             }
         }
 
@@ -158,9 +150,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
                 await ExecuteSafe(async () =>
                 {
-                    var result = await Task.Run(() => service.CreateStatisticsAsync(request))
+                    var result = await service.CreateStatisticsAsync(request)
                         .ConfigureAwait(false);
-                    messenger.Send(new RunCreatedMessaged(result, subAlgorithms));
+                    messenger.Send(new RunCreatedMessaged(result));
                 }, logger.Error).ConfigureAwait(false);
             }
             else

@@ -75,22 +75,25 @@ namespace Pathfinding.ConsoleApp.View
 
         private void AddToTable(GraphInfoModel model)
         {
-            table.Rows.Add(model.Id, model.Name,
+            Application.MainLoop.Invoke(() =>
+            {
+                table.Rows.Add(model.Id, model.Name,
                 model.Width, model.Length, model.Neighborhood,
                 model.SmoothLevel, model.Obstacles, model.Status);
-            table.AcceptChanges();
-            SetNeedsDisplay();
-            var sub = model.WhenAnyValue(c => c.Obstacles)
+                table.AcceptChanges();
+                SetNeedsDisplay();
+                Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
+                var sub = model.WhenAnyValue(c => c.Obstacles)
                 .Do(x => UpdateGraphInTable(model.Id, x))
                 .Subscribe();
-            var statusSub = model.WhenAnyValue(c => c.Status)
-                .Do(x => UpdateGraphStatus(model.Id, x))
-                .Subscribe();
-            var composite = new CompositeDisposable();
-            composite.Add(sub);
-            composite.Add(statusSub);
-            modelChangingSubs.Add(model.Id, composite);
-            Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
+                var statusSub = model.WhenAnyValue(c => c.Status)
+                    .Do(x => UpdateGraphStatus(model.Id, x))
+                    .Subscribe();
+                var composite = new CompositeDisposable();
+                composite.Add(sub);
+                composite.Add(statusSub);
+                modelChangingSubs.Add(model.Id, composite);
+            });
         }
 
         private void UpdateGraphInTable(int id, int obstacles)

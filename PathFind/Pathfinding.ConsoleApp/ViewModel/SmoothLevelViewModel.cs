@@ -1,6 +1,9 @@
 ﻿using Autofac.Features.AttributeFilters;
 using Autofac.Features.Metadata;
 using Pathfinding.ConsoleApp.Injection;
+using Pathfinding.Infrastructure.Business.Layers;
+using Pathfinding.Service.Interface;
+using Pathfinding.Shared.Extensions;
 using ReactiveUI;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +12,22 @@ namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal sealed class SmoothLevelViewModel : ReactiveObject
     {
-        public IReadOnlyDictionary<string, int> Levels { get; set; }
+        public IReadOnlyDictionary<string, ILayer> Levels { get; set; }
 
-        public SmoothLevelViewModel([KeyFilter(KeyFilters.SmoothLevels)] IEnumerable<(string Name, int Level)> levels)
+        public SmoothLevelViewModel(IEnumerable<(string Name, int Level, ILayer Layer)> levels)
         {
-            Levels = levels.ToDictionary(x => x.Name, x => x.Level);
+            Levels = levels.ToDictionary(x => x.Name, x => (ILayer)Enumerable.Repeat(x.Layer, x.Level).To(x => new Layers(x)));
         }
 
-        public SmoothLevelViewModel([KeyFilter(KeyFilters.SmoothLevels)] IEnumerable<Meta<string>> smoothLevels)
+        public SmoothLevelViewModel(IEnumerable<Meta<ILayer>> levels)
         {
-            Levels = smoothLevels.ToDictionary(x => x.Value, x => (int)x.Metadata[MetadataKeys.SmoothKey]);
+            Levels = levels.ToDictionary(x => (string)x.Metadata[MetadataKeys.NameKey], 
+                x => 
+                {
+                    int metadata = (int)x.Metadata[MetadataKeys.SmoothKey];
+                    var repeat = Enumerable.Repeat(x.Value, metadata).ToArray();
+                    return repeat.To(x => (ILayer)new Layers(x));
+                });
         }
     }
 }

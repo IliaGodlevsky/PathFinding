@@ -13,10 +13,10 @@ namespace Pathfinding.ConsoleApp.View
         {
             heuristics.X = 1;
             heuristics.Y = 1;
-            X = Pos.Percent(45);
+            X = Pos.Percent(55);
             Y = 0;
             Height = Dim.Percent(50);
-            Width = Dim.Percent(55);
+            Width = Dim.Percent(45);
             Border = new Border()
             {
                 BorderStyle = BorderStyle.Rounded,
@@ -28,7 +28,7 @@ namespace Pathfinding.ConsoleApp.View
             weightLabel.X = 1;
             weightTextField.X = Pos.Right(weightLabel) + 2;
             weightTextField.Y = Pos.Bottom(heuristics) + 1;
-            weightTextField.Width = Dim.Percent(20);
+            weightTextField.Width = Dim.Percent(35);
             var decimalSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
             weightTextField.KeyPress += (args) =>
             {

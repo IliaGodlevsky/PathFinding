@@ -3,7 +3,7 @@ using System;
 
 namespace Pathfinding.ConsoleApp.Model
 {
-    internal sealed class RunInfoModel : ReactiveObject
+    internal sealed class RunInfoModel
     {
         public int RunId { get; set; }
 

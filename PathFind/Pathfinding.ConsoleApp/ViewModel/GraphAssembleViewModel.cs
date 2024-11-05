@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Infrastructure.Data.Extensions;
@@ -15,7 +16,6 @@ using Pathfinding.Shared.Primitives;
 using Pathfinding.Shared.Random;
 using ReactiveUI;
 using System;
-using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
 using static Terminal.Gui.View;
@@ -58,8 +58,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref obstacles, value);
         }
 
-        private (string Name, int SmoothLevel) level;
-        public (string Name, int SmoothLevel) SmoothLevel
+        private (string Name, ILayer SmoothLevel) level;
+        public (string Name, ILayer SmoothLevel) SmoothLevel
         {
             get => level;
             set => this.RaiseAndSetIfChanged(ref level, value);
@@ -94,9 +94,12 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 x => x.Obstacles,
                 x => x.Name,
                 x => x.NeighborhoodFactory,
-                (width, length, obstacles, name, factory) =>
+                x => x.SmoothLevel,
+                (width, length, obstacles, name, factory, smooth) =>
                 {
-                    return width > 0 && length > 0 && obstacles >= 0 && factory.Factory != null
+                    return width > 0 && length > 0
+                        && obstacles >= 0 && factory.Factory != null
+                        && smooth.SmoothLevel != null
                         && !string.IsNullOrEmpty(name);
                 });
         }
@@ -109,10 +112,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 var costLayer = new VertexCostLayer(CostRange, range => new VertexCost(random.NextInt(range), range));
                 var obstacleLayer = new ObstacleLayer(random, Obstacles);
                 var neighborhoodLayer = new NeighborhoodLayer(NeighborhoodFactory.Factory);
-                var smoothLayer = Enumerable
-                    .Repeat(new SmoothLayer(), SmoothLevel.SmoothLevel)
-                    .To(x => new Layers(x.ToArray()));
-                var layers = new Layers(costLayer, obstacleLayer, neighborhoodLayer, smoothLayer);
+                var layers = new Layers(costLayer, obstacleLayer, neighborhoodLayer, SmoothLevel.SmoothLevel);
                 var graph = await graphAssemble.AssembleGraphAsync(layers, Width, Length)
                     .ConfigureAwait(false);
                 var request = new CreateGraphRequest<GraphVertexModel>()
@@ -122,8 +122,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     Neighborhood = NeighborhoodFactory.Name,
                     SmoothLevel = SmoothLevel.Name
                 };
-                var graphModel = await Task.Run(() => service.CreateGraphAsync(request))
-                    .ConfigureAwait(false);
+                var graphModel = await service.CreateGraphAsync(request).ConfigureAwait(false);
                 var info = new GraphInfoModel()
                 {
                     Id = graphModel.Id,

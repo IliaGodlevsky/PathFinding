@@ -5,6 +5,7 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.Domain.Core;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using ReactiveUI;
@@ -59,7 +60,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             await ExecuteSafe(async () =>
             {
-                var graph = await service.ReadGraphAsync(model.Id);
+                var graph = await service.ReadGraphAsync(model.Id).ConfigureAwait(false);
                 messenger.Send(new GraphActivatedMessage(graph), Tokens.GraphField);
                 messenger.Send(new GraphActivatedMessage(graph), Tokens.PathfindingRange);
                 messenger.Send(new GraphActivatedMessage(graph));

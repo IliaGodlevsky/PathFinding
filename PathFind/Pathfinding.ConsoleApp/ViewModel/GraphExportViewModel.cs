@@ -64,14 +64,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             await ExecuteSafe(async () =>
             {
-                var graphs = await Task.Run(() => service.ReadSerializationHistoriesAsync(graphIds))
-                    .ConfigureAwait(false);
-                await serializer.SerializeToFileAsync(graphs.ToList(), FilePath)
-                    .ConfigureAwait(false);
+                var graphs = await service.ReadSerializationHistoriesAsync(graphIds).ConfigureAwait(false);
+                await serializer.SerializeToFileAsync(graphs.ToList(), FilePath).ConfigureAwait(false);
                 FilePath = string.Empty;
                 logger.Info(graphs.Count == 1 ? "Graph was saved" : "Graphs were saved");
             }, logger.Error).ConfigureAwait(false);
-
         }
 
         private void OnGraphSelected(object recipient, GraphSelectedMessage msg)

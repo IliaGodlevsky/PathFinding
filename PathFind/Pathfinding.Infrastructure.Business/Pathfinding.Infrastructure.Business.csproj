@@ -132,8 +132,10 @@
     <Compile Include="Commands\ReplaceIsolatedSourceVertex.cs" />
     <Compile Include="Commands\ReplaceIsolatedTargetVertex.cs" />
     <Compile Include="Commands\ReplaceTransitIsolatedVertex.cs" />
+    <Compile Include="Extensions\AutomapperExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\HeuristicsExtensions.cs" />
+    <Compile Include="Extensions\LayerExtensions.cs" />
     <Compile Include="Extensions\PriorityQueueExtensions.cs" />
     <Compile Include="Extensions\SimplePriorityQueueExtensions.cs" />
     <Compile Include="Extensions\UnitOfWorkExtensions.cs" />

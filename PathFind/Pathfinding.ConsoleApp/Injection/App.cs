@@ -13,6 +13,7 @@ using Pathfinding.Infrastructure.Business;
 using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Infrastructure.Business.Commands;
+using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Infrastructure.Business.Mappings;
 using Pathfinding.Infrastructure.Business.Serializers;
 using Pathfinding.Infrastructure.Business.Serializers.Decorators;
@@ -53,21 +54,24 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<CosineDistance>().As<IHeuristic>()
                 .WithMetadata(MetadataKeys.NameKey, HeuristicNames.Cosine).SingleInstance();
 
-            builder.RegisterInstance("No").Keyed<string>(KeyFilters.SmoothLevels)
-                .WithMetadata(MetadataKeys.SmoothKey, 0).SingleInstance();
-            builder.RegisterInstance("Low").Keyed<string>(KeyFilters.SmoothLevels)
-                .WithMetadata(MetadataKeys.SmoothKey, 1).SingleInstance();
-            builder.RegisterInstance("Meduim").Keyed<string>(KeyFilters.SmoothLevels)
-                .WithMetadata(MetadataKeys.SmoothKey, 2).SingleInstance();
-            builder.RegisterInstance("High").Keyed<string>(KeyFilters.SmoothLevels).
-                WithMetadata(MetadataKeys.SmoothKey, 4).SingleInstance();
-            builder.RegisterInstance("Extreme").Keyed<string>(KeyFilters.SmoothLevels)
-                .WithMetadata(MetadataKeys.SmoothKey, 7).SingleInstance();
+            builder.RegisterType<SmoothLayer>().As<ILayer>().WithMetadata(MetadataKeys.SmoothKey, 0)
+                .WithMetadata(MetadataKeys.NameKey, SmoothLevelNames.No).SingleInstance();
+            builder.RegisterType<SmoothLayer>().As<ILayer>().WithMetadata(MetadataKeys.SmoothKey, 1)
+                .WithMetadata(MetadataKeys.NameKey, SmoothLevelNames.Low).SingleInstance();
+            builder.RegisterType<SmoothLayer>().As<ILayer>().WithMetadata(MetadataKeys.SmoothKey, 2)
+                .WithMetadata(MetadataKeys.NameKey, SmoothLevelNames.Medium).SingleInstance();
+            builder.RegisterType<SmoothLayer>().As<ILayer>().WithMetadata(MetadataKeys.SmoothKey, 4)
+                .WithMetadata(MetadataKeys.NameKey, SmoothLevelNames.High).SingleInstance();
+            builder.RegisterType<SmoothLayer>().As<ILayer>().WithMetadata(MetadataKeys.SmoothKey, 7)
+                .WithMetadata(MetadataKeys.NameKey, SmoothLevelNames.Extreme).SingleInstance();
 
             builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>()
                 .SingleInstance().WithMetadata(MetadataKeys.NameKey, NeighborhoodNames.Moore);
             builder.RegisterType<VonNeumannNeighborhoodFactory>().As<INeighborhoodFactory>()
                 .SingleInstance().WithMetadata(MetadataKeys.NameKey, NeighborhoodNames.VonNeumann);
+
+            builder.Register(_ => new SqliteUnitOfWorkFactory(AppSettings.Default.ConnectionString))
+                .As<IUnitOfWorkFactory>().SingleInstance();
 
             builder.RegisterType<GraphMappingProfile<GraphVertexModel>>().As<Profile>().SingleInstance();
             builder.RegisterType<UntitledMappingProfile>().As<Profile>().SingleInstance();
@@ -81,9 +85,6 @@ namespace Pathfinding.ConsoleApp.Injection
                 var mappingConfig = new MapperConfiguration(c => c.AddProfiles(profiles));
                 return mappingConfig.CreateMapper(context.Resolve);
             }).As<IMapper>().SingleInstance();
-
-            builder.Register(_ => new SqliteUnitOfWorkFactory(AppSettings.Default.ConnectionString))
-                .As<IUnitOfWorkFactory>().SingleInstance();
 
             builder.RegisterType<RequestService<GraphVertexModel>>().As<IRequestService<GraphVertexModel>>().SingleInstance();
 
@@ -118,14 +119,15 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<WeakReferenceMessenger>().Keyed<IMessenger>(KeyFilters.Views).SingleInstance().WithAttributeFiltering();
             builder.RegisterType<WeakReferenceMessenger>().Keyed<IMessenger>(KeyFilters.ViewModels).SingleInstance().WithAttributeFiltering();
 
-            builder.RegisterAssemblyTypes(typeof(BaseViewModel).Assembly).Where(x => x.Name.EndsWith("ViewModel"))
-                .AsSelf().AsImplementedInterfaces().SingleInstance().WithAttributeFiltering();
+            builder.RegisterAssemblyTypes(typeof(BaseViewModel).Assembly).SingleInstance()
+                .Where(x => x.Name.EndsWith("ViewModel")).AsSelf()
+                .AsImplementedInterfaces().WithAttributeFiltering();
             builder.RegisterType<HeuristicsViewModel>().AsSelf().SingleInstance()
                 .UsingConstructor(typeof(IEnumerable<Meta<IHeuristic>>));
             builder.RegisterType<StepRulesViewModel>().AsSelf().SingleInstance()
                 .UsingConstructor(typeof(IEnumerable<Meta<IStepRule>>));
             builder.RegisterType<SmoothLevelViewModel>().AsSelf().SingleInstance()
-                .UsingConstructor(typeof(IEnumerable<Meta<string>>)).WithAttributeFiltering();
+                .UsingConstructor(typeof(IEnumerable<Meta<ILayer>>)).WithAttributeFiltering();
             builder.RegisterType<NeighborhoodFactoriesViewModel>().AsSelf().SingleInstance()
                 .UsingConstructor(typeof(IEnumerable<Meta<INeighborhoodFactory>>));
 

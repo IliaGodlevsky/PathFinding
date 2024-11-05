@@ -10,7 +10,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
 
         protected abstract string CreateTableScript { get; }
 
-        protected SqliteRepository(SqliteConnection connection,
+        protected SqliteRepository(
+            SqliteConnection connection,
             SqliteTransaction transaction)
         {
             this.connection = connection;

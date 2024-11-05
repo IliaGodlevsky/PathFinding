@@ -50,18 +50,20 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             await ExecuteSafe(async () =>
             {
-                var isDeleted = await Task.Run(() => service.DeleteRunsAsync(RunsIds))
+                var isDeleted = await service.DeleteRunsAsync(RunsIds)
                     .ConfigureAwait(false);
                 if (isDeleted)
                 {
-                    messenger.Send(new RunsDeletedMessage(RunsIds.ToArray()));
+                    var runs = RunsIds.ToArray();
+                    RunsIds = Array.Empty<int>();
+                    messenger.Send(new RunsDeletedMessage(runs));
                 }
             }, logger.Error).ConfigureAwait(false);
         }
 
         private void OnRunsSelected(object recipient, RunSelectedMessage msg)
         {
-            RunsIds = msg.SelectedRuns;
+            RunsIds = msg.SelectedRuns.Select(x => x.RunId).ToArray();
         }
     }
 }

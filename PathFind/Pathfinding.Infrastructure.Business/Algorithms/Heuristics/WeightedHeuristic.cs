@@ -9,6 +9,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.Heuristics
         private readonly IHeuristic heuristic;
         private readonly double weight;
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public WeightedHeuristic(IHeuristic heuristic, double weight)
         {
             this.heuristic = heuristic;

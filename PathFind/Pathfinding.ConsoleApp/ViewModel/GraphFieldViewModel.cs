@@ -79,8 +79,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     vertex.Enumerate().ToList());
                 await ExecuteSafe(async () =>
                 {
-                    await Task.Run(() => service.UpdateVerticesAsync(request)).ConfigureAwait(false);
-                }, logger.Error);
+                    await service.UpdateVerticesAsync(request).ConfigureAwait(false);
+                }, logger.Error).ConfigureAwait(false);
             }
         }
 
@@ -102,8 +102,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
             vertex.Cost = new VertexCost(cost, vertex.Cost.CostRange);
             var request = new UpdateVerticesRequest<GraphVertexModel>(GraphId,
                 vertex.Enumerate().ToList());
-            await ExecuteSafe(async () => await service.UpdateVerticesAsync(request),
-                logger.Error);
+            await ExecuteSafe(async () => await service.UpdateVerticesAsync(request)
+                .ConfigureAwait(false),
+                logger.Error).ConfigureAwait(false);
         }
 
         private void OnGraphActivated(object recipient, GraphActivatedMessage msg)

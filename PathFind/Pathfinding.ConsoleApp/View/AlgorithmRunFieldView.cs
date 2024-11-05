@@ -24,8 +24,9 @@ namespace Pathfinding.ConsoleApp.View
         private readonly CompositeDisposable vertexDisposables = new();
         private readonly CompositeDisposable disposables = new();
 
+        private readonly AlgorithmRunFieldViewModel viewModel;
+
         public AlgorithmRunFieldView(AlgorithmRunFieldViewModel viewModel,
-            AlgorithmRunReviewFieldViewModel reviewViewModel,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
             Visible = false;
@@ -39,16 +40,15 @@ namespace Pathfinding.ConsoleApp.View
                 BorderStyle = BorderStyle.Rounded,
                 Title = "Run field"
             };
-            viewModel.WhenAnyValue(x => x.GraphState)
-                .Do(x => RenderGraphState(x, viewModel))
-                .Subscribe()
-                .DisposeWith(disposables);
-            reviewViewModel.WhenAnyValue(x => x.GraphState)
-                .Do(x => RenderGraphState(x, reviewViewModel))
+            viewModel.WhenAnyValue(x => x.RunGraph)
+                .Skip(1)
+                .Where(x => x is not null)
+                .Do(async x => await RenderGraphState(x.Values))
                 .Subscribe()
                 .DisposeWith(disposables);
             messenger.Register<OpenAlgorithmRunViewMessage>(this, OnOpen);
             messenger.Register<CloseAlgorithmRunFieldViewMessage>(this, OnCloseAlgorithmViewMessage);
+            this.viewModel = viewModel;
         }
 
         private void OnOpen(object recipient, OpenAlgorithmRunViewMessage msg)
@@ -59,39 +59,32 @@ namespace Pathfinding.ConsoleApp.View
         private void OnCloseAlgorithmViewMessage(object recipient, CloseAlgorithmRunFieldViewMessage msg)
         {
             Visible = false;
+        }
+
+        private async Task RenderGraphState(IEnumerable<RunVertexModel> graphState)
+        {
             Application.MainLoop.Invoke(RemoveAll);
             vertexDisposables.Clear();
-        }
-
-        private void RenderGraphState(
-            IReadOnlyCollection<RunVertexModel> graphState,
-            AlgorithmRunBaseViewModel viewModel)
-        {
-            RemoveAll();
-            vertexDisposables.Clear();
-            var children = new List<RunVertexView>(graphState.Count);
-
-            foreach (var vertex in graphState)
+            var children = new List<RunVertexView>();
+            await Task.Run(() =>
             {
-                var view = new RunVertexView(vertex);
-                SubscribeOnProcessNext(view, viewModel);
-                SubscribeOnReverseNext(view, viewModel);
-                children.Add(view);
-                view.DisposeWith(vertexDisposables);
-            }
-
-            Application.MainLoop.Invoke(() =>
-            {
-                Add(children.ToArray());
+                foreach (var vertex in graphState)
+                {
+                    var view = new RunVertexView(vertex);
+                    SubscribeOnProcessNext(view);
+                    SubscribeOnReverseNext(view);
+                    children.Add(view);
+                    view.DisposeWith(vertexDisposables);
+                }
             });
+            Application.MainLoop.Invoke(() => Add(children.ToArray()));
         }
 
-        private void SubscribeOnProcessNext(RunVertexView view,
-            AlgorithmRunBaseViewModel viewModel)
+        private void SubscribeOnProcessNext(RunVertexView view)
         {
             view.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button2Clicked))
-                .Do(async async => await ProcessAll(viewModel))
+                .Do(async async => await ProcessAll())
                 .Subscribe()
                 .DisposeWith(vertexDisposables);
             view.Events().MouseClick
@@ -106,13 +99,17 @@ namespace Pathfinding.ConsoleApp.View
                 .DisposeWith(vertexDisposables);
         }
 
-        private void SubscribeOnReverseNext(RunVertexView view,
-            AlgorithmRunBaseViewModel viewModel)
+        private void SubscribeOnReverseNext(RunVertexView view)
         {
             view.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button3DoubleClicked))
                 .Select(x => MaxSpeed)
                 .InvokeCommand(viewModel, x => x.ReverseNextCommand)
+                .DisposeWith(vertexDisposables);
+            view.Events().MouseClick
+                .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button2DoubleClicked))
+                .Do(async async => await ReverseAll())
+                .Subscribe()
                 .DisposeWith(vertexDisposables);
             view.Events().MouseClick
                .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.WheeledDown))
@@ -121,13 +118,26 @@ namespace Pathfinding.ConsoleApp.View
                .DisposeWith(vertexDisposables);
         }
 
-        private async Task ProcessAll(AlgorithmRunBaseViewModel viewModel)
+        private async Task ProcessAll()
         {
             var command = viewModel.ProcessNextCommand;
             bool next = true;
+            int speed = Speed;
             while (next)
             {
-                next = await command.Execute(Speed);
+                next = await command.Execute(speed++);
+                Application.Refresh();
+            }
+        }
+
+        private async Task ReverseAll()
+        {
+            var command = viewModel.ReverseNextCommand;
+            bool next = true;
+            int speed = Speed;
+            while (next)
+            {
+                next = await command.Execute(speed++);
                 Application.Refresh();
             }
         }

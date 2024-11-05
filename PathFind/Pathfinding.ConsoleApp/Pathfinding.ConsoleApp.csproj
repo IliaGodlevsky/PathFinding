@@ -57,7 +57,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>AppSettings.settings</DependentUpon>
     </Compile>
-    <Compile Include="GraphStatuses.cs" />
     <Compile Include="Injection\MetadataKeys.cs" />
     <Compile Include="Messages\Tokens.cs" />
     <Compile Include="Messages\ViewModel\GraphBecameReadOnlyMessage.cs" />
@@ -70,8 +69,6 @@
     <Compile Include="Messages\View\CloseAlgorithmRunFieldViewMessage.cs" />
     <Compile Include="Messages\View\SpreadViewModelChangedMessage.cs" />
     <Compile Include="Model\RunVertexModel.cs" />
-    <Compile Include="ViewModel\AlgorithmRunBaseViewModel.cs" />
-    <Compile Include="ViewModel\AlgorithmRunReviewFieldViewModel.cs" />
     <Compile Include="ViewModel\AStarLeeAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\BidirectAStarAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\BidirectDijkstraAlgorithmViewModel.cs" />

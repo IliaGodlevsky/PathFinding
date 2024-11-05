@@ -39,7 +39,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             foreach (var vertex in vertices)
             {
                 var id = await connection.ExecuteScalarAsync<int>(
-                    new CommandDefinition(query, vertex, transaction, cancellationToken: token));
+                    new CommandDefinition(query, vertex, transaction, cancellationToken: token))
+                    .ConfigureAwait(false);
                 vertex.Id = id;
             }
 
@@ -51,7 +52,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             const string query = $"DELETE FROM {DbTables.Vertices} WHERE GraphId = @GraphId";
 
             var affectedRows = await connection.ExecuteAsync(
-                new CommandDefinition(query, new { GraphId = graphId }, transaction, cancellationToken: token));
+                new CommandDefinition(query, new { GraphId = graphId }, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
 
             return affectedRows > 0;
         }
@@ -61,7 +63,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             const string query = $"SELECT * FROM {DbTables.Vertices} WHERE Id = @Id";
 
             return await connection.QuerySingleOrDefaultAsync<Vertex>(
-                new CommandDefinition(query, new { Id = vertexId }, transaction, cancellationToken: token));
+                new CommandDefinition(query, new { Id = vertexId }, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<Vertex>> ReadVerticesByGraphIdAsync(int graphId, CancellationToken token = default)
@@ -69,7 +72,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             const string query = $"SELECT * FROM {DbTables.Vertices} WHERE GraphId = @GraphId";
 
             return await connection.QueryAsync<Vertex>(
-                new CommandDefinition(query, new { GraphId = graphId }, transaction, cancellationToken: token));
+                new CommandDefinition(query, new { GraphId = graphId }, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
         }
 
         public async Task<bool> UpdateVerticesAsync(IEnumerable<Vertex> vertices, CancellationToken token = default)
@@ -84,7 +88,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
                 WHERE Id = @Id";
 
             var affectedRows = await connection.ExecuteAsync(
-                new CommandDefinition(query, vertices, transaction, cancellationToken: token));
+                new CommandDefinition(query, vertices, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
 
             return affectedRows > 0;
         }

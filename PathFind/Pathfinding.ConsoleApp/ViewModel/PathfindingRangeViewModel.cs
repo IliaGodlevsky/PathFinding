@@ -155,7 +155,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             {
                 var vertices = pathfindingRange.ToList();
                 var index = vertices.IndexOf(vertex);
-                await Task.Run(() => service.CreatePathfindingVertexAsync(GraphId, vertex.Id, index))
+                await service.CreatePathfindingVertexAsync(GraphId, vertex.Id, index)
                     .ConfigureAwait(false);
             }, logger.Error).ConfigureAwait(false);
         }
@@ -167,8 +167,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private async Task RemoveVertexFromStorage(GraphVertexModel vertex)
         {
-            await ExecuteSafe(async () => await Task.Run(() => service.DeleteRangeAsync(vertex.Enumerate())
-                ).ConfigureAwait(false),
+            await ExecuteSafe(async ()
+                => await service.DeleteRangeAsync(vertex.Enumerate()).ConfigureAwait(false),
                 logger.Error).ConfigureAwait(false);
         }
 
@@ -181,8 +181,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private async Task DeleteRange(MouseEventArgs args)
         {
-            var result = await Task.Run(() => service.DeleteRangeAsync(GraphId))
-                .ConfigureAwait(false);
+            var result = await service.DeleteRangeAsync(GraphId).ConfigureAwait(false);
             if (result)
             {
                 ClearRange();
@@ -199,8 +198,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 Graph = msg.Graph.Graph;
                 GraphId = msg.Graph.Id;
                 IsReadOnly = msg.Graph.IsReadOnly;
-                var range = await Task.Run(() => service.ReadRangeAsync(GraphId))
-                    .ConfigureAwait(false);
+                var range = await service.ReadRangeAsync(GraphId).ConfigureAwait(false);
                 var src = range.FirstOrDefault(x => x.IsSource);
                 Source = src != null ? Graph.Get(src.Position) : null;
                 var tgt = range.FirstOrDefault(x => x.IsTarget);
@@ -210,10 +208,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     .ToList();
                 Transit.CollectionChanged += OnCollectionChanged;
                 Transit.AddRange(transit);
-                foreach (var vertex in Graph)
-                {
-                    SubcribeToEvents(vertex);
-                }
+                Graph.ForEach(SubcribeToEvents);
             }, logger.Error).ConfigureAwait(false);
         }
 

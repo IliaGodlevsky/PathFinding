@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
@@ -43,19 +44,24 @@ namespace Pathfinding.ConsoleApp.View
 
         private void OnOpenAlgorithmRunView(object recipient, OpenAlgorithmRunViewMessage msg)
         {
-            Visible = false;
+            Application.MainLoop.Invoke(() =>
+            {
+                Visible = false;
+            });
         }
 
         private void OnCloseAlgorithmRunField(object recipient, CloseAlgorithmRunFieldViewMessage msg)
         {
-            Visible = true;
+            Application.MainLoop.Invoke(() =>
+            {
+                Visible = true;
+            });
         }
 
         private void RenderGraph(IGraph<GraphVertexModel> graph)
         {
-            RemoveAll();
+            Application.MainLoop.Invoke(RemoveAll);
             vertexDisposables.Clear();
-
             var views = new List<GraphVertexView>();
             foreach (var vertex in graph)
             {
@@ -66,7 +72,6 @@ namespace Pathfinding.ConsoleApp.View
                 SubscribeOnWheelButton(view, vertex);
                 views.Add(view);
             }
-
             Application.MainLoop.Invoke(() =>
             {
                 Add(views.ToArray());

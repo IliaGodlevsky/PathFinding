@@ -21,20 +21,21 @@ namespace Pathfinding.Infrastructure.Business.Extensions
             CancellationToken token = default)
             where T : IVertex
         {
-            var graphEntity = await unitOfWork.GraphRepository.ReadAsync(graphId, token);
-            var vertexEntities = (await unitOfWork.VerticesRepository
-                .ReadVerticesByGraphIdAsync(graphId, token))
-                .ToDictionary(x => x.Id);
-            var ids = vertexEntities.Select(x => x.Key).ToReadOnly();
-            var informationDto = mapper.Map<GraphInformationModel>(graphEntity);
-            var vertices = mapper.Map<VertexAssembleModel[]>(vertexEntities.Values);
+            var graphEntity = await unitOfWork.GraphRepository.ReadAsync(graphId, token)
+                .ConfigureAwait(false);
+            var vertexEntities = await unitOfWork.VerticesRepository
+                .ReadVerticesByGraphIdAsync(graphId, token).ConfigureAwait(false);
+            var ids = vertexEntities.Select(x => x.Id).ToReadOnly();
+            var informationDto = await mapper.MapAsync<GraphInformationModel>(graphEntity, token);
+            var vertices = await mapper.MapAsync<VertexAssembleModel[]>(vertexEntities, token);
             var assembleDto = new GraphAssembleModel()
             {
                 Dimensions = informationDto.Dimensions,
                 Vertices = vertices
             };
-            var runs = await unitOfWork.StatisticsRepository.ReadByGraphIdAsync(graphId, token);
-            var result = mapper.Map<IGraph<T>>(assembleDto);
+            var runs = await unitOfWork.StatisticsRepository.ReadByGraphIdAsync(graphId, token)
+                .ConfigureAwait(false);
+            var result = await mapper.MapAsync<IGraph<T>>(assembleDto, token);
             return new GraphModel<T>()
             {
                 Graph = result,
@@ -52,10 +53,12 @@ namespace Pathfinding.Infrastructure.Business.Extensions
             CancellationToken token = default)
         {
             var result = new List<PathfindingRangeModel>();
-            var range = await unitOfWork.RangeRepository.ReadByGraphIdAsync(graphId, token);
+            var range = await unitOfWork.RangeRepository.ReadByGraphIdAsync(graphId, token)
+                .ConfigureAwait(false);
             foreach (var x in range)
             {
-                var vertex = await unitOfWork.VerticesRepository.ReadAsync(x.VertexId, token);
+                var vertex = await unitOfWork.VerticesRepository.ReadAsync(x.VertexId, token)
+                    .ConfigureAwait(false);
                 var coordinates = mapper.Map<Coordinate>(vertex.Coordinates);
                 var model = mapper.Map<PathfindingRangeModel>(x);
                 model.Position = coordinates;
@@ -71,13 +74,12 @@ namespace Pathfinding.Infrastructure.Business.Extensions
             where T : IVertex, IEntity<int>
         {
             var graphEntity = mapper.Map<Graph>(graph);
-            await unitOfWork.GraphRepository.CreateAsync(graphEntity, token);
+            await unitOfWork.GraphRepository.CreateAsync(graphEntity, token)
+                .ConfigureAwait(false);
             var vertices = mapper.Map<Vertex[]>(graph.Graph).ToReadOnly();
-            vertices.ForEach((x, i) =>
-            {
-                x.GraphId = graphEntity.Id;
-            });
-            await unitOfWork.VerticesRepository.CreateAsync(vertices, token);
+            vertices.ForEach(x => x.GraphId = graphEntity.Id);
+            await unitOfWork.VerticesRepository.CreateAsync(vertices, token)
+                .ConfigureAwait(false);
             vertices.Zip(graph.Graph, (x, y) => (Entity: x, Vertex: y))
                 .ForEach(x => x.Vertex.Id = x.Entity.Id);
             var result = mapper.Map<GraphModel<T>>(graph);

@@ -1,6 +1,6 @@
-﻿namespace Pathfinding.ConsoleApp
+﻿namespace Pathfinding.Domain.Core
 {
-    internal static class GraphStatuses
+    public static class GraphStatuses
     {
         public const string Editable = "Editable";
         public const string Readonly = "Readonly";

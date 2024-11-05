@@ -19,24 +19,24 @@ namespace Pathfinding.ConsoleApp.View
         private const string StatusCol = "Status";
         private const string TimeFormat = @"ss\.fff";
 
-        private readonly DataTable table = new DataTable();
+        private readonly DataTable table = new();
 
         private void Initialize()
         {
             table.Columns.AddRange(new DataColumn[]
             {
-                new DataColumn(IdCol, typeof(int)),
-                new DataColumn(AlgorithmCol, typeof(string)),
-                new DataColumn(VisitedCol, typeof(int)),
-                new DataColumn(StepsCol, typeof(int)),
-                new DataColumn(CostCol, typeof(double)),
-                new DataColumn(ElapsedCol, typeof(TimeSpan)),
-                new DataColumn(StepCol, typeof(string)),
-                new DataColumn(LogicCol, typeof(string)),
-                new DataColumn(WeightCol, typeof(string)),
-                new DataColumn(StatusCol, typeof(string))
+                new (IdCol, typeof(int)),
+                new (AlgorithmCol, typeof(string)),
+                new (VisitedCol, typeof(int)),
+                new (StepsCol, typeof(int)),
+                new (CostCol, typeof(double)),
+                new (ElapsedCol, typeof(TimeSpan)),
+                new (StepCol, typeof(string)),
+                new (LogicCol, typeof(string)),
+                new (WeightCol, typeof(string)),
+                new (StatusCol, typeof(string))
             });
-            table.PrimaryKey = new DataColumn[] { table.Columns[IdCol] };
+            table.PrimaryKey = new [] { table.Columns[IdCol] };
             var columnStyles = new Dictionary<DataColumn, ColumnStyle>()
             {
                 { table.Columns[IdCol], new() { Visible = false } },
@@ -50,7 +50,7 @@ namespace Pathfinding.ConsoleApp.View
                 { table.Columns[WeightCol], new() { Alignment = TextAlignment.Left } },
                 { table.Columns[StatusCol], new() { Alignment = TextAlignment.Centered } }
             };
-            Style = new TableStyle()
+            Style = new()
             {
                 ExpandLastColumn = true,
                 ShowVerticalCellLines = false,

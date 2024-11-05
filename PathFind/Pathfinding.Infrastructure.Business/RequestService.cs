@@ -103,11 +103,13 @@ namespace Pathfinding.Infrastructure.Business
             {
                 var result = (await unitOfWork.GraphRepository.GetAll(t)).ToList();
                 var ids = result.Select(x => x.Id).ToList();
-                var obstaclesCount = await unitOfWork.GraphRepository.ReadObstaclesCountAsync(ids, token);
+                var obstaclesCount = await unitOfWork.GraphRepository.ReadObstaclesCountAsync(ids, token)
+                    .ConfigureAwait(false);
                 var infos = mapper.Map<GraphInformationModel[]>(result).ToReadOnly();
                 foreach (var info in infos)
                 {
-                    var runs = await unitOfWork.StatisticsRepository.ReadStatisticsCountAsync(info.Id, token);
+                    var runs = await unitOfWork.StatisticsRepository.ReadStatisticsCountAsync(info.Id, token)
+                        .ConfigureAwait(false);
                     info.IsReadOnly = runs > 0;
                 }
                 infos.ForEach(x => x.ObstaclesCount = obstaclesCount[x.Id]);
@@ -120,12 +122,13 @@ namespace Pathfinding.Infrastructure.Business
         {
             return await Transaction(async (unitOfWork, t) =>
             {
-                var result = await unitOfWork.ReadGraphAsync<T>(graphId, mapper, t);
+                var result = await unitOfWork.ReadGraphAsync<T>(graphId, mapper, t)
+                    .ConfigureAwait(false);
                 var factory = result.Neighborhood == NeighborhoodNames.Moore
                     ? (INeighborhoodFactory)new MooreNeighborhoodFactory()
                     : new VonNeumannNeighborhoodFactory();
                 var layer = new NeighborhoodLayer(factory);
-                layer.Overlay((IGraph<IVertex>)result.Graph);
+                await layer.OverlayAsync((IGraph<IVertex>)result.Graph, token);
                 return result;
             }, token).ConfigureAwait(false);
         }
@@ -134,7 +137,8 @@ namespace Pathfinding.Infrastructure.Business
             CancellationToken token = default)
         {
             return await Transaction(async (unitOfWork, t)
-                => await unitOfWork.AddGraphAsync<T>(mapper, graph, t), token).ConfigureAwait(false);
+                => await unitOfWork.AddGraphAsync<T>(mapper, graph, t).ConfigureAwait(false), token)
+                .ConfigureAwait(false);
         }
 
         public async Task<IReadOnlyCollection<PathfindingHistoryModel<T>>> ReadPathfindingHistoriesAsync(IEnumerable<int> graphIds,
@@ -143,11 +147,12 @@ namespace Pathfinding.Infrastructure.Business
             return await Transaction(async (unitOfWork, t) =>
             {
                 var result = new List<PathfindingHistoryModel<T>>();
-                foreach (var graphId in graphIds)
+                await foreach (var graphId in graphIds.ToAsyncEnumerable()
+                    .WithCancellation(token).ConfigureAwait(false))
                 {
-                    var graph = await unitOfWork.ReadGraphAsync<T>(graphId, mapper, t);
-                    var statistics = await unitOfWork.StatisticsRepository.ReadByGraphIdAsync(graphId, token);
-                    var range = await unitOfWork.GetRangeAsync(graphId, mapper, t);
+                    var graph = await unitOfWork.ReadGraphAsync<T>(graphId, mapper, t).ConfigureAwait(false);
+                    var statistics = await unitOfWork.StatisticsRepository.ReadByGraphIdAsync(graphId, token).ConfigureAwait(false);
+                    var range = await unitOfWork.GetRangeAsync(graphId, mapper, t).ConfigureAwait(false);
                     result.Add(new()
                     {
                         Graph = graph,
@@ -163,7 +168,8 @@ namespace Pathfinding.Infrastructure.Business
             CancellationToken token = default)
         {
             return await Transaction(async (unitOfWork, t)
-                => await unitOfWork.GetRangeAsync(graphId, mapper, t), token).ConfigureAwait(false);
+                => await unitOfWork.GetRangeAsync(graphId, mapper, t).ConfigureAwait(false), token)
+                .ConfigureAwait(false);
         }
 
         public async Task<IReadOnlyCollection<RunStatisticsModel>> ReadStatisticsAsync(int graphId,
@@ -180,7 +186,7 @@ namespace Pathfinding.Infrastructure.Business
             CancellationToken token = default)
         {
             var result = await ReadPathfindingHistoriesAsync(graphIds, token);
-            return mapper.Map<List<PathfindingHistorySerializationModel>>(result);
+            return await mapper.MapAsync<List<PathfindingHistorySerializationModel>>(result, token);
         }
 
         public async Task<bool> UpdateVerticesAsync(UpdateVerticesRequest<T> request,
@@ -189,7 +195,7 @@ namespace Pathfinding.Infrastructure.Business
             return await Transaction(async (unitOfWork, t) =>
             {
                 var repo = unitOfWork.VerticesRepository;
-                return await mapper.Map<Vertex[]>(request.Vertices)
+                return await (await mapper.MapAsync<Vertex[]>(request.Vertices, token))
                        .ForEach(x => x.GraphId = request.GraphId)
                        .ToAsync(async (x, tkn) => await repo.UpdateVerticesAsync(x, tkn), t);
             }, token).ConfigureAwait(false);
@@ -199,14 +205,15 @@ namespace Pathfinding.Infrastructure.Business
             CancellationToken token = default)
         {
             return await Transaction(async (unitOfWork, t)
-                => await unitOfWork.GraphRepository.DeleteAsync(ids, t), token).ConfigureAwait(false);
+                => await unitOfWork.GraphRepository.DeleteAsync(ids, t).ConfigureAwait(false), token)
+                .ConfigureAwait(false);
         }
 
         public async Task<bool> DeleteRunsAsync(IEnumerable<int> runIds, CancellationToken token = default)
         {
             return await Transaction(async (unit, t) =>
             {
-                return await unit.StatisticsRepository.DeleteByIdsAsync(runIds, t);
+                return await unit.StatisticsRepository.DeleteByIdsAsync(runIds, t).ConfigureAwait(false);
             }, token).ConfigureAwait(false);
         }
 

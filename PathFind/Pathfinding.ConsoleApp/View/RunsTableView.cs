@@ -8,6 +8,7 @@ using Pathfinding.Shared.Extensions;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System;
+using System.Collections.Specialized;
 using System.Data;
 using System.Linq;
 using System.Reactive.Disposables;
@@ -24,15 +25,10 @@ namespace Pathfinding.ConsoleApp.View
             [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
             Initialize();
-            viewModel.Runs.ActOnEveryObject(OnAdded, OnRemoved);
-            this.Events().CellActivated
-                .Where(x => x.Row <= table.Rows.Count - 1)
-                .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
-                .Select(x => GetRunModel(x.Row))
-                .InvokeCommand(viewModel, x => x.ActivateRunCommand)
-                .DisposeWith(disposables);
+            viewModel.Runs.CollectionChanged += OnCollectionChanged;
             this.Events().SelectedCellChanged
                 .Where(x => x.NewRow > -1 && x.NewRow < table.Rows.Count)
+                .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
                 .Select(x => (
                             MultiSelectedRegions.Count > 0
                             ? MultiSelectedRegions
@@ -64,33 +60,60 @@ namespace Pathfinding.ConsoleApp.View
 
         private void OnAdded(RunInfoModel model)
         {
-            table.Rows.Add(model.RunId, model.Name, model.Visited,
-                model.Steps, model.Cost, model.Elapsed, model.StepRule,
-                model.Heuristics, model.Weight, model.Status);
-            table.AcceptChanges();
-            SetNeedsDisplay();
-            Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
+            Application.MainLoop.Invoke(() =>
+            {
+                table.Rows.Add(model.RunId, model.Name, model.Visited,
+                    model.Steps, model.Cost, model.Elapsed, model.StepRule,
+                    model.Heuristics, model.Weight, model.Status);
+                table.AcceptChanges();
+                SetNeedsDisplay();
+                Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
+            });
         }
 
         private void OnRemoved(RunInfoModel model)
         {
-            var row = table.Rows.Find(model.RunId);
-            var index = table.Rows.IndexOf(row);
-            if (row != null)
+            Application.MainLoop.Invoke(() =>
             {
-                row.Delete();
-                table.AcceptChanges();
-                MultiSelectedRegions.Clear();
-                if (table.Rows.Count > 0)
+                var row = table.Rows.Find(model.RunId);
+                var index = table.Rows.IndexOf(row);
+                if (row != null)
                 {
-                    SelectedCellChangedEventArgs args = index == table.Rows.Count
-                        ? new(table, 0, 0, index, index - 1)
-                        : new(table, 0, 0, index, index);
-                    OnSelectedCellChanged(args);
-                    SetSelection(0, args.NewRow, false);
+                    row.Delete();
+                    table.AcceptChanges();
+                    MultiSelectedRegions.Clear();
+                    if (table.Rows.Count > 0)
+                    {
+                        SelectedCellChangedEventArgs args = index == table.Rows.Count
+                            ? new(table, 0, 0, index, index - 1)
+                            : new(table, 0, 0, index, index);
+                        OnSelectedCellChanged(args);
+                        SetSelection(0, args.NewRow, false);
+                    }
+                    SetNeedsDisplay();
+                    Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
                 }
-                SetNeedsDisplay();
-                Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
+            });
+        }
+
+        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Reset:
+                    MultiSelectedRegions.Clear();
+                    table.Clear();
+                    table.AcceptChanges();
+                    SetNeedsDisplay();
+                    break;
+                case NotifyCollectionChangedAction.Add:
+                    var added = (RunInfoModel)e.NewItems[0];
+                    OnAdded(added);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    var removed = (RunInfoModel)e.OldItems[0];
+                    OnRemoved(removed);
+                    break;
             }
         }
     }
