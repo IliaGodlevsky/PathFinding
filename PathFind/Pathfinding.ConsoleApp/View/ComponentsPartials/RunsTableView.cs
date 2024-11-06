@@ -20,8 +20,9 @@ namespace Pathfinding.ConsoleApp.View
         private const string TimeFormat = @"ss\.fff";
 
         private readonly DataTable table = new();
+        private readonly int headerLinesConsumed;
 
-        private void Initialize()
+        public RunsTableView()
         {
             table.Columns.AddRange(new DataColumn[]
             {
@@ -61,6 +62,16 @@ namespace Pathfinding.ConsoleApp.View
                 ColumnStyles = columnStyles,
                 ShowHorizontalScrollIndicators = true
             };
+            int line = 1;
+            if (Style.ShowHorizontalHeaderOverline)
+            {
+                line++;
+            }
+            if (Style.ShowHorizontalHeaderUnderline)
+            {
+                line++;
+            }
+            headerLinesConsumed = line;
             MultiSelect = true;
             FullRowSelect = true;
             X = 0;

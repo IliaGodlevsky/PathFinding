@@ -21,15 +21,14 @@ namespace Pathfinding.ConsoleApp.View
     {
         private readonly GraphTableViewModel viewModel;
         private readonly CompositeDisposable disposables = new();
-        private readonly Dictionary<int, CompositeDisposable> modelChangingSubs = new();
+        private readonly Dictionary<int, IDisposable> modelChangingSubs = new();
         private readonly IMessenger messenger;
 
         public GraphsTableView(GraphTableViewModel viewModel,
-            [KeyFilter(KeyFilters.Views)] IMessenger messenger)
+            [KeyFilter(KeyFilters.Views)] IMessenger messenger) : this()
         {
             this.viewModel = viewModel;
             this.messenger = messenger;
-            Initialize();
             viewModel.Graphs.ActOnEveryObject(AddToTable, RemoveFromTable)
                 .DisposeWith(disposables);
             viewModel.LoadGraphs();
@@ -40,22 +39,18 @@ namespace Pathfinding.ConsoleApp.View
                 .DisposeWith(disposables);
             this.Events().SelectedCellChanged
                 .Where(x => x.NewRow > -1 && x.NewRow < table.Rows.Count)
-                .Select(x => (
-                            MultiSelectedRegions.Count > 0
-                            ? MultiSelectedRegions
-                                .SelectMany(x => (x.Rect.Top, x.Rect.Bottom - 1).Iterate())
-                                .Select(GetParametresModel)
-                            : GetParametresModel(x.NewRow).Enumerate()
-                            )
-                          .ToArray())
+                .Select(x => GetAllSelectedCells().Select(x => x.Y)
+                        .ToHashSet().Select(GetParametresModel).ToArray())
                 .BindTo(viewModel, x => x.SelectedGraphs)
                 .DisposeWith(disposables);
-            MouseClick += MouseEntered;
-        }
-
-        private void MouseEntered(MouseEventArgs e)
-        {
-            messenger.Send(new CloseAlgorithmRunFieldViewMessage());
+            this.Events().MouseClick
+                .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
+                .Do(x => messenger.Send(new CloseAlgorithmRunFieldViewMessage()))
+                .Select(x => x.MouseEvent.Y + RowOffset - headerLinesConsumed)
+                .Where(x => x >= 0 && x < Table.Rows.Count && x == SelectedRow)
+                .Select(x => GetParametresModel(x).Enumerate().ToArray())
+                .BindTo(viewModel, x => x.SelectedGraphs)
+                .DisposeWith(disposables);
         }
 
         private GraphInfoModel GetParametresModel(int selectedRow)

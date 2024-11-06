@@ -22,21 +22,22 @@ namespace Pathfinding.ConsoleApp.View
         private readonly CompositeDisposable disposables = new();
 
         public RunsTableView(RunsTableViewModel viewModel,
-            [KeyFilter(KeyFilters.Views)] IMessenger messenger)
+            [KeyFilter(KeyFilters.Views)] IMessenger messenger) : this()
         {
-            Initialize();
             viewModel.Runs.CollectionChanged += OnCollectionChanged;
             this.Events().SelectedCellChanged
                 .Where(x => x.NewRow > -1 && x.NewRow < table.Rows.Count)
                 .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
-                .Select(x => (
-                            MultiSelectedRegions.Count > 0
-                            ? MultiSelectedRegions
-                                .SelectMany(x => (x.Rect.Top, x.Rect.Bottom - 1).Iterate())
-                                .Select(GetRunModel)
-                            : GetRunModel(x.NewRow).Enumerate()
-                            )
-                          .ToArray())
+                .Select(x => GetAllSelectedCells().Select(x => x.Y)
+                      .ToHashSet().Select(GetRunModel).ToArray())
+                .BindTo(viewModel, x => x.Selected)
+                .DisposeWith(disposables);
+            this.Events().MouseClick
+                .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
+                .Select(x => x.MouseEvent.Y + RowOffset - headerLinesConsumed)
+                .Where(x => x >= 0 && x < Table.Rows.Count && x == SelectedRow)
+                .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
+                .Select(x => GetRunModel(x).Enumerate().ToArray())
                 .BindTo(viewModel, x => x.Selected)
                 .DisposeWith(disposables);
         }
@@ -107,12 +108,10 @@ namespace Pathfinding.ConsoleApp.View
                     SetNeedsDisplay();
                     break;
                 case NotifyCollectionChangedAction.Add:
-                    var added = (RunInfoModel)e.NewItems[0];
-                    OnAdded(added);
+                    OnAdded((RunInfoModel)e.NewItems[0]);
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    var removed = (RunInfoModel)e.OldItems[0];
-                    OnRemoved(removed);
+                    OnRemoved((RunInfoModel)e.OldItems[0]);
                     break;
             }
         }

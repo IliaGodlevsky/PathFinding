@@ -30,7 +30,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             get => selected;
             set
             {
-                this.RaiseAndSetIfChanged(ref selected, value);
+                selected = value;
                 messenger.Send(new RunSelectedMessage(selected));
             }
         }

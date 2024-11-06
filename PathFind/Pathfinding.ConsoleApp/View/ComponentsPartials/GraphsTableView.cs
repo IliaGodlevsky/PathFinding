@@ -16,8 +16,9 @@ namespace Pathfinding.ConsoleApp.View
         private const string Status = "Status";
 
         private readonly DataTable table = new DataTable();
+        private readonly int headerLinesConsumed;
 
-        private void Initialize()
+        public GraphsTableView()
         {
             table.Columns.AddRange(new DataColumn[]
             {
@@ -50,6 +51,16 @@ namespace Pathfinding.ConsoleApp.View
                 ShowVerticalHeaderLines = false,
                 ColumnStyles = columnStyles
             };
+            int line = 1;
+            if (Style.ShowHorizontalHeaderOverline)
+            {
+                line++;
+            }
+            if (Style.ShowHorizontalHeaderUnderline)
+            {
+                line++;
+            }
+            headerLinesConsumed = line;
             MultiSelect = true;
             FullRowSelect = true;
             X = 0;
