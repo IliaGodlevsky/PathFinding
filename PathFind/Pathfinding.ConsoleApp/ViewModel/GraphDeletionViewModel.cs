@@ -64,7 +64,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnGraphSelected(object recipient, GraphSelectedMessage msg)
         {
-            GraphIds = msg.GraphIds;
+            GraphIds = msg.Graphs.Select(x => x.Id).ToArray();
         }
     }
 }

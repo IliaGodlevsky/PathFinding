@@ -22,9 +22,15 @@ namespace Pathfinding.ConsoleApp.View
             X = model.Position.GetX() * LabelWidth;
             Y = model.Position.GetY();
             Width = LabelWidth;
-            Text = model.Cost.CurrentCost.ToString();
 
-            BindTo(x => x.IsObstacle, ColorConstants.ObstacleVertexColor, ColorConstants.RegularVertexColor, 0);
+            model.WhenAnyValue(x => x.Cost)
+                .Select(x => x.CurrentCost.ToString())
+                .Do(x => Text = x)
+                .Subscribe()
+                .DisposeWith(disposables);
+
+            BindTo(x => x.IsObstacle, ColorConstants.ObstacleVertexColor,
+                ColorConstants.RegularVertexColor, 0);
             BindTo(x => x.IsTarget, ColorConstants.TargetVertexColor);
             BindTo(x => x.IsSource, ColorConstants.SourceVertexColor);
             BindTo(x => x.IsTransit, ColorConstants.TranstiVertexColor);

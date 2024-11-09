@@ -38,5 +38,10 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
         {
             return string.Empty;
         }
+
+        public IVertexCost DeepClone()
+        {
+            return NullCost.Instance;
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace Pathfinding.ConsoleApp.View
         private void Initialize()
         {
             X = Pos.Percent(35) + 1;
-            Y = Pos.Percent(15) + 1;
+            Y = Pos.Percent(25) + 1;
             Width = Dim.Percent(35);
             Height = Dim.Percent(40);
             Border = new Border()

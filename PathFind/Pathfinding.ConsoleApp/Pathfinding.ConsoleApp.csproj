@@ -60,21 +60,24 @@
     <Compile Include="Injection\MetadataKeys.cs" />
     <Compile Include="Messages\Tokens.cs" />
     <Compile Include="Messages\ViewModel\GraphBecameReadOnlyMessage.cs" />
+    <Compile Include="Messages\ViewModel\GraphUpdatedMessage.cs" />
     <Compile Include="Messages\View\HeuristicsViewModelChangedMessage.cs" />
     <Compile Include="Messages\View\OpenAlgorithmRunViewMessage.cs" />
-    <Compile Include="Messages\ViewModel\RunActivatedMessage.cs" />
     <Compile Include="Messages\ViewModel\RunCreatedMessaged.cs" />
     <Compile Include="Messages\ViewModel\RunsDeletedMessage.cs" />
     <Compile Include="Messages\ViewModel\RunSelectedMessage.cs" />
     <Compile Include="Messages\View\CloseAlgorithmRunFieldViewMessage.cs" />
-    <Compile Include="Messages\View\SpreadViewModelChangedMessage.cs" />
+    <Compile Include="Messages\View\OpenGraphUpdateViewMessage.cs" />
+    <Compile Include="Model\Factories\RunVertexModelFactory.cs" />
     <Compile Include="Model\RunVertexModel.cs" />
     <Compile Include="ViewModel\AStarLeeAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\BidirectAStarAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\BidirectDijkstraAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\BidirectLeeAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\GraphCopyViewModel.cs" />
     <Compile Include="ViewModel\CostGreedyAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\DepthFirstAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\GraphUpdateViewModel.cs" />
     <Compile Include="ViewModel\SnakeAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\DistanceFirstAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\AStarGreedyAlgorithmViewModel.cs" />
@@ -89,10 +92,19 @@
     <Compile Include="View\BidirectAStarAlgorithmView.cs" />
     <Compile Include="View\BidirectDijkstraAlgorithmView.cs" />
     <Compile Include="View\CloseAlgorithmCreationButton.cs" />
+    <Compile Include="View\ComponentsPartials\GraphUpdateView.cs" />
+    <Compile Include="View\ComponentsPartials\GraphNameUpdateView.cs" />
     <Compile Include="View\ComponentsPartials\HeuristicsView.cs" />
+    <Compile Include="View\ComponentsPartials\NeighborhoodFactoryUpdateView.cs" />
+    <Compile Include="View\ComponentsPartials\SmoothLevelUpdateView.cs" />
     <Compile Include="View\CostGreedyAlgorithmView.cs" />
     <Compile Include="View\DepthFirstAlgorithmView.cs" />
     <Compile Include="View\BidirectLeeAlgorithmView.cs" />
+    <Compile Include="View\GraphCopyView.cs" />
+    <Compile Include="View\GraphNameUpdateView.cs" />
+    <Compile Include="View\GraphUpdateView.cs" />
+    <Compile Include="View\NeighborhoodFactoryUpdateView.cs" />
+    <Compile Include="View\SmoothLevelUpdateView.cs" />
     <Compile Include="View\SnakeAlgorithmView.cs" />
     <Compile Include="View\DistanceFirstAlgorithmView.cs" />
     <Compile Include="View\AStarGreedyAlgorithmView.cs" />
@@ -113,7 +125,6 @@
     <Compile Include="Messages\View\OpenAlgorithmCreationViewMessage.cs" />
     <Compile Include="Messages\View\OpenGraphAssembleViewMessage.cs" />
     <Compile Include="Messages\View\OpenHeuristicsViewMessage.cs" />
-    <Compile Include="Messages\View\OpenSpreadViewMessage.cs" />
     <Compile Include="Messages\View\OpenStepRuleViewMessage.cs" />
     <Compile Include="Messages\View\PathfindingViewModelChangedMessage.cs" />
     <Compile Include="Messages\View\StepRuleViewModelChangedMessage.cs" />
@@ -194,6 +205,7 @@
     <Compile Include="View\ComponentsPartials\GraphsTableView.cs" />
     <Compile Include="View\MainView.cs" />
     <Compile Include="View\RightPanelView.cs" />
+    <Compile Include="View\UpdateGraphButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

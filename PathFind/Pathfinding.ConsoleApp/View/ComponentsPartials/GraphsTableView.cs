@@ -13,7 +13,7 @@ namespace Pathfinding.ConsoleApp.View
         private const string NeighborsCol = "Neighbors";
         private const string SmoothCol = "Smooth";
         private const string ObstaclesCol = "Obstacles";
-        private const string Status = "Status";
+        private const string StatusCol = "Status";
 
         private readonly DataTable table = new DataTable();
         private readonly int headerLinesConsumed;
@@ -29,7 +29,7 @@ namespace Pathfinding.ConsoleApp.View
                 new DataColumn(NeighborsCol, typeof(string)),
                 new DataColumn(SmoothCol, typeof(string)),
                 new DataColumn(ObstaclesCol, typeof(int)),
-                new DataColumn(Status, typeof(string)),
+                new DataColumn(StatusCol, typeof(string)),
             });
             table.PrimaryKey = new DataColumn[] { table.Columns[IdCol] };
             var columnStyles = new Dictionary<DataColumn, ColumnStyle>()
@@ -41,7 +41,7 @@ namespace Pathfinding.ConsoleApp.View
                 { table.Columns[NeighborsCol], new() { Alignment = TextAlignment.Left } },
                 { table.Columns[SmoothCol], new() { Alignment = TextAlignment.Left } },
                 { table.Columns[ObstaclesCol], new() { Alignment = TextAlignment.Centered } },
-                { table.Columns[Status], new () { Alignment = TextAlignment.Centered } },
+                { table.Columns[StatusCol], new () { Alignment = TextAlignment.Centered } },
             };
             Style = new TableStyle()
             {

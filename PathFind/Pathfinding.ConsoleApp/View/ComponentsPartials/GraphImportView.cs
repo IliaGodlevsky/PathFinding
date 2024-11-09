@@ -8,8 +8,8 @@ namespace Pathfinding.ConsoleApp.View
         {
             Text = "Load";
             Y = 0;
-            X = Pos.Percent(50);
-            Width = Dim.Percent(25);
+            X = Pos.Percent(66.68f);
+            Width = Dim.Percent(16.67f);
         }
     }
 }

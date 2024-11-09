@@ -111,8 +111,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 var random = new CongruentialRandom();
                 var costLayer = new VertexCostLayer(CostRange, range => new VertexCost(random.NextInt(range), range));
                 var obstacleLayer = new ObstacleLayer(random, Obstacles);
-                var neighborhoodLayer = new NeighborhoodLayer(NeighborhoodFactory.Factory);
-                var layers = new Layers(costLayer, obstacleLayer, neighborhoodLayer, SmoothLevel.SmoothLevel);
+                var layers = new Layers(costLayer, obstacleLayer);
                 var graph = await graphAssemble.AssembleGraphAsync(layers, Width, Length)
                     .ConfigureAwait(false);
                 var request = new CreateGraphRequest<GraphVertexModel>()

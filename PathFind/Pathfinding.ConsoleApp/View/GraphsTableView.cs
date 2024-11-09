@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Terminal.Gui;
@@ -64,7 +65,7 @@ namespace Pathfinding.ConsoleApp.View
                 Neighborhood = (string)table.Rows[selectedRow][NeighborsCol],
                 Id = (int)table.Rows[selectedRow][IdCol],
                 Obstacles = (int)table.Rows[selectedRow][ObstaclesCol],
-                Status = (string)table.Rows[selectedRow][Status]
+                Status = (string)table.Rows[selectedRow][StatusCol]
             };
         }
 
@@ -72,39 +73,35 @@ namespace Pathfinding.ConsoleApp.View
         {
             Application.MainLoop.Invoke(() =>
             {
-                table.Rows.Add(model.Id, model.Name,
-                model.Width, model.Length, model.Neighborhood,
-                model.SmoothLevel, model.Obstacles, model.Status);
+                table.Rows.Add(model.GetProperties());
                 table.AcceptChanges();
                 SetNeedsDisplay();
-                Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
-                var sub = model.WhenAnyValue(c => c.Obstacles)
-                .Do(x => UpdateGraphInTable(model.Id, x))
-                .Subscribe();
-                var statusSub = model.WhenAnyValue(c => c.Status)
-                    .Do(x => UpdateGraphStatus(model.Id, x))
-                    .Subscribe();
                 var composite = new CompositeDisposable();
-                composite.Add(sub);
-                composite.Add(statusSub);
+                BindTo(model, ObstaclesCol, x => x.Obstacles).DisposeWith(composite);
+                BindTo(model, StatusCol, x => x.Status).DisposeWith(composite);
+                BindTo(model, NameCol, x => x.Name).DisposeWith(composite);
+                BindTo(model, SmoothCol, x => x.SmoothLevel).DisposeWith(composite);
+                BindTo(model, NeighborsCol, x => x.Neighborhood).DisposeWith(composite);
                 modelChangingSubs.Add(model.Id, composite);
+                SetCursorInvisible();
             });
         }
 
-        private void UpdateGraphInTable(int id, int obstacles)
+        private IDisposable BindTo<T>(GraphInfoModel model, string column, 
+            Expression<Func<GraphInfoModel, T>> expression)
         {
-            var row = table.Rows.Find(id);
-            row[ObstaclesCol] = obstacles;
-            table.AcceptChanges();
-            SetNeedsDisplay();
+            return model.WhenAnyValue(expression)
+                .Do(x => Update(model.Id, column, x))
+                .Subscribe();
         }
 
-        private void UpdateGraphStatus(int id, string status)
+        private void Update<T>(int id, string column, T value)
         {
             var row = table.Rows.Find(id);
-            row[Status] = status;
+            row[column] = value;
             table.AcceptChanges();
             SetNeedsDisplay();
+            SetCursorInvisible();
         }
 
         private void RemoveFromTable(GraphInfoModel model)
@@ -125,7 +122,19 @@ namespace Pathfinding.ConsoleApp.View
                 SetSelection(0, args.NewRow, false);
             }
             SetNeedsDisplay();
+            SetCursorInvisible();
+        }
+
+        private static void SetCursorInvisible()
+        {
             Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            disposables.Dispose();
+            modelChangingSubs.ForEach(x => x.Value.Dispose());
+            base.Dispose(disposing);
         }
     }
 }

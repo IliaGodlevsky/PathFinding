@@ -71,7 +71,12 @@ namespace Pathfinding.ConsoleApp.Model
             set => this.RaiseAndSetIfChanged(ref isTransit, value);
         }
 
-        public IVertexCost Cost { get; set; }
+        private IVertexCost cost;
+        public IVertexCost Cost 
+        {
+            get => cost;
+            set => this.RaiseAndSetIfChanged(ref cost, value);
+        }
 
         public ICollection<IVertex> Neighbours { get; } = new HashSet<IVertex>();
 

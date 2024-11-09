@@ -42,7 +42,6 @@ namespace Pathfinding.ConsoleApp.View
                 {
                     if (await canExecute.FirstOrDefaultAsync())
                     {
-                        messenger.Send(new OpenAlgorithmRunViewMessage());
                         messenger.Send(new CloseAlgorithmCreationViewMessage());
                         await viewModel.StartAlgorithmCommand.Execute(x);
                     }

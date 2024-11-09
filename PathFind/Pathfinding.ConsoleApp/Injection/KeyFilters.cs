@@ -9,6 +9,7 @@
         public const string Views = nameof(Views);
         public const string ViewModels = nameof(ViewModels);
         public const string GraphAssembleView = nameof(GraphAssembleView);
+        public const string GraphUpdateView = nameof(GraphUpdateView);
         public const string RunsPanel = nameof(RunsPanel);
         public const string IncludeCommands = nameof(IncludeCommands);
         public const string ExcludeCommands = nameof(ExcludeCommands);

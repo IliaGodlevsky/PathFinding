@@ -6,8 +6,12 @@ using Pathfinding.ConsoleApp.Messages;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Domain.Core;
+using Pathfinding.Infrastructure.Business.Extensions;
+using Pathfinding.Infrastructure.Business.Layers;
+using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Models.Read;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -20,6 +24,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal sealed class GraphTableViewModel : BaseViewModel
     {
+        private readonly SmoothLevelViewModel smoothLevels;
         private readonly IRequestService<GraphVertexModel> service;
         private readonly IMessenger messenger;
         private readonly ILog logger;
@@ -32,8 +37,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set
             {
                 this.RaiseAndSetIfChanged(ref selectedGraphs, value);
-                var toSend = selectedGraphs.Select(x => x.Id).ToArray();
-                messenger.Send(new GraphSelectedMessage(toSend));
+                messenger.Send(new GraphSelectedMessage(selectedGraphs));
             }
         }
 
@@ -42,10 +46,12 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public ObservableCollection<GraphInfoModel> Graphs { get; } = new();
 
         public GraphTableViewModel(
+            SmoothLevelViewModel smoothLevels,
             IRequestService<GraphVertexModel> service,
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ILog logger)
         {
+            this.smoothLevels = smoothLevels;
             this.service = service;
             this.messenger = messenger;
             this.logger = logger;
@@ -53,6 +59,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<ObstaclesCountChangedMessage>(this, OnObstaclesCountChanged);
             messenger.Register<GraphBecameReadOnlyMessage>(this, GraphBecameReadOnly);
+            messenger.Register<GraphUpdatedMessage>(this, async (r, msg) => await OnGraphUpdated(r, msg));
             ActivateGraphCommand = ReactiveCommand.CreateFromTask<GraphInfoModel>(ActivatedGraph);
         }
 
@@ -60,11 +67,13 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             await ExecuteSafe(async () =>
             {
-                var graph = await service.ReadGraphAsync(model.Id).ConfigureAwait(false);
-                messenger.Send(new GraphActivatedMessage(graph), Tokens.GraphField);
-                messenger.Send(new GraphActivatedMessage(graph), Tokens.PathfindingRange);
-                messenger.Send(new GraphActivatedMessage(graph));
-            }, logger.Error);
+                var graphModel = await service.ReadGraphAsync(model.Id).ConfigureAwait(false);
+                var layers = GetLayers(graphModel);
+                await layers.OverlayAsync(graphModel.Graph).ConfigureAwait(false);
+                messenger.Send(new GraphActivatedMessage(graphModel), Tokens.GraphField);
+                messenger.Send(new GraphActivatedMessage(graphModel), Tokens.PathfindingRange);
+                messenger.Send(new GraphActivatedMessage(graphModel));
+            }, logger.Error).ConfigureAwait(false);
         }
 
         public void LoadGraphs()
@@ -120,6 +129,18 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
+        private async Task OnGraphUpdated(object recipient, GraphUpdatedMessage msg)
+        {
+            var info = Graphs.FirstOrDefault(x => x.Id == msg.Model.Id);
+            if (info != null)
+            {
+                info.Name = msg.Model.Name;
+                info.Neighborhood = msg.Model.Neighborhood;
+                info.SmoothLevel = msg.Model.SmoothLevel;
+                await ActivatedGraph(info);
+            }
+        }
+
         private async Task OnGraphCreated(object recipient, GraphCreatedMessage msg)
         {
             if (msg.Models.Length > 0)
@@ -138,6 +159,24 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 .Where(x => msg.GraphIds.Contains(x.Id))
                 .ToList();
             Graphs.Remove(graphs);
+        }
+
+        private ILayer GetLayers(GraphModel<GraphVertexModel> model)
+        {
+            var list = new List<ILayer>();
+            switch (model.Neighborhood)
+            {
+                case NeighborhoodNames.Moore:
+                    list.Add(new NeighborhoodLayer(new MooreNeighborhoodFactory()));
+                    break;
+                case NeighborhoodNames.VonNeumann:
+                    list.Add(new NeighborhoodLayer(new VonNeumannNeighborhoodFactory()));
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+            list.Add(smoothLevels.Levels[model.SmoothLevel]);
+            return new Layers(list);
         }
     }
 }

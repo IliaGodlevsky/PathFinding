@@ -1,4 +1,6 @@
-﻿namespace Pathfinding.ConsoleApp.Messages.ViewModel
+﻿using Pathfinding.ConsoleApp.Model;
+
+namespace Pathfinding.ConsoleApp.Messages.ViewModel
 {
-    internal sealed record class GraphSelectedMessage(int[] GraphIds);
+    internal sealed record class GraphSelectedMessage(GraphInfoModel[] Graphs);
 }

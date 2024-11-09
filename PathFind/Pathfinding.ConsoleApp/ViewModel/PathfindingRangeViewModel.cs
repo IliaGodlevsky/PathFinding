@@ -119,8 +119,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private IObservable<bool> CanExecute()
         {
-            return this.WhenAnyValue(x => x.IsReadOnly,
-                isRead => !isRead);
+            return this.WhenAnyValue(x => x.IsReadOnly, isRead => !isRead);
         }
 
         public IEnumerator<GraphVertexModel> GetEnumerator()

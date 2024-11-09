@@ -140,6 +140,7 @@
     <Compile Include="Extensions\SimplePriorityQueueExtensions.cs" />
     <Compile Include="Extensions\UnitOfWorkExtensions.cs" />
     <Compile Include="Extensions\VertexExtensions.cs" />
+    <Compile Include="Layers\GraphLayer.cs" />
     <Compile Include="Layers\Layers.cs" />
     <Compile Include="Mappings\GraphMappingProfile.cs" />
     <Compile Include="Mappings\HistoryMappingProfile.cs" />

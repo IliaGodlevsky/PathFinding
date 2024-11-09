@@ -40,6 +40,8 @@ namespace Pathfinding.Infrastructure.Business.Mappings
                 .ConvertUsing((x, y, context) => context.Mapper.Map<GraphSerializationModel>(x.Graph) with { Name = x.Name, Neighborhood = x.Neighborhood, SmoothLevel = x.SmoothLevel });
             CreateMap<Graph, GraphInformationModel>()
                 .ForMember(x => x.Dimensions, opt => opt.MapFrom(x => JsonConvert.DeserializeObject<int[]>(x.Dimensions)));
+            CreateMap<GraphInformationModel, Graph>()
+                .ForMember(x => x.Dimensions, opt => opt.MapFrom(x => JsonConvert.SerializeObject(x.Dimensions)));
         }
 
         private CreateGraphRequest<T> Construct(GraphSerializationModel serializationDto, ResolutionContext context)

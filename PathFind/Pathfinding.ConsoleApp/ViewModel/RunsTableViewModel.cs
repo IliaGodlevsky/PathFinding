@@ -37,8 +37,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private int ActivatedGraphId { get; set; }
 
-        public ReactiveCommand<RunInfoModel, Unit> ActivateRunCommand { get; }
-
         public RunsTableViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             IRequestService<GraphVertexModel> service,
             ILog logger)
@@ -46,23 +44,12 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.messenger = messenger;
             this.service = service;
             this.logger = logger;
-            ActivateRunCommand = ReactiveCommand.CreateFromTask<RunInfoModel>(ActivateRun);
 
             messenger.Register<RunCreatedMessaged>(this, OnRunCreated);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<GraphActivatedMessage>(this,
                 async (r, msg) => await OnGraphActivatedMessage(r, msg));
             messenger.Register<RunsDeletedMessage>(this, OnRunsDeleteMessage);
-        }
-
-        private async Task ActivateRun(RunInfoModel model)
-        {
-            await ExecuteSafe(async () =>
-            {
-                var run = await service.ReadStatisticAsync(model.RunId)
-                    .ConfigureAwait(false);
-                messenger.Send(new RunActivatedMessage(run));
-            }, logger.Error).ConfigureAwait(false);
         }
 
         private async Task OnGraphActivatedMessage(object recipient, GraphActivatedMessage msg)

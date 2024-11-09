@@ -5,10 +5,12 @@ using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.Shared.Extensions;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -18,7 +20,7 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class AlgorithmRunFieldView : FrameView
     {
-        private const int Speed = 90;
+        private const int Speed = 140;
         private const int MaxSpeed = int.MaxValue;
 
         private readonly CompositeDisposable vertexDisposables = new();
@@ -41,9 +43,9 @@ namespace Pathfinding.ConsoleApp.View
                 Title = "Run field"
             };
             viewModel.WhenAnyValue(x => x.RunGraph)
-                .Skip(1)
+                .DistinctUntilChanged()
                 .Where(x => x is not null)
-                .Do(async x => await RenderGraphState(x.Values))
+                .Do(async x => await RenderGraphState(x))
                 .Subscribe()
                 .DisposeWith(disposables);
             messenger.Register<OpenAlgorithmRunViewMessage>(this, OnOpen);
@@ -63,7 +65,11 @@ namespace Pathfinding.ConsoleApp.View
 
         private async Task RenderGraphState(IEnumerable<RunVertexModel> graphState)
         {
-            Application.MainLoop.Invoke(RemoveAll);
+            Application.MainLoop.Invoke(() =>
+            {
+                Subviews.OfType<RunVertexView>()
+                    .ToArray().ForEach(Remove);
+            });
             vertexDisposables.Clear();
             var children = new List<RunVertexView>();
             await Task.Run(() =>
@@ -82,11 +88,6 @@ namespace Pathfinding.ConsoleApp.View
 
         private void SubscribeOnProcessNext(RunVertexView view)
         {
-            view.Events().MouseClick
-                .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button2Clicked))
-                .Do(async async => await ProcessAll())
-                .Subscribe()
-                .DisposeWith(vertexDisposables);
             view.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.WheeledUp))
                 .Select(x => Speed)
@@ -107,39 +108,10 @@ namespace Pathfinding.ConsoleApp.View
                 .InvokeCommand(viewModel, x => x.ReverseNextCommand)
                 .DisposeWith(vertexDisposables);
             view.Events().MouseClick
-                .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button2DoubleClicked))
-                .Do(async async => await ReverseAll())
-                .Subscribe()
-                .DisposeWith(vertexDisposables);
-            view.Events().MouseClick
                .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.WheeledDown))
                .Select(x => Speed)
                .InvokeCommand(viewModel, x => x.ReverseNextCommand)
                .DisposeWith(vertexDisposables);
-        }
-
-        private async Task ProcessAll()
-        {
-            var command = viewModel.ProcessNextCommand;
-            bool next = true;
-            int speed = Speed;
-            while (next)
-            {
-                next = await command.Execute(speed++);
-                Application.Refresh();
-            }
-        }
-
-        private async Task ReverseAll()
-        {
-            var command = viewModel.ReverseNextCommand;
-            bool next = true;
-            int speed = Speed;
-            while (next)
-            {
-                next = await command.Execute(speed++);
-                Application.Refresh();
-            }
         }
     }
 }

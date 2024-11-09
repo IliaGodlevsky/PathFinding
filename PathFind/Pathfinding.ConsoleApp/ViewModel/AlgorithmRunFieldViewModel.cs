@@ -4,7 +4,6 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Shared.Primitives;
 using ReactiveUI;
 using System.Collections.Generic;
@@ -20,8 +19,12 @@ using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Infrastructure.Business.Extensions;
-using System.Threading.Tasks;
-using Pathfinding.Service.Interface.Extensions;
+using Pathfinding.Domain.Interface.Factories;
+using Pathfinding.Infrastructure.Business.Layers;
+using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Infrastructure.Data.Pathfinding;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
@@ -29,44 +32,31 @@ namespace Pathfinding.ConsoleApp.ViewModel
     {
         private readonly ILog log;
         private readonly IMessenger messenger;
+        private readonly IGraphAssemble<RunVertexModel> graphAssemble;
+        private readonly CompositeDisposable disposables = new();
         private readonly Dictionary<int, List<VertexState>> cache = new();
 
-        private IReadOnlyDictionary<Coordinate, RunVertexModel> runGraph;
-        public IReadOnlyDictionary<Coordinate, RunVertexModel> RunGraph
-        {
-            get
-            {
-                if (runGraph == null && Graph != null 
-                    && Graph != Graph<GraphVertexModel>.Empty)
-                {
-                    runGraph = Graph.ToRunVertices();
-                    this.RaisePropertyChanged();
-                }
-                return runGraph;
-            }
-            private set => this.RaiseAndSetIfChanged(ref runGraph, value);
-        }
-
-        private int GraphId { get; set; }
-
-        private IGraph<GraphVertexModel> Graph { get; set; }
+        private int graphId;
+        private List<VertexState> verticesStates = new();
 
         private int Cursor { get; set; } = 0;
 
-        private List<VertexState> VerticesStates { get; set; } = new();
+        public IGraph<RunVertexModel> RunGraph { get; set; } = Graph<RunVertexModel>.Empty;
 
         public ReactiveCommand<int, bool> ProcessNextCommand { get; }
 
         public ReactiveCommand<int, bool> ReverseNextCommand { get; }
 
         public AlgorithmRunFieldViewModel(
+            IGraphAssemble<RunVertexModel> graphAssemble,
             [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
             ILog log)
         {
             this.messenger = messenger;
             this.log = log;
+            this.graphAssemble = graphAssemble;
             messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
-            messenger.Register<RunSelectedMessage>(this, async (r, msg) => await OnRunActivated(r, msg));
+            messenger.Register<RunSelectedMessage>(this, OnRunActivated);
             messenger.Register<GraphBecameReadOnlyMessage>(this, OnGraphBecameReadOnly);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             ProcessNextCommand = ReactiveCommand.Create<int, bool>(ProcessNext);
@@ -75,7 +65,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnGraphBecameReadOnly(object recipient, GraphBecameReadOnlyMessage msg)
         {
-            if (!msg.Became)
+            if (!msg.Became && graphId == msg.Id)
             {
                 Clear();
             }
@@ -83,54 +73,60 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void Clear()
         {
-            RunGraph = new Dictionary<Coordinate, RunVertexModel>();
             cache.Clear();
-            runGraph = null;
             Cursor = 0;
-            VerticesStates.Clear();
+            verticesStates.Clear();
         }
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
         {
-            if (msg.GraphIds.Contains(GraphId))
+            if (msg.GraphIds.Contains(graphId))
             {
-                Graph = Graph<GraphVertexModel>.Empty;
-                GraphId = 0;
+                graphId = 0;
+                RunGraph = Graph<RunVertexModel>.Empty;
+                this.RaisePropertyChanged(nameof(RunGraph));
+                disposables.Clear();
                 Clear();
             }
         }
 
         private void OnGraphActivated(object recipient, GraphActivatedMessage msg)
         {
-            Graph = msg.Graph.Graph;
-            GraphId = msg.Graph.Id;
+            graphId = msg.Graph.Id;
+            var graphVertices = msg.Graph.Graph;
+            var layer = new GraphLayer(graphVertices);
+            var graph = graphAssemble.AssembleGraph(layer,
+                graphVertices.DimensionsSizes);
+            RunGraph = graph;
+            disposables.Clear();
+            foreach (var vertex in graphVertices)
+            {
+                var runVertex = graph.Get(vertex.Position);
+                vertex.WhenAnyValue(x => x.IsObstacle)
+                    .BindTo(runVertex, x => x.IsObstacle)
+                    .DisposeWith(disposables);
+                vertex.WhenAnyValue(x => x.Cost)
+                    .Do(x => runVertex.Cost = x.DeepClone())
+                    .Subscribe()
+                    .DisposeWith(disposables);
+            }
             Clear();
         }
 
         private bool ProcessNext(int number)
         {
-            while (number-- > 0 && Cursor < VerticesStates.Count)
+            while (number-- > 0 && Cursor < verticesStates.Count)
             {
-                var state = VerticesStates.ElementAtOrDefault(Cursor);
-                if (state.Vertex != default)
-                {
-                    state.SetState(); 
-                }
-                Cursor++;
+                verticesStates.ElementAtOrDefault(Cursor++).SetState();
             }
-            return Cursor < VerticesStates.Count;
+            return Cursor < verticesStates.Count;
         }
 
         private bool ReverseNext(int number)
         {
-            while (number-- > 0 && Cursor > 0)
+            while (number-- > 0 && Cursor-- > 0)
             {
-                Cursor--;
-                var state = VerticesStates.ElementAtOrDefault(Cursor);
-                if (state.Vertex != default)
-                {
-                    state.ToReverted().SetState();
-                }
+                verticesStates.ElementAtOrDefault(Cursor).ToReverted().SetState();
             }
             return Cursor > 0;
         }
@@ -140,32 +136,30 @@ namespace Pathfinding.ConsoleApp.ViewModel
             int cursor = 0;
             while (cursor < Cursor)
             {
-                var state = VerticesStates.ElementAtOrDefault(cursor);
-                if (state.Vertex != default)
-                {
-                    state.SetState();
-                }
-                cursor++;
+                verticesStates.ElementAtOrDefault(cursor++).SetState();
             }
+            
         }
 
-        private async Task OnRunActivated(object recipient, RunSelectedMessage msg)
+        private void OnRunActivated(object recipient, RunSelectedMessage msg)
         {
             var run = msg.SelectedRuns.First();
             if (cache.TryGetValue(run.RunId, out var vertices))
             {
-                RunGraph.Values.ClearState();
-                VerticesStates = vertices;
+                RunGraph.ClearState();
+                verticesStates = vertices;
                 ProcessToCursor();
                 return;
             }
+            this.RaisePropertyChanged(nameof(RunGraph));
             var rangeMsg = new QueryPathfindingRangeMessage();
             messenger.Send(rangeMsg);
             var rangeCoordinates = rangeMsg.PathfindingRange;
-            var range = rangeCoordinates.Select(x => RunGraph[x]).ToArray();
+            var range = rangeCoordinates.Select(RunGraph.Get).ToArray();
 
             var subAlgorithms = new List<SubAlgorithmModel>();
-            var visitedVertices = new List<(Coordinate Visited, IReadOnlyList<Coordinate> Enqueued)>();
+            var visitedVertices = new List<(Coordinate Visited, 
+                IReadOnlyList<Coordinate> Enqueued)>();
 
             void AddSubAlgorithm(IReadOnlyCollection<Coordinate> path = null)
             {
@@ -193,7 +187,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 algorithm.VertexProcessed += OnVertexProcessed;
                 try
                 {
-                    await algorithm.FindPathAsync();
+                    algorithm.FindPath();
                 }
                 finally
                 {
@@ -210,14 +204,14 @@ namespace Pathfinding.ConsoleApp.ViewModel
             {
                 AddSubAlgorithm();
             }
-            RunGraph.Values.ClearState();
-            VerticesStates = await Task.Run(() => RunGraph.ToVerticesStates(subAlgorithms, rangeCoordinates));
-            cache[run.RunId] = VerticesStates;
+            RunGraph.ClearState();
+            verticesStates = RunGraph.ToVerticesStates(subAlgorithms, rangeCoordinates);
+            cache[run.RunId] = verticesStates;
             ProcessToCursor();
         }
     }
 
-    enum RunState { Source, Target, Transit, Visited, Enqueued, Path, CrossPath }
+    enum RunState { No, Source, Target, Transit, Visited, Enqueued, Path, CrossPath }
 
     readonly struct VertexState
     {
@@ -273,43 +267,19 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
-        public static Dictionary<Coordinate, RunVertexModel> ToRunVertices(this IGraph<GraphVertexModel> graph)
-        {
-            var result = new Dictionary<Coordinate, RunVertexModel>();
-            foreach (var vertex in graph)
-            {
-                var runVertex = new RunVertexModel(vertex.Position)
-                {
-                    Cost = new VertexCost(vertex.Cost.CurrentCost, vertex.Cost.CostRange),
-                    IsObstacle = vertex.IsObstacle
-                };
-                result.Add(runVertex.Position, runVertex);
-            }
-            foreach (var vertex in graph)
-            {
-                var runVertex = result[vertex.Position];
-                foreach (var neighbor in vertex.Neighbours)
-                {
-                    var runVertexNeighbor = result[neighbor.Position];
-                    runVertex.Neighbours.Add(runVertexNeighbor);
-                }
-            }
-            return result;
-        }
-
         public static List<VertexState> ToVerticesStates(
-            this IReadOnlyDictionary<Coordinate, RunVertexModel> RunGraph,
+            this IGraph<RunVertexModel> graph,
             IEnumerable<SubAlgorithmModel> subAlgorithms,
             IReadOnlyCollection<Coordinate> range)
         {
             var vertices = new List<VertexState>();
 
-            vertices.Add(new (RunGraph[range.First()], RunState.Source, true));
+            vertices.Add(new (graph.Get(range.First()), RunState.Source, true));
             foreach (var transit in range.Skip(1).Take(range.Count - 2))
             {
-                vertices.Add(new (RunGraph[transit], RunState.Transit, true));
+                vertices.Add(new (graph.Get(transit), RunState.Transit, true));
             }
-            vertices.Add(new (RunGraph[range.Last()], RunState.Target, true));
+            vertices.Add(new (graph.Get(range.Last()), RunState.Target, true));
 
             var previousVisited = new HashSet<Coordinate>();
             var previousPaths = new HashSet<Coordinate>();
@@ -322,25 +292,25 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 {
                     foreach (var enqueued in Enqueued.Intersect(previousVisited).Except(visitedIgnore))
                     {
-                        vertices.Add(new (RunGraph[enqueued], RunState.Visited, false));
+                        vertices.Add(new (graph.Get(enqueued), RunState.Visited, false));
                     }
                     foreach (var visited in Visited.Enumerate().Except(visitedIgnore))
                     {
-                        vertices.Add(new (RunGraph[visited], RunState.Visited, true));
+                        vertices.Add(new (graph.Get(visited), RunState.Visited, true));
                     }
                     foreach (var enqueued in Enqueued.Except(visitedIgnore).Except(previousEnqueued))
                     {
-                        vertices.Add(new (RunGraph[enqueued], RunState.Enqueued, true));
+                        vertices.Add(new (graph.Get(enqueued), RunState.Enqueued, true));
                     }
                 }
                 var exceptRangePath = subAlgorithm.Path.Except(range).ToArray();
                 foreach (var path in exceptRangePath.Intersect(previousPaths))
                 {
-                    vertices.Add(new (RunGraph[path], RunState.CrossPath, true));
+                    vertices.Add(new (graph.Get(path), RunState.CrossPath, true));
                 }
                 foreach (var path in exceptRangePath.Except(previousPaths))
                 {
-                    vertices.Add(new (RunGraph[path], RunState.Path, true));
+                    vertices.Add(new (graph.Get(path), RunState.Path, true));
                 }
 
                 previousVisited.AddRange(subAlgorithm.Visited.Select(x => x.Visited));

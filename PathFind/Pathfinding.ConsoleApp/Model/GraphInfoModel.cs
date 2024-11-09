@@ -4,25 +4,44 @@ namespace Pathfinding.ConsoleApp.Model
 {
     internal sealed class GraphInfoModel : ReactiveObject
     {
-        private int obstacles;
-        private string name;
-
         public int Id { get; set; }
 
+        private string name;
         public string Name
         {
             get => name;
             set => this.RaiseAndSetIfChanged(ref name, value);
         }
 
-        public string Neighborhood { get; set; }
+        private string neighorhood;
+        public string Neighborhood
+        {
+            get => neighorhood;
+            set => this.RaiseAndSetIfChanged(ref neighorhood, value);
+        }
 
-        public string SmoothLevel { get; set; }
+        private string smoothLevel;
+        public string SmoothLevel
+        {
+            get => smoothLevel;
+            set => this.RaiseAndSetIfChanged(ref smoothLevel, value);
+        }
 
-        public int Width { get; set; }
+        private int width;
+        public int Width
+        {
+            get => width;
+            set => this.RaiseAndSetIfChanged(ref width, value);
+        }
 
-        public int Length { get; set; }
+        private int length;
+        public int Length
+        {
+            get => length;
+            set => this.RaiseAndSetIfChanged(ref length, value);
+        }
 
+        private int obstacles;
         public int Obstacles
         {
             get => obstacles;
@@ -34,6 +53,12 @@ namespace Pathfinding.ConsoleApp.Model
         {
             get => status;
             set => this.RaiseAndSetIfChanged(ref status, value);
+        }
+
+        public object[] GetProperties()
+        {
+            return new object[] { Id, Name, Width, Length,
+                Neighborhood, SmoothLevel, Obstacles, Status };
         }
     }
 }

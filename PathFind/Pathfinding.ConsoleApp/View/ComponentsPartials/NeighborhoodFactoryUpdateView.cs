@@ -2,26 +2,25 @@
 
 namespace Pathfinding.ConsoleApp.View
 {
-    internal sealed partial class SmoothLevelView
+    internal sealed partial class NeighborhoodFactoryUpdateView
     {
-        private readonly RadioGroup smoothLevels = new RadioGroup();
+        private readonly RadioGroup neighborhoods = new RadioGroup();
 
         private void Initialize()
         {
-            X = Pos.Percent(70) + 1;
+            X = Pos.Percent(15) + 1;
             Y = Pos.Percent(25) + 1;
-            Width = Dim.Fill(1);
+            Width = Dim.Percent(25);
             Height = Dim.Percent(40);
             Border = new Border()
             {
                 BorderStyle = BorderStyle.Rounded,
                 Padding = new Thickness(0),
-                Title = "Smooth"
+                Title = "Neighbors"
             };
-
-            smoothLevels.X = 1;
-            smoothLevels.Y = 1;
-            Add(smoothLevels);
+            neighborhoods.X = 1;
+            neighborhoods.Y = 1;
+            Add(neighborhoods);
         }
     }
 }

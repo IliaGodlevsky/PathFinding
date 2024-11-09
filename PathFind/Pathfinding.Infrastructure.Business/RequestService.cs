@@ -3,9 +3,7 @@ using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Business.Extensions;
-using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Infrastructure.Data.InMemory;
-using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Serialization;
@@ -122,14 +120,8 @@ namespace Pathfinding.Infrastructure.Business
         {
             return await Transaction(async (unitOfWork, t) =>
             {
-                var result = await unitOfWork.ReadGraphAsync<T>(graphId, mapper, t)
+                return await unitOfWork.ReadGraphAsync<T>(graphId, mapper, t)
                     .ConfigureAwait(false);
-                var factory = result.Neighborhood == NeighborhoodNames.Moore
-                    ? (INeighborhoodFactory)new MooreNeighborhoodFactory()
-                    : new VonNeumannNeighborhoodFactory();
-                var layer = new NeighborhoodLayer(factory);
-                await layer.OverlayAsync((IGraph<IVertex>)result.Graph, token);
-                return result;
             }, token).ConfigureAwait(false);
         }
 
@@ -284,6 +276,23 @@ namespace Pathfinding.Infrastructure.Business
             {
                 var statistic = await unit.StatisticsRepository.ReadByIdAsync(runId, token);
                 return mapper.Map<RunStatisticsModel>(statistic);
+            }, token);
+        }
+
+        public async Task<GraphInformationModel> ReadGraphInfoAsync(int graphId, CancellationToken token = default)
+        {
+            using var unitOfWork = factory.Invoke();
+            var result = await unitOfWork.GraphRepository.ReadAsync(graphId, token)
+                .ConfigureAwait(false);
+            return mapper.Map<GraphInformationModel>(result);
+        }
+
+        public async Task<bool> UpdateGraphInfoAsync(GraphInformationModel graph, CancellationToken token = default)
+        {
+            return await Transaction(async (unit, t) =>
+            {
+                var graphInfo = mapper.Map<Graph>(graph);
+                return await unit.GraphRepository.UpdateAsync(graphInfo, t);
             }, token);
         }
     }

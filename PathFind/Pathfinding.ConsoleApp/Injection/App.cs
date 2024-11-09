@@ -2,6 +2,7 @@
 using Autofac.Features.AttributeFilters;
 using Autofac.Features.Metadata;
 using AutoMapper;
+using AutoMapper.Configuration;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.Model.Factories;
@@ -37,6 +38,10 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<GraphFactory<GraphVertexModel>>().As<IGraphFactory<GraphVertexModel>>().SingleInstance();
             builder.RegisterType<GraphVertexModelFactory>().As<IVertexFactory<GraphVertexModel>>().SingleInstance();
             builder.RegisterType<GraphAssemble<GraphVertexModel>>().As<IGraphAssemble<GraphVertexModel>>().SingleInstance();
+
+            builder.RegisterType<GraphFactory<RunVertexModel>>().As<IGraphFactory<RunVertexModel>>().SingleInstance();
+            builder.RegisterType<RunVertexModelFactory>().As<IVertexFactory<RunVertexModel>>().SingleInstance();
+            builder.RegisterType<GraphAssemble<RunVertexModel>>().As<IGraphAssemble<RunVertexModel>>().SingleInstance();
 
             builder.RegisterType<DefaultStepRule>().As<IStepRule>()
                 .WithMetadata(MetadataKeys.NameKey, StepRuleNames.Default).SingleInstance();
@@ -78,13 +83,10 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<HistoryMappingProfile<GraphVertexModel>>().As<Profile>().SingleInstance();
             builder.RegisterType<VerticesMappingProfile<GraphVertexModel>>().As<Profile>().SingleInstance();
             builder.RegisterType<StatisticsMappingProfile>().As<Profile>().SingleInstance();
-
-            builder.Register(context =>
-            {
-                var profiles = context.Resolve<IEnumerable<Profile>>();
-                var mappingConfig = new MapperConfiguration(c => c.AddProfiles(profiles));
-                return mappingConfig.CreateMapper(context.Resolve);
-            }).As<IMapper>().SingleInstance();
+            builder.RegisterType<MapperConfiguration>().As<IConfigurationProvider>().SingleInstance();
+            builder.RegisterType<MapperConfigurationExpression>().AsSelf().SingleInstance()
+                .OnActivating(x => x.Instance.AddProfiles(x.Context.Resolve<IEnumerable<Profile>>()));
+            builder.RegisterType<Mapper>().As<IMapper>().SingleInstance();
 
             builder.RegisterType<RequestService<GraphVertexModel>>().As<IRequestService<GraphVertexModel>>().SingleInstance();
 
@@ -143,16 +145,23 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<GraphsTableView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphPanel).WithAttributeFiltering();
             builder.RegisterType<GraphTableButtonsFrame>().Keyed<Terminal.Gui.View>(KeyFilters.GraphPanel).WithAttributeFiltering();
             builder.RegisterType<GraphAssembleView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphPanel).WithAttributeFiltering();
+            builder.RegisterType<GraphUpdateView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphPanel).WithAttributeFiltering();
 
-            builder.RegisterType<DeleteGraphButton>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
             builder.RegisterType<NewGraphButton>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
-            builder.RegisterType<GraphImportView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
+            builder.RegisterType<UpdateGraphButton>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
+            builder.RegisterType<GraphCopyView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
             builder.RegisterType<GraphExportView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
+            builder.RegisterType<GraphImportView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
+            builder.RegisterType<DeleteGraphButton>().Keyed<Terminal.Gui.View>(KeyFilters.GraphTableButtons).WithAttributeFiltering();
 
             builder.RegisterType<GraphNameView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphAssembleView).WithAttributeFiltering();
             builder.RegisterType<GraphParametresView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphAssembleView).WithAttributeFiltering();
             builder.RegisterType<NeighborhoodFactoryView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphAssembleView).WithAttributeFiltering();
             builder.RegisterType<SmoothLevelView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphAssembleView).WithAttributeFiltering();
+
+            builder.RegisterType<GraphNameUpdateView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphUpdateView).WithAttributeFiltering();
+            builder.RegisterType<SmoothLevelUpdateView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphUpdateView).WithAttributeFiltering();
+            builder.RegisterType<NeighborhoodFactoryUpdateView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphUpdateView).WithAttributeFiltering();
 
             builder.RegisterType<RunsTableView>().Keyed<Terminal.Gui.View>(KeyFilters.RunsPanel).WithAttributeFiltering();
             builder.RegisterType<RunsTableButtonsFrame>().Keyed<Terminal.Gui.View>(KeyFilters.RunsPanel).WithAttributeFiltering();
