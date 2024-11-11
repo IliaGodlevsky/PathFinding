@@ -1,10 +1,10 @@
 ﻿using Pathfinding.ConsoleApp.ViewModel;
+using ReactiveMarbles.ObservableEvents;
+using ReactiveUI;
 using System.Linq;
 using System.Reactive.Disposables;
-using Terminal.Gui;
-using ReactiveMarbles.ObservableEvents;
 using System.Reactive.Linq;
-using ReactiveUI;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -21,7 +21,7 @@ namespace Pathfinding.ConsoleApp.View
             Text = "Copy";
             this.viewModel = viewModel;
             this.Events().MouseClick
-                .Where(x=>x.MouseEvent.Flags == MouseFlags.Button1Clicked)
+                .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
                 .InvokeCommand(viewModel, x => x.CopyGraphCommand)
                 .DisposeWith(disposables);
         }

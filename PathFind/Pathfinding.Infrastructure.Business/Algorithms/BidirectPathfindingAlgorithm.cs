@@ -1,5 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
+﻿using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Extensions;
@@ -14,34 +13,35 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
     {
         protected readonly TStorage forwardStorage = new();
         protected readonly TStorage backwardStorage = new();
-        protected readonly HashSet<IVertex> forwardVisited;
-        protected readonly HashSet<IVertex> backwardVisited;
-        protected readonly Dictionary<Coordinate, IVertex> forwardTraces;
-        protected readonly Dictionary<Coordinate, IVertex> backwardTraces;
+        protected readonly HashSet<IPathfindingVertex> forwardVisited;
+        protected readonly HashSet<IPathfindingVertex> backwardVisited;
+        protected readonly Dictionary<Coordinate, IPathfindingVertex> forwardTraces;
+        protected readonly Dictionary<Coordinate, IPathfindingVertex> backwardTraces;
 
-        protected IVertex Intersection { get; set; } = NullVertex.Interface;
+        protected IPathfindingVertex Intersection { get; set; } = NullPathfindingVertex.Interface;
 
-        protected (IVertex Forward, IVertex Backward) Current { get; set; }
+        protected (IPathfindingVertex Forward, IPathfindingVertex Backward) Current { get; set; }
 
-        protected (IVertex Source, IVertex Target) Range { get; set; }
+        protected (IPathfindingVertex Source, IPathfindingVertex Target) Range { get; set; }
 
-        protected BidirectPathfindingAlgorithm(IEnumerable<IVertex> pathfindingRange)
+        protected BidirectPathfindingAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
             : base(pathfindingRange)
         {
-            forwardVisited = new HashSet<IVertex>();
-            backwardVisited = new HashSet<IVertex>();
-            forwardTraces = new Dictionary<Coordinate, IVertex>();
-            backwardTraces = new Dictionary<Coordinate, IVertex>();
-            Range = (NullVertex.Instance, NullVertex.Interface);
-            Current = (NullVertex.Instance, NullVertex.Interface);
+            forwardVisited = new HashSet<IPathfindingVertex>();
+            backwardVisited = new HashSet<IPathfindingVertex>();
+            forwardTraces = new Dictionary<Coordinate, IPathfindingVertex>();
+            backwardTraces = new Dictionary<Coordinate, IPathfindingVertex>();
+            Range = (NullPathfindingVertex.Instance, NullPathfindingVertex.Interface);
+            Current = (NullPathfindingVertex.Instance, NullPathfindingVertex.Interface);
         }
 
         protected override bool IsDestination()
         {
-            return Intersection != NullVertex.Interface;
+            return Intersection != NullPathfindingVertex.Interface;
         }
 
-        protected override void PrepareForSubPathfinding((IVertex Source, IVertex Target) range)
+        protected override void PrepareForSubPathfinding(
+            (IPathfindingVertex Source, IPathfindingVertex Target) range)
         {
             Range = range;
             Current = (Range.Source, Range.Target);
@@ -59,22 +59,23 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             backwardVisited.Clear();
             forwardTraces.Clear();
             backwardTraces.Clear();
-            Intersection = NullVertex.Interface;
+            Intersection = NullPathfindingVertex.Interface;
         }
 
-        protected virtual IReadOnlyCollection<IVertex> GetForwardUnvisitedNeighbours()
+        protected virtual IReadOnlyCollection<IPathfindingVertex> GetForwardUnvisitedNeighbours()
         {
             return GetUnvisitedNeighbours(Current.Forward, forwardVisited);
         }
 
-        protected virtual IReadOnlyCollection<IVertex> GetBackwardUnvisitedNeighbours()
+        protected virtual IReadOnlyCollection<IPathfindingVertex> GetBackwardUnvisitedNeighbours()
         {
             return GetUnvisitedNeighbours(Current.Backward, backwardVisited);
         }
 
-        private IReadOnlyCollection<IVertex> GetUnvisitedNeighbours(IVertex vertex, HashSet<IVertex> visited)
+        private IReadOnlyCollection<IPathfindingVertex> GetUnvisitedNeighbours(IPathfindingVertex vertex, 
+            HashSet<IPathfindingVertex> visited)
         {
-            return vertex.Neighbours
+            return vertex.Neighbors
                 .Where(v => !v.IsObstacle && !visited.Contains(v))
                 .ToArray();
         }

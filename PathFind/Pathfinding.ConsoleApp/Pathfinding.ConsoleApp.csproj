@@ -68,7 +68,6 @@
     <Compile Include="Messages\ViewModel\RunSelectedMessage.cs" />
     <Compile Include="Messages\View\CloseAlgorithmRunFieldViewMessage.cs" />
     <Compile Include="Messages\View\OpenGraphUpdateViewMessage.cs" />
-    <Compile Include="Model\Factories\RunVertexModelFactory.cs" />
     <Compile Include="Model\RunVertexModel.cs" />
     <Compile Include="ViewModel\AStarLeeAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\BidirectAStarAlgorithmViewModel.cs" />
@@ -86,7 +85,6 @@
     <Compile Include="ViewModel\AStarAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\DeleteRunButtonViewModel.cs" />
     <Compile Include="ViewModel\HeuristicsViewModel.cs" />
-    <Compile Include="ViewModel\IRequireSpreadViewModel.cs" />
     <Compile Include="ViewModel\RunsTableViewModel.cs" />
     <Compile Include="View\AStarLeeAlgorithmView.cs" />
     <Compile Include="View\BidirectAStarAlgorithmView.cs" />
@@ -134,7 +132,6 @@
     <Compile Include="ViewModel\GraphDeletionViewModel.cs" />
     <Compile Include="ViewModel\GraphImportViewModel.cs" />
     <Compile Include="ViewModel\GraphExportViewModel.cs" />
-    <Compile Include="Model\Factories\GraphVertexModelFactory.cs" />
     <Compile Include="ViewModel\DijkstraAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\PathfindingProcessViewModel.cs" />
     <Compile Include="ViewModel\GraphAssembleViewModel.cs" />

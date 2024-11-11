@@ -30,7 +30,7 @@ namespace Pathfinding.Infrastructure.Business.Layers
             {
                 var neighborhood = factory.CreateNeighborhood(vertex.Position);
                 var neighbours = GetNeighboursWithinGraph(neighborhood, graph);
-                vertex.Neighbours.AddRange(neighbours);
+                vertex.Neighbors = neighbours;
             }
         }
 

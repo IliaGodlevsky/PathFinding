@@ -1,4 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
+using Pathfinding.Service.Interface;
 using System.Linq;
 
 namespace Pathfinding.Infrastructure.Data.Extensions
@@ -8,12 +9,12 @@ namespace Pathfinding.Infrastructure.Data.Extensions
         public static bool IsIsolated(this IVertex self)
         {
             return self?.IsObstacle == true
-                || self?.Neighbours.All(vertex => vertex.IsObstacle) == true;
+                || self?.Neighbors.All(vertex => vertex.IsObstacle) == true;
         }
 
-        public static bool HasNoNeighbours(this IVertex vertex)
+        public static bool HasNoNeighbours(this IPathfindingVertex vertex)
         {
-            return vertex.Neighbours.Count == 0;
+            return vertex.Neighbors.Count == 0;
         }
 
         public static bool IsEqual(this IVertex self, IVertex vertex)

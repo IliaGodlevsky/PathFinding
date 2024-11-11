@@ -59,7 +59,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 {
                     previous.IsSource = false;
                 }
-                else if(value != null)
+                else if (value != null)
                 {
                     value.IsSource = true;
                 }
@@ -110,7 +110,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<QueryPathfindingRangeMessage>(this, OnGetPathfindingRangeRecieved);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<GraphBecameReadOnlyMessage>(this, OnGraphBecameReadonly);
-            messenger.Register<GraphActivatedMessage, int>(this, Tokens.PathfindingRange, 
+            messenger.Register<GraphActivatedMessage, int>(this, Tokens.PathfindingRange,
                 async (r, msg) => await OnGraphActivated(msg));
             AddToRangeCommand = ReactiveCommand.Create<GraphVertexModel>(AddVertexToRange, CanExecute());
             RemoveFromRangeCommand = ReactiveCommand.Create<GraphVertexModel>(RemoveVertexFromRange, CanExecute());
@@ -132,7 +132,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             includeCommands.ExecuteFirst(pathfindingRange, vertex);
         }
 
-        private void BindTo(Expression<Func< GraphVertexModel, bool>> expression,
+        private void BindTo(Expression<Func<GraphVertexModel, bool>> expression,
             GraphVertexModel model)
         {
             model.WhenAnyValue(expression).Skip(1)

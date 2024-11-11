@@ -1,13 +1,13 @@
-﻿using NStack;
+﻿using DynamicData;
+using NStack;
 using Pathfinding.ConsoleApp.ViewModel;
+using ReactiveMarbles.ObservableEvents;
+using ReactiveUI;
+using System;
 using System.Linq;
 using System.Reactive.Disposables;
-using Terminal.Gui;
-using ReactiveMarbles.ObservableEvents;
 using System.Reactive.Linq;
-using ReactiveUI;
-using DynamicData;
-using System;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {

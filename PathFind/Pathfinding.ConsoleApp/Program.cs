@@ -16,6 +16,6 @@ internal class Program
         using var scope = App.Build();
         var main = scope.Resolve<MainView>();
         Application.Top.Add(main);
-        Application.Run(x => true);
+        Application.Run();
     }
 }

@@ -8,25 +8,15 @@ using System.Linq;
 namespace Pathfinding.Infrastructure.Data.Pathfinding.Factories
 {
     public sealed class GraphAssemble<TVertex> : IGraphAssemble<TVertex>
-        where TVertex : IVertex
+        where TVertex : IVertex, new()
     {
-        private readonly IVertexFactory<TVertex> vertexFactory;
-        private readonly IGraphFactory<TVertex> graphFactory;
-
-        public GraphAssemble(IVertexFactory<TVertex> vertexFactory,
-            IGraphFactory<TVertex> graphFactory)
-        {
-            this.vertexFactory = vertexFactory;
-            this.graphFactory = graphFactory;
-        }
-
         public IGraph<TVertex> AssembleGraph(IReadOnlyList<int> graphDimensionsSizes)
         {
             int graphSize = graphDimensionsSizes.AggregateOrDefault((x, y) => x * y);
             var vertices = Enumerable.Range(0, graphSize)
-                .Select(i => vertexFactory.CreateVertex(ToCoordinates(graphDimensionsSizes, i)))
+                .Select(i => new TVertex() { Position = ToCoordinates(graphDimensionsSizes, i) })
                 .ToArray();
-            return graphFactory.CreateGraph(vertices, graphDimensionsSizes);
+            return new Graph<TVertex>(vertices, graphDimensionsSizes);
         }
 
         private static Coordinate ToCoordinates(IReadOnlyList<int> dimensionSizes, int index)

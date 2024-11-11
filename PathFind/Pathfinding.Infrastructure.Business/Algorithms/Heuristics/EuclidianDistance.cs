@@ -1,4 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
+﻿using Pathfinding.Service.Interface;
 using System;
 using System.Runtime.CompilerServices;
 
@@ -10,7 +10,8 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.Heuristics
         private readonly double Power = 2;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public override double Calculate(IVertex first, IVertex second)
+        public override double Calculate(IPathfindingVertex first,
+            IPathfindingVertex second)
         {
             var result = base.Calculate(first, second);
             return Math.Round(Math.Sqrt(result), Precision);

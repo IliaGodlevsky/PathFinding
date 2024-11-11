@@ -1,5 +1,5 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Business.Extensions;
+﻿using Pathfinding.Infrastructure.Business.Extensions;
+using Pathfinding.Service.Interface;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,14 +7,14 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 {
     public abstract class GreedyAlgorithm : DepthAlgorithm
     {
-        protected GreedyAlgorithm(IEnumerable<IVertex> pathfindingRange)
+        protected GreedyAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
             : base(pathfindingRange)
         {
         }
 
-        protected abstract double CalculateGreed(IVertex vertex);
+        protected abstract double CalculateGreed(IPathfindingVertex vertex);
 
-        protected override IVertex GetVertex(IReadOnlyCollection<IVertex> neighbors)
+        protected override IPathfindingVertex GetVertex(IReadOnlyCollection<IPathfindingVertex> neighbors)
         {
             double leastVertexCost = neighbors.Any() ? neighbors.Min(CalculateGreed) : default;
             return neighbors.FirstOrNullVertex(vertex => CalculateGreed(vertex) == leastVertexCost);

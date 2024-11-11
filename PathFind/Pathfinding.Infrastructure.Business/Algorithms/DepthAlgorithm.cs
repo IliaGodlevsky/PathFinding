@@ -1,21 +1,21 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Business.Extensions;
+﻿using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
+using Pathfinding.Service.Interface;
 using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public abstract class DepthAlgorithm : PathfindingAlgorithm<Stack<IVertex>>
+    public abstract class DepthAlgorithm : PathfindingAlgorithm<Stack<IPathfindingVertex>>
     {
-        private IVertex PreviousVertex { get; set; } = NullVertex.Instance;
+        private IPathfindingVertex PreviousVertex { get; set; } = NullPathfindingVertex.Instance;
 
-        protected DepthAlgorithm(IEnumerable<IVertex> pathfindingRange)
+        protected DepthAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
            : base(pathfindingRange)
         {
         }
 
-        protected abstract IVertex GetVertex(IReadOnlyCollection<IVertex> neighbors);
+        protected abstract IPathfindingVertex GetVertex(IReadOnlyCollection<IPathfindingVertex> neighbors);
 
         protected override void MoveNextVertex()
         {
@@ -24,7 +24,8 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             CurrentVertex = GetVertex(neighbours);
         }
 
-        protected override void PrepareForSubPathfinding((IVertex Source, IVertex Target) range)
+        protected override void PrepareForSubPathfinding(
+            (IPathfindingVertex Source, IPathfindingVertex Target) range)
         {
             base.PrepareForSubPathfinding(range);
             visited.Add(CurrentVertex);

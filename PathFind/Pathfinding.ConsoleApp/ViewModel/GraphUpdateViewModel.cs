@@ -29,21 +29,21 @@ namespace Pathfinding.ConsoleApp.ViewModel
         }
 
         private string smoothLevel;
-        public string SmoothLevel 
+        public string SmoothLevel
         {
             get => smoothLevel;
             set => this.RaiseAndSetIfChanged(ref smoothLevel, value);
         }
 
         private string neighborhood;
-        public string Neighborhood 
+        public string Neighborhood
         {
             get => neighborhood;
             set => this.RaiseAndSetIfChanged(ref neighborhood, value);
         }
 
         private string name;
-        public string Name 
+        public string Name
         {
             get => name;
             set => this.RaiseAndSetIfChanged(ref name, value);
@@ -58,7 +58,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public ReactiveCommand<MouseEventArgs, Unit> UpdateGraphCommand { get; }
 
-        public GraphUpdateViewModel([KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
+        public GraphUpdateViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             IRequestService<GraphVertexModel> service,
             ILog log)
         {
@@ -123,7 +123,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             var deleted = SelectedGraphs.Where(x => msg.GraphIds.Contains(x.Id)).ToList();
             SelectedGraphs = SelectedGraphs.Except(deleted).ToArray();
-            if(SelectedGraphs.Length == 0)
+            if (SelectedGraphs.Length == 0)
             {
                 Name = string.Empty;
                 Neighborhood = string.Empty;

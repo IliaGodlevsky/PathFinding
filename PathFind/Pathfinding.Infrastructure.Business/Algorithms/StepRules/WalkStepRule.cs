@@ -1,5 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Service.Interface;
+﻿using Pathfinding.Service.Interface;
 using System.Runtime.CompilerServices;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.StepRules
@@ -16,7 +15,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.StepRules
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double CalculateStepCost(IVertex neighbour, IVertex current)
+        public double CalculateStepCost(IPathfindingVertex neighbour, IPathfindingVertex current)
         {
             return stepRule.CalculateStepCost(neighbour, current) + walkStepCost;
         }

@@ -6,6 +6,7 @@ using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel;
 using Pathfinding.Domain.Interface;
+using Pathfinding.Infrastructure.Data.Extensions;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System;
@@ -25,6 +26,8 @@ namespace Pathfinding.ConsoleApp.View
         private readonly CompositeDisposable disposables = new();
         private readonly CompositeDisposable vertexDisposables = new();
 
+        private readonly Terminal.Gui.View container = new();
+
         public GraphFieldView(GraphFieldViewModel viewModel,
             PathfindingRangeViewModel rangeViewModel,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger)
@@ -39,6 +42,9 @@ namespace Pathfinding.ConsoleApp.View
                 .DisposeWith(disposables);
             messenger.Register<OpenAlgorithmRunViewMessage>(this, OnOpenAlgorithmRunView);
             messenger.Register<CloseAlgorithmRunFieldViewMessage>(this, OnCloseAlgorithmRunField);
+            container.X = Pos.Center();
+            container.Y = Pos.Center();
+            Add(container);
         }
 
         private void OnOpenAlgorithmRunView(object recipient, OpenAlgorithmRunViewMessage msg)
@@ -59,8 +65,12 @@ namespace Pathfinding.ConsoleApp.View
 
         private void RenderGraph(IGraph<GraphVertexModel> graph)
         {
-            Application.MainLoop.Invoke(RemoveAll);
+            Application.MainLoop.Invoke(() =>
+            {
+                container.RemoveAll();
+            });
             vertexDisposables.Clear();
+
             var views = new List<GraphVertexView>();
             foreach (var vertex in graph)
             {
@@ -73,7 +83,9 @@ namespace Pathfinding.ConsoleApp.View
             }
             Application.MainLoop.Invoke(() =>
             {
-                Add(views.ToArray());
+                container.Add(views.ToArray());
+                container.Width = graph.GetWidth() * 3;
+                container.Height = graph.GetLength();
             });
         }
 

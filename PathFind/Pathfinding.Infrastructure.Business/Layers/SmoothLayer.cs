@@ -21,7 +21,7 @@ namespace Pathfinding.Infrastructure.Business.Layers
 
         private int GetAverageCost(IVertex vertex)
         {
-            return (int)vertex.Neighbours
+            return (int)vertex.Neighbors
                 .Average(neighbour => CalculateMeanCost(neighbour, vertex));
         }
 

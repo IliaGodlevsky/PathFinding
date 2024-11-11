@@ -5,7 +5,8 @@ using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel;
-using Pathfinding.Shared.Extensions;
+using Pathfinding.Domain.Interface;
+using Pathfinding.Infrastructure.Data.Extensions;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System;
@@ -28,6 +29,8 @@ namespace Pathfinding.ConsoleApp.View
 
         private readonly AlgorithmRunFieldViewModel viewModel;
 
+        private readonly Terminal.Gui.View container = new();
+
         public AlgorithmRunFieldView(AlgorithmRunFieldViewModel viewModel,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
@@ -42,6 +45,8 @@ namespace Pathfinding.ConsoleApp.View
                 BorderStyle = BorderStyle.Rounded,
                 Title = "Run field"
             };
+            container.X = Pos.Center();
+            container.Y = Pos.Center();
             viewModel.WhenAnyValue(x => x.RunGraph)
                 .DistinctUntilChanged()
                 .Where(x => x is not null)
@@ -51,6 +56,7 @@ namespace Pathfinding.ConsoleApp.View
             messenger.Register<OpenAlgorithmRunViewMessage>(this, OnOpen);
             messenger.Register<CloseAlgorithmRunFieldViewMessage>(this, OnCloseAlgorithmViewMessage);
             this.viewModel = viewModel;
+            Add(container);
         }
 
         private void OnOpen(object recipient, OpenAlgorithmRunViewMessage msg)
@@ -63,18 +69,17 @@ namespace Pathfinding.ConsoleApp.View
             Visible = false;
         }
 
-        private async Task RenderGraphState(IEnumerable<RunVertexModel> graphState)
+        private async Task RenderGraphState(IGraph<RunVertexModel> graph)
         {
             Application.MainLoop.Invoke(() =>
             {
-                Subviews.OfType<RunVertexView>()
-                    .ToArray().ForEach(Remove);
+                container.RemoveAll();
             });
             vertexDisposables.Clear();
             var children = new List<RunVertexView>();
             await Task.Run(() =>
             {
-                foreach (var vertex in graphState)
+                foreach (var vertex in graph)
                 {
                     var view = new RunVertexView(vertex);
                     SubscribeOnProcessNext(view);
@@ -83,7 +88,12 @@ namespace Pathfinding.ConsoleApp.View
                     view.DisposeWith(vertexDisposables);
                 }
             });
-            Application.MainLoop.Invoke(() => Add(children.ToArray()));
+            Application.MainLoop.Invoke(() =>
+            {
+                container.Add(children.ToArray());
+                container.Width = graph.GetWidth() * 3;
+                container.Height = graph.GetLength();
+            });
         }
 
         private void SubscribeOnProcessNext(RunVertexView view)

@@ -52,10 +52,8 @@
   <ItemGroup>
     <Compile Include="Comparers\CoordinateEqualityComparer.cs" />
     <Compile Include="Comparers\VertexEqualityComparer.cs" />
-    <Compile Include="Factories\IVertexFactory.cs" />
     <Compile Include="IGraph.cs" />
     <Compile Include="Factories\IGraphAssemble.cs" />
-    <Compile Include="Factories\IGraphFactory.cs" />
     <Compile Include="INeighborhood.cs" />
     <Compile Include="Factories\INeighborhoodFactory.cs" />
     <Compile Include="IPathfindingRange.cs" />

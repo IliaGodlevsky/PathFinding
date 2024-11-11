@@ -1,4 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
+﻿using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Primitives;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,8 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.Events
 
         public IReadOnlyList<Coordinate> Enqueued { get; }
 
-        public VerticesProcessedEventArgs(IVertex current, IEnumerable<IVertex> enqueued)
+        public VerticesProcessedEventArgs(IPathfindingVertex current,
+            IEnumerable<IPathfindingVertex> enqueued)
         {
             Current = current.Position;
             Enqueued = enqueued.Select(x => x.Position)

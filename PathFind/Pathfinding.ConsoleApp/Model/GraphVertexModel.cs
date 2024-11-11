@@ -1,13 +1,15 @@
 ﻿using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Primitives;
 using ReactiveUI;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.ConsoleApp.Model
 {
-    internal sealed class GraphVertexModel : ReactiveObject, IVertex, IEntity<int>
+    internal sealed class GraphVertexModel : ReactiveObject, IVertex, IPathfindingVertex, IEntity<int>
     {
         public int Id { get; set; }
 
@@ -23,7 +25,6 @@ namespace Pathfinding.ConsoleApp.Model
         {
             get => isSource;
             set => this.RaiseAndSetIfChanged(ref isSource, value);
-            
         }
 
         private bool isTarget;
@@ -47,14 +48,17 @@ namespace Pathfinding.ConsoleApp.Model
             set => this.RaiseAndSetIfChanged(ref cost, value);
         }
 
-        public Coordinate Position { get; }
+        public Coordinate Position { get; set; }
 
-        public ICollection<IVertex> Neighbours { get; } = new HashSet<IVertex>();
+        public HashSet<GraphVertexModel> Neighbors { get; private set; } = new();
 
-        public GraphVertexModel(Coordinate coordinate)
+        IReadOnlyCollection<IVertex> IVertex.Neighbors
         {
-            Position = coordinate;
+            get => Neighbors;
+            set => Neighbors = value.Cast<GraphVertexModel>().ToHashSet();
         }
+
+        IReadOnlyCollection<IPathfindingVertex> IPathfindingVertex.Neighbors => Neighbors;
 
         public bool Equals(IVertex other) => other.IsEqual(this);
 

@@ -3,15 +3,14 @@ using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.ViewModel;
-using Pathfinding.Shared.Extensions;
+using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System.Collections.Generic;
-using System.Reactive.Disposables;
-using System.Reactive;
-using Terminal.Gui;
 using System.Linq;
-using ReactiveMarbles.ObservableEvents;
+using System.Reactive;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {

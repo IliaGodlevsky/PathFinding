@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface;
-using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface.Models.Serialization;
 using Pathfinding.Service.Interface.Models.Undefined;
@@ -13,13 +12,10 @@ using System.Linq;
 namespace Pathfinding.Infrastructure.Business.Mappings
 {
     public sealed class VerticesMappingProfile<T> : Profile
-        where T : IVertex
+        where T : IVertex, new()
     {
-        private readonly IVertexFactory<T> vertexFactory;
-
-        public VerticesMappingProfile(IVertexFactory<T> vertexFactory)
+        public VerticesMappingProfile()
         {
-            this.vertexFactory = vertexFactory;
             CreateMap<Coordinate, string>()
                 .ConvertUsing(x => CoordinateToString(x));
             CreateMap<string, Coordinate>()
@@ -30,46 +26,31 @@ namespace Pathfinding.Infrastructure.Business.Mappings
                 .ForMember(x => x.LowerValueOfRange, opt => opt.MapFrom(x => x.CostRange.LowerValueOfRange));
             CreateMap<VertexCostModel, IVertexCost>()
                 .ConvertUsing(x => new VertexCost(x.Cost, new(x.UpperValueOfRange, x.LowerValueOfRange)));
-            CreateMap<VertexAssembleModel, T>()
-                .ConstructUsing(x => vertexFactory.CreateVertex(x.Coordinate));
+            CreateMap<VertexAssembleModel, T>();
             CreateMap<T, Vertex>()
                 .ForMember(x => x.Coordinates, opt => opt.MapFrom(x => CoordinateToString(x.Position)))
                 .ForMember(x => x.UpperValueRange, opt => opt.MapFrom(x => x.Cost.CostRange.UpperValueOfRange))
                 .ForMember(x => x.LowerValueRange, opt => opt.MapFrom(x => x.Cost.CostRange.LowerValueOfRange))
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => x.Cost.CurrentCost));
-            CreateMap<Vertex, T>().ConstructUsing((x, context) => vertexFactory.CreateVertex(FromStringToCoordinate(x)))
+            CreateMap<Vertex, T>().ConstructUsing((x, context) => new T() { Position = FromStringToCoordinate(x.Coordinates) })
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => new VertexCost(x.Cost, new(x.UpperValueRange, x.LowerValueRange))));
             CreateMap<Vertex, VertexAssembleModel>()
-                .ForMember(x => x.Coordinate, opt => opt.MapFrom(x => x.Coordinates))
+                .ForMember(x => x.Position, opt => opt.MapFrom(x => x.Coordinates))
                 .ForMember(x => x.Cost, opt => opt.MapFrom(x => new VertexCost(x.Cost, new(x.UpperValueRange, x.LowerValueRange))));
             CreateMap<T, VertexSerializationModel>();
-            CreateMap<VertexSerializationModel, T>().ConstructUsing(x => vertexFactory.CreateVertex(new Coordinate(x.Position.Coordinate.ToArray())));
-            CreateMap<IEnumerable<VertexSerializationModel>, IEnumerable<T>>().ConstructUsing(ToVertices);
+            CreateMap<VertexSerializationModel, T>().ConstructUsing(x => new T() { Position = new Coordinate(x.Position.Coordinate) });
         }
 
         private string CoordinateToString(Coordinate coord)
         {
             var array = coord.CoordinatesValues.ToList();
-            var serialized = JsonConvert.SerializeObject(array);
-            return serialized;
+            return JsonConvert.SerializeObject(array);
         }
 
         private Coordinate FromStringToCoordinate(string coordinate)
         {
             var deserialized = JsonConvert.DeserializeObject<List<int>>(coordinate);
             return new Coordinate(deserialized);
-        }
-
-        private Coordinate FromStringToCoordinate(Vertex entity)
-        {
-            var coordinates = JsonConvert.DeserializeObject<int[]>(entity.Coordinates);
-            return new Coordinate(coordinates);
-        }
-
-        private IEnumerable<T> ToVertices(IEnumerable<VertexSerializationModel> dtos,
-            ResolutionContext context)
-        {
-            return dtos.Select(context.Mapper.Map<T>).ToList();
         }
     }
 }

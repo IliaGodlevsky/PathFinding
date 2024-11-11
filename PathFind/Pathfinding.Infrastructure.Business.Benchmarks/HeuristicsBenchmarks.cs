@@ -13,8 +13,8 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
         [GlobalSetup]
         public void Setup()
         {
-            first = new BenchmarkVertex(new Coordinate(2, 4));
-            second = new BenchmarkVertex(new Coordinate(7, 11));
+            first = new BenchmarkVertex() { Position = new Coordinate(2, 4) };
+            second = new BenchmarkVertex() { Position = new Coordinate(7, 11) };
         }
 
         [Benchmark]

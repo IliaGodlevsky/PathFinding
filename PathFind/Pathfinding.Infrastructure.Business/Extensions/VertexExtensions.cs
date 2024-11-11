@@ -1,12 +1,13 @@
-﻿using Pathfinding.Domain.Interface;
+﻿using Pathfinding.Service.Interface;
+using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Extensions
 {
     public static class VertexExtensions
     {
-        public static bool IsNeighbor(this IVertex self, IVertex candidate)
+        public static bool IsNeighbor(this IPathfindingVertex self, IPathfindingVertex candidate)
         {
-            return self.Neighbours.Contains(candidate);
+            return self.Neighbors.Contains(candidate);
         }
     }
 }

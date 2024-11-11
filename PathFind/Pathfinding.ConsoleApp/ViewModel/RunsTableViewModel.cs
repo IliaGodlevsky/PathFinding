@@ -7,11 +7,9 @@ using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Undefined;
-using ReactiveUI;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reactive;
 using System.Threading.Tasks;
 
 namespace Pathfinding.ConsoleApp.ViewModel

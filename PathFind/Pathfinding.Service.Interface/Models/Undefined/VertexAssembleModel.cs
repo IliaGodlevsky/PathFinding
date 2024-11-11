@@ -11,6 +11,6 @@ namespace Pathfinding.Service.Interface.Models.Undefined
 
         public IVertexCost Cost { get; set; }
 
-        public Coordinate Coordinate { get; set; }
+        public Coordinate Position { get; set; }
     }
 }

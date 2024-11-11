@@ -28,8 +28,8 @@ namespace Pathfinding.ConsoleApp.View
             this.Events().SelectedCellChanged
                 .Where(x => x.NewRow > -1 && x.NewRow < table.Rows.Count)
                 .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
-                .Select(x => GetAllSelectedCells().Select(x => x.Y)
-                      .ToHashSet().Select(GetRunModel).ToArray())
+                .Select(x => GetAllSelectedCells().DistinctBy(x => x.Y)
+                      .Select(z => GetRunModel(z.Y)).ToArray())
                 .BindTo(viewModel, x => x.Selected)
                 .DisposeWith(disposables);
             this.Events().MouseClick
@@ -63,12 +63,10 @@ namespace Pathfinding.ConsoleApp.View
         {
             Application.MainLoop.Invoke(() =>
             {
-                table.Rows.Add(model.RunId, model.Name, model.Visited,
-                    model.Steps, model.Cost, model.Elapsed, model.StepRule,
-                    model.Heuristics, model.Weight, model.Status);
+                table.Rows.Add(model.GetProperties());
                 table.AcceptChanges();
                 SetNeedsDisplay();
-                Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
+                SetCursorInvisible();
             });
         }
 
@@ -92,7 +90,7 @@ namespace Pathfinding.ConsoleApp.View
                         SetSelection(0, args.NewRow, false);
                     }
                     SetNeedsDisplay();
-                    Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
+                    SetCursorInvisible();
                 }
             });
         }
@@ -114,6 +112,11 @@ namespace Pathfinding.ConsoleApp.View
                     OnRemoved((RunInfoModel)e.OldItems[0]);
                     break;
             }
+        }
+
+        private static void SetCursorInvisible()
+        {
+            Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
         }
     }
 }

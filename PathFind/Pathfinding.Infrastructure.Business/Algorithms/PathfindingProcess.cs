@@ -1,5 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Business.Algorithms.Events;
+﻿using Pathfinding.Infrastructure.Business.Algorithms.Events;
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Algorithms;
@@ -10,12 +9,12 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 {
     public abstract class PathfindingProcess : IAlgorithm<IGraphPath>
     {
-        private readonly IEnumerable<IVertex> pathfindingRange;
-
         public event VertexProcessedEventHandler VertexProcessed;
         public event SubPathFoundEventHandler SubPathFound;
 
-        protected PathfindingProcess(IEnumerable<IVertex> pathfindingRange)
+        private readonly IEnumerable<IPathfindingVertex> pathfindingRange;
+
+        protected PathfindingProcess(IEnumerable<IPathfindingVertex> pathfindingRange)
         {
             this.pathfindingRange = pathfindingRange;
         }
@@ -50,12 +49,13 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 
         protected abstract void DropState();
 
-        protected abstract void PrepareForSubPathfinding((IVertex Source, IVertex Target) range);
+        protected abstract void PrepareForSubPathfinding(
+            (IPathfindingVertex Source, IPathfindingVertex Target) range);
 
         protected abstract IGraphPath GetSubPath();
 
-        protected void RaiseVertexProcessed(IVertex vertex,
-            IEnumerable<IVertex> vertices)
+        protected void RaiseVertexProcessed(IPathfindingVertex vertex,
+            IEnumerable<IPathfindingVertex> vertices)
         {
             VertexProcessed?.Invoke(this, new(vertex, vertices));
         }
@@ -65,7 +65,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             SubPathFound?.Invoke(this, new(subPath));
         }
 
-        private IEnumerable<(IVertex Source, IVertex Target)> GetSubRanges()
+        private IEnumerable<(IPathfindingVertex Source, IPathfindingVertex Target)> GetSubRanges()
         {
             using var iterator = pathfindingRange.GetEnumerator();
             if (iterator.MoveNext())

@@ -40,8 +40,8 @@ namespace Pathfinding.ConsoleApp.View
                 .DisposeWith(disposables);
             this.Events().SelectedCellChanged
                 .Where(x => x.NewRow > -1 && x.NewRow < table.Rows.Count)
-                .Select(x => GetAllSelectedCells().Select(x => x.Y)
-                        .ToHashSet().Select(GetParametresModel).ToArray())
+                .Select(x => GetAllSelectedCells().DistinctBy(y => y.Y)
+                        .Select(z => GetParametresModel(z.Y)).ToArray())
                 .BindTo(viewModel, x => x.SelectedGraphs)
                 .DisposeWith(disposables);
             this.Events().MouseClick
@@ -87,7 +87,7 @@ namespace Pathfinding.ConsoleApp.View
             });
         }
 
-        private IDisposable BindTo<T>(GraphInfoModel model, string column, 
+        private IDisposable BindTo<T>(GraphInfoModel model, string column,
             Expression<Func<GraphInfoModel, T>> expression)
         {
             return model.WhenAnyValue(expression)

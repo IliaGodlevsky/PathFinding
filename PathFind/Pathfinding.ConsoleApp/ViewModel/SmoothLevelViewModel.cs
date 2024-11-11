@@ -1,5 +1,4 @@
-﻿using Autofac.Features.AttributeFilters;
-using Autofac.Features.Metadata;
+﻿using Autofac.Features.Metadata;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Service.Interface;
@@ -21,8 +20,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public SmoothLevelViewModel(IEnumerable<Meta<ILayer>> levels)
         {
-            Levels = levels.ToDictionary(x => (string)x.Metadata[MetadataKeys.NameKey], 
-                x => 
+            Levels = levels.ToDictionary(x => (string)x.Metadata[MetadataKeys.NameKey],
+                x =>
                 {
                     int metadata = (int)x.Metadata[MetadataKeys.SmoothKey];
                     var repeat = Enumerable.Repeat(x.Value, metadata).ToArray();

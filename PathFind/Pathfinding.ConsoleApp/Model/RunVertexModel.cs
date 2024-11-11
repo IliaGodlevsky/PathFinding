@@ -1,18 +1,15 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Primitives;
 using ReactiveUI;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.ConsoleApp.Model
 {
-    internal sealed class RunVertexModel : ReactiveObject, IVertex
+    internal sealed class RunVertexModel : ReactiveObject, IVertex, IPathfindingVertex
     {
-        public RunVertexModel(Coordinate position)
-        {
-            Position = position;
-        }
-
         private bool isObstacle;
         public bool IsObstacle
         {
@@ -20,7 +17,7 @@ namespace Pathfinding.ConsoleApp.Model
             set => this.RaiseAndSetIfChanged(ref isObstacle, value);
         }
 
-        public Coordinate Position { get; }
+        public Coordinate Position { get; set; }
 
         private bool isVisited;
         public bool IsVisited
@@ -72,13 +69,21 @@ namespace Pathfinding.ConsoleApp.Model
         }
 
         private IVertexCost cost;
-        public IVertexCost Cost 
+        public IVertexCost Cost
         {
             get => cost;
             set => this.RaiseAndSetIfChanged(ref cost, value);
         }
 
-        public ICollection<IVertex> Neighbours { get; } = new HashSet<IVertex>();
+        public HashSet<RunVertexModel> Neighbors { get; private set; } = new();
+
+        IReadOnlyCollection<IVertex> IVertex.Neighbors
+        {
+            get => Neighbors;
+            set => Neighbors = value.Cast<RunVertexModel>().ToHashSet();
+        }
+
+        IReadOnlyCollection<IPathfindingVertex> IPathfindingVertex.Neighbors => Neighbors;
 
         public bool Equals(IVertex other) => other.IsEqual(this);
 

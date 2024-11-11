@@ -9,7 +9,7 @@ namespace Pathfinding.Infrastructure.Business.Extensions
         public static async Task<T> MapAsync<T>(this IMapper mapper, object source,
             CancellationToken token = default)
         {
-            return await Task.Run(()=> mapper.Map<T>(source), token);
+            return await Task.Run(() => mapper.Map<T>(source), token);
         }
     }
 }

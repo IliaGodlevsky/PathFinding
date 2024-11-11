@@ -63,7 +63,6 @@
     <Compile Include="IPathfindingVertex.cs" />
     <Compile Include="IRequestService.cs" />
     <Compile Include="ISerializer.cs" />
-    <Compile Include="ISpreadLevel.cs" />
     <Compile Include="IStepRule.cs" />
     <Compile Include="Models\ModelBuilder.cs" />
     <Compile Include="Models\Read\PathfindingRangeModel.cs" />

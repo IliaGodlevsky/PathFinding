@@ -1,5 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Service.Interface;
+﻿using Pathfinding.Service.Interface;
 using System.Runtime.CompilerServices;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.Heuristics
@@ -17,7 +16,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.Heuristics
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double Calculate(IVertex first, IVertex second)
+        public double Calculate(IPathfindingVertex first, IPathfindingVertex second)
         {
             return heuristic.Calculate(first, second) * weight;
         }

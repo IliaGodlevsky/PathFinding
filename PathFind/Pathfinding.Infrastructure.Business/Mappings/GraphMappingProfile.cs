@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface;
-using Pathfinding.Domain.Interface.Factories;
+using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Serialization;
 using Pathfinding.Service.Interface.Models.Undefined;
@@ -16,11 +16,8 @@ namespace Pathfinding.Infrastructure.Business.Mappings
     public sealed class GraphMappingProfile<T> : Profile
         where T : IVertex
     {
-        private readonly IGraphFactory<T> graphFactory;
-
-        public GraphMappingProfile(IGraphFactory<T> graphFactory)
+        public GraphMappingProfile()
         {
-            this.graphFactory = graphFactory;
             CreateMap<IGraph<T>, IGraph<T>>().ConvertUsing(x => x);
             CreateMap<GraphAssembleModel, IGraph<T>>().ConstructUsing(Construct);
             CreateMap<IGraph<T>, IReadOnlyCollection<VertexSerializationModel>>()
@@ -49,7 +46,7 @@ namespace Pathfinding.Infrastructure.Business.Mappings
             var vertices = context.Mapper
                         .Map<IEnumerable<T>>(serializationDto.Vertices)
                         .ToReadOnly();
-            var graph = graphFactory.CreateGraph(vertices, serializationDto.DimensionSizes);
+            var graph = new Graph<T>(vertices, serializationDto.DimensionSizes);
             return new()
             {
                 Name = serializationDto.Name,
@@ -62,7 +59,7 @@ namespace Pathfinding.Infrastructure.Business.Mappings
         private IGraph<T> Construct(GraphAssembleModel assembleDto, ResolutionContext context)
         {
             var vertices = context.Mapper.Map<T[]>(assembleDto.Vertices).ToArray();
-            return graphFactory.CreateGraph(vertices, assembleDto.Dimensions);
+            return new Graph<T>(vertices, assembleDto.Dimensions);
         }
     }
 }

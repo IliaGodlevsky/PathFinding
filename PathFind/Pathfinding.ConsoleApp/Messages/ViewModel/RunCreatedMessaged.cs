@@ -1,6 +1,4 @@
-﻿using Pathfinding.Service.Interface.Models.Read;
-using Pathfinding.Service.Interface.Models.Undefined;
-using System.Collections.Generic;
+﻿using Pathfinding.Service.Interface.Models.Undefined;
 
 namespace Pathfinding.ConsoleApp.Messages.ViewModel
 {

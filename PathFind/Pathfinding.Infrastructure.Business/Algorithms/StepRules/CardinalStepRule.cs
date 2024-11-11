@@ -1,5 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Data.Extensions;
+﻿using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface;
 using System;
 using System.Runtime.CompilerServices;
@@ -19,7 +18,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.StepRules
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public double CalculateStepCost(IVertex neighbour, IVertex current)
+        public double CalculateStepCost(IPathfindingVertex neighbour, IPathfindingVertex current)
         {
             double cost = stepRule.CalculateStepCost(neighbour, current);
             bool isCardinal = current.Position.IsCardinal(neighbour.Position);

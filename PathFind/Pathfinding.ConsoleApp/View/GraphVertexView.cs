@@ -11,6 +11,12 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed class GraphVertexView : Label
     {
+        private static readonly ColorScheme ObstacleColor = Create(ColorConstants.ObstacleVertexColor);
+        private static readonly ColorScheme RegularColor = Create(ColorConstants.RegularVertexColor);
+        private static readonly ColorScheme SourceColor = Create(ColorConstants.SourceVertexColor);
+        private static readonly ColorScheme TargetColor = Create(ColorConstants.TargetVertexColor);
+        private static readonly ColorScheme TransitColor = Create(ColorConstants.TranstiVertexColor);
+
         private const int LabelWidth = 3;
 
         private readonly CompositeDisposable disposables = new();
@@ -22,14 +28,10 @@ namespace Pathfinding.ConsoleApp.View
             Y = model.Position.GetY();
             Width = LabelWidth;
             this.model = model;
-            BindTo(x => x.IsObstacle, ColorConstants.ObstacleVertexColor,
-                ColorConstants.RegularVertexColor, 0);
-            BindTo(x => x.IsTarget, ColorConstants.TargetVertexColor,
-                ColorConstants.RegularVertexColor, 1);
-            BindTo(x => x.IsSource, ColorConstants.SourceVertexColor, 
-                ColorConstants.RegularVertexColor, 1);
-            BindTo(x => x.IsTransit, ColorConstants.TranstiVertexColor,
-                ColorConstants.RegularVertexColor, 1);
+            BindTo(x => x.IsObstacle, ObstacleColor, RegularColor, 0);
+            BindTo(x => x.IsTarget, TargetColor, RegularColor, 1);
+            BindTo(x => x.IsSource, SourceColor, RegularColor, 1);
+            BindTo(x => x.IsTransit, TransitColor, RegularColor, 1);
 
             model.WhenAnyValue(x => x.Cost)
                 .Select(x => x.CurrentCost.ToString())
@@ -38,20 +40,19 @@ namespace Pathfinding.ConsoleApp.View
                 .DisposeWith(disposables);
         }
 
-        private ColorScheme Create(Color foreground)
+        private static ColorScheme Create(Color foreground)
         {
-            return new()
-            {
-                Normal = Application.Driver.MakeAttribute(foreground, ColorConstants.BackgroundColor)
-            };
+            var driver = Application.Driver;
+            var attribute = driver.MakeAttribute(foreground, ColorConstants.BackgroundColor);
+            return new() { Normal = attribute };
         }
 
-        private void BindTo(Expression<Func<GraphVertexModel, bool>> expression, Color toColor, 
-            Color falseColor, int skip)
+        private void BindTo(Expression<Func<GraphVertexModel, bool>> expression, ColorScheme toColor,
+            ColorScheme falseColor, int skip)
         {
             model.WhenAnyValue(expression)
                .Skip(skip)
-               .Select(x => x ? Create(toColor) : Create(falseColor))
+               .Select(x => x ? toColor : falseColor)
                .BindTo(this, x => x.ColorScheme)
                .DisposeWith(disposables);
         }

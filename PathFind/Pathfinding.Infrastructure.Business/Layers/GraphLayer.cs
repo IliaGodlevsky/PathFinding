@@ -1,7 +1,6 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface;
-using Pathfinding.Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,11 +22,10 @@ namespace Pathfinding.Infrastructure.Business.Layers
                 var vert = graph.Get(vertex.Position);
                 vert.IsObstacle = vertex.IsObstacle;
                 vert.Cost = vertex.Cost.DeepClone();
-                var neighbours = vertex.Neighbours
+                vert.Neighbors = vertex.Neighbors
                     .GetCoordinates()
                     .Select(graph.Get)
                     .ToArray();
-                vert.Neighbours.AddRange(neighbours);
             }
         }
     }

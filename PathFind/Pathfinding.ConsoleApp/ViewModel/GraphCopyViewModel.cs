@@ -32,7 +32,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         }
 
         public GraphCopyViewModel(
-            [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger, 
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             IRequestService<GraphVertexModel> service,
             ILog log)
         {

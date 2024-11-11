@@ -37,7 +37,7 @@ namespace Pathfinding.ConsoleApp.View
                 new (WeightCol, typeof(string)),
                 new (StatusCol, typeof(string))
             });
-            table.PrimaryKey = new [] { table.Columns[IdCol] };
+            table.PrimaryKey = new[] { table.Columns[IdCol] };
             var columnStyles = new Dictionary<DataColumn, ColumnStyle>()
             {
                 { table.Columns[IdCol], new() { Visible = false } },

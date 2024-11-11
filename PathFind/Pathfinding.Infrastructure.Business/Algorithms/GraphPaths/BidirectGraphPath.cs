@@ -1,5 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
+﻿using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface;
@@ -14,25 +13,25 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
 {
     public sealed class BidirectGraphPath : IGraphPath
     {
-        private readonly IReadOnlyDictionary<Coordinate, IVertex> forwardTraces;
-        private readonly IReadOnlyDictionary<Coordinate, IVertex> backwardTraces;
-        private readonly IVertex intersection;
+        private readonly IReadOnlyDictionary<Coordinate, IPathfindingVertex> forwardTraces;
+        private readonly IReadOnlyDictionary<Coordinate, IPathfindingVertex> backwardTraces;
+        private readonly IPathfindingVertex intersection;
         private readonly IStepRule stepRule;
 
-        private readonly Lazy<IReadOnlyList<IVertex>> path;
+        private readonly Lazy<IReadOnlyList<IPathfindingVertex>> path;
         private readonly Lazy<double> cost;
         private readonly Lazy<int> count;
 
-        private IReadOnlyList<IVertex> Path => path.Value;
+        private IReadOnlyList<IPathfindingVertex> Path => path.Value;
 
         public double Cost => cost.Value;
 
         public int Count => count.Value;
 
         public BidirectGraphPath(
-            IReadOnlyDictionary<Coordinate, IVertex> forwardTraces,
-            IReadOnlyDictionary<Coordinate, IVertex> backwardTraces,
-            IVertex intersection,
+            IReadOnlyDictionary<Coordinate, IPathfindingVertex> forwardTraces,
+            IReadOnlyDictionary<Coordinate, IPathfindingVertex> backwardTraces,
+            IPathfindingVertex intersection,
             IStepRule stepRule)
         {
             this.forwardTraces = forwardTraces;
@@ -45,17 +44,17 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
         }
 
         public BidirectGraphPath(
-            IReadOnlyDictionary<Coordinate, IVertex> forwardTraces,
-            IReadOnlyDictionary<Coordinate, IVertex> backwardTraces,
-            IVertex intersection)
+            IReadOnlyDictionary<Coordinate, IPathfindingVertex> forwardTraces,
+            IReadOnlyDictionary<Coordinate, IPathfindingVertex> backwardTraces,
+            IPathfindingVertex intersection)
             : this(forwardTraces, backwardTraces, intersection, new DefaultStepRule())
         {
 
         }
 
-        private IReadOnlyList<IVertex> GetPath()
+        private IReadOnlyList<IPathfindingVertex> GetPath()
         {
-            var vertices = new HashSet<IVertex>();
+            var vertices = new HashSet<IPathfindingVertex>();
             var vertex = intersection;
             vertices.Add(vertex);
             var parent = forwardTraces.GetOrNullVertex(vertex.Position);
@@ -67,7 +66,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
             }
             vertex = intersection;
             parent = backwardTraces.GetOrNullVertex(vertex.Position);
-            var backward = new HashSet<IVertex>();
+            var backward = new HashSet<IPathfindingVertex>();
             while (parent.IsNeighbor(vertex))
             {
                 backward.Add(parent);

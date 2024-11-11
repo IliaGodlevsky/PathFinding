@@ -3,26 +3,26 @@ using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
-using Pathfinding.Domain.Interface;
-using Pathfinding.Shared.Primitives;
-using ReactiveUI;
-using System.Collections.Generic;
-using System;
-using Pathfinding.Service.Interface.Models.Read;
-using System.Linq;
 using Pathfinding.Domain.Core;
+using Pathfinding.Domain.Interface;
+using Pathfinding.Domain.Interface.Factories;
+using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Infrastructure.Business.Algorithms.Events;
 using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
-using Pathfinding.Infrastructure.Business.Algorithms;
-using Pathfinding.Logging.Interface;
-using Pathfinding.Service.Interface;
-using Pathfinding.Shared.Extensions;
 using Pathfinding.Infrastructure.Business.Extensions;
-using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
+using Pathfinding.Logging.Interface;
+using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Models.Read;
+using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Primitives;
+using ReactiveUI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 
@@ -49,7 +49,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public AlgorithmRunFieldViewModel(
             IGraphAssemble<RunVertexModel> graphAssemble,
-            [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ILog log)
         {
             this.messenger = messenger;
@@ -138,7 +138,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             {
                 verticesStates.ElementAtOrDefault(cursor++).SetState();
             }
-            
+
         }
 
         private void OnRunActivated(object recipient, RunSelectedMessage msg)
@@ -158,7 +158,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             var range = rangeCoordinates.Select(RunGraph.Get).ToArray();
 
             var subAlgorithms = new List<SubAlgorithmModel>();
-            var visitedVertices = new List<(Coordinate Visited, 
+            var visitedVertices = new List<(Coordinate Visited,
                 IReadOnlyList<Coordinate> Enqueued)>();
 
             void AddSubAlgorithm(IReadOnlyCollection<Coordinate> path = null)
@@ -274,12 +274,12 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             var vertices = new List<VertexState>();
 
-            vertices.Add(new (graph.Get(range.First()), RunState.Source, true));
+            vertices.Add(new(graph.Get(range.First()), RunState.Source, true));
             foreach (var transit in range.Skip(1).Take(range.Count - 2))
             {
-                vertices.Add(new (graph.Get(transit), RunState.Transit, true));
+                vertices.Add(new(graph.Get(transit), RunState.Transit, true));
             }
-            vertices.Add(new (graph.Get(range.Last()), RunState.Target, true));
+            vertices.Add(new(graph.Get(range.Last()), RunState.Target, true));
 
             var previousVisited = new HashSet<Coordinate>();
             var previousPaths = new HashSet<Coordinate>();
@@ -292,25 +292,25 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 {
                     foreach (var enqueued in Enqueued.Intersect(previousVisited).Except(visitedIgnore))
                     {
-                        vertices.Add(new (graph.Get(enqueued), RunState.Visited, false));
+                        vertices.Add(new(graph.Get(enqueued), RunState.Visited, false));
                     }
                     foreach (var visited in Visited.Enumerate().Except(visitedIgnore))
                     {
-                        vertices.Add(new (graph.Get(visited), RunState.Visited, true));
+                        vertices.Add(new(graph.Get(visited), RunState.Visited, true));
                     }
                     foreach (var enqueued in Enqueued.Except(visitedIgnore).Except(previousEnqueued))
                     {
-                        vertices.Add(new (graph.Get(enqueued), RunState.Enqueued, true));
+                        vertices.Add(new(graph.Get(enqueued), RunState.Enqueued, true));
                     }
                 }
                 var exceptRangePath = subAlgorithm.Path.Except(range).ToArray();
                 foreach (var path in exceptRangePath.Intersect(previousPaths))
                 {
-                    vertices.Add(new (graph.Get(path), RunState.CrossPath, true));
+                    vertices.Add(new(graph.Get(path), RunState.CrossPath, true));
                 }
                 foreach (var path in exceptRangePath.Except(previousPaths))
                 {
-                    vertices.Add(new (graph.Get(path), RunState.Path, true));
+                    vertices.Add(new(graph.Get(path), RunState.Path, true));
                 }
 
                 previousVisited.AddRange(subAlgorithm.Visited.Select(x => x.Visited));

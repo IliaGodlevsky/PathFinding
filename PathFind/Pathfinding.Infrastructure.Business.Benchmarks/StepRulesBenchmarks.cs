@@ -15,8 +15,16 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
         public void Setup()
         {
             var range = new InclusiveValueRange<int>(9, 1);
-            first = new BenchmarkVertex(new Coordinate(2, 3)) { Cost = new VertexCost(3, range) };
-            second = new BenchmarkVertex(new Coordinate(12, 45)) { Cost = new VertexCost(6, range) };
+            first = new BenchmarkVertex()
+            {
+                Position = new Coordinate(2, 3),
+                Cost = new VertexCost(3, range)
+            };
+            second = new BenchmarkVertex()
+            {
+                Position = new Coordinate(12, 45),
+                Cost = new VertexCost(6, range)
+            };
         }
 
         [Benchmark(Baseline = true)]

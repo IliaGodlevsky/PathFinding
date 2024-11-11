@@ -12,7 +12,7 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
     public class Graph<TVertex> : IGraph<TVertex>
         where TVertex : IVertex
     {
-        public static readonly Graph<TVertex> Empty = new Graph<TVertex>();
+        public static readonly Graph<TVertex> Empty = new();
 
         private readonly IReadOnlyDictionary<Coordinate, TVertex> vertices;
 

@@ -1,5 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
+﻿using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Extensions;
@@ -11,13 +10,14 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
     {
         private readonly IStepRule stepRule;
 
-        public CostGreedyAlgorithm(IEnumerable<IVertex> pathfindingRange)
+        public CostGreedyAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
             : this(pathfindingRange, new DefaultStepRule())
         {
 
         }
 
-        public CostGreedyAlgorithm(IEnumerable<IVertex> pathfindingRange, IStepRule stepRule)
+        public CostGreedyAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange,
+            IStepRule stepRule)
             : base(pathfindingRange)
         {
             this.stepRule = stepRule;
@@ -29,7 +29,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
                 CurrentRange.Target, stepRule);
         }
 
-        protected override double CalculateGreed(IVertex vertex)
+        protected override double CalculateGreed(IPathfindingVertex vertex)
         {
             return stepRule.CalculateStepCost(vertex, CurrentVertex);
         }

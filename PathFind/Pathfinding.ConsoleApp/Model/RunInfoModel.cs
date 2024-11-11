@@ -1,5 +1,4 @@
-﻿using ReactiveUI;
-using System;
+﻿using System;
 
 namespace Pathfinding.ConsoleApp.Model
 {
@@ -24,5 +23,12 @@ namespace Pathfinding.ConsoleApp.Model
         public string Weight { get; set; }
 
         public string Status { get; set; }
+
+        public object[] GetProperties()
+        {
+            return new object[] { RunId, Name, Visited,
+                    Steps, Cost, Elapsed, StepRule,
+                    Heuristics, Weight, Status };
+        }
     }
 }

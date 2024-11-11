@@ -11,6 +11,16 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed class RunVertexView : Label
     {
+        private static readonly ColorScheme ObstacleColor = Create(ColorConstants.ObstacleVertexColor);
+        private static readonly ColorScheme RegularColor = Create(ColorConstants.RegularVertexColor);
+        private static readonly ColorScheme VisitedColor = Create(ColorConstants.VisitedVertexColor);
+        private static readonly ColorScheme EnqueuedColor = Create(ColorConstants.EnqueuedVertexColor);
+        private static readonly ColorScheme SourceColor = Create(ColorConstants.SourceVertexColor);
+        private static readonly ColorScheme TargetColor = Create(ColorConstants.TargetVertexColor);
+        private static readonly ColorScheme TransitColor = Create(ColorConstants.TranstiVertexColor);
+        private static readonly ColorScheme PathColor = Create(ColorConstants.PathVertexColor);
+        private static readonly ColorScheme CrossedPathColor = Create(ColorConstants.CrossedPathColor);
+
         private const int LabelWidth = 3;
         private readonly CompositeDisposable disposables = new();
 
@@ -29,21 +39,17 @@ namespace Pathfinding.ConsoleApp.View
                 .Subscribe()
                 .DisposeWith(disposables);
 
-            BindTo(x => x.IsObstacle, ColorConstants.ObstacleVertexColor,
-                ColorConstants.RegularVertexColor, 0);
-            BindTo(x => x.IsTarget, ColorConstants.TargetVertexColor);
-            BindTo(x => x.IsSource, ColorConstants.SourceVertexColor);
-            BindTo(x => x.IsTransit, ColorConstants.TranstiVertexColor);
-            BindTo(x => x.IsPath, ColorConstants.PathVertexColor, 
-                ColorConstants.VisitedVertexColor);
-            BindTo(x => x.IsVisited, ColorConstants.VisitedVertexColor, 
-                ColorConstants.EnqueuedVertexColor);
-            BindTo(x => x.IsEnqueued, ColorConstants.EnqueuedVertexColor);
-            BindTo(x => x.IsCrossedPath, ColorConstants.CrossedPathColor, 
-                ColorConstants.PathVertexColor);
+            BindTo(x => x.IsObstacle, ObstacleColor, RegularColor, 0);
+            BindTo(x => x.IsTarget, TargetColor, RegularColor);
+            BindTo(x => x.IsSource, SourceColor, RegularColor);
+            BindTo(x => x.IsTransit, TransitColor, RegularColor);
+            BindTo(x => x.IsPath, PathColor, VisitedColor);
+            BindTo(x => x.IsVisited, VisitedColor, EnqueuedColor);
+            BindTo(x => x.IsEnqueued, EnqueuedColor, RegularColor);
+            BindTo(x => x.IsCrossedPath, CrossedPathColor, PathColor);
         }
 
-        private ColorScheme Create(Color foreground)
+        private static ColorScheme Create(Color foreground)
         {
             var driver = Application.Driver;
             var attribute = driver.MakeAttribute(foreground, ColorConstants.BackgroundColor);
@@ -51,11 +57,11 @@ namespace Pathfinding.ConsoleApp.View
         }
 
         private void BindTo(Expression<Func<RunVertexModel, bool>> expression,
-            Color toColor, Color falseColor = ColorConstants.RegularVertexColor, int toSkip = 1)
+            ColorScheme toColor, ColorScheme falseColor, int toSkip = 1)
         {
             model.WhenAnyValue(expression)
                .Skip(toSkip)
-               .Select(x => x ? Create(toColor) : Create(falseColor))
+               .Select(x => x ? toColor : falseColor)
                .BindTo(this, x => x.ColorScheme)
                .DisposeWith(disposables);
         }

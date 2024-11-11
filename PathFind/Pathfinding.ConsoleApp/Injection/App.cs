@@ -5,7 +5,6 @@ using AutoMapper;
 using AutoMapper.Configuration;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Model;
-using Pathfinding.ConsoleApp.Model.Factories;
 using Pathfinding.ConsoleApp.View;
 using Pathfinding.ConsoleApp.ViewModel;
 using Pathfinding.Domain.Core;
@@ -35,12 +34,8 @@ namespace Pathfinding.ConsoleApp.Injection
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<GraphFactory<GraphVertexModel>>().As<IGraphFactory<GraphVertexModel>>().SingleInstance();
-            builder.RegisterType<GraphVertexModelFactory>().As<IVertexFactory<GraphVertexModel>>().SingleInstance();
             builder.RegisterType<GraphAssemble<GraphVertexModel>>().As<IGraphAssemble<GraphVertexModel>>().SingleInstance();
 
-            builder.RegisterType<GraphFactory<RunVertexModel>>().As<IGraphFactory<RunVertexModel>>().SingleInstance();
-            builder.RegisterType<RunVertexModelFactory>().As<IVertexFactory<RunVertexModel>>().SingleInstance();
             builder.RegisterType<GraphAssemble<RunVertexModel>>().As<IGraphAssemble<RunVertexModel>>().SingleInstance();
 
             builder.RegisterType<DefaultStepRule>().As<IStepRule>()

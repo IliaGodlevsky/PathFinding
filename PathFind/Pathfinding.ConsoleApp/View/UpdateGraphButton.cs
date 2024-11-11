@@ -5,7 +5,6 @@ using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.ViewModel;
 using ReactiveMarbles.ObservableEvents;
 using System;
-using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Terminal.Gui;
 

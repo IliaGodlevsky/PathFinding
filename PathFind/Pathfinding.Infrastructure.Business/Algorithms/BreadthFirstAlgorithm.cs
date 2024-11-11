@@ -1,4 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
+﻿using Pathfinding.Service.Interface;
 using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
@@ -6,13 +6,13 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
     public abstract class BreadthFirstAlgorithm<TStorage> : WaveAlgorithm<TStorage>
         where TStorage : new()
     {
-        public BreadthFirstAlgorithm(IEnumerable<IVertex> pathfindingRange)
+        public BreadthFirstAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
             : base(pathfindingRange)
         {
 
         }
 
-        protected override void RelaxVertex(IVertex vertex)
+        protected override void RelaxVertex(IPathfindingVertex vertex)
         {
             visited.Add(vertex);
             traces[vertex.Position] = CurrentVertex;

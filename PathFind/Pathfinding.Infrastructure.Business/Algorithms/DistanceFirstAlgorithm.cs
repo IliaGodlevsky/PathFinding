@@ -1,5 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
+﻿using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
 using Pathfinding.Service.Interface;
 using System.Collections.Generic;
 
@@ -9,19 +8,19 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
     {
         private readonly IHeuristic heuristic;
 
-        public DistanceFirstAlgorithm(IEnumerable<IVertex> pathfindingRange, IHeuristic heuristic)
+        public DistanceFirstAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange, IHeuristic heuristic)
             : base(pathfindingRange)
         {
             this.heuristic = heuristic;
         }
 
-        public DistanceFirstAlgorithm(IEnumerable<IVertex> pathfindingRange)
+        public DistanceFirstAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
             : this(pathfindingRange, new EuclidianDistance())
         {
 
         }
 
-        protected override double CalculateGreed(IVertex vertex)
+        protected override double CalculateGreed(IPathfindingVertex vertex)
         {
             return heuristic.Calculate(vertex, CurrentRange.Target);
         }
