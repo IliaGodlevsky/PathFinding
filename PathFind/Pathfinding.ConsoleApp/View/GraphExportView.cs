@@ -32,7 +32,7 @@ namespace Pathfinding.ConsoleApp.View
             dialog.Width = Dim.Percent(45);
             dialog.Height = Dim.Percent(55);
             Application.Run(dialog);
-            if (!dialog.Canceled && dialog.FileName != null)
+            if (!dialog.Canceled && dialog.FilePath != null)
             {
                 viewModel.FilePath = dialog.FilePath.ToString();
             }

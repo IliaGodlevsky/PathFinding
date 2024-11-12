@@ -8,7 +8,6 @@ using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Terminal.Gui;
@@ -17,14 +16,14 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphAssembleView : FrameView
     {
-        private readonly GraphAssembleViewModel viewModel;
+        private readonly IGraphAssembleViewModel viewModel;
         private readonly IMessenger messenger;
         private readonly CompositeDisposable disposables = new();
         private readonly Terminal.Gui.View[] children;
 
         public GraphAssembleView(
             [KeyFilter(KeyFilters.GraphAssembleView)] IEnumerable<Terminal.Gui.View> children,
-            GraphAssembleViewModel viewModel,
+            IGraphAssembleViewModel viewModel,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
             this.viewModel = viewModel;
@@ -32,8 +31,7 @@ namespace Pathfinding.ConsoleApp.View
             Initialize();
             this.children = children.ToArray();
             Add(this.children);
-            var hideWindowCommand = ReactiveCommand.Create<MouseEventArgs, Unit>(Hide,
-                this.viewModel.CreateCommand.CanExecute);
+            var hideWindowCommand = ReactiveCommand.Create(Hide, this.viewModel.CreateCommand.CanExecute);
             var commands = new[] { hideWindowCommand, this.viewModel.CreateCommand };
             var combined = ReactiveCommand.CreateCombined(commands);
             createButton.Events()
@@ -57,16 +55,15 @@ namespace Pathfinding.ConsoleApp.View
         {
             if (e.MouseEvent.Flags == MouseFlags.Button1Clicked)
             {
-                Hide(e);
+                Hide();
                 Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
             }
         }
 
-        private Unit Hide(MouseEventArgs e)
+        private void Hide()
         {
             Visible = false;
             children.ForEach(x => x.Visible = false);
-            return Unit.Default;
         }
     }
 }

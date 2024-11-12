@@ -4,6 +4,7 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
@@ -27,7 +28,8 @@ using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class PathfindingRangeViewModel : BaseViewModel, IPathfindingRange<GraphVertexModel>
+    internal sealed class PathfindingRangeViewModel : BaseViewModel, 
+        IPathfindingRange<GraphVertexModel>, IPathfindingRangeViewModel
     {
         private readonly CompositeDisposable disposables = new();
         private readonly IRequestService<GraphVertexModel> service;
@@ -93,7 +95,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public ReactiveCommand<GraphVertexModel, Unit> RemoveFromRangeCommand { get; }
 
-        public ReactiveCommand<MouseEventArgs, Unit> DeletePathfindingRange { get; }
+        public ReactiveCommand<Unit, Unit> DeletePathfindingRange { get; }
 
         public PathfindingRangeViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             IRequestService<GraphVertexModel> service,
@@ -114,7 +116,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 async (r, msg) => await OnGraphActivated(msg));
             AddToRangeCommand = ReactiveCommand.Create<GraphVertexModel>(AddVertexToRange, CanExecute());
             RemoveFromRangeCommand = ReactiveCommand.Create<GraphVertexModel>(RemoveVertexFromRange, CanExecute());
-            DeletePathfindingRange = ReactiveCommand.CreateFromTask<MouseEventArgs>(DeleteRange, CanExecute());
+            DeletePathfindingRange = ReactiveCommand.CreateFromTask(DeleteRange, CanExecute());
         }
 
         private IObservable<bool> CanExecute()
@@ -178,7 +180,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             while (Transit.Count > 0) Transit.RemoveAt(0);
         }
 
-        private async Task DeleteRange(MouseEventArgs args)
+        private async Task DeleteRange()
         {
             var result = await service.DeleteRangeAsync(GraphId).ConfigureAwait(false);
             if (result)

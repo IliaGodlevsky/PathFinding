@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
@@ -28,7 +29,7 @@ using System.Reactive.Linq;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class AlgorithmRunFieldViewModel : BaseViewModel
+    internal sealed class AlgorithmRunFieldViewModel : BaseViewModel, IAlgorithmRunFieldViewModel
     {
         private readonly ILog log;
         private readonly IMessenger messenger;
@@ -41,7 +42,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private int Cursor { get; set; } = 0;
 
-        public IGraph<RunVertexModel> RunGraph { get; set; } = Graph<RunVertexModel>.Empty;
+        public IGraph<RunVertexModel> RunGraph { get; private set; } = Graph<RunVertexModel>.Empty;
 
         public ReactiveCommand<int, bool> ProcessNextCommand { get; }
 

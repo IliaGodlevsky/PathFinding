@@ -123,7 +123,7 @@ namespace Pathfinding.ConsoleApp.Injection
                 .UsingConstructor(typeof(IEnumerable<Meta<IHeuristic>>));
             builder.RegisterType<StepRulesViewModel>().AsSelf().SingleInstance()
                 .UsingConstructor(typeof(IEnumerable<Meta<IStepRule>>));
-            builder.RegisterType<SmoothLevelViewModel>().AsSelf().SingleInstance()
+            builder.RegisterType<SmoothLevelsViewModel>().AsSelf().SingleInstance()
                 .UsingConstructor(typeof(IEnumerable<Meta<ILayer>>)).WithAttributeFiltering();
             builder.RegisterType<NeighborhoodFactoriesViewModel>().AsSelf().SingleInstance()
                 .UsingConstructor(typeof(IEnumerable<Meta<INeighborhoodFactory>>));

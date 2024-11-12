@@ -1,4 +1,5 @@
 ﻿using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System.Reactive.Disposables;
@@ -9,10 +10,10 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphNameView : FrameView
     {
-        private readonly GraphAssembleViewModel viewModel;
+        private readonly IGraphNameViewModel viewModel;
         private readonly CompositeDisposable disposables = new();
 
-        public GraphNameView(GraphAssembleViewModel viewModel)
+        public GraphNameView(IGraphNameViewModel viewModel)
         {
             Initialize();
             this.viewModel = viewModel;

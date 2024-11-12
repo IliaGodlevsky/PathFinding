@@ -1,6 +1,7 @@
 ﻿using Pathfinding.ConsoleApp.ViewModel;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Terminal.Gui;
@@ -16,6 +17,7 @@ namespace Pathfinding.ConsoleApp.View
             Initialize();
             this.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
+                .Select(x => Unit.Default)
                 .InvokeCommand(viewModel, x => x.DeleteRunCommand)
                 .DisposeWith(disposables);
         }

@@ -4,7 +4,7 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
-using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Extensions;
 using ReactiveMarbles.ObservableEvents;
@@ -27,11 +27,11 @@ namespace Pathfinding.ConsoleApp.View
         private readonly CompositeDisposable vertexDisposables = new();
         private readonly CompositeDisposable disposables = new();
 
-        private readonly AlgorithmRunFieldViewModel viewModel;
+        private readonly IAlgorithmRunFieldViewModel viewModel;
 
         private readonly Terminal.Gui.View container = new();
 
-        public AlgorithmRunFieldView(AlgorithmRunFieldViewModel viewModel,
+        public AlgorithmRunFieldView(IAlgorithmRunFieldViewModel viewModel,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
             Visible = false;

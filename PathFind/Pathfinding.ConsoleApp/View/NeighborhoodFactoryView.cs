@@ -1,5 +1,6 @@
 ﻿using NStack;
 using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System.Linq;
@@ -13,11 +14,11 @@ namespace Pathfinding.ConsoleApp.View
     {
         private readonly CompositeDisposable disposables = new();
         private readonly NeighborhoodFactoriesViewModel factoryViewModel;
-        private readonly GraphAssembleViewModel viewModel;
+        private readonly INeighborhoodNameViewModel viewModel;
 
         public NeighborhoodFactoryView(
             NeighborhoodFactoriesViewModel factoryViewModel,
-            GraphAssembleViewModel viewModel)
+            INeighborhoodNameViewModel viewModel)
         {
             this.factoryViewModel = factoryViewModel;
             this.viewModel = viewModel;
@@ -26,12 +27,8 @@ namespace Pathfinding.ConsoleApp.View
                 .Select(ustring.Make).ToArray();
             neighborhoods.Events().SelectedItemChanged
                 .Where(x => x.SelectedItem > -1)
-                .Select(x =>
-                {
-                    var pair = factoryViewModel.Factories.ElementAt(x.SelectedItem);
-                    return (Name: pair.Key, Factory: pair.Value);
-                })
-                .BindTo(this.viewModel, x => x.NeighborhoodFactory)
+                .Select(x => factoryViewModel.Factories.Keys.ElementAt(x.SelectedItem))
+                .BindTo(this.viewModel, x => x.Neighborhood)
                 .DisposeWith(disposables);
             neighborhoods.SelectedItem = 0;
             VisibleChanged += OnVisibilityChanged;

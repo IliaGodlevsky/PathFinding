@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
-using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Shared.Extensions;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
@@ -21,7 +21,7 @@ namespace Pathfinding.ConsoleApp.View
     {
         private readonly CompositeDisposable disposables = new();
 
-        public RunsTableView(RunsTableViewModel viewModel,
+        public RunsTableView(IRunsTableViewModel viewModel,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger) : this()
         {
             viewModel.Runs.CollectionChanged += OnCollectionChanged;
@@ -30,7 +30,7 @@ namespace Pathfinding.ConsoleApp.View
                 .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
                 .Select(x => GetAllSelectedCells().DistinctBy(x => x.Y)
                       .Select(z => GetRunModel(z.Y)).ToArray())
-                .BindTo(viewModel, x => x.Selected)
+                .InvokeCommand(viewModel, x => x.SelectRunsCommand)
                 .DisposeWith(disposables);
             this.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
@@ -38,7 +38,7 @@ namespace Pathfinding.ConsoleApp.View
                 .Where(x => x >= 0 && x < Table.Rows.Count && x == SelectedRow)
                 .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
                 .Select(x => GetRunModel(x).Enumerate().ToArray())
-                .BindTo(viewModel, x => x.Selected)
+                .InvokeCommand(viewModel, x => x.SelectRunsCommand)
                 .DisposeWith(disposables);
         }
 

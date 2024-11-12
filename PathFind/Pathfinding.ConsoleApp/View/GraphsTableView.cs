@@ -4,6 +4,7 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Shared.Extensions;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Terminal.Gui;
@@ -20,19 +22,22 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphsTableView
     {
-        private readonly GraphTableViewModel viewModel;
+        private readonly IGraphTableViewModel viewModel;
         private readonly CompositeDisposable disposables = new();
         private readonly Dictionary<int, IDisposable> modelChangingSubs = new();
         private readonly IMessenger messenger;
 
-        public GraphsTableView(GraphTableViewModel viewModel,
+        public GraphsTableView(IGraphTableViewModel viewModel,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger) : this()
         {
             this.viewModel = viewModel;
             this.messenger = messenger;
             viewModel.Graphs.ActOnEveryObject(AddToTable, RemoveFromTable)
                 .DisposeWith(disposables);
-            viewModel.LoadGraphs();
+            this.Events().Initialized
+                .Select(x => Unit.Default)
+                .InvokeCommand(viewModel, x => x.LoadGraphsCommand)
+                .DisposeWith(disposables);
             this.Events().CellActivated
                 .Where(x => x.Row < table.Rows.Count)
                 .Select(x => GetParametresModel(x.Row))
@@ -42,7 +47,7 @@ namespace Pathfinding.ConsoleApp.View
                 .Where(x => x.NewRow > -1 && x.NewRow < table.Rows.Count)
                 .Select(x => GetAllSelectedCells().DistinctBy(y => y.Y)
                         .Select(z => GetParametresModel(z.Y)).ToArray())
-                .BindTo(viewModel, x => x.SelectedGraphs)
+                .InvokeCommand(viewModel, x => x.SelectGraphsCommand)
                 .DisposeWith(disposables);
             this.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
@@ -50,7 +55,7 @@ namespace Pathfinding.ConsoleApp.View
                 .Select(x => x.MouseEvent.Y + RowOffset - headerLinesConsumed)
                 .Where(x => x >= 0 && x < Table.Rows.Count && x == SelectedRow)
                 .Select(x => GetParametresModel(x).Enumerate().ToArray())
-                .BindTo(viewModel, x => x.SelectedGraphs)
+                .InvokeCommand(viewModel, x => x.SelectGraphsCommand)
                 .DisposeWith(disposables);
         }
 
@@ -106,23 +111,26 @@ namespace Pathfinding.ConsoleApp.View
 
         private void RemoveFromTable(GraphInfoModel model)
         {
-            var row = table.Rows.Find(model.Id);
-            var index = table.Rows.IndexOf(row);
-            row.Delete();
-            table.AcceptChanges();
-            modelChangingSubs[model.Id].Dispose();
-            modelChangingSubs.Remove(model.Id);
-            MultiSelectedRegions.Clear();
-            if (table.Rows.Count > 0)
+            Application.MainLoop.Invoke(() =>
             {
-                SelectedCellChangedEventArgs args = index == table.Rows.Count
-                    ? new(table, 0, 0, index, index - 1)
-                    : new(table, 0, 0, index, index);
-                OnSelectedCellChanged(args);
-                SetSelection(0, args.NewRow, false);
-            }
-            SetNeedsDisplay();
-            SetCursorInvisible();
+                var row = table.Rows.Find(model.Id);
+                var index = table.Rows.IndexOf(row);
+                row.Delete();
+                table.AcceptChanges();
+                modelChangingSubs[model.Id].Dispose();
+                modelChangingSubs.Remove(model.Id);
+                MultiSelectedRegions.Clear();
+                if (table.Rows.Count > 0)
+                {
+                    SelectedCellChangedEventArgs args = index == table.Rows.Count
+                        ? new(table, 0, 0, index, index - 1)
+                        : new(table, 0, 0, index, index);
+                    OnSelectedCellChanged(args);
+                    SetSelection(0, args.NewRow, false);
+                }
+                SetNeedsDisplay();
+                SetCursorInvisible();
+            });
         }
 
         private static void SetCursorInvisible()

@@ -19,7 +19,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
-using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
@@ -31,10 +30,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public abstract string AlgorithmName { get; }
 
-        public ReactiveCommand<MouseEventArgs, Unit> StartAlgorithmCommand { get; }
+        public ReactiveCommand<Unit, Unit> StartAlgorithmCommand { get; }
 
         private GraphModel<GraphVertexModel> graph = GraphModel<GraphVertexModel>.Empty;
-        public GraphModel<GraphVertexModel> Graph
+        protected GraphModel<GraphVertexModel> Graph
         {
             get => graph;
             set => this.RaiseAndSetIfChanged(ref graph, value);
@@ -68,7 +67,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.messenger = messenger;
             this.service = service;
             this.logger = logger;
-            StartAlgorithmCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(StartAlgorithm, CanStartAlgorithm());
+            StartAlgorithmCommand = ReactiveCommand.CreateFromTask(StartAlgorithm, CanStartAlgorithm());
             messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
         }
@@ -77,7 +76,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         protected virtual void AppendStatistics(CreateStatisticsRequest request) { }
 
-        private async Task StartAlgorithm(MouseEventArgs e)
+        private async Task StartAlgorithm()
         {
             var msg = new QueryPathfindingRangeMessage();
             messenger.Send(msg);

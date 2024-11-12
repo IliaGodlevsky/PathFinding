@@ -4,6 +4,7 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
@@ -18,21 +19,21 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class GraphFieldViewModel : BaseViewModel
+    internal sealed class GraphFieldViewModel : BaseViewModel, IGraphFieldViewModel
     {
         private readonly IMessenger messenger;
         private readonly IRequestService<GraphVertexModel> service;
         private readonly ILog logger;
 
         private int graphId;
-        public int GraphId
+        private int GraphId
         {
             get => graphId;
             set => this.RaiseAndSetIfChanged(ref graphId, value);
         }
 
         private bool isReadOnly;
-        public bool IsReadOnly
+        private bool IsReadOnly
         {
             get => isReadOnly;
             set => this.RaiseAndSetIfChanged(ref isReadOnly, value);
@@ -42,7 +43,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public IGraph<GraphVertexModel> Graph
         {
             get => graph;
-            set => this.RaiseAndSetIfChanged(ref graph, value);
+            private set => this.RaiseAndSetIfChanged(ref graph, value);
         }
 
         public ReactiveCommand<GraphVertexModel, Unit> ReverseVertexCommand { get; }

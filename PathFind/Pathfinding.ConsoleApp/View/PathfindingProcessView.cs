@@ -42,7 +42,7 @@ namespace Pathfinding.ConsoleApp.View
                     if (await canExecute.FirstOrDefaultAsync())
                     {
                         messenger.Send(new CloseAlgorithmCreationViewMessage());
-                        await viewModel.StartAlgorithmCommand.Execute(x);
+                        await viewModel.StartAlgorithmCommand.Execute();
                     }
                 })
                 .Subscribe()

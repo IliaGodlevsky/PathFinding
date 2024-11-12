@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using ReactiveUI;
@@ -10,26 +11,26 @@ using System;
 using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
-using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class DeleteRunButtonViewModel : BaseViewModel
+    internal sealed class DeleteRunButtonViewModel : BaseViewModel, IDeleteRunViewModel
     {
         private readonly IMessenger messenger;
         private readonly IRequestService<GraphVertexModel> service;
         private readonly ILog logger;
 
         private int[] runsIds = Array.Empty<int>();
-        public int[] RunsIds
+        private int[] RunsIds
         {
             get => runsIds;
             set => this.RaiseAndSetIfChanged(ref runsIds, value);
         }
 
-        public ReactiveCommand<MouseEventArgs, Unit> DeleteRunCommand { get; }
+        public ReactiveCommand<Unit, Unit> DeleteRunCommand { get; }
 
-        public DeleteRunButtonViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
+        public DeleteRunButtonViewModel(
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             IRequestService<GraphVertexModel> service,
             ILog logger)
         {
@@ -37,7 +38,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.service = service;
             this.logger = logger;
             messenger.Register<RunSelectedMessage>(this, OnRunsSelected);
-            DeleteRunCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(DeleteRuns, CanDelete());
+            DeleteRunCommand = ReactiveCommand.CreateFromTask(DeleteRuns, CanDelete());
         }
 
         private IObservable<bool> CanDelete()
@@ -46,7 +47,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 ids => ids.Length > 0);
         }
 
-        private async Task DeleteRuns(MouseEventArgs e)
+        private async Task DeleteRuns()
         {
             await ExecuteSafe(async () =>
             {

@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Business.Layers;
@@ -18,13 +19,15 @@ using ReactiveUI;
 using System;
 using System.Reactive;
 using System.Threading.Tasks;
-using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class GraphAssembleViewModel : BaseViewModel
+    internal sealed class GraphAssembleViewModel : BaseViewModel,
+        IGraphAssembleViewModel, IGraphNameViewModel, IGraphParametresViewModel,
+        IGraphSmoothLevelViewModel, INeighborhoodNameViewModel
     {
         private static readonly InclusiveValueRange<int> CostRange = (9, 1);
+
         private readonly IRequestService<GraphVertexModel> service;
         private readonly IGraphAssemble<GraphVertexModel> graphAssemble;
         private readonly IMessenger messenger;
@@ -58,21 +61,21 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref obstacles, value);
         }
 
-        private (string Name, ILayer SmoothLevel) level;
-        public (string Name, ILayer SmoothLevel) SmoothLevel
+        private string level;
+        public string SmoothLevel
         {
             get => level;
             set => this.RaiseAndSetIfChanged(ref level, value);
         }
 
-        private (string Name, INeighborhoodFactory Factory) neighborhoodFactory;
-        public (string Name, INeighborhoodFactory Factory) NeighborhoodFactory
+        private string neighborhood;
+        public string Neighborhood
         {
-            get => neighborhoodFactory;
-            set => this.RaiseAndSetIfChanged(ref neighborhoodFactory, value);
+            get => neighborhood;
+            set => this.RaiseAndSetIfChanged(ref neighborhood, value);
         }
 
-        public ReactiveCommand<MouseEventArgs, Unit> CreateCommand { get; }
+        public ReactiveCommand<Unit, Unit> CreateCommand { get; }
 
         public GraphAssembleViewModel(IRequestService<GraphVertexModel> service,
             IGraphAssemble<GraphVertexModel> graphAssemble,
@@ -83,7 +86,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.messenger = messenger;
             this.logger = logger;
             this.graphAssemble = graphAssemble;
-            CreateCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(CreateGraph, CanExecute());
+            CreateCommand = ReactiveCommand.CreateFromTask(CreateGraph, CanExecute());
         }
 
         private IObservable<bool> CanExecute()
@@ -93,18 +96,19 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 x => x.Length,
                 x => x.Obstacles,
                 x => x.Name,
-                x => x.NeighborhoodFactory,
+                x => x.Neighborhood,
                 x => x.SmoothLevel,
                 (width, length, obstacles, name, factory, smooth) =>
                 {
                     return width > 0 && length > 0
-                        && obstacles >= 0 && factory.Factory != null
-                        && smooth.SmoothLevel != null
+                        && obstacles >= 0 
+                        && !string.IsNullOrEmpty(factory)
+                        && !string.IsNullOrEmpty(smooth)
                         && !string.IsNullOrEmpty(name);
                 });
         }
 
-        private async Task CreateGraph(MouseEventArgs e)
+        private async Task CreateGraph()
         {
             await ExecuteSafe(async () =>
             {
@@ -118,16 +122,16 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 {
                     Graph = graph,
                     Name = Name,
-                    Neighborhood = NeighborhoodFactory.Name,
-                    SmoothLevel = SmoothLevel.Name
+                    Neighborhood = Neighborhood,
+                    SmoothLevel = SmoothLevel
                 };
                 var graphModel = await service.CreateGraphAsync(request).ConfigureAwait(false);
                 var info = new GraphInfoModel()
                 {
                     Id = graphModel.Id,
                     Name = Name,
-                    SmoothLevel = SmoothLevel.Name,
-                    Neighborhood = NeighborhoodFactory.Name,
+                    SmoothLevel = SmoothLevel,
+                    Neighborhood = Neighborhood,
                     Obstacles = graphModel.Graph.GetObstaclesCount(),
                     Width = Width,
                     Length = Length,

@@ -4,7 +4,7 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
-using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Extensions;
 using ReactiveMarbles.ObservableEvents;
@@ -12,6 +12,7 @@ using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Terminal.Gui;
@@ -20,16 +21,16 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphFieldView : FrameView
     {
-        private readonly GraphFieldViewModel viewModel;
-        private readonly PathfindingRangeViewModel rangeViewModel;
+        private readonly IGraphFieldViewModel viewModel;
+        private readonly IPathfindingRangeViewModel rangeViewModel;
 
         private readonly CompositeDisposable disposables = new();
         private readonly CompositeDisposable vertexDisposables = new();
 
         private readonly Terminal.Gui.View container = new();
 
-        public GraphFieldView(GraphFieldViewModel viewModel,
-            PathfindingRangeViewModel rangeViewModel,
+        public GraphFieldView(IGraphFieldViewModel viewModel,
+            IPathfindingRangeViewModel rangeViewModel,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
             this.viewModel = viewModel;
@@ -108,6 +109,7 @@ namespace Pathfinding.ConsoleApp.View
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button1DoubleClicked)
                        && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonCtrl)
                        && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonAlt))
+                .Select(x => Unit.Default)
                 .InvokeCommand(rangeViewModel, x => x.DeletePathfindingRange)
                 .DisposeWith(vertexDisposables);
         }

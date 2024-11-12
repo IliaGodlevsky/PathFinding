@@ -55,13 +55,13 @@ namespace Pathfinding.ConsoleApp.View
             if (e.MouseEvent.Flags == MouseFlags.Button1Clicked)
             {
                 Hide(e);
-                Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
             }
         }
 
         private Unit Hide(MouseEventArgs e)
         {
             Visible = false;
+            Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
             return Unit.Default;
         }
     }

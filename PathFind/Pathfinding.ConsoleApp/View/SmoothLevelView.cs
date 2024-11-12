@@ -1,5 +1,6 @@
 ﻿using NStack;
 using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System.Linq;
@@ -11,12 +12,12 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class SmoothLevelView : FrameView
     {
-        private readonly GraphAssembleViewModel viewModel;
-        private readonly SmoothLevelViewModel smoothLevelViewModel;
+        private readonly IGraphSmoothLevelViewModel viewModel;
+        private readonly SmoothLevelsViewModel smoothLevelViewModel;
         private readonly CompositeDisposable disposables = new CompositeDisposable();
 
-        public SmoothLevelView(GraphAssembleViewModel viewModel,
-            SmoothLevelViewModel smoothLevelViewModel)
+        public SmoothLevelView(IGraphSmoothLevelViewModel viewModel,
+            SmoothLevelsViewModel smoothLevelViewModel)
         {
             this.viewModel = viewModel;
             this.smoothLevelViewModel = smoothLevelViewModel;
@@ -27,11 +28,7 @@ namespace Pathfinding.ConsoleApp.View
             smoothLevels.Events()
                 .SelectedItemChanged
                 .Where(x => x.SelectedItem > -1)
-                .Select(x =>
-                {
-                    var pair = smoothLevelViewModel.Levels.ElementAt(x.SelectedItem);
-                    return (Name: pair.Key, SmoothLevel: pair.Value);
-                })
+                .Select(x =>smoothLevelViewModel.Levels.Keys.ElementAt(x.SelectedItem))
                 .BindTo(viewModel, x => x.SmoothLevel)
                 .DisposeWith(disposables);
             smoothLevels.SelectedItem = 0;

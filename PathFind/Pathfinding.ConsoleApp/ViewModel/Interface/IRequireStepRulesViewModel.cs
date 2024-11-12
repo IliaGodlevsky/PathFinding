@@ -1,6 +1,6 @@
 ﻿using Pathfinding.Service.Interface;
 
-namespace Pathfinding.ConsoleApp.ViewModel
+namespace Pathfinding.ConsoleApp.ViewModel.Interface
 {
     internal interface IRequireStepRuleViewModel
     {

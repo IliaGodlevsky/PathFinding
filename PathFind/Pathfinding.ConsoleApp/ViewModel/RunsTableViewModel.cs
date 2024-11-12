@@ -4,17 +4,20 @@ using DynamicData;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Undefined;
+using ReactiveUI;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
 using System.Threading.Tasks;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class RunsTableViewModel : BaseViewModel
+    internal sealed class RunsTableViewModel : BaseViewModel, IRunsTableViewModel
     {
         private readonly IMessenger messenger;
         private readonly IRequestService<GraphVertexModel> service;
@@ -22,18 +25,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public ObservableCollection<RunInfoModel> Runs { get; } = new();
 
-        private RunInfoModel[] selected;
-        public RunInfoModel[] Selected
-        {
-            get => selected;
-            set
-            {
-                selected = value;
-                messenger.Send(new RunSelectedMessage(selected));
-            }
-        }
-
         private int ActivatedGraphId { get; set; }
+
+        public ReactiveCommand<RunInfoModel[], Unit> SelectRunsCommand { get; }
 
         public RunsTableViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             IRequestService<GraphVertexModel> service,
@@ -48,6 +42,13 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<GraphActivatedMessage>(this,
                 async (r, msg) => await OnGraphActivatedMessage(r, msg));
             messenger.Register<RunsDeletedMessage>(this, OnRunsDeleteMessage);
+
+            SelectRunsCommand = ReactiveCommand.Create<RunInfoModel[]>(SelectRuns);
+        }
+
+        private void SelectRuns(RunInfoModel[] selected)
+        {
+            messenger.Send(new RunSelectedMessage(selected));
         }
 
         private async Task OnGraphActivatedMessage(object recipient, GraphActivatedMessage msg)

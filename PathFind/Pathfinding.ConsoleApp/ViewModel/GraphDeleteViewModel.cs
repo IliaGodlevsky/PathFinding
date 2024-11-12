@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using ReactiveUI;
@@ -10,31 +11,30 @@ using System;
 using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
-using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class GraphDeletionViewModel : BaseViewModel
+    internal sealed class GraphDeleteViewModel : BaseViewModel, IGraphDeleteViewModel
     {
         private readonly IMessenger messenger;
         private readonly IRequestService<GraphVertexModel> service;
         private readonly ILog logger;
 
         private int[] graphIds = Array.Empty<int>();
-        public int[] GraphIds
+        private int[] GraphIds
         {
             get => graphIds;
             set => this.RaiseAndSetIfChanged(ref graphIds, value);
         }
 
-        public ReactiveCommand<MouseEventArgs, Unit> DeleteCommand { get; }
+        public ReactiveCommand<Unit, Unit> DeleteCommand { get; }
 
-        public GraphDeletionViewModel(
+        public GraphDeleteViewModel(
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             IRequestService<GraphVertexModel> service,
             ILog logger)
         {
-            DeleteCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(DeleteGraph, CanDelete());
+            DeleteCommand = ReactiveCommand.CreateFromTask(DeleteGraph, CanDelete());
             this.messenger = messenger;
             this.service = service;
             this.logger = logger;
@@ -47,7 +47,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 (ids) => ids.Length > 0);
         }
 
-        private async Task DeleteGraph(MouseEventArgs e)
+        private async Task DeleteGraph()
         {
             await ExecuteSafe(async () =>
             {

@@ -9,16 +9,16 @@ using System.Linq;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class SmoothLevelViewModel : ReactiveObject
+    internal sealed class SmoothLevelsViewModel : ReactiveObject
     {
         public IReadOnlyDictionary<string, ILayer> Levels { get; set; }
 
-        public SmoothLevelViewModel(IEnumerable<(string Name, int Level, ILayer Layer)> levels)
+        public SmoothLevelsViewModel(IEnumerable<(string Name, int Level, ILayer Layer)> levels)
         {
             Levels = levels.ToDictionary(x => x.Name, x => (ILayer)Enumerable.Repeat(x.Layer, x.Level).To(x => new Layers(x)));
         }
 
-        public SmoothLevelViewModel(IEnumerable<Meta<ILayer>> levels)
+        public SmoothLevelsViewModel(IEnumerable<Meta<ILayer>> levels)
         {
             Levels = levels.ToDictionary(x => (string)x.Metadata[MetadataKeys.NameKey],
                 x =>
