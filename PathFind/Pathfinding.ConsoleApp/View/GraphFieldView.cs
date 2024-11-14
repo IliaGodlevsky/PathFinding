@@ -15,6 +15,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
@@ -29,7 +30,8 @@ namespace Pathfinding.ConsoleApp.View
 
         private readonly Terminal.Gui.View container = new();
 
-        public GraphFieldView(IGraphFieldViewModel viewModel,
+        public GraphFieldView(
+            IGraphFieldViewModel viewModel,
             IPathfindingRangeViewModel rangeViewModel,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
@@ -73,6 +75,7 @@ namespace Pathfinding.ConsoleApp.View
             vertexDisposables.Clear();
 
             var views = new List<GraphVertexView>();
+
             foreach (var vertex in graph)
             {
                 var view = new GraphVertexView(vertex);
@@ -82,6 +85,7 @@ namespace Pathfinding.ConsoleApp.View
                 SubscribeOnWheelButton(view, vertex);
                 views.Add(view);
             }
+
             Application.MainLoop.Invoke(() =>
             {
                 container.Add(views.ToArray());

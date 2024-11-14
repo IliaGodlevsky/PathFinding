@@ -8,8 +8,8 @@ namespace Pathfinding.ConsoleApp.ViewModel.Interface
     {
         ReactiveCommand<GraphVertexModel, Unit> AddToRangeCommand { get; }
 
-        ReactiveCommand<Unit, Unit> DeletePathfindingRange { get; }
-
         ReactiveCommand<GraphVertexModel, Unit> RemoveFromRangeCommand { get; }
+
+        ReactiveCommand<Unit, Unit> DeletePathfindingRange { get; }
     }
 }

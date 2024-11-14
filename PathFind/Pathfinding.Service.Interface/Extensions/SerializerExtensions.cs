@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,6 +20,13 @@ namespace Pathfinding.Service.Interface.Extensions
         {
             using var memory = new MemoryStream(item);
             return await serializer.DeserializeFromAsync(memory, token).ConfigureAwait(false);
+        }
+
+        public static async Task<T> DeserializeFromFileAsync<T>(this ISerializer<T> serializer,
+            string fileName, CancellationToken token = default)
+        {
+            using var fileStream = File.OpenRead(fileName);
+            return await serializer.DeserializeFromAsync(fileStream, token).ConfigureAwait(false);
         }
 
         public static async Task SerializeToFileAsync<T>(this ISerializer<T> self,

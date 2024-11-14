@@ -28,10 +28,11 @@ namespace Pathfinding.ConsoleApp.View
             Y = model.Position.GetY();
             Width = LabelWidth;
             this.model = model;
-            BindTo(x => x.IsObstacle, ObstacleColor, RegularColor, 0);
-            BindTo(x => x.IsTarget, TargetColor, RegularColor, 1);
-            BindTo(x => x.IsSource, SourceColor, RegularColor, 1);
-            BindTo(x => x.IsTransit, TransitColor, RegularColor, 1);
+            
+            BindTo(x => x.IsTarget, TargetColor, RegularColor);
+            BindTo(x => x.IsSource, SourceColor, RegularColor);
+            BindTo(x => x.IsTransit, TransitColor, RegularColor);
+            BindTo(x => x.IsObstacle, ObstacleColor, RegularColor);
 
             model.WhenAnyValue(x => x.Cost)
                 .Select(x => x.CurrentCost.ToString())
@@ -48,10 +49,9 @@ namespace Pathfinding.ConsoleApp.View
         }
 
         private void BindTo(Expression<Func<GraphVertexModel, bool>> expression, ColorScheme toColor,
-            ColorScheme falseColor, int skip)
+            ColorScheme falseColor)
         {
             model.WhenAnyValue(expression)
-               .Skip(skip)
                .Select(x => x ? toColor : falseColor)
                .BindTo(this, x => x.ColorScheme)
                .DisposeWith(disposables);

@@ -121,8 +121,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
         {
-            var deleted = SelectedGraphs.Where(x => msg.GraphIds.Contains(x.Id)).ToList();
-            SelectedGraphs = SelectedGraphs.Except(deleted).ToArray();
+            SelectedGraphs = SelectedGraphs.Where(x => !msg.GraphIds.Contains(x.Id)).ToArray();
             if (SelectedGraphs.Length == 0)
             {
                 Name = string.Empty;

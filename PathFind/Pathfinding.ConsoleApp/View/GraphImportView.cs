@@ -1,29 +1,35 @@
-﻿using Pathfinding.ConsoleApp.ViewModel;
+﻿using Pathfinding.ConsoleApp.ViewModel.Interface;
 using ReactiveMarbles.ObservableEvents;
-using ReactiveUI;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphImportView : Button
     {
-        private readonly GraphImportViewModel viewModel;
+        private readonly IGraphImportViewModel viewModel;
 
-        public GraphImportView(GraphImportViewModel viewModel)
+        public GraphImportView(IGraphImportViewModel viewModel)
         {
             this.viewModel = viewModel;
             Initialize();
-            this.Events()
-                .MouseClick
+            this.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
-                .Do(async x => await OnLoadButtonClicked())
-                .InvokeCommand(viewModel, x => x.LoadGraphCommand);
+                .Do(async x =>
+                {
+                    using var stream = GetStream();
+                    if (stream != Stream.Null)
+                    {
+                        await viewModel.ImportGraphCommand.Execute(stream);
+                    }
+                })
+                .Subscribe();
         }
 
-        private async Task OnLoadButtonClicked()
+        private Stream GetStream()
         {
             var allowedTypes = new List<string>() { ".dat" };
             using var dialog = new OpenDialog("Import", string.Empty, allowedTypes);
@@ -32,9 +38,9 @@ namespace Pathfinding.ConsoleApp.View
             Application.Run(dialog);
             if (!dialog.Canceled && dialog.FilePath != null)
             {
-                viewModel.FilePath = dialog.FilePath.ToString();
+                return File.OpenRead(dialog.FilePath.ToString());
             }
-            await Task.CompletedTask;
+            return Stream.Null;
         }
     }
 }

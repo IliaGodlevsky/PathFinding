@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Pathfinding.ConsoleApp.Model
 {
-    internal sealed class GraphVertexModel : ReactiveObject, IVertex, IPathfindingVertex, IEntity<int>
+    public sealed class GraphVertexModel : ReactiveObject, IVertex, IPathfindingVertex, IEntity<int>
     {
         public int Id { get; set; }
 

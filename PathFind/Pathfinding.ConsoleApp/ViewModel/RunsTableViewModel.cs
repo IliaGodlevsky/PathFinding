@@ -25,9 +25,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public ObservableCollection<RunInfoModel> Runs { get; } = new();
 
-        private int ActivatedGraphId { get; set; }
-
         public ReactiveCommand<RunInfoModel[], Unit> SelectRunsCommand { get; }
+
+        private int ActivatedGraphId { get; set; }
 
         public RunsTableViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             IRequestService<GraphVertexModel> service,
@@ -38,9 +38,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.logger = logger;
 
             messenger.Register<RunCreatedMessaged>(this, OnRunCreated);
-            messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<GraphActivatedMessage>(this,
                 async (r, msg) => await OnGraphActivatedMessage(r, msg));
+            messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<RunsDeletedMessage>(this, OnRunsDeleteMessage);
 
             SelectRunsCommand = ReactiveCommand.Create<RunInfoModel[]>(SelectRuns);
@@ -53,12 +53,15 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private async Task OnGraphActivatedMessage(object recipient, GraphActivatedMessage msg)
         {
-            var statistics = await service.ReadStatisticsAsync(msg.Graph.Id)
-                .ConfigureAwait(false);
-            var models = statistics.Select(GetModel).ToArray();
-            ActivatedGraphId = msg.Graph.Id;
-            Runs.Clear();
-            Runs.Add(models);
+            await ExecuteSafe(async () =>
+            {
+                var statistics = await service.ReadStatisticsAsync(msg.Graph.Id)
+                    .ConfigureAwait(false);
+                var models = statistics.Select(GetModel).ToArray();
+                ActivatedGraphId = msg.Graph.Id;
+                Runs.Clear();
+                Runs.Add(models);
+            }, logger.Error).ConfigureAwait(false);
         }
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)

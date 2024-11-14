@@ -3,73 +3,47 @@ using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Serialization;
 using ReactiveUI;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
-using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class GraphImportViewModel : BaseViewModel
+    internal sealed class GraphImportViewModel : BaseViewModel, IGraphImportViewModel
     {
         private readonly IMessenger messenger;
         private readonly IRequestService<GraphVertexModel> service;
-        private readonly Func<string, Stream> streamProvider;
         private readonly ILog logger;
         private readonly ISerializer<IEnumerable<PathfindingHistorySerializationModel>> serializer;
 
-        private string filePath;
-        public string FilePath
-        {
-            get => filePath;
-            set => this.RaiseAndSetIfChanged(ref filePath, value);
-        }
-
-        public ReactiveCommand<MouseEventArgs, Unit> LoadGraphCommand { get; }
+        public ReactiveCommand<Stream, Unit> ImportGraphCommand { get; }
 
         public GraphImportViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ISerializer<IEnumerable<PathfindingHistorySerializationModel>> serializer,
             IRequestService<GraphVertexModel> service,
-            ILog logger) : this(messenger, serializer,
-                service, File.OpenRead, logger)
-        {
-        }
-
-        public GraphImportViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
-            ISerializer<IEnumerable<PathfindingHistorySerializationModel>> serializer,
-            IRequestService<GraphVertexModel> service,
-            Func<string, Stream> streamProvider,
             ILog logger)
         {
             this.messenger = messenger;
             this.serializer = serializer;
             this.service = service;
             this.logger = logger;
-            this.streamProvider = streamProvider;
-            LoadGraphCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(LoadGraph, CanLoad());
+            ImportGraphCommand = ReactiveCommand.CreateFromTask<Stream>(LoadGraph);
         }
 
-        private IObservable<bool> CanLoad()
-        {
-            return this.WhenAnyValue(x => x.FilePath,
-                path => !string.IsNullOrEmpty(path));
-        }
-
-        private async Task LoadGraph(MouseEventArgs e)
+        private async Task LoadGraph(Stream stream)
         {
             await ExecuteSafe(async () =>
             {
-                using var fileStream = streamProvider(FilePath);
-                var histories = await serializer.DeserializeFromAsync(fileStream).ConfigureAwait(false);
+                var histories = await serializer.DeserializeFromAsync(stream).ConfigureAwait(false);
                 var result = await service.CreatePathfindingHistoriesAsync(histories).ConfigureAwait(false);
                 var graphs = result.Select(x => new GraphInfoModel()
                 {
@@ -80,7 +54,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     Id = x.Graph.Id,
                     SmoothLevel = x.Graph.SmoothLevel,
                     Obstacles = x.Graph.Graph.GetObstaclesCount(),
-                    Status = x.Graph.IsReadOnly ? GraphStatuses.Readonly : GraphStatuses.Editable
+                    Status = x.Graph.IsReadOnly
+                        ? GraphStatuses.Readonly
+                        : GraphStatuses.Editable
                 }).ToArray();
                 messenger.Send(new GraphCreatedMessage(graphs));
                 logger.Info(graphs.Length > 0 ? "Graphs were loaded" : "Graph was loaded");

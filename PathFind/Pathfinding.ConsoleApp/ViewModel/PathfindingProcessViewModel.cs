@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Infrastructure.Business.Algorithms.Events;
@@ -22,7 +23,7 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal abstract class PathfindingProcessViewModel : BaseViewModel
+    internal abstract class PathfindingProcessViewModel : BaseViewModel, IPathfindingProcessViewModel
     {
         protected readonly IRequestService<GraphVertexModel> service;
         protected readonly IMessenger messenger;

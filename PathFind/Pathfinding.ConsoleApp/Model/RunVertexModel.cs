@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Pathfinding.ConsoleApp.Model
 {
-    internal sealed class RunVertexModel : ReactiveObject, IVertex, IPathfindingVertex
+    public sealed class RunVertexModel : ReactiveObject, IVertex, IPathfindingVertex
     {
         private bool isObstacle;
         public bool IsObstacle

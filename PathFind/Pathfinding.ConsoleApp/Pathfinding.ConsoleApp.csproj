@@ -77,6 +77,8 @@
     <Compile Include="ViewModel\CostGreedyAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\DepthFirstAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\GraphUpdateViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IGraphExportViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IGraphImportViewModel.cs" />
     <Compile Include="ViewModel\Interface\IGraphFieldViewModel.cs" />
     <Compile Include="ViewModel\Interface\IGraphDeleteViewModel.cs" />
     <Compile Include="ViewModel\Interface\IGraphCopyViewModel.cs" />
@@ -90,6 +92,7 @@
     <Compile Include="ViewModel\Interface\INeighborhoodNameViewModel.cs" />
     <Compile Include="ViewModel\Interface\IRunsTableViewModel.cs" />
     <Compile Include="ViewModel\Interface\IPathfindingRangeViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IPathfindingProcessViewModel.cs" />
     <Compile Include="ViewModel\SnakeAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\DistanceFirstAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\AStarGreedyAlgorithmViewModel.cs" />

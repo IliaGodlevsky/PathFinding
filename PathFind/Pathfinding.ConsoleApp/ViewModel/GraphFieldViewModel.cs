@@ -52,8 +52,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public ReactiveCommand<GraphVertexModel, Unit> DecreaseVertexCostCommand { get; }
 
-        public GraphFieldViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
-            IRequestService<GraphVertexModel> service, ILog logger)
+        public GraphFieldViewModel(
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
+            IRequestService<GraphVertexModel> service,
+            ILog logger)
         {
             this.messenger = messenger;
             this.service = service;
@@ -61,7 +63,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<GraphActivatedMessage, int>(this, Tokens.GraphField, OnGraphActivated);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<GraphBecameReadOnlyMessage>(this, OnGraphBecameReadonly);
-            var canExecute = this.WhenAnyValue(x => x.GraphId, x => x.Graph, x => x.IsReadOnly,
+            var canExecute = this.WhenAnyValue(
+                x => x.GraphId,
+                x => x.Graph,
+                x => x.IsReadOnly,
                 (id, graph, isRead) => id > 0 && graph != null && !isRead);
             ReverseVertexCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(ReverseVertex, canExecute);
             IncreaseVertexCostCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(IncreaseVertexCost, canExecute);

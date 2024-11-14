@@ -1,42 +1,48 @@
-﻿using Pathfinding.ConsoleApp.ViewModel;
+﻿using Pathfinding.ConsoleApp.ViewModel.Interface;
 using ReactiveMarbles.ObservableEvents;
-using ReactiveUI;
-using System.Collections.Generic;
-using System.Reactive.Disposables;
+using System;
+using System.IO;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphExportView
     {
-        private readonly GraphExportViewModel viewModel;
-        private readonly CompositeDisposable disposables = new();
+        private readonly IGraphExportViewModel viewModel;
 
-        public GraphExportView(GraphExportViewModel viewModel)
+        public GraphExportView(IGraphExportViewModel viewModel)
         {
             this.viewModel = viewModel;
             Initialize();
             this.Events().MouseClick
-                .Where(x => viewModel.GraphIds.Length > 0)
-                .Do(async x => await OnSaveButtonClicked())
-                .InvokeCommand(viewModel, x => x.ExportGraphCommand)
-                .DisposeWith(disposables);
+                .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
+                .Do(async x =>
+                {
+                    if (await viewModel.ExportGraphCommand.CanExecute.FirstOrDefaultAsync())
+                    {
+                        using var stream = GetStream();
+                        if (stream != Stream.Null)
+                        {
+                            await viewModel.ExportGraphCommand.Execute(stream);
+                        }
+                    }
+                })
+                .Subscribe();
         }
 
-        private async Task OnSaveButtonClicked()
+        private static Stream GetStream()
         {
-            var allowedTypes = new List<string>() { ".dat" };
-            using var dialog = new SaveDialog("Export", "Enter file name", allowedTypes);
-            dialog.Width = Dim.Percent(45);
-            dialog.Height = Dim.Percent(55);
-            Application.Run(dialog);
-            if (!dialog.Canceled && dialog.FilePath != null)
+            using var dialog = new SaveDialog("Export",
+                "Enter file name", new() { ".dat" })
             {
-                viewModel.FilePath = dialog.FilePath.ToString();
-            }
-            await Task.CompletedTask;
+                Width = Dim.Percent(45),
+                Height = Dim.Percent(55)
+            };
+            Application.Run(dialog);
+            return !dialog.Canceled && dialog.FilePath != null
+                ? File.OpenWrite(dialog.FilePath.ToString())
+                : Stream.Null;
         }
     }
 }

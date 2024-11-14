@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
 using ReactiveMarbles.ObservableEvents;
 using System;
 using System.Linq;
@@ -31,15 +32,14 @@ namespace Pathfinding.ConsoleApp.View
             SubscribeOnCreateCommand(msg.ViewModel);
         }
 
-        private void SubscribeOnCreateCommand(PathfindingProcessViewModel viewModel)
+        private void SubscribeOnCreateCommand(IPathfindingProcessViewModel viewModel)
         {
             disposables.Clear();
-            var canExecute = viewModel.StartAlgorithmCommand.CanExecute;
             this.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
                 .Do(async x =>
                 {
-                    if (await canExecute.FirstOrDefaultAsync())
+                    if (await viewModel.StartAlgorithmCommand.CanExecute.FirstOrDefaultAsync())
                     {
                         messenger.Send(new CloseAlgorithmCreationViewMessage());
                         await viewModel.StartAlgorithmCommand.Execute();
