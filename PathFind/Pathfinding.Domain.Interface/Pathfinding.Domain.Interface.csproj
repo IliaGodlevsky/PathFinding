@@ -50,8 +50,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Comparers\CoordinateEqualityComparer.cs" />
-    <Compile Include="Comparers\VertexEqualityComparer.cs" />
     <Compile Include="IGraph.cs" />
     <Compile Include="Factories\IGraphAssemble.cs" />
     <Compile Include="INeighborhood.cs" />

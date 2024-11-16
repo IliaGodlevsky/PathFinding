@@ -10,7 +10,7 @@
 
         public int GraphId { get; set; }
 
-        public int VertexId { get; set; }
+        public long VertexId { get; set; }
 
         public int Order { get; set; }
     }

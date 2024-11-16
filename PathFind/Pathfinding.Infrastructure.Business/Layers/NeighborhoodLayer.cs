@@ -13,15 +13,9 @@ namespace Pathfinding.Infrastructure.Business.Layers
     {
         private readonly INeighborhoodFactory factory;
 
-        public NeighborhoodLayer(INeighborhoodFactory factory)
+        public NeighborhoodLayer(INeighborhoodFactory factory = null)
         {
             this.factory = factory ?? new MooreNeighborhoodFactory();
-        }
-
-        public NeighborhoodLayer()
-            : this(new MooreNeighborhoodFactory())
-        {
-
         }
 
         public void Overlay(IGraph<IVertex> graph)

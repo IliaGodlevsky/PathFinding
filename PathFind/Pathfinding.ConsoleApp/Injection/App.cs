@@ -34,9 +34,10 @@ namespace Pathfinding.ConsoleApp.Injection
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<GraphAssemble<GraphVertexModel>>().As<IGraphAssemble<GraphVertexModel>>().SingleInstance();
-
-            builder.RegisterType<GraphAssemble<RunVertexModel>>().As<IGraphAssemble<RunVertexModel>>().SingleInstance();
+            builder.RegisterType<GraphAssemble<GraphVertexModel>>()
+                .As<IGraphAssemble<GraphVertexModel>>().SingleInstance();
+            builder.RegisterType<GraphAssemble<RunVertexModel>>()
+                .As<IGraphAssemble<RunVertexModel>>().SingleInstance();
 
             builder.RegisterType<DefaultStepRule>().As<IStepRule>()
                 .WithMetadata(MetadataKeys.NameKey, StepRuleNames.Default).SingleInstance();
@@ -113,11 +114,13 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
             builder.RegisterComposite<Logs, ILog>().As<ILog>().SingleInstance();
 
-            builder.RegisterType<WeakReferenceMessenger>().Keyed<IMessenger>(KeyFilters.Views).SingleInstance().WithAttributeFiltering();
-            builder.RegisterType<WeakReferenceMessenger>().Keyed<IMessenger>(KeyFilters.ViewModels).SingleInstance().WithAttributeFiltering();
+            builder.RegisterType<WeakReferenceMessenger>().Keyed<IMessenger>(KeyFilters.Views)
+                .SingleInstance().WithAttributeFiltering();
+            builder.RegisterType<WeakReferenceMessenger>().Keyed<IMessenger>(KeyFilters.ViewModels)
+                .SingleInstance().WithAttributeFiltering();
 
-            builder.RegisterAssemblyTypes(typeof(BaseViewModel).Assembly).SingleInstance()
-                .Where(x => x.Name.EndsWith("ViewModel")).AsSelf()
+            builder.RegisterAssemblyTypes(typeof(BaseViewModel).Assembly)
+                .SingleInstance().Where(x => x.Name.EndsWith("ViewModel")).AsSelf()
                 .AsImplementedInterfaces().WithAttributeFiltering();
             builder.RegisterType<HeuristicsViewModel>().AsSelf().SingleInstance()
                 .UsingConstructor(typeof(IEnumerable<Meta<IHeuristic>>));

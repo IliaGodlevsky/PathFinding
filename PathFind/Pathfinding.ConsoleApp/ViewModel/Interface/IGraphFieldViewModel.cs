@@ -9,10 +9,14 @@ namespace Pathfinding.ConsoleApp.ViewModel.Interface
     {
         IGraph<GraphVertexModel> Graph { get; }
 
+        ReactiveCommand<GraphVertexModel, Unit> ChangeVertexPolarityCommand { get; }
+
         ReactiveCommand<GraphVertexModel, Unit> DecreaseVertexCostCommand { get; }
 
         ReactiveCommand<GraphVertexModel, Unit> IncreaseVertexCostCommand { get; }
 
         ReactiveCommand<GraphVertexModel, Unit> ReverseVertexCommand { get; }
+
+        ReactiveCommand<GraphVertexModel, Unit> InverseVertexCommand { get; }
     }
 }

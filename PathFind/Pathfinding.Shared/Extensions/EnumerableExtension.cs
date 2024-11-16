@@ -29,12 +29,6 @@ namespace Pathfinding.Shared.Extensions
 
     public static class EnumerableExtension
     {
-        public static IEnumerable<T> DistinctBy<T, U>(this IEnumerable<T> collection, Func<T, U> selector)
-        {
-            var set = new HashSet<U>();
-            return collection.Where(x => set.Add(selector(x)));
-        }
-
         public static IOrderedEnumerable<T> OrderByOrderAttribute<T>(this IEnumerable<T> collection)
         {
             return collection.OrderBy(item => item.GetOrder());

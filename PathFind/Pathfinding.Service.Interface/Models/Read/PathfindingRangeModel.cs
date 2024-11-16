@@ -10,7 +10,7 @@ namespace Pathfinding.Service.Interface.Models.Read
 
         public bool IsTarget { get; set; }
 
-        public int VertexId { get; set; }
+        public long VertexId { get; set; }
 
         public int GraphId { get; set; }
 

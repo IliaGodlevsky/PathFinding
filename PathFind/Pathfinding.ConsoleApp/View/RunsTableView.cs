@@ -25,11 +25,21 @@ namespace Pathfinding.ConsoleApp.View
             [KeyFilter(KeyFilters.Views)] IMessenger messenger) : this()
         {
             viewModel.Runs.CollectionChanged += OnCollectionChanged;
+            this.Events().KeyPress
+                .Where(x => x.KeyEvent.Key.HasFlag(Key.A)
+                    && x.KeyEvent.Key.HasFlag(Key.CtrlMask))
+                .Throttle(TimeSpan.FromMilliseconds(150))
+                .Select(x => MultiSelectedRegions
+                        .SelectMany(x => (x.Rect.Top, x.Rect.Bottom - 1).Iterate())
+                        .Select(GetRunModel)
+                        .ToArray())
+                .InvokeCommand(viewModel, x => x.SelectRunsCommand)
+                .DisposeWith(disposables);
             this.Events().SelectedCellChanged
                 .Where(x => x.NewRow > -1 && x.NewRow < table.Rows.Count)
                 .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
-                .Select(x => GetAllSelectedCells().DistinctBy(x => x.Y)
-                      .Select(z => GetRunModel(z.Y)).ToArray())
+                .Select(x => GetAllSelectedCells().Select(x => x.Y)
+                    .Distinct().Select(GetRunModel).ToArray())
                 .InvokeCommand(viewModel, x => x.SelectRunsCommand)
                 .DisposeWith(disposables);
             this.Events().MouseClick

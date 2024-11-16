@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.Model;
-using Pathfinding.ConsoleApp.ViewModel;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Shared.Extensions;
 using ReactiveMarbles.ObservableEvents;
@@ -43,10 +42,20 @@ namespace Pathfinding.ConsoleApp.View
                 .Select(x => GetParametresModel(x.Row))
                 .InvokeCommand(viewModel, x => x.ActivateGraphCommand)
                 .DisposeWith(disposables);
+            this.Events().KeyPress
+                .Where(x => x.KeyEvent.Key.HasFlag(Key.A)
+                    && x.KeyEvent.Key.HasFlag(Key.CtrlMask))
+                .Throttle(TimeSpan.FromMilliseconds(150))
+                .Select(x => MultiSelectedRegions
+                        .SelectMany(x => (x.Rect.Top, x.Rect.Bottom - 1).Iterate())
+                        .Select(GetParametresModel)
+                        .ToArray())
+                .InvokeCommand(viewModel, x => x.SelectGraphsCommand)
+                .DisposeWith(disposables);
             this.Events().SelectedCellChanged
                 .Where(x => x.NewRow > -1 && x.NewRow < table.Rows.Count)
-                .Select(x => GetAllSelectedCells().DistinctBy(y => y.Y)
-                        .Select(z => GetParametresModel(z.Y)).ToArray())
+                .Select(x => GetAllSelectedCells().Select(x => x.Y)
+                        .Distinct().Select(GetParametresModel).ToArray())
                 .InvokeCommand(viewModel, x => x.SelectGraphsCommand)
                 .DisposeWith(disposables);
             this.Events().MouseClick

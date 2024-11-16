@@ -1,5 +1,4 @@
-﻿using Pathfinding.Domain.Interface.Comparers;
-using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
+﻿using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Primitives;
@@ -24,8 +23,8 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             : base(pathfindingRange, stepRule)
         {
             heuristic = function;
-            heuristics = new(CoordinateEqualityComparer.Interface);
-            accumulatedCosts = new(CoordinateEqualityComparer.Interface);
+            heuristics = new();
+            accumulatedCosts = new();
         }
 
         protected override void DropState()

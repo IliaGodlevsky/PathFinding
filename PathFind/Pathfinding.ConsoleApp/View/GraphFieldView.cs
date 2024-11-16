@@ -15,15 +15,14 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphFieldView : FrameView
     {
-        private readonly IGraphFieldViewModel viewModel;
-        private readonly IPathfindingRangeViewModel rangeViewModel;
+        private readonly IGraphFieldViewModel graphFeildViewModel;
+        private readonly IPathfindingRangeViewModel pathfindingRangeViewModel;
 
         private readonly CompositeDisposable disposables = new();
         private readonly CompositeDisposable vertexDisposables = new();
@@ -31,14 +30,14 @@ namespace Pathfinding.ConsoleApp.View
         private readonly Terminal.Gui.View container = new();
 
         public GraphFieldView(
-            IGraphFieldViewModel viewModel,
-            IPathfindingRangeViewModel rangeViewModel,
+            IGraphFieldViewModel graphFieldViewModel,
+            IPathfindingRangeViewModel pathfindingRangeViewModel,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
-            this.viewModel = viewModel;
-            this.rangeViewModel = rangeViewModel;
+            this.graphFeildViewModel = graphFieldViewModel;
+            this.pathfindingRangeViewModel = pathfindingRangeViewModel;
             Initialize();
-            this.viewModel.WhenAnyValue(x => x.Graph)
+            this.graphFeildViewModel.WhenAnyValue(x => x.Graph)
                 .Where(x => x != null)
                 .Do(RenderGraph)
                 .Subscribe()
@@ -68,10 +67,7 @@ namespace Pathfinding.ConsoleApp.View
 
         private void RenderGraph(IGraph<GraphVertexModel> graph)
         {
-            Application.MainLoop.Invoke(() =>
-            {
-                container.RemoveAll();
-            });
+            Application.MainLoop.Invoke(container.RemoveAll);
             vertexDisposables.Clear();
 
             var views = new List<GraphVertexView>();
@@ -99,14 +95,14 @@ namespace Pathfinding.ConsoleApp.View
             view.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Pressed)
                 .Select(x => model)
-                .InvokeCommand(rangeViewModel, x => x.AddToRangeCommand)
+                .InvokeCommand(pathfindingRangeViewModel, x => x.AddToRangeCommand)
                 .DisposeWith(vertexDisposables);
 
             view.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button1Pressed)
                        && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonCtrl))
                 .Select(x => model)
-                .InvokeCommand(rangeViewModel, x => x.RemoveFromRangeCommand)
+                .InvokeCommand(pathfindingRangeViewModel, x => x.RemoveFromRangeCommand)
                 .DisposeWith(vertexDisposables);
 
             view.Events().MouseClick
@@ -114,7 +110,7 @@ namespace Pathfinding.ConsoleApp.View
                        && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonCtrl)
                        && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonAlt))
                 .Select(x => Unit.Default)
-                .InvokeCommand(rangeViewModel, x => x.DeletePathfindingRange)
+                .InvokeCommand(pathfindingRangeViewModel, x => x.DeletePathfindingRange)
                 .DisposeWith(vertexDisposables);
         }
 
@@ -122,10 +118,20 @@ namespace Pathfinding.ConsoleApp.View
         {
             view.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button3Pressed)
-                         && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonCtrl)
-                         || x.MouseEvent.Flags == MouseFlags.Button3Clicked)
+                         && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonCtrl))
                 .Select(x => model)
-                .InvokeCommand(viewModel, x => x.ReverseVertexCommand)
+                .InvokeCommand(graphFeildViewModel, x => x.ReverseVertexCommand)
+                .DisposeWith(vertexDisposables);
+            view.Events().MouseClick
+                .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button3Pressed)
+                         && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonAlt))
+                .Select(x => model)
+                .InvokeCommand(graphFeildViewModel, x => x.InverseVertexCommand)
+                .DisposeWith(vertexDisposables);
+            view.Events().MouseClick
+                .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button3Clicked))
+                .Select(x => model)
+                .InvokeCommand(graphFeildViewModel, x => x.ChangeVertexPolarityCommand)
                 .DisposeWith(vertexDisposables);
         }
 
@@ -134,12 +140,12 @@ namespace Pathfinding.ConsoleApp.View
             view.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.WheeledDown))
                 .Select(x => model)
-                .InvokeCommand(viewModel, x => x.DecreaseVertexCostCommand)
+                .InvokeCommand(graphFeildViewModel, x => x.DecreaseVertexCostCommand)
                 .DisposeWith(vertexDisposables);
             view.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.WheeledUp))
                 .Select(x => model)
-                .InvokeCommand(viewModel, x => x.IncreaseVertexCostCommand)
+                .InvokeCommand(graphFeildViewModel, x => x.IncreaseVertexCostCommand)
                 .DisposeWith(vertexDisposables);
         }
     }

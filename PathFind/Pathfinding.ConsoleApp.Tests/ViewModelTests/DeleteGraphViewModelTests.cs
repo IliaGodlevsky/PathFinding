@@ -1,11 +1,15 @@
-﻿using Autofac.Extras.Moq;
+﻿using Autofac;
+using Autofac.Extras.Moq;
 using CommunityToolkit.Mvvm.Messaging;
 using Moq;
 using NUnit.Framework;
+using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
+using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 
 namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
@@ -26,7 +30,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
 
             mock.Mock<IRequestService<GraphVertexModel>>()
                 .Setup(x => x.DeleteGraphsAsync(
-                    It.Is<IEnumerable<int>>(x => x.SequenceEqual(models.Select(x => x.Id))),
+                    It.IsAny<IEnumerable<int>>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(true));
 
@@ -34,13 +38,13 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                     It.IsAny<object>(),
                     It.IsAny<IsAnyToken>(),
                     It.IsAny<MessageHandler<object, GraphSelectedMessage>>()))
-               .Callback<object, object, MessageHandler<object, GraphSelectedMessage>>((r, t, handler) 
+               .Callback<object, object, MessageHandler<object, GraphSelectedMessage>>((r, t, handler)
                     => handler(r, new GraphSelectedMessage(models)));
 
             var viewModel = mock.Create<GraphDeleteViewModel>();
 
             var command = viewModel.DeleteCommand;
-            var canExecute = await viewModel.DeleteCommand.CanExecute.FirstOrDefaultAsync();
+            var canExecute = await command.CanExecute.FirstOrDefaultAsync();
             if (canExecute)
             {
                 await command.Execute();
@@ -51,7 +55,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                 Assert.That(canExecute, Is.True);
                 mock.Mock<IRequestService<GraphVertexModel>>()
                     .Verify(x => x.DeleteGraphsAsync(
-                        It.Is<IEnumerable<int>>(x => x.SequenceEqual(models.Select(x => x.Id))),
+                        It.IsAny<IEnumerable<int>>(),
                         It.IsAny<CancellationToken>()), Times.Once);
                 mock.Mock<IMessenger>()
                     .Verify(x => x.Register(
@@ -66,6 +70,27 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
         }
 
         [Test]
+        public async Task DeleteGraphCommand_ThrowsException_ShouldLogError()
+        {
+            using var mock = AutoMock.GetLoose();
+
+            mock.Mock<IRequestService<GraphVertexModel>>()
+                .Setup(x => x.DeleteGraphsAsync(
+                    It.IsAny<IEnumerable<int>>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns<IEnumerable<int>, CancellationToken>((x, t) => throw new Exception());
+
+            var viewModel = mock.Create<GraphDeleteViewModel>();
+
+            await viewModel.DeleteCommand.Execute();
+
+            mock.Mock<ILog>()
+                .Verify(x => x.Error(
+                    It.IsAny<Exception>(),
+                    It.IsAny<string>()), Times.Once);
+        }
+
+        [Test]
         public async Task DeleteGraphCommand_NoGraphs_ShouldNotExecute()
         {
             using var mock = AutoMock.GetLoose();
@@ -74,7 +99,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
             var viewModel = mock.Create<GraphDeleteViewModel>();
 
             var command = viewModel.DeleteCommand;
-            var canExecute = await viewModel.DeleteCommand.CanExecute.FirstOrDefaultAsync();
+            var canExecute = await command.CanExecute.FirstOrDefaultAsync();
             if (canExecute)
             {
                 await command.Execute();

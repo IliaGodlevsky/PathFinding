@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 namespace Pathfinding.Infrastructure.Business
 {
     public sealed class RequestService<T> : IRequestService<T>
-        where T : IVertex, IEntity<int>
+        where T : IVertex, IEntity<long>
     {
         private readonly IMapper mapper;
         private readonly Func<IUnitOfWork> factory;
@@ -242,12 +242,17 @@ namespace Pathfinding.Infrastructure.Business
         }
 
         public async Task<bool> CreatePathfindingVertexAsync(int graphId,
-            int vertexId, int index, CancellationToken token = default)
+            long vertexId, int index, CancellationToken token = default)
         {
             return await Transaction(async (unit, t) =>
             {
                 var range = (await unit.RangeRepository.ReadByGraphIdAsync(graphId, t)).ToList();
-                var pathfindingRange = new PathfindingRange() { GraphId = graphId, Order = index, VertexId = vertexId };
+                var pathfindingRange = new PathfindingRange() 
+                { 
+                    GraphId = graphId, 
+                    Order = index, 
+                    VertexId = vertexId 
+                };
                 range.Insert(index, pathfindingRange);
                 range.ForEach((x, i) =>
                 {

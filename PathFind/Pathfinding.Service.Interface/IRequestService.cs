@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace Pathfinding.Service.Interface
 {
     public interface IRequestService<T>
-        where T : IVertex, IEntity<int>
+        where T : IVertex, IEntity<long>
     {
         Task<GraphModel<T>> ReadGraphAsync(int graphId, CancellationToken token = default);
 
@@ -52,7 +52,7 @@ namespace Pathfinding.Service.Interface
             CancellationToken token = default);
 
         Task<bool> CreatePathfindingVertexAsync(int graphId,
-            int vertexId, int index, CancellationToken token = default);
+            long vertexId, int index, CancellationToken token = default);
 
         Task<bool> DeleteRangeAsync(IEnumerable<T> request,
             CancellationToken token = default);

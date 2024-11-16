@@ -1,7 +1,6 @@
 ﻿using Pathfinding.ConsoleApp.ViewModel.Interface;
 using ReactiveMarbles.ObservableEvents;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reactive.Linq;
 using Terminal.Gui;
@@ -29,18 +28,18 @@ namespace Pathfinding.ConsoleApp.View
                 .Subscribe();
         }
 
-        private Stream GetStream()
+        private static Stream GetStream()
         {
-            var allowedTypes = new List<string>() { ".dat" };
-            using var dialog = new OpenDialog("Import", string.Empty, allowedTypes);
-            dialog.Width = Dim.Percent(45);
-            dialog.Height = Dim.Percent(55);
-            Application.Run(dialog);
-            if (!dialog.Canceled && dialog.FilePath != null)
+            using var dialog = new OpenDialog("Import",
+                "Import graph", new() { ".dat" })
             {
-                return File.OpenRead(dialog.FilePath.ToString());
-            }
-            return Stream.Null;
+                Width = Dim.Percent(45),
+                Height = Dim.Percent(55)
+            };
+            Application.Run(dialog);
+            return !dialog.Canceled && dialog.FilePath != null
+                ? File.OpenRead(dialog.FilePath.ToString())
+                : Stream.Null;
         }
     }
 }

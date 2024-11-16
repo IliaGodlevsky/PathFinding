@@ -10,9 +10,9 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
 {
     internal sealed class InMemoryVerticesRepository : IVerticesRepository
     {
-        private int id = 0;
+        private long id = 0;
 
-        private readonly HashSet<Vertex> set = new(EntityComparer<int>.Instance);
+        private readonly HashSet<Vertex> set = new(EntityComparer<long>.Instance);
 
         public async Task<IEnumerable<Vertex>> CreateAsync(IEnumerable<Vertex> vertices,
             CancellationToken token = default)
@@ -31,7 +31,7 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
             return await Task.FromResult(result > 0);
         }
 
-        public async Task<Vertex> ReadAsync(int vertexId,
+        public async Task<Vertex> ReadAsync(long vertexId,
             CancellationToken token = default)
         {
             var vertex = new Vertex() { Id = vertexId };

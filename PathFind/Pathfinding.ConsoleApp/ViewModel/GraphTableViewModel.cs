@@ -13,6 +13,7 @@ using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Read;
+using Pathfinding.Shared.Extensions;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal sealed class GraphTableViewModel : BaseViewModel, IGraphTableViewModel
     {
-        private readonly SmoothLevelsViewModel smoothLevels;
+        private readonly IReadOnlyDictionary<string, ILayer> smoothLevels;
         private readonly IRequestService<GraphVertexModel> service;
         private readonly IMessenger messenger;
         private readonly ILog logger;
@@ -44,7 +45,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ILog logger)
         {
-            this.smoothLevels = smoothLevels;
+            this.smoothLevels = smoothLevels.Levels;
             this.service = service;
             this.messenger = messenger;
             this.logger = logger;
@@ -89,8 +90,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                         Name = x.Name,
                         Neighborhood = x.Neighborhood,
                         SmoothLevel = x.SmoothLevel,
-                        Width = x.Dimensions.ElementAt(0),
-                        Length = x.Dimensions.ElementAt(1),
+                        Width = x.Dimensions.ElementAtOrDefault(0),
+                        Length = x.Dimensions.ElementAtOrDefault(1),
                         Obstacles = x.ObstaclesCount,
                         Status = x.IsReadOnly
                             ? GraphStatuses.Readonly
@@ -115,7 +116,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
             var graph = Graphs.FirstOrDefault(x => x.Id == msg.Id);
             if (graph != null)
             {
-                graph.Status = msg.Became ? GraphStatuses.Readonly : GraphStatuses.Editable;
+                graph.Status = msg.Became 
+                    ? GraphStatuses.Readonly 
+                    : GraphStatuses.Editable;
             }
         }
 
@@ -162,10 +165,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 case NeighborhoodNames.VonNeumann:
                     list.Add(new NeighborhoodLayer(new VonNeumannNeighborhoodFactory()));
                     break;
-                default:
-                    throw new NotImplementedException();
             }
-            list.Add(smoothLevels.Levels[model.SmoothLevel]);
+            string level = model.SmoothLevel;
+            var smoothLevel = smoothLevels.GetOrDefault(level, new Layers());
+            list.Add(smoothLevel);
             return new Layers(list);
         }
     }

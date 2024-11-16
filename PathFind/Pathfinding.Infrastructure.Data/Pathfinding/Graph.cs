@@ -1,5 +1,4 @@
 ﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Domain.Interface.Comparers;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
 using System;
@@ -29,7 +28,7 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
                 .ToArray();
             Count = DimensionsSizes.AggregateOrDefault((x, y) => x * y);
             this.vertices = vertices.Take(Count)
-                .ToDictionary(vertex => vertex.Position, CoordinateEqualityComparer.Interface)
+                .ToDictionary(vertex => vertex.Position)
                 .AsReadOnly();
         }
 

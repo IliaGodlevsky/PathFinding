@@ -59,7 +59,7 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             return affectedRows > 0;
         }
 
-        public async Task<bool> DeleteByVerticesIdsAsync(IEnumerable<int> verticesIds, CancellationToken token = default)
+        public async Task<bool> DeleteByVerticesIdsAsync(IEnumerable<long> verticesIds, CancellationToken token = default)
         {
             const string query = $"DELETE FROM {DbTables.Ranges} WHERE VertexId IN @VerticesIds";
 

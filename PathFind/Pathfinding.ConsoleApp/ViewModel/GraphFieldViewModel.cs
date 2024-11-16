@@ -46,7 +46,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
             private set => this.RaiseAndSetIfChanged(ref graph, value);
         }
 
+        public ReactiveCommand<GraphVertexModel, Unit> ChangeVertexPolarityCommand { get; }
+
         public ReactiveCommand<GraphVertexModel, Unit> ReverseVertexCommand { get; }
+
+        public ReactiveCommand<GraphVertexModel, Unit> InverseVertexCommand { get; }
 
         public ReactiveCommand<GraphVertexModel, Unit> IncreaseVertexCostCommand { get; }
 
@@ -68,6 +72,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 x => x.Graph,
                 x => x.IsReadOnly,
                 (id, graph, isRead) => id > 0 && graph != null && !isRead);
+            ChangeVertexPolarityCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(ChangePolarity, canExecute);
+            InverseVertexCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(InverseVertex, canExecute);
             ReverseVertexCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(ReverseVertex, canExecute);
             IncreaseVertexCostCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(IncreaseVertexCost, canExecute);
             DecreaseVertexCostCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(DecreaseVertexCost, canExecute);
@@ -75,18 +81,36 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private async Task ReverseVertex(GraphVertexModel vertex)
         {
-            var inRangeRquest = new IsVertexInRangeRequest(vertex);
-            messenger.Send(inRangeRquest);
-            if (!inRangeRquest.IsInRange)
+            await ChangeVertexPolarity(vertex, true);
+        }
+
+        private async Task InverseVertex(GraphVertexModel vertex)
+        {
+            await ChangeVertexPolarity(vertex, false);
+        }
+
+        private async Task ChangePolarity(GraphVertexModel vertex)
+        {
+            await ChangeVertexPolarity(vertex, !vertex.IsObstacle);
+        }
+
+        private async Task ChangeVertexPolarity(GraphVertexModel vertex, bool polarity)
+        {
+            if (vertex.IsObstacle != polarity)
             {
-                vertex.IsObstacle = !vertex.IsObstacle;
-                messenger.Send(new ObstaclesCountChangedMessage(graphId, vertex.IsObstacle ? 1 : -1));
-                var request = new UpdateVerticesRequest<GraphVertexModel>(graphId,
-                    vertex.Enumerate().ToList());
-                await ExecuteSafe(async () =>
+                var inRangeRquest = new IsVertexInRangeRequest(vertex);
+                messenger.Send(inRangeRquest);
+                if (!inRangeRquest.IsInRange)
                 {
-                    await service.UpdateVerticesAsync(request).ConfigureAwait(false);
-                }, logger.Error).ConfigureAwait(false);
+                    vertex.IsObstacle = polarity;
+                    messenger.Send(new ObstaclesCountChangedMessage(graphId, vertex.IsObstacle ? 1 : -1));
+                    var request = new UpdateVerticesRequest<GraphVertexModel>(graphId,
+                        vertex.Enumerate().ToList());
+                    await ExecuteSafe(async () =>
+                    {
+                        await service.UpdateVerticesAsync(request).ConfigureAwait(false);
+                    }, logger.Error).ConfigureAwait(false);
+                }
             }
         }
 

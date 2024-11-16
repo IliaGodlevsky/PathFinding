@@ -1,5 +1,4 @@
-﻿using Pathfinding.Domain.Interface.Comparers;
-using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
+﻿using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Primitives;
@@ -18,7 +17,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             : base(pathfindingRange)
         {
             heuristic = function;
-            heuristics = new(CoordinateEqualityComparer.Interface);
+            heuristics = new();
         }
 
         public AStarLeeAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)

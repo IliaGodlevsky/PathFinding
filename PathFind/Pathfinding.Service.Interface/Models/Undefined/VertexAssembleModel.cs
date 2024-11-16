@@ -5,7 +5,7 @@ namespace Pathfinding.Service.Interface.Models.Undefined
 {
     public class VertexAssembleModel
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public bool IsObstacle { get; set; }
 

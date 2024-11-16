@@ -71,7 +71,7 @@ namespace Pathfinding.Infrastructure.Business.Extensions
             IMapper mapper,
             CreateGraphRequest<T> graph,
             CancellationToken token = default)
-            where T : IVertex, IEntity<int>
+            where T : IVertex, IEntity<long>
         {
             var graphEntity = mapper.Map<Graph>(graph);
             await unitOfWork.GraphRepository.CreateAsync(graphEntity, token)

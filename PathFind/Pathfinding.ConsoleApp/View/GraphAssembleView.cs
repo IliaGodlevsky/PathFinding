@@ -8,6 +8,7 @@ using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Terminal.Gui;
@@ -37,6 +38,7 @@ namespace Pathfinding.ConsoleApp.View
             createButton.Events()
                 .MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
+                .Select(x => Unit.Default)
                 .InvokeCommand(combined)
                 .DisposeWith(disposables);
 

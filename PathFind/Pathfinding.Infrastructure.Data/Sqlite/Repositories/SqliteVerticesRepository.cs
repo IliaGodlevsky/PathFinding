@@ -58,7 +58,7 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             return affectedRows > 0;
         }
 
-        public async Task<Vertex> ReadAsync(int vertexId, CancellationToken token = default)
+        public async Task<Vertex> ReadAsync(long vertexId, CancellationToken token = default)
         {
             const string query = $"SELECT * FROM {DbTables.Vertices} WHERE Id = @Id";
 

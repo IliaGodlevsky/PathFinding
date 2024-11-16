@@ -295,7 +295,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     {
                         vertices.Add(new(graph.Get(enqueued), RunState.Visited, false));
                     }
-                    foreach (var visited in Visited.Enumerate().Except(visitedIgnore))
+                    foreach (var visited in Visited.Enumerate().Except(visitedIgnore).Distinct())
                     {
                         vertices.Add(new(graph.Get(visited), RunState.Visited, true));
                     }
@@ -318,7 +318,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 previousEnqueued.AddRange(subAlgorithm.Visited.SelectMany(x => x.Enqueued));
                 previousPaths.AddRange(subAlgorithm.Path);
             }
-            return vertices;
+            return vertices.ToList();
         }
 
         public static void SetState(this VertexState state)

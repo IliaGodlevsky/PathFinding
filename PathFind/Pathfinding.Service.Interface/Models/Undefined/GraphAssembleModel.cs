@@ -7,7 +7,5 @@ namespace Pathfinding.Service.Interface.Models.Undefined
         public IReadOnlyList<int> Dimensions { get; set; }
 
         public IReadOnlyCollection<VertexAssembleModel> Vertices { get; set; }
-
-        //public IReadOnlyDictionary<int, IReadOnlyList<VertexAssembleModel>> Neighborhood { get; set; }
     }
 }

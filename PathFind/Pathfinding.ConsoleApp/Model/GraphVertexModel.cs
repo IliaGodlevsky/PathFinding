@@ -9,9 +9,9 @@ using System.Linq;
 
 namespace Pathfinding.ConsoleApp.Model
 {
-    public sealed class GraphVertexModel : ReactiveObject, IVertex, IPathfindingVertex, IEntity<int>
+    public sealed class GraphVertexModel : ReactiveObject, IVertex, IPathfindingVertex, IEntity<long>
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         private bool isObstacle;
         public bool IsObstacle
