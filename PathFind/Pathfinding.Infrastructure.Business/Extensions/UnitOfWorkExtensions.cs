@@ -26,8 +26,8 @@ namespace Pathfinding.Infrastructure.Business.Extensions
             var vertexEntities = await unitOfWork.VerticesRepository
                 .ReadVerticesByGraphIdAsync(graphId, token).ConfigureAwait(false);
             var ids = vertexEntities.Select(x => x.Id).ToReadOnly();
-            var informationDto = await mapper.MapAsync<GraphInformationModel>(graphEntity, token);
-            var vertices = await mapper.MapAsync<VertexAssembleModel[]>(vertexEntities, token);
+            var informationDto = mapper.Map<GraphInformationModel>(graphEntity);
+            var vertices = mapper.Map<VertexAssembleModel[]>(vertexEntities);
             var assembleDto = new GraphAssembleModel()
             {
                 Dimensions = informationDto.Dimensions,
@@ -35,7 +35,7 @@ namespace Pathfinding.Infrastructure.Business.Extensions
             };
             var runs = await unitOfWork.StatisticsRepository.ReadByGraphIdAsync(graphId, token)
                 .ConfigureAwait(false);
-            var result = await mapper.MapAsync<IGraph<T>>(assembleDto, token);
+            var result = mapper.Map<IGraph<T>>(assembleDto);
             return new GraphModel<T>()
             {
                 Graph = result,

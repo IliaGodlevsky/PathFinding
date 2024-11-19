@@ -24,7 +24,6 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
@@ -97,7 +96,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public ReactiveCommand<Unit, Unit> DeletePathfindingRange { get; }
 
-        public PathfindingRangeViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
+        public PathfindingRangeViewModel(
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             IRequestService<GraphVertexModel> service,
             [KeyFilter(KeyFilters.IncludeCommands)] IEnumerable<IPathfindingRangeCommand<GraphVertexModel>> includeCommands,
             [KeyFilter(KeyFilters.ExcludeCommands)] IEnumerable<IPathfindingRangeCommand<GraphVertexModel>> excludeCommands,
@@ -137,10 +137,22 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private void BindTo(Expression<Func<GraphVertexModel, bool>> expression,
             GraphVertexModel model)
         {
-            model.WhenAnyValue(expression).Skip(1)
-                .Select<bool, Func<GraphVertexModel, Task>>(x => x ? AddRangeToStorage : RemoveVertexFromStorage)
-                .Do(async x => await x(model))
-                .Subscribe().DisposeWith(disposables);
+            model.WhenAnyValue(expression)
+                .Skip(1)
+                .Do(async x=>
+                {
+                    switch (x)
+                    {
+                        case true: 
+                            await AddRangeToStorage(model);
+                            break;
+                        case false: 
+                            await RemoveVertexFromStorage(model);
+                            break;
+                    }
+                })
+                .Subscribe()
+                .DisposeWith(disposables);
         }
 
         private void SubcribeToEvents(GraphVertexModel vertex)

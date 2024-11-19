@@ -7,7 +7,6 @@ using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Extensions;
-using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -21,13 +20,8 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class AlgorithmRunFieldView : FrameView
     {
-        private const int Speed = 140;
-        private const int MaxSpeed = int.MaxValue;
-
         private readonly CompositeDisposable vertexDisposables = new();
         private readonly CompositeDisposable disposables = new();
-
-        private readonly IAlgorithmRunFieldViewModel viewModel;
 
         private readonly Terminal.Gui.View container = new();
 
@@ -38,7 +32,7 @@ namespace Pathfinding.ConsoleApp.View
             X = 0;
             Y = 0;
             Width = Dim.Percent(66);
-            Height = Dim.Fill();
+            Height = Dim.Percent(95);
             Border = new Border()
             {
                 BorderBrush = Color.BrightYellow,
@@ -55,7 +49,6 @@ namespace Pathfinding.ConsoleApp.View
                 .DisposeWith(disposables);
             messenger.Register<OpenAlgorithmRunViewMessage>(this, OnOpen);
             messenger.Register<CloseAlgorithmRunFieldViewMessage>(this, OnCloseAlgorithmViewMessage);
-            this.viewModel = viewModel;
             Add(container);
         }
 
@@ -71,19 +64,14 @@ namespace Pathfinding.ConsoleApp.View
 
         private async Task RenderGraphState(IGraph<RunVertexModel> graph)
         {
-            Application.MainLoop.Invoke(() =>
-            {
-                container.RemoveAll();
-            });
+            Application.MainLoop.Invoke(container.RemoveAll);
             vertexDisposables.Clear();
-            var children = new List<RunVertexView>();
+            var children = new List<RunVertexView>(graph.Count);
             await Task.Run(() =>
             {
                 foreach (var vertex in graph)
                 {
                     var view = new RunVertexView(vertex);
-                    SubscribeOnProcessNext(view);
-                    SubscribeOnReverseNext(view);
                     children.Add(view);
                     view.DisposeWith(vertexDisposables);
                 }
@@ -91,37 +79,10 @@ namespace Pathfinding.ConsoleApp.View
             Application.MainLoop.Invoke(() =>
             {
                 container.Add(children.ToArray());
-                container.Width = graph.GetWidth() * 3;
+                container.Width = graph.GetWidth() 
+                    * GraphFieldView.DistanceBetweenVertices;
                 container.Height = graph.GetLength();
             });
-        }
-
-        private void SubscribeOnProcessNext(RunVertexView view)
-        {
-            view.Events().MouseClick
-                .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.WheeledUp))
-                .Select(x => Speed)
-                .InvokeCommand(viewModel, x => x.ProcessNextCommand)
-                .DisposeWith(vertexDisposables);
-            view.Events().MouseClick
-                .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button1DoubleClicked))
-                .Select(x => MaxSpeed)
-                .InvokeCommand(viewModel, x => x.ProcessNextCommand)
-                .DisposeWith(vertexDisposables);
-        }
-
-        private void SubscribeOnReverseNext(RunVertexView view)
-        {
-            view.Events().MouseClick
-                .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button3DoubleClicked))
-                .Select(x => MaxSpeed)
-                .InvokeCommand(viewModel, x => x.ReverseNextCommand)
-                .DisposeWith(vertexDisposables);
-            view.Events().MouseClick
-               .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.WheeledDown))
-               .Select(x => Speed)
-               .InvokeCommand(viewModel, x => x.ReverseNextCommand)
-               .DisposeWith(vertexDisposables);
         }
     }
 }

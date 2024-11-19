@@ -21,6 +21,8 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphFieldView : FrameView
     {
+        public const int DistanceBetweenVertices = 3;
+
         private readonly IGraphFieldViewModel graphFeildViewModel;
         private readonly IPathfindingRangeViewModel pathfindingRangeViewModel;
 
@@ -85,7 +87,7 @@ namespace Pathfinding.ConsoleApp.View
             Application.MainLoop.Invoke(() =>
             {
                 container.Add(views.ToArray());
-                container.Width = graph.GetWidth() * 3;
+                container.Width = graph.GetWidth() * DistanceBetweenVertices;
                 container.Height = graph.GetLength();
             });
         }

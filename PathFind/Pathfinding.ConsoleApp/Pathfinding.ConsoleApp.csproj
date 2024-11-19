@@ -102,10 +102,12 @@
     <Compile Include="ViewModel\DeleteRunButtonViewModel.cs" />
     <Compile Include="ViewModel\HeuristicsViewModel.cs" />
     <Compile Include="ViewModel\RunsTableViewModel.cs" />
+    <Compile Include="View\AlgorithmRunProgressView.cs" />
     <Compile Include="View\AStarLeeAlgorithmView.cs" />
     <Compile Include="View\BidirectAStarAlgorithmView.cs" />
     <Compile Include="View\BidirectDijkstraAlgorithmView.cs" />
     <Compile Include="View\CloseAlgorithmCreationButton.cs" />
+    <Compile Include="View\ComponentsPartials\AlgorithmRunProgressView.cs" />
     <Compile Include="View\ComponentsPartials\GraphUpdateView.cs" />
     <Compile Include="View\ComponentsPartials\GraphNameUpdateView.cs" />
     <Compile Include="View\ComponentsPartials\HeuristicsView.cs" />

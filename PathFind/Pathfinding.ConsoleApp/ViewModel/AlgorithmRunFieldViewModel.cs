@@ -24,6 +24,7 @@ using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 
@@ -34,8 +35,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private readonly ILog log;
         private readonly IMessenger messenger;
         private readonly IGraphAssemble<RunVertexModel> graphAssemble;
-        private readonly CompositeDisposable disposables = new();
         private readonly Dictionary<int, List<VertexState>> cache = new();
+
+        private readonly CompositeDisposable disposables = new();
 
         private int graphId;
         private List<VertexState> verticesStates = new();
@@ -44,9 +46,18 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public IGraph<RunVertexModel> RunGraph { get; private set; } = Graph<RunVertexModel>.Empty;
 
-        public ReactiveCommand<int, bool> ProcessNextCommand { get; }
+        public ReactiveCommand<float, bool> ProcessNextCommand { get; }
 
-        public ReactiveCommand<int, bool> ReverseNextCommand { get; }
+        public ReactiveCommand<float, bool> ReverseNextCommand { get; }
+
+        public ReactiveCommand<float, Unit> ProcessToCommand { get; }
+
+        private float fraction;
+        public float Fraction 
+        {
+            get => fraction;
+            set => this.RaiseAndSetIfChanged(ref fraction, value);
+        }
 
         public AlgorithmRunFieldViewModel(
             IGraphAssemble<RunVertexModel> graphAssemble,
@@ -60,8 +71,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<RunSelectedMessage>(this, OnRunActivated);
             messenger.Register<GraphBecameReadOnlyMessage>(this, OnGraphBecameReadOnly);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
-            ProcessNextCommand = ReactiveCommand.Create<int, bool>(ProcessNext);
-            ReverseNextCommand = ReactiveCommand.Create<int, bool>(ReverseNext);
+            ProcessNextCommand = ReactiveCommand.Create<float, bool>(ProcessNext);
+            ReverseNextCommand = ReactiveCommand.Create<float, bool>(ReverseNext);
+            ProcessToCommand = ReactiveCommand.Create<float>(ProcessTo);
         }
 
         private void OnGraphBecameReadOnly(object recipient, GraphBecameReadOnlyMessage msg)
@@ -76,6 +88,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             cache.Clear();
             Cursor = 0;
+            Fraction = 0;
             verticesStates.Clear();
         }
 
@@ -114,32 +127,57 @@ namespace Pathfinding.ConsoleApp.ViewModel
             Clear();
         }
 
-        private bool ProcessNext(int number)
+        private bool ProcessNext(float number)
+        {
+            ProcessForward((int)Math.Round(verticesStates.Count * number, 0));
+            if (Cursor > verticesStates.Count) Cursor = verticesStates.Count;
+            return Cursor < verticesStates.Count;
+        }
+
+        private void ProcessForward(int number)
         {
             while (number-- > 0 && Cursor < verticesStates.Count)
             {
                 verticesStates.ElementAtOrDefault(Cursor++).SetState();
             }
-            return Cursor < verticesStates.Count;
         }
 
-        private bool ReverseNext(int number)
+        private void ProcessBackward(int number)
         {
             while (number-- > 0 && Cursor-- > 0)
             {
                 verticesStates.ElementAtOrDefault(Cursor).ToReverted().SetState();
             }
+        }
+
+        private void ProcessTo(float number)
+        {
+            int num = (int)Math.Round(verticesStates.Count * number, 0);
+            if (num > Cursor)
+            {
+                ProcessForward(num - Cursor);
+            }
+            else
+            {
+                ProcessBackward(Cursor - num);
+            }
+        }
+
+        private bool ReverseNext(float number)
+        {
+            ProcessBackward((int)Math.Round(verticesStates.Count * number, 0));
+            if (Cursor < 0) Cursor = 0;
             return Cursor > 0;
         }
 
-        private void ProcessToCursor()
+        private void ProcessToFraction()
         {
+            Cursor = (int)Math.Round(verticesStates.Count * Fraction, 0);
             int cursor = 0;
             while (cursor < Cursor)
             {
                 verticesStates.ElementAtOrDefault(cursor++).SetState();
             }
-
         }
 
         private void OnRunActivated(object recipient, RunSelectedMessage msg)
@@ -149,7 +187,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             {
                 RunGraph.ClearState();
                 verticesStates = vertices;
-                ProcessToCursor();
+                ProcessToFraction();
                 return;
             }
             this.RaisePropertyChanged(nameof(RunGraph));
@@ -208,7 +246,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             RunGraph.ClearState();
             verticesStates = RunGraph.ToVerticesStates(subAlgorithms, rangeCoordinates);
             cache[run.RunId] = verticesStates;
-            ProcessToCursor();
+            ProcessToFraction();
         }
     }
 
@@ -318,7 +356,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 previousEnqueued.AddRange(subAlgorithm.Visited.SelectMany(x => x.Enqueued));
                 previousPaths.AddRange(subAlgorithm.Path);
             }
-            return vertices.ToList();
+            return vertices;
         }
 
         public static void SetState(this VertexState state)

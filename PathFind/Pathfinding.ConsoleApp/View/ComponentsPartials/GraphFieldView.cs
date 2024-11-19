@@ -9,7 +9,7 @@ namespace Pathfinding.ConsoleApp.View
             X = 0;
             Y = 0;
             Width = Dim.Percent(66);
-            Height = Dim.Fill();
+            Height = Dim.Percent(95);
             Border = new Border()
             {
                 BorderBrush = Color.BrightYellow,

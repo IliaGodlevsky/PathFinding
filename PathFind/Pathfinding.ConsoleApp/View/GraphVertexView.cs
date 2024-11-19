@@ -17,7 +17,7 @@ namespace Pathfinding.ConsoleApp.View
         private static readonly ColorScheme TargetColor = Create(ColorConstants.TargetVertexColor);
         private static readonly ColorScheme TransitColor = Create(ColorConstants.TranstiVertexColor);
 
-        private const int LabelWidth = 3;
+        private const int LabelWidth = GraphFieldView.DistanceBetweenVertices;
 
         private readonly CompositeDisposable disposables = new();
         private readonly GraphVertexModel model;

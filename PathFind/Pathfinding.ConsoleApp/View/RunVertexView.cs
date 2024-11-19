@@ -21,7 +21,7 @@ namespace Pathfinding.ConsoleApp.View
         private static readonly ColorScheme PathColor = Create(ColorConstants.PathVertexColor);
         private static readonly ColorScheme CrossedPathColor = Create(ColorConstants.CrossedPathColor);
 
-        private const int LabelWidth = 3;
+        private const int LabelWidth = GraphFieldView.DistanceBetweenVertices;
         private readonly CompositeDisposable disposables = new();
 
         private readonly RunVertexModel model;
