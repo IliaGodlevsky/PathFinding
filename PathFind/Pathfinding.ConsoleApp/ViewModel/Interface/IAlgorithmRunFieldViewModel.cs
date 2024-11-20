@@ -11,9 +11,9 @@ namespace Pathfinding.ConsoleApp.ViewModel.Interface
 
         ReactiveCommand<float, Unit> ProcessToCommand { get; }
 
-        ReactiveCommand<float, bool> ProcessNextCommand { get; }
+        ReactiveCommand<float, Unit> ProcessNextCommand { get; }
 
-        ReactiveCommand<float, bool> ReverseNextCommand { get; }
+        ReactiveCommand<float, Unit> ReverseNextCommand { get; }
 
         IGraph<RunVertexModel> RunGraph { get; }
     }

@@ -78,7 +78,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                 .Setup(x => x.DeleteGraphsAsync(
                     It.IsAny<IEnumerable<int>>(),
                     It.IsAny<CancellationToken>()))
-                .Returns<IEnumerable<int>, CancellationToken>((x, t) => throw new Exception());
+                .Throws(new Exception());
 
             var viewModel = mock.Create<GraphDeleteViewModel>();
 

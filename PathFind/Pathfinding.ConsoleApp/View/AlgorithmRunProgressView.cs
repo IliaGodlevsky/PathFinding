@@ -15,7 +15,7 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class AlgorithmRunProgressView : FrameView, IReactiveObject
     {
-        private const float FractionPerWheel = 0.03f;
+        private const float FractionPerWheel = 0.015f;
 
         public event PropertyChangedEventHandler PropertyChanged;
         public event PropertyChangingEventHandler PropertyChanging;
@@ -33,6 +33,13 @@ namespace Pathfinding.ConsoleApp.View
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Pressed)
                 .Do(x => Fraction -= FractionPerWheel)
                 .Select(x => FractionPerWheel)
+                .InvokeCommand(viewModel, x => x.ReverseNextCommand)
+                .DisposeWith(disposables);
+            leftLabel.Events().MouseClick
+                .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button1Pressed)
+                    && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonCtrl))
+                .Do(x => Fraction -= FractionPerWheel * 2)
+                .Select(x => FractionPerWheel * 2)
                 .InvokeCommand(viewModel, x => x.ReverseNextCommand)
                 .DisposeWith(disposables);
             leftLabel.Events().MouseClick
@@ -57,6 +64,13 @@ namespace Pathfinding.ConsoleApp.View
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Pressed)
                 .Do(x => Fraction += FractionPerWheel)
                 .Select(x => FractionPerWheel)
+                .InvokeCommand(viewModel, x => x.ProcessNextCommand)
+                .DisposeWith(disposables);
+            rightLabel.Events().MouseClick
+                .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button1Pressed)
+                    && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonCtrl))
+                .Do(x => Fraction += FractionPerWheel * 2)
+                .Select(x => FractionPerWheel * 2)
                 .InvokeCommand(viewModel, x => x.ProcessNextCommand)
                 .DisposeWith(disposables);
             rightLabel.Events().MouseClick

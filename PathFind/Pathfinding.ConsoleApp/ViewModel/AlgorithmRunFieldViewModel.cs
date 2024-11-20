@@ -46,9 +46,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public IGraph<RunVertexModel> RunGraph { get; private set; } = Graph<RunVertexModel>.Empty;
 
-        public ReactiveCommand<float, bool> ProcessNextCommand { get; }
+        public ReactiveCommand<float, Unit> ProcessNextCommand { get; }
 
-        public ReactiveCommand<float, bool> ReverseNextCommand { get; }
+        public ReactiveCommand<float, Unit> ReverseNextCommand { get; }
 
         public ReactiveCommand<float, Unit> ProcessToCommand { get; }
 
@@ -71,8 +71,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<RunSelectedMessage>(this, OnRunActivated);
             messenger.Register<GraphBecameReadOnlyMessage>(this, OnGraphBecameReadOnly);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
-            ProcessNextCommand = ReactiveCommand.Create<float, bool>(ProcessNext);
-            ReverseNextCommand = ReactiveCommand.Create<float, bool>(ReverseNext);
+            ProcessNextCommand = ReactiveCommand.Create<float>(ProcessNext);
+            ReverseNextCommand = ReactiveCommand.Create<float>(ReverseNext);
             ProcessToCommand = ReactiveCommand.Create<float>(ProcessTo);
         }
 
@@ -127,57 +127,51 @@ namespace Pathfinding.ConsoleApp.ViewModel
             Clear();
         }
 
-        private bool ProcessNext(float number)
+        private void ProcessNext(float fraction)
         {
-            ProcessForward((int)Math.Round(verticesStates.Count * number, 0));
+            ProcessForward((int)Math.Round(verticesStates.Count * fraction, 0));
             if (Cursor > verticesStates.Count) Cursor = verticesStates.Count;
-            return Cursor < verticesStates.Count;
         }
 
-        private void ProcessForward(int number)
+        private void ProcessForward(int count)
         {
-            while (number-- > 0 && Cursor < verticesStates.Count)
+            while (count-- > 0 && Cursor < verticesStates.Count)
             {
                 verticesStates.ElementAtOrDefault(Cursor++).SetState();
             }
         }
 
-        private void ProcessBackward(int number)
+        private void ProcessBackward(int count)
         {
-            while (number-- > 0 && Cursor-- > 0)
+            while (count-- > 0 && Cursor > 0)
             {
-                verticesStates.ElementAtOrDefault(Cursor).ToReverted().SetState();
+                verticesStates.ElementAtOrDefault(--Cursor).ToReverted().SetState();
             }
         }
 
-        private void ProcessTo(float number)
+        private void ProcessTo(float fraction)
         {
-            int num = (int)Math.Round(verticesStates.Count * number, 0);
-            if (num > Cursor)
+            int count = (int)Math.Round(verticesStates.Count * fraction, 0);
+            if (count > Cursor)
             {
-                ProcessForward(num - Cursor);
+                ProcessForward(count - Cursor);
             }
             else
             {
-                ProcessBackward(Cursor - num);
+                ProcessBackward(Cursor - count);
             }
         }
 
-        private bool ReverseNext(float number)
+        private void ReverseNext(float fraction)
         {
-            ProcessBackward((int)Math.Round(verticesStates.Count * number, 0));
+            ProcessBackward((int)Math.Round(verticesStates.Count * fraction, 0));
             if (Cursor < 0) Cursor = 0;
-            return Cursor > 0;
         }
 
         private void ProcessToFraction()
         {
-            Cursor = (int)Math.Round(verticesStates.Count * Fraction, 0);
-            int cursor = 0;
-            while (cursor < Cursor)
-            {
-                verticesStates.ElementAtOrDefault(cursor++).SetState();
-            }
+            Cursor = 0;
+            ProcessForward((int)Math.Round(verticesStates.Count * Fraction, 0));
         }
 
         private void OnRunActivated(object recipient, RunSelectedMessage msg)

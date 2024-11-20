@@ -57,7 +57,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
 
             mock.Mock<IRequestService<GraphVertexModel>>()
                  .Setup(x => x.ReadAllGraphInfoAsync(It.IsAny<CancellationToken>()))
-                 .Callback<CancellationToken>(x => throw new Exception());
+                 .Throws(new Exception());
 
             var viewModel = mock.Create<GraphTableViewModel>();
 
@@ -122,7 +122,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                .Setup(x => x.ReadGraphAsync(
                    It.IsAny<int>(),
                    It.IsAny<CancellationToken>()))
-               .Returns<int, CancellationToken>((x, t) => throw new Exception());
+               .Throws(new Exception());
 
             var viewModel = mock.Create<GraphTableViewModel>();
 

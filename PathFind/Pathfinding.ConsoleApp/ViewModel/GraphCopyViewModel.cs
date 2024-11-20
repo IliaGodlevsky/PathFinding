@@ -56,17 +56,18 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     .ConfigureAwait(false);
                 var histories = await service.CreatePathfindingHistoriesAsync(copies)
                     .ConfigureAwait(false);
-                var graphs = histories.Select(x => new GraphInfoModel()
+                var graphs = histories.Select(x => x.Graph)
+                    .Select(x => new GraphInfoModel()
                 {
-                    Width = x.Graph.Graph.GetWidth(),
-                    Length = x.Graph.Graph.GetLength(),
-                    Name = x.Graph.Name,
-                    Neighborhood = x.Graph.Neighborhood,
-                    Id = x.Graph.Id,
-                    SmoothLevel = x.Graph.SmoothLevel,
-                    Obstacles = x.Graph.Graph.GetObstaclesCount(),
-                    Status = x.Graph.IsReadOnly 
-                        ? GraphStatuses.Readonly 
+                    Width = x.Graph.GetWidth(),
+                    Length = x.Graph.GetLength(),
+                    Name = x.Name,
+                    Neighborhood = x.Neighborhood,
+                    Id = x.Id,
+                    SmoothLevel = x.SmoothLevel,
+                    Obstacles = x.Graph.GetObstaclesCount(),
+                    Status = x.IsReadOnly
+                        ? GraphStatuses.Readonly
                         : GraphStatuses.Editable
                 }).ToArray();
                 messenger.Send(new GraphCreatedMessage(graphs));
