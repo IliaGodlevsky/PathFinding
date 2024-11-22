@@ -1,5 +1,6 @@
 ﻿using Pathfinding.ConsoleApp.Model;
 using ReactiveUI;
+using System;
 using System.Collections.ObjectModel;
 using System.Reactive;
 

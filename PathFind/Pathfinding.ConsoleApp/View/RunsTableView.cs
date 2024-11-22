@@ -36,10 +36,9 @@ namespace Pathfinding.ConsoleApp.View
                 .InvokeCommand(viewModel, x => x.SelectRunsCommand)
                 .DisposeWith(disposables);
             this.Events().SelectedCellChanged
-                .Where(x => x.NewRow > -1 && x.NewRow < table.Rows.Count)
+                .Where(x => x.NewRow > -1 && x.NewRow < Table.Rows.Count)
                 .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
-                .Select(x => GetAllSelectedCells().Select(x => x.Y)
-                    .Distinct().Select(GetRunModel).ToArray())
+                .Select(x => GetSelectedRows())
                 .InvokeCommand(viewModel, x => x.SelectRunsCommand)
                 .DisposeWith(disposables);
             this.Events().MouseClick
@@ -50,22 +49,65 @@ namespace Pathfinding.ConsoleApp.View
                 .Select(x => GetRunModel(x).Enumerate().ToArray())
                 .InvokeCommand(viewModel, x => x.SelectRunsCommand)
                 .DisposeWith(disposables);
+            this.Events().KeyPress
+                .Where(args => args.KeyEvent.Key.HasFlag(Key.R)
+                    && args.KeyEvent.Key.HasFlag(Key.CtrlMask)
+                    && Table.Rows.Count > 1)
+                .Do(x => OrderTable(IdCol, Ascending))
+                .Do(x => PreviousSortedColumn = string.Empty)
+                .Select(x => GetSelectedRows())
+                .InvokeCommand(viewModel, x => x.SelectRunsCommand)
+                .DisposeWith(disposables);
+            this.Events().MouseClick
+                .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked
+                    && Table.Rows.Count > 1
+                    && x.MouseEvent.Y < headerLinesConsumed)
+                .Do(OrderOnMouseClick)
+                .Select(x => GetSelectedRows())
+                .InvokeCommand(viewModel, x => x.SelectRunsCommand)
+                .DisposeWith(disposables);
+        }
+        
+        private RunInfoModel[] GetSelectedRows()
+        {
+            return GetAllSelectedCells().Select(x => x.Y)
+                    .Distinct().Select(GetRunModel).ToArray();
+        }
+
+        private void OrderOnMouseClick(MouseEventArgs args)
+        {
+            var selectedColumn = ScreenToCell(args.MouseEvent.X,
+                headerLinesConsumed);
+            var column = Table.Columns[selectedColumn.Value.X].ColumnName;
+            Order = PreviousSortedColumn != column || !Order;
+            PreviousSortedColumn = column;
+            string sortOrder = Order ? Ascending : Descending;
+            OrderTable(column, sortOrder);
+        }
+
+        private void OrderTable(string columnName, string order)
+        {
+            Table.DefaultView.Sort = $"{columnName} {order}";
+            Table = Table.DefaultView.ToTable();
+            SetTableStyle();
+            Table.AcceptChanges();
+            SetNeedsDisplay();
         }
 
         private RunInfoModel GetRunModel(int selectedRow)
         {
             return new()
             {
-                RunId = (int)table.Rows[selectedRow][IdCol],
-                Name = table.Rows[selectedRow][AlgorithmCol].ToString(),
-                Visited = (int)table.Rows[selectedRow][VisitedCol],
-                Steps = (int)table.Rows[selectedRow][StepsCol],
-                Cost = (double)table.Rows[selectedRow][CostCol],
-                Elapsed = (TimeSpan)table.Rows[selectedRow][ElapsedCol],
-                StepRule = table.Rows[selectedRow][StepCol].ToString(),
-                Heuristics = table.Rows[selectedRow][LogicCol].ToString(),
-                Weight = table.Rows[selectedRow][WeightCol].ToString(),
-                Status = table.Rows[selectedRow][StatusCol].ToString()
+                RunId = (int)Table.Rows[selectedRow][IdCol],
+                Name = Table.Rows[selectedRow][AlgorithmCol].ToString(),
+                Visited = (int)Table.Rows[selectedRow][VisitedCol],
+                Steps = (int)Table.Rows[selectedRow][StepsCol],
+                Cost = (double)Table.Rows[selectedRow][CostCol],
+                Elapsed = (TimeSpan)Table.Rows[selectedRow][ElapsedCol],
+                StepRule = Table.Rows[selectedRow][StepCol].ToString(),
+                Heuristics = Table.Rows[selectedRow][LogicCol].ToString(),
+                Weight = Table.Rows[selectedRow][WeightCol].ToString(),
+                Status = Table.Rows[selectedRow][StatusCol].ToString()
             };
         }
 
@@ -73,8 +115,8 @@ namespace Pathfinding.ConsoleApp.View
         {
             Application.MainLoop.Invoke(() =>
             {
-                table.Rows.Add(model.GetProperties());
-                table.AcceptChanges();
+                Table.Rows.Add(model.GetProperties());
+                Table.AcceptChanges();
                 SetNeedsDisplay();
                 SetCursorInvisible();
             });
@@ -84,18 +126,18 @@ namespace Pathfinding.ConsoleApp.View
         {
             Application.MainLoop.Invoke(() =>
             {
-                var row = table.Rows.Find(model.RunId);
-                var index = table.Rows.IndexOf(row);
+                var row = Table.Rows.Find(model.RunId);
+                var index = Table.Rows.IndexOf(row);
                 if (row != null)
                 {
                     row.Delete();
-                    table.AcceptChanges();
+                    Table.AcceptChanges();
                     MultiSelectedRegions.Clear();
-                    if (table.Rows.Count > 0)
+                    if (Table.Rows.Count > 0)
                     {
-                        SelectedCellChangedEventArgs args = index == table.Rows.Count
-                            ? new(table, 0, 0, index, index - 1)
-                            : new(table, 0, 0, index, index);
+                        SelectedCellChangedEventArgs args = index == Table.Rows.Count
+                            ? new(Table, 0, 0, index, index - 1)
+                            : new(Table, 0, 0, index, index);
                         OnSelectedCellChanged(args);
                         SetSelection(0, args.NewRow, false);
                     }
@@ -111,8 +153,8 @@ namespace Pathfinding.ConsoleApp.View
             {
                 case NotifyCollectionChangedAction.Reset:
                     MultiSelectedRegions.Clear();
-                    table.Clear();
-                    table.AcceptChanges();
+                    Table.Clear();
+                    Table.AcceptChanges();
                     SetNeedsDisplay();
                     break;
                 case NotifyCollectionChangedAction.Add:

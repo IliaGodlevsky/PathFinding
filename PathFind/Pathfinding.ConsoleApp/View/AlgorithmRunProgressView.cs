@@ -15,7 +15,8 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class AlgorithmRunProgressView : FrameView, IReactiveObject
     {
-        private const float FractionPerWheel = 0.015f;
+        private const float FractionPerWheel = 0.015f; // 1,5%
+        private const float ExtraFractionPerWheel = FractionPerWheel * 2.5f;
 
         public event PropertyChangedEventHandler PropertyChanged;
         public event PropertyChangingEventHandler PropertyChanging;
@@ -38,8 +39,8 @@ namespace Pathfinding.ConsoleApp.View
             leftLabel.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button1Pressed)
                     && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonCtrl))
-                .Do(x => Fraction -= FractionPerWheel * 2)
-                .Select(x => FractionPerWheel * 2)
+                .Do(x => Fraction -= ExtraFractionPerWheel)
+                .Select(x => ExtraFractionPerWheel)
                 .InvokeCommand(viewModel, x => x.ReverseNextCommand)
                 .DisposeWith(disposables);
             leftLabel.Events().MouseClick
@@ -69,8 +70,8 @@ namespace Pathfinding.ConsoleApp.View
             rightLabel.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button1Pressed)
                     && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonCtrl))
-                .Do(x => Fraction += FractionPerWheel * 2)
-                .Select(x => FractionPerWheel * 2)
+                .Do(x => Fraction += ExtraFractionPerWheel)
+                .Select(x => ExtraFractionPerWheel)
                 .InvokeCommand(viewModel, x => x.ProcessNextCommand)
                 .DisposeWith(disposables);
             rightLabel.Events().MouseClick

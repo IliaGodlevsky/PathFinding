@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Undefined;
@@ -196,6 +197,33 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
 
                 Assert.That(viewModel.Runs.Count == 0);
             });
+        }
+
+        [Test]
+        public void ActivateGraph_ThrowsException_ShouldLogError()
+        {
+            using var mock = AutoMock.GetLoose();
+
+            mock.Mock<IRequestService<GraphVertexModel>>()
+                .Setup(x => x.ReadStatisticsAsync(
+                    It.IsAny<int>(),
+                    It.IsAny<CancellationToken>()))
+                .Throws(new Exception());
+
+            mock.Mock<IMessenger>()
+                .Setup(x => x.Register(
+                    It.IsAny<object>(),
+                    It.IsAny<IsAnyToken>(),
+                    It.IsAny<MessageHandler<object, GraphActivatedMessage>>()))
+                .Callback<object, object, MessageHandler<object, GraphActivatedMessage>>((r, t, handler)
+                => handler(r, new(new())));
+
+            var viewModel = mock.Create<RunsTableViewModel>();
+
+            mock.Mock<ILog>()
+                .Verify(x => x.Error(
+                    It.IsAny<Exception>(),
+                    It.IsAny<string>()), Times.Once);
         }
     }
 }

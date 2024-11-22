@@ -19,37 +19,30 @@ namespace Pathfinding.ConsoleApp.View
         private const string StatusCol = "Status";
         private const string TimeFormat = @"ss\.fff";
 
-        private readonly DataTable table = new();
+        private const string Ascending = "ASC";
+        private const string Descending = "DESC";
+        
         private readonly int headerLinesConsumed;
 
-        public RunsTableView()
+        private bool Order { get; set; } = false;
+
+        private string PreviousSortedColumn { get; set; } = string.Empty;
+
+        private void SetTableStyle()
         {
-            table.Columns.AddRange(new DataColumn[]
-            {
-                new (IdCol, typeof(int)),
-                new (AlgorithmCol, typeof(string)),
-                new (VisitedCol, typeof(int)),
-                new (StepsCol, typeof(int)),
-                new (CostCol, typeof(double)),
-                new (ElapsedCol, typeof(TimeSpan)),
-                new (StepCol, typeof(string)),
-                new (LogicCol, typeof(string)),
-                new (WeightCol, typeof(string)),
-                new (StatusCol, typeof(string))
-            });
-            table.PrimaryKey = new[] { table.Columns[IdCol] };
+            Table.PrimaryKey = new[] { Table.Columns[IdCol] };
             var columnStyles = new Dictionary<DataColumn, ColumnStyle>()
             {
-                { table.Columns[IdCol], new() { Visible = false } },
-                { table.Columns[AlgorithmCol], new() { MinWidth = 12, MaxWidth = 12, Alignment = TextAlignment.Left } },
-                { table.Columns[VisitedCol], new() { Alignment = TextAlignment.Centered } },
-                { table.Columns[StepsCol], new() { Alignment = TextAlignment.Centered } },
-                { table.Columns[CostCol], new() { Alignment = TextAlignment.Centered } },
-                { table.Columns[ElapsedCol], new() { Format = TimeFormat, Alignment = TextAlignment.Centered } },
-                { table.Columns[StepCol], new() { MinWidth = 9, MaxWidth = 9, Alignment = TextAlignment.Centered } },
-                { table.Columns[LogicCol], new() { MinWidth = 9, MaxWidth = 9, Alignment = TextAlignment.Centered } },
-                { table.Columns[WeightCol], new() { Alignment = TextAlignment.Left } },
-                { table.Columns[StatusCol], new() { Alignment = TextAlignment.Centered } }
+                { Table.Columns[IdCol], new() { Visible = false } },
+                { Table.Columns[AlgorithmCol], new() { MinWidth = 12, MaxWidth = 12, Alignment = TextAlignment.Left } },
+                { Table.Columns[VisitedCol], new() { Alignment = TextAlignment.Centered } },
+                { Table.Columns[StepsCol], new() { Alignment = TextAlignment.Centered } },
+                { Table.Columns[CostCol], new() { Alignment = TextAlignment.Centered } },
+                { Table.Columns[ElapsedCol], new() { Format = TimeFormat, Alignment = TextAlignment.Centered } },
+                { Table.Columns[StepCol], new() { MinWidth = 9, MaxWidth = 9, Alignment = TextAlignment.Centered } },
+                { Table.Columns[LogicCol], new() { MinWidth = 9, MaxWidth = 9, Alignment = TextAlignment.Centered } },
+                { Table.Columns[WeightCol], new() { Alignment = TextAlignment.Left } },
+                { Table.Columns[StatusCol], new() { Alignment = TextAlignment.Centered } }
             };
             Style = new()
             {
@@ -62,6 +55,25 @@ namespace Pathfinding.ConsoleApp.View
                 ColumnStyles = columnStyles,
                 ShowHorizontalScrollIndicators = true
             };
+        }
+
+        public RunsTableView()
+        {
+            Table = new();
+            Table.Columns.AddRange(new DataColumn[]
+            {
+                new (IdCol, typeof(int)),
+                new (AlgorithmCol, typeof(string)),
+                new (VisitedCol, typeof(int)),
+                new (StepsCol, typeof(int)),
+                new (CostCol, typeof(double)),
+                new (ElapsedCol, typeof(TimeSpan)),
+                new (StepCol, typeof(string)),
+                new (LogicCol, typeof(string)),
+                new (WeightCol, typeof(string)),
+                new (StatusCol, typeof(string))
+            });
+            SetTableStyle();
             int line = 1;
             if (Style.ShowHorizontalHeaderOverline)
             {
@@ -78,7 +90,6 @@ namespace Pathfinding.ConsoleApp.View
             Y = Pos.Percent(0);
             Width = Dim.Fill();
             Height = Dim.Percent(80);
-            Table = table;
         }
     }
 }
