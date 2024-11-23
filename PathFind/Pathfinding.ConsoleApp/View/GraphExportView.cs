@@ -1,7 +1,9 @@
 ﻿using Pathfinding.ConsoleApp.ViewModel.Interface;
 using ReactiveMarbles.ObservableEvents;
+using ReactiveUI;
 using System;
 using System.IO;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Terminal.Gui;
 
@@ -9,29 +11,25 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphExportView
     {
-        private readonly IGraphExportViewModel viewModel;
+        private readonly CompositeDisposable disposables = new();
 
         public GraphExportView(IGraphExportViewModel viewModel)
         {
-            this.viewModel = viewModel;
             Initialize();
             this.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
-                .Do(async x =>
+                .Select(x => new Func<Stream>(()=> 
                 {
-                    if (await viewModel.ExportGraphCommand.CanExecute.FirstOrDefaultAsync())
-                    {
-                        using var stream = GetStream();
-                        if (stream != Stream.Null)
-                        {
-                            await viewModel.ExportGraphCommand.Execute(stream);
-                        }
-                    }
-                })
-                .Subscribe();
+                    var filePath = GetFilePath();
+                    return string.IsNullOrEmpty(filePath) 
+                        ? Stream.Null 
+                        : File.OpenWrite(filePath);
+                }))
+                .InvokeCommand(viewModel, x => x.ExportGraphCommand)
+                .DisposeWith(disposables);
         }
 
-        private static Stream GetStream()
+        private static string GetFilePath()
         {
             using var dialog = new SaveDialog("Export",
                 "Enter file name", new() { ".dat" })
@@ -41,8 +39,14 @@ namespace Pathfinding.ConsoleApp.View
             };
             Application.Run(dialog);
             return !dialog.Canceled && dialog.FilePath != null
-                ? File.OpenWrite(dialog.FilePath.ToString())
-                : Stream.Null;
+                ? dialog.FilePath.ToString()
+                : string.Empty;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            disposables.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

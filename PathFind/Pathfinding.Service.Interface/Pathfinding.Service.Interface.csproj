@@ -50,11 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\IPathfindingRangeCommand.cs" />
-    <Compile Include="Extensions\AlgorithmExtensions.cs" />
     <Compile Include="Extensions\BinaryReaderExtensions.cs" />
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
     <Compile Include="Extensions\PathfindingRangeCommandExtensions.cs" />
-    <Compile Include="Extensions\SerializerExtensions.cs" />
     <Compile Include="IAlgorithm.cs" />
     <Compile Include="IBinarySerializable.cs" />
     <Compile Include="IGraphPath.cs" />

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 
+namespace System.Runtime.CompilerServices
+{
+    internal record IsExternalInit;
+}
+
 namespace Pathfinding.Service.Interface.Models.Undefined
 {
-    public class GraphAssembleModel
-    {
-        public IReadOnlyList<int> Dimensions { get; set; }
-
-        public IReadOnlyCollection<VertexAssembleModel> Vertices { get; set; }
-    }
+    public record GraphAssembleModel(IReadOnlyList<int> Dimensions,
+        IReadOnlyCollection<VertexAssembleModel> Vertices);
 }

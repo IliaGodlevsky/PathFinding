@@ -64,8 +64,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ILog log)
         {
-            this.messenger = messenger;
             this.log = log;
+            this.messenger = messenger;
             this.graphAssemble = graphAssemble;
             messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
             messenger.Register<RunSelectedMessage>(this, OnRunActivated);

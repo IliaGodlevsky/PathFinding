@@ -10,6 +10,7 @@ using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Serialization;
 using ReactiveUI;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private readonly ILog logger;
         private readonly ISerializer<IEnumerable<PathfindingHistorySerializationModel>> serializer;
 
-        public ReactiveCommand<Stream, Unit> ImportGraphCommand { get; }
+        public ReactiveCommand<Func<Stream>, Unit> ImportGraphCommand { get; }
 
         public GraphImportViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ISerializer<IEnumerable<PathfindingHistorySerializationModel>> serializer,
@@ -36,30 +37,34 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.serializer = serializer;
             this.service = service;
             this.logger = logger;
-            ImportGraphCommand = ReactiveCommand.CreateFromTask<Stream>(LoadGraph);
+            ImportGraphCommand = ReactiveCommand.CreateFromTask<Func<Stream>>(LoadGraph);
         }
 
-        private async Task LoadGraph(Stream stream)
+        private async Task LoadGraph(Func<Stream> streamFactory)
         {
             await ExecuteSafe(async () =>
             {
-                var histories = await serializer.DeserializeFromAsync(stream).ConfigureAwait(false);
-                var result = await service.CreatePathfindingHistoriesAsync(histories).ConfigureAwait(false);
-                var graphs = result.Select(x => new GraphInfoModel()
+                using var stream = streamFactory();
+                if (stream != Stream.Null)
                 {
-                    Width = x.Graph.Graph.GetWidth(),
-                    Length = x.Graph.Graph.GetLength(),
-                    Name = x.Graph.Name,
-                    Neighborhood = x.Graph.Neighborhood,
-                    Id = x.Graph.Id,
-                    SmoothLevel = x.Graph.SmoothLevel,
-                    Obstacles = x.Graph.Graph.GetObstaclesCount(),
-                    Status = x.Graph.IsReadOnly
-                        ? GraphStatuses.Readonly
-                        : GraphStatuses.Editable
-                }).ToArray();
-                messenger.Send(new GraphCreatedMessage(graphs));
-                logger.Info(graphs.Length > 0 ? "Graphs were loaded" : "Graph was loaded");
+                    var histories = await serializer.DeserializeFromAsync(stream).ConfigureAwait(false);
+                    var result = await service.CreatePathfindingHistoriesAsync(histories).ConfigureAwait(false);
+                    var graphs = result.Select(x => new GraphInfoModel()
+                    {
+                        Width = x.Graph.Graph.GetWidth(),
+                        Length = x.Graph.Graph.GetLength(),
+                        Name = x.Graph.Name,
+                        Neighborhood = x.Graph.Neighborhood,
+                        Id = x.Graph.Id,
+                        SmoothLevel = x.Graph.SmoothLevel,
+                        Obstacles = x.Graph.Graph.GetObstaclesCount(),
+                        Status = x.Graph.IsReadOnly
+                            ? GraphStatuses.Readonly
+                            : GraphStatuses.Editable
+                    }).ToArray();
+                    messenger.Send(new GraphCreatedMessage(graphs));
+                    logger.Info(graphs.Length > 0 ? "Graphs were loaded" : "Graph was loaded");
+                }
             }, logger.Error).ConfigureAwait(false);
         }
     }

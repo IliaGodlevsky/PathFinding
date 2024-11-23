@@ -111,7 +111,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
                 string status = RunStatuses.Success;
 
-                var vertices = pathfindingRange.Select(x => Graph.Graph.Get(x)).ToList();
+                var vertices = pathfindingRange.Select(Graph.Graph.Get).ToList();
                 var algorithm = GetAlgorithm(vertices);
 
                 algorithm.SubPathFound += OnSubPathFound;

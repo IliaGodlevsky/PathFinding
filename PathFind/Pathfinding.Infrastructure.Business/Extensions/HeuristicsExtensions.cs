@@ -7,11 +7,7 @@ namespace Pathfinding.Infrastructure.Business.Extensions
     {
         public static IHeuristic WithWeight(this IHeuristic heuristic, double? weight)
         {
-            if (weight == null)
-            {
-                new WeightedHeuristic(heuristic, 0);
-            }
-            return new WeightedHeuristic(heuristic, weight.Value);
+            return new WeightedHeuristic(heuristic, weight ?? 0);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref graphIds, value);
         }
 
-        public ReactiveCommand<Stream, Unit> ExportGraphCommand { get; }
+        public ReactiveCommand<Func<Stream>, Unit> ExportGraphCommand { get; }
 
         public GraphExportViewModel(IRequestService<GraphVertexModel> service,
             ISerializer<IEnumerable<PathfindingHistorySerializationModel>> serializer,
@@ -40,7 +40,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.service = service;
             this.serializer = serializer;
             this.logger = logger;
-            ExportGraphCommand = ReactiveCommand.CreateFromTask<Stream>(ExportGraph, CanExport());
+            ExportGraphCommand = ReactiveCommand.CreateFromTask<Func<Stream>>(ExportGraph, CanExport());
             messenger.Register<GraphSelectedMessage>(this, OnGraphSelected);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
         }
@@ -50,13 +50,17 @@ namespace Pathfinding.ConsoleApp.ViewModel
             return this.WhenAnyValue(x => x.GraphIds, graphIds => graphIds.Length > 0);
         }
 
-        private async Task ExportGraph(Stream stream)
+        private async Task ExportGraph(Func<Stream> streamFactory)
         {
             await ExecuteSafe(async () =>
             {
-                var graphs = await service.ReadSerializationHistoriesAsync(graphIds).ConfigureAwait(false);
-                await serializer.SerializeToAsync(graphs, stream).ConfigureAwait(false);
-                logger.Info(graphs.Count == 1 ? "Graph was saved" : "Graphs were saved");
+                using var stream = streamFactory();
+                if (stream != Stream.Null)
+                {
+                    var graphs = await service.ReadSerializationHistoriesAsync(graphIds).ConfigureAwait(false);
+                    await serializer.SerializeToAsync(graphs, stream).ConfigureAwait(false);
+                    logger.Info(graphs.Count == 1 ? "Graph was saved" : "Graphs were saved");
+                }
             }, logger.Error).ConfigureAwait(false);
         }
 

@@ -1,5 +1,6 @@
 ﻿using Pathfinding.ConsoleApp.ViewModel.Interface;
 using ReactiveMarbles.ObservableEvents;
+using ReactiveUI;
 using System;
 using System.IO;
 using System.Reactive.Linq;
@@ -9,26 +10,22 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphImportView : Button
     {
-        private readonly IGraphImportViewModel viewModel;
-
         public GraphImportView(IGraphImportViewModel viewModel)
         {
-            this.viewModel = viewModel;
             Initialize();
             this.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
-                .Do(async x =>
+                .Select(x => new Func<Stream>(() =>
                 {
-                    using var stream = GetStream();
-                    if (stream != Stream.Null)
-                    {
-                        await viewModel.ImportGraphCommand.Execute(stream);
-                    }
-                })
-                .Subscribe();
+                    var fileName = GetFileName();
+                    return string.IsNullOrEmpty(fileName)
+                        ? Stream.Null
+                        : File.OpenRead(fileName);
+                }))
+                .InvokeCommand(viewModel, x => x.ImportGraphCommand);
         }
 
-        private static Stream GetStream()
+        private static string GetFileName()
         {
             using var dialog = new OpenDialog("Import",
                 "Import graph", new() { ".dat" })
@@ -38,8 +35,8 @@ namespace Pathfinding.ConsoleApp.View
             };
             Application.Run(dialog);
             return !dialog.Canceled && dialog.FilePath != null
-                ? File.OpenRead(dialog.FilePath.ToString())
-                : Stream.Null;
+                ? dialog.FilePath.ToString()
+                : string.Empty;
         }
     }
 }
