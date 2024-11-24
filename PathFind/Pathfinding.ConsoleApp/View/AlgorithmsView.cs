@@ -1,33 +1,73 @@
 ﻿using Autofac.Features.AttributeFilters;
 using Pathfinding.ConsoleApp.Injection;
-using Pathfinding.Shared.Extensions;
-using ReactiveMarbles.ObservableEvents;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using Terminal.Gui;
+using ReactiveMarbles.ObservableEvents;
+using Pathfinding.Domain.Core;
+using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.ConsoleApp.Messages.View;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
+using ReactiveUI;
 
 namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class AlgorithmsView : FrameView
     {
-        public AlgorithmsView([KeyFilter(KeyFilters.AlgorithmsListView)] IEnumerable<Terminal.Gui.View> children)
+        public AlgorithmsView([KeyFilter(KeyFilters.Views)]IMessenger messenger,
+            IRequireAlgorithmNameViewModel viewModel)
         {
             Initialize();
-            var names = children.OrderByOrderAttribute()
-                .ToDictionary(x => x.Text, x => x);
-            algorithms.RadioLabels = names.Keys.ToArray();
+            var source = new[] 
+            { 
+                AlgorithmNames.Dijkstra, 
+                AlgorithmNames.BidirectDijkstra, 
+                AlgorithmNames.AStar,
+                AlgorithmNames.BidirectAStar,
+                AlgorithmNames.Lee,
+                AlgorithmNames.BidirectLee,
+                AlgorithmNames.AStarLee,
+                AlgorithmNames.DistanceFirst,
+                AlgorithmNames.CostGreedy,
+                AlgorithmNames.AStarGreedy,
+                AlgorithmNames.DepthFirst,
+                AlgorithmNames.Snake
+            };
+            algorithms.SetSource(source);
             algorithms.Events().SelectedItemChanged
-                .Where(x => x.SelectedItem > -1)
-                .Do(x =>
+                .Where(x => x.Item > -1)
+                .Select(x => x.Value.ToString())
+                .Do(algorithmName =>
                 {
-                    var key = algorithms.RadioLabels[x.SelectedItem];
-                    var element = names[key];
-                    var @event = new MouseEvent() { Flags = MouseFlags.Button1Clicked };
-                    element.OnMouseEvent(@event);
+                    switch (algorithmName)
+                    {
+                        case AlgorithmNames.AStar:
+                        case AlgorithmNames.BidirectAStar:
+                        case AlgorithmNames.AStarGreedy:
+                            messenger.Send(new OpenStepRuleViewMessage());
+                            messenger.Send(new OpenHeuristicsViewMessage());
+                            break;
+                        case AlgorithmNames.Dijkstra:
+                        case AlgorithmNames.BidirectDijkstra:
+                        case AlgorithmNames.CostGreedy:
+                            messenger.Send(new OpenStepRuleViewMessage());
+                            messenger.Send(new CloseHeuristicsViewMessage());
+                            break;
+                        case AlgorithmNames.Lee:
+                        case AlgorithmNames.BidirectLee:
+                        case AlgorithmNames.DepthFirst:
+                        case AlgorithmNames.Snake:
+                            messenger.Send(new CloseStepRulesViewMessage());
+                            messenger.Send(new CloseHeuristicsViewMessage());
+                            break;
+                        case AlgorithmNames.DistanceFirst:
+                        case AlgorithmNames.AStarLee:
+                            messenger.Send(new CloseStepRulesViewMessage());
+                            messenger.Send(new OpenHeuristicsViewMessage());
+                            break;
+                    }
                 })
-                .Subscribe();
+                .BindTo(viewModel, x => x.AlgorithmName);
         }
     }
 }

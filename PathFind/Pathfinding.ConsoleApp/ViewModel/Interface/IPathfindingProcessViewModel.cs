@@ -5,6 +5,6 @@ namespace Pathfinding.ConsoleApp.ViewModel.Interface
 {
     internal interface IPathfindingProcessViewModel
     {
-        ReactiveCommand<Unit, Unit> StartAlgorithmCommand { get; } 
+        ReactiveCommand<Unit, Unit> StartAlgorithmCommand { get; }
     }
 }

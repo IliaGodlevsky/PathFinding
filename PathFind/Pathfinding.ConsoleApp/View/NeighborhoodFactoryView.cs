@@ -14,11 +14,11 @@ namespace Pathfinding.ConsoleApp.View
     {
         private readonly CompositeDisposable disposables = new();
         private readonly NeighborhoodFactoriesViewModel factoryViewModel;
-        private readonly INeighborhoodNameViewModel viewModel;
+        private readonly IRequireNeighborhoodNameViewModel viewModel;
 
         public NeighborhoodFactoryView(
             NeighborhoodFactoriesViewModel factoryViewModel,
-            INeighborhoodNameViewModel viewModel)
+            IRequireNeighborhoodNameViewModel viewModel)
         {
             this.factoryViewModel = factoryViewModel;
             this.viewModel = viewModel;

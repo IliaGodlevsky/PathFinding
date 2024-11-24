@@ -12,18 +12,18 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class SmoothLevelView : FrameView
     {
-        private readonly IGraphSmoothLevelViewModel viewModel;
+        private readonly IRequireSmoothLevelViewModel viewModel;
         private readonly SmoothLevelsViewModel smoothLevelViewModel;
         private readonly CompositeDisposable disposables = new CompositeDisposable();
 
-        public SmoothLevelView(IGraphSmoothLevelViewModel viewModel,
+        public SmoothLevelView(IRequireSmoothLevelViewModel viewModel,
             SmoothLevelsViewModel smoothLevelViewModel)
         {
             this.viewModel = viewModel;
             this.smoothLevelViewModel = smoothLevelViewModel;
             Initialize();
             smoothLevels.RadioLabels = smoothLevelViewModel.Levels.Keys
-                .Select(x => ustring.Make(x))
+                .Select(ustring.Make)
                 .ToArray();
             smoothLevels.Events()
                 .SelectedItemChanged

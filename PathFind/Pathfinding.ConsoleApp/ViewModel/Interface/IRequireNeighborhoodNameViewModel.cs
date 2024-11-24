@@ -1,6 +1,6 @@
 ﻿namespace Pathfinding.ConsoleApp.ViewModel.Interface
 {
-    internal interface INeighborhoodNameViewModel
+    internal interface IRequireNeighborhoodNameViewModel
     {
         public string Neighborhood { get; set; }
     }

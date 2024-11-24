@@ -1,11 +1,9 @@
-﻿using Pathfinding.Service.Interface;
-
-namespace Pathfinding.ConsoleApp.ViewModel.Interface
+﻿namespace Pathfinding.ConsoleApp.ViewModel.Interface
 {
     internal interface IRequireHeuristicsViewModel
     {
-        public (string Name, IHeuristic Heuristic) Heuristic { get; set; }
+        string Heuristic { get; set; }
 
-        public double Weight { get; set; }
+        double Weight { get; set; }
     }
 }

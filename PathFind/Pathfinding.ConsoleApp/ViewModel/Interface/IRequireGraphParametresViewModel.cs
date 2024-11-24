@@ -1,6 +1,6 @@
 ﻿namespace Pathfinding.ConsoleApp.ViewModel.Interface
 {
-    internal interface IGraphParametresViewModel
+    internal interface IRequireGraphParametresViewModel
     {
         public int Width { get; set; }
 

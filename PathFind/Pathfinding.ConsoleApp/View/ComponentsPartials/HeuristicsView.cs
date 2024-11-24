@@ -14,7 +14,7 @@ namespace Pathfinding.ConsoleApp.View
             heuristics.X = 1;
             heuristics.Y = 1;
             X = Pos.Percent(55);
-            Y = 0;
+            Y = 1;
             Height = Dim.Percent(50);
             Width = Dim.Percent(45);
             Border = new Border()

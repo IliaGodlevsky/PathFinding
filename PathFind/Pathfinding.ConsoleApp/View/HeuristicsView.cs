@@ -3,7 +3,8 @@ using CommunityToolkit.Mvvm.Messaging;
 using NStack;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
-using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
+using Pathfinding.Domain.Core;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
 using ReactiveMarbles.ObservableEvents;
@@ -17,40 +18,35 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class HeuristicsView : FrameView
     {
-        private static readonly InclusiveValueRange<double> WeightRange = (5, 0);
         private const double DefaultWeight = 1;
 
-        private readonly HeuristicsViewModel viewModel;
+        private static readonly InclusiveValueRange<double> WeightRange = (5, 0);
+
         private readonly ustring[] radioLabels;
-
         private readonly CompositeDisposable disposables = new();
+        private readonly IRequireHeuristicsViewModel heuristicsViewModel;
 
-        public HeuristicsView([KeyFilter(KeyFilters.Views)] IMessenger messenger,
-            HeuristicsViewModel viewModel)
+        public HeuristicsView(
+            [KeyFilter(KeyFilters.Views)] IMessenger messenger,
+            IRequireHeuristicsViewModel heuristicsViewModel)
         {
             Initialize();
-            this.viewModel = viewModel;
-            radioLabels = viewModel.Heuristics.Keys.Select(ustring.Make).ToArray();
+            var heuristic = new[] 
+            { 
+                HeuristicNames.Euclidian, 
+                HeuristicNames.Chebyshev, 
+                HeuristicNames.Diagonal, 
+                HeuristicNames.Manhattan, 
+                HeuristicNames.Cosine 
+            };
+            radioLabels = heuristic.Select(ustring.Make).ToArray();
             heuristics.RadioLabels = radioLabels;
-            messenger.Register<HeuristicsViewModelChangedMessage>(this, OnViewModelChanged);
-            messenger.Register<OpenHeuristicsViewMessage>(this, OnOpen);
-            messenger.Register<CloseHeuristicsViewMessage>(this, OnHeuristicsViewClosed);
-            messenger.Register<CloseAlgorithmCreationViewMessage>(this, OnRunCreationViewClosed);
-        }
-
-        private void OnViewModelChanged(object recipient, HeuristicsViewModelChangedMessage msg)
-        {
-            var heuristic = viewModel.Heuristics;
-            disposables.Clear();
             heuristics.Events()
                .SelectedItemChanged
                .Where(x => x.SelectedItem > -1)
-               .Select(x => x.SelectedItem)
-               .Select(x => (Name: radioLabels[x].ToString(),
-                        Rule: heuristic[radioLabels[x].ToString()]))
-               .BindTo(msg.ViewModel, x => x.Heuristic)
+               .Select(x => radioLabels[x.SelectedItem].ToString())
+               .BindTo(heuristicsViewModel, x => x.Heuristic)
                .DisposeWith(disposables);
-            heuristics.SelectedItem = 0;
             weightTextField.Events()
                 .TextChanging
                 .Select(x =>
@@ -72,26 +68,35 @@ namespace Pathfinding.ConsoleApp.View
                     }
                     return -1;
                 })
-                .BindTo(msg.ViewModel, x => x.Weight)
+                .BindTo(heuristicsViewModel, x => x.Weight)
                 .DisposeWith(disposables);
-            msg.ViewModel.Weight = DefaultWeight;
-            weightTextField.Text = DefaultWeight.ToString();
+            messenger.Register<OpenHeuristicsViewMessage>(this, OnOpen);
+            messenger.Register<CloseHeuristicsViewMessage>(this, OnHeuristicsViewClosed);
+            messenger.Register<CloseAlgorithmCreationViewMessage>(this, OnRunCreationViewClosed);
+            this.heuristicsViewModel = heuristicsViewModel;
         }
 
         private void OnOpen(object recipient, OpenHeuristicsViewMessage msg)
         {
+            heuristicsViewModel.Weight = DefaultWeight;
+            weightTextField.Text = DefaultWeight.ToString();
+            heuristics.SelectedItem = 0;
             Visible = true;
         }
 
         private void OnHeuristicsViewClosed(object recipient, CloseHeuristicsViewMessage msg)
         {
-            disposables.Clear();
+            heuristicsViewModel.Weight = DefaultWeight;
+            weightTextField.Text = DefaultWeight.ToString();
+            heuristicsViewModel.Heuristic = default;
             Visible = false;
         }
 
         private void OnRunCreationViewClosed(object recipient, CloseAlgorithmCreationViewMessage msg)
         {
-            disposables.Clear();
+            heuristicsViewModel.Weight = DefaultWeight;
+            weightTextField.Text = DefaultWeight.ToString();
+            heuristicsViewModel.Heuristic = default;
             Visible = false;
         }
     }

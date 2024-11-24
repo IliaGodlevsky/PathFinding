@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Serialization;
 using System.Reactive.Linq;
@@ -71,6 +72,56 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                         It.IsAny<Stream>(),
                         It.IsAny<CancellationToken>()), Times.Once);
             });
+        }
+
+        [Test]
+        public async Task ExportGraphCommand_NullStream_ShouldNotExport()
+        {
+            using var mock = AutoMock.GetLoose();
+
+            var viewModel = mock.Create<GraphExportViewModel>();
+
+            var command = viewModel.ExportGraphCommand;
+            if (await command.CanExecute.FirstOrDefaultAsync())
+            {
+                await command.Execute(() => Stream.Null);
+            }
+
+            Assert.Multiple(() =>
+            {
+                mock.Mock<IRequestService<GraphVertexModel>>()
+                    .Verify(x => x.ReadSerializationHistoriesAsync(
+                        It.IsAny<IEnumerable<int>>(),
+                        It.IsAny<CancellationToken>()), Times.Never);
+
+                mock.Mock<ISerializer<IEnumerable<PathfindingHistorySerializationModel>>>()
+                    .Verify(x => x.SerializeToAsync(
+                        It.IsAny<IEnumerable<PathfindingHistorySerializationModel>>(),
+                        It.IsAny<Stream>(),
+                        It.IsAny<CancellationToken>()), Times.Never);
+            });
+        }
+
+        [Test]
+        public async Task ExportGraphCommand_ThrowsException_ShouldLogError()
+        {
+            using var mock = AutoMock.GetLoose();
+
+            mock.Mock<IRequestService<GraphVertexModel>>()
+                .Setup(x => x.ReadSerializationHistoriesAsync(
+                    It.IsAny<IEnumerable<int>>(),
+                    It.IsAny<CancellationToken>()))
+                .Throws(new Exception());
+
+            var viewModel = mock.Create<GraphExportViewModel>();
+
+            var command = viewModel.ExportGraphCommand;
+            await command.Execute(() => new MemoryStream());
+
+            mock.Mock<ILog>()
+                .Verify(x => x.Error(
+                    It.IsAny<Exception>(),
+                    It.IsAny<string>()), Times.Once);
         }
     }
 }
