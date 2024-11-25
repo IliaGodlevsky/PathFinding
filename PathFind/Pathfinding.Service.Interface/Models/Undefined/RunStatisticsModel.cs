@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pathfinding.Domain.Core;
+using System;
 
 namespace Pathfinding.Service.Interface.Models.Undefined
 {
@@ -6,17 +7,17 @@ namespace Pathfinding.Service.Interface.Models.Undefined
     {
         public int Id { get; set; }
 
-        public string AlgorithmName { get; set; }
+        public Domain.Core.Algorithms Algorithm { get; set; }
 
-        public string Heuristics { get; set; } = null;
+        public HeuristicFunctions? Heuristics { get; set; } = null;
 
         public double? Weight { get; set; } = null;
 
-        public string StepRule { get; set; } = null;
+        public StepRules? StepRule { get; set; } = null;
 
         public int Visited { get; set; }
 
-        public string ResultStatus { get; set; } = string.Empty;
+        public RunStatuses ResultStatus { get; set; }
 
         public TimeSpan Elapsed { get; set; }
 

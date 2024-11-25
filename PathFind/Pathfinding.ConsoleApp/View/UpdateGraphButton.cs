@@ -12,12 +12,9 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed class UpdateGraphButton : Button
     {
-        private readonly IMessenger messenger;
-
         public UpdateGraphButton([KeyFilter(KeyFilters.Views)] IMessenger messenger,
             GraphUpdateViewModel viewModel)
         {
-            this.messenger = messenger;
             X = Pos.Percent(16.67f);
             Y = 0;
             Width = Dim.Percent(16.67f);

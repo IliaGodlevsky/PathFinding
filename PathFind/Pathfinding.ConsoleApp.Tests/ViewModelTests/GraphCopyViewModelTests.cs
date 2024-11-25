@@ -41,11 +41,8 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                     Graph = new()
                     {
                         Id = x,
-                        SmoothLevel = string.Empty,
-                        IsReadOnly = false,
                         Graph = Graph<GraphVertexModel>.Empty,
-                        Name = string.Empty,
-                        Neighborhood = string.Empty,
+                        Name = string.Empty
                     }
                 }).ToList();
 

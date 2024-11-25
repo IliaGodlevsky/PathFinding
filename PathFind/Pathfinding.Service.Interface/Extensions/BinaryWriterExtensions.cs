@@ -27,6 +27,16 @@ namespace Pathfinding.Service.Interface.Extensions
             }
         }
 
+        public static void WriteNullableInt32(this BinaryWriter writer, int? value)
+        {
+            bool isNull = !value.HasValue;
+            writer.Write(isNull);
+            if (!isNull)
+            {
+                writer.Write(value.Value);
+            }
+        }
+
         public static void Write(this BinaryWriter writer, double? value)
         {
             bool hasValue = value.HasValue;

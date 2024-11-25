@@ -1,6 +1,7 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using NStack;
+using Pathfinding.ConsoleApp.Extensions;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
@@ -9,6 +10,7 @@ using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
+using System;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -31,20 +33,17 @@ namespace Pathfinding.ConsoleApp.View
             IRequireHeuristicsViewModel heuristicsViewModel)
         {
             Initialize();
-            var heuristic = new[] 
-            { 
-                HeuristicNames.Euclidian, 
-                HeuristicNames.Chebyshev, 
-                HeuristicNames.Diagonal, 
-                HeuristicNames.Manhattan, 
-                HeuristicNames.Cosine 
-            };
-            radioLabels = heuristic.Select(ustring.Make).ToArray();
+            var heurs = Enum.GetValues(typeof(HeuristicFunctions))
+                .Cast<HeuristicFunctions>()
+                .ToDictionary(x => x.ToStringRepresentation());
+            var labels = heurs.Keys.Select(ustring.Make).ToArray();
+            var values = labels.Select(x => heurs[x.ToString()]).ToList();
+            radioLabels = labels;
             heuristics.RadioLabels = radioLabels;
             heuristics.Events()
                .SelectedItemChanged
                .Where(x => x.SelectedItem > -1)
-               .Select(x => radioLabels[x.SelectedItem].ToString())
+               .Select(x =>values[x.SelectedItem])
                .BindTo(heuristicsViewModel, x => x.Heuristic)
                .DisposeWith(disposables);
             weightTextField.Events()

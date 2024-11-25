@@ -52,7 +52,6 @@ namespace Pathfinding.Infrastructure.Business
                     var graph = history.Graph.Graph;
                     var model = await CreateGraphAsyncInternal(unitOfWork, history.Graph, t)
                         .ConfigureAwait(false);
-                    model.IsReadOnly = history.Statistics.Count > 0;
                     var statistics = mapper.Map<List<Statistics>>(history.Statistics);
                     statistics.ForEach(x => x.GraphId = model.Id);
                     await unitOfWork.StatisticsRepository.CreateAsync(statistics, token);
@@ -113,12 +112,6 @@ namespace Pathfinding.Infrastructure.Business
                 var obstaclesCount = await unitOfWork.GraphRepository.ReadObstaclesCountAsync(ids, token)
                     .ConfigureAwait(false);
                 var infos = mapper.Map<GraphInformationModel[]>(result).ToReadOnly();
-                foreach (var info in infos)
-                {
-                    var runs = await unitOfWork.StatisticsRepository.ReadStatisticsCountAsync(info.Id, token)
-                        .ConfigureAwait(false);
-                    info.IsReadOnly = runs > 0;
-                }
                 infos.ForEach(x => x.ObstaclesCount = obstaclesCount[x.Id]);
                 return infos;
             }, token).ConfigureAwait(false);
@@ -328,7 +321,7 @@ namespace Pathfinding.Infrastructure.Business
                 Name = graphEntity.Name,
                 Neighborhood = graphEntity.Neighborhood,
                 SmoothLevel = graphEntity.SmoothLevel,
-                IsReadOnly = runs.Any()
+                Status = graphEntity.Status,
             };
         }
 

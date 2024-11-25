@@ -15,11 +15,11 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             CREATE TABLE IF NOT EXISTS {DbTables.Statistics} (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                 GraphId INTEGER NOT NULL,
-                AlgorithmName TEXT NOT NULL,
-                Heuristics TEXT,
+                Algorithm INTEGER NOT NULL,
+                Heuristics INTEGER,
                 Weight REAL,
-                StepRule TEXT,
-                ResultStatus TEXT NOT NULL DEFAULT '',
+                StepRule INTEGER,
+                ResultStatus INTEGER NOT NULL DEFAULT '',
                 Elapsed REAL NOT NULL,
                 Steps INTEGER NOT NULL,
                 Cost REAL NOT NULL,
@@ -37,8 +37,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
         public async Task<Statistics> CreateAsync(Statistics entity, CancellationToken token = default)
         {
             const string query = @$"
-                INSERT INTO {DbTables.Statistics} (GraphId, AlgorithmName, Heuristics, StepRule, ResultStatus, Elapsed, Steps, Cost, Visited, Weight)
-                VALUES (@GraphId, @AlgorithmName, @Heuristics, @StepRule, @ResultStatus, @Elapsed, @Steps, @Cost, @Visited, @Weight);
+                INSERT INTO {DbTables.Statistics} (GraphId, Algorithm, Heuristics, StepRule, ResultStatus, Elapsed, Steps, Cost, Visited, Weight)
+                VALUES (@GraphId, @Algorithm, @Heuristics, @StepRule, @ResultStatus, @Elapsed, @Steps, @Cost, @Visited, @Weight);
                 SELECT last_insert_rowid();";
 
             var id = await connection.ExecuteScalarAsync<int>(
@@ -52,8 +52,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
         public async Task<IEnumerable<Statistics>> CreateAsync(IEnumerable<Statistics> statistics, CancellationToken token = default)
         {
             const string query = @$"
-                INSERT INTO {DbTables.Statistics} (GraphId, AlgorithmName, Heuristics, StepRule, ResultStatus, Elapsed, Steps, Cost, Visited, Weight)
-                VALUES (@GraphId, @AlgorithmName, @Heuristics, @StepRule, @ResultStatus, @Elapsed, @Steps, @Cost, @Visited, @Weight);
+                INSERT INTO {DbTables.Statistics} (GraphId, Algorithm, Heuristics, StepRule, ResultStatus, Elapsed, Steps, Cost, Visited, Weight)
+                VALUES (@GraphId, @Algorithm, @Heuristics, @StepRule, @ResultStatus, @Elapsed, @Steps, @Cost, @Visited, @Weight);
                 SELECT last_insert_rowid();";
 
             foreach (var entity in statistics)

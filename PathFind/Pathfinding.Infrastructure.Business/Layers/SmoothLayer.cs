@@ -6,16 +6,27 @@ using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Layers
 {
-    public sealed class SmoothLayer : ILayer
+    public class SmoothLayer : ILayer
     {
+        private readonly int level;
+
+        public SmoothLayer(int level)
+        {
+            this.level = level;
+        }
+
         public void Overlay(IGraph<IVertex> graph)
         {
-            var costs = graph.Select(GetAverageCost);
-            foreach (var (Vertex, Price) in graph.Zip(costs, (v, p) => (Vertex: v, Price: p)))
+            int lvl = level;
+            while (lvl-- > 0)
             {
-                var range = Vertex.Cost.CostRange;
-                int cost = range.ReturnInRange(Price);
-                Vertex.Cost.CurrentCost = cost;
+                var costs = graph.Select(GetAverageCost);
+                foreach (var (Vertex, Price) in graph.Zip(costs, (v, p) => (Vertex: v, Price: p)))
+                {
+                    var range = Vertex.Cost.CostRange;
+                    int cost = range.ReturnInRange(Price);
+                    Vertex.Cost.CurrentCost = cost;
+                }
             }
         }
 

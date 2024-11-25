@@ -5,6 +5,7 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
+using Pathfinding.Domain.Core;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Undefined;
@@ -37,11 +38,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.service = service;
             this.logger = logger;
 
-            messenger.Register<RunCreatedMessaged>(this, OnRunCreated);
+            messenger.Register<RunCreatedMessaged>(this, async (r, msg) => await OnRunCreated(r, msg));
             messenger.Register<GraphActivatedMessage>(this,
                 async (r, msg) => await OnGraphActivatedMessage(r, msg));
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
-            messenger.Register<RunsDeletedMessage>(this, OnRunsDeleteMessage);
+            messenger.Register<RunsDeletedMessage>(this, async (r, msg) => await OnRunsDeleteMessage(r, msg));
 
             SelectRunsCommand = ReactiveCommand.Create<RunInfoModel[]>(SelectRuns);
         }
@@ -73,13 +74,16 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
-        private void OnRunsDeleteMessage(object recipient, RunsDeletedMessage msg)
+        private async Task OnRunsDeleteMessage(object recipient, RunsDeletedMessage msg)
         {
             var toDelete = Runs.Where(x => msg.RunIds.Contains(x.RunId)).ToArray();
             if (toDelete.Length == Runs.Count)
             {
                 Runs.Clear();
-                messenger.Send(new GraphBecameReadOnlyMessage(ActivatedGraphId, false));
+                messenger.Send(new GraphStateChangedMessage(ActivatedGraphId, GraphStatuses.Editable));
+                var graphInfo = await service.ReadGraphInfoAsync(ActivatedGraphId);
+                graphInfo.Status = GraphStatuses.Editable;
+                await service.UpdateGraphInfoAsync(graphInfo);
             }
             else
             {
@@ -87,13 +91,16 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
-        private void OnRunCreated(object recipient, RunCreatedMessaged msg)
+        private async Task OnRunCreated(object recipient, RunCreatedMessaged msg)
         {
             int previousCount = Runs.Count;
             Runs.Add(GetModel(msg.Model));
             if (previousCount == 0)
             {
-                messenger.Send(new GraphBecameReadOnlyMessage(ActivatedGraphId, true));
+                messenger.Send(new GraphStateChangedMessage(ActivatedGraphId, GraphStatuses.Readonly));
+                var graphInfo = await service.ReadGraphInfoAsync(ActivatedGraphId);
+                graphInfo.Status = GraphStatuses.Readonly;
+                await service.UpdateGraphInfoAsync(graphInfo);
             }
         }
 
@@ -102,13 +109,13 @@ namespace Pathfinding.ConsoleApp.ViewModel
             return new()
             {
                 RunId = model.Id,
-                Name = model.AlgorithmName,
+                Name = model.Algorithm,
                 Cost = model.Cost,
                 Steps = model.Steps,
                 Status = model.ResultStatus,
                 StepRule = model.StepRule,
                 Heuristics = model.Heuristics,
-                Weight = model.Weight?.ToString(),
+                Weight = model.Weight,
                 Elapsed = model.Elapsed,
                 Visited = model.Visited
             };

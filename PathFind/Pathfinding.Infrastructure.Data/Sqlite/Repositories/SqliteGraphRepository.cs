@@ -15,8 +15,9 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             CREATE TABLE IF NOT EXISTS {DbTables.Graphs} (
                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                 Name TEXT NOT NULL,
-                Neighborhood TEXT NOT NULL,
-                SmoothLevel TEXT NOT NULL,
+                Neighborhood INTEGER NOT NULL,
+                SmoothLevel INTEGER NOT NULL,
+                Status INTEGER NOT NULL,
                 Dimensions TEXT NOT NULL
             );
             CREATE INDEX IF NOT EXISTS idx_graph_id ON {DbTables.Graphs}(Id);";
@@ -30,8 +31,8 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
         public async Task<Graph> CreateAsync(Graph graph, CancellationToken token = default)
         {
             const string query = @$"
-                INSERT INTO {DbTables.Graphs} (Name, Neighborhood, SmoothLevel, Dimensions)
-                VALUES (@Name, @Neighborhood, @SmoothLevel, @Dimensions);
+                INSERT INTO {DbTables.Graphs} (Name, Neighborhood, SmoothLevel, Status, Dimensions)
+                VALUES (@Name, @Neighborhood, @SmoothLevel, @Status, @Dimensions);
                 SELECT last_insert_rowid();";
 
             var id = await connection.ExecuteScalarAsync<int>(
@@ -86,6 +87,7 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
                 SET Name = @Name,
                     Neighborhood = @Neighborhood,
                     SmoothLevel = @SmoothLevel,
+                    Status = @Status,
                     Dimensions = @Dimensions
                 WHERE Id = @Id";
 

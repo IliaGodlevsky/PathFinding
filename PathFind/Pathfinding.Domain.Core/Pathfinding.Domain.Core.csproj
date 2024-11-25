@@ -42,18 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AlgorithmNames.cs" />
+    <Compile Include="Algorithms.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="GraphStatuses.cs" />
-    <Compile Include="HeuristicNames.cs" />
+    <Compile Include="HeuristicFunctions.cs" />
     <Compile Include="IEntity.cs" />
-    <Compile Include="NeighborhoodNames.cs" />
+    <Compile Include="Neighborhoods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PathfindingRange.cs" />
     <Compile Include="RunStatuses.cs" />
-    <Compile Include="SmoothLevelNames.cs" />
+    <Compile Include="SmoothLevels.cs" />
     <Compile Include="Statistics.cs" />
-    <Compile Include="StepRuleNames.cs" />
+    <Compile Include="StepRules.cs" />
     <Compile Include="Vertex.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

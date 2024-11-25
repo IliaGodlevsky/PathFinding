@@ -28,6 +28,12 @@ namespace Pathfinding.Service.Interface.Extensions
             return hasValue ? reader.ReadDouble() : null;
         }
 
+        public static int? ReadNullableInt32(this BinaryReader reader)
+        {
+            bool isNull = reader.ReadBoolean();
+            return isNull ? null : reader.ReadInt32();
+        }
+
         public static string ReadNullableString(this BinaryReader reader)
         {
             bool isNull = reader.ReadBoolean();

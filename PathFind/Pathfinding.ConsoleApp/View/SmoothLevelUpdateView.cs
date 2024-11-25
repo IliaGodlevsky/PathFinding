@@ -1,6 +1,8 @@
 ﻿using DynamicData;
 using NStack;
+using Pathfinding.ConsoleApp.Extensions;
 using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.Domain.Core;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System;
@@ -13,32 +15,29 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class SmoothLevelUpdateView : FrameView
     {
-        private readonly GraphUpdateViewModel viewModel;
-        private readonly SmoothLevelsViewModel smoothLevelViewModel;
-        private readonly CompositeDisposable disposables = new CompositeDisposable();
+        private readonly CompositeDisposable disposables = new();
 
-        public SmoothLevelUpdateView(
-            GraphUpdateViewModel viewModel,
-            SmoothLevelsViewModel smoothLevelViewModel)
+        public SmoothLevelUpdateView(GraphUpdateViewModel viewModel)
         {
-            this.viewModel = viewModel;
-            this.smoothLevelViewModel = smoothLevelViewModel;
+            var lvls = Enum.GetValues(typeof(SmoothLevels))
+                .Cast<SmoothLevels>()
+                .ToDictionary(x => x.ToStringRepresentation());
             Initialize();
-            smoothLevels.RadioLabels = smoothLevelViewModel.Levels
-                .Keys.Select(x => ustring.Make(x)).ToArray();
+            var labels = lvls.Keys.Select(ustring.Make).ToArray();
+            var values = labels.Select(x => lvls[x.ToString()]).ToList();
+            smoothLevels.RadioLabels = labels;
             smoothLevels.Events()
                 .SelectedItemChanged
-                .Where(x => x.SelectedItem > -1 && !viewModel.IsReadOnly)
-                .Select(x => smoothLevelViewModel.Levels.Keys.ElementAt(x.SelectedItem))
+                .Where(x => x.SelectedItem > -1 && viewModel.Status == GraphStatuses.Editable)
+                .Select(x => values[x.SelectedItem])
                 .BindTo(viewModel, x => x.SmoothLevel)
                 .DisposeWith(disposables);
             viewModel.WhenAnyValue(x => x.SmoothLevel)
-                .Where(x => x != null)
-                .Select(x => smoothLevels.RadioLabels.IndexOf(x))
+                .Select(x => values.IndexOf(x))
                 .BindTo(smoothLevels, x => x.SelectedItem)
                 .DisposeWith(disposables);
-            viewModel.WhenAnyValue(x => x.IsReadOnly)
-                .Select(x => !x)
+            viewModel.WhenAnyValue(x => x.Status)
+                .Select(x => x == GraphStatuses.Readonly ? false : true)
                 .BindTo(this, x => x.Visible);
         }
     }

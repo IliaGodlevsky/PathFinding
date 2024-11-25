@@ -1,9 +1,12 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.ConsoleApp.Extensions;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
+using Pathfinding.Domain.Core;
+using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Shared.Extensions;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
@@ -15,7 +18,9 @@ using System.Linq.Expressions;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Xml.Linq;
 using Terminal.Gui;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -75,11 +80,11 @@ namespace Pathfinding.ConsoleApp.View
                 Width = (int)table.Rows[selectedRow][WidthCol],
                 Length = (int)table.Rows[selectedRow][LengthCol],
                 Name = (string)table.Rows[selectedRow][NameCol],
-                SmoothLevel = (string)table.Rows[selectedRow][SmoothCol],
-                Neighborhood = (string)table.Rows[selectedRow][NeighborsCol],
+                SmoothLevel = (SmoothLevels)table.Rows[selectedRow][SmoothCol],
+                Neighborhood = (Neighborhoods)table.Rows[selectedRow][NeighborsCol],
                 Id = (int)table.Rows[selectedRow][IdCol],
                 Obstacles = (int)table.Rows[selectedRow][ObstaclesCol],
-                Status = (string)table.Rows[selectedRow][StatusCol]
+                Status = (GraphStatuses)table.Rows[selectedRow][StatusCol]
             };
         }
 
@@ -92,8 +97,8 @@ namespace Pathfinding.ConsoleApp.View
                 SetNeedsDisplay();
                 var composite = new CompositeDisposable();
                 BindTo(model, ObstaclesCol, x => x.Obstacles).DisposeWith(composite);
-                BindTo(model, StatusCol, x => x.Status).DisposeWith(composite);
                 BindTo(model, NameCol, x => x.Name).DisposeWith(composite);
+                BindTo(model, StatusCol, x => x.Status).DisposeWith(composite);
                 BindTo(model, SmoothCol, x => x.SmoothLevel).DisposeWith(composite);
                 BindTo(model, NeighborsCol, x => x.Neighborhood).DisposeWith(composite);
                 modelChangingSubs.Add(model.Id, composite);

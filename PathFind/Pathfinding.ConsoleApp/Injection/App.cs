@@ -1,17 +1,14 @@
 ﻿using Autofac;
 using Autofac.Features.AttributeFilters;
-using Autofac.Features.Metadata;
 using AutoMapper;
 using AutoMapper.Configuration;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.View;
 using Pathfinding.ConsoleApp.ViewModel;
-using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Business;
 using Pathfinding.Infrastructure.Business.Commands;
-using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Infrastructure.Business.Mappings;
 using Pathfinding.Infrastructure.Business.Serializers;
 using Pathfinding.Infrastructure.Business.Serializers.Decorators;
@@ -36,22 +33,6 @@ namespace Pathfinding.ConsoleApp.Injection
                 .As<IGraphAssemble<GraphVertexModel>>().SingleInstance();
             builder.RegisterType<GraphAssemble<RunVertexModel>>()
                 .As<IGraphAssemble<RunVertexModel>>().SingleInstance();
-
-            builder.RegisterType<SmoothLayer>().As<ILayer>().WithMetadata(MetadataKeys.SmoothKey, 0)
-                .WithMetadata(MetadataKeys.NameKey, SmoothLevelNames.No).SingleInstance();
-            builder.RegisterType<SmoothLayer>().As<ILayer>().WithMetadata(MetadataKeys.SmoothKey, 1)
-                .WithMetadata(MetadataKeys.NameKey, SmoothLevelNames.Low).SingleInstance();
-            builder.RegisterType<SmoothLayer>().As<ILayer>().WithMetadata(MetadataKeys.SmoothKey, 2)
-                .WithMetadata(MetadataKeys.NameKey, SmoothLevelNames.Medium).SingleInstance();
-            builder.RegisterType<SmoothLayer>().As<ILayer>().WithMetadata(MetadataKeys.SmoothKey, 4)
-                .WithMetadata(MetadataKeys.NameKey, SmoothLevelNames.High).SingleInstance();
-            builder.RegisterType<SmoothLayer>().As<ILayer>().WithMetadata(MetadataKeys.SmoothKey, 7)
-                .WithMetadata(MetadataKeys.NameKey, SmoothLevelNames.Extreme).SingleInstance();
-
-            builder.RegisterType<MooreNeighborhoodFactory>().As<INeighborhoodFactory>()
-                .SingleInstance().WithMetadata(MetadataKeys.NameKey, NeighborhoodNames.Moore);
-            builder.RegisterType<VonNeumannNeighborhoodFactory>().As<INeighborhoodFactory>()
-                .SingleInstance().WithMetadata(MetadataKeys.NameKey, NeighborhoodNames.VonNeumann);
 
             builder.Register(_ => new SqliteUnitOfWorkFactory(AppSettings.Default.ConnectionString))
                 .As<IUnitOfWorkFactory>().SingleInstance();
@@ -104,10 +85,6 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterAssemblyTypes(typeof(BaseViewModel).Assembly)
                 .SingleInstance().Where(x => x.Name.EndsWith("ViewModel")).AsSelf()
                 .AsImplementedInterfaces().WithAttributeFiltering();
-            builder.RegisterType<SmoothLevelsViewModel>().AsSelf().SingleInstance()
-                .UsingConstructor(typeof(IEnumerable<Meta<ILayer>>)).WithAttributeFiltering();
-            builder.RegisterType<NeighborhoodFactoriesViewModel>().AsSelf().SingleInstance()
-                .UsingConstructor(typeof(IEnumerable<Meta<INeighborhoodFactory>>));
 
             builder.RegisterType<MainView>().AsSelf().WithAttributeFiltering();
 

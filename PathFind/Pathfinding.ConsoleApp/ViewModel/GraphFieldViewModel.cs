@@ -5,6 +5,7 @@ using Pathfinding.ConsoleApp.Messages;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
+using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
@@ -66,7 +67,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.logger = logger;
             messenger.Register<GraphActivatedMessage, int>(this, Tokens.GraphField, OnGraphActivated);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
-            messenger.Register<GraphBecameReadOnlyMessage>(this, OnGraphBecameReadonly);
+            messenger.Register<GraphStateChangedMessage>(this, OnGraphBecameReadonly);
             var canExecute = this.WhenAnyValue(
                 x => x.GraphId,
                 x => x.Graph,
@@ -141,12 +142,12 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             Graph = msg.Graph.Graph;
             GraphId = msg.Graph.Id;
-            IsReadOnly = msg.Graph.IsReadOnly;
+            IsReadOnly = msg.Graph.Status == GraphStatuses.Readonly;
         }
 
-        private void OnGraphBecameReadonly(object recipient, GraphBecameReadOnlyMessage msg)
+        private void OnGraphBecameReadonly(object recipient, GraphStateChangedMessage msg)
         {
-            IsReadOnly = msg.Became;
+            IsReadOnly = msg.Status == GraphStatuses.Readonly;
         }
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)

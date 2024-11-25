@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pathfinding.Domain.Core;
+using System;
 
 namespace Pathfinding.ConsoleApp.Model
 {
@@ -6,7 +7,7 @@ namespace Pathfinding.ConsoleApp.Model
     {
         public int RunId { get; set; }
 
-        public string Name { get; set; }
+        public Algorithms Name { get; set; }
 
         public int Visited { get; set; }
 
@@ -16,13 +17,13 @@ namespace Pathfinding.ConsoleApp.Model
 
         public TimeSpan Elapsed { get; set; }
 
-        public string StepRule { get; set; }
+        public StepRules? StepRule { get; set; }
 
-        public string Heuristics { get; set; }
+        public HeuristicFunctions? Heuristics { get; set; }
 
-        public string Weight { get; set; }
+        public double? Weight { get; set; }
 
-        public string Status { get; set; }
+        public RunStatuses Status { get; set; }
 
         public object[] GetProperties()
         {

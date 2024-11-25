@@ -4,6 +4,7 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
+using Pathfinding.Domain.Core;
 using Pathfinding.Shared.Extensions;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
@@ -99,23 +100,36 @@ namespace Pathfinding.ConsoleApp.View
             return new()
             {
                 RunId = (int)Table.Rows[selectedRow][IdCol],
-                Name = Table.Rows[selectedRow][AlgorithmCol].ToString(),
+                Name = (Algorithms)Table.Rows[selectedRow][AlgorithmCol],
                 Visited = (int)Table.Rows[selectedRow][VisitedCol],
                 Steps = (int)Table.Rows[selectedRow][StepsCol],
                 Cost = (double)Table.Rows[selectedRow][CostCol],
                 Elapsed = (TimeSpan)Table.Rows[selectedRow][ElapsedCol],
-                StepRule = Table.Rows[selectedRow][StepCol].ToString(),
-                Heuristics = Table.Rows[selectedRow][LogicCol].ToString(),
-                Weight = Table.Rows[selectedRow][WeightCol].ToString(),
-                Status = Table.Rows[selectedRow][StatusCol].ToString()
+                StepRule = FromTableValue<StepRules>(Table.Rows[selectedRow][StepCol]),
+                Heuristics = FromTableValue<HeuristicFunctions>(Table.Rows[selectedRow][LogicCol]),
+                Weight = FromTableValue<double>(Table.Rows[selectedRow][WeightCol]),
+                Status = (RunStatuses)Table.Rows[selectedRow][StatusCol]
             };
         }
+
+        private T? FromTableValue<T>(object value)
+            where T : struct => value is DBNull ? null : (T?)value;
+
+        private object ToTableValue<T>(T? value)
+            where T : struct => value == null ? DBNull.Value : value.Value;
 
         private void OnAdded(RunInfoModel model)
         {
             Application.MainLoop.Invoke(() =>
             {
-                Table.Rows.Add(model.GetProperties());
+                Table.Rows.Add(model.RunId, 
+                    model.Name, model.Visited,
+                    model.Steps, 
+                    model.Cost, model.Elapsed, 
+                    ToTableValue(model.StepRule),
+                    ToTableValue(model.Heuristics), 
+                    ToTableValue(model.Weight), 
+                    model.Status);
                 Table.AcceptChanges();
                 SetNeedsDisplay();
                 SetCursorInvisible();

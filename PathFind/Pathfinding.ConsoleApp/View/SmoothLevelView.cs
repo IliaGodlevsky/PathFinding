@@ -1,8 +1,10 @@
 ﻿using NStack;
-using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.ConsoleApp.Extensions;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
+using Pathfinding.Domain.Core;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
+using System;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -12,26 +14,24 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class SmoothLevelView : FrameView
     {
-        private readonly IRequireSmoothLevelViewModel viewModel;
-        private readonly SmoothLevelsViewModel smoothLevelViewModel;
-        private readonly CompositeDisposable disposables = new CompositeDisposable();
+        private readonly CompositeDisposable disposables = new();
 
-        public SmoothLevelView(IRequireSmoothLevelViewModel viewModel,
-            SmoothLevelsViewModel smoothLevelViewModel)
+        public SmoothLevelView(IRequireSmoothLevelViewModel viewModel)
         {
-            this.viewModel = viewModel;
-            this.smoothLevelViewModel = smoothLevelViewModel;
+            var smoothLevels = Enum.GetValues(typeof(SmoothLevels))
+                .Cast<SmoothLevels>()
+                .ToDictionary(x => x.ToStringRepresentation());
             Initialize();
-            smoothLevels.RadioLabels = smoothLevelViewModel.Levels.Keys
-                .Select(ustring.Make)
-                .ToArray();
-            smoothLevels.Events()
+            var labels = smoothLevels.Keys.Select(ustring.Make).ToArray();
+            var values = labels.Select(x => smoothLevels[x.ToString()]).ToList();
+            this.smoothLevels.RadioLabels = labels;
+            this.smoothLevels.Events()
                 .SelectedItemChanged
                 .Where(x => x.SelectedItem > -1)
-                .Select(x =>smoothLevelViewModel.Levels.Keys.ElementAt(x.SelectedItem))
+                .Select(x => values[x.SelectedItem])
                 .BindTo(viewModel, x => x.SmoothLevel)
                 .DisposeWith(disposables);
-            smoothLevels.SelectedItem = 0;
+            this.smoothLevels.SelectedItem = 0;
             VisibleChanged += OnVisibilityChanged;
         }
 

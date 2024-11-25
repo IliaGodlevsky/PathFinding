@@ -4,7 +4,6 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
-using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
@@ -58,9 +57,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                         Id = x.Graph.Id,
                         SmoothLevel = x.Graph.SmoothLevel,
                         Obstacles = x.Graph.Graph.GetObstaclesCount(),
-                        Status = x.Graph.IsReadOnly
-                            ? GraphStatuses.Readonly
-                            : GraphStatuses.Editable
+                        Status = x.Graph.Status
                     }).ToArray();
                     messenger.Send(new GraphCreatedMessage(graphs));
                     logger.Info(graphs.Length > 0 ? "Graphs were loaded" : "Graph was loaded");

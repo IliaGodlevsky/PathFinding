@@ -5,6 +5,7 @@ using Pathfinding.ConsoleApp.Messages;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
+using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
@@ -111,7 +112,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<IsVertexInRangeRequest>(this, OnVertexIsInRangeRecieved);
             messenger.Register<QueryPathfindingRangeMessage>(this, OnGetPathfindingRangeRecieved);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
-            messenger.Register<GraphBecameReadOnlyMessage>(this, OnGraphBecameReadonly);
+            messenger.Register<GraphStateChangedMessage>(this, OnGraphBecameReadonly);
             messenger.Register<GraphActivatedMessage, int>(this, Tokens.PathfindingRange,
                 async (r, msg) => await OnGraphActivated(msg));
             AddToRangeCommand = ReactiveCommand.Create<GraphVertexModel>(AddVertexToRange, CanExecute());
@@ -210,7 +211,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 ClearRange();
                 Graph = msg.Graph.Graph;
                 GraphId = msg.Graph.Id;
-                IsReadOnly = msg.Graph.IsReadOnly;
+                IsReadOnly = msg.Graph.Status == GraphStatuses.Readonly;
                 var range = await service.ReadRangeAsync(GraphId).ConfigureAwait(false);
                 var src = range.FirstOrDefault(x => x.IsSource);
                 Source = src != null ? Graph.Get(src.Position) : null;
@@ -225,9 +226,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }, logger.Error).ConfigureAwait(false);
         }
 
-        private void OnGraphBecameReadonly(object recipient, GraphBecameReadOnlyMessage msg)
+        private void OnGraphBecameReadonly(object recipient, GraphStateChangedMessage msg)
         {
-            IsReadOnly = msg.Became;
+            IsReadOnly = msg.Status == GraphStatuses.Readonly;
         }
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)

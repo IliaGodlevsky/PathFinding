@@ -107,8 +107,6 @@
     <Compile Include="LiteDb\Repositories\LiteDbGraphRepository.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbStatisticsRepository.cs" />
     <Compile Include="LiteDb\Repositories\LiteDbVerticesRepository.cs" />
-    <Compile Include="Pathfinding\Factories\MooreNeighborhoodFactory.cs" />
-    <Compile Include="Pathfinding\Factories\VonNeumannNeighborhoodFactory.cs" />
     <Compile Include="Pathfinding\Graph.cs" />
     <Compile Include="Pathfinding\Factories\GraphAssemble.cs" />
     <Compile Include="Pathfinding\MooreNeighborhood.cs" />

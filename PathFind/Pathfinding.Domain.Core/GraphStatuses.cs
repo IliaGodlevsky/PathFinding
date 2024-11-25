@@ -1,8 +1,8 @@
 ﻿namespace Pathfinding.Domain.Core
 {
-    public static class GraphStatuses
+    public enum GraphStatuses
     {
-        public const string Editable = "Editable";
-        public const string Readonly = "Readonly";
+        Editable = 0,
+        Readonly = 1
     }
 }

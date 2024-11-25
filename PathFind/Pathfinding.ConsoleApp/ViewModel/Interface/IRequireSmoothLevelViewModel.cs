@@ -1,7 +1,9 @@
-﻿namespace Pathfinding.ConsoleApp.ViewModel.Interface
+﻿using Pathfinding.Domain.Core;
+
+namespace Pathfinding.ConsoleApp.ViewModel.Interface
 {
     internal interface IRequireSmoothLevelViewModel
     {
-        public string SmoothLevel { get; set; }
+        public SmoothLevels SmoothLevel { get; set; }
     }
 }

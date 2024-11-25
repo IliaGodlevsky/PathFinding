@@ -11,7 +11,6 @@ using System;
 using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
-using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
@@ -28,15 +27,15 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref selectedGraph, value);
         }
 
-        private string smoothLevel;
-        public string SmoothLevel
+        private SmoothLevels smoothLevel;
+        public SmoothLevels SmoothLevel
         {
             get => smoothLevel;
             set => this.RaiseAndSetIfChanged(ref smoothLevel, value);
         }
 
-        private string neighborhood;
-        public string Neighborhood
+        private Neighborhoods neighborhood;
+        public Neighborhoods Neighborhood
         {
             get => neighborhood;
             set => this.RaiseAndSetIfChanged(ref neighborhood, value);
@@ -49,14 +48,14 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref name, value);
         }
 
-        private bool isReadOnly;
-        public bool IsReadOnly
+        private GraphStatuses status;
+        public GraphStatuses Status
         {
-            get => isReadOnly;
-            set => this.RaiseAndSetIfChanged(ref isReadOnly, value);
+            get => status;
+            set => this.RaiseAndSetIfChanged(ref status, value);
         }
 
-        public ReactiveCommand<MouseEventArgs, Unit> UpdateGraphCommand { get; }
+        public ReactiveCommand<Unit, Unit> UpdateGraphCommand { get; }
 
         public GraphUpdateViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             IRequestService<GraphVertexModel> service,
@@ -66,25 +65,21 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.service = service;
             this.log = log;
             messenger.Register<GraphSelectedMessage>(this, OnGraphSelected);
-            messenger.Register<GraphBecameReadOnlyMessage>(this, OnBecameReadOnly);
+            messenger.Register<GraphStateChangedMessage>(this, OnStatusChanged);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
-            UpdateGraphCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(ExecuteUpdate, CanExecute());
+            UpdateGraphCommand = ReactiveCommand.CreateFromTask(ExecuteUpdate, CanExecute());
         }
 
         private IObservable<bool> CanExecute()
         {
-            return this.WhenAnyValue(x => x.SelectedGraphs,
+            return this.WhenAnyValue(
+                x => x.SelectedGraphs,
                 x => x.Name,
-                x => x.SmoothLevel,
-                x => x.Neighborhood,
-                (selected, name, level, neighbor)
-                => selected.Length == 1
-                    && !string.IsNullOrEmpty(name)
-                    && !string.IsNullOrEmpty(level)
-                    && !string.IsNullOrEmpty(neighbor));
+                (selected, name) 
+                => selected.Length == 1 && !string.IsNullOrEmpty(name));
         }
 
-        private async Task ExecuteUpdate(MouseEventArgs e)
+        private async Task ExecuteUpdate()
         {
             await ExecuteSafe(async () =>
             {
@@ -101,9 +96,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }, log.Error).ConfigureAwait(false);
         }
 
-        private void OnBecameReadOnly(object recipient, GraphBecameReadOnlyMessage msg)
+        private void OnStatusChanged(object recipient, GraphStateChangedMessage msg)
         {
-            IsReadOnly = msg.Became;
+            Status = msg.Status;
         }
 
         private void OnGraphSelected(object recipient, GraphSelectedMessage msg)
@@ -115,7 +110,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 Name = graph.Name;
                 SmoothLevel = graph.SmoothLevel;
                 Neighborhood = graph.Neighborhood;
-                IsReadOnly = graph.Status == GraphStatuses.Readonly;
+                Status = graph.Status;
             }
         }
 
@@ -125,8 +120,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
             if (SelectedGraphs.Length == 0)
             {
                 Name = string.Empty;
-                Neighborhood = string.Empty;
-                SmoothLevel = string.Empty;
             }
         }
     }

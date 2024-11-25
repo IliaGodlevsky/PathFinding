@@ -25,7 +25,7 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks.Data
         static BenchmarkRange()
         {
             var assemble = new GraphAssemble<BenchmarkVertex>();
-            var neighborhoodLayer = new NeighborhoodLayer();
+            var neighborhoodLayer = new VonNeumannNeighborhoodLayer();
             var random = new CongruentialRandom();
             var costLayer = new VertexCostLayer(
                 new InclusiveValueRange<int>(9, 1),

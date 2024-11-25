@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using Pathfinding.Domain.Core;
+using ReactiveUI;
 
 namespace Pathfinding.ConsoleApp.Model
 {
@@ -13,15 +14,15 @@ namespace Pathfinding.ConsoleApp.Model
             set => this.RaiseAndSetIfChanged(ref name, value);
         }
 
-        private string neighorhood;
-        public string Neighborhood
+        private Neighborhoods neighorhood;
+        public Neighborhoods Neighborhood
         {
             get => neighorhood;
             set => this.RaiseAndSetIfChanged(ref neighorhood, value);
         }
 
-        private string smoothLevel;
-        public string SmoothLevel
+        private SmoothLevels smoothLevel;
+        public SmoothLevels SmoothLevel
         {
             get => smoothLevel;
             set => this.RaiseAndSetIfChanged(ref smoothLevel, value);
@@ -48,8 +49,8 @@ namespace Pathfinding.ConsoleApp.Model
             set => this.RaiseAndSetIfChanged(ref obstacles, value);
         }
 
-        private string status;
-        public string Status
+        private GraphStatuses status;
+        public GraphStatuses Status
         {
             get => status;
             set => this.RaiseAndSetIfChanged(ref status, value);

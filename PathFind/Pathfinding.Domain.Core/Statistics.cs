@@ -6,15 +6,15 @@
 
         public int GraphId { get; set; }
 
-        public string AlgorithmName { get; set; }
+        public Algorithms Algorithm { get; set; }
 
-        public string Heuristics { get; set; } = null;
+        public HeuristicFunctions? Heuristics { get; set; } = null;
 
         public double? Weight { get; set; } = null;
 
-        public string StepRule { get; set; } = null;
+        public StepRules? StepRule { get; set; } = null;
 
-        public string ResultStatus { get; set; } = string.Empty;
+        public RunStatuses ResultStatus { get; set; }
 
         public double Elapsed { get; set; }
 

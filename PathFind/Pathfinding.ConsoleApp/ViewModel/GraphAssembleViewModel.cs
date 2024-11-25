@@ -64,15 +64,15 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref obstacles, value);
         }
 
-        private string level;
-        public string SmoothLevel
+        private SmoothLevels level;
+        public SmoothLevels SmoothLevel
         {
             get => level;
             set => this.RaiseAndSetIfChanged(ref level, value);
         }
 
-        private string neighborhood;
-        public string Neighborhood
+        private Neighborhoods neighborhood;
+        public Neighborhoods Neighborhood
         {
             get => neighborhood;
             set => this.RaiseAndSetIfChanged(ref neighborhood, value);
@@ -99,14 +99,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 x => x.Length,
                 x => x.Obstacles,
                 x => x.Name,
-                x => x.Neighborhood,
-                x => x.SmoothLevel,
-                (width, length, obstacles, name, factory, smooth) =>
+                (width, length, obstacles, name) =>
                 {
                     return width > 0 && length > 0
                         && obstacles >= 0 
-                        && !string.IsNullOrEmpty(factory)
-                        && !string.IsNullOrEmpty(smooth)
                         && !string.IsNullOrEmpty(name);
                 });
         }
@@ -126,7 +122,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     Graph = graph,
                     Name = Name,
                     Neighborhood = Neighborhood,
-                    SmoothLevel = SmoothLevel
+                    SmoothLevel = SmoothLevel,
+                    Status = GraphStatuses.Editable
                 };
                 var graphModel = await service.CreateGraphAsync(request).ConfigureAwait(false);
                 var info = new GraphInfoModel()

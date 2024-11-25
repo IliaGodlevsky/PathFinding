@@ -1,4 +1,4 @@
-﻿using Pathfinding.ConsoleApp.ViewModel;
+﻿using Pathfinding.ConsoleApp.ViewModel.Interface;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System.Reactive;
@@ -12,7 +12,7 @@ namespace Pathfinding.ConsoleApp.View
     {
         private readonly CompositeDisposable disposables = new();
 
-        public DeleteRunButton(DeleteRunButtonViewModel viewModel)
+        public DeleteRunButton(IDeleteRunViewModel viewModel)
         {
             Initialize();
             this.Events().MouseClick

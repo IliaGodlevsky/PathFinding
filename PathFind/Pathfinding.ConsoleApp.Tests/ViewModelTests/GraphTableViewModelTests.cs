@@ -1,16 +1,10 @@
-﻿using Autofac;
-using Autofac.Extras.Moq;
-using Autofac.Features.AttributeFilters;
-using Autofac.Features.Metadata;
+﻿using Autofac.Extras.Moq;
 using CommunityToolkit.Mvvm.Messaging;
 using Moq;
 using NUnit.Framework;
-using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel;
-using Pathfinding.Domain.Core;
-using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
@@ -25,7 +19,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
         [Test]
         public async Task LoadGraphsCommand_ShouldAddGraphs()
         {
-            using var mock = AutoMock.GetLoose(RegisterSmoothLevels);
+            using var mock = AutoMock.GetLoose();
 
             IReadOnlyCollection<GraphInformationModel> graphs =
                 Enumerable.Range(1, 5).Select(x => new GraphInformationModel 
@@ -53,7 +47,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
         [Test]
         public async Task LoadGraphsCommand_ThrowsException_ShouldLogError()
         {
-            using var mock = AutoMock.GetLoose(RegisterSmoothLevels);
+            using var mock = AutoMock.GetLoose();
 
             mock.Mock<IRequestService<GraphVertexModel>>()
                  .Setup(x => x.ReadAllGraphInfoAsync(It.IsAny<CancellationToken>()))
@@ -72,16 +66,13 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
         [Test]
         public async Task ActvateGraphCommand_ShouldSendMessage()
         {
-            using var mock = AutoMock.GetLoose(RegisterSmoothLevels);
+            using var mock = AutoMock.GetLoose();
 
             var graph = new GraphModel<GraphVertexModel>()
             {
                 Id = 1,
                 Name = "Test",
-                Neighborhood = NeighborhoodNames.Moore,
-                SmoothLevel = SmoothLevelNames.No,
-                Graph = Graph<GraphVertexModel>.Empty,
-                IsReadOnly = false
+                Graph = Graph<GraphVertexModel>.Empty
             };
 
             mock.Mock<IRequestService<GraphVertexModel>>()
@@ -116,7 +107,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
         [Test]
         public async Task ActivateGraphCommand_ThrowException_ShouldLogError()
         {
-            using var mock = AutoMock.GetLoose(RegisterSmoothLevels);
+            using var mock = AutoMock.GetLoose();
 
             mock.Mock<IRequestService<GraphVertexModel>>()
                .Setup(x => x.ReadGraphAsync(
@@ -137,7 +128,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
         [Test]
         public async Task SelectedGraphsCommand_ShouldSendMessage()
         {
-            using var mock = AutoMock.GetLoose(RegisterSmoothLevels);
+            using var mock = AutoMock.GetLoose();
 
             var models = Enumerable.Range(1, 5)
                 .Select(x => new GraphInfoModel { Id = 1 })
@@ -158,18 +149,5 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
         //{
         //    using var mock = AutoMock.GetLoose(RegisterSmoothLevels);
         //}
-
-        private static void RegisterSmoothLevels(ContainerBuilder builder)
-        {
-            builder.RegisterType<SmoothLayer>().As<ILayer>()
-                    .WithMetadata(MetadataKeys.SmoothKey, 0)
-                    .WithMetadata(MetadataKeys.NameKey, SmoothLevelNames.No)
-                    .SingleInstance();
-
-            builder.RegisterType<SmoothLevelsViewModel>().AsSelf()
-                .SingleInstance()
-                .UsingConstructor(typeof(IEnumerable<Meta<ILayer>>))
-                .WithAttributeFiltering();
-        }
     }
 }

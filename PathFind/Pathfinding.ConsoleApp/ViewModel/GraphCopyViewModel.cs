@@ -66,9 +66,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     Id = x.Id,
                     SmoothLevel = x.SmoothLevel,
                     Obstacles = x.Graph.GetObstaclesCount(),
-                    Status = x.IsReadOnly
-                        ? GraphStatuses.Readonly
-                        : GraphStatuses.Editable
+                    Status = x.Status
                 }).ToArray();
                 messenger.Send(new GraphCreatedMessage(graphs));
             }, log.Error).ConfigureAwait(false);

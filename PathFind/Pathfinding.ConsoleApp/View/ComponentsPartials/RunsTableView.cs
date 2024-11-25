@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Pathfinding.ConsoleApp.Extensions;
+using Pathfinding.Domain.Core;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using Terminal.Gui;
@@ -34,15 +36,19 @@ namespace Pathfinding.ConsoleApp.View
             var columnStyles = new Dictionary<DataColumn, ColumnStyle>()
             {
                 { Table.Columns[IdCol], new() { Visible = false } },
-                { Table.Columns[AlgorithmCol], new() { MinWidth = 12, MaxWidth = 12, Alignment = TextAlignment.Left } },
+                { Table.Columns[AlgorithmCol], new() { MinWidth = 12, MaxWidth = 12, Alignment = TextAlignment.Left,
+                    RepresentationGetter = AlgorithmToString } },
                 { Table.Columns[VisitedCol], new() { Alignment = TextAlignment.Centered } },
                 { Table.Columns[StepsCol], new() { Alignment = TextAlignment.Centered } },
                 { Table.Columns[CostCol], new() { Alignment = TextAlignment.Centered } },
                 { Table.Columns[ElapsedCol], new() { Format = TimeFormat, Alignment = TextAlignment.Centered } },
-                { Table.Columns[StepCol], new() { MinWidth = 9, MaxWidth = 9, Alignment = TextAlignment.Centered } },
-                { Table.Columns[LogicCol], new() { MinWidth = 9, MaxWidth = 9, Alignment = TextAlignment.Centered } },
+                { Table.Columns[StepCol], new() { MinWidth = 9, MaxWidth = 9, Alignment = TextAlignment.Centered,
+                    RepresentationGetter = StepRulesToString } },
+                { Table.Columns[LogicCol], new() { MinWidth = 9, MaxWidth = 9, Alignment = TextAlignment.Centered,
+                    RepresentationGetter = HeuristicsToString } },
                 { Table.Columns[WeightCol], new() { Alignment = TextAlignment.Left } },
-                { Table.Columns[StatusCol], new() { Alignment = TextAlignment.Centered } }
+                { Table.Columns[StatusCol], new() { Alignment = TextAlignment.Centered,
+                    RepresentationGetter = RunStatusToString } }
             };
             Style = new()
             {
@@ -57,21 +63,45 @@ namespace Pathfinding.ConsoleApp.View
             };
         }
 
+        private static string AlgorithmToString(object algorithm)
+        {
+            var a = (Algorithms)algorithm;
+            return a.ToStringRepresentation();
+        }
+
+        private static string StepRulesToString(object stepRule)
+        {
+            var stepRules = (StepRules?)stepRule;
+            return stepRules?.ToStringRepresentation();
+        }
+
+        private static string HeuristicsToString(object heuristic)
+        {
+            var heuristics = (HeuristicFunctions?)heuristic;
+            return heuristics?.ToStringRepresentation();
+        }
+
+        private static string RunStatusToString(object status)
+        {
+            var s = (RunStatuses)status;
+            return s.ToStringRepresentation();
+        }
+
         public RunsTableView()
         {
             Table = new();
             Table.Columns.AddRange(new DataColumn[]
             {
                 new (IdCol, typeof(int)),
-                new (AlgorithmCol, typeof(string)),
+                new (AlgorithmCol, typeof(Algorithms)),
                 new (VisitedCol, typeof(int)),
                 new (StepsCol, typeof(int)),
                 new (CostCol, typeof(double)),
                 new (ElapsedCol, typeof(TimeSpan)),
-                new (StepCol, typeof(string)),
-                new (LogicCol, typeof(string)),
-                new (WeightCol, typeof(string)),
-                new (StatusCol, typeof(string))
+                new (StepCol, typeof(object)),
+                new (LogicCol, typeof(object)),
+                new (WeightCol, typeof(object)),
+                new (StatusCol, typeof(RunStatuses))
             });
             SetTableStyle();
             int line = 1;

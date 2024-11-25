@@ -138,9 +138,12 @@
     <Compile Include="Extensions\LayerExtensions.cs" />
     <Compile Include="Extensions\PriorityQueueExtensions.cs" />
     <Compile Include="Extensions\SimplePriorityQueueExtensions.cs" />
+    <Compile Include="Extensions\TupleExtensions.cs" />
     <Compile Include="Extensions\VertexExtensions.cs" />
     <Compile Include="Layers\GraphLayer.cs" />
     <Compile Include="Layers\Layers.cs" />
+    <Compile Include="Layers\MooreNeighborhoodLayer.cs" />
+    <Compile Include="Layers\VonNeumannNeighborhoodLayer.cs" />
     <Compile Include="Mappings\GraphMappingProfile.cs" />
     <Compile Include="Mappings\HistoryMappingProfile.cs" />
     <Compile Include="Mappings\StatisticsMappingProfile.cs" />

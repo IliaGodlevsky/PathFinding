@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.Domain.Core;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Read;
@@ -192,7 +193,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
 
                 mock.Mock<IMessenger>()
                     .Verify(x => x.Send(
-                        It.Is<GraphBecameReadOnlyMessage>(x => x.Id == 1 && x.Became == false),
+                        It.Is<GraphStateChangedMessage>(x => x.Id == 1 && x.Status == GraphStatuses.Editable),
                         It.IsAny<IsAnyToken>()), Times.Once);
 
                 Assert.That(viewModel.Runs.Count == 0);

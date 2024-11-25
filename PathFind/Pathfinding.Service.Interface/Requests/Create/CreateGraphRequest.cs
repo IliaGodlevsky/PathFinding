@@ -1,4 +1,5 @@
-﻿using Pathfinding.Domain.Interface;
+﻿using Pathfinding.Domain.Core;
+using Pathfinding.Domain.Interface;
 
 namespace Pathfinding.Service.Interface.Requests.Create
 {
@@ -7,9 +8,11 @@ namespace Pathfinding.Service.Interface.Requests.Create
     {
         public string Name { get; set; }
 
-        public string Neighborhood { get; set; }
+        public Neighborhoods Neighborhood { get; set; }
 
-        public string SmoothLevel { get; set; }
+        public SmoothLevels SmoothLevel { get; set; }
+
+        public GraphStatuses Status { get; set; }
 
         public IGraph<T> Graph { get; set; }
     }

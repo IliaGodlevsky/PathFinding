@@ -31,12 +31,13 @@ namespace Pathfinding.ConsoleApp.View
             Initialize();
             this.children = children.ToArray();
             Add(this.children);
-            var hideWindowCommand = ReactiveCommand.Create<MouseEventArgs, Unit>(Hide,
+            var hideWindowCommand = ReactiveCommand.Create(Hide,
                 this.viewModel.UpdateGraphCommand.CanExecute);
             var commands = new[] { hideWindowCommand, this.viewModel.UpdateGraphCommand };
             var combined = ReactiveCommand.CreateCombined(commands);
             updateButton.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
+                .Select(x => Unit.Default)
                 .InvokeCommand(combined)
                 .DisposeWith(disposables);
 
@@ -54,11 +55,11 @@ namespace Pathfinding.ConsoleApp.View
         {
             if (e.MouseEvent.Flags == MouseFlags.Button1Clicked)
             {
-                Hide(e);
+                Hide();
             }
         }
 
-        private Unit Hide(MouseEventArgs e)
+        private Unit Hide()
         {
             Visible = false;
             Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);

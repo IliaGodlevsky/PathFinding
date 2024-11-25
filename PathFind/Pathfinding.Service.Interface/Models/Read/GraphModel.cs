@@ -1,4 +1,5 @@
-﻿using Pathfinding.Domain.Interface;
+﻿using Pathfinding.Domain.Core;
+using Pathfinding.Domain.Interface;
 
 namespace Pathfinding.Service.Interface.Models.Read
 {
@@ -9,20 +10,18 @@ namespace Pathfinding.Service.Interface.Models.Read
         {
             Id = 0,
             Name = string.Empty,
-            SmoothLevel = string.Empty,
-            Neighborhood = string.Empty,
             Graph = null
         };
 
         public int Id { get; set; }
 
-        public bool IsReadOnly { get; set; }
-
         public string Name { get; set; }
 
-        public string SmoothLevel { get; set; }
+        public SmoothLevels SmoothLevel { get; set; }
 
-        public string Neighborhood { get; set; }
+        public Neighborhoods Neighborhood { get; set; }
+
+        public GraphStatuses Status { get; set; }
 
         public IGraph<T> Graph { get; set; }
     }

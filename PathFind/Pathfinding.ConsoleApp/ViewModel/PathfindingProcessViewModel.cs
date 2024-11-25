@@ -5,12 +5,9 @@ using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Domain.Core;
-using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Infrastructure.Business.Algorithms.Events;
 using Pathfinding.Infrastructure.Business.Algorithms.Exceptions;
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
-using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
-using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
@@ -40,29 +37,29 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public ReactiveCommand<Unit, Unit> StartAlgorithmCommand { get; }
 
-        private string algorithmName;
-        public string AlgorithmName
+        private Algorithms algorithm;
+        public Algorithms Algorithm
         {
-            get => algorithmName;
-            set => this.RaiseAndSetIfChanged(ref algorithmName, value);
+            get => algorithm;
+            set => this.RaiseAndSetIfChanged(ref algorithm, value);
         }
 
-        private string heuristic;
-        public string Heuristic
+        private HeuristicFunctions? heuristic;
+        public HeuristicFunctions? Heuristic
         {
             get => heuristic;
             set => this.RaiseAndSetIfChanged(ref heuristic, value);
         }
 
-        private double weight;
-        public double Weight 
+        private double? weight;
+        public double? Weight 
         {
             get => weight;
             set => this.RaiseAndSetIfChanged(ref weight, value);
         }
 
-        private string stepRule;
-        public string StepRule
+        private StepRules? stepRule;
+        public StepRules? StepRule
         { 
             get => stepRule; 
             set => this.RaiseAndSetIfChanged(ref  stepRule, value);
@@ -95,10 +92,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 x => x.Graph.Id,
                 x => x.Heuristic,
                 x => x.Weight,
-                x => x.AlgorithmName,
+                x => x.Algorithm,
                 (graph, id, heuristic, weight, algorithm) =>
                 {
-                    bool canExecute = id > 0 && graph != null && !string.IsNullOrEmpty(algorithm);
+                    bool canExecute = id > 0 && graph != null 
+                        && Enum.IsDefined(typeof(Algorithms), algorithm);
                     if (heuristic != default)
                     {
                         return canExecute && weight > 0;
@@ -119,51 +117,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 Graph = new();
             }
         }
-
-        private PathfindingProcess GetAlgorithm(string algorithmName, 
-            IEnumerable<GraphVertexModel> pathfindingRange)
-        {
-            return algorithmName switch
-            {
-                AlgorithmNames.AStar => new AStarAlgorithm(pathfindingRange, GetStatistics(StepRule), GetHeuristics(Heuristic)),
-                AlgorithmNames.AStarGreedy => new AStarGreedyAlgorithm(pathfindingRange, GetHeuristics(Heuristic), GetStatistics(StepRule)),
-                AlgorithmNames.AStarLee => new AStarLeeAlgorithm(pathfindingRange, GetHeuristics(Heuristic)),
-                AlgorithmNames.BidirectAStar => new BidirectAStarAlgorithm(pathfindingRange, GetStatistics(StepRule), GetHeuristics(Heuristic)),
-                AlgorithmNames.BidirectDijkstra => new BidirectDijkstraAlgorithm(pathfindingRange, GetStatistics(StepRule)),
-                AlgorithmNames.BidirectLee => new BidirectLeeAlgorithm(pathfindingRange),
-                AlgorithmNames.CostGreedy => new CostGreedyAlgorithm(pathfindingRange, GetStatistics(StepRule)),
-                AlgorithmNames.DepthFirst => new DepthFirstAlgorithm(pathfindingRange),
-                AlgorithmNames.Dijkstra => new DijkstraAlgorithm(pathfindingRange, GetStatistics(StepRule)),
-                AlgorithmNames.DistanceFirst => new DistanceFirstAlgorithm(pathfindingRange, GetHeuristics(Heuristic)),
-                AlgorithmNames.Lee => new LeeAlgorithm(pathfindingRange),
-                AlgorithmNames.Snake => new SnakeAlgorithm(pathfindingRange, GetHeuristics(Heuristic)),
-                _ => throw new NotImplementedException($"{algorithmName} is not implemented"),
-            };
-        }
-
-        private IHeuristic GetHeuristics(string heuristicName)
-        {
-            return heuristicName switch
-            {
-                HeuristicNames.Euclidian => new EuclidianDistance().WithWeight(Weight),
-                HeuristicNames.Chebyshev => new ChebyshevDistance().WithWeight(Weight),
-                HeuristicNames.Diagonal => new DiagonalDistance().WithWeight(Weight),
-                HeuristicNames.Manhattan => new ManhattanDistance().WithWeight(Weight),
-                HeuristicNames.Cosine => new CosineDistance().WithWeight(Weight),
-                _ => throw new NotImplementedException($"Unknown heuristic: {heuristicName}")
-            };
-        }
-
-        private IStepRule GetStatistics(string stepRule)
-        {
-            return stepRule switch
-            {
-                StepRuleNames.Default => new DefaultStepRule(),
-                StepRuleNames.Landscape => new LandscapeStepRule(),
-                _ => throw new NotImplementedException($"Unknown step rule: {stepRule}")
-            };
-        }
-
 
         private void AppendStatistics(CreateStatisticsRequest request) 
         {
@@ -208,9 +161,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     AddSubAlgorithm(args.SubPath);
                 }
 
-                string status = RunStatuses.Success;
+                var status = RunStatuses.Success;
 
-                var algorithm = GetAlgorithm(AlgorithmName, pathfindingRange);
+                var algorithm = (pathfindingRange, Algorithm, 
+                    StepRule, Heuristic, Weight).Assemble();
 
                 algorithm.SubPathFound += OnSubPathFound;
                 algorithm.VertexProcessed += OnVertexProcessed;
@@ -241,7 +195,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 }
 
                 var request = ModelBuilder.CreateStatisticsRequest()
-                    .WithStatistics(Graph.Id, AlgorithmName, path,
+                    .WithStatistics(Graph.Id, Algorithm, path,
                         visitedCount, status, stopwatch.Elapsed);
 
                 AppendStatistics(request);

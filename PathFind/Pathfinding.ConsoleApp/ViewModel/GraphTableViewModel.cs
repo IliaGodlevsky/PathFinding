@@ -9,14 +9,12 @@ using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Business.Layers;
-using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Shared.Extensions;
 using ReactiveUI;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
@@ -26,7 +24,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal sealed class GraphTableViewModel : BaseViewModel, IGraphTableViewModel
     {
-        private readonly IReadOnlyDictionary<string, ILayer> smoothLevels;
         private readonly IRequestService<GraphVertexModel> service;
         private readonly IMessenger messenger;
         private readonly ILog logger;
@@ -40,12 +37,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public ObservableCollection<GraphInfoModel> Graphs { get; } = new();
 
         public GraphTableViewModel(
-            SmoothLevelsViewModel smoothLevels,
             IRequestService<GraphVertexModel> service,
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ILog logger)
         {
-            this.smoothLevels = smoothLevels.Levels;
             this.service = service;
             this.messenger = messenger;
             this.logger = logger;
@@ -53,7 +48,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<GraphUpdatedMessage>(this, async (r, msg) => await OnGraphUpdated(r, msg));
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<ObstaclesCountChangedMessage>(this, OnObstaclesCountChanged);
-            messenger.Register<GraphBecameReadOnlyMessage>(this, GraphBecameReadOnly);
+            messenger.Register<GraphStateChangedMessage>(this, GraphBecameReadOnly);
             LoadGraphsCommand = ReactiveCommand.CreateFromTask(LoadGraphs);
             ActivateGraphCommand = ReactiveCommand.CreateFromTask<GraphInfoModel>(ActivatedGraph);
             SelectGraphsCommand = ReactiveCommand.Create<GraphInfoModel[]>(SelectGraphs);
@@ -93,9 +88,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                         Width = x.Dimensions.ElementAtOrDefault(0),
                         Length = x.Dimensions.ElementAtOrDefault(1),
                         Obstacles = x.ObstaclesCount,
-                        Status = x.IsReadOnly
-                            ? GraphStatuses.Readonly
-                            : GraphStatuses.Editable
+                        Status = x.Status
                     })
                     .ToList();
                 Graphs.Add(graphs);
@@ -111,14 +104,12 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
-        private void GraphBecameReadOnly(object recipient, GraphBecameReadOnlyMessage msg)
+        private void GraphBecameReadOnly(object recipient, GraphStateChangedMessage msg)
         {
             var graph = Graphs.FirstOrDefault(x => x.Id == msg.Id);
             if (graph != null)
             {
-                graph.Status = msg.Became 
-                    ? GraphStatuses.Readonly 
-                    : GraphStatuses.Editable;
+                graph.Status = msg.Status;
             }
         }
 
@@ -156,20 +147,26 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private ILayer GetLayers(GraphModel<GraphVertexModel> model)
         {
-            var list = new List<ILayer>();
+            var layers = new Layers();
             switch (model.Neighborhood)
             {
-                case NeighborhoodNames.Moore:
-                    list.Add(new NeighborhoodLayer(new MooreNeighborhoodFactory()));
+                case Neighborhoods.Moore:
+                    layers.Add(new MooreNeighborhoodLayer());
                     break;
-                case NeighborhoodNames.VonNeumann:
-                    list.Add(new NeighborhoodLayer(new VonNeumannNeighborhoodFactory()));
+                case Neighborhoods.VonNeumann:
+                    layers.Add(new VonNeumannNeighborhoodLayer());
                     break;
             }
-            string level = model.SmoothLevel;
-            var smoothLevel = smoothLevels.GetOrDefault(level, new Layers());
-            list.Add(smoothLevel);
-            return new Layers(list);
+            int level = default;
+            switch (model.SmoothLevel)
+            {
+                case SmoothLevels.Low: level = 1; break;
+                case SmoothLevels.Medium: level = 2; break;
+                case SmoothLevels.High: level = 4; break;
+                case SmoothLevels.Extreme: level = 7; break;
+            }
+            layers.Add(new SmoothLayer(level));
+            return layers;
         }
     }
 }

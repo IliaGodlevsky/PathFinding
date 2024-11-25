@@ -57,6 +57,13 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>AppSettings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\AlgorithmExtensions.cs" />
+    <Compile Include="Extensions\GraphStatusesExtensions.cs" />
+    <Compile Include="Extensions\HeuristicsExtensions.cs" />
+    <Compile Include="Extensions\NeighborhoodsExtensions.cs" />
+    <Compile Include="Extensions\RunStatusesExtensions.cs" />
+    <Compile Include="Extensions\SmoothLevelsExtensions.cs" />
+    <Compile Include="Extensions\StepRulesExtensions.cs" />
     <Compile Include="Injection\MetadataKeys.cs" />
     <Compile Include="Messages\Tokens.cs" />
     <Compile Include="Messages\ViewModel\GraphBecameReadOnlyMessage.cs" />
@@ -68,7 +75,6 @@
     <Compile Include="Messages\View\CloseAlgorithmRunFieldViewMessage.cs" />
     <Compile Include="Messages\View\OpenGraphUpdateViewMessage.cs" />
     <Compile Include="Model\RunVertexModel.cs" />
-    <Compile Include="Model\StartAlgorithmModel.cs" />
     <Compile Include="ViewModel\GraphCopyViewModel.cs" />
     <Compile Include="ViewModel\GraphUpdateViewModel.cs" />
     <Compile Include="ViewModel\Interface\IGraphExportViewModel.cs" />
@@ -129,8 +135,6 @@
     <Compile Include="ViewModel\GraphExportViewModel.cs" />
     <Compile Include="ViewModel\PathfindingProcessViewModel.cs" />
     <Compile Include="ViewModel\GraphAssembleViewModel.cs" />
-    <Compile Include="ViewModel\NeighborhoodFactoriesViewModel.cs" />
-    <Compile Include="ViewModel\SmoothLevelsViewModel.cs" />
     <Compile Include="ViewModel\GraphFieldViewModel.cs" />
     <Compile Include="ViewModel\Interface\IRequireStepRulesViewModel.cs" />
     <Compile Include="ViewModel\NewRunButtonViewModel.cs" />

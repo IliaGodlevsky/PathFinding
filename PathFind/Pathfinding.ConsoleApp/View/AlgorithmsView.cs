@@ -9,6 +9,8 @@ using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
 using ReactiveUI;
+using System;
+using Pathfinding.ConsoleApp.Extensions;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -18,56 +20,46 @@ namespace Pathfinding.ConsoleApp.View
             IRequireAlgorithmNameViewModel viewModel)
         {
             Initialize();
-            var source = new[] 
-            { 
-                AlgorithmNames.Dijkstra, 
-                AlgorithmNames.BidirectDijkstra, 
-                AlgorithmNames.AStar,
-                AlgorithmNames.BidirectAStar,
-                AlgorithmNames.Lee,
-                AlgorithmNames.BidirectLee,
-                AlgorithmNames.AStarLee,
-                AlgorithmNames.DistanceFirst,
-                AlgorithmNames.CostGreedy,
-                AlgorithmNames.AStarGreedy,
-                AlgorithmNames.DepthFirst,
-                AlgorithmNames.Snake
-            };
+            var algos = Enum.GetValues(typeof(Algorithms))
+                .Cast<Algorithms>()
+                .ToDictionary(x => x.ToStringRepresentation());
+            var source = algos.Keys.ToList();
+            var values = source.Select(x => algos[x]).ToList();
             algorithms.SetSource(source);
             algorithms.Events().SelectedItemChanged
                 .Where(x => x.Item > -1)
-                .Select(x => x.Value.ToString())
-                .Do(algorithmName =>
+                .Select(x => algos[x.Value.ToString()])
+                .Do(algorithm =>
                 {
-                    switch (algorithmName)
+                    switch (algorithm)
                     {
-                        case AlgorithmNames.AStar:
-                        case AlgorithmNames.BidirectAStar:
-                        case AlgorithmNames.AStarGreedy:
+                        case Algorithms.AStar:
+                        case Algorithms.BidirectAStar:
+                        case Algorithms.AStarGreedy:
                             messenger.Send(new OpenStepRuleViewMessage());
                             messenger.Send(new OpenHeuristicsViewMessage());
                             break;
-                        case AlgorithmNames.Dijkstra:
-                        case AlgorithmNames.BidirectDijkstra:
-                        case AlgorithmNames.CostGreedy:
+                        case Algorithms.Dijkstra:
+                        case Algorithms.BidirectDijkstra:
+                        case Algorithms.CostGreedy:
                             messenger.Send(new OpenStepRuleViewMessage());
                             messenger.Send(new CloseHeuristicsViewMessage());
                             break;
-                        case AlgorithmNames.Lee:
-                        case AlgorithmNames.BidirectLee:
-                        case AlgorithmNames.DepthFirst:
-                        case AlgorithmNames.Snake:
+                        case Algorithms.Lee:
+                        case Algorithms.BidirectLee:
+                        case Algorithms.DepthFirst:
+                        case Algorithms.Snake:
                             messenger.Send(new CloseStepRulesViewMessage());
                             messenger.Send(new CloseHeuristicsViewMessage());
                             break;
-                        case AlgorithmNames.DistanceFirst:
-                        case AlgorithmNames.AStarLee:
+                        case Algorithms.DistanceFirst:
+                        case Algorithms.AStarLee:
                             messenger.Send(new CloseStepRulesViewMessage());
                             messenger.Send(new OpenHeuristicsViewMessage());
                             break;
                     }
                 })
-                .BindTo(viewModel, x => x.AlgorithmName);
+                .BindTo(viewModel, x => x.Algorithm);
         }
     }
 }

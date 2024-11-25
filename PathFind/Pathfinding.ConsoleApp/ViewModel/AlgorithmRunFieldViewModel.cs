@@ -7,16 +7,12 @@ using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
-using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Infrastructure.Business.Algorithms.Events;
-using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
-using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
-using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
@@ -69,16 +65,16 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.graphAssemble = graphAssemble;
             messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
             messenger.Register<RunSelectedMessage>(this, OnRunActivated);
-            messenger.Register<GraphBecameReadOnlyMessage>(this, OnGraphBecameReadOnly);
+            messenger.Register<GraphStateChangedMessage>(this, OnGraphBecameReadOnly);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             ProcessNextCommand = ReactiveCommand.Create<float>(ProcessNext);
             ReverseNextCommand = ReactiveCommand.Create<float>(ReverseNext);
             ProcessToCommand = ReactiveCommand.Create<float>(ProcessTo);
         }
 
-        private void OnGraphBecameReadOnly(object recipient, GraphBecameReadOnlyMessage msg)
+        private void OnGraphBecameReadOnly(object recipient, GraphStateChangedMessage msg)
         {
-            if (!msg.Became && graphId == msg.Id)
+            if (msg.Status == GraphStatuses.Editable && graphId == msg.Id)
             {
                 Clear();
             }
@@ -215,7 +211,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
             try
             {
-                var algorithm = run.GetAlgorithm(range);
+                var algorithm = (range, run.Name, run.StepRule, 
+                    run.Heuristics, run.Weight).Assemble();
+
                 algorithm.SubPathFound += OnSubPathFound;
                 algorithm.VertexProcessed += OnVertexProcessed;
                 try
@@ -266,26 +264,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
     file static class Extensions
     {
-        public static PathfindingProcess GetAlgorithm(this RunInfoModel statistics, IReadOnlyCollection<RunVertexModel> range)
-        {
-            return statistics.Name switch
-            {
-                AlgorithmNames.Dijkstra => new DijkstraAlgorithm(range, GetStepRule(statistics)),
-                AlgorithmNames.BidirectDijkstra => new BidirectDijkstraAlgorithm(range, GetStepRule(statistics)),
-                AlgorithmNames.DepthFirst => new DepthFirstAlgorithm(range),
-                AlgorithmNames.AStar => new AStarAlgorithm(range, GetStepRule(statistics), GetHeuristic(statistics)),
-                AlgorithmNames.BidirectAStar => new BidirectAStarAlgorithm(range, GetStepRule(statistics), GetHeuristic(statistics)),
-                AlgorithmNames.CostGreedy => new CostGreedyAlgorithm(range, GetStepRule(statistics)),
-                AlgorithmNames.DistanceFirst => new DistanceFirstAlgorithm(range, GetHeuristic(statistics)),
-                AlgorithmNames.Snake => new SnakeAlgorithm(range),
-                AlgorithmNames.AStarGreedy => new AStarGreedyAlgorithm(range, GetHeuristic(statistics), GetStepRule(statistics)),
-                AlgorithmNames.Lee => new LeeAlgorithm(range),
-                AlgorithmNames.BidirectLee => new BidirectLeeAlgorithm(range),
-                AlgorithmNames.AStarLee => new AStarLeeAlgorithm(range, GetHeuristic(statistics)),
-                _ => throw new NotImplementedException($"Unknown algorithm name: {statistics.Name}")
-            };
-        }
-
         public static void ClearState(this IEnumerable<RunVertexModel> vertices)
         {
             foreach (var vertex in vertices)
@@ -365,30 +343,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 case RunState.Target: state.Vertex.IsTarget = state.Value; break;
                 case RunState.Transit: state.Vertex.IsTransit = state.Value; break;
             }
-        }
-
-        private static IHeuristic GetHeuristic(this RunInfoModel statistics)
-        {
-            var weight = double.Parse(statistics.Weight);
-            return statistics.Heuristics switch
-            {
-                HeuristicNames.Euclidian => new EuclidianDistance().WithWeight(weight),
-                HeuristicNames.Chebyshev => new ChebyshevDistance().WithWeight(weight),
-                HeuristicNames.Diagonal => new DiagonalDistance().WithWeight(weight),
-                HeuristicNames.Manhattan => new ManhattanDistance().WithWeight(weight),
-                HeuristicNames.Cosine => new CosineDistance().WithWeight(weight),
-                _ => throw new NotImplementedException($"Unknown heuristic: {statistics.Heuristics}")
-            };
-        }
-
-        private static IStepRule GetStepRule(this RunInfoModel statistics)
-        {
-            return statistics.StepRule switch
-            {
-                StepRuleNames.Default => new DefaultStepRule(),
-                StepRuleNames.Landscape => new LandscapeStepRule(),
-                _ => throw new NotImplementedException($"Unknown step rule: {statistics.StepRule}")
-            };
         }
     }
 }

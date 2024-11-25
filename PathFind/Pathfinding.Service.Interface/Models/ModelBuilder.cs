@@ -1,4 +1,5 @@
-﻿using Pathfinding.Service.Interface.Requests.Create;
+﻿using Pathfinding.Domain.Core;
+using Pathfinding.Service.Interface.Requests.Create;
 using System;
 
 namespace Pathfinding.Service.Interface.Models
@@ -8,14 +9,14 @@ namespace Pathfinding.Service.Interface.Models
         public static CreateStatisticsRequest CreateStatisticsRequest() => new CreateStatisticsRequest();
 
         public static CreateStatisticsRequest WithStatistics(this CreateStatisticsRequest request,
-            int graphId, string algorithmName, IGraphPath path,
-            int visited, string resultStatus, TimeSpan elapsed)
+            int graphId, Domain.Core.Algorithms algorithm, IGraphPath path,
+            int visited, RunStatuses status, TimeSpan elapsed)
         {
-            request.AlgorithmName = algorithmName;
+            request.Algorithm = algorithm;
             request.Cost = path.Cost;
             request.Elapsed = elapsed;
             request.Steps = path.Count;
-            request.ResultStatus = resultStatus;
+            request.ResultStatus = status;
             request.Visited = visited;
             request.GraphId = graphId;
             return request;

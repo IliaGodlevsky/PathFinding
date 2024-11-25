@@ -7,6 +7,7 @@ using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Domain.Core;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reactive.Disposables;
@@ -17,6 +18,11 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class StepRulesView : FrameView
     {
+        private sealed record AlgorithmPair(StepRules StepRule, string Name)
+        {
+            public override string ToString() => Name;
+        }
+
         private readonly CompositeDisposable disposables = new();
 
         private readonly ustring[] radioLabels;
@@ -27,14 +33,18 @@ namespace Pathfinding.ConsoleApp.View
             IRequireStepRuleViewModel viewModel)
         {
             Initialize();
-            var rules = new[] { StepRuleNames.Default, StepRuleNames.Landscape };
-            stepRules.RadioLabels = rules.Select(ustring.Make).ToArray();
+            var rules = new Dictionary<string, StepRules> 
+            {
+                { "Default", StepRules.Default  },
+                { "Landscape", StepRules.Landscape }
+            };
+            stepRules.RadioLabels = rules.Select(x=> ustring.Make(x.Key)).ToArray();
             radioLabels = stepRules.RadioLabels;
             disposables.Clear();
             stepRules.Events()
                .SelectedItemChanged
                .Where(x => x.SelectedItem > -1)
-               .Select(x => radioLabels[x.SelectedItem].ToString())
+               .Select(x => rules[radioLabels[x.SelectedItem].ToString()])
                .BindTo(viewModel, x => x.StepRule)
                .DisposeWith(disposables);
             stepRules.SelectedItem = 0;
