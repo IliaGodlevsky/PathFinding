@@ -1,13 +1,14 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using NStack;
+using Pathfinding.ConsoleApp.Extensions;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Domain.Core;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
-using System.Collections.Generic;
+using System;
 using System.Data;
 using System.Linq;
 using System.Reactive.Disposables;
@@ -18,14 +19,8 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class StepRulesView : FrameView
     {
-        private sealed record AlgorithmPair(StepRules StepRule, string Name)
-        {
-            public override string ToString() => Name;
-        }
-
         private readonly CompositeDisposable disposables = new();
 
-        private readonly ustring[] radioLabels;
         private readonly IRequireStepRuleViewModel viewModel;
 
         public StepRulesView(
@@ -33,18 +28,15 @@ namespace Pathfinding.ConsoleApp.View
             IRequireStepRuleViewModel viewModel)
         {
             Initialize();
-            var rules = new Dictionary<string, StepRules> 
-            {
-                { "Default", StepRules.Default  },
-                { "Landscape", StepRules.Landscape }
-            };
-            stepRules.RadioLabels = rules.Select(x=> ustring.Make(x.Key)).ToArray();
-            radioLabels = stepRules.RadioLabels;
-            disposables.Clear();
-            stepRules.Events()
-               .SelectedItemChanged
+            var rules = Enum.GetValues(typeof(StepRules))
+                .Cast<StepRules>()
+                .ToDictionary(x => x.ToStringRepresentation());
+            var labels = rules.Select(x=> ustring.Make(x.Key)).ToArray();
+            var values = labels.Select(x => rules[x.ToString()]).ToList();
+            stepRules.RadioLabels = labels;
+            stepRules.Events().SelectedItemChanged
                .Where(x => x.SelectedItem > -1)
-               .Select(x => rules[radioLabels[x.SelectedItem].ToString()])
+               .Select(x => values[x.SelectedItem])
                .BindTo(viewModel, x => x.StepRule)
                .DisposeWith(disposables);
             stepRules.SelectedItem = 0;

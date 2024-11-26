@@ -123,6 +123,8 @@
     <Compile Include="Algorithms\StepRules\LandscapeStepRule.cs" />
     <Compile Include="Algorithms\StepRules\WalkStepRule.cs" />
     <Compile Include="Algorithms\WaveAlgorithm.cs" />
+    <Compile Include="Builders\AlgorithmBuilder.cs" />
+    <Compile Include="Builders\StatisticsBuilder.cs" />
     <Compile Include="Commands\ExcludeSourceVertex.cs" />
     <Compile Include="Commands\ExcludeTargetVertex.cs" />
     <Compile Include="Commands\ExcludeTransitVertex.cs" />
@@ -138,7 +140,6 @@
     <Compile Include="Extensions\LayerExtensions.cs" />
     <Compile Include="Extensions\PriorityQueueExtensions.cs" />
     <Compile Include="Extensions\SimplePriorityQueueExtensions.cs" />
-    <Compile Include="Extensions\TupleExtensions.cs" />
     <Compile Include="Extensions\VertexExtensions.cs" />
     <Compile Include="Layers\GraphLayer.cs" />
     <Compile Include="Layers\Layers.cs" />

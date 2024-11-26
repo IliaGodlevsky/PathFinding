@@ -24,12 +24,5 @@ namespace Pathfinding.ConsoleApp.Model
         public double? Weight { get; set; }
 
         public RunStatuses Status { get; set; }
-
-        public object[] GetProperties()
-        {
-            return new object[] { RunId, Name, Visited,
-                    Steps, Cost, Elapsed, StepRule,
-                    Heuristics, Weight, Status };
-        }
     }
 }

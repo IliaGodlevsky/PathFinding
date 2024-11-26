@@ -40,14 +40,12 @@ namespace Pathfinding.ConsoleApp.View
             var values = labels.Select(x => heurs[x.ToString()]).ToList();
             radioLabels = labels;
             heuristics.RadioLabels = radioLabels;
-            heuristics.Events()
-               .SelectedItemChanged
+            heuristics.Events().SelectedItemChanged
                .Where(x => x.SelectedItem > -1)
-               .Select(x =>values[x.SelectedItem])
+               .Select(x => values[x.SelectedItem])
                .BindTo(heuristicsViewModel, x => x.Heuristic)
                .DisposeWith(disposables);
-            weightTextField.Events()
-                .TextChanging
+            weightTextField.Events().TextChanging
                 .Select(x =>
                 {
                     if (string.IsNullOrEmpty(x.NewText.ToString()))
@@ -77,25 +75,26 @@ namespace Pathfinding.ConsoleApp.View
 
         private void OnOpen(object recipient, OpenHeuristicsViewMessage msg)
         {
-            heuristicsViewModel.Weight = DefaultWeight;
             weightTextField.Text = DefaultWeight.ToString();
             heuristics.SelectedItem = 0;
+            heuristicsViewModel.Weight = DefaultWeight;
             Visible = true;
         }
 
         private void OnHeuristicsViewClosed(object recipient, CloseHeuristicsViewMessage msg)
         {
-            heuristicsViewModel.Weight = DefaultWeight;
-            weightTextField.Text = DefaultWeight.ToString();
-            heuristicsViewModel.Heuristic = default;
-            Visible = false;
+            Close();
         }
 
         private void OnRunCreationViewClosed(object recipient, CloseAlgorithmCreationViewMessage msg)
         {
-            heuristicsViewModel.Weight = DefaultWeight;
-            weightTextField.Text = DefaultWeight.ToString();
-            heuristicsViewModel.Heuristic = default;
+            Close();
+        }
+
+        private void Close()
+        {
+            heuristicsViewModel.Weight = null;
+            heuristicsViewModel.Heuristic = null;
             Visible = false;
         }
     }

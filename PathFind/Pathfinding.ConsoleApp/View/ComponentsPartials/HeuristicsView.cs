@@ -16,7 +16,7 @@ namespace Pathfinding.ConsoleApp.View
             X = Pos.Percent(55);
             Y = 1;
             Height = Dim.Percent(50);
-            Width = Dim.Percent(45);
+            Width = Dim.Percent(40);
             Border = new Border()
             {
                 BorderStyle = BorderStyle.Rounded,

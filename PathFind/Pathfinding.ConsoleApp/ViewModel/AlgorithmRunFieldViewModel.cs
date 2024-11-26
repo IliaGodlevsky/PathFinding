@@ -8,7 +8,7 @@ using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Business.Algorithms.Events;
-using Pathfinding.Infrastructure.Business.Extensions;
+using Pathfinding.Infrastructure.Business.Builders;
 using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
@@ -65,14 +65,14 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.graphAssemble = graphAssemble;
             messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
             messenger.Register<RunSelectedMessage>(this, OnRunActivated);
-            messenger.Register<GraphStateChangedMessage>(this, OnGraphBecameReadOnly);
+            messenger.Register<GraphStateChangedMessage>(this, OnGraphStatusChanged);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             ProcessNextCommand = ReactiveCommand.Create<float>(ProcessNext);
             ReverseNextCommand = ReactiveCommand.Create<float>(ReverseNext);
             ProcessToCommand = ReactiveCommand.Create<float>(ProcessTo);
         }
 
-        private void OnGraphBecameReadOnly(object recipient, GraphStateChangedMessage msg)
+        private void OnGraphStatusChanged(object recipient, GraphStateChangedMessage msg)
         {
             if (msg.Status == GraphStatuses.Editable && graphId == msg.Id)
             {
@@ -170,6 +170,24 @@ namespace Pathfinding.ConsoleApp.ViewModel
             ProcessForward((int)Math.Round(verticesStates.Count * Fraction, 0));
         }
 
+        private AlgorithmBuilder GetBuilder(RunInfoModel model)
+        {
+            var builder = AlgorithmBuilder.TakeAlgorithm(model.Name);
+            if (model.StepRule != null)
+            {
+                builder.WithStepRules(model.StepRule.Value);
+            }
+            if (model.Heuristics != null)
+            {
+                builder.WithHeuristics(model.Heuristics.Value);
+            }
+            if (model.Weight != null)
+            {
+                builder.WithWeight(model.Weight.Value);
+            }
+            return builder;
+        }
+
         private void OnRunActivated(object recipient, RunSelectedMessage msg)
         {
             var run = msg.SelectedRuns.First();
@@ -211,8 +229,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
             try
             {
-                var algorithm = (range, run.Name, run.StepRule, 
-                    run.Heuristics, run.Weight).Assemble();
+                var builder = GetBuilder(run);
+                var algorithm = builder.Build(range);
 
                 algorithm.SubPathFound += OnSubPathFound;
                 algorithm.VertexProcessed += OnVertexProcessed;
@@ -283,9 +301,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
             IEnumerable<SubAlgorithmModel> subAlgorithms,
             IReadOnlyCollection<Coordinate> range)
         {
-            var vertices = new List<VertexState>();
-
-            vertices.Add(new(graph.Get(range.First()), RunState.Source, true));
+            var vertices = new List<VertexState>
+            {
+                new(graph.Get(range.First()), RunState.Source, true)
+            };
             foreach (var transit in range.Skip(1).Take(range.Count - 2))
             {
                 vertices.Add(new(graph.Get(transit), RunState.Transit, true));

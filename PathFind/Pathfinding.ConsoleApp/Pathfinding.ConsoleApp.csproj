@@ -64,9 +64,8 @@
     <Compile Include="Extensions\RunStatusesExtensions.cs" />
     <Compile Include="Extensions\SmoothLevelsExtensions.cs" />
     <Compile Include="Extensions\StepRulesExtensions.cs" />
-    <Compile Include="Injection\MetadataKeys.cs" />
     <Compile Include="Messages\Tokens.cs" />
-    <Compile Include="Messages\ViewModel\GraphBecameReadOnlyMessage.cs" />
+    <Compile Include="Messages\ViewModel\GraphStateChangedMessage.cs" />
     <Compile Include="Messages\ViewModel\GraphUpdatedMessage.cs" />
     <Compile Include="Messages\View\OpenAlgorithmRunViewMessage.cs" />
     <Compile Include="Messages\ViewModel\RunCreatedMessaged.cs" />

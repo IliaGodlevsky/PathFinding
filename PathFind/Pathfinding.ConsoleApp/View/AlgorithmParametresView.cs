@@ -8,7 +8,7 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class AlgorithmParametresView : FrameView
     {
-        public AlgorithmParametresView([KeyFilter(KeyFilters.AlgorithmParametresView)] 
+        public AlgorithmParametresView([KeyFilter(KeyFilters.AlgorithmParametresView)]
             IEnumerable<Terminal.Gui.View> children)
         {
             X = Pos.Percent(25);

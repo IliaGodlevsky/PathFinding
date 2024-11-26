@@ -119,7 +119,7 @@ namespace Pathfinding.ConsoleApp.View
             X = 0;
             Y = Pos.Percent(0);
             Width = Dim.Fill();
-            Height = Dim.Percent(80);
+            Height = Dim.Percent(90);
         }
     }
 }

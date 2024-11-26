@@ -8,7 +8,6 @@ using Pathfinding.Domain.Core;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
-using ReactiveUI;
 using System;
 using Pathfinding.ConsoleApp.Extensions;
 
@@ -28,9 +27,10 @@ namespace Pathfinding.ConsoleApp.View
             algorithms.SetSource(source);
             algorithms.Events().SelectedItemChanged
                 .Where(x => x.Item > -1)
-                .Select(x => algos[x.Value.ToString()])
+                .Select(x => values[x.Item])
                 .Do(algorithm =>
                 {
+                    viewModel.Algorithm = algorithm;
                     switch (algorithm)
                     {
                         case Algorithms.AStar:
@@ -59,7 +59,7 @@ namespace Pathfinding.ConsoleApp.View
                             break;
                     }
                 })
-                .BindTo(viewModel, x => x.Algorithm);
+                .Subscribe();
         }
     }
 }
