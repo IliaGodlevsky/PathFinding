@@ -28,7 +28,7 @@ namespace Pathfinding.ConsoleApp.View
             smoothLevels.RadioLabels = labels;
             smoothLevels.Events()
                 .SelectedItemChanged
-                .Where(x => x.SelectedItem > -1 && viewModel.Status == GraphStatuses.Editable)
+                .Where(x => x.SelectedItem > -1)
                 .Select(x => values[x.SelectedItem])
                 .BindTo(viewModel, x => x.SmoothLevel)
                 .DisposeWith(disposables);
@@ -36,9 +36,6 @@ namespace Pathfinding.ConsoleApp.View
                 .Select(x => values.IndexOf(x))
                 .BindTo(smoothLevels, x => x.SelectedItem)
                 .DisposeWith(disposables);
-            viewModel.WhenAnyValue(x => x.Status)
-                .Select(x => x == GraphStatuses.Readonly ? false : true)
-                .BindTo(this, x => x.Visible);
         }
     }
 }

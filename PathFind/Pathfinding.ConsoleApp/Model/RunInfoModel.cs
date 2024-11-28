@@ -1,21 +1,43 @@
 ﻿using Pathfinding.Domain.Core;
+using Pathfinding.Service.Interface.Models;
+using ReactiveUI;
 using System;
 
 namespace Pathfinding.ConsoleApp.Model
 {
-    internal sealed class RunInfoModel
+    internal sealed class RunInfoModel : ReactiveObject, IAlgorithmBuildInfo
     {
-        public int RunId { get; set; }
+        public int Id { get; set; }
 
-        public Algorithms Name { get; set; }
+        public Algorithms Algorithm { get; set; }
 
-        public int Visited { get; set; }
+        private int visited;
+        public int Visited
+        {
+            get => visited;
+            set => this.RaiseAndSetIfChanged(ref visited, value);
+        }
 
-        public int Steps { get; set; }
+        private int steps;
+        public int Steps 
+        {
+            get => steps;
+            set => this.RaiseAndSetIfChanged(ref steps, value);
+        }
 
-        public double Cost { get; set; }
+        private double cost;
+        public double Cost
+        {
+            get => cost;
+            set => this.RaiseAndSetIfChanged(ref cost, value);
+        }
 
-        public TimeSpan Elapsed { get; set; }
+        private TimeSpan elapsed;
+        public TimeSpan Elapsed
+        {
+            get => elapsed;
+            set => this.RaiseAndSetIfChanged(ref elapsed, value);
+        }
 
         public StepRules? StepRule { get; set; }
 
@@ -23,6 +45,11 @@ namespace Pathfinding.ConsoleApp.Model
 
         public double? Weight { get; set; }
 
-        public RunStatuses Status { get; set; }
+        private RunStatuses status;
+        public RunStatuses ResultStatus 
+        {
+            get => status;
+            set => this.RaiseAndSetIfChanged(ref status, value);
+        }
     }
 }

@@ -22,9 +22,9 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
             using var mock = AutoMock.GetLoose();
 
             IReadOnlyCollection<GraphInformationModel> graphs =
-                Enumerable.Range(1, 5).Select(x => new GraphInformationModel 
-                { 
-                    Id = x, 
+                Enumerable.Range(1, 5).Select(x => new GraphInformationModel
+                {
+                    Id = x,
                     Dimensions = Array.Empty<int>()
                 }).ToList();
             mock.Mock<IRequestService<GraphVertexModel>>()
@@ -81,11 +81,9 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(graph));
 
-            var info = new GraphInfoModel() { Id = 1 };
-
             var viewModel = mock.Create<GraphTableViewModel>();
 
-            await viewModel.ActivateGraphCommand.Execute(info);
+            await viewModel.ActivateGraphCommand.Execute(1);
 
             Assert.Multiple(() =>
             {
@@ -95,7 +93,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                         It.IsAny<CancellationToken>()), Times.Once);
                 mock.Mock<IMessenger>()
                     .Verify(x => x.Send(
-                        It.IsAny<GraphActivatedMessage>(), 
+                        It.IsAny<GraphActivatedMessage>(),
                         It.IsAny<int>()), Times.Exactly(2));
                 mock.Mock<IMessenger>()
                     .Verify(x => x.Send(
@@ -130,9 +128,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
         {
             using var mock = AutoMock.GetLoose();
 
-            var models = Enumerable.Range(1, 5)
-                .Select(x => new GraphInfoModel { Id = 1 })
-                .ToArray();
+            var models = Enumerable.Range(1, 5).ToArray();
 
             var viewModel = mock.Create<GraphTableViewModel>();
 

@@ -44,7 +44,7 @@ namespace Pathfinding.ConsoleApp.View
                 .DisposeWith(disposables);
             this.Events().CellActivated
                 .Where(x => x.Row < table.Rows.Count)
-                .Select(x => GetParametresModel(x.Row))
+                .Select(x => GetGraphId(x.Row))
                 .InvokeCommand(viewModel, x => x.ActivateGraphCommand)
                 .DisposeWith(disposables);
             this.Events().KeyPress
@@ -53,14 +53,14 @@ namespace Pathfinding.ConsoleApp.View
                 .Throttle(TimeSpan.FromMilliseconds(150))
                 .Select(x => MultiSelectedRegions
                         .SelectMany(x => (x.Rect.Top, x.Rect.Bottom - 1).Iterate())
-                        .Select(GetParametresModel)
+                        .Select(GetGraphId)
                         .ToArray())
                 .InvokeCommand(viewModel, x => x.SelectGraphsCommand)
                 .DisposeWith(disposables);
             this.Events().SelectedCellChanged
                 .Where(x => x.NewRow > -1 && x.NewRow < table.Rows.Count)
                 .Select(x => GetAllSelectedCells().Select(x => x.Y)
-                        .Distinct().Select(GetParametresModel).ToArray())
+                    .Distinct().Select(GetGraphId).ToArray())
                 .InvokeCommand(viewModel, x => x.SelectGraphsCommand)
                 .DisposeWith(disposables);
             this.Events().MouseClick
@@ -68,24 +68,14 @@ namespace Pathfinding.ConsoleApp.View
                 .Do(x => messenger.Send(new CloseAlgorithmRunFieldViewMessage()))
                 .Select(x => x.MouseEvent.Y + RowOffset - headerLinesConsumed)
                 .Where(x => x >= 0 && x < Table.Rows.Count && x == SelectedRow)
-                .Select(x => GetParametresModel(x).Enumerate().ToArray())
+                .Select(x => GetGraphId(x).Enumerate().ToArray())
                 .InvokeCommand(viewModel, x => x.SelectGraphsCommand)
                 .DisposeWith(disposables);
         }
 
-        private GraphInfoModel GetParametresModel(int selectedRow)
+        private int GetGraphId(int selectedRow)
         {
-            return new()
-            {
-                Width = (int)table.Rows[selectedRow][WidthCol],
-                Length = (int)table.Rows[selectedRow][LengthCol],
-                Name = (string)table.Rows[selectedRow][NameCol],
-                SmoothLevel = (SmoothLevels)table.Rows[selectedRow][SmoothCol],
-                Neighborhood = (Neighborhoods)table.Rows[selectedRow][NeighborsCol],
-                Id = (int)table.Rows[selectedRow][IdCol],
-                Obstacles = (int)table.Rows[selectedRow][ObstaclesCol],
-                Status = (GraphStatuses)table.Rows[selectedRow][StatusCol]
-            };
+            return (int)Table.Rows[selectedRow][IdCol];
         }
 
         private void AddToTable(GraphInfoModel model)
@@ -96,7 +86,7 @@ namespace Pathfinding.ConsoleApp.View
                 table.AcceptChanges();
                 SetNeedsDisplay();
                 var composite = new CompositeDisposable();
-                BindTo(model, ObstaclesCol, x => x.Obstacles).DisposeWith(composite);
+                BindTo(model, ObstaclesCol, x => x.ObstaclesCount).DisposeWith(composite);
                 BindTo(model, NameCol, x => x.Name).DisposeWith(composite);
                 BindTo(model, StatusCol, x => x.Status).DisposeWith(composite);
                 BindTo(model, SmoothCol, x => x.SmoothLevel).DisposeWith(composite);

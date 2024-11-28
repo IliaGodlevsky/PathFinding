@@ -8,9 +8,12 @@ using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Algorithms.Exceptions;
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Business.Builders;
+using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Models;
 using Pathfinding.Service.Interface.Models.Read;
+using Pathfinding.Service.Interface.Requests.Create;
 using ReactiveUI;
 using System;
 using System.Diagnostics;
@@ -26,81 +29,48 @@ namespace Pathfinding.ConsoleApp.ViewModel
         IRequireStepRuleViewModel,
         IRequireAlgorithmNameViewModel
     {
+        private sealed record AlgorithmBuildInfo(HeuristicFunctions? Heuristics,
+            double? Weight, StepRules? StepRule) : IAlgorithmBuildInfo;
+
         private readonly IRequestService<GraphVertexModel> service;
         private readonly IMessenger messenger;
         private readonly ILog logger;
 
-        private AlgorithmBuilder algorithmBuilder = null;
-        private StatisticsBuilder statisitcsBuilder = null;
-
         public ReactiveCommand<Unit, Unit> StartAlgorithmCommand { get; }
 
-        private Algorithms algorithm;
-        public Algorithms Algorithm
+        private Algorithms? algorithm;
+        public Algorithms? Algorithm
         {
             get => algorithm;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref algorithm, value);
-                algorithmBuilder = AlgorithmBuilder.TakeAlgorithm(Algorithm);
-                statisitcsBuilder?.WithAlgorithm(Algorithm);
-            }
+            set => this.RaiseAndSetIfChanged(ref algorithm, value);
         }
 
         private HeuristicFunctions? heuristic;
         public HeuristicFunctions? Heuristic
         {
             get => heuristic;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref heuristic, value);
-                statisitcsBuilder?.WithHeuristics(Heuristic);
-                if (Heuristic != null && algorithmBuilder != null)
-                {
-                    algorithmBuilder.WithHeuristics(Heuristic.Value);
-                }
-            }
+            set => this.RaiseAndSetIfChanged(ref heuristic, value);
         }
 
         private double? weight;
         public double? Weight 
         {
             get => weight;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref weight, value);
-                statisitcsBuilder?.WithWeight(Weight);
-                if (Weight != null && algorithmBuilder != null)
-                {
-                    algorithmBuilder.WithWeight(Weight.Value);
-                }
-            }
+            set => this.RaiseAndSetIfChanged(ref weight, value);
         }
 
         private StepRules? stepRule;
         public StepRules? StepRule
         { 
             get => stepRule; 
-            set 
-            {
-                this.RaiseAndSetIfChanged(ref stepRule, value);
-                statisitcsBuilder?.WithStepRules(StepRule);
-                if (StepRule != null && algorithmBuilder != null)
-                {
-                    algorithmBuilder.WithStepRules(StepRule.Value);
-                }
-            }
+            set => this.RaiseAndSetIfChanged(ref stepRule, value);
         }
 
         private GraphModel<GraphVertexModel> graph = GraphModel<GraphVertexModel>.Empty;
         private GraphModel<GraphVertexModel> Graph
         {
             get => graph;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref graph, value);
-                statisitcsBuilder = StatisticsBuilder.TakeGraph(Graph.Id);
-            }
+            set => this.RaiseAndSetIfChanged(ref graph, value);
         }
 
         public PathfindingProcessViewModel(IRequestService<GraphVertexModel> service,
@@ -127,7 +97,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 (graph, id, heuristic, weight, algorithm) =>
                 {
                     bool canExecute = id > 0 && graph != null 
-                        && Enum.IsDefined(typeof(Algorithms), algorithm);
+                        && algorithm != null
+                        && Enum.IsDefined(typeof(Algorithms), algorithm.Value);
                     if (heuristic != default)
                     {
                         return canExecute && weight > 0;
@@ -156,20 +127,16 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 .Select(x => Graph.Graph.Get(x.Position))
                 .ToList();
 
-            if (pathfindingRange.Count > 1 
-                && algorithmBuilder != null 
-                && statisitcsBuilder != null)
+            if (pathfindingRange.Count > 1)
             {
                 int visitedCount = 0;
-
                 void OnVertexProcessed(object sender, EventArgs e) => visitedCount++;
-
                 var status = RunStatuses.Success;
-
-                var algorithm = algorithmBuilder.Build(pathfindingRange);
-
+                var buildInfo = new AlgorithmBuildInfo(Heuristic, Weight, StepRule);
+                var algorithm = AlgorithmBuilder.TakeAlgorithm(Algorithm.Value)
+                    .WithAlgorithmInfo(buildInfo)
+                    .Build(pathfindingRange);
                 algorithm.VertexProcessed += OnVertexProcessed;
-
                 var path = NullGraphPath.Interface;
                 var stopwatch = Stopwatch.StartNew();
                 try
@@ -186,15 +153,23 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     status = RunStatuses.Failure;
                     logger.Error(ex);
                 }
-                finally
-                {
-                    stopwatch.Stop();
-                    algorithm.VertexProcessed -= OnVertexProcessed;
-                }
 
-                var request = statisitcsBuilder.WithElapsed(stopwatch.Elapsed)
-                        .WithStatus(status).WithPath(path)
-                        .WithVisited(visitedCount).Build();
+                stopwatch.Stop();
+                algorithm.VertexProcessed -= OnVertexProcessed;
+
+                var request = new CreateStatisticsRequest()
+                {
+                    Algorithm = Algorithm.Value,
+                    Cost = path.Cost,
+                    Steps = path.Count,
+                    StepRule = StepRule,
+                    Heuristics = Heuristic,
+                    Weight = Weight,
+                    Visited = visitedCount,
+                    Elapsed = stopwatch.Elapsed,
+                    ResultStatus = status,
+                    GraphId = Graph.Id
+                };
 
                 await ExecuteSafe(async () =>
                 {

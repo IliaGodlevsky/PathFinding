@@ -4,6 +4,6 @@ namespace Pathfinding.ConsoleApp.ViewModel.Interface
 {
     internal interface IRequireAlgorithmNameViewModel
     {
-        Algorithms Algorithm { get; set; }
+        Algorithms? Algorithm { get; set; }
     }
 }

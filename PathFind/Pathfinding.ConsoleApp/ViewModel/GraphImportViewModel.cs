@@ -56,7 +56,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                         Neighborhood = x.Graph.Neighborhood,
                         Id = x.Graph.Id,
                         SmoothLevel = x.Graph.SmoothLevel,
-                        Obstacles = x.Graph.Graph.GetObstaclesCount(),
+                        ObstaclesCount = x.Graph.Graph.GetObstaclesCount(),
                         Status = x.Graph.Status
                     }).ToArray();
                     messenger.Send(new GraphCreatedMessage(graphs));

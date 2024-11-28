@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Pathfinding.Service.Interface.Models.Read
 {
-    public class GraphInformationModel
+    public class GraphInformationModel : IGraphLayersInfo
     {
         public int Id { get; set; }
 

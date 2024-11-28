@@ -124,6 +124,7 @@ namespace Pathfinding.ConsoleApp.View
             bar.Visible = true;
         }
 
+
         private void OnAlgorithmFieldClosed(object recipient, CloseAlgorithmRunFieldViewMessage msg)
         {
             rightLabel.Visible = false;

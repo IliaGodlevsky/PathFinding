@@ -4,14 +4,15 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
-using Pathfinding.Domain.Core;
 using Pathfinding.Shared.Extensions;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using Terminal.Gui;
@@ -21,10 +22,13 @@ namespace Pathfinding.ConsoleApp.View
     internal sealed partial class RunsTableView : TableView
     {
         private readonly CompositeDisposable disposables = new();
+        private readonly Dictionary<int, IDisposable> modelsSubs = new();
+        private readonly IRunsTableViewModel viewModel;
 
         public RunsTableView(IRunsTableViewModel viewModel,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger) : this()
         {
+            this.viewModel = viewModel;
             viewModel.Runs.CollectionChanged += OnCollectionChanged;
             this.Events().KeyPress
                 .Where(x => x.KeyEvent.Key.HasFlag(Key.A)
@@ -32,7 +36,7 @@ namespace Pathfinding.ConsoleApp.View
                 .Throttle(TimeSpan.FromMilliseconds(150))
                 .Select(x => MultiSelectedRegions
                         .SelectMany(x => (x.Rect.Top, x.Rect.Bottom - 1).Iterate())
-                        .Select(GetRunModel)
+                        .Select(GetRunId)
                         .ToArray())
                 .InvokeCommand(viewModel, x => x.SelectRunsCommand)
                 .DisposeWith(disposables);
@@ -47,7 +51,7 @@ namespace Pathfinding.ConsoleApp.View
                 .Select(x => x.MouseEvent.Y + RowOffset - headerLinesConsumed)
                 .Where(x => x >= 0 && x < Table.Rows.Count && x == SelectedRow)
                 .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
-                .Select(x => GetRunModel(x).Enumerate().ToArray())
+                .Select(x => GetRunId(x).Enumerate().ToArray())
                 .InvokeCommand(viewModel, x => x.SelectRunsCommand)
                 .DisposeWith(disposables);
             this.Events().KeyPress
@@ -69,10 +73,32 @@ namespace Pathfinding.ConsoleApp.View
                 .DisposeWith(disposables);
         }
         
-        private RunInfoModel[] GetSelectedRows()
+        private int[] GetSelectedRows()
         {
             return GetAllSelectedCells().Select(x => x.Y)
-                    .Distinct().Select(GetRunModel).ToArray();
+                .Distinct().Select(GetRunId).ToArray();
+        }
+
+        private IDisposable BindTo<T>(RunInfoModel model, string column,
+            Expression<Func<RunInfoModel, T>> expression)
+        {
+            return model.WhenAnyValue(expression)
+                .Do(x => Update(model.Id, column, x))
+                .Subscribe();
+        }
+
+        private void Update<T>(int id, string column, T value)
+        {
+            var row = Table.Rows.Find(id);
+            row[column] = value;
+            Table.AcceptChanges();
+            SetNeedsDisplay();
+            SetCursorInvisible();
+        }
+
+        private int GetRunId(int selectedRow)
+        {
+            return (int)Table.Rows[selectedRow][IdCol];
         }
 
         private void OrderOnMouseClick(MouseEventArgs args)
@@ -95,26 +121,6 @@ namespace Pathfinding.ConsoleApp.View
             SetNeedsDisplay();
         }
 
-        private RunInfoModel GetRunModel(int selectedRow)
-        {
-            return new()
-            {
-                RunId = (int)Table.Rows[selectedRow][IdCol],
-                Name = (Algorithms)Table.Rows[selectedRow][AlgorithmCol],
-                Visited = (int)Table.Rows[selectedRow][VisitedCol],
-                Steps = (int)Table.Rows[selectedRow][StepsCol],
-                Cost = (double)Table.Rows[selectedRow][CostCol],
-                Elapsed = (TimeSpan)Table.Rows[selectedRow][ElapsedCol],
-                StepRule = FromTableValue<StepRules>(Table.Rows[selectedRow][StepCol]),
-                Heuristics = FromTableValue<HeuristicFunctions>(Table.Rows[selectedRow][LogicCol]),
-                Weight = FromTableValue<double>(Table.Rows[selectedRow][WeightCol]),
-                Status = (RunStatuses)Table.Rows[selectedRow][StatusCol]
-            };
-        }
-
-        private T? FromTableValue<T>(object value)
-            where T : struct => value is DBNull ? null : (T?)value;
-
         private object ToTableValue<T>(T? value)
             where T : struct => value == null ? DBNull.Value : value.Value;
 
@@ -122,14 +128,22 @@ namespace Pathfinding.ConsoleApp.View
         {
             Application.MainLoop.Invoke(() =>
             {
-                Table.Rows.Add(model.RunId, 
-                    model.Name, model.Visited,
+                Table.Rows.Add(model.Id, 
+                    model.Algorithm, 
+                    model.Visited,
                     model.Steps, 
                     model.Cost, model.Elapsed, 
                     ToTableValue(model.StepRule),
                     ToTableValue(model.Heuristics), 
                     ToTableValue(model.Weight), 
-                    model.Status);
+                    model.ResultStatus);
+                var sub = new CompositeDisposable();
+                BindTo(model, VisitedCol, x => x.Visited).DisposeWith(sub);
+                BindTo(model, StepsCol, x => x.Steps).DisposeWith(sub);
+                BindTo(model, ElapsedCol, x => x.Elapsed).DisposeWith(sub);
+                BindTo(model, CostCol, x => x.Cost).DisposeWith(sub);
+                BindTo(model, StatusCol, x => x.ResultStatus).DisposeWith(sub);
+                modelsSubs.Add(model.Id, sub);
                 Table.AcceptChanges();
                 SetNeedsDisplay();
                 SetCursorInvisible();
@@ -140,11 +154,13 @@ namespace Pathfinding.ConsoleApp.View
         {
             Application.MainLoop.Invoke(() =>
             {
-                var row = Table.Rows.Find(model.RunId);
+                var row = Table.Rows.Find(model.Id);
                 var index = Table.Rows.IndexOf(row);
                 if (row != null)
                 {
                     row.Delete();
+                    modelsSubs[model.Id].Dispose();
+                    modelsSubs.Remove(model.Id);
                     Table.AcceptChanges();
                     MultiSelectedRegions.Clear();
                     if (Table.Rows.Count > 0)
@@ -169,6 +185,8 @@ namespace Pathfinding.ConsoleApp.View
                     MultiSelectedRegions.Clear();
                     Table.Clear();
                     Table.AcceptChanges();
+                    modelsSubs.ForEach(x => x.Value.Dispose());
+                    modelsSubs.Clear();
                     SetNeedsDisplay();
                     break;
                 case NotifyCollectionChangedAction.Add:

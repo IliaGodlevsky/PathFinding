@@ -13,10 +13,10 @@ namespace Pathfinding.ConsoleApp.View
         {
             heuristics.X = 1;
             heuristics.Y = 1;
-            X = Pos.Percent(55);
-            Y = 1;
-            Height = Dim.Percent(50);
-            Width = Dim.Percent(40);
+            X = 0;
+            Y = Pos.Percent(33);
+            Height = Dim.Percent(47);
+            Width = Dim.Percent(30);
             Border = new Border()
             {
                 BorderStyle = BorderStyle.Rounded,

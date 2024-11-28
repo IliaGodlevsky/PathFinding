@@ -120,19 +120,15 @@ namespace Pathfinding.Infrastructure.Business
         public async Task<GraphModel<T>> ReadGraphAsync(int graphId,
             CancellationToken token = default)
         {
-            return await Transaction(async (unitOfWork, t) =>
-            {
-                return await ReadGraphInternalAsync(unitOfWork, graphId, t).ConfigureAwait(false);
-            }, token).ConfigureAwait(false);
+            return await Transaction(async (unitOfWork, t)
+                => await ReadGraphInternalAsync(unitOfWork, graphId, t).ConfigureAwait(false), token);
         }
 
         public async Task<GraphModel<T>> CreateGraphAsync(CreateGraphRequest<T> graph,
             CancellationToken token = default)
         {
-            return await Transaction(async (unit, t) =>
-            {
-                return await CreateGraphAsyncInternal(unit, graph, t).ConfigureAwait(false);
-            }, token);
+            return await Transaction(async (unit, t) 
+                => await CreateGraphAsyncInternal(unit, graph, t).ConfigureAwait(false), token);
         }
 
         public async Task<IReadOnlyCollection<PathfindingHistoryModel<T>>> ReadPathfindingHistoriesAsync(IEnumerable<int> graphIds,
@@ -161,10 +157,9 @@ namespace Pathfinding.Infrastructure.Business
         public async Task<IReadOnlyCollection<PathfindingRangeModel>> ReadRangeAsync(int graphId,
             CancellationToken token = default)
         {
-            return await Transaction(async (unit, t) =>
-            {
-                return await ReadRangeAsyncInternal(unit, graphId, t).ConfigureAwait(false);
-            }, token).ConfigureAwait(false);
+            return await Transaction(async (unit, t)
+                => await ReadRangeAsyncInternal(unit, graphId, t).ConfigureAwait(false), token)
+                .ConfigureAwait(false);
         }
 
         public async Task<IReadOnlyCollection<RunStatisticsModel>> ReadStatisticsAsync(int graphId,
@@ -172,7 +167,7 @@ namespace Pathfinding.Infrastructure.Business
         {
             return await Transaction(async (unit, t) =>
             {
-                var result = await unit.StatisticsRepository.ReadByGraphIdAsync(graphId, token).ConfigureAwait(false);
+                var result = await unit.StatisticsRepository.ReadByGraphIdAsync(graphId, t).ConfigureAwait(false);
                 return mapper.Map<List<RunStatisticsModel>>(result);
             }, token);
         }
@@ -202,6 +197,16 @@ namespace Pathfinding.Infrastructure.Business
             return await Transaction(async (unitOfWork, t)
                 => await unitOfWork.GraphRepository.DeleteAsync(ids, t).ConfigureAwait(false), token)
                 .ConfigureAwait(false);
+        }
+
+        public async Task<bool> UpdateStatisticsAsync(IEnumerable<RunStatisticsModel> models,
+            CancellationToken token = default)
+        {
+            return await Transaction(async (unit, t) =>
+            {
+                var entities = mapper.Map<IEnumerable<Statistics>>(models);
+                return await unit.StatisticsRepository.UpdateAsync(entities, t).ConfigureAwait(false);
+            }, token);
         }
 
         public async Task<bool> DeleteRunsAsync(IEnumerable<int> runIds, CancellationToken token = default)
@@ -356,6 +361,15 @@ namespace Pathfinding.Infrastructure.Business
                 result.Add(model);
             }
             return result.AsReadOnly();
+        }
+
+        public async Task<IReadOnlyCollection<RunStatisticsModel>> ReadStatisticsAsync(IEnumerable<int> runIds, CancellationToken token = default)
+        {
+            return await Transaction(async (unit, t) =>
+            {
+                var result = await unit.StatisticsRepository.ReadByIdsAsync(runIds, t).ConfigureAwait(false);
+                return mapper.Map<IEnumerable<RunStatisticsModel>>(result).ToList();
+            }, token);
         }
     }
 }

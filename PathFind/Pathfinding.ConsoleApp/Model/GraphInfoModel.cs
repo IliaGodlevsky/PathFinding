@@ -1,9 +1,10 @@
 ﻿using Pathfinding.Domain.Core;
+using Pathfinding.Service.Interface.Models;
 using ReactiveUI;
 
 namespace Pathfinding.ConsoleApp.Model
 {
-    internal sealed class GraphInfoModel : ReactiveObject
+    internal sealed class GraphInfoModel : ReactiveObject, IGraphLayersInfo
     {
         public int Id { get; set; }
 
@@ -43,7 +44,7 @@ namespace Pathfinding.ConsoleApp.Model
         }
 
         private int obstacles;
-        public int Obstacles
+        public int ObstaclesCount
         {
             get => obstacles;
             set => this.RaiseAndSetIfChanged(ref obstacles, value);
@@ -59,7 +60,7 @@ namespace Pathfinding.ConsoleApp.Model
         public object[] GetProperties()
         {
             return new object[] { Id, Name, Width, Length,
-                Neighborhood, SmoothLevel, Obstacles, Status };
+                Neighborhood, SmoothLevel, ObstaclesCount, Status };
         }
     }
 }

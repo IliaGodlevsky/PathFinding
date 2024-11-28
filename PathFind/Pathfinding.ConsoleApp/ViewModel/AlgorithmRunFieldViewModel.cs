@@ -67,6 +67,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<RunSelectedMessage>(this, OnRunActivated);
             messenger.Register<GraphStateChangedMessage>(this, OnGraphStatusChanged);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
+            messenger.Register<GraphUpdatedMessage>(this, OnGraphUpdated);
             ProcessNextCommand = ReactiveCommand.Create<float>(ProcessNext);
             ReverseNextCommand = ReactiveCommand.Create<float>(ReverseNext);
             ProcessToCommand = ReactiveCommand.Create<float>(ProcessTo);
@@ -78,6 +79,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
             {
                 Clear();
             }
+        }
+
+        private void OnGraphUpdated(object recipient, GraphUpdatedMessage msg)
+        {
+            this.RaisePropertyChanged(nameof(RunGraph));
         }
 
         private void Clear()
@@ -170,28 +176,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
             ProcessForward((int)Math.Round(verticesStates.Count * Fraction, 0));
         }
 
-        private AlgorithmBuilder GetBuilder(RunInfoModel model)
-        {
-            var builder = AlgorithmBuilder.TakeAlgorithm(model.Name);
-            if (model.StepRule != null)
-            {
-                builder.WithStepRules(model.StepRule.Value);
-            }
-            if (model.Heuristics != null)
-            {
-                builder.WithHeuristics(model.Heuristics.Value);
-            }
-            if (model.Weight != null)
-            {
-                builder.WithWeight(model.Weight.Value);
-            }
-            return builder;
-        }
-
         private void OnRunActivated(object recipient, RunSelectedMessage msg)
         {
             var run = msg.SelectedRuns.First();
-            if (cache.TryGetValue(run.RunId, out var vertices))
+            if (cache.TryGetValue(run.Id, out var vertices))
             {
                 RunGraph.ClearState();
                 verticesStates = vertices;
@@ -229,8 +217,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
             try
             {
-                var builder = GetBuilder(run);
-                var algorithm = builder.Build(range);
+                var algorithm = AlgorithmBuilder
+                    .TakeAlgorithm(run.Algorithm)
+                    .WithAlgorithmInfo(run)
+                    .Build(range);
 
                 algorithm.SubPathFound += OnSubPathFound;
                 algorithm.VertexProcessed += OnVertexProcessed;
@@ -255,7 +245,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
             RunGraph.ClearState();
             verticesStates = RunGraph.ToVerticesStates(subAlgorithms, rangeCoordinates);
-            cache[run.RunId] = verticesStates;
+            cache[run.Id] = verticesStates;
             ProcessToFraction();
         }
     }

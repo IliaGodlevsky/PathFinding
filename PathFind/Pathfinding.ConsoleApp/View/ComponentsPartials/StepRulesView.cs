@@ -12,8 +12,8 @@ namespace Pathfinding.ConsoleApp.View
             stepRules.Y = 1;
             X = 0;
             Y = 1;
-            Height = Dim.Percent(45);
-            Width = Dim.Percent(55);
+            Height = Dim.Percent(30);
+            Width = Dim.Percent(30);
             Border = new Border()
             {
                 BorderStyle = BorderStyle.Rounded,

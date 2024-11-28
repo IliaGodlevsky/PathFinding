@@ -12,6 +12,9 @@ namespace Pathfinding.Domain.Interface.Repositories
 
         Task<Statistics> ReadByIdAsync(int runId, CancellationToken token = default);
 
+        Task<IEnumerable<Statistics>> ReadByIdsAsync(IEnumerable<int> runIds,
+            CancellationToken token = default);
+
         Task<int> ReadStatisticsCountAsync(int graphId, CancellationToken token = default);
 
         Task<Statistics> CreateAsync(Statistics entity, CancellationToken token = default);
@@ -21,5 +24,7 @@ namespace Pathfinding.Domain.Interface.Repositories
         Task<bool> DeleteByGraphId(int graphId, CancellationToken token = default);
 
         Task<bool> DeleteByIdsAsync(IEnumerable<int> ids, CancellationToken token = default);
+
+        Task<bool> UpdateAsync(IEnumerable<Statistics> entities, CancellationToken token = default);
     }
 }

@@ -124,7 +124,7 @@
     <Compile Include="Algorithms\StepRules\WalkStepRule.cs" />
     <Compile Include="Algorithms\WaveAlgorithm.cs" />
     <Compile Include="Builders\AlgorithmBuilder.cs" />
-    <Compile Include="Builders\StatisticsBuilder.cs" />
+    <Compile Include="Builders\LayersBuilder.cs" />
     <Compile Include="Commands\ExcludeSourceVertex.cs" />
     <Compile Include="Commands\ExcludeTargetVertex.cs" />
     <Compile Include="Commands\ExcludeTransitVertex.cs" />

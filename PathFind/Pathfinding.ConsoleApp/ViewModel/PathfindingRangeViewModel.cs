@@ -140,18 +140,14 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             model.WhenAnyValue(expression)
                 .Skip(1)
-                .Do(async x=>
-                {
-                    switch (x)
-                    {
-                        case true: 
-                            await AddRangeToStorage(model);
-                            break;
-                        case false: 
-                            await RemoveVertexFromStorage(model);
-                            break;
-                    }
-                })
+                .Where(x=> x)
+                .Do(async _ => await AddRangeToStorage(model))
+                .Subscribe()
+                .DisposeWith(disposables);
+            model.WhenAnyValue(expression)
+                .Skip(1)
+                .Where(x => !x)
+                .Do(async x => await RemoveVertexFromStorage(model))
                 .Subscribe()
                 .DisposeWith(disposables);
         }

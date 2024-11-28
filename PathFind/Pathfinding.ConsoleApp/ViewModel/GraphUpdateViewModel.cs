@@ -1,6 +1,8 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.ConsoleApp.Extensions;
 using Pathfinding.ConsoleApp.Injection;
+using Pathfinding.ConsoleApp.Messages;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.Domain.Core;
@@ -75,8 +77,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
             return this.WhenAnyValue(
                 x => x.SelectedGraphs,
                 x => x.Name,
-                (selected, name) 
-                => selected.Length == 1 && !string.IsNullOrEmpty(name));
+                (selected, name) =>
+                { 
+                    bool canExecute = selected.Length == 1 && !string.IsNullOrEmpty(name);
+                    return canExecute;
+                });
         }
 
         private async Task ExecuteUpdate()
@@ -88,11 +93,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 info.Name = Name;
                 info.Neighborhood = Neighborhood;
                 info.SmoothLevel = SmoothLevel;
-                bool updated = await service.UpdateGraphInfoAsync(info).ConfigureAwait(false);
-                if (updated)
-                {
-                    messenger.Send(new GraphUpdatedMessage(info));
-                }
+                await service.UpdateGraphInfoAsync(info).ConfigureAwait(false);
+                await messenger.SendAsync(new GraphUpdatedMessage(info), Tokens.GraphTable);
+                await messenger.SendAsync(new GraphUpdatedMessage(info), Tokens.AlgorithmUpdate);
+                messenger.Send(new GraphUpdatedMessage(info));
             }, log.Error).ConfigureAwait(false);
         }
 

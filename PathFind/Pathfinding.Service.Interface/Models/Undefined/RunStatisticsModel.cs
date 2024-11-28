@@ -3,7 +3,7 @@ using System;
 
 namespace Pathfinding.Service.Interface.Models.Undefined
 {
-    public record RunStatisticsModel
+    public record RunStatisticsModel : IAlgorithmBuildInfo
     {
         public int Id { get; set; }
 

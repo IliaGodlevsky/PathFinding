@@ -64,7 +64,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnRunsSelected(object recipient, RunSelectedMessage msg)
         {
-            RunsIds = msg.SelectedRuns.Select(x => x.RunId).ToArray();
+            RunsIds = msg.SelectedRuns.Select(x => x.Id).ToArray();
         }
     }
 }

@@ -123,6 +123,7 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<PathfindingProcessButtonsFrame>().Keyed<Terminal.Gui.View>(KeyFilters.RunsPanel).WithAttributeFiltering();
 
             builder.RegisterType<NewRunButton>().Keyed<Terminal.Gui.View>(KeyFilters.RunButtonsFrame).WithAttributeFiltering();
+            builder.RegisterType<AlgorithmUpdateView>().Keyed<Terminal.Gui.View>(KeyFilters.RunButtonsFrame).WithAttributeFiltering();
             builder.RegisterType<DeleteRunButton>().Keyed<Terminal.Gui.View>(KeyFilters.RunButtonsFrame).WithAttributeFiltering();
 
             builder.RegisterType<AlgorithmsView>().Keyed<Terminal.Gui.View>(KeyFilters.AlgorithmCreationView).WithAttributeFiltering();

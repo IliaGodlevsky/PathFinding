@@ -4,7 +4,6 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
-using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
@@ -65,7 +64,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     Neighborhood = x.Neighborhood,
                     Id = x.Id,
                     SmoothLevel = x.SmoothLevel,
-                    Obstacles = x.Graph.GetObstaclesCount(),
+                    ObstaclesCount = x.Graph.GetObstaclesCount(),
                     Status = x.Status
                 }).ToArray();
                 messenger.Send(new GraphCreatedMessage(graphs));

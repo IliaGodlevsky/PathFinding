@@ -60,5 +60,15 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             var count = collection.Count(x => x.GraphId == graphId);
             return await Task.FromResult(count);
         }
+
+        public Task<IEnumerable<Statistics>> ReadByIdsAsync(IEnumerable<int> runIds, CancellationToken token = default)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<bool> UpdateAsync(IEnumerable<Statistics> entities, CancellationToken token = default)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

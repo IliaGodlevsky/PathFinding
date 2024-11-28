@@ -9,6 +9,6 @@ namespace Pathfinding.ConsoleApp.ViewModel.Interface
     {
         ObservableCollection<RunInfoModel> Runs { get; }
 
-        ReactiveCommand<RunInfoModel[], Unit> SelectRunsCommand { get; }
+        ReactiveCommand<int[], Unit> SelectRunsCommand { get; }
     }
 }

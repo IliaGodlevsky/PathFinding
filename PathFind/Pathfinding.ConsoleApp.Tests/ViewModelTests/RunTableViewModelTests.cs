@@ -24,7 +24,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
 
             var run = new RunStatisticsModel() { Id = 1 };
             mock.Mock<IMessenger>().Setup(x => x.Register(
-                It.IsAny<object>(), 
+                It.IsAny<object>(),
                 It.IsAny<IsAnyToken>(),
                 It.IsAny<MessageHandler<object, RunCreatedMessaged>>()))
                 .Callback<object, object, MessageHandler<object, RunCreatedMessaged>>((r, t, handler) => handler(r, new(run)));
@@ -43,7 +43,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
             IReadOnlyCollection<RunStatisticsModel> runs = Enumerable.Range(1, 5)
                 .Select(x => new RunStatisticsModel { Id = x })
                 .ToList();
-            
+
             mock.Mock<IMessenger>()
                 .Setup(x => x.Register(
                     It.IsAny<object>(),
@@ -53,7 +53,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
 
             mock.Mock<IRequestService<GraphVertexModel>>()
                 .Setup(x => x.ReadStatisticsAsync(
-                    It.Is<int>(x => x == 1), 
+                    It.Is<int>(x => x == 1),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(runs));
 
@@ -73,7 +73,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
 
             var viewModel = mock.Create<RunsTableViewModel>();
 
-            await viewModel.SelectRunsCommand.Execute(Array.Empty<RunInfoModel>());
+            await viewModel.SelectRunsCommand.Execute(Array.Empty<int>());
 
             mock.Mock<IMessenger>()
                 .Verify(x => x.Send(
@@ -110,7 +110,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                     It.IsAny<object>(),
                     It.IsAny<IsAnyToken>(),
                     It.IsAny<MessageHandler<object, GraphsDeletedMessage>>()))
-                .Callback<object, object, MessageHandler<object, GraphsDeletedMessage>>((r, t, handler) => 
+                .Callback<object, object, MessageHandler<object, GraphsDeletedMessage>>((r, t, handler) =>
                     handler(r, new(new[] { 1 })));
 
             var viewModel = mock.Create<RunsTableViewModel>();

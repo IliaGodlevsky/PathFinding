@@ -3,7 +3,7 @@ using Pathfinding.Domain.Interface;
 
 namespace Pathfinding.Service.Interface.Models.Read
 {
-    public record class GraphModel<T>
+    public record class GraphModel<T> : IGraphLayersInfo
         where T : IVertex
     {
         public static readonly GraphModel<T> Empty = new GraphModel<T>()

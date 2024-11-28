@@ -22,6 +22,9 @@ namespace Pathfinding.Service.Interface
         Task<RunStatisticsModel> ReadStatisticAsync(int runId,
             CancellationToken token = default);
 
+        Task<IReadOnlyCollection<RunStatisticsModel>> ReadStatisticsAsync(IEnumerable<int> runIds,
+            CancellationToken token = default);
+
         Task<GraphInformationModel> ReadGraphInfoAsync(int graphId, CancellationToken token = default);
 
         Task<bool> UpdateGraphInfoAsync(GraphInformationModel graph, CancellationToken token = default);
@@ -34,6 +37,9 @@ namespace Pathfinding.Service.Interface
         Task<RunStatisticsModel> CreateStatisticsAsync(CreateStatisticsRequest request, CancellationToken token = default);
 
         Task<IReadOnlyCollection<PathfindingRangeModel>> ReadRangeAsync(int graphId,
+            CancellationToken token = default);
+
+        Task<bool> UpdateStatisticsAsync(IEnumerable<RunStatisticsModel> models, 
             CancellationToken token = default);
 
         Task<IReadOnlyCollection<PathfindingHistoryModel<T>>> CreatePathfindingHistoriesAsync(IEnumerable<CreatePathfindingHistoryRequest<T>> request,

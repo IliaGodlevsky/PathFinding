@@ -4,6 +4,7 @@ using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Models;
 using System;
 using System.Collections.Generic;
 
@@ -16,23 +17,14 @@ namespace Pathfinding.Infrastructure.Business.Builders
         private HeuristicFunctions? heuristic;
         private double? weight;
 
-        public static AlgorithmBuilder TakeAlgorithm(Domain.Core.Algorithms algorithm) => new(algorithm);
+        public static AlgorithmBuilder TakeAlgorithm(Domain.Core.Algorithms algorithm) 
+            => new(algorithm);
 
-        public AlgorithmBuilder WithStepRules(StepRules stepRules)
+        public AlgorithmBuilder WithAlgorithmInfo(IAlgorithmBuildInfo info)
         {
-            this.stepRules = stepRules;
-            return this;
-        }
-
-        public AlgorithmBuilder WithHeuristics(HeuristicFunctions heuristic)
-        {
-            this.heuristic = heuristic;
-            return this;
-        }
-
-        public AlgorithmBuilder WithWeight(double weight)
-        {
-            this.weight = weight;
+            weight = info.Weight;
+            heuristic = info.Heuristics;
+            stepRules = info.StepRule;
             return this;
         }
 

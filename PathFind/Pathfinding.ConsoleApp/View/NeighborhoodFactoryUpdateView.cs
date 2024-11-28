@@ -27,18 +27,13 @@ namespace Pathfinding.ConsoleApp.View
             var values = radioLabels.Select(x => factories[x.ToString()]).ToArray();
             neighborhoods.RadioLabels = radioLabels;
             neighborhoods.Events().SelectedItemChanged
-                .Where(x => x.SelectedItem > -1 
-                    && viewModel.Status == GraphStatuses.Editable)
+                .Where(x => x.SelectedItem > -1)
                 .Select(x => values[x.SelectedItem])
                 .BindTo(viewModel, x => x.Neighborhood)
                 .DisposeWith(disposables);
             viewModel.WhenAnyValue(x => x.Neighborhood)
                 .Select(x => factories.Values.IndexOf(x))
                 .BindTo(neighborhoods, x => x.SelectedItem)
-                .DisposeWith(disposables);
-            viewModel.WhenAnyValue(x => x.Status)
-                .Select(x => x != GraphStatuses.Readonly)
-                .BindTo(this, x => x.Visible)
                 .DisposeWith(disposables);
         }
 

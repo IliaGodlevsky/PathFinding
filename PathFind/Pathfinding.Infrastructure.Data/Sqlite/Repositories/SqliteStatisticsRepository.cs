@@ -116,5 +116,35 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
 
             return statistics;
         }
+
+        public async Task<bool> UpdateAsync(IEnumerable<Statistics> entities, CancellationToken token = default)
+        {
+            const string query = @$"
+                UPDATE {DbTables.Statistics}
+                SET Algorithm = @Algorithm, 
+                    Heuristics = @Heuristics, 
+                    StepRule = @StepRule, 
+                    ResultStatus = @ResultStatus, 
+                    Elapsed = @Elapsed, 
+                    Steps = @Steps, 
+                    Cost = @Cost, 
+                    Visited = @Visited, 
+                    Weight = @Weight
+                WHERE Id = @Id";
+
+            var affectedRows = await connection.ExecuteAsync(
+                new CommandDefinition(query, entities.ToArray(), transaction, cancellationToken: token)).ConfigureAwait(false);
+
+            return affectedRows > 0;
+        }
+
+        public async Task<IEnumerable<Statistics>> ReadByIdsAsync(IEnumerable<int> runIds, CancellationToken token = default)
+        {
+            const string query = $"SELECT * FROM {DbTables.Statistics} WHERE Id IN @Ids";
+
+            return await connection.QueryAsync<Statistics>(
+                new CommandDefinition(query, new { Ids = runIds.ToArray() }, transaction, cancellationToken: token))
+                .ConfigureAwait(false);
+        }
     }
 }

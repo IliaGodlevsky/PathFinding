@@ -59,5 +59,33 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
             set.TryGetValue(tracking, out var statistics);
             return await Task.FromResult(statistics);
         }
+
+        public async Task<bool> UpdateAsync(IEnumerable<Statistics> entities, CancellationToken token = default)
+        {
+            foreach(var entity in entities)
+            {
+                if (set.TryGetValue(entity, out var statistics))
+                {
+                    statistics.StepRule = entity.StepRule;
+                    statistics.Steps = entity.Steps;
+                    statistics.Heuristics = entity.Heuristics;
+                    statistics.ResultStatus = entity.ResultStatus;
+                    statistics.Cost = entity.Cost;
+                    statistics.Algorithm = entity.Algorithm;
+                    statistics.Weight = entity.Weight;
+                    statistics.Visited = entity.Visited;
+                    statistics.Elapsed = entity.Elapsed;
+                    return true;
+                }
+            }
+            return await Task.FromResult(false);
+        }
+
+        public async Task<IEnumerable<Statistics>> ReadByIdsAsync(IEnumerable<int> runIds, CancellationToken token = default)
+        {
+            var ids = runIds.ToHashSet();
+            var statistics = set.Where(x=> runIds.Contains(x.Id)).ToList();
+            return await Task.FromResult(statistics);
+        }
     }
 }

@@ -4,7 +4,7 @@ using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.ViewModel;
 using ReactiveMarbles.ObservableEvents;
-using ReactiveUI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
@@ -31,14 +31,18 @@ namespace Pathfinding.ConsoleApp.View
             Initialize();
             this.children = children.ToArray();
             Add(this.children);
-            var hideWindowCommand = ReactiveCommand.Create(Hide,
-                this.viewModel.UpdateGraphCommand.CanExecute);
-            var commands = new[] { hideWindowCommand, this.viewModel.UpdateGraphCommand };
-            var combined = ReactiveCommand.CreateCombined(commands);
             updateButton.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
                 .Select(x => Unit.Default)
-                .InvokeCommand(combined)
+                .Do(async x =>
+                {
+                    if (await viewModel.UpdateGraphCommand.CanExecute.FirstOrDefaultAsync())
+                    {
+                        Hide();
+                        await viewModel.UpdateGraphCommand.Execute();
+                    }
+                })
+                .Subscribe()
                 .DisposeWith(disposables);
 
             cancelButton.MouseClick += OnCancelClicked;

@@ -9,9 +9,9 @@ namespace Pathfinding.ConsoleApp.ViewModel.Interface
     {
         ObservableCollection<GraphInfoModel> Graphs { get; }
 
-        ReactiveCommand<GraphInfoModel, Unit> ActivateGraphCommand { get; }
+        ReactiveCommand<int, Unit> ActivateGraphCommand { get; }
 
-        ReactiveCommand<GraphInfoModel[], Unit> SelectGraphsCommand { get; }
+        ReactiveCommand<int[], Unit> SelectGraphsCommand { get; }
 
         ReactiveCommand<Unit, Unit> LoadGraphsCommand { get; }
     }

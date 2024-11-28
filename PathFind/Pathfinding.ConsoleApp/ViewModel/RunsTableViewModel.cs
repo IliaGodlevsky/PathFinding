@@ -26,7 +26,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public ObservableCollection<RunInfoModel> Runs { get; } = new();
 
-        public ReactiveCommand<RunInfoModel[], Unit> SelectRunsCommand { get; }
+        public ReactiveCommand<int[], Unit> SelectRunsCommand { get; }
 
         private int ActivatedGraphId { get; set; }
 
@@ -42,14 +42,16 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<GraphActivatedMessage>(this,
                 async (r, msg) => await OnGraphActivatedMessage(r, msg));
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
+            messenger.Register<RunsUpdatedMessage>(this, OnRunsUpdated);
             messenger.Register<RunsDeletedMessage>(this, async (r, msg) => await OnRunsDeleteMessage(r, msg));
 
-            SelectRunsCommand = ReactiveCommand.Create<RunInfoModel[]>(SelectRuns);
+            SelectRunsCommand = ReactiveCommand.Create<int[]>(SelectRuns);
         }
 
-        private void SelectRuns(RunInfoModel[] selected)
+        private void SelectRuns(int[] selected)
         {
-            messenger.Send(new RunSelectedMessage(selected));
+            var runs = Runs.Where(x => selected.Contains(x.Id)).ToArray();
+            messenger.Send(new RunSelectedMessage(runs));
         }
 
         private async Task OnGraphActivatedMessage(object recipient, GraphActivatedMessage msg)
@@ -74,16 +76,33 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
+        private void OnRunsUpdated(object recipient, RunsUpdatedMessage msg)
+        {
+            var runs = Runs.ToDictionary(x => x.Id);
+            var updatedRuns = msg.Updated
+                .Where(x => runs.TryGetValue(x.Id, out _))
+                .ToList();
+            foreach (var updated in updatedRuns)
+            {
+                var run = runs[updated.Id];
+                run.ResultStatus = updated.ResultStatus;
+                run.Visited = updated.Visited;
+                run.Steps = updated.Steps;
+                run.Cost = updated.Cost;
+                run.Elapsed = updated.Elapsed;
+            }
+        }
+
         private async Task OnRunsDeleteMessage(object recipient, RunsDeletedMessage msg)
         {
-            var toDelete = Runs.Where(x => msg.RunIds.Contains(x.RunId)).ToArray();
+            var toDelete = Runs.Where(x => msg.RunIds.Contains(x.Id)).ToArray();
             if (toDelete.Length == Runs.Count)
             {
                 Runs.Clear();
                 messenger.Send(new GraphStateChangedMessage(ActivatedGraphId, GraphStatuses.Editable));
-                var graphInfo = await service.ReadGraphInfoAsync(ActivatedGraphId);
+                var graphInfo = await service.ReadGraphInfoAsync(ActivatedGraphId).ConfigureAwait(false);
                 graphInfo.Status = GraphStatuses.Editable;
-                await service.UpdateGraphInfoAsync(graphInfo);
+                await service.UpdateGraphInfoAsync(graphInfo).ConfigureAwait(false);
             }
             else
             {
@@ -98,9 +117,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
             if (previousCount == 0)
             {
                 messenger.Send(new GraphStateChangedMessage(ActivatedGraphId, GraphStatuses.Readonly));
-                var graphInfo = await service.ReadGraphInfoAsync(ActivatedGraphId);
+                var graphInfo = await service.ReadGraphInfoAsync(ActivatedGraphId).ConfigureAwait(false);
                 graphInfo.Status = GraphStatuses.Readonly;
-                await service.UpdateGraphInfoAsync(graphInfo);
+                await service.UpdateGraphInfoAsync(graphInfo).ConfigureAwait(false);
             }
         }
 
@@ -108,11 +127,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             return new()
             {
-                RunId = model.Id,
-                Name = model.Algorithm,
+                Id = model.Id,
+                Algorithm = model.Algorithm,
                 Cost = model.Cost,
                 Steps = model.Steps,
-                Status = model.ResultStatus,
+                ResultStatus = model.ResultStatus,
                 StepRule = model.StepRule,
                 Heuristics = model.Heuristics,
                 Weight = model.Weight,
