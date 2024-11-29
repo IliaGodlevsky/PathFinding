@@ -1,15 +1,15 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
-using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
 using System.Reactive.Disposables;
 using ReactiveMarbles.ObservableEvents;
 using Terminal.Gui;
 using System.Reactive.Linq;
 using ReactiveUI;
-using Pathfinding.ConsoleApp.Messages.View;
 using System.ComponentModel;
+using Pathfinding.ConsoleApp.Messages.View;
+using Pathfinding.ConsoleApp.Model;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -28,7 +28,6 @@ namespace Pathfinding.ConsoleApp.View
             IAlgorithmRunFieldViewModel viewModel)
         {
             Initialize();
-            messenger.Register<OpenAlgorithmRunViewMessage>(this, OnAlgorithmFieldOpen);
             messenger.Register<CloseAlgorithmRunFieldViewMessage>(this, OnAlgorithmFieldClosed);
             leftLabel.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Pressed)
@@ -105,6 +104,24 @@ namespace Pathfinding.ConsoleApp.View
             this.WhenAnyValue(x => x.Fraction)
                 .BindTo(viewModel, x => x.Fraction)
                 .DisposeWith(disposables);
+            viewModel.WhenAnyValue(x => x.SelectedRun)
+                .Select(x => x != null)
+                .BindTo(rightLabel, x => x.Visible)
+                .DisposeWith(disposables);
+            viewModel.WhenAnyValue(x => x.SelectedRun)
+                .Select(x => x != null)
+                .BindTo(leftLabel, x => x.Visible)
+                .DisposeWith(disposables);
+            viewModel.WhenAnyValue(x => x.SelectedRun)
+                .Select(x => x != null)
+                .BindTo(bar, x => x.Visible)
+                .DisposeWith(disposables);
+            bar.Events().VisibleChanged
+                .Where(x => !bar.Visible)
+                .Select(x => (RunInfoModel)null)
+                .BindTo(viewModel, x => x.SelectedRun)
+                .DisposeWith(disposables);
+
         }
 
         public void RaisePropertyChanging(PropertyChangingEventArgs args)
@@ -115,13 +132,6 @@ namespace Pathfinding.ConsoleApp.View
         public void RaisePropertyChanged(PropertyChangedEventArgs args)
         {
             PropertyChanged?.Invoke(this, args);
-        }
-
-        private void OnAlgorithmFieldOpen(object recipient, OpenAlgorithmRunViewMessage msg)
-        {
-            rightLabel.Visible = true;
-            leftLabel.Visible = true;
-            bar.Visible = true;
         }
 
 

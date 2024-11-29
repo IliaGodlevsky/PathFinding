@@ -1,5 +1,6 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
+using DynamicData;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
@@ -36,7 +37,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private readonly CompositeDisposable disposables = new();
 
         private int graphId;
-        private List<VertexState> verticesStates = new();
+        private List<VertexState> selectedRun;
 
         private int Cursor { get; set; } = 0;
 
@@ -47,6 +48,21 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public ReactiveCommand<float, Unit> ReverseNextCommand { get; }
 
         public ReactiveCommand<float, Unit> ProcessToCommand { get; }
+
+        private RunInfoModel selected;
+        public RunInfoModel SelectedRun
+        { 
+            get => selected;
+            set
+            {
+                selected = value;
+                this.RaisePropertyChanged(nameof(SelectedRun));
+                if (SelectedRun != null)
+                {
+                    ActivateRun(SelectedRun);
+                }
+            }
+        }
 
         private float fraction;
         public float Fraction 
@@ -64,13 +80,18 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.messenger = messenger;
             this.graphAssemble = graphAssemble;
             messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
-            messenger.Register<RunSelectedMessage>(this, OnRunActivated);
             messenger.Register<GraphStateChangedMessage>(this, OnGraphStatusChanged);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<GraphUpdatedMessage>(this, OnGraphUpdated);
+            messenger.Register<RunSelectedMessage>(this, OnRunActivated);
             ProcessNextCommand = ReactiveCommand.Create<float>(ProcessNext);
             ReverseNextCommand = ReactiveCommand.Create<float>(ReverseNext);
             ProcessToCommand = ReactiveCommand.Create<float>(ProcessTo);
+        }
+
+        private void OnRunActivated(object recipient, RunSelectedMessage msg)
+        {
+            SelectedRun = msg.SelectedRuns.FirstOrDefault();
         }
 
         private void OnGraphStatusChanged(object recipient, GraphStateChangedMessage msg)
@@ -91,7 +112,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
             cache.Clear();
             Cursor = 0;
             Fraction = 0;
-            verticesStates.Clear();
+            selectedRun = new();
+            SelectedRun = null;
         }
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
@@ -131,15 +153,15 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void ProcessNext(float fraction)
         {
-            ProcessForward((int)Math.Round(verticesStates.Count * fraction, 0));
-            if (Cursor > verticesStates.Count) Cursor = verticesStates.Count;
+            ProcessForward((int)Math.Round(selectedRun.Count * fraction, 0));
+            if (Cursor > selectedRun.Count) Cursor = selectedRun.Count;
         }
 
         private void ProcessForward(int count)
         {
-            while (count-- > 0 && Cursor < verticesStates.Count)
+            while (count-- > 0 && Cursor < selectedRun.Count)
             {
-                verticesStates.ElementAtOrDefault(Cursor++).SetState();
+                selectedRun.ElementAtOrDefault(Cursor++).SetState();
             }
         }
 
@@ -147,13 +169,13 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             while (count-- > 0 && Cursor > 0)
             {
-                verticesStates.ElementAtOrDefault(--Cursor).ToReverted().SetState();
+                selectedRun.ElementAtOrDefault(--Cursor).ToReverted().SetState();
             }
         }
 
         private void ProcessTo(float fraction)
         {
-            int count = (int)Math.Round(verticesStates.Count * fraction, 0);
+            int count = (int)Math.Round(selectedRun.Count * fraction, 0);
             if (count > Cursor)
             {
                 ProcessForward(count - Cursor);
@@ -166,23 +188,23 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void ReverseNext(float fraction)
         {
-            ProcessBackward((int)Math.Round(verticesStates.Count * fraction, 0));
+            ProcessBackward((int)Math.Round(selectedRun.Count * fraction, 0));
             if (Cursor < 0) Cursor = 0;
         }
 
         private void ProcessToFraction()
         {
             Cursor = 0;
-            ProcessForward((int)Math.Round(verticesStates.Count * Fraction, 0));
+            ProcessForward((int)Math.Round(selectedRun.Count * Fraction, 0));
         }
 
-        private void OnRunActivated(object recipient, RunSelectedMessage msg)
+        private void ActivateRun(RunInfoModel model)
         {
-            var run = msg.SelectedRuns.First();
+            var run = model;
             if (cache.TryGetValue(run.Id, out var vertices))
             {
                 RunGraph.ClearState();
-                verticesStates = vertices;
+                selectedRun = vertices;
                 ProcessToFraction();
                 return;
             }
@@ -244,7 +266,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 AddSubAlgorithm();
             }
             RunGraph.ClearState();
-            verticesStates = RunGraph.ToVerticesStates(subAlgorithms, rangeCoordinates);
+            var verticesStates = RunGraph.ToVerticesStates(subAlgorithms, rangeCoordinates);
+            selectedRun = verticesStates;
             cache[run.Id] = verticesStates;
             ProcessToFraction();
         }

@@ -1,7 +1,7 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
-using Pathfinding.ConsoleApp.Messages.ViewModel;
+using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Shared.Extensions;
@@ -23,12 +23,10 @@ namespace Pathfinding.ConsoleApp.View
     {
         private readonly CompositeDisposable disposables = new();
         private readonly Dictionary<int, IDisposable> modelsSubs = new();
-        private readonly IRunsTableViewModel viewModel;
 
         public RunsTableView(IRunsTableViewModel viewModel,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger) : this()
         {
-            this.viewModel = viewModel;
             viewModel.Runs.CollectionChanged += OnCollectionChanged;
             this.Events().KeyPress
                 .Where(x => x.KeyEvent.Key.HasFlag(Key.A)
@@ -38,6 +36,7 @@ namespace Pathfinding.ConsoleApp.View
                         .SelectMany(x => (x.Rect.Top, x.Rect.Bottom - 1).Iterate())
                         .Select(GetRunId)
                         .ToArray())
+                .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
                 .InvokeCommand(viewModel, x => x.SelectRunsCommand)
                 .DisposeWith(disposables);
             this.Events().SelectedCellChanged
@@ -185,8 +184,9 @@ namespace Pathfinding.ConsoleApp.View
                     MultiSelectedRegions.Clear();
                     Table.Clear();
                     Table.AcceptChanges();
-                    modelsSubs.ForEach(x => x.Value.Dispose());
+                    modelsSubs.Values.ForEach(x => x.Dispose());
                     modelsSubs.Clear();
+                    SelectedRow = -1;
                     SetNeedsDisplay();
                     break;
                 case NotifyCollectionChangedAction.Add:

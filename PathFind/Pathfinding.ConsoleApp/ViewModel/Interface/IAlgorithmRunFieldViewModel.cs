@@ -9,6 +9,8 @@ namespace Pathfinding.ConsoleApp.ViewModel.Interface
     {
         float Fraction { get; set; }
 
+        RunInfoModel SelectedRun { get; set; }
+
         ReactiveCommand<float, Unit> ProcessToCommand { get; }
 
         ReactiveCommand<float, Unit> ProcessNextCommand { get; }
