@@ -10,7 +10,6 @@ using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Business.Algorithms.Events;
 using Pathfinding.Infrastructure.Business.Builders;
-using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
@@ -49,21 +48,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public ReactiveCommand<float, Unit> ProcessToCommand { get; }
 
-        private RunInfoModel selected;
-        public RunInfoModel SelectedRun
-        { 
-            get => selected;
-            set
-            {
-                selected = value;
-                this.RaisePropertyChanged(nameof(SelectedRun));
-                if (SelectedRun != null)
-                {
-                    ActivateRun(SelectedRun);
-                }
-            }
-        }
-
         private float fraction;
         public float Fraction 
         {
@@ -91,7 +75,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnRunActivated(object recipient, RunSelectedMessage msg)
         {
-            SelectedRun = msg.SelectedRuns.FirstOrDefault();
+            if (msg.SelectedRuns.Length > 0)
+            {
+                ActivateRun(msg.SelectedRuns[0]);
+            }
         }
 
         private void OnGraphStatusChanged(object recipient, GraphStateChangedMessage msg)
@@ -113,7 +100,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
             Cursor = 0;
             Fraction = 0;
             selectedRun = new();
-            SelectedRun = null;
         }
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
@@ -132,8 +118,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             graphId = msg.Graph.Id;
             var graphVertices = msg.Graph.Graph;
-            var layer = new GraphLayer(graphVertices);
-            var graph = graphAssemble.AssembleGraph(layer,
+            var graph = graphAssemble.AssembleGraph(
+                graphVertices,
                 graphVertices.DimensionsSizes);
             RunGraph = graph;
             disposables.Clear();

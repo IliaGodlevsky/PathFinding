@@ -1,6 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
-
-namespace Pathfinding.Service.Interface
+﻿namespace Pathfinding.Domain.Interface
 {
     public interface ILayer
     {

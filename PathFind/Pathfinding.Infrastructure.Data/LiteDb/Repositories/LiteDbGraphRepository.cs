@@ -62,11 +62,6 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             return await Task.FromResult(collection.FindById(graphId));
         }
 
-        public async Task<int> ReadCountAsync(CancellationToken token = default)
-        {
-            return await Task.FromResult(collection.Count());
-        }
-
         public async Task<IReadOnlyDictionary<int, int>> ReadObstaclesCountAsync(IEnumerable<int> graphIds, CancellationToken token = default)
         {
             return await Task.FromResult(vertexCollection

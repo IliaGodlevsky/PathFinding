@@ -1,6 +1,7 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using DynamicData;
+using Pathfinding.ConsoleApp.Extensions;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
@@ -46,9 +47,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.service = service;
             this.messenger = messenger;
             this.logger = logger;
-            messenger.Register<GraphCreatedMessage>(this, async (r, msg) => await OnGraphCreated(r, msg));
             messenger.Register<GraphUpdatedMessage, int>(this, Tokens.GraphTable, async (r, msg) 
                 => await OnGraphUpdated(r, msg));
+            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<ObstaclesCountChangedMessage>(this, OnObstaclesCountChanged);
             messenger.Register<GraphStateChangedMessage>(this, GraphStateChanged);
@@ -72,7 +73,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 await layers.OverlayAsync(graphModel.Graph).ConfigureAwait(false);
                 ActivatedGraphId = graphModel.Id;
                 messenger.Send(new GraphActivatedMessage(graphModel), Tokens.GraphField);
-                messenger.Send(new GraphActivatedMessage(graphModel), Tokens.PathfindingRange);
+                await messenger.SendAsync(new GraphActivatedMessage(graphModel), Tokens.PathfindingRange);
+                await messenger.SendAsync(new GraphActivatedMessage(graphModel), Tokens.RunsTable);
                 messenger.Send(new GraphActivatedMessage(graphModel));
             }, logger.Error).ConfigureAwait(false);
         }
@@ -122,15 +124,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
             msg.Signal();
         }
 
-        private async Task OnGraphCreated(object recipient, GraphCreatedMessage msg)
+        private void OnGraphCreated(object recipient, GraphCreatedMessage msg)
         {
             if (msg.Models.Length > 0)
             {
                 Graphs.Add(msg.Models);
-                if (Graphs.Count == 1)
-                {
-                    await ActivatedGraph(Graphs.First().Id);
-                }
             }
         }
 

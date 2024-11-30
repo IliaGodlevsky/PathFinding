@@ -1,6 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
-using Pathfinding.Service.Interface;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

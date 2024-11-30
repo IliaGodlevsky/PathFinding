@@ -57,7 +57,6 @@
     <Compile Include="IBinarySerializable.cs" />
     <Compile Include="IGraphPath.cs" />
     <Compile Include="IHeuristic.cs" />
-    <Compile Include="ILayer.cs" />
     <Compile Include="IPathfindingVertex.cs" />
     <Compile Include="IRequestService.cs" />
     <Compile Include="ISerializer.cs" />

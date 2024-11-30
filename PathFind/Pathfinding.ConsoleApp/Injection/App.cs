@@ -12,7 +12,7 @@ using Pathfinding.Infrastructure.Business.Commands;
 using Pathfinding.Infrastructure.Business.Mappings;
 using Pathfinding.Infrastructure.Business.Serializers;
 using Pathfinding.Infrastructure.Business.Serializers.Decorators;
-using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
+using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Infrastructure.Data.Sqlite;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Logging.Loggers;

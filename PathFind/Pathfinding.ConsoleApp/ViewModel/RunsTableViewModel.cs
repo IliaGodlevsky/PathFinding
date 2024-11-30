@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Messaging;
 using DynamicData;
 using Pathfinding.ConsoleApp.Injection;
+using Pathfinding.ConsoleApp.Messages;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
@@ -9,6 +10,7 @@ using Pathfinding.Domain.Core;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Undefined;
+using Pathfinding.Shared.Extensions;
 using ReactiveUI;
 using System;
 using System.Collections.ObjectModel;
@@ -39,7 +41,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.logger = logger;
 
             messenger.Register<RunCreatedMessaged>(this, async (r, msg) => await OnRunCreated(r, msg));
-            messenger.Register<GraphActivatedMessage>(this,
+            messenger.Register<GraphActivatedMessage, int>(this, Tokens.RunsTable,
                 async (r, msg) => await OnGraphActivatedMessage(r, msg));
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<RunsUpdatedMessage>(this, OnRunsUpdated);
@@ -50,8 +52,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void SelectRuns(int[] selected)
         {
-            var runs = Runs.Where(x => selected.Contains(x.Id)).ToArray();
-            messenger.Send(new RunSelectedMessage(runs));
+            var runs = Runs.ToDictionary(x => x.Id);
+            var selectedRuns = selected.Select(x => runs[x]).ToArray();
+            messenger.Send(new RunSelectedMessage(selectedRuns));
         }
 
         private async Task OnGraphActivatedMessage(object recipient, GraphActivatedMessage msg)
@@ -65,6 +68,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 Runs.Clear();
                 Runs.Add(models);
             }, logger.Error).ConfigureAwait(false);
+            msg.Signal();
         }
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
@@ -79,17 +83,16 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private void OnRunsUpdated(object recipient, RunsUpdatedMessage msg)
         {
             var runs = Runs.ToDictionary(x => x.Id);
-            var updatedRuns = msg.Updated
-                .Where(x => runs.TryGetValue(x.Id, out _))
-                .ToList();
-            foreach (var updated in updatedRuns)
+            foreach (var model in msg.Updated)
             {
-                var run = runs[updated.Id];
-                run.ResultStatus = updated.ResultStatus;
-                run.Visited = updated.Visited;
-                run.Steps = updated.Steps;
-                run.Cost = updated.Cost;
-                run.Elapsed = updated.Elapsed;
+                if (runs.TryGetValue(model.Id, out var run))
+                {
+                    run.ResultStatus = model.ResultStatus;
+                    run.Visited = model.Visited;
+                    run.Steps = model.Steps;
+                    run.Cost = model.Cost;
+                    run.Elapsed = model.Elapsed;
+                }
             }
         }
 

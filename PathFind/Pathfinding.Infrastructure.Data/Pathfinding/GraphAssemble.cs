@@ -5,7 +5,7 @@ using Pathfinding.Shared.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Pathfinding.Infrastructure.Data.Pathfinding.Factories
+namespace Pathfinding.Infrastructure.Data.Pathfinding
 {
     public sealed class GraphAssemble<TVertex> : IGraphAssemble<TVertex>
         where TVertex : IVertex, new()

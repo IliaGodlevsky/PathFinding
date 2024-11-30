@@ -1,7 +1,4 @@
-﻿using Autofac.Features.AttributeFilters;
-using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.ConsoleApp.Injection;
-using Terminal.Gui;
+﻿using Terminal.Gui;
 using ReactiveMarbles.ObservableEvents;
 using System.Reactive.Linq;
 using System.Reactive.Disposables;
@@ -15,8 +12,7 @@ namespace Pathfinding.ConsoleApp.View
     {
         private readonly CompositeDisposable disposables = new();
 
-        public AlgorithmUpdateView([KeyFilter(KeyFilters.Views)] IMessenger messenger,
-            IAlgorithmUpdateViewModel viewModel) 
+        public AlgorithmUpdateView(IAlgorithmUpdateViewModel viewModel) 
         {
             X = Pos.Percent(33);
             Y = 0;

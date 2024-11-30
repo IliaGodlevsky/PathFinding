@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="IGraph.cs" />
     <Compile Include="Factories\IGraphAssemble.cs" />
+    <Compile Include="ILayer.cs" />
     <Compile Include="INeighborhood.cs" />
     <Compile Include="IPathfindingRange.cs" />
     <Compile Include="Factories\IUnitOfWorkFactory.cs" />

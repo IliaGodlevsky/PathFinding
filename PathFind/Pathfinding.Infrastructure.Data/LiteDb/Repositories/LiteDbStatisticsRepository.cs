@@ -61,14 +61,20 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             return await Task.FromResult(count);
         }
 
-        public Task<IEnumerable<Statistics>> ReadByIdsAsync(IEnumerable<int> runIds, CancellationToken token = default)
+        public async Task<IEnumerable<Statistics>> ReadByIdsAsync(IEnumerable<int> runIds, 
+            CancellationToken token = default)
         {
-            throw new System.NotImplementedException();
+            var result = collection.Query()
+                .Where(x => runIds.Contains(x.Id))
+                .ToEnumerable();
+            return await Task.FromResult(result);
         }
 
-        public Task<bool> UpdateAsync(IEnumerable<Statistics> entities, CancellationToken token = default)
+        public async Task<bool> UpdateAsync(IEnumerable<Statistics> entities, 
+            CancellationToken token = default)
         {
-            throw new System.NotImplementedException();
+            var updated = collection.Update(entities);
+            return await Task.FromResult(updated > 0);
         }
     }
 }

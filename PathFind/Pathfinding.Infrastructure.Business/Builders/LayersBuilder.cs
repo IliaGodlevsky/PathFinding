@@ -1,6 +1,6 @@
 ﻿using Pathfinding.Domain.Core;
+using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Business.Layers;
-using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models;
 
 namespace Pathfinding.Infrastructure.Business.Builders

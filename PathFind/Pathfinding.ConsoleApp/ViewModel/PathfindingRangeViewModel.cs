@@ -220,6 +220,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 Transit.AddRange(transit);
                 Graph.ForEach(SubcribeToEvents);
             }, logger.Error).ConfigureAwait(false);
+            msg.Signal();
         }
 
         private void OnGraphBecameReadonly(object recipient, GraphStateChangedMessage msg)

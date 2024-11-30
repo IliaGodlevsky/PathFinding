@@ -1,12 +1,9 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.ConsoleApp.Extensions;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
-using Pathfinding.Domain.Core;
-using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Shared.Extensions;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
@@ -18,9 +15,7 @@ using System.Linq.Expressions;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Xml.Linq;
 using Terminal.Gui;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -106,11 +101,14 @@ namespace Pathfinding.ConsoleApp.View
 
         private void Update<T>(int id, string column, T value)
         {
-            var row = table.Rows.Find(id);
-            row[column] = value;
-            table.AcceptChanges();
-            SetNeedsDisplay();
-            SetCursorInvisible();
+            Application.MainLoop.Invoke(() =>
+            {
+                var row = table.Rows.Find(id);
+                row[column] = value;
+                table.AcceptChanges();
+                SetNeedsDisplay();
+                SetCursorInvisible();
+            });
         }
 
         private void RemoveFromTable(GraphInfoModel model)

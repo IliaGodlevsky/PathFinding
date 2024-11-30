@@ -95,8 +95,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 info.SmoothLevel = SmoothLevel;
                 await service.UpdateGraphInfoAsync(info).ConfigureAwait(false);
                 await messenger.SendAsync(new GraphUpdatedMessage(info), Tokens.GraphTable);
-                await messenger.SendAsync(new GraphUpdatedMessage(info), Tokens.AlgorithmUpdate);
                 messenger.Send(new GraphUpdatedMessage(info));
+                await messenger.SendAsync(new GraphUpdatedMessage(info), Tokens.AlgorithmUpdate);
             }, log.Error).ConfigureAwait(false);
         }
 

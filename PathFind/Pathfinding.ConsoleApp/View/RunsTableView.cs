@@ -30,8 +30,8 @@ namespace Pathfinding.ConsoleApp.View
             viewModel.Runs.CollectionChanged += OnCollectionChanged;
             this.Events().KeyPress
                 .Where(x => x.KeyEvent.Key.HasFlag(Key.A)
-                    && x.KeyEvent.Key.HasFlag(Key.CtrlMask))
-                .Throttle(TimeSpan.FromMilliseconds(150))
+                    && x.KeyEvent.Key.HasFlag(Key.CtrlMask) && Table.Rows.Count > 0)
+                .Throttle(TimeSpan.FromMilliseconds(100))
                 .Select(x => MultiSelectedRegions
                         .SelectMany(x => (x.Rect.Top, x.Rect.Bottom - 1).Iterate())
                         .Select(GetRunId)
@@ -41,16 +41,16 @@ namespace Pathfinding.ConsoleApp.View
                 .DisposeWith(disposables);
             this.Events().SelectedCellChanged
                 .Where(x => x.NewRow > -1 && x.NewRow < Table.Rows.Count)
-                .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
                 .Select(x => GetSelectedRows())
+                .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
                 .InvokeCommand(viewModel, x => x.SelectRunsCommand)
                 .DisposeWith(disposables);
             this.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
                 .Select(x => x.MouseEvent.Y + RowOffset - headerLinesConsumed)
                 .Where(x => x >= 0 && x < Table.Rows.Count && x == SelectedRow)
-                .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
                 .Select(x => GetRunId(x).Enumerate().ToArray())
+                .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
                 .InvokeCommand(viewModel, x => x.SelectRunsCommand)
                 .DisposeWith(disposables);
             this.Events().KeyPress
@@ -74,8 +74,9 @@ namespace Pathfinding.ConsoleApp.View
         
         private int[] GetSelectedRows()
         {
-            return GetAllSelectedCells().Select(x => x.Y)
+            var selected = GetAllSelectedCells().Select(x => x.Y)
                 .Distinct().Select(GetRunId).ToArray();
+            return selected;
         }
 
         private IDisposable BindTo<T>(RunInfoModel model, string column,
@@ -88,11 +89,14 @@ namespace Pathfinding.ConsoleApp.View
 
         private void Update<T>(int id, string column, T value)
         {
-            var row = Table.Rows.Find(id);
-            row[column] = value;
-            Table.AcceptChanges();
-            SetNeedsDisplay();
-            SetCursorInvisible();
+            Application.MainLoop.Invoke(() =>
+            {
+                var row = Table.Rows.Find(id);
+                row[column] = value;
+                Table.AcceptChanges();
+                SetNeedsDisplay();
+                SetCursorInvisible();
+            });
         }
 
         private int GetRunId(int selectedRow)
@@ -125,77 +129,70 @@ namespace Pathfinding.ConsoleApp.View
 
         private void OnAdded(RunInfoModel model)
         {
-            Application.MainLoop.Invoke(() =>
-            {
-                Table.Rows.Add(model.Id, 
-                    model.Algorithm, 
-                    model.Visited,
-                    model.Steps, 
-                    model.Cost, model.Elapsed, 
-                    ToTableValue(model.StepRule),
-                    ToTableValue(model.Heuristics), 
-                    ToTableValue(model.Weight), 
-                    model.ResultStatus);
-                var sub = new CompositeDisposable();
-                BindTo(model, VisitedCol, x => x.Visited).DisposeWith(sub);
-                BindTo(model, StepsCol, x => x.Steps).DisposeWith(sub);
-                BindTo(model, ElapsedCol, x => x.Elapsed).DisposeWith(sub);
-                BindTo(model, CostCol, x => x.Cost).DisposeWith(sub);
-                BindTo(model, StatusCol, x => x.ResultStatus).DisposeWith(sub);
-                modelsSubs.Add(model.Id, sub);
-                Table.AcceptChanges();
-                SetNeedsDisplay();
-                SetCursorInvisible();
-            });
+            Table.Rows.Add(model.Id,
+                model.Algorithm,
+                model.Visited,
+                model.Steps,
+                model.Cost, model.Elapsed,
+                ToTableValue(model.StepRule),
+                ToTableValue(model.Heuristics),
+                ToTableValue(model.Weight),
+                model.ResultStatus);
+            var sub = new CompositeDisposable();
+            BindTo(model, VisitedCol, x => x.Visited).DisposeWith(sub);
+            BindTo(model, StepsCol, x => x.Steps).DisposeWith(sub);
+            BindTo(model, ElapsedCol, x => x.Elapsed).DisposeWith(sub);
+            BindTo(model, CostCol, x => x.Cost).DisposeWith(sub);
+            BindTo(model, StatusCol, x => x.ResultStatus).DisposeWith(sub);
+            modelsSubs.Add(model.Id, sub);
+            Table.AcceptChanges();
         }
 
         private void OnRemoved(RunInfoModel model)
         {
-            Application.MainLoop.Invoke(() =>
+            var row = Table.Rows.Find(model.Id);
+            var index = Table.Rows.IndexOf(row);
+            if (row != null)
             {
-                var row = Table.Rows.Find(model.Id);
-                var index = Table.Rows.IndexOf(row);
-                if (row != null)
+                row.Delete();
+                modelsSubs[model.Id].Dispose();
+                modelsSubs.Remove(model.Id);
+                Table.AcceptChanges();
+                MultiSelectedRegions.Clear();
+                if (Table.Rows.Count > 0)
                 {
-                    row.Delete();
-                    modelsSubs[model.Id].Dispose();
-                    modelsSubs.Remove(model.Id);
-                    Table.AcceptChanges();
-                    MultiSelectedRegions.Clear();
-                    if (Table.Rows.Count > 0)
-                    {
-                        SelectedCellChangedEventArgs args = index == Table.Rows.Count
-                            ? new(Table, 0, 0, index, index - 1)
-                            : new(Table, 0, 0, index, index);
-                        OnSelectedCellChanged(args);
-                        SetSelection(0, args.NewRow, false);
-                    }
-                    SetNeedsDisplay();
-                    SetCursorInvisible();
+                    SelectedCellChangedEventArgs args = index == Table.Rows.Count
+                        ? new(Table, 0, 0, index, index - 1)
+                        : new(Table, 0, 0, index, index);
+                    OnSelectedCellChanged(args);
+                    SetSelection(0, args.NewRow, false);
                 }
-            });
+            }
         }
 
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            switch (e.Action)
+            Application.MainLoop.Invoke(() =>
             {
-                case NotifyCollectionChangedAction.Reset:
-                    MultiSelectedRegions.Clear();
-                    Table.Clear();
-                    Table.AcceptChanges();
-                    modelsSubs.Values.ForEach(x => x.Dispose());
-                    modelsSubs.Clear();
-                    SelectedRow = -1;
-                    SetNeedsDisplay();
-                    break;
-                case NotifyCollectionChangedAction.Add:
-                    OnAdded((RunInfoModel)e.NewItems[0]);
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    OnRemoved((RunInfoModel)e.OldItems[0]);
-                    break;
-            }
+                switch (e.Action)
+                {
+                    case NotifyCollectionChangedAction.Reset:
+                        MultiSelectedRegions.Clear();
+                        Table.Clear();
+                        Table.AcceptChanges();
+                        modelsSubs.Values.ForEach(x => x.Dispose());
+                        modelsSubs.Clear();
+                        break;
+                    case NotifyCollectionChangedAction.Add:
+                        OnAdded((RunInfoModel)e.NewItems[0]);
+                        break;
+                    case NotifyCollectionChangedAction.Remove:
+                        OnRemoved((RunInfoModel)e.OldItems[0]);
+                        break;
+                }
+                SetNeedsDisplay();
+                SetCursorInvisible();
+            });
         }
 
         private static void SetCursorInvisible()

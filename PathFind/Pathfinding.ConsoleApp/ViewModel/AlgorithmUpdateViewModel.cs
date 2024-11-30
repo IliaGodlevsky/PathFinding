@@ -72,7 +72,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
         {
-            if (msg.GraphIds.Contains(Graph.Id))
+            if (Graph != null && msg.GraphIds.Contains(Graph.Id))
             {
                 Selected = Array.Empty<RunInfoModel>();
                 Graph = null;
@@ -91,9 +91,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
             {
                 var models = await service.ReadStatisticsAsync(Selected.Select(x => x.Id))
                     .ConfigureAwait(false);
-                var updated = await UpdateRunsAsync(models, Graph);
+                var updated = await UpdateRunsAsync(models, Graph).ConfigureAwait(false);
                 messenger.Send(new RunsUpdatedMessage(updated));
-            }, log.Error);
+            }, log.Error).ConfigureAwait(false);
         }
 
         private async Task OnGraphUpdated(object recipient, GraphUpdatedMessage msg)
@@ -112,7 +112,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     var models = await service.ReadStatisticsAsync(graph.Id).ConfigureAwait(false);
                     var updated = await UpdateRunsAsync(models, graph);
                     messenger.Send(new RunsUpdatedMessage(updated));
-                }, log.Error);
+                }, log.Error).ConfigureAwait(false);
             }
             msg.Signal();
         }

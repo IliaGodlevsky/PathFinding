@@ -1,4 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
+using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
 using System;
@@ -60,6 +61,20 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
             }
 
             throw new KeyNotFoundException();
+        }
+
+        public void Overlay(IGraph<IVertex> graph)
+        {
+            foreach (var vertex in vertices.Values)
+            {
+                var vert = graph.Get(vertex.Position);
+                vert.IsObstacle = vertex.IsObstacle;
+                vert.Cost = vertex.Cost.DeepClone();
+                vert.Neighbors = vertex.Neighbors
+                    .GetCoordinates()
+                    .Select(graph.Get)
+                    .ToArray();
+            }
         }
 
         public IEnumerator<TVertex> GetEnumerator()

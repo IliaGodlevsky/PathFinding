@@ -1,5 +1,4 @@
 ﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Service.Interface;
 using System.Threading;
 using System.Threading.Tasks;
 

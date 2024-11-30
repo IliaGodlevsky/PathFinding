@@ -9,7 +9,6 @@ using System.Reactive.Linq;
 using ReactiveUI;
 using System.ComponentModel;
 using Pathfinding.ConsoleApp.Messages.View;
-using Pathfinding.ConsoleApp.Model;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -29,6 +28,7 @@ namespace Pathfinding.ConsoleApp.View
         {
             Initialize();
             messenger.Register<CloseAlgorithmRunFieldViewMessage>(this, OnAlgorithmFieldClosed);
+            messenger.Register<OpenAlgorithmRunViewMessage>(this, OnOpenAlgorithmField);
             leftLabel.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Pressed)
                 .Do(x => Fraction -= FractionPerWheel)
@@ -104,24 +104,6 @@ namespace Pathfinding.ConsoleApp.View
             this.WhenAnyValue(x => x.Fraction)
                 .BindTo(viewModel, x => x.Fraction)
                 .DisposeWith(disposables);
-            viewModel.WhenAnyValue(x => x.SelectedRun)
-                .Select(x => x != null)
-                .BindTo(rightLabel, x => x.Visible)
-                .DisposeWith(disposables);
-            viewModel.WhenAnyValue(x => x.SelectedRun)
-                .Select(x => x != null)
-                .BindTo(leftLabel, x => x.Visible)
-                .DisposeWith(disposables);
-            viewModel.WhenAnyValue(x => x.SelectedRun)
-                .Select(x => x != null)
-                .BindTo(bar, x => x.Visible)
-                .DisposeWith(disposables);
-            bar.Events().VisibleChanged
-                .Where(x => !bar.Visible)
-                .Select(x => (RunInfoModel)null)
-                .BindTo(viewModel, x => x.SelectedRun)
-                .DisposeWith(disposables);
-
         }
 
         public void RaisePropertyChanging(PropertyChangingEventArgs args)
@@ -140,6 +122,13 @@ namespace Pathfinding.ConsoleApp.View
             rightLabel.Visible = false;
             leftLabel.Visible = false;
             bar.Visible = false;
+        }
+
+        private void OnOpenAlgorithmField(object recipient, OpenAlgorithmRunViewMessage msg)
+        {
+            rightLabel.Visible = true;
+            leftLabel.Visible = true;
+            bar.Visible = true;
         }
 
         protected override void Dispose(bool disposing)
