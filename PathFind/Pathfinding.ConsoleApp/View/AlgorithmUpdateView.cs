@@ -5,6 +5,7 @@ using System.Reactive.Disposables;
 using ReactiveUI;
 using System.Reactive;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
+using System;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -20,6 +21,7 @@ namespace Pathfinding.ConsoleApp.View
             Text = "Update";
             this.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
+                .Throttle(TimeSpan.FromMilliseconds(30))
                 .Select(x => Unit.Default)
                 .InvokeCommand(viewModel, x => x.UpdateAlgorithmsCommand)
                 .DisposeWith(disposables);

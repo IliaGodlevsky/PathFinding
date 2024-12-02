@@ -30,19 +30,20 @@ namespace Pathfinding.ConsoleApp.View
             viewModel.Runs.CollectionChanged += OnCollectionChanged;
             this.Events().KeyPress
                 .Where(x => x.KeyEvent.Key.HasFlag(Key.A)
-                    && x.KeyEvent.Key.HasFlag(Key.CtrlMask) && Table.Rows.Count > 0)
-                .Throttle(TimeSpan.FromMilliseconds(100))
+                    && x.KeyEvent.Key.HasFlag(Key.CtrlMask) 
+                    && Table.Rows.Count > 0)
+                .Throttle(TimeSpan.FromMilliseconds(50))
                 .Select(x => MultiSelectedRegions
                         .SelectMany(x => (x.Rect.Top, x.Rect.Bottom - 1).Iterate())
                         .Select(GetRunId)
                         .ToArray())
-                .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
                 .InvokeCommand(viewModel, x => x.SelectRunsCommand)
                 .DisposeWith(disposables);
             this.Events().SelectedCellChanged
                 .Where(x => x.NewRow > -1 && x.NewRow < Table.Rows.Count)
+                .Select(x => x.NewRow)
+                .DistinctUntilChanged()
                 .Select(x => GetSelectedRows())
-                .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
                 .InvokeCommand(viewModel, x => x.SelectRunsCommand)
                 .DisposeWith(disposables);
             this.Events().MouseClick
@@ -50,7 +51,6 @@ namespace Pathfinding.ConsoleApp.View
                 .Select(x => x.MouseEvent.Y + RowOffset - headerLinesConsumed)
                 .Where(x => x >= 0 && x < Table.Rows.Count && x == SelectedRow)
                 .Select(x => GetRunId(x).Enumerate().ToArray())
-                .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
                 .InvokeCommand(viewModel, x => x.SelectRunsCommand)
                 .DisposeWith(disposables);
             this.Events().KeyPress
@@ -70,12 +70,17 @@ namespace Pathfinding.ConsoleApp.View
                 .Select(x => GetSelectedRows())
                 .InvokeCommand(viewModel, x => x.SelectRunsCommand)
                 .DisposeWith(disposables);
+            this.Events().MouseClick
+                .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
+                .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
+                .Subscribe()
+                .DisposeWith(disposables);
         }
         
         private int[] GetSelectedRows()
         {
             var selected = GetAllSelectedCells().Select(x => x.Y)
-                .Distinct().Select(GetRunId).ToArray();
+                    .Distinct().Select(GetRunId).ToArray();
             return selected;
         }
 

@@ -14,8 +14,8 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class AlgorithmRunProgressView : FrameView, IReactiveObject
     {
-        private const float FractionPerWheel = 0.015f; // 1,5%
-        private const float ExtraFractionPerWheel = FractionPerWheel * 2.5f;
+        private const float FractionPerWheel = 0.015f;
+        private const float ExtraFractionPerWheel = FractionPerWheel * 3;
 
         public event PropertyChangedEventHandler PropertyChanged;
         public event PropertyChangingEventHandler PropertyChanging;

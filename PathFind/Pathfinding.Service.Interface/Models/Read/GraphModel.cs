@@ -1,5 +1,7 @@
 ﻿using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface;
+using Pathfinding.Service.Interface.Models.Undefined;
+using System.Collections.Generic;
 
 namespace Pathfinding.Service.Interface.Models.Read
 {
@@ -22,6 +24,8 @@ namespace Pathfinding.Service.Interface.Models.Read
         public Neighborhoods Neighborhood { get; set; }
 
         public GraphStatuses Status { get; set; }
+
+        //public IReadOnlyCollection<VertexAssembleModel> Vertices { get; set; }
 
         public IGraph<T> Graph { get; set; }
     }

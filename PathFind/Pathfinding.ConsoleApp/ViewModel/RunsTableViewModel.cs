@@ -52,8 +52,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void SelectRuns(int[] selected)
         {
-            var runs = Runs.ToDictionary(x => x.Id);
-            var selectedRuns = selected.Select(x => runs[x]).ToArray();
+            var selectedRuns = Runs.Where(x => selected.Contains(x.Id)).ToArray();
             messenger.Send(new RunSelectedMessage(selectedRuns));
         }
 

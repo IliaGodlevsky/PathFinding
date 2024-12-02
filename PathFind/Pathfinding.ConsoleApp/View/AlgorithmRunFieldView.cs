@@ -53,12 +53,12 @@ namespace Pathfinding.ConsoleApp.View
 
         private void OnOpen(object recipient, OpenAlgorithmRunViewMessage msg)
         {
-            Visible = true;
+            Application.MainLoop.Invoke(() => Visible = true);
         }
 
         private void OnCloseAlgorithmViewMessage(object recipient, CloseAlgorithmRunFieldViewMessage msg)
         {
-            Visible = false;
+            Application.MainLoop.Invoke(() => Visible = false);
         }
 
         private async Task RenderGraphState(IGraph<RunVertexModel> graph)

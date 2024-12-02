@@ -104,6 +104,7 @@
     <Compile Include="Algorithms\WaveAlgorithm.cs" />
     <Compile Include="Builders\AlgorithmBuilder.cs" />
     <Compile Include="Builders\LayersBuilder.cs" />
+    <Compile Include="CachedRequestService.cs" />
     <Compile Include="Commands\ExcludeSourceVertex.cs" />
     <Compile Include="Commands\ExcludeTargetVertex.cs" />
     <Compile Include="Commands\ExcludeTransitVertex.cs" />

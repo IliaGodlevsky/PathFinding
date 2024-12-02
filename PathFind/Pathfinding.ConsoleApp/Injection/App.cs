@@ -48,6 +48,7 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<Mapper>().As<IMapper>().SingleInstance();
 
             builder.RegisterType<RequestService<GraphVertexModel>>().As<IRequestService<GraphVertexModel>>().SingleInstance();
+            //builder.RegisterDecorator<CachedRequestService<GraphVertexModel>, IRequestService<GraphVertexModel>>();
 
             builder.RegisterType<IncludeSourceVertex<GraphVertexModel>>().SingleInstance().WithAttributeFiltering()
                 .Keyed<IPathfindingRangeCommand<GraphVertexModel>>(KeyFilters.IncludeCommands);
