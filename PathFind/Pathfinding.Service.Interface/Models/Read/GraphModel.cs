@@ -1,6 +1,6 @@
 ﻿using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface;
-using Pathfinding.Service.Interface.Models.Undefined;
+using System;
 using System.Collections.Generic;
 
 namespace Pathfinding.Service.Interface.Models.Read
@@ -8,11 +8,12 @@ namespace Pathfinding.Service.Interface.Models.Read
     public record class GraphModel<T> : IGraphLayersInfo
         where T : IVertex
     {
-        public static readonly GraphModel<T> Empty = new GraphModel<T>()
+        public static readonly GraphModel<T> Empty = new ()
         {
             Id = 0,
             Name = string.Empty,
-            Graph = null
+            Vertices = Array.Empty<T>(),
+            DimensionSizes = Array.Empty<int>()
         };
 
         public int Id { get; set; }
@@ -25,8 +26,8 @@ namespace Pathfinding.Service.Interface.Models.Read
 
         public GraphStatuses Status { get; set; }
 
-        //public IReadOnlyCollection<VertexAssembleModel> Vertices { get; set; }
+        public IReadOnlyCollection<T> Vertices { get; set; }
 
-        public IGraph<T> Graph { get; set; }
+        public IReadOnlyList<int> DimensionSizes { get; set; }
     }
 }

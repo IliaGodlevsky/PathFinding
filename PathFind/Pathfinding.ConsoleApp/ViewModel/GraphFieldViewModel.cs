@@ -40,7 +40,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref isReadOnly, value);
         }
 
-        private IGraph<GraphVertexModel> graph;
+        private IGraph<GraphVertexModel> graph = Graph<GraphVertexModel>.Empty;
         public IGraph<GraphVertexModel> Graph
         {
             get => graph;
@@ -72,7 +72,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 x => x.GraphId,
                 x => x.Graph,
                 x => x.IsReadOnly,
-                (id, graph, isRead) => id > 0 && graph != null && !isRead);
+                (id, graph, isRead) => id > 0 && graph != Graph<GraphVertexModel>.Empty && !isRead);
             ChangeVertexPolarityCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(ChangePolarity, canExecute);
             InverseVertexCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(InverseVertex, canExecute);
             ReverseVertexCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(ReverseVertex, canExecute);
@@ -140,7 +140,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnGraphActivated(object recipient, GraphActivatedMessage msg)
         {
-            Graph = msg.Graph.Graph;
+            Graph = new Graph<GraphVertexModel>(msg.Graph.Vertices, msg.Graph.DimensionSizes);
             GraphId = msg.Graph.Id;
             IsReadOnly = msg.Graph.Status == GraphStatuses.Readonly;
         }

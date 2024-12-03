@@ -36,7 +36,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private readonly CompositeDisposable disposables = new();
 
         private int graphId;
-        private List<VertexState> selectedRun;
+        private List<VertexState> selectedRun = new();
 
         private int Cursor { get; set; } = 0;
 
@@ -117,15 +117,17 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private void OnGraphActivated(object recipient, GraphActivatedMessage msg)
         {
             graphId = msg.Graph.Id;
-            var graphVertices = msg.Graph.Graph;
-            var graph = graphAssemble.AssembleGraph(
-                graphVertices,
-                graphVertices.DimensionsSizes);
-            RunGraph = graph;
+            var graphVertices = msg.Graph.Vertices;
+            var graph = new Graph<GraphVertexModel>(msg.Graph.Vertices,
+                msg.Graph.DimensionSizes);
+            var runGraph = graphAssemble.AssembleGraph(
+                graph,
+                msg.Graph.DimensionSizes);
+            RunGraph = runGraph;
             disposables.Clear();
             foreach (var vertex in graphVertices)
             {
-                var runVertex = graph.Get(vertex.Position);
+                var runVertex = runGraph.Get(vertex.Position);
                 vertex.WhenAnyValue(x => x.IsObstacle)
                     .BindTo(runVertex, x => x.IsObstacle)
                     .DisposeWith(disposables);

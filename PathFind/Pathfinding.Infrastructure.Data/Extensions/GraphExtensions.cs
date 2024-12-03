@@ -25,7 +25,7 @@ namespace Pathfinding.Infrastructure.Data.Extensions
             return graph.DimensionsSizes.ElementAtOrDefault(1);
         }
 
-        public static IEnumerable<TVertex> GetObstacles<TVertex>(this IGraph<TVertex> graph)
+        public static IEnumerable<TVertex> GetObstacles<TVertex>(this IEnumerable<TVertex> graph)
             where TVertex : IVertex
         {
             return graph.Where(vertex => vertex.IsObstacle);
@@ -37,7 +37,7 @@ namespace Pathfinding.Infrastructure.Data.Extensions
             return graph.Select(vertex => vertex.Position);
         }
 
-        public static int GetObstaclesCount<TVertex>(this IGraph<TVertex> self)
+        public static int GetObstaclesCount<TVertex>(this IEnumerable<TVertex> self)
             where TVertex : IVertex
         {
             return self.GetObstacles().Count();

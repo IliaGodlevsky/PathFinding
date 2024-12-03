@@ -17,16 +17,6 @@ namespace Pathfinding.Service.Interface.Extensions
             serializable.Serialize(writer);
         }
 
-        public static void WriteNullableString(this BinaryWriter writer, string value)
-        {
-            bool isNull = string.IsNullOrEmpty(value);
-            writer.Write(isNull);
-            if (!isNull)
-            {
-                writer.Write(value);
-            }
-        }
-
         public static void WriteNullableInt32(this BinaryWriter writer, int? value)
         {
             bool isNull = !value.HasValue;

@@ -9,6 +9,7 @@ using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Business.Builders;
 using Pathfinding.Infrastructure.Business.Extensions;
+using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Read;
@@ -36,12 +37,14 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref selected, value);
         }
 
-        private GraphModel<GraphVertexModel> graph = GraphModel<GraphVertexModel>.Empty;
-        private GraphModel<GraphVertexModel> Graph
+        private Graph<GraphVertexModel> graph = Graph<GraphVertexModel>.Empty;
+        private Graph<GraphVertexModel> Graph
         {
             get => graph;
             set => this.RaiseAndSetIfChanged(ref graph, value);
         }
+
+        private int ActivatedGraphId { get; set; }
 
         public ReactiveCommand<Unit, Unit> UpdateAlgorithmsCommand { get; }
 
@@ -67,22 +70,24 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnGraphActivated(object recipient, GraphActivatedMessage msg)
         {
-            Graph = msg.Graph;
+            Graph = new Graph<GraphVertexModel>(msg.Graph.Vertices, msg.Graph.DimensionSizes);
+            
         }
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
         {
-            if (Graph != null && msg.GraphIds.Contains(Graph.Id))
+            if (Graph != null && msg.GraphIds.Contains(ActivatedGraphId))
             {
                 Selected = Array.Empty<RunInfoModel>();
-                Graph = null;
+                Graph = Graph<GraphVertexModel>.Empty;
+                ActivatedGraphId = 0;
             }
         }
 
         private IObservable<bool> CanUpdate()
         {
             return this.WhenAnyValue(x => x.Selected,
-                x => x.Graph, (s, g) => s.Length > 0 && g != null);
+                x => x.Graph, (s, g) => s.Length > 0 && g != Graph<GraphVertexModel>.Empty);
         }
 
         private async Task ExecuteUpdate()
@@ -91,7 +96,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             {
                 var models = await service.ReadStatisticsAsync(Selected.Select(x => x.Id))
                     .ConfigureAwait(false);
-                var updated = await UpdateRunsAsync(models, Graph).ConfigureAwait(false);
+                var updated = await UpdateRunsAsync(models, Graph, ActivatedGraphId).ConfigureAwait(false);
                 messenger.Send(new RunsUpdatedMessage(updated));
             }, log.Error).ConfigureAwait(false);
         }
@@ -99,18 +104,22 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private async Task OnGraphUpdated(object recipient, GraphUpdatedMessage msg)
         {
             var graph = Graph;
-            if ((graph != null && msg.Model.Id != graph.Id) || graph == null)
+            int id = ActivatedGraphId;
+            if ((graph != Graph<GraphVertexModel>.Empty && msg.Model.Id != ActivatedGraphId) 
+                || graph == Graph<GraphVertexModel>.Empty)
             {
-                graph = await service.ReadGraphAsync(msg.Model.Id).ConfigureAwait(false);
-                var layers = LayersBuilder.Take(graph).Build();
-                await layers.OverlayAsync(graph.Graph).ConfigureAwait(false);
+                var model = await service.ReadGraphAsync(msg.Model.Id).ConfigureAwait(false);
+                graph = new Graph<GraphVertexModel>(model.Vertices, model.DimensionSizes);
+                id = model.Id;
+                var layers = LayersBuilder.Take(model).Build();
+                await layers.OverlayAsync(graph).ConfigureAwait(false);
             }
-            if (graph != null)
+            if (graph != Graph<GraphVertexModel>.Empty)
             {
                 await ExecuteSafe(async () =>
                 {
-                    var models = await service.ReadStatisticsAsync(graph.Id).ConfigureAwait(false);
-                    var updated = await UpdateRunsAsync(models, graph);
+                    var models = await service.ReadStatisticsAsync(id).ConfigureAwait(false);
+                    var updated = await UpdateRunsAsync(models, graph, id);
                     messenger.Send(new RunsUpdatedMessage(updated));
                 }, log.Error).ConfigureAwait(false);
             }
@@ -118,11 +127,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
         }
 
         private async Task<IReadOnlyCollection<RunStatisticsModel>> UpdateRunsAsync(
-            IEnumerable<RunStatisticsModel> selected, 
-            GraphModel<GraphVertexModel> graph)
+            IEnumerable<RunStatisticsModel> selected, Graph<GraphVertexModel> graph, int graphId)
         {
-            var range = (await service.ReadRangeAsync(graph.Id).ConfigureAwait(false))
-                .Select(x => graph.Graph.Get(x.Position))
+            var range = (await service.ReadRangeAsync(graphId).ConfigureAwait(false))
+                .Select(x => graph.Get(x.Position))
                 .ToList();
             var updatedRuns = new List<RunStatisticsModel>();
             if (range.Count > 1)

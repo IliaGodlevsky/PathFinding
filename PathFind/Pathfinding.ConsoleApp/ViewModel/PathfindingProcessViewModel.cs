@@ -9,6 +9,7 @@ using Pathfinding.Infrastructure.Business.Algorithms.Exceptions;
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Business.Builders;
 using Pathfinding.Infrastructure.Business.Extensions;
+using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models;
@@ -66,8 +67,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref stepRule, value);
         }
 
-        private GraphModel<GraphVertexModel> graph = GraphModel<GraphVertexModel>.Empty;
-        private GraphModel<GraphVertexModel> Graph
+        private int ActivatedGraphId { get; set; }
+
+        private Graph<GraphVertexModel> graph = Graph<GraphVertexModel>.Empty;
+        private Graph<GraphVertexModel> Graph
         {
             get => graph;
             set => this.RaiseAndSetIfChanged(ref graph, value);
@@ -89,15 +92,13 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private IObservable<bool> CanStartAlgorithm()
         {
             return this.WhenAnyValue(
-                x => x.Graph.Graph,
-                x => x.Graph.Id,
+                x => x.Graph,
                 x => x.Heuristic,
                 x => x.Weight,
                 x => x.Algorithm,
-                (graph, id, heuristic, weight, algorithm) =>
+                (graph, heuristic, weight, algorithm) =>
                 {
-                    bool canExecute = id > 0 && graph != null 
-                        && algorithm != null
+                    bool canExecute = graph != Graph<GraphVertexModel>.Empty && algorithm != null
                         && Enum.IsDefined(typeof(Algorithms), algorithm.Value);
                     if (heuristic != default)
                     {
@@ -109,22 +110,24 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnGraphActivated(object recipient, GraphActivatedMessage msg)
         {
-            Graph = msg.Graph;
+            Graph = new Graph<GraphVertexModel>(msg.Graph.Vertices, msg.Graph.DimensionSizes);
+            ActivatedGraphId = msg.Graph.Id;
         }
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
         {
-            if (msg.GraphIds.Contains(Graph.Id))
+            if (msg.GraphIds.Contains(ActivatedGraphId))
             {
-                Graph = new();
+                Graph = Graph<GraphVertexModel>.Empty;
+                ActivatedGraphId = 0;
             }
         }
 
         private async Task StartAlgorithm()
         {
-            var pathfindingRange = (await service.ReadRangeAsync(Graph.Id)
+            var pathfindingRange = (await service.ReadRangeAsync(ActivatedGraphId)
                 .ConfigureAwait(false))
-                .Select(x => Graph.Graph.Get(x.Position))
+                .Select(x => Graph.Get(x.Position))
                 .ToList();
 
             if (pathfindingRange.Count > 1)
@@ -168,7 +171,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     Visited = visitedCount,
                     Elapsed = stopwatch.Elapsed,
                     ResultStatus = status,
-                    GraphId = Graph.Id
+                    GraphId = ActivatedGraphId
                 };
 
                 await ExecuteSafe(async () =>

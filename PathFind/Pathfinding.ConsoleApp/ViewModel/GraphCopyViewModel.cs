@@ -58,13 +58,13 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 var graphs = histories.Select(x => x.Graph)
                     .Select(x => new GraphInfoModel()
                 {
-                    Width = x.Graph.GetWidth(),
-                    Length = x.Graph.GetLength(),
+                    Width = x.DimensionSizes.ElementAtOrDefault(0),
+                    Length = x.DimensionSizes.ElementAtOrDefault(1),
                     Name = x.Name,
                     Neighborhood = x.Neighborhood,
                     Id = x.Id,
                     SmoothLevel = x.SmoothLevel,
-                    ObstaclesCount = x.Graph.GetObstaclesCount(),
+                    ObstaclesCount = x.Vertices.GetObstaclesCount(),
                     Status = x.Status
                 }).ToArray();
                 messenger.Send(new GraphCreatedMessage(graphs));

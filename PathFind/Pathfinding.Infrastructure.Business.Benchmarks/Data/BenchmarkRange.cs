@@ -2,7 +2,6 @@
 using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
-using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
 using Pathfinding.Shared.Random;

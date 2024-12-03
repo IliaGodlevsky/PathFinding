@@ -50,13 +50,13 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     var result = await service.CreatePathfindingHistoriesAsync(histories).ConfigureAwait(false);
                     var graphs = result.Select(x => new GraphInfoModel()
                     {
-                        Width = x.Graph.Graph.GetWidth(),
-                        Length = x.Graph.Graph.GetLength(),
+                        Width = x.Graph.DimensionSizes.ElementAtOrDefault(0),
+                        Length = x.Graph.DimensionSizes.ElementAtOrDefault(1),
                         Name = x.Graph.Name,
                         Neighborhood = x.Graph.Neighborhood,
                         Id = x.Graph.Id,
                         SmoothLevel = x.Graph.SmoothLevel,
-                        ObstaclesCount = x.Graph.Graph.GetObstaclesCount(),
+                        ObstaclesCount = x.Graph.Vertices.GetObstaclesCount(),
                         Status = x.Graph.Status
                     }).ToArray();
                     messenger.Send(new GraphCreatedMessage(graphs));

@@ -1,7 +1,5 @@
 ﻿using Autofac;
 using Autofac.Features.AttributeFilters;
-using AutoMapper;
-using AutoMapper.Configuration;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.View;
@@ -9,7 +7,6 @@ using Pathfinding.ConsoleApp.ViewModel;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Business;
 using Pathfinding.Infrastructure.Business.Commands;
-using Pathfinding.Infrastructure.Business.Mappings;
 using Pathfinding.Infrastructure.Business.Serializers;
 using Pathfinding.Infrastructure.Business.Serializers.Decorators;
 using Pathfinding.Infrastructure.Data.Pathfinding;
@@ -37,18 +34,7 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.Register(_ => new SqliteUnitOfWorkFactory(AppSettings.Default.ConnectionString))
                 .As<IUnitOfWorkFactory>().SingleInstance();
 
-            builder.RegisterType<GraphMappingProfile<GraphVertexModel>>().As<Profile>().SingleInstance();
-            builder.RegisterType<UntitledMappingProfile>().As<Profile>().SingleInstance();
-            builder.RegisterType<HistoryMappingProfile<GraphVertexModel>>().As<Profile>().SingleInstance();
-            builder.RegisterType<VerticesMappingProfile<GraphVertexModel>>().As<Profile>().SingleInstance();
-            builder.RegisterType<StatisticsMappingProfile>().As<Profile>().SingleInstance();
-            builder.RegisterType<MapperConfiguration>().As<IConfigurationProvider>().SingleInstance();
-            builder.RegisterType<MapperConfigurationExpression>().AsSelf().SingleInstance()
-                .OnActivating(x => x.Instance.AddProfiles(x.Context.Resolve<IEnumerable<Profile>>()));
-            builder.RegisterType<Mapper>().As<IMapper>().SingleInstance();
-
             builder.RegisterType<RequestService<GraphVertexModel>>().As<IRequestService<GraphVertexModel>>().SingleInstance();
-            //builder.RegisterDecorator<CachedRequestService<GraphVertexModel>, IRequestService<GraphVertexModel>>();
 
             builder.RegisterType<IncludeSourceVertex<GraphVertexModel>>().SingleInstance().WithAttributeFiltering()
                 .Keyed<IPathfindingRangeCommand<GraphVertexModel>>(KeyFilters.IncludeCommands);

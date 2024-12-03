@@ -205,7 +205,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 disposables.Clear();
                 Transit.CollectionChanged -= OnCollectionChanged;
                 ClearRange();
-                Graph = msg.Graph.Graph;
+                Graph = new Graph<GraphVertexModel>(msg.Graph.Vertices,
+                    msg.Graph.DimensionSizes);
                 GraphId = msg.Graph.Id;
                 IsReadOnly = msg.Graph.Status == GraphStatuses.Readonly;
                 var range = await service.ReadRangeAsync(GraphId).ConfigureAwait(false);

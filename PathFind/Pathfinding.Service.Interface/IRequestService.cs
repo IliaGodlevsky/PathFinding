@@ -42,9 +42,6 @@ namespace Pathfinding.Service.Interface
         Task<bool> UpdateStatisticsAsync(IEnumerable<RunStatisticsModel> models, 
             CancellationToken token = default);
 
-        Task<IReadOnlyCollection<PathfindingHistoryModel<T>>> CreatePathfindingHistoriesAsync(IEnumerable<CreatePathfindingHistoryRequest<T>> request,
-            CancellationToken token = default);
-
         Task<IReadOnlyCollection<PathfindingHistoryModel<T>>> CreatePathfindingHistoriesAsync(IEnumerable<PathfindingHistorySerializationModel> request,
             CancellationToken token = default);
 

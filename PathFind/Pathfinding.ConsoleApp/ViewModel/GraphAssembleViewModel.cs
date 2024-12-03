@@ -132,7 +132,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     Name = Name,
                     SmoothLevel = SmoothLevel,
                     Neighborhood = Neighborhood,
-                    ObstaclesCount = graphModel.Graph.GetObstaclesCount(),
+                    ObstaclesCount = graphModel.Vertices.GetObstaclesCount(),
                     Width = Width,
                     Length = Length,
                     Status = GraphStatuses.Editable
