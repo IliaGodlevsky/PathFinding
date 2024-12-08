@@ -6,6 +6,10 @@ namespace Pathfinding.ConsoleApp.ViewModel.Interface
     {
         HeuristicFunctions? Heuristic { get; set; }
 
-        double? Weight { get; set; }
+        double? FromWeight { get; set; }
+
+        double? ToWeight { get; set; }
+
+        double? Step { get; set; }
     }
 }

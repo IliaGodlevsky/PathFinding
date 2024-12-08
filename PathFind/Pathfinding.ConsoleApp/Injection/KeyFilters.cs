@@ -17,7 +17,5 @@
         public const string AlgorithmCreationView = nameof(AlgorithmCreationView);
         public const string AlgorithmParametresView = nameof(AlgorithmParametresView);
         public const string CreateRunButtonsFrame = nameof(CreateRunButtonsFrame);
-        public const string SmoothLevels = nameof(SmoothLevels);
-        public const string SpreadLevels = nameof(SpreadLevels);
     }
 }

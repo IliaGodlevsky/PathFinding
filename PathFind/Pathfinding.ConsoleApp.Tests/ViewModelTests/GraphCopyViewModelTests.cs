@@ -41,7 +41,8 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                     Graph = new()
                     {
                         Id = x,
-                        Graph = Graph<GraphVertexModel>.Empty,
+                        Vertices = Array.Empty<GraphVertexModel>(),
+                        DimensionSizes = Array.Empty<int>(),
                         Name = string.Empty
                     }
                 }).ToList();

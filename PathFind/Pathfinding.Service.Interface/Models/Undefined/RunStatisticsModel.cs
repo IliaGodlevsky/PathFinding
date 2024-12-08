@@ -7,6 +7,8 @@ namespace Pathfinding.Service.Interface.Models.Undefined
     {
         public int Id { get; set; }
 
+        public int GraphId { get; set; }
+
         public Domain.Core.Algorithms Algorithm { get; set; }
 
         public HeuristicFunctions? Heuristics { get; set; } = null;

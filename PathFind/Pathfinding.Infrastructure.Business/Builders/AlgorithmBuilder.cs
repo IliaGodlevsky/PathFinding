@@ -43,7 +43,7 @@ namespace Pathfinding.Infrastructure.Business.Builders
                 Domain.Core.Algorithms.Dijkstra => new DijkstraAlgorithm(range, GetStepRule()),
                 Domain.Core.Algorithms.DistanceFirst => new DistanceFirstAlgorithm(range, GetHeuristic()),
                 Domain.Core.Algorithms.Lee => new LeeAlgorithm(range),
-                Domain.Core.Algorithms.Snake => new SnakeAlgorithm(range, GetHeuristic()),
+                Domain.Core.Algorithms.Snake => new SnakeAlgorithm(range, new ManhattanDistance()),
                 _ => throw new NotImplementedException($"Uknown algorithm: {algorithm}")
             };
         }

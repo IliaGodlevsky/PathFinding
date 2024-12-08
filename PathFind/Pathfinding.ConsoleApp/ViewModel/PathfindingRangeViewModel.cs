@@ -113,7 +113,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<QueryPathfindingRangeMessage>(this, OnGetPathfindingRangeRecieved);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<GraphStateChangedMessage>(this, OnGraphBecameReadonly);
-            messenger.Register<GraphActivatedMessage, int>(this, Tokens.PathfindingRange,
+            messenger.Register<AsyncGraphActivatedMessage, int>(this, Tokens.PathfindingRange,
                 async (r, msg) => await OnGraphActivated(msg));
             AddToRangeCommand = ReactiveCommand.Create<GraphVertexModel>(AddVertexToRange, CanExecute());
             RemoveFromRangeCommand = ReactiveCommand.Create<GraphVertexModel>(RemoveVertexFromRange, CanExecute());
@@ -198,7 +198,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
-        private async Task OnGraphActivated(GraphActivatedMessage msg)
+        private async Task OnGraphActivated(AsyncGraphActivatedMessage msg)
         {
             await ExecuteSafe(async () =>
             {
@@ -221,7 +221,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 Transit.AddRange(transit);
                 Graph.ForEach(SubcribeToEvents);
             }, logger.Error).ConfigureAwait(false);
-            msg.Signal();
+            msg.Signal(Unit.Default);
         }
 
         private void OnGraphBecameReadonly(object recipient, GraphStateChangedMessage msg)

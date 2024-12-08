@@ -72,7 +72,8 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
             {
                 Id = 1,
                 Name = "Test",
-                Graph = Graph<GraphVertexModel>.Empty
+                Vertices = Array.Empty<GraphVertexModel>(),
+                DimensionSizes = Array.Empty<int>()
             };
 
             mock.Mock<IRequestService<GraphVertexModel>>()
@@ -80,6 +81,10 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                     It.Is<int>(x => x == 1),
                     It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(graph));
+            mock.Mock<IMessenger>()
+                .Setup(x => x.Send(It.IsAny<AsyncGraphActivatedMessage>(),
+                    It.IsAny<IsAnyToken>()))
+                .Callback<AsyncGraphActivatedMessage, object>((m, t) => m.Signal(default(System.Reactive.Unit)));
 
             var viewModel = mock.Create<GraphTableViewModel>();
 
@@ -93,12 +98,12 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                         It.IsAny<CancellationToken>()), Times.Once);
                 mock.Mock<IMessenger>()
                     .Verify(x => x.Send(
-                        It.IsAny<GraphActivatedMessage>(),
-                        It.IsAny<int>()), Times.Exactly(2));
+                        It.IsAny<AsyncGraphActivatedMessage>(),
+                        It.IsAny<int>()), Times.Exactly(3));
                 mock.Mock<IMessenger>()
                     .Verify(x => x.Send(
-                        It.IsAny<GraphActivatedMessage>(),
-                        It.IsAny<IsAnyToken>()), Times.Exactly(3));
+                        It.IsAny<AsyncGraphActivatedMessage>(),
+                        It.IsAny<IsAnyToken>()), Times.Exactly(4));
             });
         }
 

@@ -41,11 +41,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.logger = logger;
 
             messenger.Register<RunCreatedMessaged>(this, async (r, msg) => await OnRunCreated(r, msg));
-            messenger.Register<GraphActivatedMessage, int>(this, Tokens.RunsTable,
+            messenger.Register<AsyncGraphActivatedMessage, int>(this, Tokens.RunsTable,
                 async (r, msg) => await OnGraphActivatedMessage(r, msg));
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<RunsUpdatedMessage>(this, OnRunsUpdated);
-            messenger.Register<RunsDeletedMessage>(this, async (r, msg) => await OnRunsDeleteMessage(r, msg));
+            messenger.Register<AsyncRunsDeletedMessage>(this, async (r, msg) => await OnRunsDeleteMessage(r, msg));
 
             SelectRunsCommand = ReactiveCommand.Create<int[]>(SelectRuns);
         }
@@ -56,7 +56,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Send(new RunSelectedMessage(selectedRuns));
         }
 
-        private async Task OnGraphActivatedMessage(object recipient, GraphActivatedMessage msg)
+        private async Task OnGraphActivatedMessage(object recipient, AsyncGraphActivatedMessage msg)
         {
             await ExecuteSafe(async () =>
             {
@@ -67,7 +67,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 Runs.Clear();
                 Runs.Add(models);
             }, logger.Error).ConfigureAwait(false);
-            msg.Signal();
+            msg.Signal(Unit.Default);
         }
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
@@ -95,7 +95,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
-        private async Task OnRunsDeleteMessage(object recipient, RunsDeletedMessage msg)
+        private async Task OnRunsDeleteMessage(object recipient, AsyncRunsDeletedMessage msg)
         {
             var toDelete = Runs.Where(x => msg.RunIds.Contains(x.Id)).ToArray();
             if (toDelete.Length == Runs.Count)
@@ -115,7 +115,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private async Task OnRunCreated(object recipient, RunCreatedMessaged msg)
         {
             int previousCount = Runs.Count;
-            Runs.Add(GetModel(msg.Model));
+            Runs.Add(msg.Models.Select(GetModel));
             if (previousCount == 0)
             {
                 messenger.Send(new GraphStateChangedMessage(ActivatedGraphId, GraphStatuses.Readonly));
@@ -130,6 +130,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             return new()
             {
                 Id = model.Id,
+                GraphId = model.GraphId,
                 Algorithm = model.Algorithm,
                 Cost = model.Cost,
                 Steps = model.Steps,

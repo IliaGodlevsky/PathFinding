@@ -44,7 +44,8 @@ namespace Pathfinding.Infrastructure.Business
         {
             return await Transaction(async (unitOfWork, t) =>
             {
-                var models = await request.ToAsyncEnumerable().SelectAwait(async history =>
+                var models = new List<PathfindingHistoryModel<T>>();
+                foreach(var history in request)
                 {
                     var graphModel = history.Graph;
                     var vertices = graphModel.Vertices.ToVertices<T>();
@@ -74,10 +75,10 @@ namespace Pathfinding.Infrastructure.Business
                         VertexId = x.Vertex.Id,
                         Order = x.Order,
                         IsSource = x.Order == 0,
-                        IsTarget = x.Order == vertices.Count - 1 && vertices.Count > 1
+                        IsTarget = x.Order == rangeVertices.Count - 1 && rangeVertices.Count > 1
                     }).ToReadOnly();
                     await unitOfWork.RangeRepository.CreateAsync(entities, t);
-                    return new PathfindingHistoryModel<T>()
+                    models.Add(new PathfindingHistoryModel<T>()
                     {
                         Graph = new()
                         {
@@ -91,9 +92,9 @@ namespace Pathfinding.Infrastructure.Business
                         },
                         Statistics = statistics.ToRunStatisticsModels(),
                         Range = range
-                    };
-                }).ToListAsync(token).ConfigureAwait(false);
-                return models.ToReadOnly();
+                    });
+                }
+                return models.AsReadOnly();
             }, token).ConfigureAwait(false);
         }
 
@@ -162,8 +163,8 @@ namespace Pathfinding.Infrastructure.Business
                     });
                 }
                 return result;
-
             }, token).ConfigureAwait(false);
+            
         }
 
         public async Task<IReadOnlyCollection<PathfindingRangeModel>> ReadRangeAsync(int graphId,
@@ -330,14 +331,13 @@ namespace Pathfinding.Infrastructure.Business
             }
         }
 
-        private async Task<GraphModel<T>> ReadGraphInternalAsync(IUnitOfWork unit, int graphId, CancellationToken token = default)
+        private async Task<GraphModel<T>> ReadGraphInternalAsync(IUnitOfWork unit, int graphId,
+            CancellationToken token = default)
         {
             var graphEntity = await unit.GraphRepository.ReadAsync(graphId, token).ConfigureAwait(false);
-            var vertexEntities = await unit.VerticesRepository
-                .ReadVerticesByGraphIdAsync(graphId, token).ConfigureAwait(false);
-            var ids = vertexEntities.Select(x => x.Id).ToReadOnly();
-            // TODO: large operation, better to do it async
-            var vertices = await vertexEntities.ToVerticesAsync<T>(token).ConfigureAwait(false);
+            var vertexEntities = (await unit.VerticesRepository
+                .ReadVerticesByGraphIdAsync(graphId, token).ConfigureAwait(false)).ToList();
+            var vertices = await Task.Run(vertexEntities.ToVertices<T>, token).ConfigureAwait(false);
             return new GraphModel<T>()
             {
                 Vertices = vertices,
@@ -396,6 +396,16 @@ namespace Pathfinding.Infrastructure.Business
                 var result = await unit.StatisticsRepository.ReadByIdsAsync(runIds, t).ConfigureAwait(false);
                 return result.ToRunStatisticsModels();
             }, token);
+        }
+
+        public async Task<IReadOnlyCollection<RunStatisticsModel>> CreateStatisticsAsync(IEnumerable<CreateStatisticsRequest> request, CancellationToken token = default)
+        {
+            return await Transaction(async (unit, t) =>
+            {
+                var entities = request.Select(x => x.ToStatistics()).ToArray();
+                var result = await unit.StatisticsRepository.CreateAsync(entities, t).ConfigureAwait(false);
+                return result.ToRunStatisticsModels();
+            }, token).ConfigureAwait(false);
         }
     }
 }

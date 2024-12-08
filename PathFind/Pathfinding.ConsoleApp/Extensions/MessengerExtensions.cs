@@ -8,15 +8,17 @@ namespace Pathfinding.ConsoleApp.Extensions
 {
     internal static class MessengerExtensions
     {
-        public static async Task SendAsync<T, TToken>(this IMessenger messenger, T message, TToken token)
-            where T : class, IMayBeAsync
+        public static async Task SendAsync<TMessage, TToken>(this IMessenger messenger,
+            TMessage message, TToken token)
+            where TMessage : class, IAsyncMessage<Unit>
             where TToken : IEquatable<TToken>
         {
             var tcs = new TaskCompletionSource<Unit>();
-            void Signal() => tcs.TrySetResult(Unit.Default);
+            void Signal(Unit unit) => tcs.TrySetResult(unit);
             message.Signal = Signal;
+            var timeout = Task.Delay(TimeSpan.FromSeconds(100));
             messenger.Send(message, token);
-            await tcs.Task.ConfigureAwait(false);
+            await Task.WhenAny(timeout, tcs.Task).ConfigureAwait(false);
         }
     }
 }

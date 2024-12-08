@@ -20,10 +20,6 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class HeuristicsView : FrameView
     {
-        private const double DefaultWeight = 1;
-
-        private static readonly InclusiveValueRange<double> WeightRange = (5, 0);
-
         private readonly ustring[] radioLabels;
         private readonly CompositeDisposable disposables = new();
         private readonly IRequireHeuristicsViewModel heuristicsViewModel;
@@ -45,28 +41,6 @@ namespace Pathfinding.ConsoleApp.View
                .Select(x => values[x.SelectedItem])
                .BindTo(heuristicsViewModel, x => x.Heuristic)
                .DisposeWith(disposables);
-            weightTextField.Events().TextChanging
-                .Select(x =>
-                {
-                    if (string.IsNullOrEmpty(x.NewText.ToString()))
-                    {
-                        return -1;
-                    }
-                    else if (double.TryParse(x.NewText.ToString(), out var value)
-                        && !WeightRange.Contains(value))
-                    {
-                        var returned = WeightRange.ReturnInRange(value);
-                        x.NewText = returned.ToString();
-                        return returned;
-                    }
-                    else if (double.TryParse(x.NewText.ToString(), out var val))
-                    {
-                        return val;
-                    }
-                    return -1;
-                })
-                .BindTo(heuristicsViewModel, x => x.Weight)
-                .DisposeWith(disposables);
             messenger.Register<OpenHeuristicsViewMessage>(this, OnOpen);
             messenger.Register<CloseHeuristicsViewMessage>(this, OnHeuristicsViewClosed);
             messenger.Register<CloseAlgorithmCreationViewMessage>(this, OnRunCreationViewClosed);
@@ -75,9 +49,8 @@ namespace Pathfinding.ConsoleApp.View
 
         private void OnOpen(object recipient, OpenHeuristicsViewMessage msg)
         {
-            weightTextField.Text = DefaultWeight.ToString();
             heuristics.SelectedItem = 0;
-            heuristicsViewModel.Weight = DefaultWeight;
+            
             Visible = true;
         }
 
@@ -93,8 +66,10 @@ namespace Pathfinding.ConsoleApp.View
 
         private void Close()
         {
-            heuristicsViewModel.Weight = null;
+            heuristicsViewModel.FromWeight = null;
             heuristicsViewModel.Heuristic = null;
+            heuristicsViewModel.ToWeight = null;
+            heuristicsViewModel.Step = null;
             Visible = false;
         }
     }

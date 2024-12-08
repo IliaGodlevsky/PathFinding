@@ -30,6 +30,7 @@ namespace Pathfinding.ConsoleApp.View
                 .Select(x => values[x.Item])
                 .Do(algorithm =>
                 {
+                    // Don't change order of the messages
                     viewModel.Algorithm = algorithm;
                     switch (algorithm)
                     {
@@ -37,12 +38,14 @@ namespace Pathfinding.ConsoleApp.View
                         case Algorithms.BidirectAStar:
                         case Algorithms.AStarGreedy:
                             messenger.Send(new OpenStepRuleViewMessage());
+                            messenger.Send(new OpenAlgorithmsPopulateViewMessage());
                             messenger.Send(new OpenHeuristicsViewMessage());
                             break;
                         case Algorithms.Dijkstra:
                         case Algorithms.BidirectDijkstra:
                         case Algorithms.CostGreedy:
                             messenger.Send(new OpenStepRuleViewMessage());
+                            messenger.Send(new CloseAlgorithmsPopulateViewMessage());
                             messenger.Send(new CloseHeuristicsViewMessage());
                             break;
                         case Algorithms.Lee:
@@ -50,11 +53,13 @@ namespace Pathfinding.ConsoleApp.View
                         case Algorithms.DepthFirst:
                         case Algorithms.Snake:
                             messenger.Send(new CloseStepRulesViewMessage());
+                            messenger.Send(new CloseAlgorithmsPopulateViewMessage());
                             messenger.Send(new CloseHeuristicsViewMessage());
                             break;
                         case Algorithms.DistanceFirst:
                         case Algorithms.AStarLee:
                             messenger.Send(new CloseStepRulesViewMessage());
+                            messenger.Send(new CloseAlgorithmsPopulateViewMessage());
                             messenger.Send(new OpenHeuristicsViewMessage());
                             break;
                     }

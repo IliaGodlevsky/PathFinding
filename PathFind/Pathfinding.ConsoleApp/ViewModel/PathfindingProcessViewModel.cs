@@ -8,15 +8,14 @@ using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Algorithms.Exceptions;
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Business.Builders;
-using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models;
-using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Requests.Create;
 using ReactiveUI;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reactive;
@@ -54,10 +53,24 @@ namespace Pathfinding.ConsoleApp.ViewModel
         }
 
         private double? weight;
-        public double? Weight 
+        public double? FromWeight 
         {
             get => weight;
             set => this.RaiseAndSetIfChanged(ref weight, value);
+        }
+
+        private double? to;
+        public double? ToWeight 
+        { 
+            get => to; 
+            set => this.RaiseAndSetIfChanged(ref to, value); 
+        }
+
+        private double? step;
+        public double? Step 
+        { 
+            get => step; 
+            set => this.RaiseAndSetIfChanged(ref step, value); 
         }
 
         private StepRules? stepRule;
@@ -94,15 +107,17 @@ namespace Pathfinding.ConsoleApp.ViewModel
             return this.WhenAnyValue(
                 x => x.Graph,
                 x => x.Heuristic,
-                x => x.Weight,
+                x => x.FromWeight,
+                x => x.ToWeight,
+                x => x.Step,
                 x => x.Algorithm,
-                (graph, heuristic, weight, algorithm) =>
+                (graph, heuristic, weight, to, step, algorithm) =>
                 {
                     bool canExecute = graph != Graph<GraphVertexModel>.Empty && algorithm != null
                         && Enum.IsDefined(typeof(Algorithms), algorithm.Value);
-                    if (heuristic != default)
+                    if (heuristic != null)
                     {
-                        return canExecute && weight > 0;
+                        return canExecute && weight > 0 && to > 0 && step >= 0;
                     }
                     return canExecute;
                 });
@@ -135,49 +150,59 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 int visitedCount = 0;
                 void OnVertexProcessed(object sender, EventArgs e) => visitedCount++;
                 var status = RunStatuses.Success;
-                var buildInfo = new AlgorithmBuildInfo(Heuristic, Weight, StepRule);
-                var algorithm = AlgorithmBuilder.TakeAlgorithm(Algorithm.Value)
-                    .WithAlgorithmInfo(buildInfo)
-                    .Build(pathfindingRange);
-                algorithm.VertexProcessed += OnVertexProcessed;
-                var path = NullGraphPath.Interface;
-                var stopwatch = Stopwatch.StartNew();
-                try
+                double from = FromWeight ?? 0;
+                double to = ToWeight ?? 0;
+                double step = Step ?? 1;
+                int limit = (int)Math.Floor(((to - from)) / (step + double.Epsilon));
+                var list = new List<CreateStatisticsRequest>();
+                for (int i = 0; i <= limit; i++)
                 {
-                    path = algorithm.FindPath();
-                }
-                catch (PathfindingException ex)
-                {
-                    status = RunStatuses.Failure;
-                    logger.Warn(ex);
-                }
-                catch (Exception ex)
-                {
-                    status = RunStatuses.Failure;
-                    logger.Error(ex);
-                }
+                    visitedCount = 0;
+                    var val = from + step * i;
+                    double? weight = val == 0 ? null : val;
+                    var buildInfo = new AlgorithmBuildInfo(Heuristic, weight, StepRule);
+                    var algorithm = AlgorithmBuilder.TakeAlgorithm(Algorithm.Value)
+                        .WithAlgorithmInfo(buildInfo)
+                        .Build(pathfindingRange);
+                    algorithm.VertexProcessed += OnVertexProcessed;
+                    var path = NullGraphPath.Interface;
+                    var stopwatch = Stopwatch.StartNew();
+                    try
+                    {
+                        path = algorithm.FindPath();
+                    }
+                    catch (PathfindingException ex)
+                    {
+                        status = RunStatuses.Failure;
+                        logger.Warn(ex);
+                    }
+                    catch (Exception ex)
+                    {
+                        status = RunStatuses.Failure;
+                        logger.Error(ex);
+                    }
 
-                stopwatch.Stop();
-                algorithm.VertexProcessed -= OnVertexProcessed;
+                    stopwatch.Stop();
+                    algorithm.VertexProcessed -= OnVertexProcessed;
 
-                var request = new CreateStatisticsRequest()
-                {
-                    Algorithm = Algorithm.Value,
-                    Cost = path.Cost,
-                    Steps = path.Count,
-                    StepRule = StepRule,
-                    Heuristics = Heuristic,
-                    Weight = Weight,
-                    Visited = visitedCount,
-                    Elapsed = stopwatch.Elapsed,
-                    ResultStatus = status,
-                    GraphId = ActivatedGraphId
-                };
-
+                    var request = new CreateStatisticsRequest()
+                    {
+                        Algorithm = Algorithm.Value,
+                        Cost = path.Cost,
+                        Steps = path.Count,
+                        StepRule = StepRule,
+                        Heuristics = Heuristic,
+                        Weight = weight,
+                        Visited = visitedCount,
+                        Elapsed = stopwatch.Elapsed,
+                        ResultStatus = status,
+                        GraphId = ActivatedGraphId
+                    };
+                    list.Add(request);
+                }
                 await ExecuteSafe(async () =>
                 {
-                    var result = await service.CreateStatisticsAsync(request)
-                        .ConfigureAwait(false);
+                    var result = await service.CreateStatisticsAsync(list).ConfigureAwait(false);
                     messenger.Send(new RunCreatedMessaged(result));
                 }, logger.Error).ConfigureAwait(false);
             }

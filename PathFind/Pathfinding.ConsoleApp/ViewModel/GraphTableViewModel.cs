@@ -48,7 +48,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.service = service;
             this.messenger = messenger;
             this.logger = logger;
-            messenger.Register<GraphUpdatedMessage, int>(this, Tokens.GraphTable, async (r, msg) 
+            messenger.Register<AsyncGraphUpdatedMessage, int>(this, Tokens.GraphTable, async (r, msg) 
                 => await OnGraphUpdated(r, msg));
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
@@ -75,8 +75,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 await layers.OverlayAsync(graph).ConfigureAwait(false);
                 ActivatedGraphId = graphModel.Id;
                 messenger.Send(new GraphActivatedMessage(graphModel), Tokens.GraphField);
-                await messenger.SendAsync(new GraphActivatedMessage(graphModel), Tokens.PathfindingRange);
-                await messenger.SendAsync(new GraphActivatedMessage(graphModel), Tokens.RunsTable);
+                await messenger.SendAsync(new AsyncGraphActivatedMessage(graphModel), Tokens.PathfindingRange);
+                await messenger.SendAsync(new AsyncGraphActivatedMessage(graphModel), Tokens.RunsTable);
                 messenger.Send(new GraphActivatedMessage(graphModel));
             }, logger.Error).ConfigureAwait(false);
         }
@@ -110,7 +110,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
-        private async Task OnGraphUpdated(object recipient, GraphUpdatedMessage msg)
+        private async Task OnGraphUpdated(object recipient, AsyncGraphUpdatedMessage msg)
         {
             var model = Graphs.FirstOrDefault(x => x.Id == msg.Model.Id);
             if (model != null)
@@ -123,7 +123,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     await ActivatedGraph(ActivatedGraphId);
                 }
             }
-            msg.Signal();
+
+            msg.Signal(Unit.Default);
         }
 
         private void OnGraphCreated(object recipient, GraphCreatedMessage msg)

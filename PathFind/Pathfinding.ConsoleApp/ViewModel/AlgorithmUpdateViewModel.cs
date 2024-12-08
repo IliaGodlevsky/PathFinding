@@ -12,7 +12,6 @@ using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
-using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Undefined;
 using ReactiveUI;
 using System;
@@ -59,7 +58,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<RunSelectedMessage>(this, OnRunsSelected);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
-            messenger.Register<GraphUpdatedMessage, int>(this, Tokens.AlgorithmUpdate, 
+            messenger.Register<AsyncGraphUpdatedMessage, int>(this, Tokens.AlgorithmUpdate, 
                 async (r, msg) => await OnGraphUpdated(r, msg));
         }
 
@@ -71,7 +70,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private void OnGraphActivated(object recipient, GraphActivatedMessage msg)
         {
             Graph = new Graph<GraphVertexModel>(msg.Graph.Vertices, msg.Graph.DimensionSizes);
-            
+            ActivatedGraphId = msg.Graph.Id;
         }
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
@@ -101,7 +100,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }, log.Error).ConfigureAwait(false);
         }
 
-        private async Task OnGraphUpdated(object recipient, GraphUpdatedMessage msg)
+        private async Task OnGraphUpdated(object recipient, AsyncGraphUpdatedMessage msg)
         {
             var graph = Graph;
             int id = ActivatedGraphId;
@@ -123,7 +122,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     messenger.Send(new RunsUpdatedMessage(updated));
                 }, log.Error).ConfigureAwait(false);
             }
-            msg.Signal();
+            msg.Signal(Unit.Default);
         }
 
         private async Task<IReadOnlyCollection<RunStatisticsModel>> UpdateRunsAsync(

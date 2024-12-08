@@ -9,6 +9,8 @@ namespace Pathfinding.ConsoleApp.Model
     {
         public int Id { get; set; }
 
+        public int GraphId { get; set; }
+
         public Algorithms Algorithm { get; set; }
 
         private int visited;

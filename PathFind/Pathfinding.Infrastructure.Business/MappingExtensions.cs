@@ -10,8 +10,6 @@ using Pathfinding.Shared.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Pathfinding.Infrastructure.Business
 {
@@ -68,6 +66,7 @@ namespace Pathfinding.Infrastructure.Business
         {
             return new()
             {
+                GraphId = model.GraphId,
                 Algorithm = model.Algorithm,
                 Cost = model.Cost,
                 Elapsed = model.Elapsed.TotalMilliseconds,
@@ -111,12 +110,10 @@ namespace Pathfinding.Infrastructure.Business
             };
         }
 
-        public static async Task<IReadOnlyCollection<T>> ToVerticesAsync<T>(this IEnumerable<Vertex> entities,
-            CancellationToken token = default)
+        public static IReadOnlyCollection<T> ToVertices<T>(this IEnumerable<Vertex> entities)
             where T : IVertex, IEntity<long>, new()
         {
-            return await Task.Run(() => entities.Select(x => x.ToVertex<T>()).ToList().AsReadOnly(), token)
-                .ConfigureAwait(false);
+            return entities.Select(x => x.ToVertex<T>()).ToList().AsReadOnly();
         }
 
         public static PathfindingRangeModel ToRangeModel(this PathfindingRange entity)
@@ -137,6 +134,7 @@ namespace Pathfinding.Infrastructure.Business
             return new()
             {
                 Id = entity.Id,
+                GraphId = entity.GraphId,
                 Heuristics = entity.Heuristics,
                 Weight = entity.Weight,
                 StepRule = entity.StepRule,
@@ -168,10 +166,11 @@ namespace Pathfinding.Infrastructure.Business
         }
 
         public static Vertex ToVertexEntity<T>(this T vertex)
-            where T : IVertex
+            where T : IVertex, IEntity<long>
         {
             return new()
             {
+                Id = vertex.Id,
                 Coordinates = vertex.Position.ToStringCoordinates(),
                 UpperValueRange = vertex.Cost.CostRange.UpperValueOfRange,
                 LowerValueRange = vertex.Cost.CostRange.LowerValueOfRange,
@@ -204,7 +203,7 @@ namespace Pathfinding.Infrastructure.Business
         }
 
         public static IReadOnlyCollection<Vertex> ToVertexEntities<T>(this IEnumerable<T> vertices)
-            where T : IVertex
+            where T : IVertex, IEntity<long>
         {
             return vertices.Select(x => x.ToVertexEntity()).ToList().AsReadOnly();
         }

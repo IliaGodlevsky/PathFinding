@@ -9,10 +9,10 @@ namespace Pathfinding.ConsoleApp.View
         private void Initialize()
         {
             stepRules.X = 1;
-            stepRules.Y = 1;
+            stepRules.Y = 0;
             X = 0;
             Y = 1;
-            Height = Dim.Percent(30);
+            Height = Dim.Percent(20);
             Width = Dim.Percent(30);
             Border = new Border()
             {

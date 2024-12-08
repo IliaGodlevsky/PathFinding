@@ -75,10 +75,9 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
                     statistics.Weight = entity.Weight;
                     statistics.Visited = entity.Visited;
                     statistics.Elapsed = entity.Elapsed;
-                    return true;
                 }
             }
-            return await Task.FromResult(false);
+            return await Task.FromResult(true);
         }
 
         public async Task<IEnumerable<Statistics>> ReadByIdsAsync(IEnumerable<int> runIds, CancellationToken token = default)

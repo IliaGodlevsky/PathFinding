@@ -36,6 +36,9 @@ namespace Pathfinding.Service.Interface
 
         Task<RunStatisticsModel> CreateStatisticsAsync(CreateStatisticsRequest request, CancellationToken token = default);
 
+        Task<IReadOnlyCollection<RunStatisticsModel>> CreateStatisticsAsync(IEnumerable<CreateStatisticsRequest> request,
+            CancellationToken token = default);
+
         Task<IReadOnlyCollection<PathfindingRangeModel>> ReadRangeAsync(int graphId,
             CancellationToken token = default);
 
