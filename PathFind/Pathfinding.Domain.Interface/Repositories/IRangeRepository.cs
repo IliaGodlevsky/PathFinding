@@ -16,7 +16,7 @@ namespace Pathfinding.Domain.Interface.Repositories
         Task<IEnumerable<PathfindingRange>> ReadByGraphIdAsync(int graphId,
             CancellationToken token = default);
 
-        Task<bool> DeleteByVerticesIdsAsync(IEnumerable<int> verticesIds,
+        Task<bool> DeleteByVerticesIdsAsync(IEnumerable<long> verticesIds,
             CancellationToken token = default);
 
         Task<bool> DeleteByGraphIdAsync(int graphId, CancellationToken token = default);

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Pathfinding.ConsoleApp.Extensions;
+using Pathfinding.Domain.Core;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using Terminal.Gui;
@@ -15,42 +17,40 @@ namespace Pathfinding.ConsoleApp.View
         private const string ElapsedCol = "Elapsed";
         private const string StepCol = "Step";
         private const string LogicCol = "Logic";
-        private const string SpreadCol = "Spread";
+        private const string WeightCol = "Weight";
         private const string StatusCol = "Status";
         private const string TimeFormat = @"ss\.fff";
 
-        private readonly DataTable table = new DataTable();
+        private const string Ascending = "ASC";
+        private const string Descending = "DESC";
+        
+        private readonly int headerLinesConsumed;
 
-        private void Initialize()
+        private bool Order { get; set; } = false;
+
+        private string PreviousSortedColumn { get; set; } = string.Empty;
+
+        private void SetTableStyle()
         {
-            table.Columns.AddRange(new DataColumn[]
-            {
-                new DataColumn(IdCol, typeof(int)),
-                new DataColumn(AlgorithmCol, typeof(string)),
-                new DataColumn(VisitedCol, typeof(int)),
-                new DataColumn(StepsCol, typeof(int)),
-                new DataColumn(CostCol, typeof(double)),
-                new DataColumn(ElapsedCol, typeof(TimeSpan)),
-                new DataColumn(StepCol, typeof(string)),
-                new DataColumn(LogicCol, typeof(string)),
-                new DataColumn(SpreadCol, typeof(string)),
-                new DataColumn(StatusCol, typeof(string))
-            });
-            table.PrimaryKey = new DataColumn[] { table.Columns[IdCol] };
+            Table.PrimaryKey = new[] { Table.Columns[IdCol] };
             var columnStyles = new Dictionary<DataColumn, ColumnStyle>()
             {
-                { table.Columns[IdCol], new() { Visible = false } },
-                { table.Columns[AlgorithmCol], new() { Alignment = TextAlignment.Left } },
-                { table.Columns[VisitedCol], new() { Alignment = TextAlignment.Centered } },
-                { table.Columns[StepsCol], new() { Alignment = TextAlignment.Centered } },
-                { table.Columns[CostCol], new() { Alignment = TextAlignment.Centered } },
-                { table.Columns[ElapsedCol], new() { Format = TimeFormat, Alignment = TextAlignment.Centered } },
-                { table.Columns[StepCol], new() { Alignment = TextAlignment.Centered } },
-                { table.Columns[LogicCol], new() { Alignment = TextAlignment.Centered } },
-                { table.Columns[SpreadCol], new() { Alignment = TextAlignment.Left } },
-                { table.Columns[StatusCol], new() { Alignment = TextAlignment.Centered } }
+                { Table.Columns[IdCol], new() { Visible = false } },
+                { Table.Columns[AlgorithmCol], new() { MinWidth = 12, MaxWidth = 12, Alignment = TextAlignment.Left,
+                    RepresentationGetter = AlgorithmToString } },
+                { Table.Columns[VisitedCol], new() { Alignment = TextAlignment.Centered } },
+                { Table.Columns[StepsCol], new() { Alignment = TextAlignment.Centered } },
+                { Table.Columns[CostCol], new() { Alignment = TextAlignment.Centered } },
+                { Table.Columns[ElapsedCol], new() { Format = TimeFormat, Alignment = TextAlignment.Centered } },
+                { Table.Columns[StepCol], new() { MinWidth = 9, MaxWidth = 9, Alignment = TextAlignment.Centered,
+                    RepresentationGetter = StepRulesToString } },
+                { Table.Columns[LogicCol], new() { MinWidth = 9, MaxWidth = 9, Alignment = TextAlignment.Centered,
+                    RepresentationGetter = HeuristicsToString } },
+                { Table.Columns[WeightCol], new() { Alignment = TextAlignment.Left } },
+                { Table.Columns[StatusCol], new() { Alignment = TextAlignment.Centered,
+                    RepresentationGetter = RunStatusToString } }
             };
-            Style = new TableStyle()
+            Style = new()
             {
                 ExpandLastColumn = true,
                 ShowVerticalCellLines = false,
@@ -61,13 +61,65 @@ namespace Pathfinding.ConsoleApp.View
                 ColumnStyles = columnStyles,
                 ShowHorizontalScrollIndicators = true
             };
+        }
+
+        private static string AlgorithmToString(object algorithm)
+        {
+            var a = (Algorithms)algorithm;
+            return a.ToStringRepresentation();
+        }
+
+        private static string StepRulesToString(object stepRule)
+        {
+            var stepRules = (StepRules?)stepRule;
+            return stepRules?.ToStringRepresentation();
+        }
+
+        private static string HeuristicsToString(object heuristic)
+        {
+            var heuristics = (HeuristicFunctions?)heuristic;
+            return heuristics?.ToStringRepresentation();
+        }
+
+        private static string RunStatusToString(object status)
+        {
+            var s = (RunStatuses)status;
+            return s.ToStringRepresentation();
+        }
+
+        public RunsTableView()
+        {
+            Table = new();
+            Table.Columns.AddRange(new DataColumn[]
+            {
+                new (IdCol, typeof(int)),
+                new (AlgorithmCol, typeof(Algorithms)),
+                new (VisitedCol, typeof(int)),
+                new (StepsCol, typeof(int)),
+                new (CostCol, typeof(double)),
+                new (ElapsedCol, typeof(TimeSpan)),
+                new (StepCol, typeof(object)),
+                new (LogicCol, typeof(object)),
+                new (WeightCol, typeof(object)),
+                new (StatusCol, typeof(RunStatuses))
+            });
+            SetTableStyle();
+            int line = 1;
+            if (Style.ShowHorizontalHeaderOverline)
+            {
+                line++;
+            }
+            if (Style.ShowHorizontalHeaderUnderline)
+            {
+                line++;
+            }
+            headerLinesConsumed = line;
             MultiSelect = true;
             FullRowSelect = true;
             X = 0;
             Y = Pos.Percent(0);
             Width = Dim.Fill();
             Height = Dim.Percent(90);
-            Table = table;
         }
     }
 }

@@ -9,17 +9,11 @@ namespace Pathfinding.Domain.Interface
     {
         IGraphParametresRepository GraphRepository { get; }
 
-        ISubAlgorithmRepository SubAlgorithmRepository { get; }
-
         IVerticesRepository VerticesRepository { get; }
 
         IRangeRepository RangeRepository { get; }
 
         IStatisticsRepository StatisticsRepository { get; }
-
-        IGraphStateRepository GraphStateRepository { get; }
-
-        IAlgorithmRunRepository RunRepository { get; }
 
         void BeginTransaction();
 

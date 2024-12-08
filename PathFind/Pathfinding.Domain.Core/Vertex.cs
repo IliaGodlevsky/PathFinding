@@ -1,8 +1,8 @@
 ﻿namespace Pathfinding.Domain.Core
 {
-    public class Vertex : IEntity<int>
+    public class Vertex : IEntity<long>
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         public int GraphId { get; set; }
 

@@ -10,8 +10,8 @@ namespace Pathfinding.Domain.Interface
 
         IVertexCost Cost { get; set; }
 
-        Coordinate Position { get; }
+        Coordinate Position { get; set; }
 
-        ICollection<IVertex> Neighbours { get; }
+        IReadOnlyCollection<IVertex> Neighbors { get; set; }
     }
 }

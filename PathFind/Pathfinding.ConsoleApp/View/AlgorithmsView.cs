@@ -1,31 +1,68 @@
 ﻿using Autofac.Features.AttributeFilters;
 using Pathfinding.ConsoleApp.Injection;
-using Pathfinding.Shared.Extensions;
-using ReactiveMarbles.ObservableEvents;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using Terminal.Gui;
+using ReactiveMarbles.ObservableEvents;
+using Pathfinding.Domain.Core;
+using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.ConsoleApp.Messages.View;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
+using System;
+using Pathfinding.ConsoleApp.Extensions;
 
 namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class AlgorithmsView : FrameView
     {
-        public AlgorithmsView([KeyFilter(KeyFilters.AlgorithmsListView)] IEnumerable<Terminal.Gui.View> children)
+        public AlgorithmsView([KeyFilter(KeyFilters.Views)]IMessenger messenger,
+            IRequireAlgorithmNameViewModel viewModel)
         {
             Initialize();
-            var names = children.OrderByOrderAttribute()
-                .ToDictionary(x => x.Text, x => x);
-            algorithms.RadioLabels = names.Keys.ToArray();
+            var algos = Enum.GetValues(typeof(Algorithms))
+                .Cast<Algorithms>()
+                .ToDictionary(x => x.ToStringRepresentation());
+            var source = algos.Keys.ToList();
+            var values = source.Select(x => algos[x]).ToList();
+            algorithms.SetSource(source);
             algorithms.Events().SelectedItemChanged
-                .Where(x => x.SelectedItem > -1)
-                .Do(x =>
+                .Where(x => x.Item > -1)
+                .Select(x => values[x.Item])
+                .Do(algorithm =>
                 {
-                    var key = algorithms.RadioLabels[x.SelectedItem];
-                    var element = names[key];
-                    var @event = new MouseEvent() { Flags = MouseFlags.Button1Clicked };
-                    element.OnMouseEvent(@event);
+                    // Don't change order of the messages
+                    viewModel.Algorithm = algorithm;
+                    switch (algorithm)
+                    {
+                        case Algorithms.AStar:
+                        case Algorithms.BidirectAStar:
+                        case Algorithms.AStarGreedy:
+                            messenger.Send(new OpenStepRuleViewMessage());
+                            messenger.Send(new OpenAlgorithmsPopulateViewMessage());
+                            messenger.Send(new OpenHeuristicsViewMessage());
+                            break;
+                        case Algorithms.Dijkstra:
+                        case Algorithms.BidirectDijkstra:
+                        case Algorithms.CostGreedy:
+                            messenger.Send(new OpenStepRuleViewMessage());
+                            messenger.Send(new CloseAlgorithmsPopulateViewMessage());
+                            messenger.Send(new CloseHeuristicsViewMessage());
+                            break;
+                        case Algorithms.Lee:
+                        case Algorithms.BidirectLee:
+                        case Algorithms.DepthFirst:
+                        case Algorithms.Snake:
+                            messenger.Send(new CloseStepRulesViewMessage());
+                            messenger.Send(new CloseAlgorithmsPopulateViewMessage());
+                            messenger.Send(new CloseHeuristicsViewMessage());
+                            break;
+                        case Algorithms.DistanceFirst:
+                        case Algorithms.AStarLee:
+                            messenger.Send(new CloseStepRulesViewMessage());
+                            messenger.Send(new CloseAlgorithmsPopulateViewMessage());
+                            messenger.Send(new OpenHeuristicsViewMessage());
+                            break;
+                    }
                 })
                 .Subscribe();
         }

@@ -1,42 +1,52 @@
-﻿using Pathfinding.ConsoleApp.ViewModel;
+﻿using Pathfinding.ConsoleApp.ViewModel.Interface;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
-using System.Collections.Generic;
+using System;
+using System.IO;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphExportView
     {
-        private readonly GraphExportViewModel viewModel;
         private readonly CompositeDisposable disposables = new();
 
-        public GraphExportView(GraphExportViewModel viewModel)
+        public GraphExportView(IGraphExportViewModel viewModel)
         {
-            this.viewModel = viewModel;
             Initialize();
             this.Events().MouseClick
-                .Where(x => viewModel.GraphIds.Length > 0)
-                .Do(async x => await OnSaveButtonClicked())
+                .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
+                .Select(x => new Func<Stream>(()=> 
+                {
+                    var filePath = GetFilePath();
+                    return string.IsNullOrEmpty(filePath) 
+                        ? Stream.Null 
+                        : File.OpenWrite(filePath);
+                }))
                 .InvokeCommand(viewModel, x => x.ExportGraphCommand)
                 .DisposeWith(disposables);
         }
 
-        private async Task OnSaveButtonClicked()
+        private static string GetFilePath()
         {
-            var allowedTypes = new List<string>() { ".json", ".dat" };
-            using var dialog = new SaveDialog("Export", "Enter file name", allowedTypes);
-            dialog.Width = Dim.Percent(45);
-            dialog.Height = Dim.Percent(55);
-            Application.Run(dialog);
-            if (!dialog.Canceled && dialog.FileName != null)
+            using var dialog = new SaveDialog("Export",
+                "Enter file name", new() { ".dat" })
             {
-                viewModel.FilePath = dialog.FilePath.ToString();
-            }
-            await Task.CompletedTask;
+                Width = Dim.Percent(45),
+                Height = Dim.Percent(55)
+            };
+            Application.Run(dialog);
+            return !dialog.Canceled && dialog.FilePath != null
+                ? dialog.FilePath.ToString()
+                : string.Empty;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            disposables.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

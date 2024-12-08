@@ -2,6 +2,7 @@
 using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,16 +11,19 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
     internal sealed class LiteDbGraphRepository : IGraphParametresRepository
     {
         private readonly ILiteCollection<Graph> collection;
-        private readonly LiteDbAlgorithmRunRepository algorithmRunRepository;
         private readonly LiteDbRangeRepository rangeRepository;
         private readonly LiteDbVerticesRepository verticesRepository;
+        private readonly LiteDbStatisticsRepository statisticsRepository;
+        private readonly ILiteCollection<Vertex> vertexCollection;
 
         public LiteDbGraphRepository(ILiteDatabase db)
         {
             collection = db.GetCollection<Graph>(DbTables.Graphs);
-            algorithmRunRepository = new LiteDbAlgorithmRunRepository(db);
             rangeRepository = new LiteDbRangeRepository(db);
             verticesRepository = new LiteDbVerticesRepository(db);
+            statisticsRepository = new LiteDbStatisticsRepository(db);
+            vertexCollection = db.GetCollection<Vertex>(DbTables.Vertices);
+            collection.EnsureIndex(x => x.Id);
         }
 
         public async Task<Graph> CreateAsync(Graph graph, CancellationToken token = default)
@@ -34,7 +38,7 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             // Reason: some repositories need the presence of values in the database
             await rangeRepository.DeleteByGraphIdAsync(graphId, token);
             await verticesRepository.DeleteVerticesByGraphIdAsync(graphId, token);
-            await algorithmRunRepository.DeleteByGraphIdAsync(graphId, token);
+            await statisticsRepository.DeleteByGraphId(graphId, token);
             return collection.Delete(graphId);
         }
 
@@ -58,9 +62,12 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             return await Task.FromResult(collection.FindById(graphId));
         }
 
-        public async Task<int> ReadCountAsync(CancellationToken token = default)
+        public async Task<IReadOnlyDictionary<int, int>> ReadObstaclesCountAsync(IEnumerable<int> graphIds, CancellationToken token = default)
         {
-            return await Task.FromResult(collection.Count());
+            return await Task.FromResult(vertexCollection
+                .Find(x => graphIds.Contains(x.GraphId) && x.IsObstacle)
+                .GroupBy(x => x.GraphId)
+                .ToDictionary(x => x.Key, x => x.Count()));
         }
 
         public async Task<bool> UpdateAsync(Graph graph, CancellationToken token = default)

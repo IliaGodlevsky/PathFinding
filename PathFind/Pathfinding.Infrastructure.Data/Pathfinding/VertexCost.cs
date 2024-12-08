@@ -19,5 +19,10 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
         {
             return CurrentCost.GetHashCode();
         }
+
+        public IVertexCost DeepClone()
+        {
+            return new VertexCost(CurrentCost, CostRange);
+        }
     }
 }

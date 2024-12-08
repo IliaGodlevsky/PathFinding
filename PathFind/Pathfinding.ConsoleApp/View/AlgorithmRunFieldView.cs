@@ -2,13 +2,14 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
-using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
-using Pathfinding.ConsoleApp.ViewModel;
-using ReactiveMarbles.ObservableEvents;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
+using Pathfinding.Domain.Interface;
+using Pathfinding.Infrastructure.Data.Extensions;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -18,83 +19,69 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class AlgorithmRunFieldView : FrameView
     {
-        private const int IntialSpeed = 90;
-
         private readonly CompositeDisposable vertexDisposables = new();
         private readonly CompositeDisposable disposables = new();
 
-        private readonly AlgorithmRunFieldViewModel viewModel;
+        private readonly Terminal.Gui.View container = new();
 
-        private int VerticesToVisualizePerTime { get; set; } = IntialSpeed;
-
-        public AlgorithmRunFieldView(AlgorithmRunFieldViewModel viewModel,
+        public AlgorithmRunFieldView(IAlgorithmRunFieldViewModel viewModel,
             [KeyFilter(KeyFilters.Views)] IMessenger messenger)
         {
             Visible = false;
             X = 0;
             Y = 0;
-            Width = Dim.Percent(67);
-            Height = Dim.Fill();
+            Width = Dim.Percent(66);
+            Height = Dim.Percent(95);
             Border = new Border()
             {
                 BorderBrush = Color.BrightYellow,
                 BorderStyle = BorderStyle.Rounded,
                 Title = "Run field"
             };
-            this.viewModel = viewModel;
-            viewModel.WhenAnyValue(x => x.GraphState)
-                .Do(RenderGraphState)
+            container.X = Pos.Center();
+            container.Y = Pos.Center();
+            viewModel.WhenAnyValue(x => x.RunGraph)
+                .DistinctUntilChanged()
+                .Where(x => x is not null)
+                .Do(async x => await RenderGraphState(x))
                 .Subscribe()
                 .DisposeWith(disposables);
             messenger.Register<OpenAlgorithmRunViewMessage>(this, OnOpen);
             messenger.Register<CloseAlgorithmRunFieldViewMessage>(this, OnCloseAlgorithmViewMessage);
+            Add(container);
         }
 
         private void OnOpen(object recipient, OpenAlgorithmRunViewMessage msg)
         {
-            Visible = true;
+            Application.MainLoop.Invoke(() => Visible = true);
         }
 
         private void OnCloseAlgorithmViewMessage(object recipient, CloseAlgorithmRunFieldViewMessage msg)
         {
-            Visible = false;
-            Application.MainLoop.Invoke(RemoveAll);
-            vertexDisposables.Clear();
+            Application.MainLoop.Invoke(() => Visible = false);
         }
 
-        private void RenderGraphState(IReadOnlyCollection<RunVertexModel> graphState)
+        private async Task RenderGraphState(IGraph<RunVertexModel> graph)
         {
-            RemoveAll();
+            Application.MainLoop.Invoke(container.RemoveAll);
             vertexDisposables.Clear();
-            var children = new List<RunVertexView>(graphState.Count);
-            VerticesToVisualizePerTime = IntialSpeed;
-
-            foreach (var vertex in graphState)
+            var children = new List<RunVertexView>(graph.Count);
+            await Task.Run(() =>
             {
-                var view = new RunVertexView(vertex);
-                view.Events().MouseClick
-                    .Do(async x => await Visualize())
-                    .Subscribe()
-                    .DisposeWith(vertexDisposables);
-                children.Add(view);
-                view.DisposeWith(vertexDisposables);
-            }
-
+                foreach (var vertex in graph)
+                {
+                    var view = new RunVertexView(vertex);
+                    children.Add(view);
+                    view.DisposeWith(vertexDisposables);
+                }
+            });
             Application.MainLoop.Invoke(() =>
             {
-                Add(children.ToArray());
+                container.Add(children.ToArray());
+                container.Width = graph.GetWidth() 
+                    * GraphFieldView.DistanceBetweenVertices;
+                container.Height = graph.GetLength();
             });
-        }
-
-        private async Task Visualize()
-        {
-            var command = viewModel.ProcessNextCommand;
-            while (viewModel.Remained > 0)
-            {
-                await command.Execute(VerticesToVisualizePerTime);
-                VerticesToVisualizePerTime++;
-                Application.Refresh();
-            }
         }
     }
 }

@@ -1,32 +1,66 @@
-﻿using ReactiveUI;
+﻿using Pathfinding.Domain.Core;
+using Pathfinding.Service.Interface.Models;
+using ReactiveUI;
 
 namespace Pathfinding.ConsoleApp.Model
 {
-    internal sealed class GraphInfoModel : ReactiveObject
+    internal sealed class GraphInfoModel : ReactiveObject, IGraphLayersInfo
     {
-        private int obstacles;
-        private string name;
-
         public int Id { get; set; }
 
+        private string name;
         public string Name
         {
             get => name;
             set => this.RaiseAndSetIfChanged(ref name, value);
         }
 
-        public string Neighborhood { get; set; }
+        private Neighborhoods neighorhood;
+        public Neighborhoods Neighborhood
+        {
+            get => neighorhood;
+            set => this.RaiseAndSetIfChanged(ref neighorhood, value);
+        }
 
-        public string SmoothLevel { get; set; }
+        private SmoothLevels smoothLevel;
+        public SmoothLevels SmoothLevel
+        {
+            get => smoothLevel;
+            set => this.RaiseAndSetIfChanged(ref smoothLevel, value);
+        }
 
-        public int Width { get; set; }
+        private int width;
+        public int Width
+        {
+            get => width;
+            set => this.RaiseAndSetIfChanged(ref width, value);
+        }
 
-        public int Length { get; set; }
+        private int length;
+        public int Length
+        {
+            get => length;
+            set => this.RaiseAndSetIfChanged(ref length, value);
+        }
 
-        public int Obstacles
+        private int obstacles;
+        public int ObstaclesCount
         {
             get => obstacles;
             set => this.RaiseAndSetIfChanged(ref obstacles, value);
+        }
+
+        private GraphStatuses status;
+        public GraphStatuses Status
+        {
+            get => status;
+            set => this.RaiseAndSetIfChanged(ref status, value);
+        }
+
+        public object[] GetProperties()
+        {
+            return new object[] { Id, Name, Width, Length,
+                Neighborhood, SmoothLevel, ObstaclesCount, Status };
         }
     }
 }

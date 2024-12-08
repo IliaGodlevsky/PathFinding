@@ -1,12 +1,12 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Business.Extensions;
+﻿using Pathfinding.Infrastructure.Business.Extensions;
+using Pathfinding.Service.Interface;
 using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public sealed class LeeAlgorithm : BreadthFirstAlgorithm<Queue<IVertex>>
+    public sealed class LeeAlgorithm : BreadthFirstAlgorithm<Queue<IPathfindingVertex>>
     {
-        public LeeAlgorithm(IEnumerable<IVertex> pathfindingRange)
+        public LeeAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
             : base(pathfindingRange)
         {
 
@@ -23,7 +23,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             CurrentVertex = storage.DequeueOrThrowDeadEndVertexException();
         }
 
-        protected override void RelaxVertex(IVertex vertex)
+        protected override void RelaxVertex(IPathfindingVertex vertex)
         {
             storage.Enqueue(vertex);
             base.RelaxVertex(vertex);

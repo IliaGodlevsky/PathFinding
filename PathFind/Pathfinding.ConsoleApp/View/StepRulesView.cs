@@ -1,11 +1,14 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using NStack;
+using Pathfinding.ConsoleApp.Extensions;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
-using Pathfinding.ConsoleApp.ViewModel;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
+using Pathfinding.Domain.Core;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
+using System;
 using System.Data;
 using System.Linq;
 using System.Reactive.Disposables;
@@ -18,53 +21,50 @@ namespace Pathfinding.ConsoleApp.View
     {
         private readonly CompositeDisposable disposables = new();
 
-        private readonly StepRulesViewModel stepRulesViewModel;
-        private readonly ustring[] radioLabels;
+        private readonly IRequireStepRuleViewModel viewModel;
 
-        public StepRulesView(StepRulesViewModel stepRulesViewModel,
-            [KeyFilter(KeyFilters.Views)] IMessenger messenger)
+        public StepRulesView(
+            [KeyFilter(KeyFilters.Views)] IMessenger messenger,
+            IRequireStepRuleViewModel viewModel)
         {
             Initialize();
-            this.stepRulesViewModel = stepRulesViewModel;
-            stepRules.RadioLabels = stepRulesViewModel.StepRules
-                .Keys.Select(x => ustring.Make(x))
-                .ToArray();
-            radioLabels = stepRules.RadioLabels;
-            messenger.Register<StepRuleViewModelChangedMessage>(this, OnViewModelChanged);
+            var rules = Enum.GetValues(typeof(StepRules))
+                .Cast<StepRules>()
+                .ToDictionary(x => x.ToStringRepresentation());
+            var labels = rules.Select(x=> ustring.Make(x.Key)).ToArray();
+            var values = labels.Select(x => rules[x.ToString()]).ToList();
+            stepRules.RadioLabels = labels;
+            stepRules.Events().SelectedItemChanged
+               .Where(x => x.SelectedItem > -1)
+               .Select(x => values[x.SelectedItem])
+               .BindTo(viewModel, x => x.StepRule)
+               .DisposeWith(disposables);
+            stepRules.SelectedItem = 0;
             messenger.Register<OpenStepRuleViewMessage>(this, OnOpen);
             messenger.Register<CloseStepRulesViewMessage>(this, OnStepRulesViewClose);
             messenger.Register<CloseAlgorithmCreationViewMessage>(this, OnRunCreationViewClosed);
-        }
-
-        private void OnViewModelChanged(object recipient, StepRuleViewModelChangedMessage msg)
-        {
-            var rules = stepRulesViewModel.StepRules;
-            disposables.Clear();
-            stepRules.Events()
-               .SelectedItemChanged
-               .Where(x => x.SelectedItem > -1)
-               .Select(x => x.SelectedItem)
-               .Select(x => (Name: radioLabels[x].ToString(),
-                        Rule: rules[radioLabels[x].ToString()]))
-               .BindTo(msg.ViewModel, x => x.StepRule)
-               .DisposeWith(disposables);
-            stepRules.SelectedItem = 0;
+            this.viewModel = viewModel;
         }
 
         private void OnOpen(object recipient, OpenStepRuleViewMessage msg)
         {
+            stepRules.SelectedItem = 0;
             Visible = true;
         }
 
         private void OnStepRulesViewClose(object recipient, CloseStepRulesViewMessage msg)
         {
-            disposables.Clear();
-            Visible = false;
+            Close();
         }
 
         private void OnRunCreationViewClosed(object recipient, CloseAlgorithmCreationViewMessage msg)
         {
-            disposables.Clear();
+            Close();
+        }
+        
+        private void Close()
+        {
+            viewModel.StepRule = default;
             Visible = false;
         }
     }

@@ -6,9 +6,9 @@ namespace Pathfinding.ConsoleApp.View
     {
         private void Initialize()
         {
-            X = Pos.Percent(25);
+            X = Pos.Percent(50.01f);
             Y = 0;
-            Width = Dim.Percent(25);
+            Width = Dim.Percent(16.67f);
             Text = "Save";
         }
     }

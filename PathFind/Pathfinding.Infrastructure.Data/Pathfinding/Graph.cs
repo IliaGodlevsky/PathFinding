@@ -1,5 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Domain.Interface.Comparers;
+using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
 using System;
@@ -12,7 +12,7 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
     public class Graph<TVertex> : IGraph<TVertex>
         where TVertex : IVertex
     {
-        public static readonly Graph<TVertex> Empty = new Graph<TVertex>();
+        public static readonly Graph<TVertex> Empty = new();
 
         private readonly IReadOnlyDictionary<Coordinate, TVertex> vertices;
 
@@ -29,7 +29,7 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
                 .ToArray();
             Count = DimensionsSizes.AggregateOrDefault((x, y) => x * y);
             this.vertices = vertices.Take(Count)
-                .ToDictionary(vertex => vertex.Position, CoordinateEqualityComparer.Interface)
+                .ToDictionary(vertex => vertex.Position)
                 .AsReadOnly();
         }
 
@@ -61,6 +61,20 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
             }
 
             throw new KeyNotFoundException();
+        }
+
+        public void Overlay(IGraph<IVertex> graph)
+        {
+            foreach (var vertex in vertices.Values)
+            {
+                var vert = graph.Get(vertex.Position);
+                vert.IsObstacle = vertex.IsObstacle;
+                vert.Cost = vertex.Cost.DeepClone();
+                vert.Neighbors = vertex.Neighbors
+                    .GetCoordinates()
+                    .Select(graph.Get)
+                    .ToArray();
+            }
         }
 
         public IEnumerator<TVertex> GetEnumerator()

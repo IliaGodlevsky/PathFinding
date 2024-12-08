@@ -43,7 +43,6 @@
     <Reference Include="System.Management" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Windows" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,54 +57,74 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>AppSettings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Injection\MetadataKeys.cs" />
-    <Compile Include="Messages\View\HeuristicsViewModelChangedMessage.cs" />
+    <Compile Include="Extensions\AlgorithmExtensions.cs" />
+    <Compile Include="Extensions\GraphStatusesExtensions.cs" />
+    <Compile Include="Extensions\HeuristicsExtensions.cs" />
+    <Compile Include="Extensions\MessengerExtensions.cs" />
+    <Compile Include="Extensions\NeighborhoodsExtensions.cs" />
+    <Compile Include="Extensions\RunStatusesExtensions.cs" />
+    <Compile Include="Extensions\SmoothLevelsExtensions.cs" />
+    <Compile Include="Extensions\StepRulesExtensions.cs" />
+    <Compile Include="Messages\IAsyncMessage.cs" />
+    <Compile Include="Messages\Tokens.cs" />
+    <Compile Include="Messages\ViewModel\GraphActivatedMessage.cs" />
+    <Compile Include="Messages\ViewModel\GraphStateChangedMessage.cs" />
+    <Compile Include="Messages\ViewModel\AsyncGraphUpdatedMessage.cs" />
+    <Compile Include="Messages\ViewModel\GraphUpdatedMessage.cs" />
+    <Compile Include="Messages\ViewModel\RunsUpdatedMessage.cs" />
+    <Compile Include="Messages\View\CloseAlgorithmsPopulateViewMessage.cs" />
     <Compile Include="Messages\View\OpenAlgorithmRunViewMessage.cs" />
-    <Compile Include="Messages\ViewModel\RunActivatedMessage.cs" />
     <Compile Include="Messages\ViewModel\RunCreatedMessaged.cs" />
-    <Compile Include="Messages\ViewModel\RunsDeletedMessage.cs" />
+    <Compile Include="Messages\ViewModel\AsyncRunsDeletedMessage.cs" />
     <Compile Include="Messages\ViewModel\RunSelectedMessage.cs" />
     <Compile Include="Messages\View\CloseAlgorithmRunFieldViewMessage.cs" />
-    <Compile Include="Messages\View\SpreadViewModelChangedMessage.cs" />
+    <Compile Include="Messages\View\OpenAlgorithmsPopulateViewMessage.cs" />
+    <Compile Include="Messages\View\OpenGraphUpdateViewMessage.cs" />
     <Compile Include="Model\RunVertexModel.cs" />
-    <Compile Include="ViewModel\AStarLeeAlgorithmViewModel.cs" />
-    <Compile Include="ViewModel\BidirectAStarAlgorithmViewModel.cs" />
-    <Compile Include="ViewModel\BidirectDijkstraAlgorithmViewModel.cs" />
-    <Compile Include="ViewModel\BidirectLeeAlgorithmViewModel.cs" />
-    <Compile Include="ViewModel\CostGreedyAlgorithmViewModel.cs" />
-    <Compile Include="ViewModel\DepthFirstAlgorithmViewModel.cs" />
-    <Compile Include="ViewModel\DepthRandomAlgorithmViewModel.cs" />
-    <Compile Include="ViewModel\SnakeAlgorithmViewModel.cs" />
-    <Compile Include="ViewModel\DistanceFirstAlgorithmViewModel.cs" />
-    <Compile Include="ViewModel\AStarGreedyAlgorithmViewModel.cs" />
-    <Compile Include="ViewModel\IDAStarAlgorithmViewModel.cs" />
-    <Compile Include="ViewModel\LeeAlgorithmViewModel.cs" />
-    <Compile Include="ViewModel\IRequireHeuristicsViewModel.cs" />
-    <Compile Include="ViewModel\AStarAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\GraphCopyViewModel.cs" />
+    <Compile Include="ViewModel\GraphUpdateViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IAlgorithmUpdateViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IGraphExportViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IGraphImportViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IGraphFieldViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IGraphDeleteViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IGraphCopyViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IGraphAssembleViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IDeleteRunViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IAlgorithmRunFieldViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IRequireAlgorithmNameViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IRequireSmoothLevelViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IRequireGraphNameViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IRequireGraphParametresViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IGraphTableViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IRequireNeighborhoodNameViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IRunsTableViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IPathfindingRangeViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IPathfindingProcessViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IRequireHeuristicsViewModel.cs" />
     <Compile Include="ViewModel\DeleteRunButtonViewModel.cs" />
-    <Compile Include="ViewModel\HeuristicsViewModel.cs" />
-    <Compile Include="ViewModel\IRequireSpreadViewModel.cs" />
-    <Compile Include="ViewModel\RandomAlgorithmViewModel.cs" />
+    <Compile Include="ViewModel\AlgorithmUpdateViewModel.cs" />
     <Compile Include="ViewModel\RunsTableViewModel.cs" />
-    <Compile Include="ViewModel\SpreadViewModel.cs" />
-    <Compile Include="View\AStarLeeAlgorithmView.cs" />
-    <Compile Include="View\BidirectAStarAlgorithmView.cs" />
-    <Compile Include="View\BidirectDijkstraAlgorithmView.cs" />
+    <Compile Include="View\AlgorithmRunProgressView.cs" />
     <Compile Include="View\CloseAlgorithmCreationButton.cs" />
+    <Compile Include="View\ComponentsPartials\AlgorithmRunProgressView.cs" />
+    <Compile Include="View\ComponentsPartials\GraphUpdateView.cs" />
+    <Compile Include="View\ComponentsPartials\GraphNameUpdateView.cs" />
     <Compile Include="View\ComponentsPartials\HeuristicsView.cs" />
-    <Compile Include="View\CostGreedyAlgorithmView.cs" />
-    <Compile Include="View\DepthRandomAlgorithmView.cs" />
-    <Compile Include="View\DepthFirstAlgorithmView.cs" />
-    <Compile Include="View\BidirectLeeAlgorithmView.cs" />
-    <Compile Include="View\SnakeAlgorithmView.cs" />
-    <Compile Include="View\DistanceFirstAlgorithmView.cs" />
-    <Compile Include="View\AStarGreedyAlgorithmView.cs" />
-    <Compile Include="View\RandomAlgorithmView.cs" />
-    <Compile Include="View\ComponentsPartials\SpreadView.cs" />
+    <Compile Include="View\ComponentsPartials\NeighborhoodFactoryUpdateView.cs" />
+    <Compile Include="View\ComponentsPartials\PopulateAlgorithmsView.cs" />
+    <Compile Include="View\ComponentsPartials\SmoothLevelUpdateView.cs" />
+    <Compile Include="View\GraphCopyView.cs" />
+    <Compile Include="View\GraphNameUpdateView.cs" />
+    <Compile Include="View\GraphUpdateView.cs" />
+    <Compile Include="View\NeighborhoodFactoryUpdateView.cs" />
+    <Compile Include="View\AlgorithmUpdateView.cs" />
+    <Compile Include="View\PopulateAlgorithmsView.cs" />
+    <Compile Include="View\SmoothLevelUpdateView.cs" />
     <Compile Include="View\ConsoleLog.cs" />
     <Compile Include="Injection\App.cs" />
     <Compile Include="Injection\KeyFilters.cs" />
-    <Compile Include="Messages\ViewModel\GraphActivatedMessage.cs" />
+    <Compile Include="Messages\ViewModel\AsyncGraphActivatedMessage.cs" />
     <Compile Include="Messages\ViewModel\GraphCreatedMessage.cs" />
     <Compile Include="Messages\ViewModel\GraphsDeletedMessage.cs" />
     <Compile Include="Messages\ViewModel\GraphSelectedMessage.cs" />
@@ -114,33 +133,24 @@
     <Compile Include="Messages\ViewModel\QueryPathfindingRangeMessage.cs" />
     <Compile Include="Messages\View\CloseAlgorithmCreationViewMessage.cs" />
     <Compile Include="Messages\View\CloseHeuristicsViewMessage.cs" />
-    <Compile Include="Messages\View\CloseSpreadViewMessage.cs" />
     <Compile Include="Messages\View\CloseStepRulesViewMessage.cs" />
     <Compile Include="Messages\View\OpenAlgorithmCreationViewMessage.cs" />
     <Compile Include="Messages\View\OpenGraphAssembleViewMessage.cs" />
     <Compile Include="Messages\View\OpenHeuristicsViewMessage.cs" />
-    <Compile Include="Messages\View\OpenSpreadViewMessage.cs" />
     <Compile Include="Messages\View\OpenStepRuleViewMessage.cs" />
-    <Compile Include="Messages\View\PathfindingViewModelChangedMessage.cs" />
-    <Compile Include="Messages\View\StepRuleViewModelChangedMessage.cs" />
     <Compile Include="Model\GraphInfoModel.cs" />
     <Compile Include="Model\RunInfoModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
-    <Compile Include="ViewModel\GraphDeletionViewModel.cs" />
+    <Compile Include="ViewModel\GraphDeleteViewModel.cs" />
     <Compile Include="ViewModel\GraphImportViewModel.cs" />
     <Compile Include="ViewModel\GraphExportViewModel.cs" />
-    <Compile Include="Model\Factories\GraphVertexModelFactory.cs" />
-    <Compile Include="ViewModel\DijkstraAlgorithmViewModel.cs" />
     <Compile Include="ViewModel\PathfindingProcessViewModel.cs" />
     <Compile Include="ViewModel\GraphAssembleViewModel.cs" />
-    <Compile Include="ViewModel\NeighborhoodFactoriesViewModel.cs" />
-    <Compile Include="ViewModel\SmoothLevelViewModel.cs" />
     <Compile Include="ViewModel\GraphFieldViewModel.cs" />
-    <Compile Include="ViewModel\IRequireStepRulesViewModel.cs" />
+    <Compile Include="ViewModel\Interface\IRequireStepRulesViewModel.cs" />
     <Compile Include="ViewModel\NewRunButtonViewModel.cs" />
     <Compile Include="ViewModel\PathfindingRangeViewModel.cs" />
     <Compile Include="ViewModel\AlgorithmRunFieldViewModel.cs" />
-    <Compile Include="ViewModel\StepRulesViewModel.cs" />
     <Compile Include="View\ComponentsPartials\AlgorithmsView.cs" />
     <Compile Include="View\ComponentsPartials\PathfindingProcessButtonsFrame.cs" />
     <Compile Include="View\ComponentsPartials\DeleteRunButton.cs" />
@@ -150,14 +160,9 @@
     <Compile Include="View\PathfindingProcessView.cs" />
     <Compile Include="View\HeuristicsView.cs" />
     <Compile Include="View\AlgorithmsView.cs" />
-    <Compile Include="View\AStarAlgorithmView.cs" />
     <Compile Include="View\AlgorithmParametresView.cs" />
-    <Compile Include="View\IDAStarAlgorithmView.cs" />
-    <Compile Include="View\LeeAlgorithmView.cs" />
     <Compile Include="View\PathfindingProcessButtonsFrame.cs" />
     <Compile Include="View\AlgorithmCreationView.cs" />
-    <Compile Include="View\DijkstraAlgorithmView.cs" />
-    <Compile Include="View\SpreadView.cs" />
     <Compile Include="View\StepRulesView.cs" />
     <Compile Include="View\GraphTableButtonsFrame.cs" />
     <Compile Include="View\DeleteGraphButton.cs" />
@@ -202,6 +207,7 @@
     <Compile Include="View\ComponentsPartials\GraphsTableView.cs" />
     <Compile Include="View\MainView.cs" />
     <Compile Include="View\RightPanelView.cs" />
+    <Compile Include="View\UpdateGraphButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -210,7 +216,6 @@
       <LastGenOutput>AppSettings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Pathfinding.Domain.Core\Pathfinding.Domain.Core.csproj">
       <Project>{E0C71A1A-7DB7-426F-80DC-887F87F0AA13}</Project>
@@ -244,9 +249,6 @@
   <ItemGroup>
     <PackageReference Include="Autofac">
       <Version>8.0.0</Version>
-    </PackageReference>
-    <PackageReference Include="AutoMapper">
-      <Version>10.1.1</Version>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm">
       <Version>8.2.2</Version>

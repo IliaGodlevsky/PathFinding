@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 
 namespace Pathfinding.Service.Interface.Extensions
@@ -23,10 +22,16 @@ namespace Pathfinding.Service.Interface.Extensions
             return list.AsReadOnly();
         }
 
-        public static string ReadNullableString(this BinaryReader reader)
+        public static double? ReadNullableDouble(this BinaryReader reader)
+        {
+            bool hasValue = reader.ReadBoolean();
+            return hasValue ? reader.ReadDouble() : null;
+        }
+
+        public static int? ReadNullableInt32(this BinaryReader reader)
         {
             bool isNull = reader.ReadBoolean();
-            return isNull ? string.Empty : reader.ReadString();
+            return isNull ? null : reader.ReadInt32();
         }
 
         public static IReadOnlyList<int> ReadArray(this BinaryReader reader)

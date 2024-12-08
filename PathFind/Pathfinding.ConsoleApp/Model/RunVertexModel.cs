@@ -1,17 +1,15 @@
-﻿using Pathfinding.Shared.Primitives;
+﻿using Pathfinding.Domain.Interface;
+using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Service.Interface;
+using Pathfinding.Shared.Primitives;
 using ReactiveUI;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.ConsoleApp.Model
 {
-    internal sealed class RunVertexModel : ReactiveObject
+    public sealed class RunVertexModel : ReactiveObject, IVertex, IPathfindingVertex
     {
-        private int cost;
-        public int Cost
-        {
-            get => cost;
-            set => this.RaiseAndSetIfChanged(ref cost, value);
-        }
-
         private bool isObstacle;
         public bool IsObstacle
         {
@@ -25,54 +23,21 @@ namespace Pathfinding.ConsoleApp.Model
         public bool IsVisited
         {
             get => isVisited;
-            set
-            {
-                if (!IsRange() && !IsPathVertex())
-                {
-                    if (IsEnqueued)
-                    {
-                        IsEnqueued = false;
-                    }
-                    this.RaiseAndSetIfChanged(ref isVisited, value);
-                }
-            }
+            set => this.RaiseAndSetIfChanged(ref isVisited, value);
         }
 
         private bool isEnqueued;
         public bool IsEnqueued
         {
             get => isEnqueued;
-            set
-            {
-                if (!IsRange() && !IsPathVertex())
-                {
-                    if (IsVisited)
-                    {
-                        IsVisited = false;
-                    }
-                    this.RaiseAndSetIfChanged(ref isEnqueued, value);
-                }
-            }
+            set => this.RaiseAndSetIfChanged(ref isEnqueued, value);
         }
 
         private bool isPath;
         public bool IsPath
         {
             get => isPath;
-            set
-            {
-                if (!IsRange())
-                {
-                    if (!isPath)
-                    {
-                        this.RaiseAndSetIfChanged(ref isPath, value);
-                    }
-                    else
-                    {
-                        IsCrossedPath = true;
-                    }
-                }
-            }
+            set => this.RaiseAndSetIfChanged(ref isPath, value);
         }
 
         private bool isCrossedPath;
@@ -103,14 +68,27 @@ namespace Pathfinding.ConsoleApp.Model
             set => this.RaiseAndSetIfChanged(ref isTransit, value);
         }
 
-        private bool IsRange()
+        private IVertexCost cost;
+        public IVertexCost Cost
         {
-            return IsSource || IsTarget || IsTransit;
+            get => cost;
+            set => this.RaiseAndSetIfChanged(ref cost, value);
         }
 
-        private bool IsPathVertex()
+        public HashSet<RunVertexModel> Neighbors { get; private set; } = new();
+
+        IReadOnlyCollection<IVertex> IVertex.Neighbors
         {
-            return IsPath || IsCrossedPath;
+            get => Neighbors;
+            set => Neighbors = value.Cast<RunVertexModel>().ToHashSet();
         }
+
+        IReadOnlyCollection<IPathfindingVertex> IPathfindingVertex.Neighbors => Neighbors;
+
+        public bool Equals(IVertex other) => other.IsEqual(this);
+
+        public override bool Equals(object obj) => obj is IVertex vertex && Equals(vertex);
+
+        public override int GetHashCode() => Position.GetHashCode();
     }
 }

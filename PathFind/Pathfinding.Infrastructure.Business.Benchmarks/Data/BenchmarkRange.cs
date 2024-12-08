@@ -2,7 +2,6 @@
 using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
-using Pathfinding.Infrastructure.Data.Pathfinding.Factories;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
 using Pathfinding.Shared.Random;
@@ -24,10 +23,8 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks.Data
 
         static BenchmarkRange()
         {
-            var assemble = new GraphAssemble<BenchmarkVertex>(
-                new BenchmarkVertexFactory(),
-                new GraphFactory<BenchmarkVertex>());
-            var neighborhoodLayer = new NeighborhoodLayer();
+            var assemble = new GraphAssemble<BenchmarkVertex>();
+            var neighborhoodLayer = new VonNeumannNeighborhoodLayer();
             var random = new CongruentialRandom();
             var costLayer = new VertexCostLayer(
                 new InclusiveValueRange<int>(9, 1),

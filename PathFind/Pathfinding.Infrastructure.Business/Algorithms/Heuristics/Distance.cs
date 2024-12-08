@@ -1,5 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Service.Interface;
+﻿using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Extensions;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -9,7 +8,8 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.Heuristics
     public abstract class Distance : IHeuristic
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual double Calculate(IVertex first, IVertex second)
+        public virtual double Calculate(IPathfindingVertex first,
+            IPathfindingVertex second)
         {
             return first.Position.CoordinatesValues
                 .Zip(second.Position.CoordinatesValues, Zip)

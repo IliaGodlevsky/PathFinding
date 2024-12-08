@@ -1,4 +1,5 @@
-﻿using Pathfinding.Service.Interface.Extensions;
+﻿using Pathfinding.Domain.Core;
+using Pathfinding.Service.Interface.Extensions;
 using System.Collections.Generic;
 using System.IO;
 
@@ -8,9 +9,11 @@ namespace Pathfinding.Service.Interface.Models.Serialization
     {
         public string Name { get; set; }
 
-        public string SmoothLevel { get; set; }
+        public SmoothLevels SmoothLevel { get; set; }
 
-        public string Neighborhood { get; set; }
+        public Neighborhoods Neighborhood { get; set; }
+
+        public GraphStatuses Status { get; set; }
 
         public IReadOnlyList<int> DimensionSizes { get; set; }
 
@@ -19,8 +22,9 @@ namespace Pathfinding.Service.Interface.Models.Serialization
         public void Deserialize(BinaryReader reader)
         {
             Name = reader.ReadString();
-            SmoothLevel = reader.ReadString();
-            Neighborhood = reader.ReadString();
+            SmoothLevel = (SmoothLevels)reader.ReadInt32();
+            Neighborhood = (Neighborhoods)reader.ReadInt32();
+            Status = (GraphStatuses)reader.ReadInt32();
             DimensionSizes = reader.ReadArray();
             Vertices = reader.ReadSerializableArray<VertexSerializationModel>();
         }
@@ -28,8 +32,9 @@ namespace Pathfinding.Service.Interface.Models.Serialization
         public void Serialize(BinaryWriter writer)
         {
             writer.Write(Name);
-            writer.Write(SmoothLevel);
-            writer.Write(Neighborhood);
+            writer.Write((int)SmoothLevel);
+            writer.Write((int)Neighborhood);
+            writer.Write((int)Status);
             writer.Write(DimensionSizes);
             writer.Write(Vertices);
         }

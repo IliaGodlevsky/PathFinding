@@ -1,5 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
+﻿using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface;
@@ -10,30 +9,30 @@ using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
 {
-    using Traces = IReadOnlyDictionary<Coordinate, IVertex>;
+    using Traces = IReadOnlyDictionary<Coordinate, IPathfindingVertex>;
 
     public sealed class GraphPath : IGraphPath
     {
         private readonly Traces traces;
-        private readonly IVertex target;
+        private readonly IPathfindingVertex target;
         private readonly IStepRule stepRule;
-        private readonly Lazy<IReadOnlyList<IVertex>> path;
+        private readonly Lazy<IReadOnlyList<IPathfindingVertex>> path;
         private readonly Lazy<double> cost;
         private readonly Lazy<int> count;
 
-        private IReadOnlyList<IVertex> Path => path.Value;
+        private IReadOnlyList<IPathfindingVertex> Path => path.Value;
 
         public double Cost => cost.Value;
 
         public int Count => count.Value;
 
-        public GraphPath(Traces traces, IVertex target)
+        public GraphPath(Traces traces, IPathfindingVertex target)
             : this(traces, target, new DefaultStepRule())
         {
 
         }
 
-        public GraphPath(Traces traces, IVertex target, IStepRule stepRule)
+        public GraphPath(Traces traces, IPathfindingVertex target, IStepRule stepRule)
         {
             this.traces = traces;
             this.target = target;
@@ -43,9 +42,9 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
             count = new(GetCount);
         }
 
-        private IReadOnlyList<IVertex> GetPath()
+        private IReadOnlyList<IPathfindingVertex> GetPath()
         {
-            var vertices = new List<IVertex>();
+            var vertices = new List<IPathfindingVertex>();
             var vertex = target;
             vertices.Add(vertex);
             var parent = traces.GetOrNullVertex(vertex.Position);

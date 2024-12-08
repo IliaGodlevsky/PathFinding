@@ -12,32 +12,24 @@ namespace Pathfinding.Infrastructure.Data.Sqlite
         private readonly SqliteConnection connection;
         private SqliteTransaction transaction;
 
-        public IGraphParametresRepository GraphRepository 
+        public IGraphParametresRepository GraphRepository
             => new SqliteGraphRepository(connection, transaction);
 
-        public ISubAlgorithmRepository SubAlgorithmRepository 
-            => new SqliteSubAlgorithmsRepository(connection, transaction);
-
-        public IVerticesRepository VerticesRepository 
+        public IVerticesRepository VerticesRepository
             => new SqliteVerticesRepository(connection, transaction);
 
-        public IRangeRepository RangeRepository 
+        public IRangeRepository RangeRepository
             => new SqliteRangeRepository(connection, transaction);
 
-        public IStatisticsRepository StatisticsRepository 
+        public IStatisticsRepository StatisticsRepository
             => new SqliteStatisticsRepository(connection, transaction);
-
-        public IGraphStateRepository GraphStateRepository 
-            => new SqliteGraphStateRepository(connection, transaction);
-
-        public IAlgorithmRunRepository RunRepository
-            => new SqliteAlgorithmRunRepository(connection, transaction);
 
         public SqliteUnitOfWork(string connectionString)
         {
             connection = new SqliteConnection(connectionString);
             connection.Open();
             transaction = connection.BeginTransaction();
+            new SqliteVerticesRepository(connection, transaction);
         }
 
         public void BeginTransaction()

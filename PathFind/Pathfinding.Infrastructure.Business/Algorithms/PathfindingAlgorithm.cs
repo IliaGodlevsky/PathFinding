@@ -1,6 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Domain.Interface.Comparers;
-using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
+﻿using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Extensions;
@@ -13,18 +11,18 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
     public abstract class PathfindingAlgorithm<TStorage> : PathfindingProcess
         where TStorage : new()
     {
-        protected readonly HashSet<IVertex> visited = new();
-        protected readonly Dictionary<Coordinate, IVertex> traces = new();
+        protected readonly HashSet<IPathfindingVertex> visited = new();
+        protected readonly Dictionary<Coordinate, IPathfindingVertex> traces = new();
         protected readonly TStorage storage = new();
 
-        protected (IVertex Source, IVertex Target) CurrentRange { get; set; }
+        protected (IPathfindingVertex Source, IPathfindingVertex Target) CurrentRange { get; set; }
 
-        protected IVertex CurrentVertex { get; set; } = NullVertex.Interface;
+        protected IPathfindingVertex CurrentVertex { get; set; } = NullPathfindingVertex.Interface;
 
-        protected PathfindingAlgorithm(IEnumerable<IVertex> pathfindingRange)
+        protected PathfindingAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
             : base(pathfindingRange)
         {
-            CurrentRange = (NullVertex.Interface, NullVertex.Interface);
+            CurrentRange = (NullPathfindingVertex.Interface, NullPathfindingVertex.Interface);
         }
 
         protected override bool IsDestination()
@@ -32,7 +30,8 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             return CurrentVertex.Equals(CurrentRange.Target);
         }
 
-        protected override void PrepareForSubPathfinding((IVertex Source, IVertex Target) range)
+        protected override void PrepareForSubPathfinding(
+            (IPathfindingVertex Source, IPathfindingVertex Target) range)
         {
             CurrentRange = range;
             CurrentVertex = CurrentRange.Source;
@@ -49,9 +48,10 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             traces.Clear();
         }
 
-        protected virtual IReadOnlyCollection<IVertex> GetUnvisitedNeighbours(IVertex vertex)
+        protected virtual IReadOnlyCollection<IPathfindingVertex> GetUnvisitedNeighbours(
+            IPathfindingVertex vertex)
         {
-            return vertex.Neighbours
+            return vertex.Neighbors
                 .Where(v => !v.IsObstacle && !visited.Contains(v))
                 .ToArray();
         }

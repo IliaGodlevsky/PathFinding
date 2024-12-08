@@ -1,13 +1,13 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Business.Extensions;
+﻿using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
+using Pathfinding.Service.Interface;
 using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public sealed class BidirectLeeAlgorithm : BidirectBreadthFirstAlgorithm<Queue<IVertex>>
+    public sealed class BidirectLeeAlgorithm : BidirectBreadthFirstAlgorithm<Queue<IPathfindingVertex>>
     {
-        public BidirectLeeAlgorithm(IEnumerable<IVertex> pathfindingRange)
+        public BidirectLeeAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
             : base(pathfindingRange)
         {
 
@@ -20,10 +20,10 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             forwardStorage.Clear();
         }
 
-        protected override void RelaxForwardVertex(IVertex vertex)
+        protected override void RelaxForwardVertex(IPathfindingVertex vertex)
         {
             forwardStorage.Enqueue(vertex);
-            if (Intersection == NullVertex.Instance
+            if (Intersection == NullPathfindingVertex.Instance
                 && backwardVisited.Contains(vertex))
             {
                 Intersection = vertex;
@@ -31,10 +31,10 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             base.RelaxForwardVertex(vertex);
         }
 
-        protected override void RelaxBackwardVertex(IVertex vertex)
+        protected override void RelaxBackwardVertex(IPathfindingVertex vertex)
         {
             backwardStorage.Enqueue(vertex);
-            if (Intersection == NullVertex.Instance
+            if (Intersection == NullPathfindingVertex.Instance
                 && forwardVisited.Contains(vertex))
             {
                 Intersection = vertex;

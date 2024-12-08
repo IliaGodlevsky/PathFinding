@@ -29,7 +29,7 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             return await Task.FromResult(collection.DeleteMany(x => x.GraphId == graphId) > 0);
         }
 
-        public async Task<Vertex> ReadAsync(int vertexId, CancellationToken token = default)
+        public async Task<Vertex> ReadAsync(long vertexId, CancellationToken token = default)
         {
             return await Task.FromResult(collection.FindById(vertexId));
         }

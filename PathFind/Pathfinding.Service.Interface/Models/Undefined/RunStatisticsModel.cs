@@ -1,27 +1,30 @@
-﻿using System;
+﻿using Pathfinding.Domain.Core;
+using System;
 
 namespace Pathfinding.Service.Interface.Models.Undefined
 {
-    public record RunStatisticsModel
+    public record RunStatisticsModel : IAlgorithmBuildInfo
     {
-        public int AlgorithmRunId { get; set; }
+        public int Id { get; set; }
 
-        public string AlgorithmId { get; set; } = null;
+        public int GraphId { get; set; }
 
-        public string Heuristics { get; set; } = null;
+        public Domain.Core.Algorithms Algorithm { get; set; }
 
-        public string StepRule { get; set; } = null;
+        public HeuristicFunctions? Heuristics { get; set; } = null;
+
+        public double? Weight { get; set; } = null;
+
+        public StepRules? StepRule { get; set; } = null;
 
         public int Visited { get; set; }
 
-        public string ResultStatus { get; set; } = string.Empty;
+        public RunStatuses ResultStatus { get; set; }
 
         public TimeSpan Elapsed { get; set; }
 
         public int Steps { get; set; }
 
         public double Cost { get; set; }
-
-        public string Spread { get; set; } = null;
     }
 }

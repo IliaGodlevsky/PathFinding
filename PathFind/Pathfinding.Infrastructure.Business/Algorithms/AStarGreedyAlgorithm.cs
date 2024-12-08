@@ -1,5 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
+﻿using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Service.Interface;
@@ -13,14 +12,14 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
         private readonly IStepRule stepRule;
         private readonly IHeuristic heuristic;
 
-        public AStarGreedyAlgorithm(IEnumerable<IVertex> pathfindingRange,
+        public AStarGreedyAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange,
             IHeuristic heuristic, IStepRule stepRule) : base(pathfindingRange)
         {
             this.stepRule = stepRule;
             this.heuristic = heuristic;
         }
 
-        public AStarGreedyAlgorithm(IEnumerable<IVertex> pathfindingRange)
+        public AStarGreedyAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
             : this(pathfindingRange, new ChebyshevDistance(), new DefaultStepRule())
         {
 
@@ -32,7 +31,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
                 CurrentRange.Target, stepRule);
         }
 
-        protected override double CalculateGreed(IVertex vertex)
+        protected override double CalculateGreed(IPathfindingVertex vertex)
         {
             double heuristicResult = heuristic.Calculate(vertex, CurrentRange.Target);
             double stepCost = stepRule.CalculateStepCost(vertex, CurrentVertex);

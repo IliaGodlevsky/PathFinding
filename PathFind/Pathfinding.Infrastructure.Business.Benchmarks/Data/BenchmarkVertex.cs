@@ -1,37 +1,41 @@
 ﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Primitives;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace Pathfinding.Infrastructure.Business.Benchmarks.Data
 {
-    internal sealed class BenchmarkVertex : IVertex
+    internal sealed class BenchmarkVertex : IVertex, IPathfindingVertex
     {
         public bool IsObstacle { get; set; }
 
         public IVertexCost Cost { get; set; }
 
-        public Coordinate Position { get; }
+        public Coordinate Position { get; set; }
 
-        public ICollection<IVertex> Neighbours { get; } = new HashSet<IVertex>();
+        public BenchmarkVertex[] Neighbors { get; private set; }
+            = Array.Empty<BenchmarkVertex>();
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public BenchmarkVertex(Coordinate coordinate)
+        IReadOnlyCollection<IPathfindingVertex> IPathfindingVertex.Neighbors => Neighbors;
+
+        IReadOnlyCollection<IVertex> IVertex.Neighbors
         {
-            Position = coordinate;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Equals(IVertex other)
-        {
-            return other.IsEqual(other);
+            get => Neighbors;
+            set => Neighbors = value.Cast<BenchmarkVertex>().ToArray();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override bool Equals(object obj)
         {
             return obj is BenchmarkVertex vert && Equals(vert);
+        }
+
+        public bool Equals(IVertex other)
+        {
+            throw new System.NotImplementedException();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

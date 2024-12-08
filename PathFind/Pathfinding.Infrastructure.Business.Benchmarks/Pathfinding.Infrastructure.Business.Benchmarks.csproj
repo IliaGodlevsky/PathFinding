@@ -59,7 +59,6 @@
   <ItemGroup>
     <Compile Include="Data\BenchmarkRange.cs" />
     <Compile Include="Data\BenchmarkVertex.cs" />
-    <Compile Include="Data\BenchmarkVertexFactory.cs" />
     <Compile Include="Data\Serializable.cs" />
     <Compile Include="HeuristicsBenchmarks.cs" />
     <Compile Include="SerializersBenchmarks.cs" />

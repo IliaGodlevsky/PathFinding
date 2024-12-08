@@ -1,4 +1,5 @@
-﻿using Pathfinding.Service.Interface.Extensions;
+﻿using Pathfinding.Domain.Core;
+using Pathfinding.Service.Interface.Extensions;
 using System;
 using System.IO;
 
@@ -6,13 +7,15 @@ namespace Pathfinding.Service.Interface.Models.Serialization
 {
     public class RunStatisticsSerializationModel : IBinarySerializable
     {
-        public int AlgorithmRunId { get; set; }
+        public Domain.Core.Algorithms Algorithm { get; set; }
 
-        public string Heuristics { get; set; } = null;
+        public HeuristicFunctions? Heuristics { get; set; } = null;
 
-        public string StepRule { get; set; } = null;
+        public double? Weight { get; set; }
 
-        public string ResultStatus { get; set; } = string.Empty;
+        public StepRules? StepRule { get; set; } = null;
+
+        public RunStatuses ResultStatus { get; set; }
 
         public TimeSpan Elapsed { get; set; }
 
@@ -20,33 +23,31 @@ namespace Pathfinding.Service.Interface.Models.Serialization
 
         public double Cost { get; set; }
 
-        public string Spread { get; set; } = null;
-
         public int Visited { get; set; }
 
         public void Deserialize(BinaryReader reader)
         {
-            AlgorithmRunId = reader.ReadInt32();
-            Heuristics = reader.ReadNullableString();
-            StepRule = reader.ReadNullableString();
-            ResultStatus = reader.ReadString();
+            Algorithm = (Domain.Core.Algorithms)reader.ReadInt32();
+            Heuristics = (HeuristicFunctions?)reader.ReadNullableInt32();
+            Weight = reader.ReadNullableDouble();
+            StepRule = (StepRules?)reader.ReadNullableInt32();
+            ResultStatus = (RunStatuses)reader.ReadInt32();
             Elapsed = TimeSpan.FromMilliseconds(reader.ReadDouble());
             Steps = reader.ReadInt32();
             Cost = reader.ReadDouble();
-            Spread = reader.ReadNullableString();
             Visited = reader.ReadInt32();
         }
 
         public void Serialize(BinaryWriter writer)
         {
-            writer.Write(AlgorithmRunId);
-            writer.WriteNullableString(Heuristics);
-            writer.WriteNullableString(StepRule);
-            writer.Write(ResultStatus);
+            writer.Write((int)Algorithm);
+            writer.WriteNullableInt32((int?)Heuristics);
+            writer.Write(Weight);
+            writer.WriteNullableInt32((int?)StepRule);
+            writer.Write((int)ResultStatus);
             writer.Write(Elapsed.TotalMilliseconds);
             writer.Write(Steps);
             writer.Write(Cost);
-            writer.WriteNullableString(Spread);
             writer.Write(Visited);
         }
     }

@@ -1,5 +1,4 @@
 ﻿using Pathfinding.Shared.Extensions;
-using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -18,13 +17,23 @@ namespace Pathfinding.Service.Interface.Extensions
             serializable.Serialize(writer);
         }
 
-        public static void WriteNullableString(this BinaryWriter writer, string value)
+        public static void WriteNullableInt32(this BinaryWriter writer, int? value)
         {
-            bool isNull = string.IsNullOrEmpty(value);
+            bool isNull = !value.HasValue;
             writer.Write(isNull);
             if (!isNull)
             {
-                writer.Write(value);
+                writer.Write(value.Value);
+            }
+        }
+
+        public static void Write(this BinaryWriter writer, double? value)
+        {
+            bool hasValue = value.HasValue;
+            writer.Write(hasValue);
+            if (hasValue)
+            {
+                writer.Write(value.Value);
             }
         }
 

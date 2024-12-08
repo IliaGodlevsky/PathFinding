@@ -1,4 +1,6 @@
-﻿namespace Pathfinding.ConsoleApp.Messages.ViewModel
+﻿using Pathfinding.ConsoleApp.Model;
+
+namespace Pathfinding.ConsoleApp.Messages.ViewModel
 {
-    internal sealed record class RunSelectedMessage(int[] SelectedRuns);
+    internal sealed record class RunSelectedMessage(RunInfoModel[] SelectedRuns);
 }

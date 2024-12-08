@@ -1,6 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Domain.Interface.Comparers;
-using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
+﻿using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Primitives;
@@ -9,19 +7,20 @@ using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public sealed class AStarLeeAlgorithm : BreadthFirstAlgorithm<SimplePriorityQueue<IVertex, double>>
+    public sealed class AStarLeeAlgorithm : BreadthFirstAlgorithm<SimplePriorityQueue<IPathfindingVertex, double>>
     {
         private readonly Dictionary<Coordinate, double> heuristics;
         private readonly IHeuristic heuristic;
 
-        public AStarLeeAlgorithm(IEnumerable<IVertex> pathfindingRange, IHeuristic function)
+        public AStarLeeAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange,
+            IHeuristic function)
             : base(pathfindingRange)
         {
             heuristic = function;
-            heuristics = new(CoordinateEqualityComparer.Interface);
+            heuristics = new();
         }
 
-        public AStarLeeAlgorithm(IEnumerable<IVertex> pathfindingRange)
+        public AStarLeeAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
             : this(pathfindingRange, new ManhattanDistance())
         {
 
@@ -39,14 +38,15 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             heuristics.Clear();
         }
 
-        protected override void PrepareForSubPathfinding((IVertex Source, IVertex Target) range)
+        protected override void PrepareForSubPathfinding(
+            (IPathfindingVertex Source, IPathfindingVertex Target) range)
         {
             base.PrepareForSubPathfinding(range);
             double value = CalculateHeuristic(CurrentRange.Source);
             heuristics[CurrentRange.Source.Position] = value;
         }
 
-        protected override void RelaxVertex(IVertex vertex)
+        protected override void RelaxVertex(IPathfindingVertex vertex)
         {
             if (!heuristics.TryGetValue(vertex.Position, out double cost))
             {
@@ -57,12 +57,12 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             base.RelaxVertex(vertex);
         }
 
-        private double CalculateHeuristic(IVertex vertex)
+        private double CalculateHeuristic(IPathfindingVertex vertex)
         {
             return heuristic.Calculate(vertex, CurrentRange.Target);
         }
 
-        protected override void RelaxNeighbours(IReadOnlyCollection<IVertex> neighbours)
+        protected override void RelaxNeighbours(IReadOnlyCollection<IPathfindingVertex> neighbours)
         {
             base.RelaxNeighbours(neighbours);
             storage.TryRemove(CurrentVertex);

@@ -1,40 +1,42 @@
-﻿using Pathfinding.ConsoleApp.ViewModel;
+﻿using Pathfinding.ConsoleApp.ViewModel.Interface;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
-using System.Collections.Generic;
+using System;
+using System.IO;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphImportView : Button
     {
-        private readonly GraphImportViewModel viewModel;
-
-        public GraphImportView(GraphImportViewModel viewModel)
+        public GraphImportView(IGraphImportViewModel viewModel)
         {
-            this.viewModel = viewModel;
             Initialize();
-            this.Events()
-                .MouseClick
+            this.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
-                .Do(async x => await OnLoadButtonClicked())
-                .InvokeCommand(viewModel, x => x.LoadGraphCommand);
+                .Select(x => new Func<Stream>(() =>
+                {
+                    var fileName = GetFileName();
+                    return string.IsNullOrEmpty(fileName)
+                        ? Stream.Null
+                        : File.OpenRead(fileName);
+                }))
+                .InvokeCommand(viewModel, x => x.ImportGraphCommand);
         }
 
-        private async Task OnLoadButtonClicked()
+        private static string GetFileName()
         {
-            var allowedTypes = new List<string>() { ".json", ".dat" };
-            using var dialog = new OpenDialog("Import", string.Empty, allowedTypes);
-            dialog.Width = Dim.Percent(45);
-            dialog.Height = Dim.Percent(55);
-            Application.Run(dialog);
-            if (!dialog.Canceled && dialog.FilePath != null)
+            using var dialog = new OpenDialog("Import",
+                "Import graph", new() { ".dat" })
             {
-                viewModel.FilePath = dialog.FilePath.ToString();
-            }
-            await Task.CompletedTask;
+                Width = Dim.Percent(45),
+                Height = Dim.Percent(55)
+            };
+            Application.Run(dialog);
+            return !dialog.Canceled && dialog.FilePath != null
+                ? dialog.FilePath.ToString()
+                : string.Empty;
         }
     }
 }

@@ -7,9 +7,9 @@ namespace Pathfinding.ConsoleApp.View
         private void Initialize()
         {
             Text = "Delete";
-            X = Pos.Percent(75);
+            X = Pos.Percent(83.65f);
             Y = 0;
-            Width = Dim.Percent(25);
+            Width = Dim.Percent(16.65f);
         }
     }
 }

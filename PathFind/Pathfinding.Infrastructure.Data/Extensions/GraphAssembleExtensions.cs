@@ -1,6 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
-using Pathfinding.Service.Interface;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -35,7 +34,7 @@ namespace Pathfinding.Infrastructure.Data.Extensions
             ILayer layer, IReadOnlyList<int> dimensionSizes)
             where TVertex : IVertex
         {
-            return await Task.Run(() => self.AssembleGraph(layer, dimensionSizes));
+            return await Task.Run(() => self.AssembleGraph(layer, dimensionSizes)).ConfigureAwait(false);
         }
     }
 }

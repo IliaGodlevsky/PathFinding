@@ -1,21 +1,18 @@
-﻿using CommunityToolkit.Mvvm.Messaging;
+﻿using Autofac.Features.AttributeFilters;
+using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Domain.Core;
-using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Business.Algorithms;
-using Pathfinding.Infrastructure.Business.Algorithms.Events;
 using Pathfinding.Infrastructure.Business.Algorithms.Exceptions;
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
-using Pathfinding.Infrastructure.Business.Extensions;
+using Pathfinding.Infrastructure.Business.Builders;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
-using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Service.Interface.Models;
-using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Service.Interface.Requests.Create;
-using Pathfinding.Shared.Primitives;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -23,149 +20,189 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
-using static Terminal.Gui.View;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal abstract class PathfindingProcessViewModel : BaseViewModel
+    internal sealed class PathfindingProcessViewModel : BaseViewModel, 
+        IPathfindingProcessViewModel,
+        IRequireHeuristicsViewModel,
+        IRequireStepRuleViewModel,
+        IRequireAlgorithmNameViewModel
     {
-        protected readonly IRequestService<GraphVertexModel> service;
-        protected readonly IMessenger messenger;
-        protected readonly ILog logger;
+        private sealed record AlgorithmBuildInfo(HeuristicFunctions? Heuristics,
+            double? Weight, StepRules? StepRule) : IAlgorithmBuildInfo;
 
-        public abstract string AlgorithmId { get; }
+        private readonly IRequestService<GraphVertexModel> service;
+        private readonly IMessenger messenger;
+        private readonly ILog logger;
 
-        public ReactiveCommand<MouseEventArgs, Unit> StartAlgorithmCommand { get; }
+        public ReactiveCommand<Unit, Unit> StartAlgorithmCommand { get; }
 
-        private int graphId;
-        public int GraphId
+        private Algorithms? algorithm;
+        public Algorithms? Algorithm
         {
-            get => graphId;
-            set => this.RaiseAndSetIfChanged(ref graphId, value);
+            get => algorithm;
+            set => this.RaiseAndSetIfChanged(ref algorithm, value);
         }
 
-        private IGraph<GraphVertexModel> graph;
-        public IGraph<GraphVertexModel> Graph
+        private HeuristicFunctions? heuristic;
+        public HeuristicFunctions? Heuristic
+        {
+            get => heuristic;
+            set => this.RaiseAndSetIfChanged(ref heuristic, value);
+        }
+
+        private double? weight;
+        public double? FromWeight 
+        {
+            get => weight;
+            set => this.RaiseAndSetIfChanged(ref weight, value);
+        }
+
+        private double? to;
+        public double? ToWeight 
+        { 
+            get => to; 
+            set => this.RaiseAndSetIfChanged(ref to, value); 
+        }
+
+        private double? step;
+        public double? Step 
+        { 
+            get => step; 
+            set => this.RaiseAndSetIfChanged(ref step, value); 
+        }
+
+        private StepRules? stepRule;
+        public StepRules? StepRule
+        { 
+            get => stepRule; 
+            set => this.RaiseAndSetIfChanged(ref stepRule, value);
+        }
+
+        private int ActivatedGraphId { get; set; }
+
+        private Graph<GraphVertexModel> graph = Graph<GraphVertexModel>.Empty;
+        private Graph<GraphVertexModel> Graph
         {
             get => graph;
             set => this.RaiseAndSetIfChanged(ref graph, value);
         }
 
-        private IObservable<bool> CanStartAlgorithm()
-        {
-            return this.WhenAnyValue(
-                x => x.GraphId,
-                x => x.Graph,
-                (id, graph) => id > 0 && graph != null);
-        }
-
-        private void OnGraphActivated(object recipient, GraphActivatedMessage msg)
-        {
-            Graph = msg.Graph;
-            GraphId = msg.GraphId;
-        }
-
-        private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
-        {
-            if (msg.GraphIds.Contains(GraphId))
-            {
-                Graph = Graph<GraphVertexModel>.Empty;
-                GraphId = 0;
-            }
-        }
-
-        protected PathfindingProcessViewModel(IRequestService<GraphVertexModel> service,
-            IMessenger messenger,
+        public PathfindingProcessViewModel(IRequestService<GraphVertexModel> service,
+            [KeyFilter(KeyFilters.ViewModels)]IMessenger messenger,
             ILog logger)
         {
             this.messenger = messenger;
             this.service = service;
             this.logger = logger;
-            StartAlgorithmCommand = ReactiveCommand.CreateFromTask<MouseEventArgs>(StartAlgorithm, CanStartAlgorithm());
+            StartAlgorithmCommand = ReactiveCommand.CreateFromTask(StartAlgorithm,
+                CanStartAlgorithm());
             messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
         }
 
-        protected abstract PathfindingProcess GetAlgorithm(IEnumerable<GraphVertexModel> pathfindingRange);
-
-        protected virtual void AppendStatistics(RunStatisticsModel model) { }
-
-        private async Task StartAlgorithm(MouseEventArgs e)
+        private IObservable<bool> CanStartAlgorithm()
         {
-            var msg = new QueryPathfindingRangeMessage();
-            messenger.Send(msg);
-            var pathfindingRange = msg.PathfindingRange;
+            return this.WhenAnyValue(
+                x => x.Graph,
+                x => x.Heuristic,
+                x => x.FromWeight,
+                x => x.ToWeight,
+                x => x.Step,
+                x => x.Algorithm,
+                (graph, heuristic, weight, to, step, algorithm) =>
+                {
+                    bool canExecute = graph != Graph<GraphVertexModel>.Empty && algorithm != null
+                        && Enum.IsDefined(typeof(Algorithms), algorithm.Value);
+                    if (heuristic != null)
+                    {
+                        return canExecute && weight > 0 && to > 0 && step >= 0;
+                    }
+                    return canExecute;
+                });
+        }
+
+        private void OnGraphActivated(object recipient, GraphActivatedMessage msg)
+        {
+            Graph = new Graph<GraphVertexModel>(msg.Graph.Vertices, msg.Graph.DimensionSizes);
+            ActivatedGraphId = msg.Graph.Id;
+        }
+
+        private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
+        {
+            if (msg.GraphIds.Contains(ActivatedGraphId))
+            {
+                Graph = Graph<GraphVertexModel>.Empty;
+                ActivatedGraphId = 0;
+            }
+        }
+
+        private async Task StartAlgorithm()
+        {
+            var pathfindingRange = (await service.ReadRangeAsync(ActivatedGraphId)
+                .ConfigureAwait(false))
+                .Select(x => Graph.Get(x.Position))
+                .ToList();
 
             if (pathfindingRange.Count > 1)
             {
-                var subAlgorithms = new List<CreateSubAlgorithmRequest>();
                 int visitedCount = 0;
-                var visitedVertices = new List<(Coordinate Visited, IReadOnlyList<Coordinate> Enqueued)>();
+                void OnVertexProcessed(object sender, EventArgs e) => visitedCount++;
+                var status = RunStatuses.Success;
+                double from = FromWeight ?? 0;
+                double to = ToWeight ?? 0;
+                double step = Step ?? 1;
+                int limit = (int)Math.Floor(((to - from)) / (step + double.Epsilon));
+                var list = new List<CreateStatisticsRequest>();
+                for (int i = 0; i <= limit; i++)
+                {
+                    visitedCount = 0;
+                    var val = from + step * i;
+                    double? weight = val == 0 ? null : val;
+                    var buildInfo = new AlgorithmBuildInfo(Heuristic, weight, StepRule);
+                    var algorithm = AlgorithmBuilder.TakeAlgorithm(Algorithm.Value)
+                        .WithAlgorithmInfo(buildInfo)
+                        .Build(pathfindingRange);
+                    algorithm.VertexProcessed += OnVertexProcessed;
+                    var path = NullGraphPath.Interface;
+                    var stopwatch = Stopwatch.StartNew();
+                    try
+                    {
+                        path = algorithm.FindPath();
+                    }
+                    catch (PathfindingException ex)
+                    {
+                        status = RunStatuses.Failure;
+                        logger.Warn(ex);
+                    }
+                    catch (Exception ex)
+                    {
+                        status = RunStatuses.Failure;
+                        logger.Error(ex);
+                    }
 
-                void AddSubAlgorithm(IReadOnlyCollection<Coordinate> path = null)
-                {
-                    ModelBuilder.CreateSubAlgorithmRequest()
-                        .WithOrder(subAlgorithms.Count)
-                        .WithPath(path ?? Array.Empty<Coordinate>())
-                        .WithVisitedVertices(visitedVertices.ToArray())
-                        .AddTo(subAlgorithms);
-                    visitedCount += visitedVertices.Count;
-                    visitedVertices.Clear();
-                }
-                void OnVertexProcessed(object sender, VerticesProcessedEventArgs e)
-                {
-                    visitedVertices.Add((e.Current, e.Enqueued));
-                }
-                void OnSubPathFound(object sender, SubPathFoundEventArgs args)
-                {
-                    AddSubAlgorithm(args.SubPath);
-                }
-
-                string status = RunStatuses.Success;
-
-                var algorithm = GetAlgorithm(pathfindingRange);
-
-                algorithm.SubPathFound += OnSubPathFound;
-                algorithm.VertexProcessed += OnVertexProcessed;
-
-                var path = NullGraphPath.Interface;
-                var stopwatch = Stopwatch.StartNew();
-                try
-                {
-                    path = algorithm.FindPath();
-                }
-                catch (PathfindingException ex)
-                {
-                    status = RunStatuses.Failure;
-                    logger.Warn(ex);
-                    AddSubAlgorithm();
-                }
-                catch (Exception ex)
-                {
-                    status = RunStatuses.Failure;
-                    logger.Error(ex);
-                    AddSubAlgorithm();
-                }
-                finally
-                {
                     stopwatch.Stop();
-                    algorithm.SubPathFound -= OnSubPathFound;
                     algorithm.VertexProcessed -= OnVertexProcessed;
+
+                    var request = new CreateStatisticsRequest()
+                    {
+                        Algorithm = Algorithm.Value,
+                        Cost = path.Cost,
+                        Steps = path.Count,
+                        StepRule = StepRule,
+                        Heuristics = Heuristic,
+                        Weight = weight,
+                        Visited = visitedCount,
+                        Elapsed = stopwatch.Elapsed,
+                        ResultStatus = status,
+                        GraphId = ActivatedGraphId
+                    };
+                    list.Add(request);
                 }
-
-                var request = ModelBuilder.CreateRunHistoryRequest()
-                    .WithGraph(Graph, pathfindingRange.Select(x => x.Position))
-                    .WithRun(GraphId, AlgorithmId)
-                    .WithSubAlgorithms(subAlgorithms)
-                    .WithStatistics(AlgorithmId, path,
-                        visitedCount, status, stopwatch.Elapsed);
-
-                AppendStatistics(request.Statistics);
-
                 await ExecuteSafe(async () =>
                 {
-                    var result = await Task.Run(() => service.CreateRunHistoryAsync(request))
-                        .ConfigureAwait(false);
+                    var result = await service.CreateStatisticsAsync(list).ConfigureAwait(false);
                     messenger.Send(new RunCreatedMessaged(result));
                 }, logger.Error).ConfigureAwait(false);
             }

@@ -15,6 +15,8 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
         public LiteDbRangeRepository(ILiteDatabase db)
         {
             collection = db.GetCollection<PathfindingRange>(DbTables.Ranges);
+            collection.EnsureIndex(x => x.VertexId);
+            collection.EnsureIndex(x => x.GraphId);
         }
 
         public async Task<IEnumerable<PathfindingRange>> CreateAsync(IEnumerable<PathfindingRange> entities, CancellationToken token = default)
@@ -29,7 +31,7 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             return await Task.FromResult(deleted > 0);
         }
 
-        public async Task<bool> DeleteByVerticesIdsAsync(IEnumerable<int> verticesIds, CancellationToken token = default)
+        public async Task<bool> DeleteByVerticesIdsAsync(IEnumerable<long> verticesIds, CancellationToken token = default)
         {
             var ids = verticesIds.Select(x => new BsonValue(x)).ToArray();
             var query = Query.In(nameof(PathfindingRange.VertexId), ids);

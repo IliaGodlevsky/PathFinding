@@ -1,15 +1,17 @@
 ﻿using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Extensions;
+using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Primitives;
 using ReactiveUI;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pathfinding.ConsoleApp.Model
 {
-    public class GraphVertexModel : ReactiveObject, IVertex, IEntity<int>
+    public sealed class GraphVertexModel : ReactiveObject, IVertex, IPathfindingVertex, IEntity<long>
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         private bool isObstacle;
         public bool IsObstacle
@@ -18,44 +20,25 @@ namespace Pathfinding.ConsoleApp.Model
             set => this.RaiseAndSetIfChanged(ref isObstacle, value);
         }
 
-        private bool isRegular;
-        public bool IsRegular
-        {
-            get => isRegular;
-            set => this.RaiseAndSetIfChanged(ref isRegular, value);
-        }
-
         private bool isSource;
         public bool IsSource
         {
             get => isSource;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref isSource, value);
-                if (!isSource) IsRegular = true;
-            }
+            set => this.RaiseAndSetIfChanged(ref isSource, value);
         }
 
         private bool isTarget;
         public bool IsTarget
         {
             get => isTarget;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref isTarget, value);
-                if (!isTarget) IsRegular = true;
-            }
+            set => this.RaiseAndSetIfChanged(ref isTarget, value);
         }
 
         private bool isTransit;
         public bool IsTransit
         {
             get => isTransit;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref isTransit, value);
-                if (!isTransit) IsRegular = true;
-            }
+            set => this.RaiseAndSetIfChanged(ref isTransit, value);
         }
 
         private IVertexCost cost;
@@ -65,14 +48,17 @@ namespace Pathfinding.ConsoleApp.Model
             set => this.RaiseAndSetIfChanged(ref cost, value);
         }
 
-        public Coordinate Position { get; }
+        public Coordinate Position { get; set; }
 
-        public ICollection<IVertex> Neighbours { get; } = new HashSet<IVertex>();
+        public HashSet<GraphVertexModel> Neighbors { get; private set; } = new();
 
-        public GraphVertexModel(Coordinate coordinate)
+        IReadOnlyCollection<IVertex> IVertex.Neighbors
         {
-            Position = coordinate;
+            get => Neighbors;
+            set => Neighbors = value.Cast<GraphVertexModel>().ToHashSet();
         }
+
+        IReadOnlyCollection<IPathfindingVertex> IPathfindingVertex.Neighbors => Neighbors;
 
         public bool Equals(IVertex other) => other.IsEqual(this);
 

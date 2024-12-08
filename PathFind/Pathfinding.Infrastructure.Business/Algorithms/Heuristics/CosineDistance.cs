@@ -1,5 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Service.Interface;
+﻿using Pathfinding.Service.Interface;
 using System;
 using System.Collections.Generic;
 
@@ -9,7 +8,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.Heuristics
     {
         private const double Radians = 57.2956;
 
-        public double Calculate(IVertex first, IVertex second)
+        public double Calculate(IPathfindingVertex first, IPathfindingVertex second)
         {
             var firstVector = first.Position;
             var secondVector = second.Position;

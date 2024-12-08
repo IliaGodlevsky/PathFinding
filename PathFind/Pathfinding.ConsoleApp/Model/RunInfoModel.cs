@@ -1,28 +1,57 @@
-﻿using ReactiveUI;
+﻿using Pathfinding.Domain.Core;
+using Pathfinding.Service.Interface.Models;
+using ReactiveUI;
 using System;
 
 namespace Pathfinding.ConsoleApp.Model
 {
-    internal sealed class RunInfoModel : ReactiveObject
+    internal sealed class RunInfoModel : ReactiveObject, IAlgorithmBuildInfo
     {
-        public int RunId { get; set; }
+        public int Id { get; set; }
 
-        public string Name { get; set; }
+        public int GraphId { get; set; }
 
-        public int Visited { get; set; }
+        public Algorithms Algorithm { get; set; }
 
-        public int Steps { get; set; }
+        private int visited;
+        public int Visited
+        {
+            get => visited;
+            set => this.RaiseAndSetIfChanged(ref visited, value);
+        }
 
-        public double Cost { get; set; }
+        private int steps;
+        public int Steps 
+        {
+            get => steps;
+            set => this.RaiseAndSetIfChanged(ref steps, value);
+        }
 
-        public TimeSpan Elapsed { get; set; }
+        private double cost;
+        public double Cost
+        {
+            get => cost;
+            set => this.RaiseAndSetIfChanged(ref cost, value);
+        }
 
-        public string StepRule { get; set; }
+        private TimeSpan elapsed;
+        public TimeSpan Elapsed
+        {
+            get => elapsed;
+            set => this.RaiseAndSetIfChanged(ref elapsed, value);
+        }
 
-        public string Heuristics { get; set; }
+        public StepRules? StepRule { get; set; }
 
-        public string Spread { get; set; }
+        public HeuristicFunctions? Heuristics { get; set; }
 
-        public string Status { get; set; }
+        public double? Weight { get; set; }
+
+        private RunStatuses status;
+        public RunStatuses ResultStatus 
+        {
+            get => status;
+            set => this.RaiseAndSetIfChanged(ref status, value);
+        }
     }
 }

@@ -33,46 +33,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="PriorityQueue, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5e136dbf0437dacd, processorArchitecture=MSIL">
-      <HintPath>..\packages\OptimizedPriorityQueue.5.1.0\lib\net45\PriorityQueue.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
     <Reference Include="System.Core" />
-    <Reference Include="System.Linq.Async, Version=6.0.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Linq.Async.6.0.1\lib\net48\System.Linq.Async.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
     <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.Caching" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -94,9 +61,9 @@
     <Compile Include="Algorithms\Events\VertexProcessedEventHandler.cs" />
     <Compile Include="Algorithms\GraphPaths\BidirectGraphPath.cs" />
     <Compile Include="Algorithms\Heuristics\DiagonalDistance.cs" />
+    <Compile Include="Algorithms\Heuristics\WeightedHeuristic.cs" />
     <Compile Include="Algorithms\SnakeAlgorithm.cs" />
     <Compile Include="Algorithms\DepthFirstAlgorithm.cs" />
-    <Compile Include="Algorithms\DepthRandomAlgorithm.cs" />
     <Compile Include="Algorithms\DijkstraAlgorithm.cs" />
     <Compile Include="Algorithms\DistanceFirstAlgorithm.cs" />
     <Compile Include="Algorithms\Events\SubPathFoundEventArgs.cs" />
@@ -115,16 +82,16 @@
     <Compile Include="Algorithms\Heuristics\Distance.cs" />
     <Compile Include="Algorithms\Heuristics\EuclidianDistance.cs" />
     <Compile Include="Algorithms\Heuristics\ManhattanDistance.cs" />
-    <Compile Include="Algorithms\IDAStarAlgorithm.cs" />
     <Compile Include="Algorithms\LeeAlgorithm.cs" />
     <Compile Include="Algorithms\PathfindingAlgorithm.cs" />
     <Compile Include="Algorithms\PathfindingProcess.cs" />
-    <Compile Include="Algorithms\RandomAlgorithm.cs" />
     <Compile Include="Algorithms\StepRules\CardinalStepRule.cs" />
     <Compile Include="Algorithms\StepRules\DefaultStepRule.cs" />
     <Compile Include="Algorithms\StepRules\LandscapeStepRule.cs" />
     <Compile Include="Algorithms\StepRules\WalkStepRule.cs" />
     <Compile Include="Algorithms\WaveAlgorithm.cs" />
+    <Compile Include="Builders\AlgorithmBuilder.cs" />
+    <Compile Include="Builders\LayersBuilder.cs" />
     <Compile Include="Commands\ExcludeSourceVertex.cs" />
     <Compile Include="Commands\ExcludeTargetVertex.cs" />
     <Compile Include="Commands\ExcludeTransitVertex.cs" />
@@ -135,19 +102,15 @@
     <Compile Include="Commands\ReplaceIsolatedTargetVertex.cs" />
     <Compile Include="Commands\ReplaceTransitIsolatedVertex.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\HeuristicsExtensions.cs" />
+    <Compile Include="Extensions\LayerExtensions.cs" />
     <Compile Include="Extensions\PriorityQueueExtensions.cs" />
     <Compile Include="Extensions\SimplePriorityQueueExtensions.cs" />
-    <Compile Include="Extensions\UnitOfWorkExtensions.cs" />
     <Compile Include="Extensions\VertexExtensions.cs" />
     <Compile Include="Layers\Layers.cs" />
-    <Compile Include="Mappings\AlgorithmRunMappingProfile.cs" />
-    <Compile Include="Mappings\GraphMappingProfile.cs" />
-    <Compile Include="Mappings\GraphStateMappingProfile.cs" />
-    <Compile Include="Mappings\HistoryMappingProfile.cs" />
-    <Compile Include="Mappings\StatisticsMappingProfile.cs" />
-    <Compile Include="Mappings\SubAlgorithmsMappingProfile.cs" />
-    <Compile Include="Mappings\UntitledMappingProfile.cs" />
-    <Compile Include="Mappings\VerticesMappingProfile.cs" />
+    <Compile Include="Layers\MooreNeighborhoodLayer.cs" />
+    <Compile Include="Layers\VonNeumannNeighborhoodLayer.cs" />
+    <Compile Include="MappingExtensions.cs" />
     <Compile Include="Layers\NeighborhoodLayer.cs" />
     <Compile Include="Layers\ObstacleLayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -184,7 +147,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces">
+      <Version>8.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="OptimizedPriorityQueue">
+      <Version>5.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Linq.Async">
+      <Version>6.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Text.Encodings.Web">
+      <Version>8.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.ValueTuple">
+      <Version>4.5.0</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

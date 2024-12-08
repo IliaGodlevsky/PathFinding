@@ -1,4 +1,5 @@
-﻿using Terminal.Gui;
+﻿using System.Globalization;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -9,11 +10,11 @@ namespace Pathfinding.ConsoleApp.View
         private void Initialize()
         {
             heuristics.X = 1;
-            heuristics.Y = 1;
-            X = Pos.Percent(45);
-            Y = 0;
-            Height = Dim.Percent(40);
-            Width = Dim.Percent(55);
+            heuristics.Y = 0;
+            X = 0;
+            Y = Pos.Percent(20) + 1;
+            Height = Dim.Percent(35);
+            Width = Dim.Percent(30);
             Border = new Border()
             {
                 BorderStyle = BorderStyle.Rounded,

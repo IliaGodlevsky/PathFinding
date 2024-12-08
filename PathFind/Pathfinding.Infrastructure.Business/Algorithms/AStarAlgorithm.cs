@@ -1,6 +1,4 @@
-﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Domain.Interface.Comparers;
-using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
+﻿using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Primitives;
@@ -14,18 +12,19 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
         protected readonly Dictionary<Coordinate, double> heuristics;
         protected readonly IHeuristic heuristic;
 
-        public AStarAlgorithm(IEnumerable<IVertex> pathfindingRange)
+        public AStarAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
             : this(pathfindingRange, new DefaultStepRule(), new ChebyshevDistance())
         {
 
         }
 
-        public AStarAlgorithm(IEnumerable<IVertex> pathfindingRange, IStepRule stepRule, IHeuristic function)
+        public AStarAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange,
+            IStepRule stepRule, IHeuristic function)
             : base(pathfindingRange, stepRule)
         {
             heuristic = function;
-            heuristics = new(CoordinateEqualityComparer.Interface);
-            accumulatedCosts = new(CoordinateEqualityComparer.Interface);
+            heuristics = new();
+            accumulatedCosts = new();
         }
 
         protected override void DropState()
@@ -35,13 +34,14 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             accumulatedCosts.Clear();
         }
 
-        protected override void PrepareForSubPathfinding((IVertex Source, IVertex Target) range)
+        protected override void PrepareForSubPathfinding(
+            (IPathfindingVertex Source, IPathfindingVertex Target) range)
         {
             base.PrepareForSubPathfinding(range);
             accumulatedCosts[CurrentRange.Source.Position] = default;
         }
 
-        protected override void Enqueue(IVertex vertex, double value)
+        protected override void Enqueue(IPathfindingVertex vertex, double value)
         {
             if (!heuristics.TryGetValue(vertex.Position, out double cost))
             {
@@ -52,14 +52,14 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             accumulatedCosts[vertex.Position] = value;
         }
 
-        protected override double GetVertexCurrentCost(IVertex vertex)
+        protected override double GetVertexCurrentCost(IPathfindingVertex vertex)
         {
             return accumulatedCosts.TryGetValue(vertex.Position, out double cost)
                 ? cost
                 : double.PositiveInfinity;
         }
 
-        protected virtual double CalculateHeuristic(IVertex vertex)
+        protected virtual double CalculateHeuristic(IPathfindingVertex vertex)
         {
             return heuristic.Calculate(vertex, CurrentRange.Target);
         }

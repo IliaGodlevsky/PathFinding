@@ -1,10 +1,12 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
+using Pathfinding.ConsoleApp.Messages;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
+using Pathfinding.Domain.Core;
 using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
@@ -18,42 +20,61 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class GraphFieldViewModel : BaseViewModel
+    internal sealed class GraphFieldViewModel : BaseViewModel, IGraphFieldViewModel
     {
         private readonly IMessenger messenger;
         private readonly IRequestService<GraphVertexModel> service;
         private readonly ILog logger;
 
         private int graphId;
-        public int GraphId
+        private int GraphId
         {
             get => graphId;
             set => this.RaiseAndSetIfChanged(ref graphId, value);
         }
 
-        private IGraph<GraphVertexModel> graph;
+        private bool isReadOnly;
+        private bool IsReadOnly
+        {
+            get => isReadOnly;
+            set => this.RaiseAndSetIfChanged(ref isReadOnly, value);
+        }
+
+        private IGraph<GraphVertexModel> graph = Graph<GraphVertexModel>.Empty;
         public IGraph<GraphVertexModel> Graph
         {
             get => graph;
-            set => this.RaiseAndSetIfChanged(ref graph, value);
+            private set => this.RaiseAndSetIfChanged(ref graph, value);
         }
 
+        public ReactiveCommand<GraphVertexModel, Unit> ChangeVertexPolarityCommand { get; }
+
         public ReactiveCommand<GraphVertexModel, Unit> ReverseVertexCommand { get; }
+
+        public ReactiveCommand<GraphVertexModel, Unit> InverseVertexCommand { get; }
 
         public ReactiveCommand<GraphVertexModel, Unit> IncreaseVertexCostCommand { get; }
 
         public ReactiveCommand<GraphVertexModel, Unit> DecreaseVertexCostCommand { get; }
 
-        public GraphFieldViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
-            IRequestService<GraphVertexModel> service, ILog logger)
+        public GraphFieldViewModel(
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
+            IRequestService<GraphVertexModel> service,
+            ILog logger)
         {
             this.messenger = messenger;
             this.service = service;
             this.logger = logger;
-            messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
+            messenger.Register<GraphActivatedMessage, int>(this, Tokens.GraphField, OnGraphActivated);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
-            var canExecute = this.WhenAnyValue(x => x.GraphId, x => x.Graph,
-                (id, graph) => id > 0 && graph != null);
+            messenger.Register<GraphStateChangedMessage>(this, OnGraphBecameReadonly);
+            var canExecute = this.WhenAnyValue(
+                x => x.GraphId,
+                x => x.Graph,
+                x => x.IsReadOnly,
+                (id, graph, isRead) => id > 0 && graph != Graph<GraphVertexModel>.Empty && !isRead);
+            ChangeVertexPolarityCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(ChangePolarity, canExecute);
+            InverseVertexCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(InverseVertex, canExecute);
             ReverseVertexCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(ReverseVertex, canExecute);
             IncreaseVertexCostCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(IncreaseVertexCost, canExecute);
             DecreaseVertexCostCommand = ReactiveCommand.CreateFromTask<GraphVertexModel>(DecreaseVertexCost, canExecute);
@@ -61,22 +82,36 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private async Task ReverseVertex(GraphVertexModel vertex)
         {
-            var inRangeRquest = new IsVertexInRangeRequest(vertex);
-            messenger.Send(inRangeRquest);
-            if (!inRangeRquest.IsInRange)
+            await ChangeVertexPolarity(vertex, true);
+        }
+
+        private async Task InverseVertex(GraphVertexModel vertex)
+        {
+            await ChangeVertexPolarity(vertex, false);
+        }
+
+        private async Task ChangePolarity(GraphVertexModel vertex)
+        {
+            await ChangeVertexPolarity(vertex, !vertex.IsObstacle);
+        }
+
+        private async Task ChangeVertexPolarity(GraphVertexModel vertex, bool polarity)
+        {
+            if (vertex.IsObstacle != polarity)
             {
-                vertex.IsObstacle = !vertex.IsObstacle;
-                messenger.Send(new ObstaclesCountChangedMessage(graphId, vertex.IsObstacle ? 1 : -1));
-                var request = new UpdateVerticesRequest<GraphVertexModel>(graphId,
-                    vertex.Enumerate().ToList());
-                await ExecuteSafe(async () =>
+                var inRangeRquest = new IsVertexInRangeRequest(vertex);
+                messenger.Send(inRangeRquest);
+                if (!inRangeRquest.IsInRange)
                 {
-                    await service.UpdateVerticesAsync(request);
-                    var obstacles = Graph.GetObstaclesCount();
-                    var graphRequest = new UpdateGraphInfoRequest(graphId, obstacles);
-                    await Task.Run(() => service.UpdateObstaclesCountAsync(graphRequest))
-                        .ConfigureAwait(false);
-                }, logger.Error);
+                    vertex.IsObstacle = polarity;
+                    messenger.Send(new ObstaclesCountChangedMessage(graphId, vertex.IsObstacle ? 1 : -1));
+                    var request = new UpdateVerticesRequest<GraphVertexModel>(graphId,
+                        vertex.Enumerate().ToList());
+                    await ExecuteSafe(async () =>
+                    {
+                        await service.UpdateVerticesAsync(request).ConfigureAwait(false);
+                    }, logger.Error).ConfigureAwait(false);
+                }
             }
         }
 
@@ -98,14 +133,21 @@ namespace Pathfinding.ConsoleApp.ViewModel
             vertex.Cost = new VertexCost(cost, vertex.Cost.CostRange);
             var request = new UpdateVerticesRequest<GraphVertexModel>(GraphId,
                 vertex.Enumerate().ToList());
-            await ExecuteSafe(async () => await service.UpdateVerticesAsync(request),
-                logger.Error);
+            await ExecuteSafe(async () => await service.UpdateVerticesAsync(request)
+                .ConfigureAwait(false),
+                logger.Error).ConfigureAwait(false);
         }
 
         private void OnGraphActivated(object recipient, GraphActivatedMessage msg)
         {
-            Graph = msg.Graph;
-            GraphId = msg.GraphId;
+            Graph = new Graph<GraphVertexModel>(msg.Graph.Vertices, msg.Graph.DimensionSizes);
+            GraphId = msg.Graph.Id;
+            IsReadOnly = msg.Graph.Status == GraphStatuses.Readonly;
+        }
+
+        private void OnGraphBecameReadonly(object recipient, GraphStateChangedMessage msg)
+        {
+            IsReadOnly = msg.Status == GraphStatuses.Readonly;
         }
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
@@ -114,6 +156,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             {
                 GraphId = 0;
                 Graph = Graph<GraphVertexModel>.Empty;
+                IsReadOnly = false;
             }
         }
     }

@@ -15,9 +15,9 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
 
         protected override Coordinate[] Filter(Coordinate coordinate)
         {
-            return selfCoordinate.IsCardinal(coordinate) 
-                ? new[] { coordinate } 
-                : Array.Empty<Coordinate>(); 
+            return selfCoordinate.IsCardinal(coordinate)
+                ? new[] { coordinate }
+                : Array.Empty<Coordinate>();
         }
     }
 }

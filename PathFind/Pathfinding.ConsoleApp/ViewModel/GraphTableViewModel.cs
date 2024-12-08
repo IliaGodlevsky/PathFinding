@@ -1,43 +1,44 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using DynamicData;
+using Pathfinding.ConsoleApp.Extensions;
 using Pathfinding.ConsoleApp.Injection;
+using Pathfinding.ConsoleApp.Messages;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
+using Pathfinding.Infrastructure.Business.Builders;
+using Pathfinding.Infrastructure.Business.Extensions;
+using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Models.Read;
+using Pathfinding.Shared.Extensions;
 using ReactiveUI;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class GraphTableViewModel : BaseViewModel
+    internal sealed class GraphTableViewModel : BaseViewModel, IGraphTableViewModel
     {
         private readonly IRequestService<GraphVertexModel> service;
         private readonly IMessenger messenger;
         private readonly ILog logger;
 
-        private GraphInfoModel[] selectedGraphs;
+        public ReactiveCommand<Unit, Unit> LoadGraphsCommand { get; }
 
-        public GraphInfoModel[] SelectedGraphs
-        {
-            get => selectedGraphs;
-            set
-            {
-                this.RaiseAndSetIfChanged(ref selectedGraphs, value);
-                var toSend = selectedGraphs.Select(x => x.Id).ToArray();
-                messenger.Send(new GraphSelectedMessage(toSend));
-            }
-        }
+        public ReactiveCommand<int, Unit> ActivateGraphCommand { get; }
 
-        public ReactiveCommand<GraphInfoModel, Unit> ActivateGraphCommand { get; }
+        public ReactiveCommand<int[], Unit> SelectGraphsCommand { get; }
 
         public ObservableCollection<GraphInfoModel> Graphs { get; } = new();
+
+        private int ActivatedGraphId { get; set; } = 0;
 
         public GraphTableViewModel(
             IRequestService<GraphVertexModel> service,
@@ -47,27 +48,48 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.service = service;
             this.messenger = messenger;
             this.logger = logger;
-            messenger.Register<GraphCreatedMessage>(this, async (r, msg) => await OnGraphCreated(r, msg));
+            messenger.Register<AsyncGraphUpdatedMessage, int>(this, Tokens.GraphTable, async (r, msg) 
+                => await OnGraphUpdated(r, msg));
+            messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<ObstaclesCountChangedMessage>(this, OnObstaclesCountChanged);
-            ActivateGraphCommand = ReactiveCommand.CreateFromTask<GraphInfoModel>(ActivatedGraph);
+            messenger.Register<GraphStateChangedMessage>(this, GraphStateChanged);
+            LoadGraphsCommand = ReactiveCommand.CreateFromTask(LoadGraphs);
+            ActivateGraphCommand = ReactiveCommand.CreateFromTask<int>(ActivatedGraph);
+            SelectGraphsCommand = ReactiveCommand.Create<int[]>(SelectGraphs);
         }
 
-        private async Task ActivatedGraph(GraphInfoModel model)
+        private void SelectGraphs(int[] selected)
+        {
+            var graphs = Graphs.Where(x => selected.Contains(x.Id)).ToArray();
+            messenger.Send(new GraphSelectedMessage(graphs));
+        }
+
+        private async Task ActivatedGraph(int model)
         {
             await ExecuteSafe(async () =>
             {
-                var graph = await service.ReadGraphAsync(model.Id);
-                messenger.Send(new GraphActivatedMessage(graph.Id, graph.Graph));
-            }, logger.Error);
+                var graphModel = await service.ReadGraphAsync(model).ConfigureAwait(false);
+                var graph = new Graph<GraphVertexModel>(graphModel.Vertices, graphModel.DimensionSizes);
+                var layers = LayersBuilder.Take(graphModel).Build();
+                await layers.OverlayAsync(graph).ConfigureAwait(false);
+                ActivatedGraphId = graphModel.Id;
+                messenger.Send(new GraphActivatedMessage(graphModel), Tokens.GraphField);
+                await messenger.SendAsync(new AsyncGraphActivatedMessage(graphModel), Tokens.PathfindingRange);
+                await messenger.SendAsync(new AsyncGraphActivatedMessage(graphModel), Tokens.RunsTable);
+                messenger.Send(new GraphActivatedMessage(graphModel));
+            }, logger.Error).ConfigureAwait(false);
         }
 
-        public void LoadGraphs()
+        private async Task LoadGraphs()
         {
-            foreach (var value in GetGraphs())
+            await ExecuteSafe(async () =>
             {
-                Graphs.Add(value);
-            }
+                Graphs.Clear();
+                var infos = (await service.ReadAllGraphInfoAsync().ConfigureAwait(false))
+                    .Select(ToGraphInfo).ToList();
+                Graphs.Add(infos);
+            }, logger.Error).ConfigureAwait(false);
         }
 
         private void OnObstaclesCountChanged(object recipient, ObstaclesCountChangedMessage msg)
@@ -75,45 +97,41 @@ namespace Pathfinding.ConsoleApp.ViewModel
             var graph = Graphs.FirstOrDefault(x => x.Id == msg.GraphId);
             if (graph != null)
             {
-                graph.Obstacles += msg.Delta;
+                graph.ObstaclesCount += msg.Delta;
             }
         }
 
-        private List<GraphInfoModel> GetGraphs()
+        private void GraphStateChanged(object recipient, GraphStateChangedMessage msg)
         {
-            try
+            var graph = Graphs.FirstOrDefault(x => x.Id == msg.Id);
+            if (graph != null)
             {
-                return service.ReadAllGraphInfoAsync()
-                    .GetAwaiter()
-                    .GetResult()
-                    .Select(x => new GraphInfoModel()
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        Neighborhood = x.Neighborhood,
-                        SmoothLevel = x.SmoothLevel,
-                        Width = x.Dimensions.ElementAt(0),
-                        Length = x.Dimensions.ElementAt(1),
-                        Obstacles = x.ObstaclesCount
-                    })
-                    .ToList();
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex);
-                return new();
+                graph.Status = msg.Status;
             }
         }
 
-        private async Task OnGraphCreated(object recipient, GraphCreatedMessage msg)
+        private async Task OnGraphUpdated(object recipient, AsyncGraphUpdatedMessage msg)
+        {
+            var model = Graphs.FirstOrDefault(x => x.Id == msg.Model.Id);
+            if (model != null)
+            {
+                model.Name = msg.Model.Name;
+                model.Neighborhood = msg.Model.Neighborhood;
+                model.SmoothLevel = msg.Model.SmoothLevel;
+                if (ActivatedGraphId == model.Id)
+                {
+                    await ActivatedGraph(ActivatedGraphId);
+                }
+            }
+
+            msg.Signal(Unit.Default);
+        }
+
+        private void OnGraphCreated(object recipient, GraphCreatedMessage msg)
         {
             if (msg.Models.Length > 0)
             {
                 Graphs.Add(msg.Models);
-                if (Graphs.Count == 1)
-                {
-                    await ActivatedGraph(Graphs.First());
-                }
             }
         }
 
@@ -123,7 +141,21 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 .Where(x => msg.GraphIds.Contains(x.Id))
                 .ToList();
             Graphs.Remove(graphs);
+        }
 
+        private GraphInfoModel ToGraphInfo(GraphInformationModel model)
+        {
+            return new GraphInfoModel()
+            {
+                Id = model.Id,
+                Name = model.Name,
+                Neighborhood = model.Neighborhood,
+                SmoothLevel = model.SmoothLevel,
+                Width = model.Dimensions.ElementAtOrDefault(0),
+                Length = model.Dimensions.ElementAtOrDefault(1),
+                ObstaclesCount = model.ObstaclesCount,
+                Status = model.Status
+            };
         }
     }
 }

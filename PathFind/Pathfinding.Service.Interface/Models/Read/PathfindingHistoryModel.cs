@@ -1,4 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
+using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Shared.Primitives;
 using System.Collections.Generic;
 
@@ -9,7 +10,7 @@ namespace Pathfinding.Service.Interface.Models.Read
     {
         public GraphModel<T> Graph { get; set; }
 
-        public IReadOnlyCollection<AlgorithmRunHistoryModel> Algorithms { get; set; }
+        public IReadOnlyCollection<RunStatisticsModel> Statistics { get; set; }
 
         public IReadOnlyCollection<Coordinate> Range { get; set; }
     }

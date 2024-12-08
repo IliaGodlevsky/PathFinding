@@ -6,12 +6,12 @@
 
         public string Name { get; set; }
 
-        public string Neighborhood { get; set; }
+        public Neighborhoods Neighborhood { get; set; }
 
-        public string SmoothLevel { get; set; }
+        public SmoothLevels SmoothLevel { get; set; }
+
+        public GraphStatuses Status { get; set; }
 
         public string Dimensions { get; set; }
-
-        public int ObstaclesCount { get; set; }
     }
 }

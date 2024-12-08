@@ -1,5 +1,4 @@
 ﻿using Priority_Queue;
-using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Extensions
 {
@@ -16,12 +15,6 @@ namespace Pathfinding.Infrastructure.Business.Extensions
             {
                 self.Enqueue(node, priority);
             }
-        }
-
-        public static void EnqueueOrUpdatePriority<TItem, TPriority>(this IPriorityQueue<TItem, TPriority> self,
-            KeyValuePair<TItem, TPriority> item)
-        {
-            self.EnqueueOrUpdatePriority(item.Key, item.Value);
         }
     }
 }

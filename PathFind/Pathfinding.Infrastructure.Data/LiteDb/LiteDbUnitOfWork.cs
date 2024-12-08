@@ -14,17 +14,11 @@ namespace Pathfinding.Infrastructure.Data.LiteDb
 
         public IGraphParametresRepository GraphRepository { get; }
 
-        public ISubAlgorithmRepository SubAlgorithmRepository { get; }
-
         public IVerticesRepository VerticesRepository { get; }
 
         public IRangeRepository RangeRepository { get; }
 
         public IStatisticsRepository StatisticsRepository { get; }
-
-        public IGraphStateRepository GraphStateRepository { get; }
-
-        public IAlgorithmRunRepository RunRepository { get; }
 
         public LiteDbUnitOfWork(string connectionString)
             : this(new ConnectionString(connectionString))
@@ -44,13 +38,10 @@ namespace Pathfinding.Infrastructure.Data.LiteDb
         public LiteDbUnitOfWork(ILiteDatabase db)
         {
             database = db;
-            SubAlgorithmRepository = new LiteDbSubAlgorithmRepository(database);
             GraphRepository = new LiteDbGraphRepository(database);
             VerticesRepository = new LiteDbVerticesRepository(database);
             RangeRepository = new LiteDbRangeRepository(database);
             StatisticsRepository = new LiteDbStatisticsRepository(database);
-            GraphStateRepository = new LiteDbGraphStateRepository(database);
-            RunRepository = new LiteDbAlgorithmRunRepository(database);
         }
 
         public void BeginTransaction()

@@ -31,7 +31,7 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
             return await Task.FromResult(result > 0);
         }
 
-        public async Task<bool> DeleteByVerticesIdsAsync(IEnumerable<int> verticesIds,
+        public async Task<bool> DeleteByVerticesIdsAsync(IEnumerable<long> verticesIds,
             CancellationToken token = default)
         {
             var result = set.RemoveWhere(x => verticesIds.Contains(x.VertexId));

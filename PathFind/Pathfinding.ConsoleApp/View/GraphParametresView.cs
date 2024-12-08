@@ -1,4 +1,4 @@
-﻿using Pathfinding.ConsoleApp.ViewModel;
+﻿using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
 using ReactiveMarbles.ObservableEvents;
@@ -13,14 +13,14 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class GraphParametresView : FrameView
     {
-        private static readonly InclusiveValueRange<int> WidthRange = (53, 1);
-        private static readonly InclusiveValueRange<int> LengthRange = (54, 1);
+        private static readonly InclusiveValueRange<int> WidthRange = (51, 1);
+        private static readonly InclusiveValueRange<int> LengthRange = (48, 1);
         private static readonly InclusiveValueRange<int> ObstaclesRange = (99, 0);
 
-        private readonly GraphAssembleViewModel viewModel;
+        private readonly IRequireGraphParametresViewModel viewModel;
         private readonly CompositeDisposable disposables = new();
 
-        public GraphParametresView(GraphAssembleViewModel viewModel)
+        public GraphParametresView(IRequireGraphParametresViewModel viewModel)
         {
             this.viewModel = viewModel;
             Initialize();
@@ -41,7 +41,7 @@ namespace Pathfinding.ConsoleApp.View
         }
 
         private void BindTo(TextField field,
-            Expression<Func<GraphAssembleViewModel, int>> expression,
+            Expression<Func<IRequireGraphParametresViewModel, int>> expression,
             InclusiveValueRange<int> range)
         {
             field.Events()

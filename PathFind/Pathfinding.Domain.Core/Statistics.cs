@@ -1,18 +1,20 @@
-﻿using System;
-
-namespace Pathfinding.Domain.Core
+﻿namespace Pathfinding.Domain.Core
 {
     public class Statistics : IEntity<int>
     {
         public int Id { get; set; }
 
-        public int AlgorithmRunId { get; set; }
+        public int GraphId { get; set; }
 
-        public string Heuristics { get; set; } = null;
+        public Algorithms Algorithm { get; set; }
 
-        public string StepRule { get; set; } = null;
+        public HeuristicFunctions? Heuristics { get; set; } = null;
 
-        public string ResultStatus { get; set; } = string.Empty;
+        public double? Weight { get; set; } = null;
+
+        public StepRules? StepRule { get; set; } = null;
+
+        public RunStatuses ResultStatus { get; set; }
 
         public double Elapsed { get; set; }
 
@@ -21,7 +23,5 @@ namespace Pathfinding.Domain.Core
         public double Cost { get; set; }
 
         public int Visited { get; set; }
-
-        public string Spread { get; set; } = null;
     }
 }

@@ -4,18 +4,18 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal partial class AlgorithmsView
     {
-        private readonly RadioGroup algorithms = new RadioGroup();
+        private readonly ListView algorithms = new();
 
         private void Initialize()
         {
-            algorithms.X = 1;
-            algorithms.Y = 1;
+            algorithms.X = 0;
+            algorithms.Y = 0;
             algorithms.Width = Dim.Fill();
             algorithms.Height = Dim.Fill();
             X = 0;
-            Y = 0;
-            Width = Dim.Percent(33);
-            Height = Dim.Percent(87);
+            Y = 1;
+            Width = Dim.Percent(25);
+            Height = Dim.Percent(78);
             Border = new Border()
             {
                 BorderStyle = BorderStyle.Rounded,
