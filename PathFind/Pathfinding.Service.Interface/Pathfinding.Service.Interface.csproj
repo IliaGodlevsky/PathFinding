@@ -70,7 +70,6 @@
     <Compile Include="Models\Read\GraphInformationModel.cs" />
     <Compile Include="Models\Read\GraphModel.cs" />
     <Compile Include="Models\Read\PathfindingHistoryModel.cs" />
-    <Compile Include="Models\Read\SubAlgorithmModel.cs" />
     <Compile Include="Models\Serialization\GraphSerializationModel.cs" />
     <Compile Include="Models\Serialization\PathfindingHistorySerializationModel.cs" />
     <Compile Include="Models\Serialization\RunStatisticsSerializationModel.cs" />

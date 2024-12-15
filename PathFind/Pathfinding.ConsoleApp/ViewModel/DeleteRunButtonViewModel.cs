@@ -57,7 +57,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 {
                     var runs = RunsIds.ToArray();
                     RunsIds = Array.Empty<int>();
-                    messenger.Send(new AsyncRunsDeletedMessage(runs));
+                    messenger.Send(new RunsDeletedMessage(runs));
                 }
             }, logger.Error).ConfigureAwait(false);
         }

@@ -45,7 +45,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 async (r, msg) => await OnGraphActivatedMessage(r, msg));
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<RunsUpdatedMessage>(this, OnRunsUpdated);
-            messenger.Register<AsyncRunsDeletedMessage>(this, async (r, msg) => await OnRunsDeleteMessage(r, msg));
+            messenger.Register<RunsDeletedMessage>(this, async (r, msg) => await OnRunsDeleteMessage(r, msg));
 
             SelectRunsCommand = ReactiveCommand.Create<int[]>(SelectRuns);
         }
@@ -95,7 +95,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
-        private async Task OnRunsDeleteMessage(object recipient, AsyncRunsDeletedMessage msg)
+        private async Task OnRunsDeleteMessage(object recipient, RunsDeletedMessage msg)
         {
             var toDelete = Runs.Where(x => msg.RunIds.Contains(x.Id)).ToArray();
             if (toDelete.Length == Runs.Count)

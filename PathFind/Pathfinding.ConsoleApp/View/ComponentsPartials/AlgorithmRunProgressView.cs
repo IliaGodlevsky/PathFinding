@@ -1,5 +1,4 @@
-﻿using ReactiveUI;
-using Terminal.Gui;
+﻿using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -8,18 +7,6 @@ namespace Pathfinding.ConsoleApp.View
         private readonly ProgressBar bar = new();
         private readonly Label leftLabel = new("-");
         private readonly Label rightLabel = new("+");
-
-        public float Fraction
-        {
-            get => bar.Fraction;
-            set
-            {
-                if (value < 0) bar.Fraction = 0;
-                else if (value > 1) bar.Fraction = 1;
-                else bar.Fraction = value;
-                this.RaisePropertyChanged();
-            }
-        }
 
         private void Initialize()
         {
@@ -37,7 +24,7 @@ namespace Pathfinding.ConsoleApp.View
                 BorderBrush = Color.BrightYellow,
                 BorderStyle = BorderStyle.Rounded
             };
-            Fraction = 0;
+            bar.Fraction = 0;
 
             rightLabel.Width = Dim.Percent(3);
             leftLabel.Width = Dim.Percent(3);

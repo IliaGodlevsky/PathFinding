@@ -7,26 +7,6 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.Shared.Extensions
 {
-    file sealed class MatchComparer<T> : IEqualityComparer<T>
-    {
-        private readonly Func<T, T, bool> predicate;
-
-        public MatchComparer(Func<T, T, bool> predicate)
-        {
-            this.predicate = predicate;
-        }
-
-        public bool Equals(T x, T y)
-        {
-            return predicate(x, y);
-        }
-
-        public int GetHashCode(T obj)
-        {
-            return obj.GetHashCode();
-        }
-    }
-
     public static class EnumerableExtension
     {
         public static IOrderedEnumerable<T> OrderByOrderAttribute<T>(this IEnumerable<T> collection)

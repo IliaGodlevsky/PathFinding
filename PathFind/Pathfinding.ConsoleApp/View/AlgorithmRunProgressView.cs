@@ -7,18 +7,18 @@ using ReactiveMarbles.ObservableEvents;
 using Terminal.Gui;
 using System.Reactive.Linq;
 using ReactiveUI;
-using System.ComponentModel;
 using Pathfinding.ConsoleApp.Messages.View;
+using Pathfinding.Shared.Primitives;
+using Pathfinding.Shared.Extensions;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    internal sealed partial class AlgorithmRunProgressView : FrameView, IReactiveObject
+    internal sealed partial class AlgorithmRunProgressView : FrameView
     {
+        private static readonly InclusiveValueRange<float> FractionRange = new(1, 0);
+
         private const float FractionPerWheel = 0.015f;
         private const float ExtraFractionPerWheel = FractionPerWheel * 3;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public event PropertyChangingEventHandler PropertyChanging;
 
         private readonly CompositeDisposable disposables = new();
 
@@ -31,91 +31,74 @@ namespace Pathfinding.ConsoleApp.View
             messenger.Register<OpenAlgorithmRunViewMessage>(this, OnOpenAlgorithmField);
             leftLabel.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Pressed)
-                .Do(x => Fraction -= FractionPerWheel)
-                .Select(x => FractionPerWheel)
-                .InvokeCommand(viewModel, x => x.ReverseNextCommand)
+                .Select(x => FractionRange.ReturnInRange(bar.Fraction - FractionPerWheel))
+                .Do(x => bar.Fraction = x)
+                .BindTo(viewModel, x => x.SelectedRun.Fraction)
                 .DisposeWith(disposables);
             leftLabel.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button1Pressed)
                     && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonCtrl))
-                .Do(x => Fraction -= ExtraFractionPerWheel)
-                .Select(x => ExtraFractionPerWheel)
-                .InvokeCommand(viewModel, x => x.ReverseNextCommand)
+                .Select(x => FractionRange.ReturnInRange(bar.Fraction - ExtraFractionPerWheel))
+                .Do(x => bar.Fraction = x)
+                .BindTo(viewModel, x => x.SelectedRun.Fraction)
                 .DisposeWith(disposables);
             leftLabel.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.WheeledDown)
-                .Do(x => Fraction -= FractionPerWheel)
-                .Select(x => FractionPerWheel)
-                .InvokeCommand(viewModel, x => x.ReverseNextCommand)
+                .Select(x => FractionRange.ReturnInRange(bar.Fraction - FractionPerWheel))
+                .Do(x => bar.Fraction = x)
+                .BindTo(viewModel, x => x.SelectedRun.Fraction)
                 .DisposeWith(disposables);
             leftLabel.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.WheeledUp)
-                .Do(x => Fraction += FractionPerWheel)
-                .Select(x => FractionPerWheel)
-                .InvokeCommand(viewModel, x => x.ProcessNextCommand)
+                .Select(x => FractionRange.ReturnInRange(bar.Fraction + FractionPerWheel))
+                .Do(x => bar.Fraction = x)
+                .BindTo(viewModel, x => x.SelectedRun.Fraction)
                 .DisposeWith(disposables);
             leftLabel.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button2Clicked)
-                .Do(x => Fraction = 0)
-                .Select(x => Fraction)
-                .InvokeCommand(viewModel, x => x.ProcessToCommand)
+                .Select(x => FractionRange.LowerValueOfRange)
+                .BindTo(viewModel, x => x.SelectedRun.Fraction)
                 .DisposeWith(disposables);
             rightLabel.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Pressed)
-                .Do(x => Fraction += FractionPerWheel)
-                .Select(x => FractionPerWheel)
-                .InvokeCommand(viewModel, x => x.ProcessNextCommand)
+                .Select(x => FractionRange.ReturnInRange(bar.Fraction + FractionPerWheel))
+                .Do(x => bar.Fraction = x)
+                .BindTo(viewModel, x => x.SelectedRun.Fraction)
                 .DisposeWith(disposables);
             rightLabel.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags.HasFlag(MouseFlags.Button1Pressed)
                     && x.MouseEvent.Flags.HasFlag(MouseFlags.ButtonCtrl))
-                .Do(x => Fraction += ExtraFractionPerWheel)
-                .Select(x => ExtraFractionPerWheel)
-                .InvokeCommand(viewModel, x => x.ProcessNextCommand)
+                .Select(x => FractionRange.ReturnInRange(bar.Fraction + ExtraFractionPerWheel))
+                .Do(x => bar.Fraction = x)
+                .BindTo(viewModel, x => x.SelectedRun.Fraction)
                 .DisposeWith(disposables);
             rightLabel.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.WheeledDown)
-                .Do(x => Fraction -= FractionPerWheel)
-                .Select(x => FractionPerWheel)
-                .InvokeCommand(viewModel, x => x.ReverseNextCommand)
+                .Select(x => FractionRange.ReturnInRange(bar.Fraction - FractionPerWheel))
+                .Do(x => bar.Fraction = x)
+                .BindTo(viewModel, x => x.SelectedRun.Fraction)
                 .DisposeWith(disposables);
             rightLabel.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.WheeledUp)
-                .Do(x => Fraction += FractionPerWheel)
-                .Select(x => FractionPerWheel)
-                .InvokeCommand(viewModel, x => x.ProcessNextCommand)
+                .Select(x => FractionRange.ReturnInRange(bar.Fraction + FractionPerWheel))
+                .Do(x => bar.Fraction = x)
+                .BindTo(viewModel, x => x.SelectedRun.Fraction)
                 .DisposeWith(disposables);
             rightLabel.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button2Clicked)
-                .Do(x => Fraction = 1)
-                .Select(x => Fraction)
-                .InvokeCommand(viewModel, x => x.ProcessToCommand)
+                .Select(x => FractionRange.UpperValueOfRange)
+                .Do(x => bar.Fraction = x)
+                .BindTo(viewModel, x => x.SelectedRun.Fraction)
                 .DisposeWith(disposables);
             bar.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
                 .Select(x => (float)(x.MouseEvent.X + 1) / bar.Bounds.Width)
-                .Do(x => Fraction = x)
-                .Select(x => Fraction)
-                .InvokeCommand(viewModel, x => x.ProcessToCommand)
+                .BindTo(viewModel, x => x.SelectedRun.Fraction)
                 .DisposeWith(disposables);
-            viewModel.WhenAnyValue(x => x.Fraction)
+            viewModel.WhenAnyValue(x => x.SelectedRun.Fraction)
                 .BindTo(bar, x => x.Fraction)
                 .DisposeWith(disposables);
-            this.WhenAnyValue(x => x.Fraction)
-                .BindTo(viewModel, x => x.Fraction)
-                .DisposeWith(disposables);
         }
-
-        public void RaisePropertyChanging(PropertyChangingEventArgs args)
-        {
-            PropertyChanging?.Invoke(this, args);
-        }
-
-        public void RaisePropertyChanged(PropertyChangedEventArgs args)
-        {
-            PropertyChanged?.Invoke(this, args);
-        }
-
 
         private void OnAlgorithmFieldClosed(object recipient, CloseAlgorithmRunFieldViewMessage msg)
         {
