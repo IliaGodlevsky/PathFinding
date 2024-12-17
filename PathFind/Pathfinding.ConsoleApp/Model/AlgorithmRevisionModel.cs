@@ -9,12 +9,12 @@ using System.Reactive.Linq;
 
 namespace Pathfinding.ConsoleApp.Model
 {
-    internal record struct SubRevisionModel(
-        IReadOnlyCollection<(Coordinate Visited, IReadOnlyList<Coordinate> Enqueued)> Visited,
-        IReadOnlyCollection<Coordinate> Path);
-
     internal sealed class AlgorithmRevisionModel : ReactiveObject, IDisposable
     {
+        public record struct SubRevisionModel(
+            IReadOnlyCollection<(Coordinate Visited, IReadOnlyList<Coordinate> Enqueued)> Visited,
+            IReadOnlyCollection<Coordinate> Path);
+
         private enum RevisionUnitState
         {
             No, 
@@ -78,6 +78,8 @@ namespace Pathfinding.ConsoleApp.Model
             set => cursor = CursorRange.ReturnInRange(value);
         }
 
+        public int Id { get; set; }
+
         public AlgorithmRevisionModel(
             IReadOnlyCollection<RunVertexModel> vertices, 
             IReadOnlyCollection<SubRevisionModel> pathfindingResult,
@@ -86,10 +88,12 @@ namespace Pathfinding.ConsoleApp.Model
             algorithm = new(() => CreateAlgorithmRevision(vertices, pathfindingResult, range));
             cursorRange = new(() => new InclusiveValueRange<int>(Count, 0));
             this.WhenAnyValue(x => x.Fraction)
-                .Select(GetCount).Where(x => x > 0).Do(Next)
+                .DistinctUntilChanged().Select(GetCount)
+                .Where(x => x > 0).Do(Next)
                 .Subscribe().DisposeWith(disposables);
             this.WhenAnyValue(x => x.Fraction)
-                .Select(GetCount).Where(x => x < 0).Do(Previous)
+                .DistinctUntilChanged().Select(GetCount)
+                .Where(x => x < 0).Do(Previous)
                 .Subscribe().DisposeWith(disposables);
         }
 
@@ -125,7 +129,7 @@ namespace Pathfinding.ConsoleApp.Model
             var previousVisited = new HashSet<Coordinate>();
             var previousPaths = new HashSet<Coordinate>();
             var previousEnqueued = new HashSet<Coordinate>();
-            var subAlgorithms = new List<HashSet<RevisionUnit>>();
+            var subAlgorithms = new List<RevisionUnit>();
             foreach (var subAlgorithm in pathfindingResult)
             {
                 var sub = new HashSet<RevisionUnit>();
@@ -158,7 +162,7 @@ namespace Pathfinding.ConsoleApp.Model
                 previousVisited.AddRange(subAlgorithm.Visited.Select(x => x.Visited));
                 previousEnqueued.AddRange(subAlgorithm.Visited.SelectMany(x => x.Enqueued));
                 previousPaths.AddRange(subAlgorithm.Path);
-                subAlgorithms.Add(sub);
+                subAlgorithms.AddRange(sub);
             }
             var vertices = new List<RevisionUnit>
             {
@@ -169,7 +173,8 @@ namespace Pathfinding.ConsoleApp.Model
                 vertices.Add(new(dictionary[transit], RevisionUnitState.Transit, true));
             }
             vertices.Add(new(dictionary[range.Last()], RevisionUnitState.Target, true));
-            return vertices.Concat(subAlgorithms.SelectMany(x => x)).ToArray();
+            vertices.AddRange(subAlgorithms);
+            return vertices;
         }
 
         public void Dispose()

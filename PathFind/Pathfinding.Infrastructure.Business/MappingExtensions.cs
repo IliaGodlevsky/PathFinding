@@ -41,13 +41,13 @@ namespace Pathfinding.Infrastructure.Business
             return models.Select(x => x.ToStatistics()).ToList().AsReadOnly();
         }
 
-        public static RunStatisticsSerializationModel ToSerializionModel(this RunStatisticsModel model)
+        public static RunStatisticsSerializationModel ToSerializionModel(this Statistics model)
         {
             return new()
             {
                 Algorithm = model.Algorithm,
                 Cost = model.Cost,
-                Elapsed = model.Elapsed,
+                Elapsed = TimeSpan.FromMilliseconds(model.Elapsed),
                 Heuristics = model.Heuristics,
                 ResultStatus = model.ResultStatus,
                 StepRule = model.StepRule,
@@ -57,9 +57,14 @@ namespace Pathfinding.Infrastructure.Business
             };
         }
 
-        public static IReadOnlyCollection<RunStatisticsSerializationModel> ToSerializationModels(this IEnumerable<RunStatisticsModel> models)
+        public static IReadOnlyCollection<RunStatisticsSerializationModel> ToSerializationModels(this IEnumerable<Statistics> models)
         {
             return models.Select(x => x.ToSerializionModel()).ToList().AsReadOnly();
+        }
+
+        public static IReadOnlyCollection<CoordinateModel> ToCoordinates(this IEnumerable<PathfindingRangeModel> models)
+        {
+            return models.Select(x => new CoordinateModel() { Coordinate = x.Position.CoordinatesValues.ToArray() }).ToList();
         }
 
         public static Statistics ToStatistics(this RunStatisticsModel model)
@@ -193,6 +198,20 @@ namespace Pathfinding.Infrastructure.Business
                     LowerValueOfRange = cost.CostRange.LowerValueOfRange
                 },
                 Position = new() { Coordinate = vertex.Position.CoordinatesValues}
+            };
+        }
+
+        public static GraphSerializationModel ToSerializationModel<T>(this GraphModel<T> model)
+            where T : IVertex
+        {
+            return new GraphSerializationModel()
+            {
+                DimensionSizes = model.DimensionSizes,
+                Vertices = model.Vertices.ToSerializationModels(),
+                Neighborhood = model.Neighborhood,
+                SmoothLevel = model.SmoothLevel,
+                Status = model.Status,
+                Name = model.Name
             };
         }
 

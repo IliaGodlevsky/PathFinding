@@ -12,7 +12,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
         public event VertexProcessedEventHandler VertexProcessed;
         public event SubPathFoundEventHandler SubPathFound;
 
-        private readonly IEnumerable<IPathfindingVertex> pathfindingRange;
+        private readonly IEnumerable<IPathfindingVertex> pathfindingRange; 
 
         protected PathfindingProcess(IEnumerable<IPathfindingVertex> pathfindingRange)
         {

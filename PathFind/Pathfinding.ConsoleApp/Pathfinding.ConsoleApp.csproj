@@ -58,6 +58,7 @@
       <DependentUpon>AppSettings.settings</DependentUpon>
     </Compile>
     <Compile Include="Extensions\AlgorithmExtensions.cs" />
+    <Compile Include="Extensions\ExportOptionsExtensions.cs" />
     <Compile Include="Extensions\GraphStatusesExtensions.cs" />
     <Compile Include="Extensions\HeuristicsExtensions.cs" />
     <Compile Include="Extensions\MessengerExtensions.cs" />
@@ -84,7 +85,7 @@
     <Compile Include="Model\RunVertexModel.cs" />
     <Compile Include="ViewModel\GraphCopyViewModel.cs" />
     <Compile Include="ViewModel\GraphUpdateViewModel.cs" />
-    <Compile Include="ViewModel\ImportExportOptions.cs" />
+    <Compile Include="Model\ExportOptions.cs" />
     <Compile Include="ViewModel\Interface\IAlgorithmUpdateViewModel.cs" />
     <Compile Include="ViewModel\Interface\IGraphExportViewModel.cs" />
     <Compile Include="ViewModel\Interface\IGraphImportViewModel.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="View\GraphCopyView.cs" />
     <Compile Include="View\GraphNameUpdateView.cs" />
     <Compile Include="View\GraphUpdateView.cs" />
+    <Compile Include="View\ExportOptionsView.cs" />
     <Compile Include="View\NeighborhoodFactoryUpdateView.cs" />
     <Compile Include="View\AlgorithmUpdateView.cs" />
     <Compile Include="View\PopulateAlgorithmsView.cs" />

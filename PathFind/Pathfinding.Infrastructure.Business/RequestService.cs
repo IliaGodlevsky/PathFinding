@@ -14,6 +14,7 @@ using Pathfinding.Shared.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -144,29 +145,6 @@ namespace Pathfinding.Infrastructure.Business
                 => await CreateGraphAsyncInternal(unit, graph, t).ConfigureAwait(false), token);
         }
 
-        public async Task<IReadOnlyCollection<PathfindingHistoryModel<T>>> ReadPathfindingHistoriesAsync(IEnumerable<int> graphIds,
-            CancellationToken token = default)
-        {
-            return await Transaction(async (unitOfWork, t) =>
-            {
-                var result = new List<PathfindingHistoryModel<T>>();
-                foreach (var graphId in graphIds)
-                {
-                    var graph = await ReadGraphInternalAsync(unitOfWork, graphId, t).ConfigureAwait(false);
-                    var statistics = await unitOfWork.StatisticsRepository.ReadByGraphIdAsync(graphId, t).ConfigureAwait(false);
-                    var range = await ReadRangeAsyncInternal(unitOfWork, graphId, t).ConfigureAwait(false);
-                    result.Add(new()
-                    {
-                        Graph = graph,
-                        Statistics = statistics.ToRunStatisticsModels(),
-                        Range = range.Select(x => x.Position).ToReadOnly()
-                    });
-                }
-                return result;
-            }, token).ConfigureAwait(false);
-            
-        }
-
         public async Task<IReadOnlyCollection<PathfindingRangeModel>> ReadRangeAsync(int graphId,
             CancellationToken token = default)
         {
@@ -189,28 +167,65 @@ namespace Pathfinding.Infrastructure.Business
         public async Task<IReadOnlyCollection<PathfindingHistorySerializationModel>> ReadSerializationHistoriesAsync(IEnumerable<int> graphIds,
             CancellationToken token = default)
         {
-            var result = await ReadPathfindingHistoriesAsync(graphIds, token).ConfigureAwait(false);
-            var list = new List<PathfindingHistorySerializationModel>();
-            foreach (var model in result)
+            return await Transaction(async (unitOfWork, t) =>
             {
-                list.Add(new PathfindingHistorySerializationModel()
+                var result = new List<PathfindingHistorySerializationModel>();
+                foreach (var graphId in graphIds)
                 {
-                    Graph = new GraphSerializationModel()
+                    var graph = await ReadGraphInternalAsync(unitOfWork, graphId, t).ConfigureAwait(false);
+                    var range = await ReadRangeAsyncInternal(unitOfWork, graphId, t).ConfigureAwait(false);
+                    var statistics = await unitOfWork.StatisticsRepository
+                        .ReadByGraphIdAsync(graphId, t).ConfigureAwait(false);
+                    result.Add(new()
                     {
-                        DimensionSizes = model.Graph.DimensionSizes,
-                        Vertices = model.Graph.Vertices.ToSerializationModels(),
-                        Neighborhood = model.Graph.Neighborhood,
-                        SmoothLevel = model.Graph.SmoothLevel,
-                        Status = model.Graph.Status,
-                        Name = model.Graph.Name
-                    },
-                    Statistics = model.Statistics.ToSerializationModels(),
-                    Range = model.Range
-                        .Select(x => new CoordinateModel() { Coordinate = x.CoordinatesValues })
-                        .ToList()
-                });
-            }
-            return list;
+                        Graph = graph.ToSerializationModel(),
+                        Statistics = statistics.ToSerializationModels(),
+                        Range = range.ToCoordinates()
+                    });
+                }
+                return result;
+            }, token).ConfigureAwait(false);
+        }
+
+        public async Task<IReadOnlyCollection<PathfindingHistorySerializationModel>> ReadSerializationGraphsAsync(IEnumerable<int> graphIds, CancellationToken token = default)
+        {
+            return await Transaction(async (unitOfWork, t) =>
+            {
+                var result = new List<PathfindingHistorySerializationModel>();
+                foreach (var graphId in graphIds)
+                {
+                    var graph = await ReadGraphInternalAsync(unitOfWork, graphId, t).ConfigureAwait(false);
+                    graph.Status = GraphStatuses.Editable;
+                    result.Add(new()
+                    {
+                        Graph = graph.ToSerializationModel(),
+                        Statistics = Array.Empty<RunStatisticsSerializationModel>(),
+                        Range = Array.Empty<CoordinateModel>()
+                    });
+                }
+                return result;
+            }, token).ConfigureAwait(false);
+        }
+
+        public async Task<IReadOnlyCollection<PathfindingHistorySerializationModel>> ReadSerializationGraphsWithRangeAsync(IEnumerable<int> graphIds, CancellationToken token = default)
+        {
+            return await Transaction(async (unitOfWork, t) =>
+            {
+                var result = new List<PathfindingHistorySerializationModel>();
+                foreach (var graphId in graphIds)
+                {
+                    var graph = await ReadGraphInternalAsync(unitOfWork, graphId, t).ConfigureAwait(false);
+                    graph.Status = GraphStatuses.Editable;
+                    var range = await ReadRangeAsyncInternal(unitOfWork, graphId, t).ConfigureAwait(false);
+                    result.Add(new()
+                    {
+                        Graph = graph.ToSerializationModel(),
+                        Statistics = Array.Empty<RunStatisticsSerializationModel>(),
+                        Range = range.ToCoordinates()
+                    });
+                }
+                return result;
+            }, token).ConfigureAwait(false);
         }
 
         public async Task<bool> UpdateVerticesAsync(UpdateVerticesRequest<T> request,
@@ -274,16 +289,6 @@ namespace Pathfinding.Infrastructure.Business
                 await unit.RangeRepository.UpsertAsync(range, t);
                 return true;
             }, token);
-        }
-
-        public async Task<RunStatisticsModel> CreateStatisticsAsync(CreateStatisticsRequest request, CancellationToken token = default)
-        {
-            return await Transaction(async (unit, t) =>
-            {
-                var statistics = request.ToStatistics();
-                var result = await unit.StatisticsRepository.CreateAsync(statistics, t);
-                return result.ToRunStatisticsModel();
-            }, token).ConfigureAwait(false);
         }
 
         public async Task<RunStatisticsModel> ReadStatisticAsync(int runId, CancellationToken token = default)

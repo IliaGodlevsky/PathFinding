@@ -1,5 +1,6 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
+using DynamicData;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
@@ -16,9 +17,11 @@ using Pathfinding.Shared.Primitives;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using static Pathfinding.ConsoleApp.Model.AlgorithmRevisionModel;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
@@ -34,10 +37,16 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public AlgorithmRevisionModel SelectedRun
         {
             get => selected;
-            set => this.RaiseAndSetIfChanged(ref selected, value);
+            set
+            {
+                float prevFraction = selected.Fraction;
+                selected.Fraction = 0;
+                this.RaiseAndSetIfChanged(ref selected, value);
+                selected.Fraction = prevFraction;
+            }
         }
 
-        public Dictionary<int, AlgorithmRevisionModel> Runs { get; } = new();
+        public ObservableCollection<AlgorithmRevisionModel> Runs { get; } = new();
 
         private int graphId;
         public IGraph<RunVertexModel> RunGraph { get; private set; } = Graph<RunVertexModel>.Empty;
@@ -50,6 +59,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.log = log;
             this.messenger = messenger;
             this.graphAssemble = graphAssemble;
+            Runs.ActOnEveryObject(OnAdded, OnRemoved);
             messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
             messenger.Register<RunsDeletedMessage>(this, OnRunsDeleted);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
@@ -67,12 +77,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnRunsDeleted(object recipient, RunsDeletedMessage msg)
         {
-            foreach (var runId in msg.RunIds.Where(Runs.ContainsKey))
-            {
-                var run = Runs[runId];
-                run.Dispose();
-                Runs.Remove(runId);
-            }
+            var runs = Runs.Where(x => msg.RunIds.Contains(x.Id)).ToArray();
+            Runs.RemoveMany(runs);
         }
 
         private void OnGraphUpdated(object recipient, GraphUpdatedMessage msg)
@@ -123,76 +129,62 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
+        private void OnAdded(AlgorithmRevisionModel model) { }
+
+        private void OnRemoved(AlgorithmRevisionModel model) => model.Dispose();
+
         private void ActivateRun(RunInfoModel model)
         {
-            if (Runs.TryGetValue(model.Id, out var vertices))
+            var run = Runs.FirstOrDefault(x => x.Id == model.Id);
+            if (run == null)
             {
-                var prevFraction = SelectedRun.Fraction;
-                SelectedRun.Fraction = 0;
-                SelectedRun = vertices;
-                SelectedRun.Fraction = prevFraction;
-                return;
-            }
-            this.RaisePropertyChanged(nameof(RunGraph));
-            var rangeMsg = new QueryPathfindingRangeMessage();
-            messenger.Send(rangeMsg);
-            var rangeCoordinates = rangeMsg.PathfindingRange;
-            var range = rangeCoordinates.Select(RunGraph.Get).ToArray();
+                this.RaisePropertyChanged(nameof(RunGraph));
 
-            var subRevisions = new List<SubRevisionModel>();
-            var visitedVertices = new List<(Coordinate Visited,
-                IReadOnlyList<Coordinate> Enqueued)>();
+                var rangeMsg = new QueryPathfindingRangeMessage();
+                messenger.Send(rangeMsg);
+                var rangeCoordinates = rangeMsg.PathfindingRange;
+                var range = rangeCoordinates.Select(RunGraph.Get).ToArray();
 
-            void AddSubAlgorithm(IReadOnlyCollection<Coordinate> path = null)
-            {
-                subRevisions.Add(new(visitedVertices, path ?? Array.Empty<Coordinate>()));
-                visitedVertices = new();
-            }
-            void OnVertexProcessed(object sender, VerticesProcessedEventArgs e)
-            {
-                visitedVertices.Add((e.Current, e.Enqueued));
-            }
-            void OnSubPathFound(object sender, SubPathFoundEventArgs args)
-            {
-                AddSubAlgorithm(args.SubPath);
-            }
+                var subRevisions = new List<SubRevisionModel>();
+                var visitedVertices = new List<(Coordinate Visited,
+                    IReadOnlyList<Coordinate> Enqueued)>();
 
-            try
-            {
+                void AddSubAlgorithm(IReadOnlyCollection<Coordinate> path = null)
+                {
+                    subRevisions.Add(new(visitedVertices, path ?? Array.Empty<Coordinate>()));
+                    visitedVertices = new();
+                }
+                void OnVertexProcessed(object sender, VerticesProcessedEventArgs e)
+                {
+                    visitedVertices.Add((e.Current, e.Enqueued));
+                }
+                void OnSubPathFound(object sender, SubPathFoundEventArgs args)
+                {
+                    AddSubAlgorithm(args.SubPath);
+                }
+
                 var algorithm = AlgorithmBuilder
                     .TakeAlgorithm(model.Algorithm)
                     .WithAlgorithmInfo(model)
                     .Build(range);
-
                 algorithm.SubPathFound += OnSubPathFound;
                 algorithm.VertexProcessed += OnVertexProcessed;
                 try
                 {
                     algorithm.FindPath();
                 }
-                finally
+                catch
                 {
-                    algorithm.SubPathFound -= OnSubPathFound;
-                    algorithm.VertexProcessed -= OnVertexProcessed;
+                    AddSubAlgorithm();
                 }
+                algorithm.SubPathFound -= OnSubPathFound;
+                algorithm.VertexProcessed -= OnVertexProcessed;
+
+                run = new AlgorithmRevisionModel(RunGraph,
+                    subRevisions, rangeCoordinates) { Id = model.Id };
+                Runs.Add(run);
             }
-            catch (NotImplementedException ex)
-            {
-                log.Warn(ex, ex.Message);
-                AddSubAlgorithm();
-            }
-            catch (Exception)
-            {
-                AddSubAlgorithm();
-            }
-            var verticesStates = new AlgorithmRevisionModel(RunGraph, 
-                subRevisions, rangeCoordinates);
-            verticesStates.DisposeWith(disposables);
-            var previousFraction = SelectedRun.Fraction;
-            SelectedRun.Fraction = 0;
-            SelectedRun = verticesStates;
-            SelectedRun.Fraction = previousFraction;
-            Runs[model.Id] = verticesStates;
+            SelectedRun = run;
         }
     }
 }

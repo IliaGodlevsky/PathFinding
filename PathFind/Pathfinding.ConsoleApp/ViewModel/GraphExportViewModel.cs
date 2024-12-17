@@ -30,6 +30,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
             set => this.RaiseAndSetIfChanged(ref graphIds, value);
         }
 
+        public ExportOptions Options { get; set; }
+
         public ReactiveCommand<Func<Stream>, Unit> ExportGraphCommand { get; }
 
         public GraphExportViewModel(IRequestService<GraphVertexModel> service,
@@ -57,7 +59,21 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 using var stream = streamFactory();
                 if (stream != Stream.Null)
                 {
-                    var graphs = await service.ReadSerializationHistoriesAsync(graphIds).ConfigureAwait(false);
+                    IReadOnlyCollection<PathfindingHistorySerializationModel> graphs;
+                    switch (Options)
+                    {
+                        case ExportOptions.GraphOnly:
+                            graphs = await service.ReadSerializationGraphsAsync(GraphIds).ConfigureAwait(false);
+                            break;
+                        case ExportOptions.WithRange:
+                            graphs = await service.ReadSerializationGraphsWithRangeAsync(GraphIds).ConfigureAwait(false);
+                            break;
+                        case ExportOptions.WithRuns:
+                            graphs = await service.ReadSerializationHistoriesAsync(GraphIds).ConfigureAwait(false);
+                            break;
+                        default:
+                            throw new InvalidOperationException("Invalid export option");
+                    }
                     await serializer.SerializeToAsync(graphs, stream).ConfigureAwait(false);
                     logger.Info(graphs.Count == 1 ? "Graph was saved" : "Graphs were saved");
                 }
