@@ -164,7 +164,7 @@ namespace Pathfinding.Infrastructure.Business
             }, token);
         }
 
-        public async Task<IReadOnlyCollection<PathfindingHistorySerializationModel>> ReadSerializationHistoriesAsync(IEnumerable<int> graphIds,
+        public async Task<PathfindingHisotiriesSerializationModel> ReadSerializationHistoriesAsync(IEnumerable<int> graphIds,
             CancellationToken token = default)
         {
             return await Transaction(async (unitOfWork, t) =>
@@ -183,11 +183,11 @@ namespace Pathfinding.Infrastructure.Business
                         Range = range.ToCoordinates()
                     });
                 }
-                return result;
+                return new PathfindingHisotiriesSerializationModel() { Histories = result };
             }, token).ConfigureAwait(false);
         }
 
-        public async Task<IReadOnlyCollection<PathfindingHistorySerializationModel>> ReadSerializationGraphsAsync(IEnumerable<int> graphIds, CancellationToken token = default)
+        public async Task<PathfindingHisotiriesSerializationModel> ReadSerializationGraphsAsync(IEnumerable<int> graphIds, CancellationToken token = default)
         {
             return await Transaction(async (unitOfWork, t) =>
             {
@@ -203,11 +203,11 @@ namespace Pathfinding.Infrastructure.Business
                         Range = Array.Empty<CoordinateModel>()
                     });
                 }
-                return result;
+                return new PathfindingHisotiriesSerializationModel() { Histories = result }; ;
             }, token).ConfigureAwait(false);
         }
 
-        public async Task<IReadOnlyCollection<PathfindingHistorySerializationModel>> ReadSerializationGraphsWithRangeAsync(IEnumerable<int> graphIds, CancellationToken token = default)
+        public async Task<PathfindingHisotiriesSerializationModel> ReadSerializationGraphsWithRangeAsync(IEnumerable<int> graphIds, CancellationToken token = default)
         {
             return await Transaction(async (unitOfWork, t) =>
             {
@@ -224,7 +224,7 @@ namespace Pathfinding.Infrastructure.Business
                         Range = range.ToCoordinates()
                     });
                 }
-                return result;
+                return new PathfindingHisotiriesSerializationModel() { Histories = result };
             }, token).ConfigureAwait(false);
         }
 

@@ -2,24 +2,22 @@
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Extensions;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Pathfinding.Infrastructure.Business.Serializers
 {
-    public sealed class BinarySerializer<T> : ISerializer<IEnumerable<T>>
+    public sealed class BinarySerializer<T> : ISerializer<T>
         where T : IBinarySerializable, new()
     {
-        public async Task<IEnumerable<T>> DeserializeFromAsync(Stream stream, CancellationToken token = default)
+        public async Task<T> DeserializeFromAsync(Stream stream, CancellationToken token = default)
         {
             try
             {
                 using var reader = new BinaryReader(stream, Encoding.Default, leaveOpen: true);
-                return await Task.Run(reader.ReadSerializableArray<T>, token).ConfigureAwait(false);
+                return await Task.Run(reader.ReadSerializable<T>, token).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -27,13 +25,12 @@ namespace Pathfinding.Infrastructure.Business.Serializers
             }
         }
 
-        public async Task SerializeToAsync(IEnumerable<T> item, Stream stream, CancellationToken token = default)
+        public async Task SerializeToAsync(T item, Stream stream, CancellationToken token = default)
         {
             try
             {
                 using var writer = new BinaryWriter(stream, Encoding.Default, leaveOpen: true);
-                var serializables = item.Cast<IBinarySerializable>().ToArray();
-                await Task.Run(() => writer.Write(serializables), token).ConfigureAwait(false);
+                await Task.Run(() => writer.Write(item), token).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

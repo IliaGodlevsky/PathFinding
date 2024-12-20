@@ -129,10 +129,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnGraphCreated(object recipient, GraphCreatedMessage msg)
         {
-            if (msg.Models.Length > 0)
-            {
-                Graphs.Add(msg.Models);
-            }
+            Graphs.Add(msg.Models);
         }
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)

@@ -16,7 +16,6 @@ using Pathfinding.Logging.Loggers;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Commands;
 using Pathfinding.Service.Interface.Models.Serialization;
-using System.Collections.Generic;
 
 namespace Pathfinding.ConsoleApp.Injection
 {
@@ -55,8 +54,8 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<ExcludeTransitVertex<GraphVertexModel>>().SingleInstance().WithAttributeFiltering()
                 .Keyed<IPathfindingRangeCommand<GraphVertexModel>>(KeyFilters.ExcludeCommands);
 
-            builder.RegisterType<BinarySerializer<PathfindingHistorySerializationModel>>()
-                .As<ISerializer<IEnumerable<PathfindingHistorySerializationModel>>>().SingleInstance();
+            builder.RegisterType<BinarySerializer<PathfindingHisotiriesSerializationModel>>()
+                .As<ISerializer<PathfindingHisotiriesSerializationModel>>().SingleInstance();
             builder.RegisterGenericDecorator(typeof(BufferedSerializer<>), typeof(ISerializer<>));
             builder.RegisterGenericDecorator(typeof(CompressSerializer<>), typeof(ISerializer<>));
 

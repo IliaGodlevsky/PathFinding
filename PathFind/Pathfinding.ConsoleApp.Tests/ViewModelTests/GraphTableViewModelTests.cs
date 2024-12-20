@@ -99,11 +99,11 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                 mock.Mock<IMessenger>()
                     .Verify(x => x.Send(
                         It.IsAny<AsyncGraphActivatedMessage>(),
-                        It.IsAny<int>()), Times.Exactly(3));
+                        It.IsAny<int>()), Times.Exactly(2));
                 mock.Mock<IMessenger>()
                     .Verify(x => x.Send(
-                        It.IsAny<AsyncGraphActivatedMessage>(),
-                        It.IsAny<IsAnyToken>()), Times.Exactly(4));
+                        It.IsAny<GraphActivatedMessage>(),
+                        It.IsAny<IsAnyToken>()), Times.Exactly(2));
             });
         }
 

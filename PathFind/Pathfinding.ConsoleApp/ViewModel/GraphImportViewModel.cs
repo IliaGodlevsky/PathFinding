@@ -23,12 +23,12 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private readonly IMessenger messenger;
         private readonly IRequestService<GraphVertexModel> service;
         private readonly ILog logger;
-        private readonly ISerializer<IEnumerable<PathfindingHistorySerializationModel>> serializer;
+        private readonly ISerializer<PathfindingHisotiriesSerializationModel> serializer;
 
         public ReactiveCommand<Func<Stream>, Unit> ImportGraphCommand { get; }
 
         public GraphImportViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
-            ISerializer<IEnumerable<PathfindingHistorySerializationModel>> serializer,
+            ISerializer<PathfindingHisotiriesSerializationModel> serializer,
             IRequestService<GraphVertexModel> service,
             ILog logger)
         {
@@ -47,7 +47,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 if (stream != Stream.Null)
                 {
                     var histories = await serializer.DeserializeFromAsync(stream).ConfigureAwait(false);
-                    var result = await service.CreatePathfindingHistoriesAsync(histories).ConfigureAwait(false);
+                    var result = await service.CreatePathfindingHistoriesAsync(histories.Histories)
+                        .ConfigureAwait(false);
                     var graphs = result.Select(x => new GraphInfoModel()
                     {
                         Width = x.Graph.DimensionSizes.ElementAtOrDefault(0),

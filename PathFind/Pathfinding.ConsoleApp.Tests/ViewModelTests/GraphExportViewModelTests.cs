@@ -8,6 +8,7 @@ using Pathfinding.ConsoleApp.ViewModel;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Serialization;
+using Pathfinding.Shared.Extensions;
 using System.Reactive.Linq;
 
 namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
@@ -27,10 +28,11 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                 new GraphInfoModel() { Id = 3 }
             };
 
-            IReadOnlyCollection<PathfindingHistorySerializationModel> histories
+            PathfindingHisotiriesSerializationModel histories
                = Enumerable.Range(1, 5)
                .Select(x => new PathfindingHistorySerializationModel())
-               .ToArray();
+               .ToArray()
+               .To(x => new PathfindingHisotiriesSerializationModel() { Histories = x.ToList() });
 
             mock.Mock<IRequestService<GraphVertexModel>>()
                 .Setup(x => x.ReadSerializationHistoriesAsync(
@@ -46,6 +48,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                     => handler(r, new GraphSelectedMessage(models)));
 
             var viewModel = mock.Create<GraphExportViewModel>();
+            viewModel.Options = ExportOptions.WithRuns;
 
             var command = viewModel.ExportGraphCommand;
             if (await command.CanExecute.FirstOrDefaultAsync())
@@ -66,9 +69,9 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                         It.IsAny<IsAnyToken>(),
                         It.IsAny<MessageHandler<object, GraphSelectedMessage>>()), Times.Once);
 
-                mock.Mock<ISerializer<IEnumerable<PathfindingHistorySerializationModel>>>()
+                mock.Mock<ISerializer<PathfindingHisotiriesSerializationModel>>()
                     .Verify(x => x.SerializeToAsync(
-                        It.IsAny<IEnumerable<PathfindingHistorySerializationModel>>(),
+                        It.IsAny<PathfindingHisotiriesSerializationModel>(),
                         It.IsAny<Stream>(),
                         It.IsAny<CancellationToken>()), Times.Once);
             });

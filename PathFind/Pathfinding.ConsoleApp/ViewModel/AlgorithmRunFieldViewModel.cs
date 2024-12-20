@@ -33,6 +33,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private readonly CompositeDisposable disposables = new();
 
+        private int graphId;
+
         private AlgorithmRevisionModel selected = AlgorithmRevisionModel.Empty;
         public AlgorithmRevisionModel SelectedRun
         {
@@ -48,7 +50,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public ObservableCollection<AlgorithmRevisionModel> Runs { get; } = new();
 
-        private int graphId;
         public IGraph<RunVertexModel> RunGraph { get; private set; } = Graph<RunVertexModel>.Empty;
 
         public AlgorithmRunFieldViewModel(
@@ -78,7 +79,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private void OnRunsDeleted(object recipient, RunsDeletedMessage msg)
         {
             var runs = Runs.Where(x => msg.RunIds.Contains(x.Id)).ToArray();
-            Runs.RemoveMany(runs);
+            Runs.Remove(runs);
         }
 
         private void OnGraphUpdated(object recipient, GraphUpdatedMessage msg)
@@ -109,11 +110,11 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             graphId = msg.Graph.Id;
             var graphVertices = msg.Graph.Vertices;
-            var graph = new Graph<GraphVertexModel>(msg.Graph.Vertices,
-                msg.Graph.DimensionSizes);
-            var runGraph = graphAssemble.AssembleGraph(
-                graph,
-                msg.Graph.DimensionSizes);
+            var dimensions = msg.Graph.DimensionSizes;
+            var graph = new Graph<GraphVertexModel>(graphVertices, dimensions);
+            var runGraph = graphAssemble.AssembleGraph(graph, dimensions);
+            RunGraph = Graph<RunVertexModel>.Empty;
+            this.RaisePropertyChanged(nameof(RunGraph));
             RunGraph = runGraph;
             Clear();
             foreach (var vertex in graphVertices)

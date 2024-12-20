@@ -53,7 +53,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             {
                 var copies = await service.ReadSerializationHistoriesAsync(GraphIds)
                     .ConfigureAwait(false);
-                var histories = await service.CreatePathfindingHistoriesAsync(copies)
+                var histories = await service.CreatePathfindingHistoriesAsync(copies.Histories)
                     .ConfigureAwait(false);
                 var graphs = histories.Select(x => x.Graph)
                     .Select(x => new GraphInfoModel()

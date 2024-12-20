@@ -64,6 +64,7 @@
     <Compile Include="Models\IGraphLayersInfo.cs" />
     <Compile Include="Models\IAlgorithmBuildInfo.cs" />
     <Compile Include="Models\Read\PathfindingRangeModel.cs" />
+    <Compile Include="Models\Serialization\PathfindingHisotiriesSerializationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requests\Create\CreateStatisticsRequest.cs" />
     <Compile Include="Requests\Create\CreateGraphRequest.cs" />

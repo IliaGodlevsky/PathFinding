@@ -43,13 +43,13 @@ namespace Pathfinding.Service.Interface
         Task<IReadOnlyCollection<PathfindingHistoryModel<T>>> CreatePathfindingHistoriesAsync(IEnumerable<PathfindingHistorySerializationModel> request,
             CancellationToken token = default);
 
-        Task<IReadOnlyCollection<PathfindingHistorySerializationModel>> ReadSerializationHistoriesAsync(IEnumerable<int> graphIds,
+        Task<PathfindingHisotiriesSerializationModel> ReadSerializationHistoriesAsync(IEnumerable<int> graphIds,
             CancellationToken token = default);
 
-        Task<IReadOnlyCollection<PathfindingHistorySerializationModel>> ReadSerializationGraphsAsync(IEnumerable<int> graphIds,
+        Task<PathfindingHisotiriesSerializationModel> ReadSerializationGraphsAsync(IEnumerable<int> graphIds,
             CancellationToken token = default);
 
-        Task<IReadOnlyCollection<PathfindingHistorySerializationModel>> ReadSerializationGraphsWithRangeAsync(IEnumerable<int> graphIds,
+        Task<PathfindingHisotiriesSerializationModel> ReadSerializationGraphsWithRangeAsync(IEnumerable<int> graphIds,
             CancellationToken token = default);
 
         Task<GraphModel<T>> CreateGraphAsync(CreateGraphRequest<T> graph,

@@ -19,11 +19,11 @@ namespace Pathfinding.ConsoleApp.View
             Initialize();
             this.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
-                .Select(x => new Func<Stream>(()=> 
+                .Select(x => new Func<Stream>(() =>
                 {
                     var filePath = GetFilePath(viewModel);
-                    return string.IsNullOrEmpty(filePath) 
-                        ? Stream.Null 
+                    return string.IsNullOrEmpty(filePath)
+                        ? Stream.Null
                         : File.OpenWrite(filePath);
                 }))
                 .InvokeCommand(viewModel, x => x.ExportGraphCommand)

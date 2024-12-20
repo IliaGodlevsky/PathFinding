@@ -11,6 +11,7 @@ using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Serialization;
 using Pathfinding.Service.Interface.Requests.Create;
+using Pathfinding.Shared.Extensions;
 using System.Reactive.Linq;
 
 namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
@@ -30,10 +31,11 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                 new GraphInfoModel() { Id = 3 }
             };
 
-            IReadOnlyCollection<PathfindingHistorySerializationModel> histories
+            PathfindingHisotiriesSerializationModel histories
                 = Enumerable.Range(1, 5)
                 .Select(x => new PathfindingHistorySerializationModel())
-                .ToArray();
+                .ToArray()
+                .To(x => new PathfindingHisotiriesSerializationModel() { Histories = x.ToList() });
             IReadOnlyCollection<PathfindingHistoryModel<GraphVertexModel>> result
                 = Enumerable.Range(1, 5)
                 .Select(x => new PathfindingHistoryModel<GraphVertexModel>()

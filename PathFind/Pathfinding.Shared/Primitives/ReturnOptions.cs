@@ -17,8 +17,6 @@ namespace Pathfinding.Shared.Primitives
             return value;
         }
 
-        public abstract override string ToString();
-
         protected abstract T GetIfGreater<T>(InclusiveValueRange<T> range) where T : IComparable<T>;
 
         protected abstract T GetIfLess<T>(InclusiveValueRange<T> range) where T : IComparable<T>;
@@ -30,9 +28,6 @@ namespace Pathfinding.Shared.Primitives
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             protected override T GetIfLess<T>(InclusiveValueRange<T> range) => range.UpperValueOfRange;
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public override string ToString() => "Cycle";
         }
 
         private sealed class LimitReturnOptions : ReturnOptions
@@ -42,9 +37,6 @@ namespace Pathfinding.Shared.Primitives
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             protected override T GetIfLess<T>(InclusiveValueRange<T> range) => range.LowerValueOfRange;
-
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public override string ToString() => "Limit";
         }
     }
 }

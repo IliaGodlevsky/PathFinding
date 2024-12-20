@@ -58,7 +58,6 @@ namespace Pathfinding.Infrastructure.Business.Builders
             };
         }
 
-
         private IHeuristic GetHeuristic()
         {
             return heuristic switch

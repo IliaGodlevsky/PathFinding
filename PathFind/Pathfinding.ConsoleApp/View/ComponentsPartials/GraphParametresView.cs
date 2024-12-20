@@ -1,4 +1,5 @@
-﻿using Terminal.Gui;
+﻿using System.Globalization;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -47,8 +48,34 @@ namespace Pathfinding.ConsoleApp.View
             obstaclesInput.X = Pos.Right(obstaclesLabel) + 1;
             obstaclesInput.Y = Pos.Bottom(graphLengthInput) + 1;
             obstaclesInput.Width = Dim.Fill(1);
-            Add(graphWidthLabel, graphWidthInput, graphLengthLabel, graphLengthInput,
+
+            graphWidthInput.KeyPress += KeyRestriction;
+            graphLengthInput.KeyPress += KeyRestriction;
+            obstaclesInput.KeyPress += KeyRestriction;
+
+            Add(graphWidthLabel, graphWidthInput,
+                graphLengthLabel, graphLengthInput,
                 obstaclesLabel, obstaclesInput);
+        }
+
+        private void KeyRestriction(KeyEventEventArgs args)
+        {
+            var keyChar = (char)args.KeyEvent.KeyValue;
+            if (args.KeyEvent.Key == Key.Backspace ||
+                args.KeyEvent.Key == Key.Delete ||
+                args.KeyEvent.Key == Key.CursorLeft ||
+                args.KeyEvent.Key == Key.CursorRight ||
+                args.KeyEvent.Key == Key.Home ||
+                args.KeyEvent.Key == Key.End)
+            {
+                return;
+            }
+            if (char.IsDigit(keyChar))
+            {
+                return;
+            }
+
+            args.Handled = true;
         }
     }
 }

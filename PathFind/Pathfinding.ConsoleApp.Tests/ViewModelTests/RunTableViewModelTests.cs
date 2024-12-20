@@ -167,8 +167,8 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                 .Setup(x => x.Register(
                     It.IsAny<object>(),
                     It.IsAny<IsAnyToken>(),
-                    It.IsAny<MessageHandler<object, AsyncRunsDeletedMessage>>()))
-                .Callback<object, object, MessageHandler<object, AsyncRunsDeletedMessage>>((r, t, handler)
+                    It.IsAny<MessageHandler<object, RunsDeletedMessage>>()))
+                .Callback<object, object, MessageHandler<object, RunsDeletedMessage>>((r, t, handler)
                 => handler(r, new(runs.Select(x => x.Id).ToArray())));
 
             var viewModel = mock.Create<RunsTableViewModel>();
@@ -190,7 +190,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                     .Verify(x => x.Register(
                         It.IsAny<object>(),
                         It.IsAny<IsAnyToken>(),
-                        It.IsAny<MessageHandler<object, AsyncRunsDeletedMessage>>()), Times.Once);
+                        It.IsAny<MessageHandler<object, RunsDeletedMessage>>()), Times.Once);
 
                 mock.Mock<IMessenger>()
                     .Verify(x => x.Send(

@@ -20,7 +20,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
     internal sealed class GraphExportViewModel : BaseViewModel, IGraphExportViewModel
     {
         private readonly IRequestService<GraphVertexModel> service;
-        private readonly ISerializer<IEnumerable<PathfindingHistorySerializationModel>> serializer;
+        private readonly ISerializer<PathfindingHisotiriesSerializationModel> serializer;
         private readonly ILog logger;
 
         private int[] graphIds = Array.Empty<int>();
@@ -35,7 +35,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public ReactiveCommand<Func<Stream>, Unit> ExportGraphCommand { get; }
 
         public GraphExportViewModel(IRequestService<GraphVertexModel> service,
-            ISerializer<IEnumerable<PathfindingHistorySerializationModel>> serializer,
+            ISerializer<PathfindingHisotiriesSerializationModel> serializer,
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             ILog logger)
         {
@@ -59,23 +59,24 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 using var stream = streamFactory();
                 if (stream != Stream.Null)
                 {
-                    IReadOnlyCollection<PathfindingHistorySerializationModel> graphs;
+                    PathfindingHisotiriesSerializationModel histories;
                     switch (Options)
                     {
                         case ExportOptions.GraphOnly:
-                            graphs = await service.ReadSerializationGraphsAsync(GraphIds).ConfigureAwait(false);
+                            histories = await service.ReadSerializationGraphsAsync(GraphIds).ConfigureAwait(false);
                             break;
                         case ExportOptions.WithRange:
-                            graphs = await service.ReadSerializationGraphsWithRangeAsync(GraphIds).ConfigureAwait(false);
+                            histories = await service.ReadSerializationGraphsWithRangeAsync(GraphIds).ConfigureAwait(false);
                             break;
                         case ExportOptions.WithRuns:
-                            graphs = await service.ReadSerializationHistoriesAsync(GraphIds).ConfigureAwait(false);
+                            histories = await service.ReadSerializationHistoriesAsync(GraphIds).ConfigureAwait(false);
                             break;
                         default:
                             throw new InvalidOperationException("Invalid export option");
                     }
-                    await serializer.SerializeToAsync(graphs, stream).ConfigureAwait(false);
-                    logger.Info(graphs.Count == 1 ? "Graph was saved" : "Graphs were saved");
+                    await serializer.SerializeToAsync(histories, stream).ConfigureAwait(false);
+                    logger.Info(histories.Histories.Count == 1 
+                        ? "Graph was saved" : "Graphs were saved");
                 }
             }, logger.Error).ConfigureAwait(false);
         }
