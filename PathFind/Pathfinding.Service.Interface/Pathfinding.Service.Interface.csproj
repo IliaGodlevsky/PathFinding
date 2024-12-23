@@ -53,6 +53,8 @@
     <Compile Include="Extensions\BinaryReaderExtensions.cs" />
     <Compile Include="Extensions\BinaryWriterExtensions.cs" />
     <Compile Include="Extensions\PathfindingRangeCommandExtensions.cs" />
+    <Compile Include="Extensions\XmlReaderExtensions.cs" />
+    <Compile Include="Extensions\XmlWriterExtensions.cs" />
     <Compile Include="IAlgorithm.cs" />
     <Compile Include="IBinarySerializable.cs" />
     <Compile Include="IGraphPath.cs" />

@@ -1,4 +1,6 @@
-﻿using Pathfinding.ConsoleApp.ViewModel.Interface;
+﻿using Pathfinding.ConsoleApp.Extensions;
+using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System;
@@ -19,21 +21,26 @@ namespace Pathfinding.ConsoleApp.View
             Initialize();
             this.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
-                .Select(x => new Func<Stream>(() =>
+                .Select(x => new Func<(Stream Stream, ExportFormat? Format)>(() =>
                 {
                     var filePath = GetFilePath(viewModel);
-                    return string.IsNullOrEmpty(filePath)
-                        ? Stream.Null
-                        : File.OpenWrite(filePath);
+                    return string.IsNullOrEmpty(filePath.Path)
+                        ? (Stream.Null, null)
+                        : (File.OpenWrite(filePath.Path), filePath.Format);
                 }))
                 .InvokeCommand(viewModel, x => x.ExportGraphCommand)
                 .DisposeWith(disposables);
         }
 
-        private static string GetFilePath(IGraphExportViewModel viewModel)
+        private static (string Path, ExportFormat? Format) GetFilePath(IGraphExportViewModel viewModel)
         {
+            var formats = Enum
+                .GetValues(typeof(ExportFormat))
+                .Cast<ExportFormat>()
+                .ToDictionary(x => x.ToExtensionRepresentation());
+            var allowedTypes = formats.Keys.ToList();
             using var dialog = new SaveDialog("Export",
-                "Enter file name", new() { ".dat" })
+                "Enter file name", allowedTypes)
             {
                 Width = Dim.Percent(45),
                 Height = Dim.Percent(55)
@@ -48,9 +55,12 @@ namespace Pathfinding.ConsoleApp.View
             };
             dialog.Add(export);
             Application.Run(dialog);
+            string filePath = dialog.FilePath.ToString();
+            string extension = Path.GetExtension(filePath);
+            var format = formats[extension];
             return !dialog.Canceled && dialog.FilePath != null
-                ? dialog.FilePath.ToString()
-                : string.Empty;
+                ? (filePath, format)
+                : (string.Empty, null);
         }
 
         protected override void Dispose(bool disposing)

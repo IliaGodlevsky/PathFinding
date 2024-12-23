@@ -13,8 +13,8 @@ using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Shared.Extensions;
+using Pathfinding.Shared.Interface;
 using Pathfinding.Shared.Primitives;
-using Pathfinding.Shared.Random;
 using ReactiveUI;
 using System;
 using System.Reactive;
@@ -34,6 +34,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private readonly IRequestService<GraphVertexModel> service;
         private readonly IGraphAssemble<GraphVertexModel> graphAssemble;
         private readonly IMessenger messenger;
+        private readonly IRandom random;
         private readonly ILog logger;
 
         private string name;
@@ -83,10 +84,12 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public GraphAssembleViewModel(IRequestService<GraphVertexModel> service,
             IGraphAssemble<GraphVertexModel> graphAssemble,
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
+            IRandom random,
             ILog logger)
         {
             this.service = service;
             this.messenger = messenger;
+            this.random = random;
             this.logger = logger;
             this.graphAssemble = graphAssemble;
             CreateCommand = ReactiveCommand.CreateFromTask(CreateGraph, CanExecute());
@@ -111,7 +114,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             await ExecuteSafe(async () =>
             {
-                var random = new CongruentialRandom();
                 var costLayer = new VertexCostLayer(CostRange, range => new VertexCost(random.NextInt(range), range));
                 var obstacleLayer = new ObstacleLayer(random, Obstacles);
                 var layers = new Layers(costLayer, obstacleLayer);

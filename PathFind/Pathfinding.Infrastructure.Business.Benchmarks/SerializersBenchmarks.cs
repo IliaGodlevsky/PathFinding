@@ -70,7 +70,7 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
         {
             var serializer = new BinarySerializer<Serializable>();
             var memory = new MemoryStream();
-            await serializer.SerializeToAsync(toSerialize.Enumerate(), memory);
+            await serializer.SerializeToAsync(toSerialize, memory);
         }
     }
 }

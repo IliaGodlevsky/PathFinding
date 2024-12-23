@@ -10,6 +10,7 @@ using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
 using System;
 using Pathfinding.ConsoleApp.Extensions;
+using ReactiveUI;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -21,17 +22,14 @@ namespace Pathfinding.ConsoleApp.View
             Initialize();
             var algos = Enum.GetValues(typeof(Algorithms))
                 .Cast<Algorithms>()
-                .ToDictionary(x => x.ToStringRepresentation());
-            var source = algos.Keys.ToList();
-            var values = source.Select(x => algos[x]).ToList();
-            algorithms.SetSource(source);
+                .ToArray();
+            algorithms.SetSource(algos.Select(x => x.ToStringRepresentation()).ToArray());
             algorithms.Events().SelectedItemChanged
                 .Where(x => x.Item > -1)
-                .Select(x => values[x.Item])
+                .Select(x => algos[x.Item])
                 .Do(algorithm =>
                 {
                     // Don't change order of the messages
-                    viewModel.Algorithm = algorithm;
                     switch (algorithm)
                     {
                         case Algorithms.AStar:
@@ -64,7 +62,7 @@ namespace Pathfinding.ConsoleApp.View
                             break;
                     }
                 })
-                .Subscribe();
+                .BindTo(viewModel, x => x.Algorithm);
         }
     }
 }

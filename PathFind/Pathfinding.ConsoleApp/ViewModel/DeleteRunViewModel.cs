@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class DeleteRunButtonViewModel : BaseViewModel, IDeleteRunViewModel
+    internal sealed class DeleteRunViewModel : BaseViewModel, IDeleteRunViewModel
     {
         private readonly IMessenger messenger;
         private readonly IRequestService<GraphVertexModel> service;
@@ -29,7 +29,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public ReactiveCommand<Unit, Unit> DeleteRunCommand { get; }
 
-        public DeleteRunButtonViewModel(
+        public DeleteRunViewModel(
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             IRequestService<GraphVertexModel> service,
             ILog logger)

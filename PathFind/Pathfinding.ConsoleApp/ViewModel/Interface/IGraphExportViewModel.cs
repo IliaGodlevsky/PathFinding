@@ -10,6 +10,6 @@ namespace Pathfinding.ConsoleApp.ViewModel.Interface
     {
         ExportOptions Options { get; set; }
 
-        ReactiveCommand<Func<Stream>, Unit> ExportGraphCommand { get; }
+        ReactiveCommand<Func<(Stream Stream, ExportFormat? Format)>, Unit> ExportGraphCommand { get; }
     }
 }

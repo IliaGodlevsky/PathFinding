@@ -122,6 +122,7 @@
     <Compile Include="Serializers\JsonSerializer.cs" />
     <Compile Include="Layers\SmoothLayer.cs" />
     <Compile Include="Layers\VertexCostLayer.cs" />
+    <Compile Include="Serializers\XmlSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Pathfinding.Domain.Core\Pathfinding.Domain.Core.csproj">

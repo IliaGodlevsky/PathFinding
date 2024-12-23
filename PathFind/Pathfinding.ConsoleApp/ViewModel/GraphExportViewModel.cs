@@ -1,4 +1,5 @@
 ﻿using Autofac.Features.AttributeFilters;
+using Autofac.Features.Metadata;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
@@ -20,8 +21,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
     internal sealed class GraphExportViewModel : BaseViewModel, IGraphExportViewModel
     {
         private readonly IRequestService<GraphVertexModel> service;
-        private readonly ISerializer<PathfindingHisotiriesSerializationModel> serializer;
         private readonly ILog logger;
+        private readonly IReadOnlyDictionary<ExportFormat, 
+            ISerializer<PathfindingHisotiriesSerializationModel>> serializers;
 
         private int[] graphIds = Array.Empty<int>();
         private int[] GraphIds
@@ -32,17 +34,18 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public ExportOptions Options { get; set; }
 
-        public ReactiveCommand<Func<Stream>, Unit> ExportGraphCommand { get; }
+        public ReactiveCommand<Func<(Stream Stream, ExportFormat? Format)>, Unit> ExportGraphCommand { get; }
 
         public GraphExportViewModel(IRequestService<GraphVertexModel> service,
-            ISerializer<PathfindingHisotiriesSerializationModel> serializer,
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
+            IEnumerable<Meta<ISerializer<PathfindingHisotiriesSerializationModel>>> serializers,
             ILog logger)
         {
             this.service = service;
-            this.serializer = serializer;
             this.logger = logger;
-            ExportGraphCommand = ReactiveCommand.CreateFromTask<Func<Stream>>(ExportGraph, CanExport());
+            this.serializers =  serializers
+                .ToDictionary(x => (ExportFormat)x.Metadata[MetadataKeys.ExportFormat], x => x.Value);
+            ExportGraphCommand = ReactiveCommand.CreateFromTask<Func<(Stream, ExportFormat?)>>(ExportGraph, CanExport());
             messenger.Register<GraphSelectedMessage>(this, OnGraphSelected);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
         }
@@ -52,31 +55,32 @@ namespace Pathfinding.ConsoleApp.ViewModel
             return this.WhenAnyValue(x => x.GraphIds, graphIds => graphIds.Length > 0);
         }
 
-        private async Task ExportGraph(Func<Stream> streamFactory)
+        private async Task ExportGraph(Func<(Stream Stream, ExportFormat? Format)> streamFactory)
         {
             await ExecuteSafe(async () =>
             {
-                using var stream = streamFactory();
-                if (stream != Stream.Null)
+                var stream = streamFactory();
+                var format = stream.Format;
+                var serializationStream = stream.Stream;
+                using (serializationStream)
                 {
-                    PathfindingHisotiriesSerializationModel histories;
-                    switch (Options)
+                    if (serializationStream != Stream.Null && format != null)
                     {
-                        case ExportOptions.GraphOnly:
-                            histories = await service.ReadSerializationGraphsAsync(GraphIds).ConfigureAwait(false);
-                            break;
-                        case ExportOptions.WithRange:
-                            histories = await service.ReadSerializationGraphsWithRangeAsync(GraphIds).ConfigureAwait(false);
-                            break;
-                        case ExportOptions.WithRuns:
-                            histories = await service.ReadSerializationHistoriesAsync(GraphIds).ConfigureAwait(false);
-                            break;
-                        default:
-                            throw new InvalidOperationException("Invalid export option");
+                        var serializer = serializers[format.Value];
+                        var historiesTask = Options switch
+                        {
+                            ExportOptions.GraphOnly => service.ReadSerializationGraphsAsync(GraphIds),
+                            ExportOptions.WithRange => service.ReadSerializationGraphsWithRangeAsync(GraphIds),
+                            ExportOptions.WithRuns => service.ReadSerializationHistoriesAsync(GraphIds),
+                            _ => throw new InvalidOperationException("Invalid export option"),
+                        };
+                        var histories = await historiesTask.ConfigureAwait(false);
+                        await serializer.SerializeToAsync(histories, serializationStream)
+                            .ConfigureAwait(false);
+                        logger.Info(histories.Histories.Count == 1
+                            ? "Graph was saved" 
+                            : "Graphs were saved");
                     }
-                    await serializer.SerializeToAsync(histories, stream).ConfigureAwait(false);
-                    logger.Info(histories.Histories.Count == 1 
-                        ? "Graph was saved" : "Graphs were saved");
                 }
             }, logger.Error).ConfigureAwait(false);
         }

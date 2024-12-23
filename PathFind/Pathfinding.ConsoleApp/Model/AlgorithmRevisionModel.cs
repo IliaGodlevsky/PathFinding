@@ -163,8 +163,10 @@ namespace Pathfinding.ConsoleApp.Model
                 previousPaths.AddRange(subAlgorithm.Path);
                 subAlgorithms.AddRange(sub);
             }
-            var vertices = new List<RevisionUnit>();
-            vertices.Add(new(dictionary[range.First()], RevisionUnitState.Source, true));
+            var vertices = new List<RevisionUnit>
+            {
+                new(dictionary[range.First()], RevisionUnitState.Source, true)
+            };
             foreach (var transit in range.Skip(1).Take(range.Count - 2))
             {
                 vertices.Add(new(dictionary[transit], RevisionUnitState.Transit, true));

@@ -7,7 +7,6 @@ using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Domain.Core;
 using Pathfinding.Shared.Extensions;
-using Pathfinding.Shared.Primitives;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System;

@@ -1,4 +1,5 @@
 ﻿using Autofac.Features.AttributeFilters;
+using Autofac.Features.Metadata;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
@@ -7,6 +8,7 @@ using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
+using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Serialization;
 using ReactiveUI;
 using System;
@@ -23,47 +25,63 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private readonly IMessenger messenger;
         private readonly IRequestService<GraphVertexModel> service;
         private readonly ILog logger;
-        private readonly ISerializer<PathfindingHisotiriesSerializationModel> serializer;
+        private readonly IReadOnlyDictionary<ExportFormat,
+            ISerializer<PathfindingHisotiriesSerializationModel>> serializers;
 
-        public ReactiveCommand<Func<Stream>, Unit> ImportGraphCommand { get; }
+        public ReactiveCommand<Func<(Stream Stream, ExportFormat? Format)>, Unit> ImportGraphCommand { get; }
 
         public GraphImportViewModel([KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
-            ISerializer<PathfindingHisotiriesSerializationModel> serializer,
+            IEnumerable<Meta<ISerializer<PathfindingHisotiriesSerializationModel>>> serializers,
             IRequestService<GraphVertexModel> service,
             ILog logger)
         {
             this.messenger = messenger;
-            this.serializer = serializer;
+            this.serializers = serializers
+                .ToDictionary(x => (ExportFormat)x.Metadata[MetadataKeys.ExportFormat], x => x.Value);
             this.service = service;
             this.logger = logger;
-            ImportGraphCommand = ReactiveCommand.CreateFromTask<Func<Stream>>(LoadGraph);
+            ImportGraphCommand = ReactiveCommand.CreateFromTask<Func<(Stream Stream, ExportFormat? Format)>>(LoadGraph);
         }
 
-        private async Task LoadGraph(Func<Stream> streamFactory)
+        private async Task LoadGraph(Func<(Stream Stream, ExportFormat? Format)> streamFactory)
         {
             await ExecuteSafe(async () =>
             {
-                using var stream = streamFactory();
-                if (stream != Stream.Null)
+                var stream = streamFactory();
+                var format = stream.Format;
+                var serializationStream = stream.Stream;
+                using (serializationStream)
                 {
-                    var histories = await serializer.DeserializeFromAsync(stream).ConfigureAwait(false);
-                    var result = await service.CreatePathfindingHistoriesAsync(histories.Histories)
-                        .ConfigureAwait(false);
-                    var graphs = result.Select(x => new GraphInfoModel()
+                    if (serializationStream != Stream.Null && format != null)
                     {
-                        Width = x.Graph.DimensionSizes.ElementAtOrDefault(0),
-                        Length = x.Graph.DimensionSizes.ElementAtOrDefault(1),
-                        Name = x.Graph.Name,
-                        Neighborhood = x.Graph.Neighborhood,
-                        Id = x.Graph.Id,
-                        SmoothLevel = x.Graph.SmoothLevel,
-                        ObstaclesCount = x.Graph.Vertices.GetObstaclesCount(),
-                        Status = x.Graph.Status
-                    }).ToArray();
-                    messenger.Send(new GraphCreatedMessage(graphs));
-                    logger.Info(graphs.Length > 0 ? "Graphs were loaded" : "Graph was loaded");
+                        var serializer = serializers[format.Value];
+                        var histories = await serializer.DeserializeFromAsync(serializationStream)
+                            .ConfigureAwait(false);
+                        var result = await service.CreatePathfindingHistoriesAsync(histories.Histories)
+                            .ConfigureAwait(false);
+                        var graphs = result.Select(CreateGraphInfo).ToArray();
+                        messenger.Send(new GraphCreatedMessage(graphs));
+                        logger.Info(graphs.Length > 0 
+                            ? "Graphs were loaded" 
+                            : "Graph was loaded");
+                    }
                 }
             }, logger.Error).ConfigureAwait(false);
+        }
+
+        private static GraphInfoModel CreateGraphInfo(PathfindingHistoryModel<GraphVertexModel> x)
+        {
+            return new GraphInfoModel()
+            {
+                Width = x.Graph.DimensionSizes.ElementAtOrDefault(0),
+                Length = x.Graph.DimensionSizes.ElementAtOrDefault(1),
+                Name = x.Graph.Name,
+                Neighborhood = x.Graph.Neighborhood,
+                Id = x.Graph.Id,
+                SmoothLevel = x.Graph.SmoothLevel,
+                ObstaclesCount = x.Graph.Vertices.GetObstaclesCount(),
+                Status = x.Graph.Status
+            };
         }
     }
 }

@@ -1,10 +1,13 @@
 ﻿using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Service.Interface.Models.Undefined;
 using System.IO;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
 namespace Pathfinding.Service.Interface.Models.Serialization
 {
-    public class VertexSerializationModel : IBinarySerializable
+    public class VertexSerializationModel : IBinarySerializable, IXmlSerializable
     {
         public CoordinateModel Position { get; set; }
 
@@ -24,6 +27,24 @@ namespace Pathfinding.Service.Interface.Models.Serialization
             writer.Write(Position);
             writer.Write(Cost);
             writer.Write(IsObstacle);
+        }
+
+        public XmlSchema GetSchema() => null;
+
+        public void ReadXml(XmlReader reader)
+        {
+            Position = new CoordinateModel();
+            Position.ReadXml(reader);
+            Cost = new VertexCostModel();
+            Cost.ReadXml(reader);
+            IsObstacle = reader.ReadElement<bool>("IsObstacle");
+        }
+
+        public void WriteXml(XmlWriter writer)
+        {
+            Position.WriteXml(writer);
+            Cost.WriteXml(writer);
+            writer.WriteElement("IsObstacle", IsObstacle);
         }
     }
 }

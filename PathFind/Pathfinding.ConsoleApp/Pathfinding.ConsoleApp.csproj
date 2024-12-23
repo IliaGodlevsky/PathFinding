@@ -58,6 +58,7 @@
       <DependentUpon>AppSettings.settings</DependentUpon>
     </Compile>
     <Compile Include="Extensions\AlgorithmExtensions.cs" />
+    <Compile Include="Extensions\ExportFormatExtensions.cs" />
     <Compile Include="Extensions\ExportOptionsExtensions.cs" />
     <Compile Include="Extensions\GraphStatusesExtensions.cs" />
     <Compile Include="Extensions\HeuristicsExtensions.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Extensions\RunStatusesExtensions.cs" />
     <Compile Include="Extensions\SmoothLevelsExtensions.cs" />
     <Compile Include="Extensions\StepRulesExtensions.cs" />
+    <Compile Include="Injection\MetadataKeys.cs" />
     <Compile Include="Messages\IAsyncMessage.cs" />
     <Compile Include="Messages\Tokens.cs" />
     <Compile Include="Messages\ViewModel\GraphActivatedMessage.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="Messages\View\OpenAlgorithmsPopulateViewMessage.cs" />
     <Compile Include="Messages\View\OpenGraphUpdateViewMessage.cs" />
     <Compile Include="Model\AlgorithmRevisionModel.cs" />
+    <Compile Include="Model\ExportFormat.cs" />
     <Compile Include="Model\RunVertexModel.cs" />
     <Compile Include="ViewModel\GraphCopyViewModel.cs" />
     <Compile Include="ViewModel\GraphUpdateViewModel.cs" />
@@ -105,7 +108,7 @@
     <Compile Include="ViewModel\Interface\IPathfindingRangeViewModel.cs" />
     <Compile Include="ViewModel\Interface\IPathfindingProcessViewModel.cs" />
     <Compile Include="ViewModel\Interface\IRequireHeuristicsViewModel.cs" />
-    <Compile Include="ViewModel\DeleteRunButtonViewModel.cs" />
+    <Compile Include="ViewModel\DeleteRunViewModel.cs" />
     <Compile Include="ViewModel\AlgorithmUpdateViewModel.cs" />
     <Compile Include="ViewModel\RunsTableViewModel.cs" />
     <Compile Include="View\AlgorithmRunProgressView.cs" />

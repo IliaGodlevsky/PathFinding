@@ -1,11 +1,15 @@
 ﻿using Pathfinding.Service.Interface.Extensions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
 namespace Pathfinding.Service.Interface.Models.Serialization
 {
-    public class PathfindingHisotiriesSerializationModel : IBinarySerializable
+    public class PathfindingHisotiriesSerializationModel : IBinarySerializable, IXmlSerializable
     {
         public IReadOnlyCollection<PathfindingHistorySerializationModel> Histories { get; set; }
             = Array.Empty<PathfindingHistorySerializationModel>();
@@ -18,6 +22,19 @@ namespace Pathfinding.Service.Interface.Models.Serialization
         public void Serialize(BinaryWriter writer)
         {
             writer.Write(Histories);
+        }
+
+        public XmlSchema GetSchema() => null;
+
+        public void ReadXml(XmlReader reader)
+        {
+            reader.Read();
+            Histories = reader.ReadCollection<PathfindingHistorySerializationModel>("Histories", "History");
+        }
+
+        public void WriteXml(XmlWriter writer)
+        {
+            writer.WriteCollection("Histories", "History", Histories);
         }
     }
 }

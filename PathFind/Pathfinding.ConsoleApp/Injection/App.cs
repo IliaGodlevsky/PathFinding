@@ -16,6 +16,8 @@ using Pathfinding.Logging.Loggers;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Commands;
 using Pathfinding.Service.Interface.Models.Serialization;
+using Pathfinding.Shared.Interface;
+using Pathfinding.Shared.Random;
 
 namespace Pathfinding.ConsoleApp.Injection
 {
@@ -29,6 +31,8 @@ namespace Pathfinding.ConsoleApp.Injection
                 .As<IGraphAssemble<GraphVertexModel>>().SingleInstance();
             builder.RegisterType<GraphAssemble<RunVertexModel>>()
                 .As<IGraphAssemble<RunVertexModel>>().SingleInstance();
+
+            builder.RegisterType<CongruentialRandom>().As<IRandom>().SingleInstance();
 
             builder.Register(_ => new SqliteUnitOfWorkFactory(AppSettings.Default.ConnectionString))
                 .As<IUnitOfWorkFactory>().SingleInstance();
@@ -54,10 +58,16 @@ namespace Pathfinding.ConsoleApp.Injection
             builder.RegisterType<ExcludeTransitVertex<GraphVertexModel>>().SingleInstance().WithAttributeFiltering()
                 .Keyed<IPathfindingRangeCommand<GraphVertexModel>>(KeyFilters.ExcludeCommands);
 
+            builder.RegisterType<JsonSerializer<PathfindingHisotiriesSerializationModel>>()
+                .As<ISerializer<PathfindingHisotiriesSerializationModel>>()
+                .SingleInstance().WithMetadata(MetadataKeys.ExportFormat, ExportFormat.Json);
             builder.RegisterType<BinarySerializer<PathfindingHisotiriesSerializationModel>>()
-                .As<ISerializer<PathfindingHisotiriesSerializationModel>>().SingleInstance();
+                .As<ISerializer<PathfindingHisotiriesSerializationModel>>()
+                .SingleInstance().WithMetadata(MetadataKeys.ExportFormat, ExportFormat.Binary);
+            builder.RegisterType<XmlSerializer<PathfindingHisotiriesSerializationModel>>()
+                .As<ISerializer<PathfindingHisotiriesSerializationModel>>()
+                .SingleInstance().WithMetadata(MetadataKeys.ExportFormat, ExportFormat.Xml);
             builder.RegisterGenericDecorator(typeof(BufferedSerializer<>), typeof(ISerializer<>));
-            builder.RegisterGenericDecorator(typeof(CompressSerializer<>), typeof(ISerializer<>));
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
             builder.RegisterType<ConsoleLog>().As<ILog>().SingleInstance();
