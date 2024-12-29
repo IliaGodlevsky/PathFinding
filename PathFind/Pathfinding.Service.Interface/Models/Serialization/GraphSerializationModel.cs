@@ -47,23 +47,23 @@ namespace Pathfinding.Service.Interface.Models.Serialization
 
         public void WriteXml(XmlWriter writer)
         {
-            writer.WriteAttribute("Name", Name);
-            writer.WriteAttribute("SmoothLevel", SmoothLevel);
-            writer.WriteAttribute("Neighborhood", Neighborhood);
-            writer.WriteAttribute("Status", Status);
-            writer.WriteAttribute("DimensionSizes", string.Join(",", DimensionSizes));
-            writer.WriteCollection("Vertices", "Vertex", Vertices);
+            writer.WriteAttribute(nameof(Name), Name);
+            writer.WriteAttribute(nameof(SmoothLevel), SmoothLevel);
+            writer.WriteAttribute(nameof(Neighborhood), Neighborhood);
+            writer.WriteAttribute(nameof(Status), Status);
+            writer.WriteAttribute(nameof(DimensionSizes), string.Join(",", DimensionSizes));
+            writer.WriteCollection(nameof(Vertices), "Vertex", Vertices);
         }
 
         public void ReadXml(XmlReader reader)
         {
-            Name = reader.ReadAttribute<string>("Name");
-            SmoothLevel = (SmoothLevels)Enum.Parse(typeof(SmoothLevels), reader.ReadAttribute<string>("SmoothLevel"));
-            Neighborhood = (Neighborhoods)Enum.Parse(typeof(Neighborhoods), reader.ReadAttribute<string>("Neighborhood"));
-            Status = (GraphStatuses)Enum.Parse(typeof(GraphStatuses), reader.ReadAttribute<string>("Status"));
-            DimensionSizes = Array.ConvertAll(reader.ReadAttribute<string>("DimensionSizes").Split(','), int.Parse);
+            Name = reader.ReadAttribute<string>(nameof(Name));
+            SmoothLevel = reader.ReadEnumAttribute<SmoothLevels>(nameof(SmoothLevel));
+            Neighborhood = reader.ReadEnumAttribute<Neighborhoods>(nameof(Neighborhood));
+            Status = reader.ReadEnumAttribute<GraphStatuses>(nameof(Status));
+            DimensionSizes = Array.ConvertAll(reader.ReadAttribute<string>(nameof(DimensionSizes)).Split(','), int.Parse);
             reader.Read();
-            Vertices = reader.ReadCollection<VertexSerializationModel>("Vertices", "Vertex");
+            Vertices = reader.ReadCollection<VertexSerializationModel>(nameof(Vertices), "Vertex");
         }
     }
 }

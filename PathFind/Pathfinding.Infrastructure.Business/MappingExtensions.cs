@@ -110,7 +110,7 @@ namespace Pathfinding.Infrastructure.Business
                 Id = vertexEntity.Id,
                 IsObstacle = vertexEntity.IsObstacle,
                 Position = vertexEntity.Coordinates.ToCoordinates(),
-                Cost = new VertexCost(vertexEntity.Cost, 
+                Cost = new VertexCost(vertexEntity.Cost,
                     new(vertexEntity.UpperValueRange, vertexEntity.LowerValueRange)),
             };
         }
@@ -197,7 +197,7 @@ namespace Pathfinding.Infrastructure.Business
                     UpperValueOfRange = cost.CostRange.UpperValueOfRange,
                     LowerValueOfRange = cost.CostRange.LowerValueOfRange
                 },
-                Position = new() { Coordinate = vertex.Position.CoordinatesValues}
+                Position = new() { Coordinate = vertex.Position.CoordinatesValues }
             };
         }
 

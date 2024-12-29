@@ -4,13 +4,13 @@ namespace Pathfinding.ConsoleApp.Extensions
 {
     internal static class ExportFormatExtensions
     {
-        public static string ToExtensionRepresentation(this ExportFormat exportFormat)
+        public static string ToExtensionRepresentation(this StreamFormat exportFormat)
         {
             return exportFormat switch
             {
-                ExportFormat.Json => ".json",
-                ExportFormat.Binary => ".dat",
-                ExportFormat.Xml => ".xml",
+                StreamFormat.Json => ".json",
+                StreamFormat.Binary => ".dat",
+                StreamFormat.Xml => ".xml",
                 _ => ""
             };
         }

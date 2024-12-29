@@ -1,6 +1,5 @@
 ﻿using Pathfinding.Service.Interface.Extensions;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
@@ -29,12 +28,12 @@ namespace Pathfinding.Service.Interface.Models.Serialization
         public void ReadXml(XmlReader reader)
         {
             reader.Read();
-            Histories = reader.ReadCollection<PathfindingHistorySerializationModel>("Histories", "History");
+            Histories = reader.ReadCollection<PathfindingHistorySerializationModel>(nameof(Histories), "Graph");
         }
 
         public void WriteXml(XmlWriter writer)
         {
-            writer.WriteCollection("Histories", "History", Histories);
+            writer.WriteCollection(nameof(Histories), "Graph", Histories);
         }
     }
 }

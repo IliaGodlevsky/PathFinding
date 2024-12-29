@@ -1,15 +1,15 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
-using Pathfinding.ConsoleApp.ViewModel.Interface;
-using System.Reactive.Disposables;
-using ReactiveMarbles.ObservableEvents;
-using Terminal.Gui;
-using System.Reactive.Linq;
-using ReactiveUI;
 using Pathfinding.ConsoleApp.Messages.View;
-using System;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
+using ReactiveMarbles.ObservableEvents;
+using ReactiveUI;
+using System;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {

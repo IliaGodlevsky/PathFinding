@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.Messaging.Messages;
-using Pathfinding.Service.Interface.Models.Read;
+﻿using Pathfinding.Service.Interface.Models.Read;
 using System;
 using System.Reactive;
 

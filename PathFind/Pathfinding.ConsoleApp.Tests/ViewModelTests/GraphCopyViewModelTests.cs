@@ -5,12 +5,10 @@ using NUnit.Framework;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel;
-using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Models.Serialization;
-using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Shared.Extensions;
 using System.Reactive.Linq;
 

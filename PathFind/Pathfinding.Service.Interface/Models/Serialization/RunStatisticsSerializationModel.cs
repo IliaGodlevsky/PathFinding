@@ -58,28 +58,28 @@ namespace Pathfinding.Service.Interface.Models.Serialization
 
         public void ReadXml(XmlReader reader)
         {
-            Algorithm = (Domain.Core.Algorithms)Enum.Parse(typeof(Domain.Core.Algorithms), reader.ReadElement<string>("Algorithm"));
-            Heuristics = reader.ReadNullableEnum<HeuristicFunctions>("Heuristics");
-            Weight = reader.ReadNullableElement<double>("Weight");
-            StepRule = reader.ReadNullableEnum<StepRules>("StepRule");
-            ResultStatus = (RunStatuses)Enum.Parse(typeof(RunStatuses), reader.ReadElement<string>("ResultStatus"));
-            Elapsed = TimeSpan.FromMilliseconds(reader.ReadElement<double>("Elapsed"));
-            Steps = reader.ReadElement<int>("Steps");
-            Cost = reader.ReadElement<double>("Cost");
-            Visited = reader.ReadElement<int>("Visited");
+            Algorithm = reader.ReadEnumElement<Domain.Core.Algorithms>(nameof(Algorithm));
+            Heuristics = reader.ReadNullableEnum<HeuristicFunctions>(nameof(Heuristics));
+            Weight = reader.ReadNullableElement<double>(nameof(Weight));
+            StepRule = reader.ReadNullableEnum<StepRules>(nameof(StepRule));
+            ResultStatus = reader.ReadEnumElement<RunStatuses>(nameof(ResultStatus));
+            Elapsed = TimeSpan.FromMilliseconds(reader.ReadElement<double>(nameof(Elapsed)));
+            Steps = reader.ReadElement<int>(nameof(Steps));
+            Cost = reader.ReadElement<double>(nameof(Cost));
+            Visited = reader.ReadElement<int>(nameof(Visited));
         }
 
         public void WriteXml(XmlWriter writer)
         {
-            writer.WriteElement("Algorithm", Algorithm.ToString());
-            writer.WriteNullableElement("Heuristics", Heuristics);
-            writer.WriteNullableElement("Weight", Weight);
-            writer.WriteNullableElement("StepRule", StepRule);
-            writer.WriteElement("ResultStatus", ResultStatus.ToString());
-            writer.WriteElement("Elapsed", Elapsed.TotalMilliseconds);
-            writer.WriteElement("Steps", Steps);
-            writer.WriteElement("Cost", Cost);
-            writer.WriteElement("Visited", Visited);
+            writer.WriteElement(nameof(Algorithm), Algorithm.ToString());
+            writer.WriteNullableElement(nameof(Heuristics), Heuristics);
+            writer.WriteNullableElement(nameof(Weight), Weight);
+            writer.WriteNullableElement(nameof(StepRule), StepRule);
+            writer.WriteElement(nameof(ResultStatus), ResultStatus.ToString());
+            writer.WriteElement(nameof(Elapsed), Elapsed.TotalMilliseconds);
+            writer.WriteElement(nameof(Steps), Steps);
+            writer.WriteElement(nameof(Cost), Cost);
+            writer.WriteElement(nameof(Visited), Visited);
         }
     }
 }

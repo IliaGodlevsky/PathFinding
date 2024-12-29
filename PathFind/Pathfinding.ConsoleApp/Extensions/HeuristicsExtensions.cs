@@ -1,4 +1,5 @@
-﻿using Pathfinding.Domain.Core;
+﻿using Pathfinding.ConsoleApp.Resources;
+using Pathfinding.Domain.Core;
 
 namespace Pathfinding.ConsoleApp.Extensions
 {
@@ -8,12 +9,12 @@ namespace Pathfinding.ConsoleApp.Extensions
         {
             return heuristics switch
             {
-                HeuristicFunctions.Euclidian => "Euclidian",
-                HeuristicFunctions.Chebyshev => "Chebyshev",
-                HeuristicFunctions.Diagonal => "Diagonal",
-                HeuristicFunctions.Manhattan => "Manhattan",
-                HeuristicFunctions.Cosine => "Cosine",
-                _ => "",
+                HeuristicFunctions.Euclidian => Resource.Euclidian,
+                HeuristicFunctions.Chebyshev => Resource.Chebyshev,
+                HeuristicFunctions.Diagonal => Resource.Diagonal,
+                HeuristicFunctions.Manhattan => Resource.Manhattan,
+                HeuristicFunctions.Cosine => Resource.Cosine,
+                _ => string.Empty,
             };
         }
     }

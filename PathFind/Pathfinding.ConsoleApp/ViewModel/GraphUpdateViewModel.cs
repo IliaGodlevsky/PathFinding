@@ -78,7 +78,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 x => x.SelectedGraphs,
                 x => x.Name,
                 (selected, name) =>
-                { 
+                {
                     bool canExecute = selected.Length == 1 && !string.IsNullOrEmpty(name);
                     return canExecute;
                 });

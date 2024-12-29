@@ -1,4 +1,5 @@
-﻿using Pathfinding.Domain.Core;
+﻿using Pathfinding.ConsoleApp.Resources;
+using Pathfinding.Domain.Core;
 
 namespace Pathfinding.ConsoleApp.Extensions
 {
@@ -8,9 +9,9 @@ namespace Pathfinding.ConsoleApp.Extensions
         {
             return stepRules switch
             {
-                StepRules.Default => "Default",
-                StepRules.Landscape => "Landscape",
-                _ => "",
+                StepRules.Default => Resource.Default,
+                StepRules.Landscape => Resource.Landscape,
+                _ => string.Empty,
             };
         }
     }

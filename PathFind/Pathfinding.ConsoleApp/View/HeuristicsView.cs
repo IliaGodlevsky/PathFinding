@@ -49,7 +49,7 @@ namespace Pathfinding.ConsoleApp.View
         private void OnOpen(object recipient, OpenHeuristicsViewMessage msg)
         {
             heuristics.SelectedItem = 0;
-            
+
             Visible = true;
         }
 

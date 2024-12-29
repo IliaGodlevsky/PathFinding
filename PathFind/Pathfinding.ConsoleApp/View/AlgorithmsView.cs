@@ -1,22 +1,22 @@
 ﻿using Autofac.Features.AttributeFilters;
+using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.ConsoleApp.Extensions;
 using Pathfinding.ConsoleApp.Injection;
+using Pathfinding.ConsoleApp.Messages.View;
+using Pathfinding.ConsoleApp.ViewModel.Interface;
+using Pathfinding.Domain.Core;
+using ReactiveMarbles.ObservableEvents;
+using ReactiveUI;
+using System;
 using System.Linq;
 using System.Reactive.Linq;
 using Terminal.Gui;
-using ReactiveMarbles.ObservableEvents;
-using Pathfinding.Domain.Core;
-using CommunityToolkit.Mvvm.Messaging;
-using Pathfinding.ConsoleApp.Messages.View;
-using Pathfinding.ConsoleApp.ViewModel.Interface;
-using System;
-using Pathfinding.ConsoleApp.Extensions;
-using ReactiveUI;
 
 namespace Pathfinding.ConsoleApp.View
 {
     internal sealed partial class AlgorithmsView : FrameView
     {
-        public AlgorithmsView([KeyFilter(KeyFilters.Views)]IMessenger messenger,
+        public AlgorithmsView([KeyFilter(KeyFilters.Views)] IMessenger messenger,
             IRequireAlgorithmNameViewModel viewModel)
         {
             Initialize();

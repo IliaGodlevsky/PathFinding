@@ -51,8 +51,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             await ExecuteSafe(async () =>
             {
-                var isDeleted = await service.DeleteRunsAsync(RunsIds)
-                    .ConfigureAwait(false);
+                var isDeleted = await service.DeleteRunsAsync(RunsIds).ConfigureAwait(false);
                 if (isDeleted)
                 {
                     var runs = RunsIds.ToArray();

@@ -8,7 +8,7 @@ namespace Pathfinding.Service.Interface.Models.Read
     public record class GraphModel<T> : IGraphLayersInfo
         where T : IVertex
     {
-        public static readonly GraphModel<T> Empty = new ()
+        public static readonly GraphModel<T> Empty = new()
         {
             Id = 0,
             Name = string.Empty,

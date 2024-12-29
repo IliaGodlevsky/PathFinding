@@ -1,5 +1,5 @@
-﻿using Pathfinding.Domain.Core;
-using System;
+﻿using Pathfinding.ConsoleApp.Resources;
+using Pathfinding.Domain.Core;
 
 namespace Pathfinding.ConsoleApp.Extensions
 {
@@ -9,9 +9,9 @@ namespace Pathfinding.ConsoleApp.Extensions
         {
             return status switch
             {
-                GraphStatuses.Editable => "Editable",
-                GraphStatuses.Readonly => "Readonly",
-                _ => throw new ArgumentOutOfRangeException(nameof(status), status, "Invalid GraphStatus")
+                GraphStatuses.Editable => Resource.Editable,
+                GraphStatuses.Readonly => Resource.Readonly,
+                _ => string.Empty
             };
         }
     }

@@ -12,7 +12,6 @@ using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
-using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Shared.Extensions;
 using ReactiveUI;
 using System;
@@ -48,8 +47,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             this.service = service;
             this.messenger = messenger;
             this.logger = logger;
-            messenger.Register<AsyncGraphUpdatedMessage, int>(this, Tokens.GraphTable, async (r, msg) 
-                => await OnGraphUpdated(r, msg));
+            messenger.RegisterAsyncHandler<AsyncGraphUpdatedMessage, int>(this, Tokens.GraphTable, OnGraphUpdated);
             messenger.Register<GraphCreatedMessage>(this, OnGraphCreated);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<ObstaclesCountChangedMessage>(this, OnObstaclesCountChanged);
@@ -87,7 +85,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             {
                 Graphs.Clear();
                 var infos = (await service.ReadAllGraphInfoAsync().ConfigureAwait(false))
-                    .Select(ToGraphInfo).ToList();
+                    .ToGraphInfo();
                 Graphs.Add(infos);
             }, logger.Error).ConfigureAwait(false);
         }
@@ -138,21 +136,6 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 .Where(x => msg.GraphIds.Contains(x.Id))
                 .ToList();
             Graphs.Remove(graphs);
-        }
-
-        private GraphInfoModel ToGraphInfo(GraphInformationModel model)
-        {
-            return new GraphInfoModel()
-            {
-                Id = model.Id,
-                Name = model.Name,
-                Neighborhood = model.Neighborhood,
-                SmoothLevel = model.SmoothLevel,
-                Width = model.Dimensions.ElementAtOrDefault(0),
-                Length = model.Dimensions.ElementAtOrDefault(1),
-                ObstaclesCount = model.ObstaclesCount,
-                Status = model.Status
-            };
         }
     }
 }

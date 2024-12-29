@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
+using Pathfinding.ConsoleApp.Resources;
 using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
@@ -14,7 +15,7 @@ namespace Pathfinding.ConsoleApp.View
         {
             X = Pos.Percent(65);
             Y = 0;
-            Text = "Close";
+            Text = Resource.CloseAlgorithms;
             this.messenger = messenger;
             MouseClick += OnClicked;
         }

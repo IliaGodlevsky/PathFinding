@@ -60,13 +60,13 @@ namespace Pathfinding.ConsoleApp.Injection
 
             builder.RegisterType<JsonSerializer<PathfindingHisotiriesSerializationModel>>()
                 .As<ISerializer<PathfindingHisotiriesSerializationModel>>()
-                .SingleInstance().WithMetadata(MetadataKeys.ExportFormat, ExportFormat.Json);
+                .SingleInstance().WithMetadata(MetadataKeys.ExportFormat, StreamFormat.Json);
             builder.RegisterType<BinarySerializer<PathfindingHisotiriesSerializationModel>>()
                 .As<ISerializer<PathfindingHisotiriesSerializationModel>>()
-                .SingleInstance().WithMetadata(MetadataKeys.ExportFormat, ExportFormat.Binary);
+                .SingleInstance().WithMetadata(MetadataKeys.ExportFormat, StreamFormat.Binary);
             builder.RegisterType<XmlSerializer<PathfindingHisotiriesSerializationModel>>()
                 .As<ISerializer<PathfindingHisotiriesSerializationModel>>()
-                .SingleInstance().WithMetadata(MetadataKeys.ExportFormat, ExportFormat.Xml);
+                .SingleInstance().WithMetadata(MetadataKeys.ExportFormat, StreamFormat.Xml);
             builder.RegisterGenericDecorator(typeof(BufferedSerializer<>), typeof(ISerializer<>));
 
             builder.RegisterType<FileLog>().As<ILog>().SingleInstance();
@@ -91,7 +91,7 @@ namespace Pathfinding.ConsoleApp.Injection
 
             builder.RegisterType<GraphPanel>().Keyed<Terminal.Gui.View>(KeyFilters.RightPanel).WithAttributeFiltering();
             builder.RegisterType<RunsPanel>().Keyed<Terminal.Gui.View>(KeyFilters.RightPanel).WithAttributeFiltering();
-            
+
             builder.RegisterType<GraphsTableView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphPanel).WithAttributeFiltering();
             builder.RegisterType<GraphTableButtonsFrame>().Keyed<Terminal.Gui.View>(KeyFilters.GraphPanel).WithAttributeFiltering();
             builder.RegisterType<GraphAssembleView>().Keyed<Terminal.Gui.View>(KeyFilters.GraphPanel).WithAttributeFiltering();

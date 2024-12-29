@@ -1,4 +1,5 @@
 ﻿using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.Resources;
 
 namespace Pathfinding.ConsoleApp.Extensions
 {
@@ -8,10 +9,10 @@ namespace Pathfinding.ConsoleApp.Extensions
         {
             return options switch
             {
-                ExportOptions.GraphOnly => "Graph only",
-                ExportOptions.WithRange => "With range",
-                ExportOptions.WithRuns => "With runs",
-                _ => ""
+                ExportOptions.GraphOnly => Resource.GraphOnly,
+                ExportOptions.WithRange => Resource.WithRange,
+                ExportOptions.WithRuns => Resource.WithRuns,
+                _ => string.Empty
             };
         }
     }

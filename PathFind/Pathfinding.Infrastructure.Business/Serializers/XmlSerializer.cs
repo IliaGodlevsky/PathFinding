@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 namespace Pathfinding.Infrastructure.Business.Serializers
 {
     public sealed class XmlSerializer<T> : ISerializer<T>
-        where T : IXmlSerializable
+        where T : IXmlSerializable, new()
     {
         public async Task<T> DeserializeFromAsync(Stream stream, CancellationToken token = default)
         {
@@ -18,7 +18,8 @@ namespace Pathfinding.Infrastructure.Business.Serializers
             {
                 var serializer = new XmlSerializer(typeof(T));
                 using var reader = new StreamReader(stream, Encoding.Default, false, 1024, leaveOpen: true);
-                var result = await Task.Run(() => serializer.Deserialize(reader), token).ConfigureAwait(false);
+                var result = await Task.Run(() => serializer.Deserialize(reader), token)
+                    .ConfigureAwait(false);
                 return (T)result;
             }
             catch (Exception ex)

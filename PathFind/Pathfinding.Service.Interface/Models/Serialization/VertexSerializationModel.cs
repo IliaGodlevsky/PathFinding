@@ -37,14 +37,14 @@ namespace Pathfinding.Service.Interface.Models.Serialization
             Position.ReadXml(reader);
             Cost = new VertexCostModel();
             Cost.ReadXml(reader);
-            IsObstacle = reader.ReadElement<bool>("IsObstacle");
+            IsObstacle = reader.ReadElement<bool>(nameof(IsObstacle));
         }
 
         public void WriteXml(XmlWriter writer)
         {
             Position.WriteXml(writer);
             Cost.WriteXml(writer);
-            writer.WriteElement("IsObstacle", IsObstacle);
+            writer.WriteElement(nameof(IsObstacle), IsObstacle);
         }
     }
 }

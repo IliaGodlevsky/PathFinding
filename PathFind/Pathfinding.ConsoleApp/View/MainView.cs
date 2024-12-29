@@ -8,9 +8,6 @@ namespace Pathfinding.ConsoleApp.View
 {
     internal sealed class MainView : Window
     {
-        private const Color ForegroundColor = Color.Gray;
-        private const Color BackgroundColor = ColorConstants.BackgroundColor;
-
         public MainView([KeyFilter(KeyFilters.MainWindow)] IEnumerable<Terminal.Gui.View> children)
         {
             X = 0;
@@ -25,7 +22,9 @@ namespace Pathfinding.ConsoleApp.View
         private void OnActivate()
         {
             var driver = Application.Driver;
-            var attribute = driver.MakeAttribute(ForegroundColor, BackgroundColor);
+            var backgroundColor = AppSettings.Default.BackgroundColor;
+            var foregroundColor = AppSettings.Default.ForegroundColor;
+            var attribute = driver.MakeAttribute(foregroundColor, backgroundColor);
             Colors.Base.Normal = attribute;
         }
     }

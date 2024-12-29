@@ -78,6 +78,10 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         private void OnRunsDeleted(object recipient, RunsDeletedMessage msg)
         {
+            if (msg.RunIds.Contains(SelectedRun.Id))
+            {
+                selected = AlgorithmRevisionModel.Empty;
+            }
             var runs = Runs.Where(x => msg.RunIds.Contains(x.Id)).ToArray();
             Runs.Remove(runs);
         }
@@ -182,7 +186,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 algorithm.VertexProcessed -= OnVertexProcessed;
 
                 run = new AlgorithmRevisionModel(RunGraph,
-                    subRevisions, rangeCoordinates) { Id = model.Id };
+                    subRevisions, rangeCoordinates)
+                { Id = model.Id };
                 Runs.Add(run);
             }
             SelectedRun = run;

@@ -31,7 +31,7 @@ namespace Pathfinding.ConsoleApp.View
             var rules = Enum.GetValues(typeof(StepRules))
                 .Cast<StepRules>()
                 .ToDictionary(x => x.ToStringRepresentation());
-            var labels = rules.Select(x=> ustring.Make(x.Key)).ToArray();
+            var labels = rules.Select(x => ustring.Make(x.Key)).ToArray();
             var values = labels.Select(x => rules[x.ToString()]).ToList();
             stepRules.RadioLabels = labels;
             stepRules.Events().SelectedItemChanged
@@ -61,7 +61,7 @@ namespace Pathfinding.ConsoleApp.View
         {
             Close();
         }
-        
+
         private void Close()
         {
             viewModel.StepRule = default;

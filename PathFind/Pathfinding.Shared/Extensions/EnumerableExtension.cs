@@ -61,21 +61,19 @@ namespace Pathfinding.Shared.Extensions
 
         public static bool Juxtapose<T, U>(this IEnumerable<T> self, IEnumerable<U> second, Func<T, U, bool> predicate)
         {
-            using (var enumerator = self.GetEnumerator())
+            using var enumerator = self.GetEnumerator();
+            using var enumerator2 = second.GetEnumerator();
+            while (enumerator.MoveNext())
             {
-                using var enumerator2 = second.GetEnumerator();
-                while (enumerator.MoveNext())
-                {
-                    if (!enumerator2.MoveNext() || !predicate(enumerator.Current, enumerator2.Current))
-                    {
-                        return false;
-                    }
-                }
-
-                if (enumerator2.MoveNext())
+                if (!enumerator2.MoveNext() || !predicate(enumerator.Current, enumerator2.Current))
                 {
                     return false;
                 }
+            }
+
+            if (enumerator2.MoveNext())
+            {
+                return false;
             }
             return true;
         }

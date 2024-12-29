@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Xml.Serialization;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace Pathfinding.Service.Interface.Extensions
 {
@@ -9,17 +9,25 @@ namespace Pathfinding.Service.Interface.Extensions
     {
         public static T ReadElement<T>(this XmlReader reader, string elementName)
         {
-            if (reader.NodeType == XmlNodeType.Element && reader.Name == elementName)
+            return reader.Read(elementName,
+                content => (T)Convert.ChangeType(content, typeof(T)));
+        }
+
+        public static T ReadEnumElement<T>(this XmlReader reader, string elementName)
+            where T : Enum
+        {
+            return reader.Read(elementName, content => (T)Enum.Parse(typeof(T), content));
+        }
+
+        private static T Read<T>(this XmlReader reader, string elementName, Func<string, T> converter)
+        {
+            if (reader.NodeType == XmlNodeType.Element && reader.Name == elementName
+               || reader.ReadToFollowing(elementName))
             {
                 var content = reader.ReadElementContentAsString();
-                return (T)Convert.ChangeType(content, typeof(T));
+                return converter(content);
             }
 
-            if (reader.ReadToFollowing(elementName))
-            {
-                var content = reader.ReadElementContentAsString();
-                return (T)Convert.ChangeType(content, typeof(T));
-            }
             return default;
         }
 
@@ -29,7 +37,15 @@ namespace Pathfinding.Service.Interface.Extensions
             return (T)Convert.ChangeType(value, typeof(T));
         }
 
-        public static List<T> ReadCollection<T>(this XmlReader reader, string collectionName, string itemName) where T : IXmlSerializable, new()
+        public static T ReadEnumAttribute<T>(this XmlReader reader, string attributeName)
+            where T : Enum
+        {
+            var value = reader.GetAttribute(attributeName);
+            return (T)Enum.Parse(typeof(T), value);
+        }
+
+        public static List<T> ReadCollection<T>(this XmlReader reader, string collectionName, string itemName)
+            where T : IXmlSerializable, new()
         {
             var items = new List<T>();
             if (reader.NodeType == XmlNodeType.Element && reader.Name == collectionName)
@@ -62,38 +78,17 @@ namespace Pathfinding.Service.Interface.Extensions
             return items;
         }
 
-
-        public static T? ReadNullableElement<T>(this XmlReader reader, string elementName) where T : struct
+        public static T? ReadNullableElement<T>(this XmlReader reader, string elementName)
+            where T : struct
         {
-            if (reader.NodeType == XmlNodeType.Element && reader.Name == elementName)
-            {
-                var content = reader.ReadElementContentAsString();
-                return !string.IsNullOrEmpty(content) ? (T)Convert.ChangeType(content, typeof(T)) : (T?)null;
-            }
-
-            if (reader.ReadToFollowing(elementName))
-            {
-                var content = reader.ReadElementContentAsString();
-                return !string.IsNullOrEmpty(content) ? (T)Convert.ChangeType(content, typeof(T)) : (T?)null;
-            }
-            return null;
+            return reader.Read(elementName,
+                content => string.IsNullOrEmpty(content) ? default(T?) : (T)Convert.ChangeType(content, typeof(T)));
         }
 
         public static T? ReadNullableEnum<T>(this XmlReader reader, string elementName) where T : struct, Enum
         {
-            if (reader.NodeType == XmlNodeType.Element && reader.Name == elementName)
-            {
-                var content = reader.ReadElementContentAsString();
-                return !string.IsNullOrEmpty(content) ? (T)Enum.Parse(typeof(T), content) : null;
-            }
-
-            if (reader.ReadToFollowing(elementName))
-            {
-                var content = reader.ReadElementContentAsString();
-                return !string.IsNullOrEmpty(content) ? (T)Enum.Parse(typeof(T), content) : null;
-            }
-
-            return null;
+            return reader.Read(elementName,
+                content => string.IsNullOrEmpty(content) ? default(T?) : (T)Enum.Parse(typeof(T), content));
         }
     }
 }

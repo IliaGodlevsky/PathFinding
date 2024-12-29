@@ -20,5 +20,20 @@ namespace Pathfinding.ConsoleApp.Extensions
             messenger.Send(message, token);
             await Task.WhenAny(timeout, tcs.Task).ConfigureAwait(false);
         }
+
+        public static void RegisterAsyncHandler<TMessage, TToken>(this IMessenger messenger, 
+            object recipient, TToken token, Func<object, TMessage, Task> handler)
+            where TMessage : class
+            where TToken : IEquatable<TToken>
+        {
+            messenger.Register<TMessage, TToken>(recipient, token, async (r, msg) => await handler(r, msg));
+        }
+
+        public static void RegisterAsyncHandler<TMessage>(this IMessenger messenger,
+            object recipient, Func<object, TMessage, Task> handler)
+            where TMessage : class
+        {
+            messenger.Register<TMessage>(recipient, async (r, msg) => await handler(r, msg));
+        }
     }
 }

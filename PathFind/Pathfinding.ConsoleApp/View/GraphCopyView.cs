@@ -23,7 +23,7 @@ namespace Pathfinding.ConsoleApp.View
             this.viewModel = viewModel;
             this.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
-                .Select(x=> Unit.Default)
+                .Select(x => Unit.Default)
                 .InvokeCommand(viewModel, x => x.CopyGraphCommand)
                 .DisposeWith(disposables);
         }

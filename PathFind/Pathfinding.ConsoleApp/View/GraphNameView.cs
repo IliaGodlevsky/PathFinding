@@ -1,5 +1,4 @@
-﻿using Pathfinding.ConsoleApp.ViewModel;
-using Pathfinding.ConsoleApp.ViewModel.Interface;
+﻿using Pathfinding.ConsoleApp.ViewModel.Interface;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System.Reactive.Disposables;

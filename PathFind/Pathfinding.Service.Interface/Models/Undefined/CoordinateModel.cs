@@ -26,7 +26,7 @@ namespace Pathfinding.Service.Interface.Models.Undefined
 
         public void ReadXml(XmlReader reader)
         {
-            var coordinates = reader.ReadElement<string>("Coordinate")
+            var coordinates = reader.ReadElement<string>(nameof(Coordinate))
                                     .Split(',')
                                     .Select(int.Parse)
                                     .ToList();
@@ -35,7 +35,7 @@ namespace Pathfinding.Service.Interface.Models.Undefined
 
         public void WriteXml(XmlWriter writer)
         {
-            writer.WriteElement("Coordinate", string.Join(",", Coordinate));
+            writer.WriteElement(nameof(Coordinate), string.Join(",", Coordinate));
         }
     }
 }

@@ -1,15 +1,12 @@
-﻿using Autofac;
-using Autofac.Extras.Moq;
+﻿using Autofac.Extras.Moq;
 using CommunityToolkit.Mvvm.Messaging;
 using Moq;
 using NUnit.Framework;
-using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
-using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 
 namespace Pathfinding.ConsoleApp.Tests.ViewModelTests

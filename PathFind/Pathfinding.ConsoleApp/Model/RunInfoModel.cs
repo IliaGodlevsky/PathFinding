@@ -21,7 +21,7 @@ namespace Pathfinding.ConsoleApp.Model
         }
 
         private int steps;
-        public int Steps 
+        public int Steps
         {
             get => steps;
             set => this.RaiseAndSetIfChanged(ref steps, value);
@@ -48,7 +48,7 @@ namespace Pathfinding.ConsoleApp.Model
         public double? Weight { get; set; }
 
         private RunStatuses status;
-        public RunStatuses ResultStatus 
+        public RunStatuses ResultStatus
         {
             get => status;
             set => this.RaiseAndSetIfChanged(ref status, value);

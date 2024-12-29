@@ -1,7 +1,6 @@
 ﻿using Pathfinding.ConsoleApp.Model;
 using ReactiveUI;
 using System;
-using System.IO;
 using System.Reactive;
 
 namespace Pathfinding.ConsoleApp.ViewModel.Interface
@@ -10,6 +9,6 @@ namespace Pathfinding.ConsoleApp.ViewModel.Interface
     {
         ExportOptions Options { get; set; }
 
-        ReactiveCommand<Func<(Stream Stream, ExportFormat? Format)>, Unit> ExportGraphCommand { get; }
+        ReactiveCommand<Func<StreamModel>, Unit> ExportGraphCommand { get; }
     }
 }

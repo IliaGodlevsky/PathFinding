@@ -32,16 +32,16 @@ namespace Pathfinding.Service.Interface.Models.Undefined
 
         public void ReadXml(XmlReader reader)
         {
-            Cost = reader.ReadElement<int>("Cost");
-            UpperValueOfRange = reader.ReadElement<int>("UpperValueOfRange");
-            LowerValueOfRange = reader.ReadElement<int>("LowerValueOfRange");
+            Cost = reader.ReadElement<int>(nameof(Cost));
+            UpperValueOfRange = reader.ReadElement<int>(nameof(UpperValueOfRange));
+            LowerValueOfRange = reader.ReadElement<int>(nameof(LowerValueOfRange));
         }
 
         public void WriteXml(XmlWriter writer)
         {
-            writer.WriteElement("Cost", Cost);
-            writer.WriteElement("UpperValueOfRange", UpperValueOfRange);
-            writer.WriteElement("LowerValueOfRange", LowerValueOfRange);
+            writer.WriteElement(nameof(Cost), Cost);
+            writer.WriteElement(nameof(UpperValueOfRange), UpperValueOfRange);
+            writer.WriteElement(nameof(LowerValueOfRange), LowerValueOfRange);
         }
     }
 }

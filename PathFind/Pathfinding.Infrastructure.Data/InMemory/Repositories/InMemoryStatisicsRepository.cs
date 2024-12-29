@@ -62,7 +62,7 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
 
         public async Task<bool> UpdateAsync(IEnumerable<Statistics> entities, CancellationToken token = default)
         {
-            foreach(var entity in entities)
+            foreach (var entity in entities)
             {
                 if (set.TryGetValue(entity, out var statistics))
                 {
@@ -83,7 +83,7 @@ namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
         public async Task<IEnumerable<Statistics>> ReadByIdsAsync(IEnumerable<int> runIds, CancellationToken token = default)
         {
             var ids = runIds.ToHashSet();
-            var statistics = set.Where(x=> runIds.Contains(x.Id)).ToList();
+            var statistics = set.Where(x => runIds.Contains(x.Id)).ToList();
             return await Task.FromResult(statistics);
         }
     }

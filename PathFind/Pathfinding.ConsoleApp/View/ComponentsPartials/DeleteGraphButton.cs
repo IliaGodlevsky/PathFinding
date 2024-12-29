@@ -1,4 +1,5 @@
-﻿using Terminal.Gui;
+﻿using Pathfinding.ConsoleApp.Resources;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -6,7 +7,7 @@ namespace Pathfinding.ConsoleApp.View
     {
         private void Initialize()
         {
-            Text = "Delete";
+            Text = Resource.DeleteGraph;
             X = Pos.Percent(83.65f);
             Y = 0;
             Width = Dim.Percent(16.65f);

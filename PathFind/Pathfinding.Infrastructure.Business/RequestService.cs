@@ -45,7 +45,7 @@ namespace Pathfinding.Infrastructure.Business
             return await Transaction(async (unitOfWork, t) =>
             {
                 var models = new List<PathfindingHistoryModel<T>>();
-                foreach(var history in request)
+                foreach (var history in request)
                 {
                     var graphModel = history.Graph;
                     var vertices = graphModel.Vertices.ToVertices<T>();
@@ -140,7 +140,7 @@ namespace Pathfinding.Infrastructure.Business
         public async Task<GraphModel<T>> CreateGraphAsync(CreateGraphRequest<T> graph,
             CancellationToken token = default)
         {
-            return await Transaction(async (unit, t) 
+            return await Transaction(async (unit, t)
                 => await CreateGraphAsyncInternal(unit, graph, t).ConfigureAwait(false), token);
         }
 
@@ -272,11 +272,11 @@ namespace Pathfinding.Infrastructure.Business
             return await Transaction(async (unit, t) =>
             {
                 var range = (await unit.RangeRepository.ReadByGraphIdAsync(graphId, t)).ToList();
-                var pathfindingRange = new PathfindingRange() 
-                { 
-                    GraphId = graphId, 
-                    Order = index, 
-                    VertexId = vertexId 
+                var pathfindingRange = new PathfindingRange()
+                {
+                    GraphId = graphId,
+                    Order = index,
+                    VertexId = vertexId
                 };
                 range.Insert(index, pathfindingRange);
                 range.ForEach((x, i) =>
@@ -354,7 +354,7 @@ namespace Pathfinding.Infrastructure.Business
             };
         }
 
-        private async Task<GraphModel<T>> CreateGraphAsyncInternal(IUnitOfWork unit, 
+        private async Task<GraphModel<T>> CreateGraphAsyncInternal(IUnitOfWork unit,
             CreateGraphRequest<T> request, CancellationToken token = default)
         {
             var graph = request.ToGraphEntity();

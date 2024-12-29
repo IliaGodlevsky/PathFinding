@@ -1,4 +1,5 @@
-﻿using Pathfinding.Domain.Core;
+﻿using Pathfinding.ConsoleApp.Resources;
+using Pathfinding.Domain.Core;
 
 namespace Pathfinding.ConsoleApp.Extensions
 {
@@ -8,12 +9,12 @@ namespace Pathfinding.ConsoleApp.Extensions
         {
             return level switch
             {
-                SmoothLevels.No => "No",
-                SmoothLevels.Low => "Low",
-                SmoothLevels.Medium => "Medium",
-                SmoothLevels.High => "High",
-                SmoothLevels.Extreme => "Extreme",
-                _ => "",
+                SmoothLevels.No => Resource.No,
+                SmoothLevels.Low => Resource.Low,
+                SmoothLevels.Medium => Resource.Medium,
+                SmoothLevels.High => Resource.High,
+                SmoothLevels.Extreme => Resource.Extreme,
+                _ => string.Empty,
             };
         }
     }

@@ -1,10 +1,10 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.ConsoleApp.Extensions;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
-using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using ReactiveUI;
@@ -55,18 +55,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                     .ConfigureAwait(false);
                 var histories = await service.CreatePathfindingHistoriesAsync(copies.Histories)
                     .ConfigureAwait(false);
-                var graphs = histories.Select(x => x.Graph)
-                    .Select(x => new GraphInfoModel()
-                {
-                    Width = x.DimensionSizes.ElementAtOrDefault(0),
-                    Length = x.DimensionSizes.ElementAtOrDefault(1),
-                    Name = x.Name,
-                    Neighborhood = x.Neighborhood,
-                    Id = x.Id,
-                    SmoothLevel = x.SmoothLevel,
-                    ObstaclesCount = x.Vertices.GetObstaclesCount(),
-                    Status = x.Status
-                }).ToArray();
+                var graphs = histories.Select(x => x.Graph).ToGraphInfo();
                 messenger.Send(new GraphCreatedMessage(graphs));
             }, log.Error).ConfigureAwait(false);
         }

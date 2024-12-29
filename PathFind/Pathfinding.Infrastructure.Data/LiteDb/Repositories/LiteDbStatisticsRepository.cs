@@ -61,7 +61,7 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             return await Task.FromResult(count);
         }
 
-        public async Task<IEnumerable<Statistics>> ReadByIdsAsync(IEnumerable<int> runIds, 
+        public async Task<IEnumerable<Statistics>> ReadByIdsAsync(IEnumerable<int> runIds,
             CancellationToken token = default)
         {
             var result = collection.Query()
@@ -70,7 +70,7 @@ namespace Pathfinding.Infrastructure.Data.LiteDb.Repositories
             return await Task.FromResult(result);
         }
 
-        public async Task<bool> UpdateAsync(IEnumerable<Statistics> entities, 
+        public async Task<bool> UpdateAsync(IEnumerable<Statistics> entities,
             CancellationToken token = default)
         {
             var updated = collection.Update(entities);

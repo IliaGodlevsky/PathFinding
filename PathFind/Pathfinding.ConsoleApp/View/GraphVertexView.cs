@@ -1,5 +1,4 @@
 ﻿using Pathfinding.ConsoleApp.Model;
-using Pathfinding.Infrastructure.Data.Extensions;
 using ReactiveUI;
 using System;
 using System.Linq.Expressions;
@@ -9,26 +8,13 @@ using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
-    internal sealed class GraphVertexView : Label
+    internal sealed class GraphVertexView : VertexView<GraphVertexModel>
     {
-        private static readonly ColorScheme ObstacleColor = Create(ColorConstants.ObstacleVertexColor);
-        private static readonly ColorScheme RegularColor = Create(ColorConstants.RegularVertexColor);
-        private static readonly ColorScheme SourceColor = Create(ColorConstants.SourceVertexColor);
-        private static readonly ColorScheme TargetColor = Create(ColorConstants.TargetVertexColor);
-        private static readonly ColorScheme TransitColor = Create(ColorConstants.TranstiVertexColor);
-
-        private const int LabelWidth = GraphFieldView.DistanceBetweenVertices;
-
         private readonly CompositeDisposable disposables = new();
-        private readonly GraphVertexModel model;
 
         public GraphVertexView(GraphVertexModel model)
+            : base(model)
         {
-            X = model.Position.GetX() * LabelWidth;
-            Y = model.Position.GetY();
-            Width = LabelWidth;
-            this.model = model;
-            
             BindTo(x => x.IsTarget, TargetColor, RegularColor);
             BindTo(x => x.IsSource, SourceColor, RegularColor);
             BindTo(x => x.IsTransit, TransitColor, RegularColor);
@@ -39,13 +25,6 @@ namespace Pathfinding.ConsoleApp.View
                 .Do(x => Text = x)
                 .Subscribe()
                 .DisposeWith(disposables);
-        }
-
-        private static ColorScheme Create(Color foreground)
-        {
-            var driver = Application.Driver;
-            var attribute = driver.MakeAttribute(foreground, ColorConstants.BackgroundColor);
-            return new() { Normal = attribute };
         }
 
         private void BindTo(Expression<Func<GraphVertexModel, bool>> expression, ColorScheme toColor,

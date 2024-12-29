@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.View;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.Resources;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Extensions;
@@ -36,7 +37,7 @@ namespace Pathfinding.ConsoleApp.View
             {
                 BorderBrush = Color.BrightYellow,
                 BorderStyle = BorderStyle.Rounded,
-                Title = "Run field"
+                Title = Resource.RunField
             };
             container.X = Pos.Center();
             container.Y = Pos.Center();
@@ -78,7 +79,7 @@ namespace Pathfinding.ConsoleApp.View
             Application.MainLoop.Invoke(() =>
             {
                 container.Add(children.ToArray());
-                container.Width = graph.GetWidth() 
+                container.Width = graph.GetWidth()
                     * GraphFieldView.DistanceBetweenVertices;
                 container.Height = graph.GetLength();
             });

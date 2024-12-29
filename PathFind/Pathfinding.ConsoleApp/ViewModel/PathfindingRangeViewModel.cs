@@ -1,5 +1,6 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.ConsoleApp.Extensions;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
@@ -28,7 +29,7 @@ using System.Threading.Tasks;
 
 namespace Pathfinding.ConsoleApp.ViewModel
 {
-    internal sealed class PathfindingRangeViewModel : BaseViewModel, 
+    internal sealed class PathfindingRangeViewModel : BaseViewModel,
         IPathfindingRange<GraphVertexModel>, IPathfindingRangeViewModel
     {
         private readonly CompositeDisposable disposables = new();
@@ -113,8 +114,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<QueryPathfindingRangeMessage>(this, OnGetPathfindingRangeRecieved);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<GraphStateChangedMessage>(this, OnGraphBecameReadonly);
-            messenger.Register<AsyncGraphActivatedMessage, int>(this, Tokens.PathfindingRange,
-                async (r, msg) => await OnGraphActivated(msg));
+            messenger.RegisterAsyncHandler<AsyncGraphActivatedMessage, int>(this, Tokens.PathfindingRange, OnGraphActivated);
             AddToRangeCommand = ReactiveCommand.Create<GraphVertexModel>(AddVertexToRange, CanExecute());
             RemoveFromRangeCommand = ReactiveCommand.Create<GraphVertexModel>(RemoveVertexFromRange, CanExecute());
             DeletePathfindingRange = ReactiveCommand.CreateFromTask(DeleteRange, CanExecute());
@@ -138,18 +138,12 @@ namespace Pathfinding.ConsoleApp.ViewModel
         private void BindTo(Expression<Func<GraphVertexModel, bool>> expression,
             GraphVertexModel model)
         {
-            model.WhenAnyValue(expression)
-                .Skip(1)
-                .Where(x=> x)
+            model.WhenAnyValue(expression).Skip(1).Where(x => x)
                 .Do(async _ => await AddRangeToStorage(model))
-                .Subscribe()
-                .DisposeWith(disposables);
-            model.WhenAnyValue(expression)
-                .Skip(1)
-                .Where(x => !x)
+                .Subscribe().DisposeWith(disposables);
+            model.WhenAnyValue(expression).Skip(1).Where(x => !x)
                 .Do(async x => await RemoveVertexFromStorage(model))
-                .Subscribe()
-                .DisposeWith(disposables);
+                .Subscribe().DisposeWith(disposables);
         }
 
         private void SubcribeToEvents(GraphVertexModel vertex)
@@ -198,7 +192,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             }
         }
 
-        private async Task OnGraphActivated(AsyncGraphActivatedMessage msg)
+        private async Task OnGraphActivated(object recipient, AsyncGraphActivatedMessage msg)
         {
             await ExecuteSafe(async () =>
             {

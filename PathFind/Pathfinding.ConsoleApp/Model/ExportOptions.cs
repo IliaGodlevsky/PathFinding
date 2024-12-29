@@ -1,9 +1,4 @@
 ﻿namespace Pathfinding.ConsoleApp.Model
 {
-    internal enum ExportOptions
-    {
-        GraphOnly,
-        WithRange,
-        WithRuns
-    }
+    internal enum ExportOptions { GraphOnly, WithRange, WithRuns }
 }

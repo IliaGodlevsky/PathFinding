@@ -1,4 +1,5 @@
-﻿using Pathfinding.Domain.Core;
+﻿using Pathfinding.ConsoleApp.Resources;
+using Pathfinding.Domain.Core;
 
 namespace Pathfinding.ConsoleApp.Extensions
 {
@@ -8,9 +9,9 @@ namespace Pathfinding.ConsoleApp.Extensions
         {
             return neighborhood switch
             {
-                Neighborhoods.Moore => "Moore",
-                Neighborhoods.VonNeumann => "Neumann",
-                _ => "",
+                Neighborhoods.Moore => Resource.Moore,
+                Neighborhoods.VonNeumann => Resource.VonNeumann,
+                _ => string.Empty,
             };
         }
     }

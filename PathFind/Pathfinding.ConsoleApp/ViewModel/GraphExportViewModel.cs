@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.Resources;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
@@ -22,7 +23,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
     {
         private readonly IRequestService<GraphVertexModel> service;
         private readonly ILog logger;
-        private readonly IReadOnlyDictionary<ExportFormat, 
+        private readonly IReadOnlyDictionary<StreamFormat,
             ISerializer<PathfindingHisotiriesSerializationModel>> serializers;
 
         private int[] graphIds = Array.Empty<int>();
@@ -34,7 +35,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
 
         public ExportOptions Options { get; set; }
 
-        public ReactiveCommand<Func<(Stream Stream, ExportFormat? Format)>, Unit> ExportGraphCommand { get; }
+        public ReactiveCommand<Func<StreamModel>, Unit> ExportGraphCommand { get; }
 
         public GraphExportViewModel(IRequestService<GraphVertexModel> service,
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
@@ -43,43 +44,43 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             this.service = service;
             this.logger = logger;
-            this.serializers =  serializers
-                .ToDictionary(x => (ExportFormat)x.Metadata[MetadataKeys.ExportFormat], x => x.Value);
-            ExportGraphCommand = ReactiveCommand.CreateFromTask<Func<(Stream, ExportFormat?)>>(ExportGraph, CanExport());
+            this.serializers = serializers
+                .ToDictionary(x => (StreamFormat)x.Metadata[MetadataKeys.ExportFormat], x => x.Value);
+            ExportGraphCommand = ReactiveCommand.CreateFromTask<Func<StreamModel>>(ExportGraph, CanExport());
             messenger.Register<GraphSelectedMessage>(this, OnGraphSelected);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
         }
 
         private IObservable<bool> CanExport()
         {
-            return this.WhenAnyValue(x => x.GraphIds, graphIds => graphIds.Length > 0);
+            return this.WhenAnyValue(x => x.GraphIds,
+                graphIds => graphIds.Length > 0);
         }
 
-        private async Task ExportGraph(Func<(Stream Stream, ExportFormat? Format)> streamFactory)
+        private async Task ExportGraph(Func<StreamModel> streamFactory)
         {
             await ExecuteSafe(async () =>
             {
                 var stream = streamFactory();
-                var format = stream.Format;
-                var serializationStream = stream.Stream;
-                using (serializationStream)
+                var exportFormat = stream.Format;
+                var exportStream = stream.Stream;
+                using (exportStream)
                 {
-                    if (serializationStream != Stream.Null && format != null)
+                    if (exportStream != Stream.Null && exportFormat.HasValue)
                     {
-                        var serializer = serializers[format.Value];
+                        var serializer = serializers[exportFormat.Value];
                         var historiesTask = Options switch
                         {
                             ExportOptions.GraphOnly => service.ReadSerializationGraphsAsync(GraphIds),
                             ExportOptions.WithRange => service.ReadSerializationGraphsWithRangeAsync(GraphIds),
                             ExportOptions.WithRuns => service.ReadSerializationHistoriesAsync(GraphIds),
-                            _ => throw new InvalidOperationException("Invalid export option"),
+                            _ => throw new InvalidOperationException(Resource.InvalidExportOptions)
                         };
                         var histories = await historiesTask.ConfigureAwait(false);
-                        await serializer.SerializeToAsync(histories, serializationStream)
-                            .ConfigureAwait(false);
+                        await serializer.SerializeToAsync(histories, exportStream).ConfigureAwait(false);
                         logger.Info(histories.Histories.Count == 1
-                            ? "Graph was saved" 
-                            : "Graphs were saved");
+                            ? Resource.WasDeletedMsg
+                            : Resource.WereDeletedMsg);
                     }
                 }
             }, logger.Error).ConfigureAwait(false);

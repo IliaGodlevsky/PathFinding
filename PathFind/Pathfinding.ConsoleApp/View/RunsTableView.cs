@@ -30,7 +30,7 @@ namespace Pathfinding.ConsoleApp.View
             viewModel.Runs.CollectionChanged += OnCollectionChanged;
             this.Events().KeyPress
                 .Where(x => x.KeyEvent.Key.HasFlag(Key.A)
-                    && x.KeyEvent.Key.HasFlag(Key.CtrlMask) 
+                    && x.KeyEvent.Key.HasFlag(Key.CtrlMask)
                     && Table.Rows.Count > 0)
                 .Throttle(TimeSpan.FromMilliseconds(50))
                 .Select(x => MultiSelectedRegions
@@ -76,7 +76,7 @@ namespace Pathfinding.ConsoleApp.View
                 .Subscribe()
                 .DisposeWith(disposables);
         }
-        
+
         private int[] GetSelectedRows()
         {
             var selected = GetAllSelectedCells().Select(x => x.Y)

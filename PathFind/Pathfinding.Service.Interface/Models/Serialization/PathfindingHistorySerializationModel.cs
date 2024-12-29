@@ -36,15 +36,15 @@ namespace Pathfinding.Service.Interface.Models.Serialization
         {
             Graph = new GraphSerializationModel();
             Graph.ReadXml(reader);
-            Statistics = reader.ReadCollection<RunStatisticsSerializationModel>("Statistics", "Statistic");
-            Range = reader.ReadCollection<CoordinateModel>("Range", "Coordinates");
+            Statistics = reader.ReadCollection<RunStatisticsSerializationModel>(nameof(Statistics), "Statistic");
+            Range = reader.ReadCollection<CoordinateModel>(nameof(Range), "Coordinates");
         }
 
         public void WriteXml(XmlWriter writer)
         {
             Graph.WriteXml(writer);
-            writer.WriteCollection("Statistics", "Statistic", Statistics);
-            writer.WriteCollection("Range", "Coordinates", Range);
+            writer.WriteCollection(nameof(Statistics), "Statistic", Statistics);
+            writer.WriteCollection(nameof(Range), "Coordinates", Range);
         }
     }
 }

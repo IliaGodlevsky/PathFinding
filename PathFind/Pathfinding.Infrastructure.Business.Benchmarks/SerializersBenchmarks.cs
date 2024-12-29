@@ -2,7 +2,6 @@
 using Pathfinding.Infrastructure.Business.Benchmarks.Data;
 using Pathfinding.Infrastructure.Business.Serializers;
 using Pathfinding.Infrastructure.Business.Serializers.Decorators;
-using Pathfinding.Shared.Extensions;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;

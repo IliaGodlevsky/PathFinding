@@ -17,7 +17,7 @@ namespace Pathfinding.Infrastructure.Business.Builders
         private HeuristicFunctions? heuristic;
         private double? weight;
 
-        public static AlgorithmBuilder TakeAlgorithm(Domain.Core.Algorithms algorithm) 
+        public static AlgorithmBuilder TakeAlgorithm(Domain.Core.Algorithms algorithm)
             => new(algorithm);
 
         public AlgorithmBuilder WithAlgorithmInfo(IAlgorithmBuildInfo info)

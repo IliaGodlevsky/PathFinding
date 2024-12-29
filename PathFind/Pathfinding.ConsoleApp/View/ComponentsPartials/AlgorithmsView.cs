@@ -1,4 +1,5 @@
-﻿using Terminal.Gui;
+﻿using Pathfinding.ConsoleApp.Resources;
+using Terminal.Gui;
 
 namespace Pathfinding.ConsoleApp.View
 {
@@ -19,7 +20,7 @@ namespace Pathfinding.ConsoleApp.View
             Border = new Border()
             {
                 BorderStyle = BorderStyle.Rounded,
-                Title = "Algorithms",
+                Title = Resource.Algorithms,
                 BorderThickness = new Thickness(0)
             };
             Add(algorithms);

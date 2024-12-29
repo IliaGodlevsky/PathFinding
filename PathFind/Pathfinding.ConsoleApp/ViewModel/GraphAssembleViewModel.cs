@@ -23,10 +23,10 @@ using System.Threading.Tasks;
 namespace Pathfinding.ConsoleApp.ViewModel
 {
     internal sealed class GraphAssembleViewModel : BaseViewModel,
-        IGraphAssembleViewModel, 
-        IRequireGraphNameViewModel, 
+        IGraphAssembleViewModel,
+        IRequireGraphNameViewModel,
         IRequireGraphParametresViewModel,
-        IRequireSmoothLevelViewModel, 
+        IRequireSmoothLevelViewModel,
         IRequireNeighborhoodNameViewModel
     {
         private static readonly InclusiveValueRange<int> CostRange = (9, 1);
@@ -105,7 +105,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 (width, length, obstacles, name) =>
                 {
                     return width > 0 && length > 0
-                        && obstacles >= 0 
+                        && obstacles >= 0
                         && !string.IsNullOrEmpty(name);
                 });
         }

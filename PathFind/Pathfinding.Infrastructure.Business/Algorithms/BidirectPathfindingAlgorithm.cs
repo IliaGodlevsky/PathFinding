@@ -72,7 +72,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             return GetUnvisitedNeighbours(Current.Backward, backwardVisited);
         }
 
-        private IReadOnlyCollection<IPathfindingVertex> GetUnvisitedNeighbours(IPathfindingVertex vertex, 
+        private IReadOnlyCollection<IPathfindingVertex> GetUnvisitedNeighbours(IPathfindingVertex vertex,
             HashSet<IPathfindingVertex> visited)
         {
             return vertex.Neighbors

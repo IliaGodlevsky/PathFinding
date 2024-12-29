@@ -18,21 +18,21 @@ namespace Pathfinding.ConsoleApp.View
             Initialize();
             this.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
-                .Select(x => new Func<(Stream Stream, ExportFormat? Format)>(() =>
+                .Select(x => new Func<StreamModel>(() =>
                 {
                     var fileName = GetFileName();
                     return string.IsNullOrEmpty(fileName.Path)
-                        ? (Stream.Null, null)
-                        : (File.OpenRead(fileName.Path), fileName.Format);
+                        ? new(Stream.Null, null)
+                        : new(File.OpenRead(fileName.Path), fileName.Format);
                 }))
                 .InvokeCommand(viewModel, x => x.ImportGraphCommand);
         }
 
-        private static (string Path, ExportFormat? Format) GetFileName()
+        private static (string Path, StreamFormat? Format) GetFileName()
         {
             var formats = Enum
-                .GetValues(typeof(ExportFormat))
-                .Cast<ExportFormat>()
+                .GetValues(typeof(StreamFormat))
+                .Cast<StreamFormat>()
                 .ToDictionary(x => x.ToExtensionRepresentation());
             var extensions = formats.Keys.ToList();
             using var dialog = new OpenDialog("Import",

@@ -18,19 +18,19 @@ namespace Pathfinding.ConsoleApp.Model
 
         private enum RevisionUnitState
         {
-            No, 
-            Source, 
+            No,
+            Source,
             Target,
             Transit,
-            Visited, 
-            Enqueued, 
-            Path, 
+            Visited,
+            Enqueued,
+            Path,
             CrossPath
         }
 
         private readonly record struct RevisionUnit(
             RunVertexModel Vertex,
-            RevisionUnitState State, 
+            RevisionUnitState State,
             bool Value)
         {
             public void Set() => Set(Value);
@@ -52,7 +52,7 @@ namespace Pathfinding.ConsoleApp.Model
             }
         }
 
-        public static readonly AlgorithmRevisionModel Empty 
+        public static readonly AlgorithmRevisionModel Empty
             = new(Array.Empty<RunVertexModel>(),
                   Array.Empty<SubRevisionModel>(),
                   Array.Empty<Coordinate>());
@@ -77,7 +77,7 @@ namespace Pathfinding.ConsoleApp.Model
         }
 
         private int cursor;
-        public int Cursor 
+        public int Cursor
         {
             get => cursor;
             private set => cursor = CursorRange.ReturnInRange(value);
@@ -86,7 +86,7 @@ namespace Pathfinding.ConsoleApp.Model
         public int Id { get; set; }
 
         public AlgorithmRevisionModel(
-            IReadOnlyCollection<RunVertexModel> vertices, 
+            IReadOnlyCollection<RunVertexModel> vertices,
             IReadOnlyCollection<SubRevisionModel> pathfindingResult,
             IReadOnlyCollection<Coordinate> range)
         {

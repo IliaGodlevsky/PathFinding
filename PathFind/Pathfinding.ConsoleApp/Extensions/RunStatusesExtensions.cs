@@ -1,4 +1,5 @@
-﻿using Pathfinding.Domain.Core;
+﻿using Pathfinding.ConsoleApp.Resources;
+using Pathfinding.Domain.Core;
 
 namespace Pathfinding.ConsoleApp.Extensions
 {
@@ -8,9 +9,9 @@ namespace Pathfinding.ConsoleApp.Extensions
         {
             return statuses switch
             {
-                RunStatuses.Success => "Success",
-                RunStatuses.Failure => "Failure",
-                _ => "",
+                RunStatuses.Success => Resource.Success,
+                RunStatuses.Failure => Resource.Failure,
+                _ => string.Empty,
             };
         }
     }

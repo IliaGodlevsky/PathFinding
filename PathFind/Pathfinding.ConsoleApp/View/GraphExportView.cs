@@ -21,22 +21,22 @@ namespace Pathfinding.ConsoleApp.View
             Initialize();
             this.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
-                .Select(x => new Func<(Stream Stream, ExportFormat? Format)>(() =>
+                .Select(x => new Func<StreamModel>(() =>
                 {
                     var filePath = GetFilePath(viewModel);
                     return string.IsNullOrEmpty(filePath.Path)
-                        ? (Stream.Null, null)
-                        : (File.OpenWrite(filePath.Path), filePath.Format);
+                        ? new(Stream.Null, null)
+                        : new(File.OpenWrite(filePath.Path), filePath.Format);
                 }))
                 .InvokeCommand(viewModel, x => x.ExportGraphCommand)
                 .DisposeWith(disposables);
         }
 
-        private static (string Path, ExportFormat? Format) GetFilePath(IGraphExportViewModel viewModel)
+        private static (string Path, StreamFormat? Format) GetFilePath(IGraphExportViewModel viewModel)
         {
             var formats = Enum
-                .GetValues(typeof(ExportFormat))
-                .Cast<ExportFormat>()
+                .GetValues(typeof(StreamFormat))
+                .Cast<StreamFormat>()
                 .ToDictionary(x => x.ToExtensionRepresentation());
             var allowedTypes = formats.Keys.ToList();
             using var dialog = new SaveDialog("Export",

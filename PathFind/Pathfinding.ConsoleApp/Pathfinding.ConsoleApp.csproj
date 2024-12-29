@@ -62,6 +62,7 @@
     <Compile Include="Extensions\ExportOptionsExtensions.cs" />
     <Compile Include="Extensions\GraphStatusesExtensions.cs" />
     <Compile Include="Extensions\HeuristicsExtensions.cs" />
+    <Compile Include="Extensions\MappingExtensions.cs" />
     <Compile Include="Extensions\MessengerExtensions.cs" />
     <Compile Include="Extensions\NeighborhoodsExtensions.cs" />
     <Compile Include="Extensions\RunStatusesExtensions.cs" />
@@ -84,8 +85,14 @@
     <Compile Include="Messages\View\OpenAlgorithmsPopulateViewMessage.cs" />
     <Compile Include="Messages\View\OpenGraphUpdateViewMessage.cs" />
     <Compile Include="Model\AlgorithmRevisionModel.cs" />
-    <Compile Include="Model\ExportFormat.cs" />
+    <Compile Include="Model\StreamFormat.cs" />
+    <Compile Include="Model\StreamModel.cs" />
     <Compile Include="Model\RunVertexModel.cs" />
+    <Compile Include="Resources\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\GraphCopyViewModel.cs" />
     <Compile Include="ViewModel\GraphUpdateViewModel.cs" />
     <Compile Include="Model\ExportOptions.cs" />
@@ -176,7 +183,6 @@
     <Compile Include="View\GraphImportView.cs" />
     <Compile Include="View\NewGraphButton.cs" />
     <Compile Include="View\GraphExportView.cs" />
-    <Compile Include="View\ColorConstants.cs" />
     <Compile Include="View\ComponentsPartials\GraphTableButtonsFrame.cs" />
     <Compile Include="View\ComponentsPartials\GraphAssembleView.cs" />
     <Compile Include="View\ComponentsPartials\DeleteGraphButton.cs" />
@@ -215,6 +221,7 @@
     <Compile Include="View\MainView.cs" />
     <Compile Include="View\RightPanelView.cs" />
     <Compile Include="View\UpdateGraphButton.cs" />
+    <Compile Include="View\VertexView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -281,6 +288,12 @@
     <PackageReference Include="Terminal.Gui">
       <Version>1.17.1</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

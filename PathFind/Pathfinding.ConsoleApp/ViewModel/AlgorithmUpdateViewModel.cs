@@ -58,7 +58,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
             messenger.Register<RunSelectedMessage>(this, OnRunsSelected);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
-            messenger.Register<AsyncGraphUpdatedMessage, int>(this, Tokens.AlgorithmUpdate, 
+            messenger.Register<AsyncGraphUpdatedMessage, int>(this, Tokens.AlgorithmUpdate,
                 async (r, msg) => await OnGraphUpdated(r, msg));
         }
 
@@ -104,7 +104,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
         {
             var graph = Graph;
             int id = ActivatedGraphId;
-            if ((graph != Graph<GraphVertexModel>.Empty && msg.Model.Id != ActivatedGraphId) 
+            if ((graph != Graph<GraphVertexModel>.Empty && msg.Model.Id != ActivatedGraphId)
                 || graph == Graph<GraphVertexModel>.Empty)
             {
                 var model = await service.ReadGraphAsync(msg.Model.Id).ConfigureAwait(false);
@@ -170,8 +170,9 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 await ExecuteSafe(async () =>
                 {
                     await service.UpdateStatisticsAsync(updatedRuns).ConfigureAwait(false);
-                }, (ex, msg) => { 
-                    log.Error(ex, msg); 
+                }, (ex, msg) =>
+                {
+                    log.Error(ex, msg);
                     updatedRuns.Clear();
                 });
             }

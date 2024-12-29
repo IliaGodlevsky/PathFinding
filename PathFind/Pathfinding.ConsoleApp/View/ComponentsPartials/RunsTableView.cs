@@ -23,7 +23,7 @@ namespace Pathfinding.ConsoleApp.View
 
         private const string Ascending = "ASC";
         private const string Descending = "DESC";
-        
+
         private readonly int headerLinesConsumed;
 
         private bool Order { get; set; } = false;

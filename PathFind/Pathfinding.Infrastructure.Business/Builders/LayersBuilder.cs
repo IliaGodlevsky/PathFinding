@@ -10,8 +10,8 @@ namespace Pathfinding.Infrastructure.Business.Builders
         private readonly Neighborhoods neighborhoods;
         private readonly SmoothLevels smoothLevels;
 
-        public static LayersBuilder Take(IGraphLayersInfo info) 
-            => new (info.Neighborhood, info.SmoothLevel);
+        public static LayersBuilder Take(IGraphLayersInfo info)
+            => new(info.Neighborhood, info.SmoothLevel);
 
         public ILayer Build()
         {
@@ -37,7 +37,7 @@ namespace Pathfinding.Infrastructure.Business.Builders
             return layers;
         }
 
-        private LayersBuilder(Neighborhoods neighborhoods, 
+        private LayersBuilder(Neighborhoods neighborhoods,
             SmoothLevels smoothLevels)
         {
             this.neighborhoods = neighborhoods;

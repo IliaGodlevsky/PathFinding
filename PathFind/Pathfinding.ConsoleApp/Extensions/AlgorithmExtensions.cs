@@ -1,4 +1,5 @@
-﻿using Pathfinding.Domain.Core;
+﻿using Pathfinding.ConsoleApp.Resources;
+using Pathfinding.Domain.Core;
 
 namespace Pathfinding.ConsoleApp.Extensions
 {
@@ -8,19 +9,19 @@ namespace Pathfinding.ConsoleApp.Extensions
         {
             return algorithm switch
             {
-                Algorithms.Dijkstra => "Dijkstra",
-                Algorithms.BidirectDijkstra => "Bi Dijkstra",
-                Algorithms.AStar => "A*",
-                Algorithms.BidirectAStar => "Bidirect A*",
-                Algorithms.Lee => "Lee",
-                Algorithms.BidirectLee => "Bidirect Lee",
-                Algorithms.AStarLee => "A* Lee",
-                Algorithms.DistanceFirst => "DFS dist",
-                Algorithms.CostGreedy => "DFS cost",
-                Algorithms.AStarGreedy => "A* greedy",
-                Algorithms.DepthFirst => "DFS",
-                Algorithms.Snake => "Snake",
-                _ => ""
+                Algorithms.Dijkstra => Resource.Dijkstra,
+                Algorithms.BidirectDijkstra => Resource.BidirectDijkstra,
+                Algorithms.AStar => Resource.AStar,
+                Algorithms.BidirectAStar => Resource.BidirectAStar,
+                Algorithms.Lee => Resource.Lee,
+                Algorithms.BidirectLee => Resource.BidirectLee,
+                Algorithms.AStarLee => Resource.AStarLee,
+                Algorithms.DistanceFirst => Resource.DistanceFirst,
+                Algorithms.CostGreedy => Resource.CostGreedy,
+                Algorithms.AStarGreedy => Resource.AStarGreedy,
+                Algorithms.DepthFirst => Resource.DepthFirst,
+                Algorithms.Snake => Resource.Snake,
+                _ => string.Empty
             };
         }
     }
