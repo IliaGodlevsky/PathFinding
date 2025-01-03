@@ -151,8 +151,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 var range = rangeCoordinates.Select(RunGraph.Get).ToArray();
 
                 var subRevisions = new List<SubRevisionModel>();
-                var visitedVertices = new List<(Coordinate Visited,
-                    IReadOnlyList<Coordinate> Enqueued)>();
+                var visitedVertices = new List<VisitedModel>();
 
                 void AddSubAlgorithm(IReadOnlyCollection<Coordinate> path = null)
                 {
@@ -161,7 +160,7 @@ namespace Pathfinding.ConsoleApp.ViewModel
                 }
                 void OnVertexProcessed(object sender, VerticesProcessedEventArgs e)
                 {
-                    visitedVertices.Add((e.Current, e.Enqueued));
+                    visitedVertices.Add(new(e.Current, e.Enqueued));
                 }
                 void OnSubPathFound(object sender, SubPathFoundEventArgs args)
                 {

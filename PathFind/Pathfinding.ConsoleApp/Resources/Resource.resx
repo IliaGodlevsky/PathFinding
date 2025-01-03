@@ -231,8 +231,14 @@
   <data name="WasDeletedMsg" xml:space="preserve">
     <value>Graph was saved</value>
   </data>
+  <data name="WasLoadedMsg" xml:space="preserve">
+    <value>Graph was loaded</value>
+  </data>
   <data name="WereDeletedMsg" xml:space="preserve">
     <value>Graphs were saved</value>
+  </data>
+  <data name="WereLoadedMsg" xml:space="preserve">
+    <value>Graphs were loaded</value>
   </data>
   <data name="WithRange" xml:space="preserve">
     <value>With range</value>

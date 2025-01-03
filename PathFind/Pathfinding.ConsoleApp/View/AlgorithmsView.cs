@@ -22,8 +22,12 @@ namespace Pathfinding.ConsoleApp.View
             Initialize();
             var algos = Enum.GetValues(typeof(Algorithms))
                 .Cast<Algorithms>()
+                .OrderBy(x => x.GetOrder())
                 .ToArray();
-            algorithms.SetSource(algos.Select(x => x.ToStringRepresentation()).ToArray());
+            var source = algos
+                .Select(x => x.ToStringRepresentation())
+                .ToArray();
+            algorithms.SetSource(source);
             algorithms.Events().SelectedItemChanged
                 .Where(x => x.Item > -1)
                 .Select(x => algos[x.Item])

@@ -60,7 +60,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             VertexProcessed?.Invoke(this, new(vertex, vertices));
         }
 
-        protected void RaiseSubPathFound(IReadOnlyCollection<Coordinate> subPath)
+        protected void RaiseSubPathFound(IGraphPath subPath)
         {
             SubPathFound?.Invoke(this, new(subPath));
         }

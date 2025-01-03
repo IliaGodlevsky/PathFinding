@@ -15,10 +15,10 @@ namespace Pathfinding.ConsoleApp.View
         public GraphVertexView(GraphVertexModel model)
             : base(model)
         {
-            BindTo(x => x.IsTarget, TargetColor, RegularColor);
-            BindTo(x => x.IsSource, SourceColor, RegularColor);
-            BindTo(x => x.IsTransit, TransitColor, RegularColor);
-            BindTo(x => x.IsObstacle, ObstacleColor, RegularColor);
+            BindTo(x => x.IsTarget, TargetColor);
+            BindTo(x => x.IsSource, SourceColor);
+            BindTo(x => x.IsTransit, TransitColor);
+            BindTo(x => x.IsObstacle, ObstacleColor);
 
             model.WhenAnyValue(x => x.Cost)
                 .Select(x => x.CurrentCost.ToString())
@@ -27,11 +27,11 @@ namespace Pathfinding.ConsoleApp.View
                 .DisposeWith(disposables);
         }
 
-        private void BindTo(Expression<Func<GraphVertexModel, bool>> expression, ColorScheme toColor,
-            ColorScheme falseColor)
+        private void BindTo(Expression<Func<GraphVertexModel, bool>> expression,
+            ColorScheme toColor)
         {
             model.WhenAnyValue(expression)
-               .Select(x => x ? toColor : falseColor)
+               .Select(x => x ? toColor : RegularColor)
                .BindTo(this, x => x.ColorScheme)
                .DisposeWith(disposables);
         }

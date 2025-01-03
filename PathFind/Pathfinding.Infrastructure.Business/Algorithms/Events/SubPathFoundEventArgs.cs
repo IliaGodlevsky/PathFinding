@@ -1,14 +1,13 @@
-﻿using Pathfinding.Shared.Primitives;
+﻿using Pathfinding.Service.Interface;
 using System;
-using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.Events
 {
     public class SubPathFoundEventArgs : EventArgs
     {
-        public IReadOnlyCollection<Coordinate> SubPath { get; }
+        public IGraphPath SubPath { get; }
 
-        public SubPathFoundEventArgs(IReadOnlyCollection<Coordinate> subPath)
+        public SubPathFoundEventArgs(IGraphPath subPath)
         {
             SubPath = subPath;
         }

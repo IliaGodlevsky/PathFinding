@@ -5,6 +5,7 @@ using Pathfinding.ConsoleApp.Extensions;
 using Pathfinding.ConsoleApp.Injection;
 using Pathfinding.ConsoleApp.Messages.ViewModel;
 using Pathfinding.ConsoleApp.Model;
+using Pathfinding.ConsoleApp.Resources;
 using Pathfinding.ConsoleApp.ViewModel.Interface;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
@@ -61,8 +62,8 @@ namespace Pathfinding.ConsoleApp.ViewModel
                         var graphs = result.Select(x => x.Graph).ToGraphInfo();
                         messenger.Send(new GraphCreatedMessage(graphs));
                         logger.Info(graphs.Length > 0
-                            ? "Graphs were loaded"
-                            : "Graph was loaded");
+                            ? Resource.WasLoadedMsg
+                            : Resource.WereLoadedMsg);
                     }
                 }
             }, logger.Error).ConfigureAwait(false);

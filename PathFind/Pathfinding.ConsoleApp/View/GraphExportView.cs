@@ -26,10 +26,15 @@ namespace Pathfinding.ConsoleApp.View
                     var filePath = GetFilePath(viewModel);
                     return string.IsNullOrEmpty(filePath.Path)
                         ? new(Stream.Null, null)
-                        : new(File.OpenWrite(filePath.Path), filePath.Format);
+                        : new(OpenWrite(filePath.Path), filePath.Format);
                 }))
                 .InvokeCommand(viewModel, x => x.ExportGraphCommand)
                 .DisposeWith(disposables);
+        }
+
+        private FileStream OpenWrite(string path)
+        {
+            return new(path, FileMode.Create, FileAccess.Write, FileShare.None);
         }
 
         private static (string Path, StreamFormat? Format) GetFilePath(IGraphExportViewModel viewModel)
@@ -57,9 +62,8 @@ namespace Pathfinding.ConsoleApp.View
             Application.Run(dialog);
             string filePath = dialog.FilePath.ToString();
             string extension = Path.GetExtension(filePath);
-            var format = formats[extension];
             return !dialog.Canceled && dialog.FilePath != null
-                ? (filePath, format)
+                ? (filePath, formats[extension])
                 : (string.Empty, null);
         }
 

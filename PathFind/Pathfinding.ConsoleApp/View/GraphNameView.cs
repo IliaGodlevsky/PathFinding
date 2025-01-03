@@ -16,8 +16,9 @@ namespace Pathfinding.ConsoleApp.View
         {
             Initialize();
             this.viewModel = viewModel;
-            nameField.Events().TextChanged.Select(_ => nameField.Text)
-                .BindTo(this.viewModel, x => x.Name)
+            nameField.Events().TextChanged
+                .Select(_ => nameField.Text)
+                .BindTo(viewModel, x => x.Name)
                 .DisposeWith(disposables);
             VisibleChanged += OnVisibilityChanged;
         }

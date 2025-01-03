@@ -1,4 +1,6 @@
-﻿using Pathfinding.Shared.Extensions;
+﻿using Pathfinding.Domain.Interface;
+using Pathfinding.Infrastructure.Data.Pathfinding;
+using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
 using ReactiveUI;
 using System;
@@ -10,10 +12,14 @@ using System.Reactive.Linq;
 
 namespace Pathfinding.ConsoleApp.Model
 {
-    internal sealed class AlgorithmRevisionModel : ReactiveObject, IDisposable
+    internal class AlgorithmRevisionModel : ReactiveObject, IDisposable
     {
-        public record struct SubRevisionModel(
-            IReadOnlyCollection<(Coordinate Visited, IReadOnlyList<Coordinate> Enqueued)> Visited,
+        public readonly record struct VisitedModel(
+            Coordinate Visited, 
+            IReadOnlyList<Coordinate> Enqueued);
+
+        public readonly record struct SubRevisionModel(
+            IReadOnlyCollection<VisitedModel> Visited,
             IReadOnlyCollection<Coordinate> Path);
 
         private enum RevisionUnitState
@@ -33,6 +39,20 @@ namespace Pathfinding.ConsoleApp.Model
             RevisionUnitState State,
             bool Value)
         {
+            public static RevisionUnit CreateVisited(RunVertexModel model, bool value = true) => new(model, RevisionUnitState.Visited, value);
+
+            public static RevisionUnit CreateEnqueued(RunVertexModel model) => new(model, RevisionUnitState.Enqueued, true);
+
+            public static RevisionUnit CreateCrossedPath(RunVertexModel model) => new(model, RevisionUnitState.CrossPath, true);
+
+            public static RevisionUnit CreatePath(RunVertexModel model) => new(model, RevisionUnitState.Path, true);
+
+            public static RevisionUnit CreateSource(RunVertexModel model) => new(model, RevisionUnitState.Source, true);
+
+            public static RevisionUnit CreateTarget(RunVertexModel model) => new(model, RevisionUnitState.Target, true);
+
+            public static RevisionUnit CreateTransit(RunVertexModel model) => new(model, RevisionUnitState.Transit, true);
+
             public void Set() => Set(Value);
 
             public void SetInverse() => Set(!Value);
@@ -53,7 +73,7 @@ namespace Pathfinding.ConsoleApp.Model
         }
 
         public static readonly AlgorithmRevisionModel Empty
-            = new(Array.Empty<RunVertexModel>(),
+            = new(Graph<RunVertexModel>.Empty,
                   Array.Empty<SubRevisionModel>(),
                   Array.Empty<Coordinate>());
 
@@ -86,7 +106,7 @@ namespace Pathfinding.ConsoleApp.Model
         public int Id { get; set; }
 
         public AlgorithmRevisionModel(
-            IReadOnlyCollection<RunVertexModel> vertices,
+            IGraph<RunVertexModel> vertices,
             IReadOnlyCollection<SubRevisionModel> pathfindingResult,
             IReadOnlyCollection<Coordinate> range)
         {
@@ -116,64 +136,52 @@ namespace Pathfinding.ConsoleApp.Model
         }
 
         private static ReadOnlyCollection<RevisionUnit> CreateAlgorithmRevision(
-            IReadOnlyCollection<RunVertexModel> graph,
+            IGraph<RunVertexModel> graph,
             IReadOnlyCollection<SubRevisionModel> pathfindingResult,
             IReadOnlyCollection<Coordinate> range)
         {
-            if (graph.Count == 0)
+            if (graph.Count == 0 || pathfindingResult.Count == 0 || range.Count < 2)
             {
                 return Array.AsReadOnly(Array.Empty<RevisionUnit>());
             }
-            var dictionary = graph.ToDictionary(x => x.Position);
+
             var previousVisited = new HashSet<Coordinate>();
             var previousPaths = new HashSet<Coordinate>();
             var previousEnqueued = new HashSet<Coordinate>();
             var subAlgorithms = new List<RevisionUnit>();
+
+            range.Skip(1).Take(range.Count - 2)
+                .Select(x => RevisionUnit.CreateTransit(graph.Get(x)))
+                .Prepend(RevisionUnit.CreateSource(graph.Get(range.First())))
+                .Append(RevisionUnit.CreateTarget(graph.Get(range.Last())))
+                .ForWhole(pathfindingRange => subAlgorithms.AddRange(pathfindingRange));
+
             foreach (var subAlgorithm in pathfindingResult)
             {
-                var sub = new HashSet<RevisionUnit>();
                 var visitedIgnore = range.Concat(previousPaths).ToArray();
-                foreach (var (Visited, Enqueued) in subAlgorithm.Visited)
-                {
-                    foreach (var enqueued in Enqueued.Intersect(previousVisited).Except(visitedIgnore))
-                    {
-                        sub.Add(new(dictionary[enqueued], RevisionUnitState.Visited, false));
-                    }
-                    foreach (var visited in Visited.Enumerate().Except(visitedIgnore))
-                    {
-                        sub.Add(new(dictionary[visited], RevisionUnitState.Visited, true));
-                    }
-                    foreach (var enqueued in Enqueued.Except(visitedIgnore).Except(previousEnqueued))
-                    {
-                        sub.Add(new(dictionary[enqueued], RevisionUnitState.Enqueued, true));
-                    }
-                }
                 var exceptRangePath = subAlgorithm.Path.Except(range).ToArray();
-                foreach (var path in exceptRangePath.Intersect(previousPaths))
-                {
-                    sub.Add(new(dictionary[path], RevisionUnitState.CrossPath, true));
-                }
-                foreach (var path in exceptRangePath.Except(previousPaths))
-                {
-                    sub.Add(new(dictionary[path], RevisionUnitState.Path, true));
-                }
+
+                subAlgorithm.Visited.SelectMany(v =>
+                     v.Enqueued.Intersect(previousVisited).Except(visitedIgnore)
+                        .Select(x => RevisionUnit.CreateVisited(graph.Get(x), false))
+                        .Concat(v.Visited.Enumerate().Except(visitedIgnore)
+                        .Select(x => RevisionUnit.CreateVisited(graph.Get(x)))
+                        .Concat(v.Enqueued.Except(visitedIgnore).Except(previousEnqueued)
+                        .Select(x => RevisionUnit.CreateEnqueued(graph.Get(x))))))
+                        .Distinct().ForWhole(x => subAlgorithms.AddRange(x));
+
+                exceptRangePath.Intersect(previousPaths)
+                    .Select(x => RevisionUnit.CreateCrossedPath(graph.Get(x)))
+                    .Concat(exceptRangePath.Except(previousPaths)
+                    .Select(x => RevisionUnit.CreatePath(graph.Get(x))))
+                    .ForWhole(x => subAlgorithms.AddRange(x));
 
                 previousVisited.AddRange(subAlgorithm.Visited.Select(x => x.Visited));
                 previousEnqueued.AddRange(subAlgorithm.Visited.SelectMany(x => x.Enqueued));
                 previousPaths.AddRange(subAlgorithm.Path);
-                subAlgorithms.AddRange(sub);
             }
-            var vertices = new List<RevisionUnit>
-            {
-                new(dictionary[range.First()], RevisionUnitState.Source, true)
-            };
-            foreach (var transit in range.Skip(1).Take(range.Count - 2))
-            {
-                vertices.Add(new(dictionary[transit], RevisionUnitState.Transit, true));
-            }
-            vertices.Add(new(dictionary[range.Last()], RevisionUnitState.Target, true));
-            vertices.AddRange(subAlgorithms);
-            return vertices.AsReadOnly();
+            
+            return subAlgorithms.AsReadOnly();
         }
 
         public void Dispose()

@@ -24,5 +24,25 @@ namespace Pathfinding.ConsoleApp.Extensions
                 _ => string.Empty
             };
         }
+
+        public static int GetOrder(this Algorithms algorithm)
+        {
+            return algorithm switch
+            {
+                Algorithms.Dijkstra => 1,
+                Algorithms.AStar => 2,
+                Algorithms.BidirectDijkstra => 3,
+                Algorithms.BidirectAStar => 4,
+                Algorithms.Lee => 5,
+                Algorithms.BidirectLee => 6,
+                Algorithms.AStarLee => 7,
+                Algorithms.DistanceFirst => 8,
+                Algorithms.CostGreedy => 9,
+                Algorithms.AStarGreedy => 10,
+                Algorithms.DepthFirst => 11,
+                Algorithms.Snake => 12,
+                _ => int.MaxValue
+            };
+        }
     }
 }

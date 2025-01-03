@@ -403,11 +403,29 @@ namespace Pathfinding.ConsoleApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Graph was loaded.
+        /// </summary>
+        internal static string WasLoadedMsg {
+            get {
+                return ResourceManager.GetString("WasLoadedMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Graphs were saved.
         /// </summary>
         internal static string WereDeletedMsg {
             get {
                 return ResourceManager.GetString("WereDeletedMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Graphs were loaded.
+        /// </summary>
+        internal static string WereLoadedMsg {
+            get {
+                return ResourceManager.GetString("WereLoadedMsg", resourceCulture);
             }
         }
         

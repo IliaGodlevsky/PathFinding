@@ -39,7 +39,8 @@ namespace Pathfinding.Infrastructure.Business
             this.factory = factory;
         }
 
-        public async Task<IReadOnlyCollection<PathfindingHistoryModel<T>>> CreatePathfindingHistoriesAsync(IEnumerable<PathfindingHistorySerializationModel> request,
+        public async Task<IReadOnlyCollection<PathfindingHistoryModel<T>>> CreatePathfindingHistoriesAsync(
+            IEnumerable<PathfindingHistorySerializationModel> request,
             CancellationToken token = default)
         {
             return await Transaction(async (unitOfWork, t) =>
@@ -104,8 +105,7 @@ namespace Pathfinding.Infrastructure.Business
             return await Transaction(async (unitOfWork, t) =>
             {
                 var verticesIds = request.Select(x => x.Id);
-                return await unitOfWork.RangeRepository
-                    .DeleteByVerticesIdsAsync(verticesIds, t);
+                return await unitOfWork.RangeRepository.DeleteByVerticesIdsAsync(verticesIds, t);
             }, token).ConfigureAwait(false);
         }
 
