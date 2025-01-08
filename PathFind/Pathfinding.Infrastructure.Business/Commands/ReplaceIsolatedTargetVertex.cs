@@ -1,11 +1,9 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface.Commands;
-using Pathfinding.Shared;
 
 namespace Pathfinding.Infrastructure.Business.Commands
 {
-    [Order(5)]
     public sealed class ReplaceIsolatedTargetVertex<TVertex> : IPathfindingRangeCommand<TVertex>
         where TVertex : IVertex
     {

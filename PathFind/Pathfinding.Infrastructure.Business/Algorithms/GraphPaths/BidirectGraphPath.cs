@@ -7,6 +7,7 @@ using Pathfinding.Shared.Primitives;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
@@ -29,8 +30,8 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
         public int Count => count.Value;
 
         public BidirectGraphPath(
-            IReadOnlyDictionary<Coordinate, IPathfindingVertex> forwardTraces,
-            IReadOnlyDictionary<Coordinate, IPathfindingVertex> backwardTraces,
+            IImmutableDictionary<Coordinate, IPathfindingVertex> forwardTraces,
+            IImmutableDictionary<Coordinate, IPathfindingVertex> backwardTraces,
             IPathfindingVertex intersection,
             IStepRule stepRule)
         {
@@ -44,8 +45,8 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
         }
 
         public BidirectGraphPath(
-            IReadOnlyDictionary<Coordinate, IPathfindingVertex> forwardTraces,
-            IReadOnlyDictionary<Coordinate, IPathfindingVertex> backwardTraces,
+            IImmutableDictionary<Coordinate, IPathfindingVertex> forwardTraces,
+            IImmutableDictionary<Coordinate, IPathfindingVertex> backwardTraces,
             IPathfindingVertex intersection)
             : this(forwardTraces, backwardTraces, intersection, new DefaultStepRule())
         {

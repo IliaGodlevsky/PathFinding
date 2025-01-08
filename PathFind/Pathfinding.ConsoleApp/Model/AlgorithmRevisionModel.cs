@@ -15,7 +15,7 @@ namespace Pathfinding.ConsoleApp.Model
     internal class AlgorithmRevisionModel : ReactiveObject, IDisposable
     {
         public readonly record struct VisitedModel(
-            Coordinate Visited, 
+            Coordinate Visited,
             IReadOnlyList<Coordinate> Enqueued);
 
         public readonly record struct SubRevisionModel(
@@ -100,7 +100,7 @@ namespace Pathfinding.ConsoleApp.Model
         public int Cursor
         {
             get => cursor;
-            private set => cursor = CursorRange.ReturnInRange(value);
+            private set => this.RaiseAndSetIfChanged(ref cursor, CursorRange.ReturnInRange(value));
         }
 
         public int Id { get; set; }
@@ -154,7 +154,7 @@ namespace Pathfinding.ConsoleApp.Model
                 .Select(x => RevisionUnit.CreateTransit(graph.Get(x)))
                 .Prepend(RevisionUnit.CreateSource(graph.Get(range.First())))
                 .Append(RevisionUnit.CreateTarget(graph.Get(range.Last())))
-                .ForWhole(pathfindingRange => subAlgorithms.AddRange(pathfindingRange));
+                .ForWhole(subAlgorithms.AddRange);
 
             foreach (var subAlgorithm in pathfindingResult)
             {
@@ -168,19 +168,19 @@ namespace Pathfinding.ConsoleApp.Model
                         .Select(x => RevisionUnit.CreateVisited(graph.Get(x)))
                         .Concat(v.Enqueued.Except(visitedIgnore).Except(previousEnqueued)
                         .Select(x => RevisionUnit.CreateEnqueued(graph.Get(x))))))
-                        .Distinct().ForWhole(x => subAlgorithms.AddRange(x));
+                        .Distinct().ForWhole(subAlgorithms.AddRange);
 
                 exceptRangePath.Intersect(previousPaths)
                     .Select(x => RevisionUnit.CreateCrossedPath(graph.Get(x)))
                     .Concat(exceptRangePath.Except(previousPaths)
                     .Select(x => RevisionUnit.CreatePath(graph.Get(x))))
-                    .ForWhole(x => subAlgorithms.AddRange(x));
+                    .ForWhole(subAlgorithms.AddRange);
 
                 previousVisited.AddRange(subAlgorithm.Visited.Select(x => x.Visited));
                 previousEnqueued.AddRange(subAlgorithm.Visited.SelectMany(x => x.Enqueued));
                 previousPaths.AddRange(subAlgorithm.Path);
             }
-            
+
             return subAlgorithms.AsReadOnly();
         }
 

@@ -9,11 +9,6 @@ namespace Pathfinding.Shared.Extensions
 {
     public static class EnumerableExtension
     {
-        public static IOrderedEnumerable<T> OrderByOrderAttribute<T>(this IEnumerable<T> collection)
-        {
-            return collection.OrderBy(item => item.GetOrder());
-        }
-
         public static IReadOnlyList<T> ToReadOnly<T>(this IEnumerable<T> collection)
         {
             return collection switch

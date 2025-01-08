@@ -1,4 +1,5 @@
 ﻿using Autofac.Features.AttributeFilters;
+using Autofac.Features.Metadata;
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.ConsoleApp.Extensions;
 using Pathfinding.ConsoleApp.Injection;
@@ -101,14 +102,20 @@ namespace Pathfinding.ConsoleApp.ViewModel
         public PathfindingRangeViewModel(
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
             IRequestService<GraphVertexModel> service,
-            [KeyFilter(KeyFilters.IncludeCommands)] IEnumerable<IPathfindingRangeCommand<GraphVertexModel>> includeCommands,
-            [KeyFilter(KeyFilters.ExcludeCommands)] IEnumerable<IPathfindingRangeCommand<GraphVertexModel>> excludeCommands,
+            [KeyFilter(KeyFilters.IncludeCommands)] IEnumerable<Meta<IPathfindingRangeCommand<GraphVertexModel>>> includeCommands,
+            [KeyFilter(KeyFilters.ExcludeCommands)] IEnumerable<Meta<IPathfindingRangeCommand<GraphVertexModel>>> excludeCommands,
             ILog logger)
         {
             pathfindingRange = this;
             this.service = service;
-            this.includeCommands = includeCommands.OrderByOrderAttribute().ToReadOnly();
-            this.excludeCommands = excludeCommands.OrderByOrderAttribute().ToReadOnly();
+            this.includeCommands = includeCommands
+                .OrderBy(x => x.Metadata[MetadataKeys.Order])
+                .Select(x => x.Value)
+                .ToReadOnly();
+            this.excludeCommands = excludeCommands
+                .OrderBy(x => x.Metadata[MetadataKeys.Order])
+                .Select(x => x.Value)
+                .ToReadOnly();
             this.logger = logger;
             messenger.Register<IsVertexInRangeRequest>(this, OnVertexIsInRangeRecieved);
             messenger.Register<QueryPathfindingRangeMessage>(this, OnGetPathfindingRangeRecieved);

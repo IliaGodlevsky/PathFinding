@@ -3,9 +3,9 @@ using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
-using Pathfinding.Shared.Extensions;
 using Priority_Queue;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
@@ -36,8 +36,8 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 
         protected override IGraphPath GetSubPath()
         {
-            return new BidirectGraphPath(forwardTraces.ToDictionary(),
-                backwardTraces.ToDictionary(), Intersection, stepRule);
+            return new BidirectGraphPath(forwardTraces.ToImmutableDictionary(),
+                backwardTraces.ToImmutableDictionary(), Intersection, stepRule);
         }
 
         protected override void DropState()

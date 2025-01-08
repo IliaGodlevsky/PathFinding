@@ -1,8 +1,8 @@
 ﻿using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Service.Interface;
-using Pathfinding.Shared.Extensions;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
@@ -25,7 +25,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 
         protected override IGraphPath GetSubPath()
         {
-            return new GraphPath(traces.ToDictionary(),
+            return new GraphPath(traces.ToImmutableDictionary(),
                 CurrentRange.Target, stepRule);
         }
 

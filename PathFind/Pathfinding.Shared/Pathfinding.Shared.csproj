@@ -58,7 +58,6 @@
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="Interface\ICloneable.cs" />
     <Compile Include="Interface\IRandom.cs" />
-    <Compile Include="OrderAttribute.cs" />
     <Compile Include="Primitives\Coordinate.cs" />
     <Compile Include="Primitives\InclusiveValueRange.cs" />
     <Compile Include="Primitives\ReturnOptions.cs" />

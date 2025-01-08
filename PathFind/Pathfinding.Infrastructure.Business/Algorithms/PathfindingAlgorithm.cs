@@ -1,9 +1,9 @@
 ﻿using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
-using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
@@ -39,7 +39,8 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 
         protected override IGraphPath GetSubPath()
         {
-            return new GraphPath(traces.ToDictionary(), CurrentRange.Target);
+            return new GraphPath(traces.ToImmutableDictionary(),
+                CurrentRange.Target);
         }
 
         protected override void DropState()

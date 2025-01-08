@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel;
 
-namespace Pathfinding.ConsoleApp.Model
+namespace Pathfinding.ConsoleApp.Model;
+
+internal enum StreamFormat
 {
-    internal enum StreamFormat 
-    {
-        [Description(".json")]  Json,
-        [Description(".dat")]   Binary,
-        [Description(".xml")]   Xml 
-    }
+    [Description(".json")] Json,
+    [Description(".dat")] Binary,
+    [Description(".xml")] Xml
 }

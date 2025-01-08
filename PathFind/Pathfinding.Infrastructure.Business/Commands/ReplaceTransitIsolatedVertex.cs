@@ -1,12 +1,10 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface.Commands;
-using Pathfinding.Shared;
 using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Commands
 {
-    [Order(1)]
     public sealed class ReplaceTransitIsolatedVertex<TVertex> : IPathfindingRangeCommand<TVertex>
         where TVertex : IVertex
     {

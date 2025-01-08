@@ -29,8 +29,7 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
                 .ToArray();
             Count = DimensionsSizes.AggregateOrDefault((x, y) => x * y);
             this.vertices = vertices.Take(Count)
-                .ToDictionary(vertex => vertex.Position)
-                .AsReadOnly();
+                .ToDictionary(vertex => vertex.Position);
         }
 
         public Graph(IReadOnlyCollection<TVertex> vertices,

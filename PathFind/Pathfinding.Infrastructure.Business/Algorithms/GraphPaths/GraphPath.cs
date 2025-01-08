@@ -6,10 +6,11 @@ using Pathfinding.Shared.Primitives;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
 {
-    using Traces = IReadOnlyDictionary<Coordinate, IPathfindingVertex>;
+    using Traces = IImmutableDictionary<Coordinate, IPathfindingVertex>;
 
     public sealed class GraphPath : IGraphPath
     {

@@ -14,7 +14,7 @@ namespace Pathfinding.Service.Interface.Models.Serialization
 
         public HeuristicFunctions? Heuristics { get; set; } = null;
 
-        public double? Weight { get; set; }
+        public double? Weight { get; set; } = null;
 
         public StepRules? StepRule { get; set; } = null;
 

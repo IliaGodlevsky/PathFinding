@@ -21,7 +21,7 @@ namespace Pathfinding.ConsoleApp.Extensions
             await Task.WhenAny(timeout, tcs.Task).ConfigureAwait(false);
         }
 
-        public static void RegisterAsyncHandler<TMessage, TToken>(this IMessenger messenger, 
+        public static void RegisterAsyncHandler<TMessage, TToken>(this IMessenger messenger,
             object recipient, TToken token, Func<object, TMessage, Task> handler)
             where TMessage : class
             where TToken : IEquatable<TToken>
