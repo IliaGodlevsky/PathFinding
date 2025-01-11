@@ -50,7 +50,6 @@
     <Compile Include="Exceptions\SingletonException.cs" />
     <Compile Include="Extensions\EnumerableExtension.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
-    <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Extensions\ComparableExtensions.cs" />
     <Compile Include="Extensions\InclusiveValueRangeExtensions.cs" />
     <Compile Include="Extensions\RandomExtensions.cs" />

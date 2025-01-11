@@ -107,7 +107,6 @@
     <Compile Include="Extensions\PriorityQueueExtensions.cs" />
     <Compile Include="Extensions\SimplePriorityQueueExtensions.cs" />
     <Compile Include="Extensions\VertexExtensions.cs" />
-    <Compile Include="Extensions\XmlSerializerExtensions.cs" />
     <Compile Include="Layers\Layers.cs" />
     <Compile Include="Layers\MooreNeighborhoodLayer.cs" />
     <Compile Include="Layers\VonNeumannNeighborhoodLayer.cs" />

@@ -19,7 +19,8 @@ namespace Pathfinding.Infrastructure.Business.Serializers
             {
                 var serializer = new XmlSerializer(typeof(T));
                 using var reader = new StreamReader(stream, Encoding.Default, false, 1024, leaveOpen: true);
-                return await serializer.DeserializeAsync<T>(reader, token).ConfigureAwait(false);
+                var result = await Task.Run(() => serializer.Deserialize(reader), token).ConfigureAwait(false);
+                return (T)result;
             }
             catch (Exception ex)
             {
@@ -33,7 +34,7 @@ namespace Pathfinding.Infrastructure.Business.Serializers
             {
                 var serializer = new XmlSerializer(typeof(T));
                 using var writer = new StreamWriter(stream, Encoding.Default, 1024, leaveOpen: true);
-                await serializer.SerializeAsync(item, writer, token).ConfigureAwait(false);
+                await Task.Run(() => serializer.Serialize(writer, item), token).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
