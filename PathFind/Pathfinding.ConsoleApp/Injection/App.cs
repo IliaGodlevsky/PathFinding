@@ -27,10 +27,8 @@ namespace Pathfinding.ConsoleApp.Injection
         {
             var builder = new ContainerBuilder();
 
-            builder.RegisterType<GraphAssemble<GraphVertexModel>>()
-                .As<IGraphAssemble<GraphVertexModel>>().SingleInstance();
-            builder.RegisterType<GraphAssemble<RunVertexModel>>()
-                .As<IGraphAssemble<RunVertexModel>>().SingleInstance();
+            builder.RegisterType<GraphAssemble<GraphVertexModel>>().As<IGraphAssemble<GraphVertexModel>>().SingleInstance();
+            builder.RegisterType<GraphAssemble<RunVertexModel>>().As<IGraphAssemble<RunVertexModel>>().SingleInstance();
 
             builder.RegisterType<CongruentialRandom>().As<IRandom>().SingleInstance();
 
