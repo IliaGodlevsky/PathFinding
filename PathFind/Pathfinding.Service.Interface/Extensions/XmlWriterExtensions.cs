@@ -15,12 +15,9 @@ namespace Pathfinding.Service.Interface.Extensions
 
         public static void WriteNullableElement<T>(this XmlWriter writer, string elementName, T? value) where T : struct
         {
-            if (value.HasValue)
-            {
-                writer.WriteStartElement(elementName);
-                writer.WriteValue(value.ToString());
-                writer.WriteEndElement();
-            }
+            writer.WriteStartElement(elementName);
+            writer.WriteValue(value?.ToString() ?? string.Empty);
+            writer.WriteEndElement();
         }
 
         public static void WriteAttribute<T>(this XmlWriter writer, string attributeName, T value)

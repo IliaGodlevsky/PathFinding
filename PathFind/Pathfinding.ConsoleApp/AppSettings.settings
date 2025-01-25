@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ConnectionString" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Data Source=pathfinding.sqlite</Value>
+      <Value Profile="(Default)">Data Source=pathfinding.sqlite;</Value>
     </Setting>
     <Setting Name="BackgroundColor" Type="Terminal.Gui.Color" Scope="User">
       <Value Profile="(Default)">Black</Value>
