@@ -34,7 +34,7 @@ namespace Pathfinding.Infrastructure.Business
         {
         }
 
-        public RequestService(Func<IUnitOfWork> factory)
+        private RequestService(Func<IUnitOfWork> factory)
         {
             this.factory = factory;
         }
