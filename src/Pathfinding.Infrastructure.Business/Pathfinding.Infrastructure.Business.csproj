@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="OptimizedPriorityQueue" Version="5.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pathfinding.Infrastructure.Data\Pathfinding.Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\Pathfinding.Service.Interface\Pathfinding.Service.Interface.csproj" />
+    <ProjectReference Include="..\Pathfinding.Shared\Pathfinding.Shared.csproj" />
+  </ItemGroup>
+
+</Project>
