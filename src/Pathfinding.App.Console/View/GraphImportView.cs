@@ -28,8 +28,7 @@ namespace Pathfinding.App.Console.View
         private static (string Path, StreamFormat? Format) GetFileName()
         {
             var formats = Enum
-                .GetValues(typeof(StreamFormat))
-                .Cast<StreamFormat>()
+                .GetValues<StreamFormat>()
                 .ToDictionary(x => x.ToExtensionRepresentation());
             var extensions = formats.Keys.ToList();
             using var dialog = new OpenDialog("Import",

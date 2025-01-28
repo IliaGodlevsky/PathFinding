@@ -2,7 +2,6 @@
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
-using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {

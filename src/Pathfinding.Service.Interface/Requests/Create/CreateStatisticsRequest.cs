@@ -1,5 +1,4 @@
 ﻿using Pathfinding.Domain.Core;
-using System;
 
 namespace Pathfinding.Service.Interface.Requests.Create
 {

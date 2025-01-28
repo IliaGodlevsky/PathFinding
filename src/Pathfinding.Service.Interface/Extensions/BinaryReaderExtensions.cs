@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-
-namespace Pathfinding.Service.Interface.Extensions
+﻿namespace Pathfinding.Service.Interface.Extensions
 {
     public static class BinaryReaderExtensions
     {

@@ -1,6 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
-using System.IO;
 
 namespace Pathfinding.Infrastructure.Data.LiteDb
 {

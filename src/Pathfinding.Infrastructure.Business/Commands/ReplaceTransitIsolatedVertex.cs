@@ -1,7 +1,6 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface.Commands;
-using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Commands
 {

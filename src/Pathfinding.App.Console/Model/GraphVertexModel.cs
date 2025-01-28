@@ -48,7 +48,7 @@ namespace Pathfinding.App.Console.Model
 
         public Coordinate Position { get; set; }
 
-        public HashSet<GraphVertexModel> Neighbors { get; private set; } = new();
+        public HashSet<GraphVertexModel> Neighbors { get; private set; } = [];
 
         IReadOnlyCollection<IVertex> IVertex.Neighbors
         {

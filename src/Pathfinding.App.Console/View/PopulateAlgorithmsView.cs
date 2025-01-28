@@ -18,7 +18,7 @@ namespace Pathfinding.App.Console.View
         private const double DefaultWeight = 1;
         private static readonly InclusiveValueRange<double> WeightRange = (5, 0);
 
-        private readonly CompositeDisposable disposables = new();
+        private readonly CompositeDisposable disposables = [];
         private readonly IRequireHeuristicsViewModel heuristicsViewModel;
 
         public PopulateAlgorithmsView(
@@ -29,12 +29,11 @@ namespace Pathfinding.App.Console.View
             weightTextField.Events().TextChanging
                 .Select(x =>
                 {
-                    double value;
                     if (string.IsNullOrEmpty(x.NewText.ToString()))
                     {
                         return -1;
                     }
-                    else if (double.TryParse(x.NewText.ToString(), out value))
+                    else if (double.TryParse(x.NewText.ToString(), out double value))
                     {
                         if (!WeightRange.Contains(value))
                         {

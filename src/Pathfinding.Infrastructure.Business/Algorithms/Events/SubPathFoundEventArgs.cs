@@ -1,5 +1,4 @@
 ﻿using Pathfinding.Service.Interface;
-using System;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.Events
 {

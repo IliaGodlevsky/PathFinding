@@ -4,7 +4,6 @@ using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
 using Priority_Queue;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms

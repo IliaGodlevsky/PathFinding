@@ -4,12 +4,13 @@ using Moq;
 using Pathfinding.App.Console.Messages.ViewModel;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.ViewModel;
+using Pathfinding.ConsoleApp.Tests;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Read;
 using System.Reactive.Linq;
 
-namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
+namespace Pathfinding.App.Console.Tests.ViewModelTests
 {
     [Category("Unit")]
     internal sealed class GraphTableViewModelTests
@@ -23,7 +24,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                 Enumerable.Range(1, 5).Select(x => new GraphInformationModel
                 {
                     Id = x,
-                    Dimensions = Array.Empty<int>()
+                    Dimensions = []
                 }).ToList();
             mock.Mock<IRequestService<GraphVertexModel>>()
                 .Setup(x => x.ReadAllGraphInfoAsync(It.IsAny<CancellationToken>()))
@@ -38,7 +39,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                 mock.Mock<IRequestService<GraphVertexModel>>()
                     .Verify(x => x.ReadAllGraphInfoAsync(
                         It.IsAny<CancellationToken>()), Times.Once);
-                Assert.That(viewModel.Graphs.Count == graphs.Count);
+                Assert.That(viewModel.Graphs, Has.Count.EqualTo(graphs.Count));
             });
         }
 
@@ -70,8 +71,8 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
             {
                 Id = 1,
                 Name = "Test",
-                Vertices = Array.Empty<GraphVertexModel>(),
-                DimensionSizes = Array.Empty<int>()
+                Vertices = [],
+                DimensionSizes = []
             };
 
             mock.Mock<IRequestService<GraphVertexModel>>()
@@ -82,7 +83,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
             mock.Mock<IMessenger>()
                 .Setup(x => x.Send(It.IsAny<AsyncGraphActivatedMessage>(),
                     It.IsAny<IsAnyToken>()))
-                .Callback<AsyncGraphActivatedMessage, object>((m, t) => m.Signal(default(System.Reactive.Unit)));
+                .Callback<AsyncGraphActivatedMessage, object>((m, t) => m.Signal(default));
 
             var viewModel = mock.Create<GraphTableViewModel>();
 

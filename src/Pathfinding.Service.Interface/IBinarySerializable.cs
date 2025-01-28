@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace Pathfinding.Service.Interface
+﻿namespace Pathfinding.Service.Interface
 {
     public interface IBinarySerializable
     {

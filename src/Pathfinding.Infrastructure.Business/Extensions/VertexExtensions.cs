@@ -1,5 +1,4 @@
 ﻿using Pathfinding.Service.Interface;
-using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Extensions
 {

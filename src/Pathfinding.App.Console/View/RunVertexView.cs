@@ -1,6 +1,5 @@
 ﻿using Pathfinding.App.Console.Model;
 using ReactiveUI;
-using System;
 using System.Linq.Expressions;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;

@@ -1,6 +1,4 @@
 ﻿using Pathfinding.Service.Interface;
-using System;
-using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.Heuristics
 {

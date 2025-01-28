@@ -57,7 +57,7 @@ namespace Pathfinding.Infrastructure.Business.Tests
                         It.IsAny<CancellationToken>()), Times.Once());
                 Assert.That(result.All(x => graphs.Any(y => y.Id == x.Id)
                     && result.First(y => y.Id == x.Id).ObstaclesCount == obstaclesCount[x.Id]));
-                Assert.That(result.Count == graphs.Count);
+                Assert.That(result, Has.Count.EqualTo(graphs.Count));
             });
         }
     }

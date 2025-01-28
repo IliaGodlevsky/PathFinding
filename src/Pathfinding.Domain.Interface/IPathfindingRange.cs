@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Pathfinding.Domain.Interface
+﻿namespace Pathfinding.Domain.Interface
 {
     public interface IPathfindingRange<TVertex> : IEnumerable<TVertex>
         where TVertex : IVertex

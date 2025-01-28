@@ -1,6 +1,5 @@
 ﻿using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Extensions;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.Heuristics

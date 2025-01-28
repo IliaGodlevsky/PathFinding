@@ -5,25 +5,17 @@ using Pathfinding.Shared.Primitives;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public class AStarAlgorithm : DijkstraAlgorithm
+    public class AStarAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange,
+        IStepRule stepRule, IHeuristic function) : DijkstraAlgorithm(pathfindingRange, stepRule)
     {
-        protected readonly Dictionary<Coordinate, double> accumulatedCosts;
-        protected readonly Dictionary<Coordinate, double> heuristics;
-        protected readonly IHeuristic heuristic;
+        protected readonly Dictionary<Coordinate, double> accumulatedCosts = [];
+        protected readonly Dictionary<Coordinate, double> heuristics = [];
+        protected readonly IHeuristic heuristic = function;
 
         public AStarAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
             : this(pathfindingRange, new DefaultStepRule(), new ChebyshevDistance())
         {
 
-        }
-
-        public AStarAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange,
-            IStepRule stepRule, IHeuristic function)
-            : base(pathfindingRange, stepRule)
-        {
-            heuristic = function;
-            heuristics = new();
-            accumulatedCosts = new();
         }
 
         protected override void DropState()

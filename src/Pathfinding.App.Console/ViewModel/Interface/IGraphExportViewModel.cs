@@ -1,6 +1,5 @@
 ﻿using Pathfinding.App.Console.Model;
 using ReactiveUI;
-using System;
 using System.Reactive;
 
 namespace Pathfinding.App.Console.ViewModel.Interface

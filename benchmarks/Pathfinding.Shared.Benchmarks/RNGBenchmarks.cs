@@ -7,7 +7,7 @@ namespace Pathfinding.Shared.Benchmarks
     public class RNGBenchmarks
     {
         [Benchmark]
-        public void CryptoRandomBenchmark()
+        public static void CryptoRandomBenchmark()
         {
             var random = new CryptoRandom();
 
@@ -15,7 +15,7 @@ namespace Pathfinding.Shared.Benchmarks
         }
 
         [Benchmark]
-        public void XorshiftRandomBenchmarks()
+        public static void XorshiftRandomBenchmarks()
         {
             var random = new XorshiftRandom();
 
@@ -23,7 +23,7 @@ namespace Pathfinding.Shared.Benchmarks
         }
 
         [Benchmark(Baseline = true)]
-        public void CongruentialRandomBenchmark()
+        public static void CongruentialRandomBenchmark()
         {
             var random = new CongruentialRandom();
 
@@ -31,7 +31,7 @@ namespace Pathfinding.Shared.Benchmarks
         }
 
         [Benchmark]
-        public void KnuthRandomBenchmark()
+        public static void KnuthRandomBenchmark()
         {
             var random = new KnuthRandom();
 

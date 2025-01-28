@@ -11,7 +11,7 @@ namespace Pathfinding.App.Console.View
 {
     internal sealed partial class GraphExportView
     {
-        private readonly CompositeDisposable disposables = new();
+        private readonly CompositeDisposable disposables = [];
 
         public GraphExportView(IGraphExportViewModel viewModel)
         {
@@ -23,22 +23,20 @@ namespace Pathfinding.App.Console.View
                     var filePath = GetFilePath(viewModel);
                     return string.IsNullOrEmpty(filePath.Path)
                         ? new(Stream.Null, null)
-                        : new(OpenWrite(filePath.Path), filePath.Format);
+                        : new(global::Pathfinding.App.Console.View.GraphExportView.OpenWrite(filePath.Path), filePath.Format);
                 }))
                 .InvokeCommand(viewModel, x => x.ExportGraphCommand)
                 .DisposeWith(disposables);
         }
 
-        private FileStream OpenWrite(string path)
+        private static FileStream OpenWrite(string path)
         {
             return new(path, FileMode.Create, FileAccess.Write, FileShare.None);
         }
 
         private static (string Path, StreamFormat? Format) GetFilePath(IGraphExportViewModel viewModel)
         {
-            var formats = Enum
-                .GetValues(typeof(StreamFormat))
-                .Cast<StreamFormat>()
+            var formats = Enum.GetValues<StreamFormat>()
                 .ToDictionary(x => x.ToExtensionRepresentation());
             var allowedTypes = formats.Keys.ToList();
             using var dialog = new SaveDialog("Export",

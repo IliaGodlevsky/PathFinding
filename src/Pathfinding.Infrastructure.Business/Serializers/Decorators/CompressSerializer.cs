@@ -1,10 +1,6 @@
 ﻿using Pathfinding.Infrastructure.Business.Serializers.Exceptions;
 using Pathfinding.Service.Interface;
-using System;
-using System.IO;
 using System.IO.Compression;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Pathfinding.Infrastructure.Business.Serializers.Decorators
 {

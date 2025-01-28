@@ -2,8 +2,6 @@
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Pathfinding.Infrastructure.Data.Pathfinding
 {

@@ -1,7 +1,6 @@
 ﻿using Autofac.Features.AttributeFilters;
 using DynamicData.Kernel;
 using Pathfinding.App.Console.Injection;
-using System.Collections.Generic;
 using Terminal.Gui;
 
 namespace Pathfinding.App.Console.View

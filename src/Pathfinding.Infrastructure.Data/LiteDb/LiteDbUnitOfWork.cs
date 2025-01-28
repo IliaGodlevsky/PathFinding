@@ -2,9 +2,6 @@
 using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Repositories;
 using Pathfinding.Infrastructure.Data.LiteDb.Repositories;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Pathfinding.Infrastructure.Data.LiteDb
 {

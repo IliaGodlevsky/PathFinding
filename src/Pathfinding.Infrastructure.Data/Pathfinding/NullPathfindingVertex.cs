@@ -1,8 +1,6 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Primitives;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Pathfinding.Infrastructure.Data.Pathfinding

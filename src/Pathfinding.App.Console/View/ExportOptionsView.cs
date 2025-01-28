@@ -12,15 +12,12 @@ namespace Pathfinding.App.Console.View
 {
     internal sealed class ExportOptionsView : FrameView
     {
-        private readonly CompositeDisposable disposables = new();
-        private readonly RadioGroup exportOptions = new RadioGroup();
+        private readonly CompositeDisposable disposables = [];
+        private readonly RadioGroup exportOptions = new();
 
         public ExportOptionsView(IGraphExportViewModel viewModel)
         {
-            var options = Enum
-                .GetValues(typeof(ExportOptions))
-                .Cast<ExportOptions>()
-                .ToArray();
+            var options = Enum.GetValues<ExportOptions>();
             var labels = options
                 .Select(x => ustring.Make(x.ToStringRepresentation()))
                 .ToArray();

@@ -1,5 +1,4 @@
-﻿using Pathfinding.App.Console;
-using Pathfinding.Domain.Interface;
+﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Terminal.Gui;
 

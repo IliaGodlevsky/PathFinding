@@ -1,6 +1,5 @@
 ﻿using Pathfinding.Logging.Interface;
 using Pathfinding.Shared.Extensions;
-using System;
 
 namespace Pathfinding.Logging.Loggers
 {

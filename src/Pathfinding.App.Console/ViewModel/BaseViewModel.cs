@@ -1,6 +1,4 @@
 ﻿using ReactiveUI;
-using System;
-using System.Threading.Tasks;
 
 namespace Pathfinding.App.Console.ViewModel
 {

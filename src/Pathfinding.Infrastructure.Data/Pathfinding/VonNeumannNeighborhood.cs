@@ -1,6 +1,5 @@
 ﻿using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Shared.Primitives;
-using System;
 using System.Diagnostics;
 
 namespace Pathfinding.Infrastructure.Data.Pathfinding

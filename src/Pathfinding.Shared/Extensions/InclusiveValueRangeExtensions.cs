@@ -1,6 +1,4 @@
 ﻿using Pathfinding.Shared.Primitives;
-using System;
-using System.Collections.Generic;
 
 namespace Pathfinding.Shared.Extensions
 {

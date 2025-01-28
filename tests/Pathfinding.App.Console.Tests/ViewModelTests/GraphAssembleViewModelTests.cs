@@ -4,6 +4,7 @@ using Moq;
 using Pathfinding.App.Console.Messages.ViewModel;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.ViewModel;
+using Pathfinding.ConsoleApp.Tests;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
@@ -12,7 +13,7 @@ using Pathfinding.Service.Interface.Requests.Create;
 using Pathfinding.Shared.Interface;
 using System.Reactive.Linq;
 
-namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
+namespace Pathfinding.App.Console.Tests.ViewModelTests
 {
     [Category("Unit")]
     internal class GraphAssembleViewModelTests
@@ -43,10 +44,10 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
 
             var viewModel = mock.Create<GraphAssembleViewModel>();
             viewModel.SmoothLevel = Domain.Core.SmoothLevels.No;
-            viewModel.Length = 15; 
+            viewModel.Length = 15;
             viewModel.Width = 15;
             viewModel.Neighborhood = Domain.Core.Neighborhoods.VonNeumann;
-            viewModel.Obstacles = 10; 
+            viewModel.Obstacles = 10;
             viewModel.Name = "Demo";
 
             var command = viewModel.CreateCommand;
@@ -64,7 +65,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                         It.IsAny<CreateGraphRequest<GraphVertexModel>>(),
                         It.IsAny<CancellationToken>()), Times.Once);
                 mock.Mock<IMessenger>().Verify(x => x.Send(
-                    It.IsAny<GraphCreatedMessage>(), 
+                    It.IsAny<GraphCreatedMessage>(),
                     It.IsAny<IsAnyToken>()), Times.Once);
                 mock.Mock<IGraphAssemble<GraphVertexModel>>()
                     .Verify(x => x.AssembleGraph(

@@ -1,5 +1,4 @@
 ﻿using Pathfinding.Logging.Interface;
-using System;
 
 namespace Pathfinding.Logging.Loggers
 {

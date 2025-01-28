@@ -1,7 +1,6 @@
 ﻿using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Service.Interface;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms

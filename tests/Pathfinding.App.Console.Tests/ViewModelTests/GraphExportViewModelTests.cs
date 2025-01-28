@@ -7,6 +7,7 @@ using Pathfinding.App.Console.Injection;
 using Pathfinding.App.Console.Messages.ViewModel;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.ViewModel;
+using Pathfinding.ConsoleApp.Tests;
 using Pathfinding.Infrastructure.Business.Serializers;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
@@ -15,22 +16,22 @@ using Pathfinding.Shared.Extensions;
 using System.Linq.Expressions;
 using System.Reactive.Linq;
 
-namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
+namespace Pathfinding.App.Console.Tests.ViewModelTests
 {
     [Category("Unit")]
     internal class GraphExportViewModelTests
     {
-        private async Task ExportGraphCommand_HasGraphs_ShouldExport(Expression<Func<IRequestService<GraphVertexModel>, Task<PathfindingHisotiriesSerializationModel>>> expression,
+        private static async Task ExportGraphCommand_HasGraphs_ShouldExport(Expression<Func<IRequestService<GraphVertexModel>, Task<PathfindingHisotiriesSerializationModel>>> expression,
             ExportOptions options)
         {
             using var mock = AutoMock.GetLoose();
 
-            GraphInfoModel[] models = new[]
-            {
+            GraphInfoModel[] models =
+            [
                 new GraphInfoModel() { Id = 1 },
                 new GraphInfoModel() { Id = 2 },
                 new GraphInfoModel() { Id = 3 }
-            };
+            ];
 
             PathfindingHisotiriesSerializationModel histories
                = Enumerable.Range(1, 5)

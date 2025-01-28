@@ -2,8 +2,6 @@
 using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.Injection;
 using Pathfinding.App.Console.Messages.View;
-using System.Collections.Generic;
-using System.Linq;
 using Terminal.Gui;
 
 namespace Pathfinding.App.Console.View

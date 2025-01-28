@@ -1,5 +1,4 @@
 ﻿using Pathfinding.Shared.Extensions;
-using System;
 using System.Runtime.CompilerServices;
 
 namespace Pathfinding.Shared.Primitives

@@ -2,7 +2,6 @@
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Primitives;
-using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {

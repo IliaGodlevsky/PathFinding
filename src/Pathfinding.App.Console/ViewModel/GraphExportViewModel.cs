@@ -18,10 +18,10 @@ namespace Pathfinding.App.Console.ViewModel
     {
         private readonly IRequestService<GraphVertexModel> service;
         private readonly ILog logger;
-        private readonly IReadOnlyDictionary<StreamFormat,
+        private readonly Dictionary<StreamFormat,
             ISerializer<PathfindingHisotiriesSerializationModel>> serializers;
 
-        private int[] graphIds = Array.Empty<int>();
+        private int[] graphIds = [];
         private int[] GraphIds
         {
             get => graphIds;

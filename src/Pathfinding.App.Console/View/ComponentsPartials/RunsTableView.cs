@@ -1,7 +1,5 @@
 ﻿using Pathfinding.App.Console.Extensions;
 using Pathfinding.Domain.Core;
-using System;
-using System.Collections.Generic;
 using System.Data;
 using Terminal.Gui;
 

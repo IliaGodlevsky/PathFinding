@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Pathfinding.Shared.Exceptions
+﻿namespace Pathfinding.Shared.Exceptions
 {
     public class SingletonException : Exception
     {

@@ -3,25 +3,19 @@ using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Service.Interface;
 using Priority_Queue;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public class DijkstraAlgorithm : WaveAlgorithm<SimplePriorityQueue<IPathfindingVertex, double>>
+    public class DijkstraAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange, IStepRule stepRule)
+        : WaveAlgorithm<SimplePriorityQueue<IPathfindingVertex, double>>(pathfindingRange)
     {
-        protected readonly IStepRule stepRule;
+        protected readonly IStepRule stepRule = stepRule;
 
         public DijkstraAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
             : this(pathfindingRange, new DefaultStepRule())
         {
 
-        }
-
-        public DijkstraAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange, IStepRule stepRule)
-            : base(pathfindingRange)
-        {
-            this.stepRule = stepRule;
         }
 
         protected override IGraphPath GetSubPath()

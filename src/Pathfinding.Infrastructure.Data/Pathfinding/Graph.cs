@@ -2,10 +2,7 @@
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Pathfinding.Infrastructure.Data.Pathfinding
 {

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Pathfinding.Logging.Interface
+﻿namespace Pathfinding.Logging.Interface
 {
     public interface ILog
     {

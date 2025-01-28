@@ -3,7 +3,6 @@ using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Primitives;
 using Priority_Queue;
-using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {

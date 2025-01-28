@@ -1,6 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Shared.Primitives;
-using System;
 
 namespace Pathfinding.Infrastructure.Business.Layers
 {

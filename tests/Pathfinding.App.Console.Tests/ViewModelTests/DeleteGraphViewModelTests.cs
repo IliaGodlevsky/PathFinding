@@ -18,12 +18,12 @@ namespace Pathfinding.App.Console.Tests.ViewModelTests
         public async Task DeleteGraphCommand_MoreThanOneGraph_ShouldExecute()
         {
             using var mock = AutoMock.GetLoose();
-            GraphInfoModel[] models = new[]
-            {
+            GraphInfoModel[] models =
+            [
                 new GraphInfoModel() { Id = 1 },
                 new GraphInfoModel() { Id = 2 },
                 new GraphInfoModel() { Id = 3 }
-            };
+            ];
 
             mock.Mock<IRequestService<GraphVertexModel>>()
                 .Setup(x => x.DeleteGraphsAsync(

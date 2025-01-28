@@ -1,6 +1,5 @@
 ﻿using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface;
-using System;
 using System.Runtime.CompilerServices;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.StepRules

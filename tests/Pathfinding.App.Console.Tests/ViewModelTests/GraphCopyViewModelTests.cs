@@ -4,6 +4,7 @@ using Moq;
 using Pathfinding.App.Console.Messages.ViewModel;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.ViewModel;
+using Pathfinding.ConsoleApp.Tests;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Read;
@@ -11,7 +12,7 @@ using Pathfinding.Service.Interface.Models.Serialization;
 using Pathfinding.Shared.Extensions;
 using System.Reactive.Linq;
 
-namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
+namespace Pathfinding.App.Console.Tests.ViewModelTests
 {
     [Category("Unit")]
     internal class GraphCopyViewModelTests
@@ -21,12 +22,12 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
         {
             using var mock = AutoMock.GetLoose();
 
-            GraphInfoModel[] models = new[]
-            {
+            GraphInfoModel[] models =
+            [
                 new GraphInfoModel() { Id = 1 },
                 new GraphInfoModel() { Id = 2 },
                 new GraphInfoModel() { Id = 3 }
-            };
+            ];
 
             PathfindingHisotiriesSerializationModel histories
                 = Enumerable.Range(1, 5)
@@ -40,8 +41,8 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                     Graph = new()
                     {
                         Id = x,
-                        Vertices = Array.Empty<GraphVertexModel>(),
-                        DimensionSizes = Array.Empty<int>(),
+                        Vertices = [],
+                        DimensionSizes = [],
                         Name = string.Empty
                     }
                 }).ToList();

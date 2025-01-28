@@ -1,7 +1,6 @@
 ﻿using Pathfinding.Domain.Interface;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Interface;
-using System.Linq;
 
 using static System.Linq.Enumerable;
 

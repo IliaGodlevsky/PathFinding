@@ -1,8 +1,5 @@
 ﻿using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Primitives;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.Events
 {

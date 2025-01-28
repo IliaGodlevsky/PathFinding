@@ -1,6 +1,5 @@
 ﻿using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Service.Interface;
-using System.Collections.Generic;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {

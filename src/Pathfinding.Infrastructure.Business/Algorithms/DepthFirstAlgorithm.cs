@@ -1,7 +1,5 @@
 ﻿using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {

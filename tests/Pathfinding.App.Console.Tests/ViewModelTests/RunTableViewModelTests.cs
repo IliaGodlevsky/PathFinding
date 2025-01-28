@@ -4,6 +4,7 @@ using Moq;
 using Pathfinding.App.Console.Messages.ViewModel;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.ViewModel;
+using Pathfinding.ConsoleApp.Tests;
 using Pathfinding.Domain.Core;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
@@ -12,7 +13,7 @@ using Pathfinding.Service.Interface.Models.Undefined;
 using Pathfinding.Shared.Extensions;
 using System.Reactive.Linq;
 
-namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
+namespace Pathfinding.App.Console.Tests.ViewModelTests
 {
     [Category("Unit")]
     internal sealed class RunTableViewModelTests
@@ -31,7 +32,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
 
             var viewModel = mock.Create<RunsTableViewModel>();
 
-            Assert.That(viewModel.Runs.Count == 1);
+            Assert.That(viewModel.Runs, Has.Count.EqualTo(1));
         }
 
         [Test]
@@ -61,8 +62,8 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(viewModel.Runs.Count == runs.Count);
-                Assert.That(viewModel.Runs.Count > 0);
+                Assert.That(viewModel.Runs, Has.Count.EqualTo(runs.Count));
+                Assert.That(viewModel.Runs, Is.Not.Empty);
             });
         }
 
@@ -73,7 +74,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
 
             var viewModel = mock.Create<RunsTableViewModel>();
 
-            await viewModel.SelectRunsCommand.Execute(Array.Empty<int>());
+            await viewModel.SelectRunsCommand.Execute([]);
 
             mock.Mock<IMessenger>()
                 .Verify(x => x.Send(
@@ -111,7 +112,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                     It.IsAny<IsAnyToken>(),
                     It.IsAny<MessageHandler<object, GraphsDeletedMessage>>()))
                 .Callback<object, object, MessageHandler<object, GraphsDeletedMessage>>((r, t, handler) =>
-                    handler(r, new(new[] { 1 })));
+                    handler(r, new([1])));
 
             var viewModel = mock.Create<RunsTableViewModel>();
 
@@ -134,7 +135,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                         It.IsAny<IsAnyToken>(),
                         It.IsAny<MessageHandler<object, GraphsDeletedMessage>>()), Times.Once);
 
-                Assert.That(viewModel.Runs.Count == 0);
+                Assert.That(viewModel.Runs, Is.Empty);
             });
         }
 
@@ -196,7 +197,7 @@ namespace Pathfinding.ConsoleApp.Tests.ViewModelTests
                         It.Is<GraphStateChangedMessage>(x => x.Id == 1 && x.Status == GraphStatuses.Editable),
                         It.IsAny<IsAnyToken>()), Times.Once);
 
-                Assert.That(viewModel.Runs.Count == 0);
+                Assert.That(viewModel.Runs, Is.Empty);
             });
         }
 

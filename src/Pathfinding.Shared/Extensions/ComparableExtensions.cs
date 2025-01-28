@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Pathfinding.Shared.Extensions
+﻿namespace Pathfinding.Shared.Extensions
 {
     public static class ComparableExtensions
     {

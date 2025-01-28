@@ -1,8 +1,4 @@
-﻿using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Pathfinding.Service.Interface
+﻿namespace Pathfinding.Service.Interface
 {
     public interface ISerializer<T>
     {

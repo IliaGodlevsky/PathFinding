@@ -1,5 +1,4 @@
 ﻿using Pathfinding.Service.Interface;
-using System;
 using System.Runtime.CompilerServices;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.Heuristics

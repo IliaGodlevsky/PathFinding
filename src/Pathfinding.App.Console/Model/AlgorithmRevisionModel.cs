@@ -70,13 +70,11 @@ namespace Pathfinding.App.Console.Model
         }
 
         public static readonly AlgorithmRevisionModel Empty
-            = new(Graph<RunVertexModel>.Empty,
-                  Array.Empty<SubRevisionModel>(),
-                  Array.Empty<Coordinate>());
+            = new(Graph<RunVertexModel>.Empty, [], []);
 
         public static readonly InclusiveValueRange<float> FractionRange = new(1, 0);
 
-        private readonly CompositeDisposable disposables = new();
+        private readonly CompositeDisposable disposables = [];
         private readonly Lazy<ReadOnlyCollection<RevisionUnit>> algorithm;
         private readonly Lazy<InclusiveValueRange<int>> cursorRange;
 

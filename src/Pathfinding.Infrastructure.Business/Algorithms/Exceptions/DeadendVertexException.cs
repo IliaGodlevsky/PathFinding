@@ -1,7 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
-
-namespace Pathfinding.Infrastructure.Business.Algorithms.Exceptions
+﻿namespace Pathfinding.Infrastructure.Business.Algorithms.Exceptions
 {
     public class DeadendVertexException : PathfindingException
     {
