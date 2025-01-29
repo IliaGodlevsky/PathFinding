@@ -266,7 +266,8 @@ namespace Pathfinding.Infrastructure.Business
         {
             return await Transaction(async (unit, t) =>
             {
-                var range = (await unit.RangeRepository.ReadByGraphIdAsync(graphId, t)).ToList();
+                var range = (await unit.RangeRepository
+                    .ReadByGraphIdAsync(graphId, t)).ToList();
                 var pathfindingRange = new PathfindingRange()
                 {
                     GraphId = graphId,
@@ -274,12 +275,12 @@ namespace Pathfinding.Infrastructure.Business
                     VertexId = vertexId
                 };
                 range.Insert(index, pathfindingRange);
-                range.ForEach((x, i) =>
+                for (int i = 0; i < range.Count; i++)
                 {
-                    x.IsSource = i == 0;
-                    x.IsTarget = i == range.Count - 1 && range.Count > 1;
-                    x.Order = i;
-                });
+                    range[i].IsSource = i == 0;
+                    range[i].IsTarget = i == range.Count - 1 && range.Count > 1;
+                    range[i].Order = i;
+                }
                 await unit.RangeRepository.UpsertAsync(range, t);
                 return true;
             }, token);

@@ -16,12 +16,10 @@ using Pathfinding.Logging.Loggers;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Commands;
 using Pathfinding.Service.Interface.Models.Serialization;
-using Pathfinding.Shared.Interface;
-using Pathfinding.Shared.Random;
 
 namespace Pathfinding.App.Console.Injection
 {
-    internal static class App
+    internal static class Modules
     {
         public static ILifetimeScope Build()
         {
@@ -29,8 +27,6 @@ namespace Pathfinding.App.Console.Injection
 
             builder.RegisterType<GraphAssemble<GraphVertexModel>>().As<IGraphAssemble<GraphVertexModel>>().SingleInstance();
             builder.RegisterType<GraphAssemble<RunVertexModel>>().As<IGraphAssemble<RunVertexModel>>().SingleInstance();
-
-            builder.RegisterType<CongruentialRandom>().As<IRandom>().SingleInstance();
 
             builder.Register(_ => new SqliteUnitOfWorkFactory(Settings.Default.ConnectionString))
                 .As<IUnitOfWorkFactory>().SingleInstance();

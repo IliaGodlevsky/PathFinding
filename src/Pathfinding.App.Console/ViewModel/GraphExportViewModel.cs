@@ -73,9 +73,8 @@ namespace Pathfinding.App.Console.ViewModel
                         };
                         var histories = await historiesTask.ConfigureAwait(false);
                         await serializer.SerializeToAsync(histories, exportStream).ConfigureAwait(false);
-                        logger.Info(histories.Histories.Count == 1
-                            ? Resource.WasDeletedMsg
-                            : Resource.WereDeletedMsg);
+                        int count = histories.Histories.Count;
+                        logger.Info(count == 1 ? Resource.WasDeletedMsg : Resource.WereDeletedMsg);
                     }
                 }
             }, logger.Error).ConfigureAwait(false);

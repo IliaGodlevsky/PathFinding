@@ -17,7 +17,7 @@ namespace Pathfinding.App.Console.ViewModel
         private readonly IRequestService<GraphVertexModel> service;
         private readonly ILog logger;
 
-        private int[] graphIds = Array.Empty<int>();
+        private int[] graphIds = [];
         private int[] GraphIds
         {
             get => graphIds;
@@ -53,7 +53,7 @@ namespace Pathfinding.App.Console.ViewModel
                 if (isDeleted)
                 {
                     var graphs = GraphIds.ToArray();
-                    GraphIds = Array.Empty<int>();
+                    GraphIds = [];
                     messenger.Send(new GraphsDeletedMessage(graphs));
                 }
             }, logger.Error).ConfigureAwait(false);

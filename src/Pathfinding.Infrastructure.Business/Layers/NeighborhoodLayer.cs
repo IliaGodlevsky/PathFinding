@@ -24,7 +24,8 @@ namespace Pathfinding.Infrastructure.Business.Layers
             bool IsInRange(Coordinate coordinate)
             {
                 return coordinate.CoordinatesValues
-                    .Juxtapose(graph.DimensionsSizes, (x, y) => x < y && x >= 0);
+                    .Zip(graph.DimensionsSizes, (x, y) => (Position: x, Dimension: y))
+                    .All(z => z.Position < z.Dimension && z.Position >= 0);
             }
             return self.Where(IsInRange).Distinct()
                 .Select(graph.Get).ToList();

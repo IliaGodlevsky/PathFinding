@@ -20,7 +20,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         public ReactiveCommand<Unit, Unit> CopyGraphCommand { get; }
 
-        private int[] graphIds = Array.Empty<int>();
+        private int[] graphIds = [];
         private int[] GraphIds
         {
             get => graphIds;

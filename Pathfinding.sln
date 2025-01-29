@@ -33,8 +33,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.Logging", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.Infrastructure.Business.Benchmarks", "benchmarks\Pathfinding.Infrastructure.Business.Benchmarks\Pathfinding.Infrastructure.Business.Benchmarks.csproj", "{E2E5C5CA-6856-473D-A4C6-292F0B04CCB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathfinding.Shared.Benchmarks", "benchmarks\Pathfinding.Shared.Benchmarks\Pathfinding.Shared.Benchmarks.csproj", "{F4307AFC-533A-4633-837C-D03C63BD964E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,10 +83,6 @@ Global
 		{E2E5C5CA-6856-473D-A4C6-292F0B04CCB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2E5C5CA-6856-473D-A4C6-292F0B04CCB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2E5C5CA-6856-473D-A4C6-292F0B04CCB9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F4307AFC-533A-4633-837C-D03C63BD964E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4307AFC-533A-4633-837C-D03C63BD964E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4307AFC-533A-4633-837C-D03C63BD964E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4307AFC-533A-4633-837C-D03C63BD964E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

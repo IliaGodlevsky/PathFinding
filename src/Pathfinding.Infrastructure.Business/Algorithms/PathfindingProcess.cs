@@ -1,7 +1,6 @@
 ﻿using Pathfinding.Infrastructure.Business.Algorithms.Events;
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Service.Interface;
-using Pathfinding.Service.Interface.Algorithms;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {

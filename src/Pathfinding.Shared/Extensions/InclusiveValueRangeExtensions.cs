@@ -67,11 +67,6 @@ namespace Pathfinding.Shared.Extensions
             return (long)valueRange.UpperValueOfRange - valueRange.LowerValueOfRange;
         }
 
-        public static double Amplitude(this InclusiveValueRange<double> valueRange)
-        {
-            return valueRange.UpperValueOfRange - valueRange.LowerValueOfRange;
-        }
-
         public static T ReturnInRange<T>(this InclusiveValueRange<T> self, T value, ReturnOptions options)
             where T : IComparable<T>
         {

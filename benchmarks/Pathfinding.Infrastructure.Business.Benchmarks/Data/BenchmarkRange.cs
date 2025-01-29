@@ -2,9 +2,7 @@
 using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
-using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
-using Pathfinding.Shared.Random;
 using System.Collections;
 
 namespace Pathfinding.Infrastructure.Business.Benchmarks.Data
@@ -24,10 +22,10 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks.Data
         {
             var assemble = new GraphAssemble<BenchmarkVertex>();
             var neighborhoodLayer = new VonNeumannNeighborhoodLayer();
-            var random = new CongruentialRandom();
             var costLayer = new VertexCostLayer(
                 new InclusiveValueRange<int>(9, 1),
-                range => new VertexCost(random.NextInt(range), range));
+                range => new VertexCost(Random.Shared.Next(range.LowerValueOfRange, 
+                range.UpperValueOfRange + 1), range));
             var layers = new Layers.Layers(neighborhoodLayer, costLayer);
             graph = assemble.AssembleGraph(layers, 200, 250);
         }

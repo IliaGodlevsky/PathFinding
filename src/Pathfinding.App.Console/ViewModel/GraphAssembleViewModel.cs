@@ -12,8 +12,6 @@ using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Requests.Create;
-using Pathfinding.Shared.Extensions;
-using Pathfinding.Shared.Interface;
 using Pathfinding.Shared.Primitives;
 using ReactiveUI;
 using System.Reactive;
@@ -32,7 +30,6 @@ namespace Pathfinding.App.Console.ViewModel
         private readonly IRequestService<GraphVertexModel> service;
         private readonly IGraphAssemble<GraphVertexModel> graphAssemble;
         private readonly IMessenger messenger;
-        private readonly IRandom random;
         private readonly ILog logger;
 
         private string name;
@@ -82,12 +79,10 @@ namespace Pathfinding.App.Console.ViewModel
         public GraphAssembleViewModel(IRequestService<GraphVertexModel> service,
             IGraphAssemble<GraphVertexModel> graphAssemble,
             [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
-            IRandom random,
             ILog logger)
         {
             this.service = service;
             this.messenger = messenger;
-            this.random = random;
             this.logger = logger;
             this.graphAssemble = graphAssemble;
             CreateCommand = ReactiveCommand.CreateFromTask(CreateGraph, CanExecute());
@@ -112,8 +107,9 @@ namespace Pathfinding.App.Console.ViewModel
         {
             await ExecuteSafe(async () =>
             {
-                var costLayer = new VertexCostLayer(CostRange, range => new VertexCost(random.NextInt(range), range));
-                var obstacleLayer = new ObstacleLayer(random, Obstacles);
+                var random = Random.Shared;
+                var costLayer = new VertexCostLayer(CostRange, range => new VertexCost(random.Next(range.LowerValueOfRange, range.UpperValueOfRange + 1), range));
+                var obstacleLayer = new ObstacleLayer(Obstacles);
                 var layers = new Layers(costLayer, obstacleLayer);
                 var graph = await graphAssemble.AssembleGraphAsync(layers, Width, Length)
                     .ConfigureAwait(false);

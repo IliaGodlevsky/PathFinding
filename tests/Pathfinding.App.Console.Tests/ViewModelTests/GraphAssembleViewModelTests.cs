@@ -23,7 +23,6 @@ namespace Pathfinding.App.Console.Tests.ViewModelTests
         {
             using var mock = AutoMock.GetLoose();
 
-            mock.Mock<IRandom>().Setup(x => x.NextUInt()).Returns(1);
             mock.Mock<IGraphAssemble<GraphVertexModel>>()
                 .Setup(x => x.AssembleGraph(It.IsAny<IReadOnlyList<int>>()))
                 .Returns(Graph<GraphVertexModel>.Empty);

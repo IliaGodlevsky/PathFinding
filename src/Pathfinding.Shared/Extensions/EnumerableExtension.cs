@@ -38,36 +38,6 @@ namespace Pathfinding.Shared.Extensions
             return collection;
         }
 
-        public static IEnumerable<T> ForEach<T>(this IEnumerable<T> collection, Action<T, int> action)
-        {
-            int i = 0;
-            foreach (var item in collection)
-            {
-                action(item, i);
-                i++;
-            }
-            return collection;
-        }
-
-        public static bool Juxtapose<T, U>(this IEnumerable<T> self, IEnumerable<U> second, Func<T, U, bool> predicate)
-        {
-            using var enumerator = self.GetEnumerator();
-            using var enumerator2 = second.GetEnumerator();
-            while (enumerator.MoveNext())
-            {
-                if (!enumerator2.MoveNext() || !predicate(enumerator.Current, enumerator2.Current))
-                {
-                    return false;
-                }
-            }
-
-            if (enumerator2.MoveNext())
-            {
-                return false;
-            }
-            return true;
-        }
-
         public static IEnumerable<T> TakeOrDefault<T>(this IEnumerable<T> collection, int number, T defaultValue = default)
         {
             int count = 0;
@@ -98,7 +68,5 @@ namespace Pathfinding.Shared.Extensions
         {
             return selector(items);
         }
-
-
     }
 }
