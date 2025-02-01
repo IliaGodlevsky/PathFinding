@@ -2,14 +2,10 @@
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public abstract class BidirectBreadthFirstAlgorithm<TStorage> : BidirectWaveAlgorithm<TStorage>
+    public abstract class BidirectBreadthFirstAlgorithm<TStorage>(IEnumerable<IPathfindingVertex> pathfindingRange) 
+        : BidirectWaveAlgorithm<TStorage>(pathfindingRange)
         where TStorage : new()
     {
-        protected BidirectBreadthFirstAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
-            : base(pathfindingRange)
-        {
-        }
-
         protected override void RelaxForwardVertex(IPathfindingVertex vertex)
         {
             forwardVisited.Add(vertex);

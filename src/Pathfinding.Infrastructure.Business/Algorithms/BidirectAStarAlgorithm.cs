@@ -5,28 +5,17 @@ using Pathfinding.Shared.Primitives;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public sealed class BidirectAStarAlgorithm : BidirectDijkstraAlgorithm
+    public sealed class BidirectAStarAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange,
+        IStepRule stepRule, IHeuristic heuristic) : BidirectDijkstraAlgorithm(pathfindingRange, stepRule)
     {
-        private readonly Dictionary<Coordinate, double> forwardAccumulatedCosts;
-        private readonly Dictionary<Coordinate, double> backwardAccumulatedCosts;
-        private readonly Dictionary<Coordinate, double> forwardHeuristics;
-        private readonly Dictionary<Coordinate, double> backwardHeuristics;
-        private readonly IHeuristic heuristic;
+        private readonly Dictionary<Coordinate, double> forwardAccumulatedCosts = [];
+        private readonly Dictionary<Coordinate, double> backwardAccumulatedCosts = [];
+        private readonly Dictionary<Coordinate, double> forwardHeuristics = [];
+        private readonly Dictionary<Coordinate, double> backwardHeuristics = [];
 
         public BidirectAStarAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
             : this(pathfindingRange, new DefaultStepRule(), new ManhattanDistance())
         {
-        }
-
-        public BidirectAStarAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange,
-            IStepRule stepRule, IHeuristic heuristic)
-            : base(pathfindingRange, stepRule)
-        {
-            this.heuristic = heuristic;
-            forwardAccumulatedCosts = new();
-            backwardAccumulatedCosts = new();
-            forwardHeuristics = new();
-            backwardHeuristics = new();
         }
 
         protected override void DropState()

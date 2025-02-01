@@ -2,22 +2,13 @@
 using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Service.Interface;
-using System.Collections.Immutable;
+using System.Collections.Frozen;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public sealed class AStarGreedyAlgorithm : GreedyAlgorithm
+    public sealed class AStarGreedyAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange,
+        IHeuristic heuristic, IStepRule stepRule) : GreedyAlgorithm(pathfindingRange)
     {
-        private readonly IStepRule stepRule;
-        private readonly IHeuristic heuristic;
-
-        public AStarGreedyAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange,
-            IHeuristic heuristic, IStepRule stepRule) : base(pathfindingRange)
-        {
-            this.stepRule = stepRule;
-            this.heuristic = heuristic;
-        }
-
         public AStarGreedyAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
             : this(pathfindingRange, new ChebyshevDistance(), new DefaultStepRule())
         {
@@ -26,7 +17,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 
         protected override IGraphPath GetSubPath()
         {
-            return new GraphPath(traces.ToImmutableDictionary(),
+            return new GraphPath(traces.ToFrozenDictionary(),
                 CurrentRange.Target, stepRule);
         }
 

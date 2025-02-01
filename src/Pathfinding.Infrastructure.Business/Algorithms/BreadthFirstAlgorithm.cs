@@ -2,15 +2,10 @@
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public abstract class BreadthFirstAlgorithm<TStorage> : WaveAlgorithm<TStorage>
+    public abstract class BreadthFirstAlgorithm<TStorage>(IEnumerable<IPathfindingVertex> pathfindingRange) 
+        : WaveAlgorithm<TStorage>(pathfindingRange)
         where TStorage : new()
     {
-        public BreadthFirstAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
-            : base(pathfindingRange)
-        {
-
-        }
-
         protected override void RelaxVertex(IPathfindingVertex vertex)
         {
             visited.Add(vertex);

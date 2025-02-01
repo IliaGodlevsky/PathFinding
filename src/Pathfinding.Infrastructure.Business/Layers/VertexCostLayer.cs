@@ -3,18 +3,9 @@ using Pathfinding.Shared.Primitives;
 
 namespace Pathfinding.Infrastructure.Business.Layers
 {
-    public sealed class VertexCostLayer : ILayer
+    public sealed class VertexCostLayer(InclusiveValueRange<int> costRange,
+        Func<InclusiveValueRange<int>, IVertexCost> generator) : ILayer
     {
-        private readonly Func<InclusiveValueRange<int>, IVertexCost> generator;
-        private readonly InclusiveValueRange<int> costRange;
-
-        public VertexCostLayer(InclusiveValueRange<int> costRange,
-            Func<InclusiveValueRange<int>, IVertexCost> generator)
-        {
-            this.costRange = costRange;
-            this.generator = generator;
-        }
-
         public void Overlay(IGraph<IVertex> graph)
         {
             foreach (var vertex in graph)

@@ -1,15 +1,7 @@
 ﻿using BenchmarkDotNet.Running;
+using Pathfinding.Infrastructure.Business.Benchmarks;
 
-namespace Pathfinding.Infrastructure.Business.Benchmarks
-{
-    internal class Program
-    {
-        static void Main(string[] args)
-        {
-            BenchmarkRunner.Run<WaveAlgorithmsBenchmarks>();
-            //BenchmarkRunner.Run<HeuristicsBenchmarks>();
-            //BenchmarkRunner.Run<StepRulesBenchmarks>();
-            //BenchmarkRunner.Run<SerializersBenchmarks>();
-        }
-    }
-}
+BenchmarkRunner.Run<WaveAlgorithmsBenchmarks>();
+//BenchmarkRunner.Run<HeuristicsBenchmarks>();
+//BenchmarkRunner.Run<StepRulesBenchmarks>();
+//BenchmarkRunner.Run<SerializersBenchmarks>();

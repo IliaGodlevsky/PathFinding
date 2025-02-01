@@ -3,14 +3,10 @@ using Pathfinding.Shared.Extensions;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public abstract class WaveAlgorithm<TStorage> : PathfindingAlgorithm<TStorage>
+    public abstract class WaveAlgorithm<TStorage>(IEnumerable<IPathfindingVertex> pathfindingRange) 
+        : PathfindingAlgorithm<TStorage>(pathfindingRange)
         where TStorage : new()
     {
-        protected WaveAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
-            : base(pathfindingRange)
-        {
-        }
-
         protected abstract void RelaxVertex(IPathfindingVertex vertex);
 
         protected override void PrepareForSubPathfinding(

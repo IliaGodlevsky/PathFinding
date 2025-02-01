@@ -4,20 +4,14 @@ using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
 using Priority_Queue;
-using System.Collections.Immutable;
+using System.Collections.Frozen;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public class BidirectDijkstraAlgorithm : BidirectWaveAlgorithm<SimplePriorityQueue<IPathfindingVertex, double>>
+    public class BidirectDijkstraAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange,
+        IStepRule stepRule) : BidirectWaveAlgorithm<SimplePriorityQueue<IPathfindingVertex, double>>(pathfindingRange)
     {
-        protected readonly IStepRule stepRule;
-
-        public BidirectDijkstraAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange,
-            IStepRule stepRule)
-            : base(pathfindingRange)
-        {
-            this.stepRule = stepRule;
-        }
+        protected readonly IStepRule stepRule = stepRule;
 
         public BidirectDijkstraAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
             : this(pathfindingRange, new DefaultStepRule())
@@ -35,8 +29,9 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 
         protected override IGraphPath GetSubPath()
         {
-            return new BidirectGraphPath(forwardTraces.ToImmutableDictionary(),
-                backwardTraces.ToImmutableDictionary(), Intersection, stepRule);
+            return new BidirectGraphPath(
+                forwardTraces.ToFrozenDictionary(),
+                backwardTraces.ToFrozenDictionary(), Intersection, stepRule);
         }
 
         protected override void DropState()

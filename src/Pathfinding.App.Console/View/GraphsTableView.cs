@@ -19,8 +19,8 @@ namespace Pathfinding.App.Console.View
     internal sealed partial class GraphsTableView
     {
         private readonly IGraphTableViewModel viewModel;
-        private readonly CompositeDisposable disposables = new();
-        private readonly Dictionary<int, IDisposable> modelChangingSubs = new();
+        private readonly CompositeDisposable disposables = [];
+        private readonly Dictionary<int, IDisposable> modelChangingSubs = [];
         private readonly IMessenger messenger;
 
         public GraphsTableView(IGraphTableViewModel viewModel,

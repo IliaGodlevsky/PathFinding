@@ -29,7 +29,7 @@ namespace Pathfinding.App.Console.ViewModel
     internal sealed class PathfindingRangeViewModel : BaseViewModel,
         IPathfindingRange<GraphVertexModel>, IPathfindingRangeViewModel
     {
-        private readonly CompositeDisposable disposables = new();
+        private readonly CompositeDisposable disposables = [];
         private readonly IRequestService<GraphVertexModel> service;
         private readonly IEnumerable<IPathfindingRangeCommand<GraphVertexModel>> includeCommands;
         private readonly IEnumerable<IPathfindingRangeCommand<GraphVertexModel>> excludeCommands;
@@ -38,7 +38,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         private int GraphId { get; set; }
 
-        private IGraph<GraphVertexModel> Graph { get; set; }
+        private Graph<GraphVertexModel> Graph { get; set; }
 
         private bool isReadOnly;
         public bool IsReadOnly
@@ -85,7 +85,7 @@ namespace Pathfinding.App.Console.ViewModel
             }
         }
 
-        public ObservableCollection<GraphVertexModel> Transit { get; } = new();
+        public ObservableCollection<GraphVertexModel> Transit { get; } = [];
 
         IList<GraphVertexModel> IPathfindingRange<GraphVertexModel>.Transit => Transit;
 

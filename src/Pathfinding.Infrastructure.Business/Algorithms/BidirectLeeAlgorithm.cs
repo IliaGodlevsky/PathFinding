@@ -4,14 +4,9 @@ using Pathfinding.Service.Interface;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public sealed class BidirectLeeAlgorithm : BidirectBreadthFirstAlgorithm<Queue<IPathfindingVertex>>
+    public sealed class BidirectLeeAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange) 
+        : BidirectBreadthFirstAlgorithm<Queue<IPathfindingVertex>>(pathfindingRange)
     {
-        public BidirectLeeAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
-            : base(pathfindingRange)
-        {
-
-        }
-
         protected override void DropState()
         {
             base.DropState();

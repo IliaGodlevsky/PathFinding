@@ -11,14 +11,14 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
         private static BenchmarkVertex second;
 
         [GlobalSetup]
-        public void Setup()
+        public static void Setup()
         {
             first = new BenchmarkVertex() { Position = new Coordinate(2, 4) };
             second = new BenchmarkVertex() { Position = new Coordinate(7, 11) };
         }
 
         [Benchmark]
-        public void ChebyshevDistanceBenchmark()
+        public static void ChebyshevDistanceBenchmark()
         {
             var chebyshev = new ChebyshevDistance();
 
@@ -26,7 +26,7 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
         }
 
         [Benchmark(Baseline = true)]
-        public void ManhattanDistanceBenchmark()
+        public static void ManhattanDistanceBenchmark()
         {
             var chebyshev = new ManhattanDistance();
 
@@ -34,7 +34,7 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
         }
 
         [Benchmark]
-        public void EuclidianDistanceBenchmark()
+        public static void EuclidianDistanceBenchmark()
         {
             var chebyshev = new EuclidianDistance();
 
@@ -42,7 +42,7 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
         }
 
         [Benchmark]
-        public void CosineDistanceBenchmark()
+        public static void CosineDistanceBenchmark()
         {
             var chebyshev = new CosineDistance();
 

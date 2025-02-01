@@ -27,7 +27,7 @@ namespace Pathfinding.Infrastructure.Data.Sqlite
             connection = new SqliteConnection(connectionString);
             connection.Open();
             transaction = connection.BeginTransaction();
-            new SqliteVerticesRepository(connection, transaction);
+            _ = new SqliteVerticesRepository(connection, transaction);
         }
 
         public void BeginTransaction()

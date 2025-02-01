@@ -3,7 +3,7 @@ using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Service.Interface;
 using Priority_Queue;
-using System.Collections.Immutable;
+using System.Collections.Frozen;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
@@ -20,7 +20,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 
         protected override IGraphPath GetSubPath()
         {
-            return new GraphPath(traces.ToImmutableDictionary(),
+            return new GraphPath(traces.ToFrozenDictionary(),
                 CurrentRange.Target, stepRule);
         }
 

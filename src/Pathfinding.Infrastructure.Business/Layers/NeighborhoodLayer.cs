@@ -1,5 +1,4 @@
 ﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
 
 namespace Pathfinding.Infrastructure.Business.Layers
@@ -18,7 +17,7 @@ namespace Pathfinding.Infrastructure.Business.Layers
 
         protected abstract INeighborhood CreateNeighborhood(Coordinate coordinate);
 
-        private IReadOnlyCollection<IVertex> GetNeighboursWithinGraph(INeighborhood self,
+        private List<IVertex> GetNeighboursWithinGraph(INeighborhood self,
             IGraph<IVertex> graph)
         {
             bool IsInRange(Coordinate coordinate)

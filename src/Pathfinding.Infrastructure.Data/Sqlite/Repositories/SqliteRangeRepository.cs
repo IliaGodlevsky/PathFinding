@@ -5,7 +5,8 @@ using Pathfinding.Domain.Interface.Repositories;
 
 namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
 {
-    internal sealed class SqliteRangeRepository : SqliteRepository, IRangeRepository
+    internal sealed class SqliteRangeRepository(SqliteConnection connection,
+        SqliteTransaction transaction) : SqliteRepository(connection, transaction), IRangeRepository
     {
         protected override string CreateTableScript { get; } = @$"
             CREATE TABLE IF NOT EXISTS {DbTables.Ranges} (
@@ -19,12 +20,6 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             );
             CREATE INDEX IF NOT EXISTS idx_range_vertexid ON {DbTables.Ranges}(VertexId);
             CREATE INDEX IF NOT EXISTS idx_range_graphid ON {DbTables.Ranges}(GraphId);";
-
-        public SqliteRangeRepository(SqliteConnection connection,
-            SqliteTransaction transaction)
-            : base(connection, transaction)
-        {
-        }
 
         public async Task<IEnumerable<PathfindingRange>> CreateAsync(IEnumerable<PathfindingRange> entities, CancellationToken token = default)
         {

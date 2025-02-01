@@ -3,14 +3,9 @@ using Pathfinding.Service.Interface;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public sealed class LeeAlgorithm : BreadthFirstAlgorithm<Queue<IPathfindingVertex>>
+    public sealed class LeeAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange) 
+        : BreadthFirstAlgorithm<Queue<IPathfindingVertex>>(pathfindingRange)
     {
-        public LeeAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
-            : base(pathfindingRange)
-        {
-
-        }
-
         protected override void DropState()
         {
             base.DropState();

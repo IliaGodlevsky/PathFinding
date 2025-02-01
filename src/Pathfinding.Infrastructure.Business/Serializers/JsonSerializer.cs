@@ -12,7 +12,7 @@ namespace Pathfinding.Infrastructure.Business.Serializers
             try
             {
                 using var reader = new StreamReader(stream, Encoding.Default, false, 1024, leaveOpen: true);
-                string deserialized = await reader.ReadToEndAsync().ConfigureAwait(false);
+                string deserialized = await reader.ReadToEndAsync(token).ConfigureAwait(false);
                 return await Task.Run(() => JsonConvert.DeserializeObject<T>(deserialized), token)
                     .ConfigureAwait(false);
             }

@@ -1,5 +1,6 @@
 ﻿using Pathfinding.Domain.Core;
 using Pathfinding.Service.Interface.Extensions;
+using System.Globalization;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -8,7 +9,7 @@ namespace Pathfinding.Service.Interface.Models.Serialization
 {
     public class RunStatisticsSerializationModel : IBinarySerializable, IXmlSerializable
     {
-        public Domain.Core.Algorithms Algorithm { get; set; }
+        public Algorithms Algorithm { get; set; }
 
         public HeuristicFunctions? Heuristics { get; set; } = null;
 
@@ -46,7 +47,7 @@ namespace Pathfinding.Service.Interface.Models.Serialization
             writer.Write(Weight);
             writer.WriteNullableInt32((int?)StepRule);
             writer.Write((int)ResultStatus);
-            writer.Write(Elapsed.TotalMilliseconds);
+            writer.Write(Elapsed.TotalMilliseconds.ToString(CultureInfo.InvariantCulture));
             writer.Write(Steps);
             writer.Write(Cost);
             writer.Write(Visited);

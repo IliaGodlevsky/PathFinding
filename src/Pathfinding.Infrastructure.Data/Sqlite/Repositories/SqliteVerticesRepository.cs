@@ -5,7 +5,8 @@ using Pathfinding.Domain.Interface.Repositories;
 
 namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
 {
-    internal sealed class SqliteVerticesRepository : SqliteRepository, IVerticesRepository
+    internal sealed class SqliteVerticesRepository(SqliteConnection connection,
+        SqliteTransaction transaction) : SqliteRepository(connection, transaction), IVerticesRepository
     {
         protected override string CreateTableScript { get; } =
             @$"CREATE TABLE IF NOT EXISTS {DbTables.Vertices} (
@@ -20,11 +21,6 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             );
             CREATE INDEX IF NOT EXISTS idx_vertex_id ON {DbTables.Vertices}(Id);
             CREATE INDEX IF NOT EXISTS idx_vertex_graphid ON {DbTables.Vertices}(GraphId);";
-
-        public SqliteVerticesRepository(SqliteConnection connection,
-            SqliteTransaction transaction) : base(connection, transaction)
-        {
-        }
 
         public async Task<IEnumerable<Vertex>> CreateAsync(IEnumerable<Vertex> vertices, CancellationToken token = default)
         {

@@ -5,14 +5,10 @@ using Pathfinding.Service.Interface;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public abstract class DepthAlgorithm : PathfindingAlgorithm<Stack<IPathfindingVertex>>
+    public abstract class DepthAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange) 
+        : PathfindingAlgorithm<Stack<IPathfindingVertex>>(pathfindingRange)
     {
         private IPathfindingVertex PreviousVertex { get; set; } = NullPathfindingVertex.Instance;
-
-        protected DepthAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
-           : base(pathfindingRange)
-        {
-        }
 
         protected abstract IPathfindingVertex GetVertex(IReadOnlyCollection<IPathfindingVertex> neighbors);
 

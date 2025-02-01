@@ -59,8 +59,8 @@ namespace Pathfinding.App.Console.Model
 
         public object[] GetProperties()
         {
-            return [ Id, Name, Width, Length,
-                Neighborhood, SmoothLevel, ObstaclesCount, Status ];
+            return [ Id, Name, Width, Length, Neighborhood, 
+                SmoothLevel, ObstaclesCount, Status ];
         }
     }
 }

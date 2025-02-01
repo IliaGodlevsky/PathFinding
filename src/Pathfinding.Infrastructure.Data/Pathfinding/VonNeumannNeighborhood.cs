@@ -5,18 +5,11 @@ using System.Diagnostics;
 namespace Pathfinding.Infrastructure.Data.Pathfinding
 {
     [DebuggerDisplay("Count = {Neighbours.Count}")]
-    public sealed class VonNeumannNeighborhood : Neighborhood
+    public sealed class VonNeumannNeighborhood(Coordinate coordinate) : Neighborhood(coordinate)
     {
-        public VonNeumannNeighborhood(Coordinate coordinate) : base(coordinate)
-        {
-
-        }
-
         protected override Coordinate[] Filter(Coordinate coordinate)
         {
-            return selfCoordinate.IsCardinal(coordinate)
-                ? new[] { coordinate }
-                : Array.Empty<Coordinate>();
+            return selfCoordinate.IsCardinal(coordinate) ? [coordinate] : [];
         }
     }
 }

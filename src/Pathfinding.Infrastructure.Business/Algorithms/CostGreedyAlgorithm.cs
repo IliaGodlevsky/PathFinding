@@ -1,30 +1,22 @@
 ﻿using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Service.Interface;
-using System.Collections.Immutable;
+using System.Collections.Frozen;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public sealed class CostGreedyAlgorithm : GreedyAlgorithm
+    public sealed class CostGreedyAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange,
+        IStepRule stepRule) : GreedyAlgorithm(pathfindingRange)
     {
-        private readonly IStepRule stepRule;
-
         public CostGreedyAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
             : this(pathfindingRange, new DefaultStepRule())
         {
 
         }
 
-        public CostGreedyAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange,
-            IStepRule stepRule)
-            : base(pathfindingRange)
-        {
-            this.stepRule = stepRule;
-        }
-
         protected override IGraphPath GetSubPath()
         {
-            return new GraphPath(traces.ToImmutableDictionary(),
+            return new GraphPath(traces.ToFrozenDictionary(),
                 CurrentRange.Target, stepRule);
         }
 

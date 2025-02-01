@@ -5,48 +5,43 @@ using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models;
+using Algorithm = Pathfinding.Domain.Core.Algorithms;
 
 namespace Pathfinding.Infrastructure.Business.Builders
 {
     public sealed class AlgorithmBuilder
     {
-        private readonly Domain.Core.Algorithms algorithm;
-        private StepRules? stepRules;
-        private HeuristicFunctions? heuristic;
-        private double? weight;
-
-        public static AlgorithmBuilder TakeAlgorithm(Domain.Core.Algorithms algorithm)
-            => new(algorithm);
-
-        public AlgorithmBuilder WithAlgorithmInfo(IAlgorithmBuildInfo info)
+        public static PathfindingProcess CreateAlgorithm(
+            IEnumerable<IPathfindingVertex> range, 
+            IAlgorithmBuildInfo info)
         {
-            weight = info.Weight;
-            heuristic = info.Heuristics;
-            stepRules = info.StepRule;
-            return this;
-        }
-
-        public PathfindingProcess Build(IEnumerable<IPathfindingVertex> range)
-        {
-            return algorithm switch
+            return info.Algorithm switch
             {
-                Domain.Core.Algorithms.AStar => new AStarAlgorithm(range, GetStepRule(), GetHeuristic()),
-                Domain.Core.Algorithms.AStarGreedy => new AStarGreedyAlgorithm(range, GetHeuristic(), GetStepRule()),
-                Domain.Core.Algorithms.AStarLee => new AStarLeeAlgorithm(range, GetHeuristic()),
-                Domain.Core.Algorithms.BidirectAStar => new BidirectAStarAlgorithm(range, GetStepRule(), GetHeuristic()),
-                Domain.Core.Algorithms.BidirectDijkstra => new BidirectDijkstraAlgorithm(range, GetStepRule()),
-                Domain.Core.Algorithms.BidirectLee => new BidirectLeeAlgorithm(range),
-                Domain.Core.Algorithms.CostGreedy => new CostGreedyAlgorithm(range, GetStepRule()),
-                Domain.Core.Algorithms.DepthFirst => new DepthFirstAlgorithm(range),
-                Domain.Core.Algorithms.Dijkstra => new DijkstraAlgorithm(range, GetStepRule()),
-                Domain.Core.Algorithms.DistanceFirst => new DistanceFirstAlgorithm(range, GetHeuristic()),
-                Domain.Core.Algorithms.Lee => new LeeAlgorithm(range),
-                Domain.Core.Algorithms.Snake => new SnakeAlgorithm(range, new ManhattanDistance()),
-                _ => throw new NotImplementedException($"Uknown algorithm: {algorithm}")
+                Algorithm.AStar => new AStarAlgorithm(range, GetStepRule(info.StepRule),
+                    GetHeuristic(info.Heuristics, info.Weight)),
+                Algorithm.AStarGreedy => new AStarGreedyAlgorithm(range, 
+                    GetHeuristic(info.Heuristics, info.Weight), GetStepRule(info.StepRule)),
+                Algorithm.AStarLee => new AStarLeeAlgorithm(range, 
+                    GetHeuristic(info.Heuristics, info.Weight)),
+                Algorithm.BidirectAStar => new BidirectAStarAlgorithm(range,
+                    GetStepRule(info.StepRule), GetHeuristic(info.Heuristics, info.Weight)),
+                Algorithm.BidirectDijkstra => new BidirectDijkstraAlgorithm(range, 
+                    GetStepRule(info.StepRule)),
+                Algorithm.BidirectLee => new BidirectLeeAlgorithm(range),
+                Algorithm.CostGreedy => new CostGreedyAlgorithm(range, 
+                    GetStepRule(info.StepRule)),
+                Algorithm.DepthFirst => new DepthFirstAlgorithm(range),
+                Algorithm.Dijkstra => new DijkstraAlgorithm(range, 
+                    GetStepRule(info.StepRule)),
+                Algorithm.DistanceFirst => new DistanceFirstAlgorithm(range, 
+                    GetHeuristic(info.Heuristics, info.Weight)),
+                Algorithm.Lee => new LeeAlgorithm(range),
+                Algorithm.Snake => new SnakeAlgorithm(range, new ManhattanDistance()),
+                _ => throw new NotImplementedException($"Uknown algorithm: {info.Algorithm}")
             };
         }
 
-        private IStepRule GetStepRule()
+        private static IStepRule GetStepRule(StepRules? stepRules)
         {
             return stepRules switch
             {
@@ -56,7 +51,7 @@ namespace Pathfinding.Infrastructure.Business.Builders
             };
         }
 
-        private IHeuristic GetHeuristic()
+        private static IHeuristic GetHeuristic(HeuristicFunctions? heuristic, double? weight)
         {
             return heuristic switch
             {
@@ -68,7 +63,5 @@ namespace Pathfinding.Infrastructure.Business.Builders
                 _ => throw new NotImplementedException($"Unknown heuristic: {heuristic}")
             };
         }
-
-        private AlgorithmBuilder(Domain.Core.Algorithms algorithm) => this.algorithm = algorithm;
     }
 }

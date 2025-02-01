@@ -3,15 +3,8 @@ using Pathfinding.Service.Interface;
 
 namespace Pathfinding.Infrastructure.Business.Serializers.Decorators
 {
-    public sealed class BufferedSerializer<T> : ISerializer<T>
+    public sealed class BufferedSerializer<T>(ISerializer<T> serializer) : ISerializer<T>
     {
-        private readonly ISerializer<T> serializer;
-
-        public BufferedSerializer(ISerializer<T> serializer)
-        {
-            this.serializer = serializer;
-        }
-
         public async Task<T> DeserializeFromAsync(Stream stream, CancellationToken token = default)
         {
             try

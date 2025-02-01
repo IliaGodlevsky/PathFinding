@@ -11,7 +11,6 @@ using Pathfinding.Infrastructure.Business.Algorithms.Events;
 using Pathfinding.Infrastructure.Business.Builders;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
-using Pathfinding.Logging.Interface;
 using Pathfinding.Shared.Extensions;
 using Pathfinding.Shared.Primitives;
 using ReactiveUI;
@@ -24,11 +23,10 @@ namespace Pathfinding.App.Console.ViewModel
 {
     internal sealed class AlgorithmRunFieldViewModel : BaseViewModel, IAlgorithmRunFieldViewModel
     {
-        private readonly ILog log;
         private readonly IMessenger messenger;
         private readonly IGraphAssemble<RunVertexModel> graphAssemble;
 
-        private readonly CompositeDisposable disposables = new();
+        private readonly CompositeDisposable disposables = [];
 
         private int graphId;
 
@@ -45,16 +43,14 @@ namespace Pathfinding.App.Console.ViewModel
             }
         }
 
-        public ObservableCollection<AlgorithmRevisionModel> Runs { get; } = new();
+        public ObservableCollection<AlgorithmRevisionModel> Runs { get; } = [];
 
         public IGraph<RunVertexModel> RunGraph { get; private set; } = Graph<RunVertexModel>.Empty;
 
         public AlgorithmRunFieldViewModel(
             IGraphAssemble<RunVertexModel> graphAssemble,
-            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger,
-            ILog log)
+            [KeyFilter(KeyFilters.ViewModels)] IMessenger messenger)
         {
-            this.log = log;
             this.messenger = messenger;
             this.graphAssemble = graphAssemble;
             Runs.ActOnEveryObject(OnAdded, OnRemoved);
@@ -152,8 +148,8 @@ namespace Pathfinding.App.Console.ViewModel
 
                 void AddSubAlgorithm(IReadOnlyCollection<Coordinate> path = null)
                 {
-                    subRevisions.Add(new(visitedVertices, path ?? Array.Empty<Coordinate>()));
-                    visitedVertices = new();
+                    subRevisions.Add(new(visitedVertices, path ?? []));
+                    visitedVertices = [];
                 }
                 void OnVertexProcessed(object sender, VerticesProcessedEventArgs e)
                 {
@@ -164,10 +160,7 @@ namespace Pathfinding.App.Console.ViewModel
                     AddSubAlgorithm(args.SubPath);
                 }
 
-                var algorithm = AlgorithmBuilder
-                    .TakeAlgorithm(model.Algorithm)
-                    .WithAlgorithmInfo(model)
-                    .Build(range);
+                var algorithm = AlgorithmBuilder.CreateAlgorithm(range, model);
                 algorithm.SubPathFound += OnSubPathFound;
                 algorithm.VertexProcessed += OnVertexProcessed;
                 try
@@ -182,8 +175,7 @@ namespace Pathfinding.App.Console.ViewModel
                 algorithm.VertexProcessed -= OnVertexProcessed;
 
                 run = new AlgorithmRevisionModel(RunGraph,
-                    subRevisions, rangeCoordinates)
-                { Id = model.Id };
+                    subRevisions, rangeCoordinates) { Id = model.Id };
                 Runs.Add(run);
             }
             SelectedRun = run;

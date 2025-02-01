@@ -25,7 +25,7 @@ namespace Pathfinding.App.Console.ViewModel
         private readonly IRequestService<GraphVertexModel> service;
         private readonly ILog log;
 
-        private RunInfoModel[] selected = Array.Empty<RunInfoModel>();
+        private RunInfoModel[] selected = [];
         private RunInfoModel[] Selected
         {
             get => selected;
@@ -73,7 +73,7 @@ namespace Pathfinding.App.Console.ViewModel
         {
             if (Graph != null && msg.GraphIds.Contains(ActivatedGraphId))
             {
-                Selected = Array.Empty<RunInfoModel>();
+                Selected = [];
                 Graph = Graph<GraphVertexModel>.Empty;
                 ActivatedGraphId = 0;
             }
@@ -106,7 +106,7 @@ namespace Pathfinding.App.Console.ViewModel
                 var model = await service.ReadGraphAsync(msg.Model.Id).ConfigureAwait(false);
                 graph = new Graph<GraphVertexModel>(model.Vertices, model.DimensionSizes);
                 id = model.Id;
-                var layers = LayersBuilder.Take(model).Build();
+                var layers = LayersBuilder.Build(model);
                 await layers.OverlayAsync(graph).ConfigureAwait(false);
             }
             if (graph != Graph<GraphVertexModel>.Empty)
@@ -135,10 +135,7 @@ namespace Pathfinding.App.Console.ViewModel
                     int visitedCount = 0;
                     void OnVertexProcessed(object sender, EventArgs e) => visitedCount++;
                     var info = await service.ReadStatisticAsync(select.Id).ConfigureAwait(false);
-                    var algorithm = AlgorithmBuilder
-                        .TakeAlgorithm(select.Algorithm)
-                        .WithAlgorithmInfo(select)
-                        .Build(range);
+                    var algorithm = AlgorithmBuilder.CreateAlgorithm(range, select);
                     algorithm.VertexProcessed += OnVertexProcessed;
 
                     var status = RunStatuses.Success;

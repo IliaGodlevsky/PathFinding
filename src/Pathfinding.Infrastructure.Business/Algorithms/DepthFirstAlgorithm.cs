@@ -3,13 +3,9 @@ using Pathfinding.Service.Interface;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public sealed class DepthFirstAlgorithm : DepthAlgorithm
+    public sealed class DepthFirstAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange) 
+        : DepthAlgorithm(pathfindingRange)
     {
-        public DepthFirstAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
-            : base(pathfindingRange)
-        {
-        }
-
         protected override IPathfindingVertex GetVertex(IReadOnlyCollection<IPathfindingVertex> neighbors)
         {
             return neighbors.FirstOrDefault() ?? NullPathfindingVertex.Interface;

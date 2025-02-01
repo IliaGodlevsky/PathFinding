@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System.Globalization;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace Pathfinding.Service.Interface.Extensions
@@ -8,7 +9,7 @@ namespace Pathfinding.Service.Interface.Extensions
         public static T ReadElement<T>(this XmlReader reader, string elementName)
         {
             return reader.Read(elementName,
-                content => (T)Convert.ChangeType(content, typeof(T)));
+                content => (T)Convert.ChangeType(content, typeof(T), CultureInfo.InvariantCulture));
         }
 
         public static T ReadEnumElement<T>(this XmlReader reader, string elementName)
@@ -32,14 +33,14 @@ namespace Pathfinding.Service.Interface.Extensions
         public static T ReadAttribute<T>(this XmlReader reader, string attributeName)
         {
             var value = reader.GetAttribute(attributeName);
-            return (T)Convert.ChangeType(value, typeof(T));
+            return (T)Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
         }
 
         public static T ReadEnumAttribute<T>(this XmlReader reader, string attributeName)
-            where T : Enum
+            where T : struct, Enum
         {
             var value = reader.GetAttribute(attributeName);
-            return (T)Enum.Parse(typeof(T), value);
+            return Enum.Parse<T>(value);
         }
 
         public static List<T> ReadCollection<T>(this XmlReader reader, string collectionName, string itemName)

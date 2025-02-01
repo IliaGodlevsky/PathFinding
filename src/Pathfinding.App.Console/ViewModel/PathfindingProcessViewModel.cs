@@ -25,7 +25,8 @@ namespace Pathfinding.App.Console.ViewModel
         IRequireStepRuleViewModel,
         IRequireAlgorithmNameViewModel
     {
-        private sealed record AlgorithmBuildInfo(HeuristicFunctions? Heuristics,
+        private sealed record AlgorithmBuildInfo(Algorithms Algorithm, 
+            HeuristicFunctions? Heuristics,
             double? Weight, StepRules? StepRule) : IAlgorithmBuildInfo;
 
         private readonly IRequestService<GraphVertexModel> service;
@@ -157,11 +158,10 @@ namespace Pathfinding.App.Console.ViewModel
                     visitedCount = 0;
                     var val = from + step * i;
                     double? weight = val == 0 ? null : val;
-                    var buildInfo = new AlgorithmBuildInfo(Heuristic, weight, StepRule);
-                    var algorithm = AlgorithmBuilder
-                        .TakeAlgorithm(Algorithm.Value)
-                        .WithAlgorithmInfo(buildInfo)
-                        .Build(pathfindingRange);
+                    var buildInfo = new AlgorithmBuildInfo(Algorithm.Value, 
+                        Heuristic, weight, StepRule);
+                    var algorithm = AlgorithmBuilder.CreateAlgorithm(pathfindingRange,
+                        buildInfo);
                     algorithm.VertexProcessed += OnVertexProcessed;
                     var path = NullGraphPath.Interface;
                     var stopwatch = Stopwatch.StartNew();

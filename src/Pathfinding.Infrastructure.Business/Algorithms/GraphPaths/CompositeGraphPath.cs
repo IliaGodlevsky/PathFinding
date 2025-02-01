@@ -25,7 +25,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
             cost = new(GetCost);
         }
 
-        private IReadOnlyCollection<Coordinate> GetPath()
+        private Coordinate[] GetPath()
         {
             return paths.SelectMany(p => p.Reverse()).ToArray();
         }

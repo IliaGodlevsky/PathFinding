@@ -3,14 +3,10 @@ using Pathfinding.Shared.Extensions;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public abstract class BidirectWaveAlgorithm<TStorage> : BidirectPathfindingAlgorithm<TStorage>
+    public abstract class BidirectWaveAlgorithm<TStorage>(IEnumerable<IPathfindingVertex> pathfindingRange) 
+        : BidirectPathfindingAlgorithm<TStorage>(pathfindingRange)
         where TStorage : new()
     {
-        protected BidirectWaveAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
-            : base(pathfindingRange)
-        {
-        }
-
         protected abstract void RelaxForwardVertex(IPathfindingVertex vertex);
 
         protected abstract void RelaxBackwardVertex(IPathfindingVertex vertex);

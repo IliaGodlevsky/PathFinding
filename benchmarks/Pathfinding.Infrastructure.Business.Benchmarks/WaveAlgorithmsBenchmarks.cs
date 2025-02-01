@@ -10,13 +10,13 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
         private static IEnumerable<BenchmarkVertex> range;
 
         [GlobalSetup]
-        public void Setup()
+        public static void Setup()
         {
             range = BenchmarkRange.Interface;
         }
 
         [Benchmark(Baseline = true)]
-        public void DijkstraAlgorithmBenchmark()
+        public static void DijkstraAlgorithmBenchmark()
         {
             var algorithm = new DijkstraAlgorithm(range);
 
@@ -24,7 +24,7 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
         }
 
         [Benchmark]
-        public void BidirectDijkstraAlgorithmBenchmark()
+        public static void BidirectDijkstraAlgorithmBenchmark()
         {
             var algorithm = new BidirectDijkstraAlgorithm(range);
 
@@ -32,7 +32,7 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
         }
 
         [Benchmark]
-        public void BidirectAStarDijkstraAlgorithmBenchmark()
+        public static void BidirectAStarDijkstraAlgorithmBenchmark()
         {
             var algorithm = new BidirectAStarAlgorithm(range);
 
@@ -41,7 +41,7 @@ namespace Pathfinding.Infrastructure.Business.Benchmarks
 
 
         [Benchmark]
-        public void AStarAlgorithmBenchmark()
+        public static void AStarAlgorithmBenchmark()
         {
             var algorithm = new AStarAlgorithm(range);
 

@@ -5,7 +5,8 @@ using Pathfinding.Domain.Interface.Repositories;
 
 namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
 {
-    internal sealed class SqliteGraphRepository : SqliteRepository, IGraphParametresRepository
+    internal sealed class SqliteGraphRepository(SqliteConnection connection,
+        SqliteTransaction transaction) : SqliteRepository(connection, transaction), IGraphParametresRepository
     {
         protected override string CreateTableScript { get; } = @$"
             CREATE TABLE IF NOT EXISTS {DbTables.Graphs} (
@@ -17,12 +18,6 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
                 Dimensions TEXT NOT NULL
             );
             CREATE INDEX IF NOT EXISTS idx_graph_id ON {DbTables.Graphs}(Id);";
-
-        public SqliteGraphRepository(SqliteConnection connection,
-            SqliteTransaction transaction)
-            : base(connection, transaction)
-        {
-        }
 
         public async Task<Graph> CreateAsync(Graph graph, CancellationToken token = default)
         {

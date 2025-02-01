@@ -4,17 +4,11 @@ using Pathfinding.Service.Interface;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public abstract class PathfindingProcess : IAlgorithm<IGraphPath>
+    public abstract class PathfindingProcess(IEnumerable<IPathfindingVertex> pathfindingRange) 
+        : IAlgorithm<IGraphPath>
     {
         public event VertexProcessedEventHandler VertexProcessed;
         public event SubPathFoundEventHandler SubPathFound;
-
-        private readonly IEnumerable<IPathfindingVertex> pathfindingRange;
-
-        protected PathfindingProcess(IEnumerable<IPathfindingVertex> pathfindingRange)
-        {
-            this.pathfindingRange = pathfindingRange;
-        }
 
         public virtual IGraphPath FindPath()
         {
@@ -77,7 +71,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             }
         }
 
-        private static IGraphPath CreatePath(IReadOnlyList<IGraphPath> subPaths)
+        private static IGraphPath CreatePath(List<IGraphPath> subPaths)
         {
             return subPaths.Count switch
             {

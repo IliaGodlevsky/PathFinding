@@ -3,25 +3,14 @@ using Pathfinding.Domain.Interface.Repositories;
 
 namespace Pathfinding.Infrastructure.Data.InMemory.Repositories
 {
-    internal sealed class InMemoryGraphParametresRepository : IGraphParametresRepository
+    internal sealed class InMemoryGraphParametresRepository(
+        InMemoryRangeRepository rangeRepository,
+        InMemoryVerticesRepository verticesRepository,
+        InMemoryStatisicsRepository statisticsRepository) : IGraphParametresRepository
     {
         private int id = 0;
 
         private readonly HashSet<Graph> set = new(EntityComparer<int>.Interface);
-
-        private readonly InMemoryRangeRepository rangeRepository;
-        private readonly InMemoryVerticesRepository verticesRepository;
-        private readonly InMemoryStatisicsRepository statisticsRepository;
-
-        public InMemoryGraphParametresRepository(
-            InMemoryRangeRepository rangeRepository,
-            InMemoryVerticesRepository verticesRepository,
-            InMemoryStatisicsRepository statisticsRepository)
-        {
-            this.rangeRepository = rangeRepository;
-            this.verticesRepository = verticesRepository;
-            this.statisticsRepository = statisticsRepository;
-        }
 
         public Task<Graph> CreateAsync(Graph graph,
             CancellationToken token = default)

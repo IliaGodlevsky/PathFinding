@@ -42,9 +42,9 @@ namespace Pathfinding.Shared.Primitives
             var instanceType = typeof(TInstance);
             var ctor = instanceType
                 .GetConstructors(NonPublic | BindingFlags.Instance)
-                .SingleOrDefault(c => !c.GetParameters().Any());
+                .SingleOrDefault(c => c.GetParameters().Length == 0);
             return ctor != null
-                ? (TInstance)ctor.Invoke(Array.Empty<object>())
+                ? (TInstance)ctor.Invoke([])
                 : throw new SingletonException(instanceType);
         }
     }

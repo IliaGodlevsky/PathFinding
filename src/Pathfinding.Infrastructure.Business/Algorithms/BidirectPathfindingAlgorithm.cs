@@ -6,32 +6,22 @@ using System.Collections.Immutable;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public abstract class BidirectPathfindingAlgorithm<TStorage> : PathfindingProcess
+    public abstract class BidirectPathfindingAlgorithm<TStorage>(IEnumerable<IPathfindingVertex> pathfindingRange) 
+        : PathfindingProcess(pathfindingRange)
         where TStorage : new()
     {
         protected readonly TStorage forwardStorage = new();
         protected readonly TStorage backwardStorage = new();
-        protected readonly HashSet<IPathfindingVertex> forwardVisited;
-        protected readonly HashSet<IPathfindingVertex> backwardVisited;
-        protected readonly Dictionary<Coordinate, IPathfindingVertex> forwardTraces;
-        protected readonly Dictionary<Coordinate, IPathfindingVertex> backwardTraces;
+        protected readonly HashSet<IPathfindingVertex> forwardVisited = [];
+        protected readonly HashSet<IPathfindingVertex> backwardVisited = [];
+        protected readonly Dictionary<Coordinate, IPathfindingVertex> forwardTraces = [];
+        protected readonly Dictionary<Coordinate, IPathfindingVertex> backwardTraces = [];
 
         protected IPathfindingVertex Intersection { get; set; } = NullPathfindingVertex.Interface;
 
-        protected (IPathfindingVertex Forward, IPathfindingVertex Backward) Current { get; set; }
+        protected (IPathfindingVertex Forward, IPathfindingVertex Backward) Current { get; set; } = (NullPathfindingVertex.Instance, NullPathfindingVertex.Interface);
 
-        protected (IPathfindingVertex Source, IPathfindingVertex Target) Range { get; set; }
-
-        protected BidirectPathfindingAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
-            : base(pathfindingRange)
-        {
-            forwardVisited = new HashSet<IPathfindingVertex>();
-            backwardVisited = new HashSet<IPathfindingVertex>();
-            forwardTraces = new Dictionary<Coordinate, IPathfindingVertex>();
-            backwardTraces = new Dictionary<Coordinate, IPathfindingVertex>();
-            Range = (NullPathfindingVertex.Instance, NullPathfindingVertex.Interface);
-            Current = (NullPathfindingVertex.Instance, NullPathfindingVertex.Interface);
-        }
+        protected (IPathfindingVertex Source, IPathfindingVertex Target) Range { get; set; } = (NullPathfindingVertex.Instance, NullPathfindingVertex.Interface);
 
         protected override bool IsDestination()
         {
@@ -71,7 +61,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
             return GetUnvisitedNeighbours(Current.Backward, backwardVisited);
         }
 
-        private IReadOnlyCollection<IPathfindingVertex> GetUnvisitedNeighbours(IPathfindingVertex vertex,
+        private static IPathfindingVertex[] GetUnvisitedNeighbours(IPathfindingVertex vertex,
             HashSet<IPathfindingVertex> visited)
         {
             return vertex.Neighbors

@@ -32,7 +32,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         public ReactiveCommand<int[], Unit> SelectGraphsCommand { get; }
 
-        public ObservableCollection<GraphInfoModel> Graphs { get; } = new();
+        public ObservableCollection<GraphInfoModel> Graphs { get; } = [];
 
         private int ActivatedGraphId { get; set; } = 0;
 
@@ -66,7 +66,7 @@ namespace Pathfinding.App.Console.ViewModel
             {
                 var graphModel = await service.ReadGraphAsync(model).ConfigureAwait(false);
                 var graph = new Graph<GraphVertexModel>(graphModel.Vertices, graphModel.DimensionSizes);
-                var layers = LayersBuilder.Take(graphModel).Build();
+                var layers = LayersBuilder.Build(graphModel);
                 await layers.OverlayAsync(graph).ConfigureAwait(false);
                 ActivatedGraphId = graphModel.Id;
                 messenger.Send(new GraphActivatedMessage(graphModel), Tokens.GraphField);

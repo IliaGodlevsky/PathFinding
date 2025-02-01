@@ -4,16 +4,11 @@ using System.Diagnostics;
 namespace Pathfinding.Infrastructure.Data.Pathfinding
 {
     [DebuggerDisplay("Count = {Neighbours.Count}")]
-    public sealed class MooreNeighborhood : Neighborhood
+    public sealed class MooreNeighborhood(Coordinate coordinate) : Neighborhood(coordinate)
     {
-        public MooreNeighborhood(Coordinate coordinate) : base(coordinate)
-        {
-
-        }
-
         protected override Coordinate[] Filter(Coordinate coordinate)
         {
-            return new[] { coordinate };
+            return [coordinate];
         }
     }
 }

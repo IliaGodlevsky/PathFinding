@@ -6,18 +6,10 @@ using Priority_Queue;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public sealed class AStarLeeAlgorithm : BreadthFirstAlgorithm<SimplePriorityQueue<IPathfindingVertex, double>>
+    public sealed class AStarLeeAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange,
+        IHeuristic function) : BreadthFirstAlgorithm<SimplePriorityQueue<IPathfindingVertex, double>>(pathfindingRange)
     {
-        private readonly Dictionary<Coordinate, double> heuristics;
-        private readonly IHeuristic heuristic;
-
-        public AStarLeeAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange,
-            IHeuristic function)
-            : base(pathfindingRange)
-        {
-            heuristic = function;
-            heuristics = new();
-        }
+        private readonly Dictionary<Coordinate, double> heuristics = [];
 
         public AStarLeeAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
             : this(pathfindingRange, new ManhattanDistance())
@@ -58,7 +50,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 
         private double CalculateHeuristic(IPathfindingVertex vertex)
         {
-            return heuristic.Calculate(vertex, CurrentRange.Target);
+            return function.Calculate(vertex, CurrentRange.Target);
         }
 
         protected override void RelaxNeighbours(IReadOnlyCollection<IPathfindingVertex> neighbours)

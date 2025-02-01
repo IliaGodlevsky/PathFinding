@@ -3,15 +3,8 @@ using Pathfinding.Shared.Extensions;
 
 namespace Pathfinding.Infrastructure.Business.Layers
 {
-    public class SmoothLayer : ILayer
+    public class SmoothLayer(int level) : ILayer
     {
-        private readonly int level;
-
-        public SmoothLayer(int level)
-        {
-            this.level = level;
-        }
-
         public void Overlay(IGraph<IVertex> graph)
         {
             int lvl = level;
@@ -33,7 +26,7 @@ namespace Pathfinding.Infrastructure.Business.Layers
                 .Average(neighbour => CalculateMeanCost(neighbour, vertex));
         }
 
-        private double CalculateMeanCost(IVertex neighbor, IVertex vertex)
+        private static double CalculateMeanCost(IVertex neighbor, IVertex vertex)
         {
             int neighbourCost = neighbor.Cost.CurrentCost;
             int vertexCost = vertex.Cost.CurrentCost;

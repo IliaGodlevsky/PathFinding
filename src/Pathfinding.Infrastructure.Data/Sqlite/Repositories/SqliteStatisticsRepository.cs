@@ -5,7 +5,8 @@ using Pathfinding.Domain.Interface.Repositories;
 
 namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
 {
-    internal sealed class SqliteStatisticsRepository : SqliteRepository, IStatisticsRepository
+    internal sealed class SqliteStatisticsRepository(SqliteConnection connection,
+        SqliteTransaction transaction) : SqliteRepository(connection, transaction), IStatisticsRepository
     {
         protected override string CreateTableScript { get; } = $@"
             CREATE TABLE IF NOT EXISTS {DbTables.Statistics} (
@@ -24,11 +25,6 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
             );
             CREATE INDEX IF NOT EXISTS idx_statistics_id ON {DbTables.Statistics}(Id);
             CREATE INDEX IF NOT EXISTS idx_statistics_graphid ON {DbTables.Statistics}(GraphId);";
-
-        public SqliteStatisticsRepository(SqliteConnection connection,
-            SqliteTransaction transaction) : base(connection, transaction)
-        {
-        }
 
         public async Task<Statistics> CreateAsync(Statistics entity, CancellationToken token = default)
         {

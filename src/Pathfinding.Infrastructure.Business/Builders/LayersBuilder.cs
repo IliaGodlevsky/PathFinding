@@ -7,41 +7,23 @@ namespace Pathfinding.Infrastructure.Business.Builders
 {
     public sealed class LayersBuilder
     {
-        private readonly Neighborhoods neighborhoods;
-        private readonly SmoothLevels smoothLevels;
-
-        public static LayersBuilder Take(IGraphLayersInfo info)
-            => new(info.Neighborhood, info.SmoothLevel);
-
-        public ILayer Build()
+        public static ILayer Build(IGraphLayersInfo info)
         {
-            var layers = new Layers.Layers();
-            switch (neighborhoods)
+            var neighborhood = info.Neighborhood switch
             {
-                case Neighborhoods.Moore:
-                    layers.Add(new MooreNeighborhoodLayer());
-                    break;
-                case Neighborhoods.VonNeumann:
-                    layers.Add(new VonNeumannNeighborhoodLayer());
-                    break;
-            }
-            int level = default;
-            switch (smoothLevels)
+                Neighborhoods.Moore => new MooreNeighborhoodLayer(),
+                Neighborhoods.VonNeumann => new VonNeumannNeighborhoodLayer(),
+                _ => (ILayer)new Layers.Layers()
+            };
+            SmoothLayer smooth = info.SmoothLevel switch
             {
-                case SmoothLevels.Low: level = 1; break;
-                case SmoothLevels.Medium: level = 2; break;
-                case SmoothLevels.High: level = 4; break;
-                case SmoothLevels.Extreme: level = 7; break;
-            }
-            layers.Add(new SmoothLayer(level));
-            return layers;
-        }
-
-        private LayersBuilder(Neighborhoods neighborhoods,
-            SmoothLevels smoothLevels)
-        {
-            this.neighborhoods = neighborhoods;
-            this.smoothLevels = smoothLevels;
+                SmoothLevels.Low => new(1),
+                SmoothLevels.Medium => new(2),
+                SmoothLevels.High => new(4),
+                SmoothLevels.Extreme => new(7),
+                _ => new(0)
+            };
+            return new Layers.Layers() { neighborhood, smooth };
         }
     }
 }

@@ -2,26 +2,21 @@
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Primitives;
-using System.Collections.Immutable;
+using System.Collections.Frozen;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms
 {
-    public abstract class PathfindingAlgorithm<TStorage> : PathfindingProcess
+    public abstract class PathfindingAlgorithm<TStorage>(IEnumerable<IPathfindingVertex> pathfindingRange) 
+        : PathfindingProcess(pathfindingRange)
         where TStorage : new()
     {
-        protected readonly HashSet<IPathfindingVertex> visited = new();
-        protected readonly Dictionary<Coordinate, IPathfindingVertex> traces = new();
+        protected readonly HashSet<IPathfindingVertex> visited = [];
+        protected readonly Dictionary<Coordinate, IPathfindingVertex> traces = [];
         protected readonly TStorage storage = new();
 
-        protected (IPathfindingVertex Source, IPathfindingVertex Target) CurrentRange { get; set; }
+        protected (IPathfindingVertex Source, IPathfindingVertex Target) CurrentRange { get; set; } = (NullPathfindingVertex.Interface, NullPathfindingVertex.Interface);
 
         protected IPathfindingVertex CurrentVertex { get; set; } = NullPathfindingVertex.Interface;
-
-        protected PathfindingAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
-            : base(pathfindingRange)
-        {
-            CurrentRange = (NullPathfindingVertex.Interface, NullPathfindingVertex.Interface);
-        }
 
         protected override bool IsDestination()
         {
@@ -37,7 +32,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
 
         protected override IGraphPath GetSubPath()
         {
-            return new GraphPath(traces.ToImmutableDictionary(),
+            return new GraphPath(traces.ToFrozenDictionary(),
                 CurrentRange.Target);
         }
 

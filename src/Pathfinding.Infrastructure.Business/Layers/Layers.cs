@@ -2,14 +2,8 @@
 
 namespace Pathfinding.Infrastructure.Business.Layers
 {
-    public sealed class Layers : List<ILayer>, ILayer
+    public sealed class Layers(params ILayer[] layers) : List<ILayer>(layers), ILayer
     {
-        public Layers(params ILayer[] layers)
-            : base(layers)
-        {
-
-        }
-
         public Layers(IEnumerable<ILayer> layers)
             : this(layers.ToArray())
         {

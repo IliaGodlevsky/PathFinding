@@ -4,15 +4,8 @@ using System.IO.Compression;
 
 namespace Pathfinding.Infrastructure.Business.Serializers.Decorators
 {
-    public sealed class CompressSerializer<T> : ISerializer<T>
+    public sealed class CompressSerializer<T>(ISerializer<T> serializer) : ISerializer<T>
     {
-        private readonly ISerializer<T> serializer;
-
-        public CompressSerializer(ISerializer<T> serializer)
-        {
-            this.serializer = serializer;
-        }
-
         public async Task<T> DeserializeFromAsync(Stream stream, CancellationToken token = default)
         {
             try

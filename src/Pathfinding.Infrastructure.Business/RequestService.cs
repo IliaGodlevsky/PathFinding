@@ -193,8 +193,8 @@ namespace Pathfinding.Infrastructure.Business
                     result.Add(new()
                     {
                         Graph = graph.ToSerializationModel(),
-                        Statistics = Array.Empty<RunStatisticsSerializationModel>(),
-                        Range = Array.Empty<CoordinateModel>()
+                        Statistics = [],
+                        Range = []
                     });
                 }
                 return new PathfindingHisotiriesSerializationModel() { Histories = result }; ;
@@ -214,7 +214,7 @@ namespace Pathfinding.Infrastructure.Business
                     result.Add(new()
                     {
                         Graph = graph.ToSerializationModel(),
-                        Statistics = Array.Empty<RunStatisticsSerializationModel>(),
+                        Statistics = [],
                         Range = range.ToCoordinates()
                     });
                 }
@@ -331,7 +331,7 @@ namespace Pathfinding.Infrastructure.Business
             }
         }
 
-        private async Task<GraphModel<T>> ReadGraphInternalAsync(IUnitOfWork unit, int graphId,
+        private static async Task<GraphModel<T>> ReadGraphInternalAsync(IUnitOfWork unit, int graphId,
             CancellationToken token = default)
         {
             var graphEntity = await unit.GraphRepository.ReadAsync(graphId, token).ConfigureAwait(false);
@@ -350,7 +350,7 @@ namespace Pathfinding.Infrastructure.Business
             };
         }
 
-        private async Task<GraphModel<T>> CreateGraphAsyncInternal(IUnitOfWork unit,
+        private static async Task<GraphModel<T>> CreateGraphAsyncInternal(IUnitOfWork unit,
             CreateGraphRequest<T> request, CancellationToken token = default)
         {
             var graph = request.ToGraphEntity();
@@ -373,7 +373,7 @@ namespace Pathfinding.Infrastructure.Business
             };
         }
 
-        private async Task<IReadOnlyCollection<PathfindingRangeModel>> ReadRangeAsyncInternal(
+        private static async Task<IReadOnlyCollection<PathfindingRangeModel>> ReadRangeAsyncInternal(
             IUnitOfWork unit, int graphId, CancellationToken token = default)
         {
             var result = new List<PathfindingRangeModel>();

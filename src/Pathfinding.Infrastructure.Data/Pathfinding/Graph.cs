@@ -43,8 +43,7 @@ namespace Pathfinding.Infrastructure.Data.Pathfinding
 
         }
 
-        protected Graph()
-            : this(Array.Empty<TVertex>())
+        protected Graph() : this([])
         {
 
         }

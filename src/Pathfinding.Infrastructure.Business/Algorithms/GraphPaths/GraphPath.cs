@@ -4,11 +4,11 @@ using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Service.Interface;
 using Pathfinding.Shared.Primitives;
 using System.Collections;
-using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 
 namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
 {
-    using Traces = IImmutableDictionary<Coordinate, IPathfindingVertex>;
+    using Traces = IReadOnlyDictionary<Coordinate, IPathfindingVertex>;
 
     public sealed class GraphPath : IGraphPath
     {
@@ -41,7 +41,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms.GraphPaths
             count = new(GetCount);
         }
 
-        private IReadOnlyList<IPathfindingVertex> GetPath()
+        private ReadOnlyCollection<IPathfindingVertex> GetPath()
         {
             var vertices = new List<IPathfindingVertex>();
             var vertex = target;

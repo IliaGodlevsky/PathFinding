@@ -12,12 +12,11 @@ namespace Pathfinding.App.Console.View
 {
     internal sealed partial class NeighborhoodFactoryView : FrameView
     {
-        private readonly CompositeDisposable disposables = new();
+        private readonly CompositeDisposable disposables = [];
 
         public NeighborhoodFactoryView(IRequireNeighborhoodNameViewModel viewModel)
         {
-            var neighborhoods = Enum.GetValues(typeof(Neighborhoods))
-                .Cast<Neighborhoods>()
+            var neighborhoods = Enum.GetValues<Neighborhoods>()
                 .ToDictionary(x => x.ToStringRepresentation());
             Initialize();
             var labels = neighborhoods.Keys.Select(ustring.Make).ToArray();

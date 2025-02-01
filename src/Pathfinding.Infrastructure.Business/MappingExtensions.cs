@@ -61,7 +61,7 @@ namespace Pathfinding.Infrastructure.Business
 
         public static IReadOnlyCollection<CoordinateModel> ToCoordinates(this IEnumerable<PathfindingRangeModel> models)
         {
-            return models.Select(x => new CoordinateModel() { Coordinate = x.Position.CoordinatesValues.ToArray() }).ToList();
+            return models.Select(x => new CoordinateModel() { Coordinate = [.. x.Position.CoordinatesValues] }).ToList();
         }
 
         public static Statistics ToStatistics(this RunStatisticsModel model)
