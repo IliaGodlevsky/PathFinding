@@ -4,7 +4,7 @@ namespace Pathfinding.App.Console.ViewModel
 {
     internal abstract class BaseViewModel : ReactiveObject
     {
-        protected async Task ExecuteSafe(Func<Task> action, Action<Exception, string> log)
+        protected static async Task ExecuteSafe(Func<Task> action, Action<Exception, string> log)
         {
             try
             {

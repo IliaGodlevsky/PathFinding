@@ -7,7 +7,6 @@ using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Messages.ViewModel;
 using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.ViewModel.Interface;
-using Pathfinding.Infrastructure.Business.Builders;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
@@ -66,7 +65,7 @@ namespace Pathfinding.App.Console.ViewModel
             {
                 var graphModel = await service.ReadGraphAsync(model).ConfigureAwait(false);
                 var graph = new Graph<GraphVertexModel>(graphModel.Vertices, graphModel.DimensionSizes);
-                var layers = LayersBuilder.Build(graphModel);
+                var layers = graphModel.ToLayers();
                 await layers.OverlayAsync(graph).ConfigureAwait(false);
                 ActivatedGraphId = graphModel.Id;
                 messenger.Send(new GraphActivatedMessage(graphModel), Tokens.GraphField);

@@ -12,7 +12,6 @@ using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
-using Pathfinding.Service.Interface.Commands;
 using Pathfinding.Service.Interface.Extensions;
 using Pathfinding.Shared.Extensions;
 using ReactiveUI;

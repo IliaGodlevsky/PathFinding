@@ -7,7 +7,7 @@ using Pathfinding.App.Console.ViewModel.Interface;
 using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Algorithms.Exceptions;
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
-using Pathfinding.Infrastructure.Business.Builders;
+using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Service.Interface;
@@ -25,7 +25,7 @@ namespace Pathfinding.App.Console.ViewModel
         IRequireStepRuleViewModel,
         IRequireAlgorithmNameViewModel
     {
-        private sealed record AlgorithmBuildInfo(Algorithms Algorithm, 
+        private sealed record class AlgorithmBuildInfo(Algorithms Algorithm, 
             HeuristicFunctions? Heuristics,
             double? Weight, StepRules? StepRule) : IAlgorithmBuildInfo;
 
@@ -160,8 +160,7 @@ namespace Pathfinding.App.Console.ViewModel
                     double? weight = val == 0 ? null : val;
                     var buildInfo = new AlgorithmBuildInfo(Algorithm.Value, 
                         Heuristic, weight, StepRule);
-                    var algorithm = AlgorithmBuilder.CreateAlgorithm(pathfindingRange,
-                        buildInfo);
+                    var algorithm = buildInfo.ToAlgorithm(pathfindingRange);
                     algorithm.VertexProcessed += OnVertexProcessed;
                     var path = NullGraphPath.Interface;
                     var stopwatch = Stopwatch.StartNew();

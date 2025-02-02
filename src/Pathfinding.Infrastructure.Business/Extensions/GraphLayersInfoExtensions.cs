@@ -3,11 +3,11 @@ using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Business.Layers;
 using Pathfinding.Service.Interface.Models;
 
-namespace Pathfinding.Infrastructure.Business.Builders
+namespace Pathfinding.Infrastructure.Business.Extensions
 {
-    public sealed class LayersBuilder
+    public static class GraphLayersInfoExtensions
     {
-        public static ILayer Build(IGraphLayersInfo info)
+        public static ILayer ToLayers(this IGraphLayersInfo info)
         {
             var neighborhood = info.Neighborhood switch
             {

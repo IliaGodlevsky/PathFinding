@@ -1,5 +1,5 @@
 ﻿using Pathfinding.Domain.Interface;
-using Pathfinding.Service.Interface.Commands;
+using Pathfinding.Service.Interface;
 
 namespace Pathfinding.Infrastructure.Business.Commands
 {

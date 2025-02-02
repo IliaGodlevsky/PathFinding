@@ -92,10 +92,10 @@ namespace Pathfinding.App.Console.Model
         }
 
         private int cursor;
-        public int Cursor
+        private int Cursor
         {
             get => cursor;
-            private set => this.RaiseAndSetIfChanged(ref cursor, CursorRange.ReturnInRange(value));
+            set => this.RaiseAndSetIfChanged(ref cursor, CursorRange.ReturnInRange(value));
         }
 
         public int Id { get; set; }

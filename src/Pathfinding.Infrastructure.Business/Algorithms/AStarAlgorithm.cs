@@ -15,7 +15,7 @@ namespace Pathfinding.Infrastructure.Business.Algorithms
         public AStarAlgorithm(IEnumerable<IPathfindingVertex> pathfindingRange)
             : this(pathfindingRange, new DefaultStepRule(), new ChebyshevDistance())
         {
-
+            
         }
 
         protected override void DropState()

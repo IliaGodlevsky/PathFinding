@@ -14,7 +14,6 @@ using Pathfinding.Infrastructure.Data.Sqlite;
 using Pathfinding.Logging.Interface;
 using Pathfinding.Logging.Loggers;
 using Pathfinding.Service.Interface;
-using Pathfinding.Service.Interface.Commands;
 using Pathfinding.Service.Interface.Models.Serialization;
 
 namespace Pathfinding.App.Console.Injection

@@ -2,38 +2,36 @@
 using Pathfinding.Infrastructure.Business.Algorithms;
 using Pathfinding.Infrastructure.Business.Algorithms.Heuristics;
 using Pathfinding.Infrastructure.Business.Algorithms.StepRules;
-using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models;
 using Algorithm = Pathfinding.Domain.Core.Algorithms;
 
-namespace Pathfinding.Infrastructure.Business.Builders
+namespace Pathfinding.Infrastructure.Business.Extensions
 {
-    public sealed class AlgorithmBuilder
+    public static class AlgorithmBuildInfoExtensions
     {
-        public static PathfindingProcess CreateAlgorithm(
-            IEnumerable<IPathfindingVertex> range, 
-            IAlgorithmBuildInfo info)
+        public static PathfindingProcess ToAlgorithm(this IAlgorithmBuildInfo info,
+            IEnumerable<IPathfindingVertex> range)
         {
             return info.Algorithm switch
             {
                 Algorithm.AStar => new AStarAlgorithm(range, GetStepRule(info.StepRule),
                     GetHeuristic(info.Heuristics, info.Weight)),
-                Algorithm.AStarGreedy => new AStarGreedyAlgorithm(range, 
+                Algorithm.AStarGreedy => new AStarGreedyAlgorithm(range,
                     GetHeuristic(info.Heuristics, info.Weight), GetStepRule(info.StepRule)),
-                Algorithm.AStarLee => new AStarLeeAlgorithm(range, 
+                Algorithm.AStarLee => new AStarLeeAlgorithm(range,
                     GetHeuristic(info.Heuristics, info.Weight)),
                 Algorithm.BidirectAStar => new BidirectAStarAlgorithm(range,
                     GetStepRule(info.StepRule), GetHeuristic(info.Heuristics, info.Weight)),
-                Algorithm.BidirectDijkstra => new BidirectDijkstraAlgorithm(range, 
+                Algorithm.BidirectDijkstra => new BidirectDijkstraAlgorithm(range,
                     GetStepRule(info.StepRule)),
                 Algorithm.BidirectLee => new BidirectLeeAlgorithm(range),
-                Algorithm.CostGreedy => new CostGreedyAlgorithm(range, 
+                Algorithm.CostGreedy => new CostGreedyAlgorithm(range,
                     GetStepRule(info.StepRule)),
                 Algorithm.DepthFirst => new DepthFirstAlgorithm(range),
-                Algorithm.Dijkstra => new DijkstraAlgorithm(range, 
+                Algorithm.Dijkstra => new DijkstraAlgorithm(range,
                     GetStepRule(info.StepRule)),
-                Algorithm.DistanceFirst => new DistanceFirstAlgorithm(range, 
+                Algorithm.DistanceFirst => new DistanceFirstAlgorithm(range,
                     GetHeuristic(info.Heuristics, info.Weight)),
                 Algorithm.Lee => new LeeAlgorithm(range),
                 Algorithm.Snake => new SnakeAlgorithm(range, new ManhattanDistance()),

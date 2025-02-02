@@ -10,7 +10,6 @@ using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Service.Interface;
 using Pathfinding.Service.Interface.Models.Read;
 using Pathfinding.Service.Interface.Requests.Create;
-using Pathfinding.Shared.Interface;
 using System.Reactive.Linq;
 
 namespace Pathfinding.App.Console.Tests.ViewModelTests

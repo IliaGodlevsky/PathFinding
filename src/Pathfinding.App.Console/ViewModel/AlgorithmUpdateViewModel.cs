@@ -7,7 +7,6 @@ using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.ViewModel.Interface;
 using Pathfinding.Domain.Core;
 using Pathfinding.Infrastructure.Business.Algorithms.GraphPaths;
-using Pathfinding.Infrastructure.Business.Builders;
 using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Logging.Interface;
@@ -106,7 +105,7 @@ namespace Pathfinding.App.Console.ViewModel
                 var model = await service.ReadGraphAsync(msg.Model.Id).ConfigureAwait(false);
                 graph = new Graph<GraphVertexModel>(model.Vertices, model.DimensionSizes);
                 id = model.Id;
-                var layers = LayersBuilder.Build(model);
+                var layers = model.ToLayers();
                 await layers.OverlayAsync(graph).ConfigureAwait(false);
             }
             if (graph != Graph<GraphVertexModel>.Empty)
@@ -135,7 +134,7 @@ namespace Pathfinding.App.Console.ViewModel
                     int visitedCount = 0;
                     void OnVertexProcessed(object sender, EventArgs e) => visitedCount++;
                     var info = await service.ReadStatisticAsync(select.Id).ConfigureAwait(false);
-                    var algorithm = AlgorithmBuilder.CreateAlgorithm(range, select);
+                    var algorithm = select.ToAlgorithm(range);
                     algorithm.VertexProcessed += OnVertexProcessed;
 
                     var status = RunStatuses.Success;

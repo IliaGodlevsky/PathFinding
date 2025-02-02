@@ -22,12 +22,7 @@ namespace Pathfinding.App.Console.Tests.ViewModelTests
         {
             using var mock = AutoMock.GetLoose();
 
-            GraphInfoModel[] models =
-            [
-                new GraphInfoModel() { Id = 1 },
-                new GraphInfoModel() { Id = 2 },
-                new GraphInfoModel() { Id = 3 }
-            ];
+            var models = Generators.GenerateGraphInfos(3).ToArray();
 
             PathfindingHisotiriesSerializationModel histories
                 = Enumerable.Range(1, 5)

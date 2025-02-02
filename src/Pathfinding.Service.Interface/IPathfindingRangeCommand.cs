@@ -1,6 +1,6 @@
 ﻿using Pathfinding.Domain.Interface;
 
-namespace Pathfinding.Service.Interface.Commands
+namespace Pathfinding.Service.Interface
 {
     public interface IPathfindingRangeCommand<TVertex>
         where TVertex : IVertex

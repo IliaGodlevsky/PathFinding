@@ -8,7 +8,7 @@ using Pathfinding.App.Console.ViewModel.Interface;
 using Pathfinding.Domain.Interface;
 using Pathfinding.Domain.Interface.Factories;
 using Pathfinding.Infrastructure.Business.Algorithms.Events;
-using Pathfinding.Infrastructure.Business.Builders;
+using Pathfinding.Infrastructure.Business.Extensions;
 using Pathfinding.Infrastructure.Data.Extensions;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using Pathfinding.Shared.Extensions;
@@ -160,7 +160,7 @@ namespace Pathfinding.App.Console.ViewModel
                     AddSubAlgorithm(args.SubPath);
                 }
 
-                var algorithm = AlgorithmBuilder.CreateAlgorithm(range, model);
+                var algorithm = model.ToAlgorithm(range);
                 algorithm.SubPathFound += OnSubPathFound;
                 algorithm.VertexProcessed += OnVertexProcessed;
                 try
