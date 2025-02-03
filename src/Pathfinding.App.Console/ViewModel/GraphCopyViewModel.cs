@@ -20,11 +20,11 @@ namespace Pathfinding.App.Console.ViewModel
 
         public ReactiveCommand<Unit, Unit> CopyGraphCommand { get; }
 
-        private int[] graphIds = [];
-        private int[] GraphIds
+        private int[] selectedGraphIds = [];
+        public int[] SelectedGraphIds
         {
-            get => graphIds;
-            set => this.RaiseAndSetIfChanged(ref graphIds, value);
+            get => selectedGraphIds;
+            set => this.RaiseAndSetIfChanged(ref selectedGraphIds, value);
         }
 
         public GraphCopyViewModel(
@@ -36,19 +36,25 @@ namespace Pathfinding.App.Console.ViewModel
             this.service = service;
             this.log = log;
             messenger.Register<GraphSelectedMessage>(this, OnGraphSelected);
+            messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             CopyGraphCommand = ReactiveCommand.CreateFromTask(ExecuteCopy, CanExecute());
         }
 
         private void OnGraphSelected(object recipient, GraphSelectedMessage msg)
         {
-            GraphIds = msg.Graphs.Select(x => x.Id).ToArray();
+            SelectedGraphIds = msg.Graphs.Select(x => x.Id).ToArray();
+        }
+
+        private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
+        {
+            SelectedGraphIds = SelectedGraphIds.Where(x => !msg.GraphIds.Contains(x)).ToArray();
         }
 
         private async Task ExecuteCopy()
         {
             await ExecuteSafe(async () =>
             {
-                var copies = await service.ReadSerializationHistoriesAsync(GraphIds)
+                var copies = await service.ReadSerializationHistoriesAsync(SelectedGraphIds)
                     .ConfigureAwait(false);
                 var histories = await service.CreatePathfindingHistoriesAsync(copies.Histories)
                     .ConfigureAwait(false);
@@ -59,7 +65,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         private IObservable<bool> CanExecute()
         {
-            return this.WhenAnyValue(x => x.GraphIds,
+            return this.WhenAnyValue(x => x.SelectedGraphIds,
                 (ids) => ids.Length > 0);
         }
     }

@@ -17,7 +17,7 @@ namespace Pathfinding.App.Console.View
         private static readonly InclusiveValueRange<int> ObstaclesRange = (99, 0);
 
         private readonly IRequireGraphParametresViewModel viewModel;
-        private readonly CompositeDisposable disposables = new();
+        private readonly CompositeDisposable disposables = [];
 
         public GraphParametresView(IRequireGraphParametresViewModel viewModel)
         {
@@ -26,17 +26,15 @@ namespace Pathfinding.App.Console.View
             BindTo(obstaclesInput, x => x.Obstacles, ObstaclesRange);
             BindTo(graphWidthInput, x => x.Width, WidthRange);
             BindTo(graphLengthInput, x => x.Length, LengthRange);
-            VisibleChanged += OnVisibilityChanged;
-        }
-
-        private void OnVisibilityChanged()
-        {
-            if (Visible)
-            {
-                graphWidthInput.Text = string.Empty;
-                graphLengthInput.Text = string.Empty;
-                obstaclesInput.Text = string.Empty;
-            }
+            this.Events().VisibleChanged
+                .Where(x => Visible)
+                .Do(x =>
+                {
+                    graphWidthInput.Text = string.Empty;
+                    graphLengthInput.Text = string.Empty;
+                    obstaclesInput.Text = string.Empty;
+                })
+                .Subscribe();
         }
 
         private void BindTo(TextField field,

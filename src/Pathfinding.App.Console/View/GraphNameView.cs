@@ -9,26 +9,20 @@ namespace Pathfinding.App.Console.View
 {
     internal sealed partial class GraphNameView : FrameView
     {
-        private readonly IRequireGraphNameViewModel viewModel;
-        private readonly CompositeDisposable disposables = new();
+        private readonly CompositeDisposable disposables = [];
 
         public GraphNameView(IRequireGraphNameViewModel viewModel)
         {
             Initialize();
-            this.viewModel = viewModel;
             nameField.Events().TextChanged
                 .Select(_ => nameField.Text)
                 .BindTo(viewModel, x => x.Name)
                 .DisposeWith(disposables);
-            VisibleChanged += OnVisibilityChanged;
-        }
-
-        private void OnVisibilityChanged()
-        {
-            if (Visible)
-            {
-                nameField.Text = string.Empty;
-            }
+            this.Events().VisibleChanged
+                .Where(x => Visible)
+                .Do(x => nameField.Text = string.Empty)
+                .Subscribe()
+                .DisposeWith(disposables);
         }
     }
 }

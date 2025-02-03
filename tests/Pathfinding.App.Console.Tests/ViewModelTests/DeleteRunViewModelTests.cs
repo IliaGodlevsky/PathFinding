@@ -38,9 +38,9 @@ namespace Pathfinding.App.Console.Tests.ViewModelTests
                .Callback<object, object, MessageHandler<object, RunSelectedMessage>>((r, t, handler)
                     => handler(r, new RunSelectedMessage(runModels)));
 
-            var viewModel = mock.Create<DeleteRunViewModel>();
+            var viewModel = mock.Create<RunDeleteViewModel>();
 
-            var command = viewModel.DeleteRunCommand;
+            var command = viewModel.DeleteRunsCommand;
             var canExecute = await command.CanExecute.FirstOrDefaultAsync();
             if (canExecute)
             {
@@ -56,7 +56,7 @@ namespace Pathfinding.App.Console.Tests.ViewModelTests
                         It.IsAny<CancellationToken>()), Times.Once);
                 mock.Mock<IMessenger>()
                     .Verify(x => x.Register(
-                        It.IsAny<DeleteRunViewModel>(),
+                        It.IsAny<RunDeleteViewModel>(),
                         It.IsAny<IsAnyToken>(),
                         It.IsAny<MessageHandler<object, RunSelectedMessage>>()), Times.Once);
                 mock.Mock<IMessenger>()
@@ -77,9 +77,9 @@ namespace Pathfinding.App.Console.Tests.ViewModelTests
                     It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
-            var viewModel = mock.Create<DeleteRunViewModel>();
+            var viewModel = mock.Create<RunDeleteViewModel>();
 
-            await viewModel.DeleteRunCommand.Execute();
+            await viewModel.DeleteRunsCommand.Execute();
 
             mock.Mock<ILog>()
                 .Verify(x => x.Error(
@@ -92,9 +92,9 @@ namespace Pathfinding.App.Console.Tests.ViewModelTests
         {
             using var mock = AutoMock.GetLoose();
 
-            var viewModel = mock.Create<DeleteRunViewModel>();
+            var viewModel = mock.Create<RunDeleteViewModel>();
 
-            var command = viewModel.DeleteRunCommand;
+            var command = viewModel.DeleteRunsCommand;
             var canExecute = await command.CanExecute.FirstOrDefaultAsync();
             if (canExecute)
             {

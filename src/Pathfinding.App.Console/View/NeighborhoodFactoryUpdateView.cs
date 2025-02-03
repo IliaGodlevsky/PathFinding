@@ -18,8 +18,7 @@ namespace Pathfinding.App.Console.View
         public NeighborhoodFactoryUpdateView(GraphUpdateViewModel viewModel)
         {
             Initialize();
-            var factories = Enum.GetValues(typeof(Neighborhoods))
-                .Cast<Neighborhoods>()
+            var factories = Enum.GetValues<Neighborhoods>()
                 .ToDictionary(x => x.ToStringRepresentation());
             var radioLabels = factories.Keys.Select(ustring.Make).ToArray();
             var values = radioLabels.Select(x => factories[x.ToString()]).ToArray();

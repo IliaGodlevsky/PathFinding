@@ -17,7 +17,7 @@ namespace Pathfinding.App.Console.View
 {
     internal sealed partial class StepRulesView : FrameView
     {
-        private readonly CompositeDisposable disposables = new();
+        private readonly CompositeDisposable disposables = [];
 
         private readonly IRequireStepRuleViewModel viewModel;
 
@@ -26,8 +26,7 @@ namespace Pathfinding.App.Console.View
             IRequireStepRuleViewModel viewModel)
         {
             Initialize();
-            var rules = Enum.GetValues(typeof(StepRules))
-                .Cast<StepRules>()
+            var rules = Enum.GetValues<StepRules>()
                 .ToDictionary(x => x.ToStringRepresentation());
             var labels = rules.Select(x => ustring.Make(x.Key)).ToArray();
             var values = labels.Select(x => rules[x.ToString()]).ToList();

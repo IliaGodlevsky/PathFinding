@@ -57,7 +57,7 @@ namespace Pathfinding.App.Console.View
                 .DisposeWith(disposables);
             this.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
-                .Do(x => messenger.Send(new CloseAlgorithmRunFieldViewMessage()))
+                .Do(x => messenger.Send(new CloseRunFieldMessage()))
                 .Select(x => x.MouseEvent.Y + RowOffset - headerLinesConsumed)
                 .Where(x => x >= 0 && x < Table.Rows.Count && x == SelectedRow)
                 .Select(x => GetGraphId(x).Enumerate().ToArray())

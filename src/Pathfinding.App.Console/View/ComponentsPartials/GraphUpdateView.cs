@@ -4,8 +4,8 @@ namespace Pathfinding.App.Console.View
 {
     internal sealed partial class GraphUpdateView
     {
-        private readonly Button updateButton = new Button("Update");
-        private readonly Button cancelButton = new Button("Cancel");
+        private readonly Button updateButton = new("Update");
+        private readonly Button cancelButton = new("Cancel");
 
         private void Initialize()
         {

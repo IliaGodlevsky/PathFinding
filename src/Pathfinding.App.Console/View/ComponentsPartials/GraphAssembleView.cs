@@ -1,14 +1,24 @@
-﻿using Terminal.Gui;
+﻿using System.Reactive.Disposables;
+using Terminal.Gui;
 
 namespace Pathfinding.App.Console.View
 {
     internal sealed partial class GraphAssembleView
     {
-        private readonly Button createButton = new Button("Create");
-        private readonly Button cancelButton = new Button("Cancel");
+        private readonly Button createButton = new("Create");
+        private readonly Button cancelButton = new("Cancel");
+        private readonly FrameView buttonsFrame = new();
 
         private void Initialize()
         {
+            buttonsFrame.Border = new()
+            {
+                BorderStyle = BorderStyle.Rounded
+            };
+            buttonsFrame.X = 0;
+            buttonsFrame.Y = Pos.Percent(90);
+            buttonsFrame.Width = Dim.Fill();
+            buttonsFrame.Height = Dim.Fill();
             X = Pos.Center();
             Y = Pos.Center();
             Width = Dim.Fill();
@@ -20,11 +30,12 @@ namespace Pathfinding.App.Console.View
                 BorderThickness = new Thickness(0)
             };
 
-            createButton.X = Pos.Percent(35);
-            createButton.Y = Pos.Percent(85) + 1;
-            cancelButton.X = Pos.Right(createButton) + 2;
-            cancelButton.Y = Pos.Percent(85) + 1;
-            Add(createButton, cancelButton);
+            cancelButton.X = Pos.Percent(65);
+            cancelButton.Y = 0;
+            createButton.X = Pos.Percent(15);
+            createButton.Y = 0;
+            buttonsFrame.Add(createButton, cancelButton);
+            Add(buttonsFrame);
         }
     }
 }

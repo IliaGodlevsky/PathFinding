@@ -9,7 +9,7 @@ namespace Pathfinding.App.Console.View
 {
     internal sealed class RunVertexView : VertexView<RunVertexModel>
     {
-        private readonly CompositeDisposable disposables = new();
+        private readonly CompositeDisposable disposables = [];
 
         public RunVertexView(RunVertexModel model) : base(model)
         {

@@ -92,10 +92,10 @@ namespace Pathfinding.Infrastructure.Data.Sqlite.Repositories
         public async Task<IReadOnlyDictionary<int, int>> ReadObstaclesCountAsync(IEnumerable<int> graphIds, CancellationToken token = default)
         {
             const string query = $@"
-                SELECT GraphId, COUNT(*) AS ObstacleCount 
-                FROM {DbTables.Vertices}
-                WHERE GraphId IN @GraphIds AND IsObstacle = 1
-                GROUP BY GraphId";
+                SELECT g.GraphId, COALESCE(SUM(v.IsObstacle), 0) AS ObstacleCount
+                FROM (SELECT DISTINCT GraphId FROM Vertices WHERE GraphId IN @GraphIds) g
+                LEFT JOIN Vertices v ON g.GraphId = v.GraphId
+                GROUP BY g.GraphId;";
 
             var result = await connection.QueryAsync<(int GraphId, int ObstacleCount)>(
                 new CommandDefinition(query, new { GraphIds = graphIds.ToArray() }, transaction, cancellationToken: token))

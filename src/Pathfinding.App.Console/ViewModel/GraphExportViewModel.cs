@@ -21,11 +21,11 @@ namespace Pathfinding.App.Console.ViewModel
         private readonly Dictionary<StreamFormat,
             ISerializer<PathfindingHisotiriesSerializationModel>> serializers;
 
-        private int[] graphIds = [];
-        private int[] GraphIds
+        private int[] selectedGraphIds = [];
+        public int[] SelectedGraphIds
         {
-            get => graphIds;
-            set => this.RaiseAndSetIfChanged(ref graphIds, value);
+            get => selectedGraphIds;
+            set => this.RaiseAndSetIfChanged(ref selectedGraphIds, value);
         }
 
         public ExportOptions Options { get; set; }
@@ -48,7 +48,7 @@ namespace Pathfinding.App.Console.ViewModel
 
         private IObservable<bool> CanExport()
         {
-            return this.WhenAnyValue(x => x.GraphIds,
+            return this.WhenAnyValue(x => x.SelectedGraphIds,
                 graphIds => graphIds.Length > 0);
         }
 
@@ -66,9 +66,9 @@ namespace Pathfinding.App.Console.ViewModel
                         var serializer = serializers[exportFormat.Value];
                         var historiesTask = Options switch
                         {
-                            ExportOptions.GraphOnly => service.ReadSerializationGraphsAsync(GraphIds),
-                            ExportOptions.WithRange => service.ReadSerializationGraphsWithRangeAsync(GraphIds),
-                            ExportOptions.WithRuns => service.ReadSerializationHistoriesAsync(GraphIds),
+                            ExportOptions.GraphOnly => service.ReadSerializationGraphsAsync(SelectedGraphIds),
+                            ExportOptions.WithRange => service.ReadSerializationGraphsWithRangeAsync(SelectedGraphIds),
+                            ExportOptions.WithRuns => service.ReadSerializationHistoriesAsync(SelectedGraphIds),
                             _ => throw new InvalidOperationException(Resource.InvalidExportOptions)
                         };
                         var histories = await historiesTask.ConfigureAwait(false);
@@ -82,12 +82,12 @@ namespace Pathfinding.App.Console.ViewModel
 
         private void OnGraphSelected(object recipient, GraphSelectedMessage msg)
         {
-            GraphIds = msg.Graphs.Select(x => x.Id).ToArray();
+            SelectedGraphIds = msg.Graphs.Select(x => x.Id).ToArray();
         }
 
         private void OnGraphDeleted(object recipient, GraphsDeletedMessage msg)
         {
-            GraphIds = GraphIds.Except(msg.GraphIds).ToArray();
+            SelectedGraphIds = SelectedGraphIds.Except(msg.GraphIds).ToArray();
         }
     }
 }

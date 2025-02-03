@@ -2,14 +2,14 @@
 
 namespace Pathfinding.App.Console.View
 {
-    internal sealed partial class RunDeleteButton
+    internal partial class RunCreateButton
     {
         private void Initialize()
         {
-            Text = "Delete";
-            X = Pos.Percent(66);
+            Text = "New";
+            X = Pos.Percent(0);
             Y = 0;
-            Width = Dim.Percent(34);
+            Width = Dim.Percent(33);
         }
     }
 }

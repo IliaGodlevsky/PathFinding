@@ -19,7 +19,7 @@ namespace Pathfinding.App.Console.ViewModel
         private readonly IRequestService<GraphVertexModel> service;
         private readonly ILog log;
 
-        private GraphInfoModel[] selectedGraph = Array.Empty<GraphInfoModel>();
+        private GraphInfoModel[] selectedGraph = [];
         public GraphInfoModel[] SelectedGraphs
         {
             get => selectedGraph;

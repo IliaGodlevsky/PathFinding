@@ -73,7 +73,7 @@ namespace Pathfinding.App.Console.Model
             set => this.RaiseAndSetIfChanged(ref cost, value);
         }
 
-        public HashSet<RunVertexModel> Neighbors { get; private set; } = new();
+        public HashSet<RunVertexModel> Neighbors { get; private set; } = [];
 
         IReadOnlyCollection<IVertex> IVertex.Neighbors
         {

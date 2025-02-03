@@ -1,9 +1,8 @@
 ﻿using Autofac.Features.AttributeFilters;
-using CommunityToolkit.Mvvm.Messaging;
 using Pathfinding.App.Console.Injection;
-using Pathfinding.App.Console.Messages.View;
 using Pathfinding.App.Console.ViewModel;
 using ReactiveMarbles.ObservableEvents;
+using ReactiveUI;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -13,58 +12,36 @@ namespace Pathfinding.App.Console.View
 {
     internal sealed partial class GraphUpdateView : FrameView
     {
-        private readonly GraphUpdateViewModel viewModel;
-        private readonly IMessenger messenger;
-        private readonly CompositeDisposable disposables = new();
+        private readonly CompositeDisposable disposables = [];
         private readonly Terminal.Gui.View[] children;
 
         public GraphUpdateView(
             [KeyFilter(KeyFilters.GraphUpdateView)] IEnumerable<Terminal.Gui.View> children,
-            GraphUpdateViewModel viewModel,
-            [KeyFilter(KeyFilters.Views)] IMessenger messenger)
+            GraphUpdateViewModel viewModel)
         {
-            this.viewModel = viewModel;
-            this.messenger = messenger;
             Initialize();
             this.children = children.ToArray();
             Add(this.children);
+            viewModel.UpdateGraphCommand.CanExecute
+                .BindTo(updateButton, x => x.Enabled)
+                .DisposeWith(disposables);
             updateButton.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
                 .Select(x => Unit.Default)
-                .Do(async x =>
-                {
-                    if (await viewModel.UpdateGraphCommand.CanExecute.FirstOrDefaultAsync())
-                    {
-                        Hide();
-                        await viewModel.UpdateGraphCommand.Execute();
-                    }
-                })
+                .Do(x => Hide())
+                .InvokeCommand(viewModel, x => x.UpdateGraphCommand)
+                .DisposeWith(disposables);
+            cancelButton.Events().MouseClick
+                .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
+                .Do(x => Hide())
                 .Subscribe()
                 .DisposeWith(disposables);
-
-            cancelButton.MouseClick += OnCancelClicked;
-            messenger.Register<OpenGraphUpdateViewMessage>(this, OnOpenCreateGraphViewRequestRecieved);
         }
 
-        private void OnOpenCreateGraphViewRequestRecieved(object recipient,
-            OpenGraphUpdateViewMessage request)
-        {
-            Visible = true;
-        }
-
-        private void OnCancelClicked(MouseEventArgs e)
-        {
-            if (e.MouseEvent.Flags == MouseFlags.Button1Clicked)
-            {
-                Hide();
-            }
-        }
-
-        private Unit Hide()
+        private void Hide()
         {
             Visible = false;
             Application.Driver.SetCursorVisibility(CursorVisibility.Invisible);
-            return Unit.Default;
         }
     }
 }

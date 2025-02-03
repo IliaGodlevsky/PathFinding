@@ -2,13 +2,13 @@
 
 namespace Pathfinding.App.Console.View
 {
-    internal sealed partial class GraphImportButton
+    internal sealed partial class GraphAssembleButton
     {
         private void Initialize()
         {
-            Text = "Load";
+            Text = "New";
+            X = 0;
             Y = 0;
-            X = Pos.Percent(66.68f);
             Width = Dim.Percent(16.67f);
         }
     }

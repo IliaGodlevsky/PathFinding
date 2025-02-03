@@ -25,8 +25,7 @@ namespace Pathfinding.App.Console.View
             IRequireHeuristicsViewModel heuristicsViewModel)
         {
             Initialize();
-            var heurs = Enum.GetValues(typeof(HeuristicFunctions))
-                .Cast<HeuristicFunctions>()
+            var heurs = Enum.GetValues<HeuristicFunctions>()
                 .ToDictionary(x => x.ToStringRepresentation());
             var labels = heurs.Keys.Select(ustring.Make).ToArray();
             var values = labels.Select(x => heurs[x.ToString()]).ToList();

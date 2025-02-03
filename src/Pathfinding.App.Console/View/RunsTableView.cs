@@ -69,7 +69,7 @@ namespace Pathfinding.App.Console.View
                 .DisposeWith(disposables);
             this.Events().MouseClick
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
-                .Do(x => messenger.Send(new OpenAlgorithmRunViewMessage()))
+                .Do(x => messenger.Send(new OpenRunFieldMessage()))
                 .Subscribe()
                 .DisposeWith(disposables);
         }

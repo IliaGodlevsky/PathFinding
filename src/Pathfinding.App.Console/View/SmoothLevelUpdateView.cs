@@ -17,8 +17,7 @@ namespace Pathfinding.App.Console.View
 
         public SmoothLevelUpdateView(GraphUpdateViewModel viewModel)
         {
-            var lvls = Enum.GetValues(typeof(SmoothLevels))
-                .Cast<SmoothLevels>()
+            var lvls = Enum.GetValues<SmoothLevels>()
                 .ToDictionary(x => x.ToStringRepresentation());
             Initialize();
             var labels = lvls.Keys.Select(ustring.Make).ToArray();
