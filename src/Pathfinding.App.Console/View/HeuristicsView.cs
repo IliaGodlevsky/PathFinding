@@ -38,7 +38,7 @@ namespace Pathfinding.App.Console.View
                .DisposeWith(disposables);
             messenger.Register<OpenHeuristicsViewMessage>(this, OnOpen);
             messenger.Register<CloseHeuristicsViewMessage>(this, OnHeuristicsViewClosed);
-            messenger.Register<CloseAlgorithmCreationViewMessage>(this, OnRunCreationViewClosed);
+            messenger.Register<CloseRunCreateViewMessage>(this, OnRunCreationViewClosed);
             this.heuristicsViewModel = heuristicsViewModel;
         }
 
@@ -54,7 +54,7 @@ namespace Pathfinding.App.Console.View
             Close();
         }
 
-        private void OnRunCreationViewClosed(object recipient, CloseAlgorithmCreationViewMessage msg)
+        private void OnRunCreationViewClosed(object recipient, CloseRunCreateViewMessage msg)
         {
             Close();
         }

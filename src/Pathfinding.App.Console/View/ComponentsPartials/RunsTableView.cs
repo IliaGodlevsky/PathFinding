@@ -30,7 +30,7 @@ namespace Pathfinding.App.Console.View
 
         private void SetTableStyle()
         {
-            Table.PrimaryKey = new[] { Table.Columns[IdCol] };
+            Table.PrimaryKey = [Table.Columns[IdCol]];
             var columnStyles = new Dictionary<DataColumn, ColumnStyle>()
             {
                 { Table.Columns[IdCol], new() { Visible = false } },
@@ -88,8 +88,8 @@ namespace Pathfinding.App.Console.View
         public RunsTableView()
         {
             Table = new();
-            Table.Columns.AddRange(new DataColumn[]
-            {
+            Table.Columns.AddRange(
+            [
                 new (IdCol, typeof(int)),
                 new (AlgorithmCol, typeof(Algorithms)),
                 new (VisitedCol, typeof(int)),
@@ -100,7 +100,7 @@ namespace Pathfinding.App.Console.View
                 new (LogicCol, typeof(object)),
                 new (WeightCol, typeof(object)),
                 new (StatusCol, typeof(RunStatuses))
-            });
+            ]);
             SetTableStyle();
             int line = 1;
             if (Style.ShowHorizontalHeaderOverline)

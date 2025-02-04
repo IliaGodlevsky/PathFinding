@@ -6,9 +6,9 @@ namespace Pathfinding.App.Console.ViewModel.Interface
 {
     internal interface IRunFieldViewModel
     {
-        AlgorithmRevisionModel SelectedRun { get; set; }
+        RunModel SelectedRun { get; set; }
 
-        ObservableCollection<AlgorithmRevisionModel> Runs { get; }
+        ObservableCollection<RunModel> Runs { get; }
 
         IGraph<RunVertexModel> RunGraph { get; }
     }

@@ -27,9 +27,9 @@ namespace Pathfinding.App.Console.View
             messenger.Register<CloseRunFieldMessage>(this, OnRunFieldClosed);
             messenger.Register<OpenRunFieldMessage>(this, OnRunFieldOpen);
             var leftLabelMouseEvent = leftLabel.Events().MouseClick
-                .Where(x => viewModel.SelectedRun != AlgorithmRevisionModel.Empty);
+                .Where(x => viewModel.SelectedRun != RunModel.Empty);
             var rightLabelMouseEvent = rightLabel.Events().MouseClick
-                .Where(x => viewModel.SelectedRun != AlgorithmRevisionModel.Empty);
+                .Where(x => viewModel.SelectedRun != RunModel.Empty);
             leftLabelMouseEvent
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Pressed)
                 .Select(x => bar.Fraction - FractionPerClick)
@@ -53,7 +53,7 @@ namespace Pathfinding.App.Console.View
                 .DisposeWith(disposables);
             leftLabelMouseEvent
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button2Clicked)
-                .Select(x => AlgorithmRevisionModel.FractionRange.LowerValueOfRange)
+                .Select(x => RunModel.FractionRange.LowerValueOfRange)
                 .BindTo(viewModel, x => x.SelectedRun.Fraction)
                 .DisposeWith(disposables);
             rightLabelMouseEvent
@@ -79,11 +79,11 @@ namespace Pathfinding.App.Console.View
                 .DisposeWith(disposables);
             rightLabelMouseEvent
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button2Clicked)
-                .Select(x => AlgorithmRevisionModel.FractionRange.UpperValueOfRange)
+                .Select(x => RunModel.FractionRange.UpperValueOfRange)
                 .BindTo(viewModel, x => x.SelectedRun.Fraction)
                 .DisposeWith(disposables);
             bar.Events().MouseClick
-                .Where(x => viewModel.SelectedRun != AlgorithmRevisionModel.Empty)
+                .Where(x => viewModel.SelectedRun != RunModel.Empty)
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
                 .Select(x => (float)Math.Round((float)(x.MouseEvent.X + 1) / bar.Bounds.Width, 3))
                 .BindTo(viewModel, x => x.SelectedRun.Fraction)

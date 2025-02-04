@@ -9,17 +9,17 @@ using System.Reactive.Linq;
 
 namespace Pathfinding.App.Console.Model
 {
-    internal class AlgorithmRevisionModel : ReactiveObject, IDisposable
+    internal class RunModel : ReactiveObject, IDisposable
     {
         public readonly record struct VisitedModel(
             Coordinate Visited,
             IReadOnlyList<Coordinate> Enqueued);
 
-        public readonly record struct SubRevisionModel(
+        public readonly record struct SubRunModel(
             IReadOnlyCollection<VisitedModel> Visited,
             IReadOnlyCollection<Coordinate> Path);
 
-        private enum RevisionUnitState
+        private enum RunVertexState
         {
             No,
             Source,
@@ -31,24 +31,24 @@ namespace Pathfinding.App.Console.Model
             CrossPath
         }
 
-        private readonly record struct RevisionUnit(
+        private readonly record struct RunVertexStateModel(
             RunVertexModel Vertex,
-            RevisionUnitState State,
+            RunVertexState State,
             bool Value)
         {
-            public static RevisionUnit CreateVisited(RunVertexModel model, bool value = true) => new(model, RevisionUnitState.Visited, value);
+            public static RunVertexStateModel CreateVisited(RunVertexModel model, bool value = true) => new(model, RunVertexState.Visited, value);
 
-            public static RevisionUnit CreateEnqueued(RunVertexModel model) => new(model, RevisionUnitState.Enqueued, true);
+            public static RunVertexStateModel CreateEnqueued(RunVertexModel model) => new(model, RunVertexState.Enqueued, true);
 
-            public static RevisionUnit CreateCrossedPath(RunVertexModel model) => new(model, RevisionUnitState.CrossPath, true);
+            public static RunVertexStateModel CreateCrossedPath(RunVertexModel model) => new(model, RunVertexState.CrossPath, true);
 
-            public static RevisionUnit CreatePath(RunVertexModel model) => new(model, RevisionUnitState.Path, true);
+            public static RunVertexStateModel CreatePath(RunVertexModel model) => new(model, RunVertexState.Path, true);
 
-            public static RevisionUnit CreateSource(RunVertexModel model) => new(model, RevisionUnitState.Source, true);
+            public static RunVertexStateModel CreateSource(RunVertexModel model) => new(model, RunVertexState.Source, true);
 
-            public static RevisionUnit CreateTarget(RunVertexModel model) => new(model, RevisionUnitState.Target, true);
+            public static RunVertexStateModel CreateTarget(RunVertexModel model) => new(model, RunVertexState.Target, true);
 
-            public static RevisionUnit CreateTransit(RunVertexModel model) => new(model, RevisionUnitState.Transit, true);
+            public static RunVertexStateModel CreateTransit(RunVertexModel model) => new(model, RunVertexState.Transit, true);
 
             public void Set() => Set(Value);
 
@@ -58,27 +58,27 @@ namespace Pathfinding.App.Console.Model
             {
                 switch (State)
                 {
-                    case RevisionUnitState.Visited: Vertex.IsVisited = value; break;
-                    case RevisionUnitState.Enqueued: Vertex.IsEnqueued = value; break;
-                    case RevisionUnitState.CrossPath: Vertex.IsCrossedPath = value; break;
-                    case RevisionUnitState.Path: Vertex.IsPath = value; break;
-                    case RevisionUnitState.Source: Vertex.IsSource = value; break;
-                    case RevisionUnitState.Target: Vertex.IsTarget = value; break;
-                    case RevisionUnitState.Transit: Vertex.IsTransit = value; break;
+                    case RunVertexState.Visited: Vertex.IsVisited = value; break;
+                    case RunVertexState.Enqueued: Vertex.IsEnqueued = value; break;
+                    case RunVertexState.CrossPath: Vertex.IsCrossedPath = value; break;
+                    case RunVertexState.Path: Vertex.IsPath = value; break;
+                    case RunVertexState.Source: Vertex.IsSource = value; break;
+                    case RunVertexState.Target: Vertex.IsTarget = value; break;
+                    case RunVertexState.Transit: Vertex.IsTransit = value; break;
                 }
             }
         }
 
-        public static readonly AlgorithmRevisionModel Empty
+        public static readonly RunModel Empty
             = new(Graph<RunVertexModel>.Empty, [], []);
 
         public static readonly InclusiveValueRange<float> FractionRange = new(1, 0);
 
         private readonly CompositeDisposable disposables = [];
-        private readonly Lazy<ReadOnlyCollection<RevisionUnit>> algorithm;
+        private readonly Lazy<ReadOnlyCollection<RunVertexStateModel>> algorithm;
         private readonly Lazy<InclusiveValueRange<int>> cursorRange;
 
-        private ReadOnlyCollection<RevisionUnit> Algorithm => algorithm.Value;
+        private ReadOnlyCollection<RunVertexStateModel> Algorithm => algorithm.Value;
 
         private InclusiveValueRange<int> CursorRange => cursorRange.Value;
 
@@ -100,9 +100,9 @@ namespace Pathfinding.App.Console.Model
 
         public int Id { get; set; }
 
-        public AlgorithmRevisionModel(
+        public RunModel(
             IGraph<RunVertexModel> vertices,
-            IReadOnlyCollection<SubRevisionModel> pathfindingResult,
+            IReadOnlyCollection<SubRunModel> pathfindingResult,
             IReadOnlyCollection<Coordinate> range)
         {
             algorithm = new(() => CreateAlgorithmRevision(vertices, pathfindingResult, range));
@@ -130,25 +130,25 @@ namespace Pathfinding.App.Console.Model
             while (count++ <= 0) Algorithm[Cursor--].SetInverse();
         }
 
-        private static ReadOnlyCollection<RevisionUnit> CreateAlgorithmRevision(
+        private static ReadOnlyCollection<RunVertexStateModel> CreateAlgorithmRevision(
             IGraph<RunVertexModel> graph,
-            IReadOnlyCollection<SubRevisionModel> pathfindingResult,
+            IReadOnlyCollection<SubRunModel> pathfindingResult,
             IReadOnlyCollection<Coordinate> range)
         {
             if (graph.Count == 0 || pathfindingResult.Count == 0 || range.Count < 2)
             {
-                return Array.AsReadOnly(Array.Empty<RevisionUnit>());
+                return Array.AsReadOnly(Array.Empty<RunVertexStateModel>());
             }
 
             var previousVisited = new HashSet<Coordinate>();
             var previousPaths = new HashSet<Coordinate>();
             var previousEnqueued = new HashSet<Coordinate>();
-            var subAlgorithms = new List<RevisionUnit>();
+            var subAlgorithms = new List<RunVertexStateModel>();
 
             range.Skip(1).Take(range.Count - 2)
-                .Select(x => RevisionUnit.CreateTransit(graph.Get(x)))
-                .Prepend(RevisionUnit.CreateSource(graph.Get(range.First())))
-                .Append(RevisionUnit.CreateTarget(graph.Get(range.Last())))
+                .Select(x => RunVertexStateModel.CreateTransit(graph.Get(x)))
+                .Prepend(RunVertexStateModel.CreateSource(graph.Get(range.First())))
+                .Append(RunVertexStateModel.CreateTarget(graph.Get(range.Last())))
                 .ForWhole(subAlgorithms.AddRange);
 
             foreach (var subAlgorithm in pathfindingResult)
@@ -158,17 +158,17 @@ namespace Pathfinding.App.Console.Model
 
                 subAlgorithm.Visited.SelectMany(v =>
                      v.Enqueued.Intersect(previousVisited).Except(visitedIgnore)
-                        .Select(x => RevisionUnit.CreateVisited(graph.Get(x), false))
+                        .Select(x => RunVertexStateModel.CreateVisited(graph.Get(x), false))
                         .Concat(v.Visited.Enumerate().Except(visitedIgnore)
-                        .Select(x => RevisionUnit.CreateVisited(graph.Get(x)))
+                        .Select(x => RunVertexStateModel.CreateVisited(graph.Get(x)))
                         .Concat(v.Enqueued.Except(visitedIgnore).Except(previousEnqueued)
-                        .Select(x => RevisionUnit.CreateEnqueued(graph.Get(x))))))
+                        .Select(x => RunVertexStateModel.CreateEnqueued(graph.Get(x))))))
                         .Distinct().ForWhole(subAlgorithms.AddRange);
 
                 exceptRangePath.Intersect(previousPaths)
-                    .Select(x => RevisionUnit.CreateCrossedPath(graph.Get(x)))
+                    .Select(x => RunVertexStateModel.CreateCrossedPath(graph.Get(x)))
                     .Concat(exceptRangePath.Except(previousPaths)
-                    .Select(x => RevisionUnit.CreatePath(graph.Get(x))))
+                    .Select(x => RunVertexStateModel.CreatePath(graph.Get(x))))
                     .ForWhole(subAlgorithms.AddRange);
 
                 previousVisited.AddRange(subAlgorithm.Visited.Select(x => x.Visited));

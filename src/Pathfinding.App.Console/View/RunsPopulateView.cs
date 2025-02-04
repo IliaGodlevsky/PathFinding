@@ -160,9 +160,9 @@ namespace Pathfinding.App.Console.View
                 })
                 .BindTo(heuristicsViewModel, x => x.Step)
                 .DisposeWith(disposables);
-            messenger.Register<OpenAlgorithmsPopulateViewMessage>(this, OnOpen);
-            messenger.Register<CloseAlgorithmsPopulateViewMessage>(this, OnViewClosed);
-            messenger.Register<CloseAlgorithmCreationViewMessage>(this, OnRunCreationViewClosed);
+            messenger.Register<OpenRunsPopulateViewMessage>(this, OnOpen);
+            messenger.Register<CloseRunPopulateViewMessage>(this, OnViewClosed);
+            messenger.Register<CloseRunCreateViewMessage>(this, OnRunCreationViewClosed);
             messenger.Register<OpenHeuristicsViewMessage>(this, OnHeuristicsOpen);
             this.heuristicsViewModel = heuristicsViewModel;
         }
@@ -174,7 +174,7 @@ namespace Pathfinding.App.Console.View
             heuristicsViewModel.Step = 0;
         }
 
-        private void OnOpen(object recipient, OpenAlgorithmsPopulateViewMessage msg)
+        private void OnOpen(object recipient, OpenRunsPopulateViewMessage msg)
         {
             weightTextField.Text = DefaultWeight.ToString();
             toWeightTextField.Text = DefaultWeight.ToString();
@@ -185,12 +185,12 @@ namespace Pathfinding.App.Console.View
             Visible = true;
         }
 
-        private void OnViewClosed(object recipient, CloseAlgorithmsPopulateViewMessage msg)
+        private void OnViewClosed(object recipient, CloseRunPopulateViewMessage msg)
         {
             Close();
         }
 
-        private void OnRunCreationViewClosed(object recipient, CloseAlgorithmCreationViewMessage msg)
+        private void OnRunCreationViewClosed(object recipient, CloseRunCreateViewMessage msg)
         {
             Close();
         }

@@ -5,12 +5,9 @@ namespace Pathfinding.App.Console.View
 {
     internal sealed class ConsoleLog : ILog
     {
-        private void QueryMessageBox(string title, string message)
+        private static void QueryMessageBox(string title, string message)
         {
-            Application.MainLoop.Invoke(() =>
-            {
-                MessageBox.Query(title, message, "Ok");
-            });
+            Application.MainLoop.Invoke(() => MessageBox.Query(title, message, "Ok"));
         }
 
         public void Debug(string message)

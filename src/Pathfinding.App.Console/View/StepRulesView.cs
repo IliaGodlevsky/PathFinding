@@ -39,7 +39,7 @@ namespace Pathfinding.App.Console.View
             stepRules.SelectedItem = 0;
             messenger.Register<OpenStepRuleViewMessage>(this, OnOpen);
             messenger.Register<CloseStepRulesViewMessage>(this, OnStepRulesViewClose);
-            messenger.Register<CloseAlgorithmCreationViewMessage>(this, OnRunCreationViewClosed);
+            messenger.Register<CloseRunCreateViewMessage>(this, OnRunCreationViewClosed);
             this.viewModel = viewModel;
         }
 
@@ -54,7 +54,7 @@ namespace Pathfinding.App.Console.View
             Close();
         }
 
-        private void OnRunCreationViewClosed(object recipient, CloseAlgorithmCreationViewMessage msg)
+        private void OnRunCreationViewClosed(object recipient, CloseRunCreateViewMessage msg)
         {
             Close();
         }

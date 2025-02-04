@@ -1,5 +1,6 @@
 ﻿using Autofac.Features.AttributeFilters;
 using CommunityToolkit.Mvvm.Messaging;
+using Pathfinding.App.Console.Extensions;
 using Pathfinding.App.Console.Injection;
 using Pathfinding.App.Console.Messages;
 using Pathfinding.App.Console.Messages.ViewModel;
@@ -53,8 +54,8 @@ namespace Pathfinding.App.Console.ViewModel
             messenger.Register<RunSelectedMessage>(this, OnRunsSelected);
             messenger.Register<GraphsDeletedMessage>(this, OnGraphDeleted);
             messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
-            messenger.Register<AsyncGraphUpdatedMessage, int>(this, Tokens.AlgorithmUpdate,
-                async (r, msg) => await OnGraphUpdated(r, msg));
+            messenger.RegisterAsyncHandler<AsyncGraphUpdatedMessage, int>(this,
+                Tokens.AlgorithmUpdate, OnGraphUpdated);
         }
 
         private void OnRunsSelected(object recipient, RunSelectedMessage msg)

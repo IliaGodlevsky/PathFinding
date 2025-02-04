@@ -7,7 +7,7 @@ namespace Pathfinding.Logging.Loggers
     {
         private readonly ILogger infoLogger;
         private readonly ILogger debugLogger;
-        private readonly ILogger errorLogger;
+        private readonly Logger errorLogger;
         private readonly ILogger traceLogger;
 
         public FileLog()

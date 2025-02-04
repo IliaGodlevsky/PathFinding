@@ -17,7 +17,7 @@ using ReactiveUI;
 using System.Collections.ObjectModel;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using static Pathfinding.App.Console.Model.AlgorithmRevisionModel;
+using static Pathfinding.App.Console.Model.RunModel;
 
 namespace Pathfinding.App.Console.ViewModel
 {
@@ -30,8 +30,8 @@ namespace Pathfinding.App.Console.ViewModel
 
         private int graphId;
 
-        private AlgorithmRevisionModel selected = Empty;
-        public AlgorithmRevisionModel SelectedRun
+        private RunModel selected = Empty;
+        public RunModel SelectedRun
         {
             get => selected;
             set
@@ -43,7 +43,7 @@ namespace Pathfinding.App.Console.ViewModel
             }
         }
 
-        public ObservableCollection<AlgorithmRevisionModel> Runs { get; } = [];
+        public ObservableCollection<RunModel> Runs { get; } = [];
 
         public IGraph<RunVertexModel> RunGraph { get; private set; } = Graph<RunVertexModel>.Empty;
 
@@ -127,9 +127,9 @@ namespace Pathfinding.App.Console.ViewModel
             }
         }
 
-        private void OnAdded(AlgorithmRevisionModel model) { }
+        private void OnAdded(RunModel model) { }
 
-        private void OnRemoved(AlgorithmRevisionModel model) => model.Dispose();
+        private void OnRemoved(RunModel model) => model.Dispose();
 
         private void ActivateRun(RunInfoModel model)
         {
@@ -143,7 +143,7 @@ namespace Pathfinding.App.Console.ViewModel
                 var rangeCoordinates = rangeMsg.PathfindingRange;
                 var range = rangeCoordinates.Select(RunGraph.Get).ToArray();
 
-                var subRevisions = new List<SubRevisionModel>();
+                var subRevisions = new List<SubRunModel>();
                 var visitedVertices = new List<VisitedModel>();
 
                 void AddSubAlgorithm(IReadOnlyCollection<Coordinate> path = null)
@@ -174,7 +174,7 @@ namespace Pathfinding.App.Console.ViewModel
                 algorithm.SubPathFound -= OnSubPathFound;
                 algorithm.VertexProcessed -= OnVertexProcessed;
 
-                run = new AlgorithmRevisionModel(RunGraph,
+                run = new RunModel(RunGraph,
                     subRevisions, rangeCoordinates) { Id = model.Id };
                 Runs.Add(run);
             }

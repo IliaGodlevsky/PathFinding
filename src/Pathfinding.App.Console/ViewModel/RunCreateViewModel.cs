@@ -157,7 +157,7 @@ namespace Pathfinding.App.Console.ViewModel
                 {
                     visitedCount = 0;
                     var val = from + step * i;
-                    double? weight = val == 0 ? null : val;
+                    double? weight = val == 0 ? null : Math.Round(val, 1);
                     var buildInfo = new AlgorithmBuildInfo(Algorithm.Value, 
                         Heuristic, weight, StepRule);
                     var algorithm = buildInfo.ToAlgorithm(pathfindingRange);
