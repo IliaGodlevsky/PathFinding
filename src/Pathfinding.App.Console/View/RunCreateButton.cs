@@ -1,5 +1,6 @@
 ﻿using Pathfinding.App.Console.Model;
 using Pathfinding.App.Console.ViewModel.Interface;
+using Pathfinding.Domain.Interface;
 using Pathfinding.Infrastructure.Data.Pathfinding;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
@@ -11,7 +12,7 @@ namespace Pathfinding.App.Console.View
     internal sealed partial class RunCreateButton : Button
     {
         public RunCreateButton(RunCreateView view,
-            IGraphFieldViewModel viewModel)
+            IPathfindingRange<GraphVertexModel> pathfindingRange)
         {
             Initialize();
 
@@ -19,8 +20,8 @@ namespace Pathfinding.App.Console.View
                 .Where(x => x.MouseEvent.Flags == MouseFlags.Button1Clicked)
                 .Do(x => view.Visible = true)
                 .Subscribe();
-            viewModel.WhenAnyValue(x => x.Graph)
-                .Select(x => x != Graph<GraphVertexModel>.Empty)
+            pathfindingRange.WhenAnyValue(x => x.Source, x => x.Target,
+                (source, target) => source is not null && target is not null)
                 .BindTo(this, x => x.Enabled);
         }
     }

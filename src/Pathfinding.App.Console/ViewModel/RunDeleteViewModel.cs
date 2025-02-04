@@ -24,6 +24,8 @@ namespace Pathfinding.App.Console.ViewModel
             set => this.RaiseAndSetIfChanged(ref selectedRunsIds, value);
         }
 
+        private int ActivatedGraph { get; set; } = 0;
+
         public ReactiveCommand<Unit, Unit> DeleteRunsCommand { get; }
 
         public RunDeleteViewModel(
@@ -35,6 +37,8 @@ namespace Pathfinding.App.Console.ViewModel
             this.service = service;
             this.logger = logger;
             messenger.Register<RunSelectedMessage>(this, OnRunsSelected);
+            messenger.Register<GraphsDeletedMessage>(this, OnGraphsDeleted);
+            messenger.Register<GraphActivatedMessage>(this, OnGraphActivated);
             DeleteRunsCommand = ReactiveCommand.CreateFromTask(DeleteRuns, CanDelete());
         }
 
@@ -61,6 +65,20 @@ namespace Pathfinding.App.Console.ViewModel
         private void OnRunsSelected(object recipient, RunSelectedMessage msg)
         {
             SelectedRunsIds = msg.SelectedRuns.Select(x => x.Id).ToArray();
+        }
+
+        private void OnGraphActivated(object recipient, GraphActivatedMessage msg)
+        {
+            ActivatedGraph = msg.Graph.Id;
+        }
+
+        private void OnGraphsDeleted(object recipient, GraphsDeletedMessage msg) 
+        {
+            if (msg.GraphIds.Contains(ActivatedGraph))
+            {
+                ActivatedGraph = 0;
+                SelectedRunsIds = [];
+            }
         }
     }
 }

@@ -62,6 +62,7 @@ namespace Pathfinding.App.Console.ViewModel
                 {
                     value.IsSource = true;
                 }
+                this.RaisePropertyChanged(nameof(Source));
             }
         }
 
@@ -81,6 +82,7 @@ namespace Pathfinding.App.Console.ViewModel
                 {
                     value.IsTarget = true;
                 }
+                this.RaisePropertyChanged(nameof(Target));
             }
         }
 

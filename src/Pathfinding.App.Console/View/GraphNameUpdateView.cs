@@ -10,7 +10,7 @@ namespace Pathfinding.App.Console.View
     internal sealed partial class GraphNameUpdateView : FrameView
     {
         private readonly GraphUpdateViewModel viewModel;
-        private readonly CompositeDisposable disposables = new();
+        private readonly CompositeDisposable disposables = [];
 
         public GraphNameUpdateView(GraphUpdateViewModel viewModel)
         {
