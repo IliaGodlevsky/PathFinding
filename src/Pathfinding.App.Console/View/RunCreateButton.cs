@@ -1,7 +1,5 @@
 ﻿using Pathfinding.App.Console.Model;
-using Pathfinding.App.Console.ViewModel.Interface;
 using Pathfinding.Domain.Interface;
-using Pathfinding.Infrastructure.Data.Pathfinding;
 using ReactiveMarbles.ObservableEvents;
 using ReactiveUI;
 using System.Reactive.Linq;
