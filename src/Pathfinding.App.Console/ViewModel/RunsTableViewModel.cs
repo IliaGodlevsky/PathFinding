@@ -23,7 +23,7 @@ namespace Pathfinding.App.Console.ViewModel
         private readonly IRequestService<GraphVertexModel> service;
         private readonly ILog logger;
 
-        public ObservableCollection<RunInfoModel> Runs { get; } = new();
+        public ObservableCollection<RunInfoModel> Runs { get; } = [];
 
         public ReactiveCommand<int[], Unit> SelectRunsCommand { get; }
 
